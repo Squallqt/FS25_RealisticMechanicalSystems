@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Geringe Wartbarkeit"/>
         <text name="rms_shop_launch_year" text="Markteinführung %d"/>
         <text name="rms_shop_launch_year_unknown" text="Jahr der Markteinführung unbekannt"/>
+        <text name="rms_shop_category_maintenance" text="Wartung"/>
         <text name="rms_owner_care_careful" text="Sorgfältige Wartung"/>
         <text name="rms_owner_care_regular" text="Regelmäßige Wartung"/>
         <text name="rms_owner_care_neglected" text="Vernachlässigte Wartung"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="Gelenkwelle zu stark abgewinkelt"/>
         <text name="rms_warranty_windup" text="Sperre oder 4WD auf festem Boden"/>
         <text name="rms_warranty_filter" text="Filter verstopft"/>
+        <text name="rms_warranty_oil" text="ungeeignetes Motoröl"/>
         <text name="rms_warranty_trailer" text="Anhänger zu schwer"/>
         <text name="rms_warranty_aftermarket_part" text="Nachbauteil"/>
         <text name="rms_warranty_used_part" text="Gebrauchtteil"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Starthilfekabel von %s getrennt"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Flüssigkeitskanister"/>
-        <text name="rms_fluid_function_engine_oil" text="Motoröl zum manuellen Nachfüllen"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motoröl, für alle Maschinen, auch mit AdBlue und Partikelfilter"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motoröl, für Maschinen ohne AdBlue und Partikelfilter"/>
         <text name="rms_fluid_function_utto" text="Getriebe- und Hydrauliköl zum manuellen Nachfüllen"/>
         <text name="rms_fluid_function_coolant" text="Kühlmittel zum manuellen Nachfüllen"/>
         <text name="rms_fluid_pour_action" text="Einfüllen: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß des Getriebes bis zu verdreifachen und es stärker erwärmen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß der Hydraulik bis zu verdreifachen, sie stärker erwärmen und verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß von Getriebe und Hydraulik bis zu verdreifachen, beide stärker erwärmen und die Hydraulik verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Ungeeignetes Motoröl"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Dieser Motor hat AdBlue oder einen Partikelfilter: Seine Betriebsanleitung verlangt ein Öl, das dafür ausgelegt ist. Mit diesem Öl wird sein Ölwechsel bis zu doppelt so früh fällig. Ein Partikelfilter füllt sich zudem 1,5-mal so schnell mit Asche. Fortfahren?"/>
         <text name="rms_fluid_error_no_circuit" text="Dieses Fahrzeug benötigt kein Nachfüllen von Flüssigkeit"/>
         <text name="rms_fluid_error_motor_running" text="Motor abstellen, bevor Flüssigkeit umgefüllt wird"/>
         <text name="rms_fluid_error_vehicle_moving" text="Das Fahrzeug muss stehen"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Flüssigkeiten im Mietpreis enthalten"/>
         <text name="rms_fluid_stock_required" text="Aus den Behältern im Werkstattbereich"/>
         <text name="rms_fluid_stock_missing" text="Im Werkstattbereich fehlen %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Im Werkstattbereich fehlen %s Öl, das für diesen Motor geeignet ist"/>
         <text name="rms_fluid_refill_work_order" text="Flüssigkeiten nachfüllen"/>
         <text name="rms_fluid_refill_dealer_supply" text="Bereitstellung im Kostenvoranschlag enthalten"/>
         <text name="rms_fluid_mode_top_up" text="Nachfüllen"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Kautionserstattung"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niedriger Flüssigkeitsstand"/>
-        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein verschlissener Motor verbraucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydrauliköl sinken nur durch ein Leck.&#10;&#10;Unter der Markierung benötigt die Maschine nur Nachfüllen und arbeitet weiterhin normal. Je tiefer der Stand sinkt, desto leichter saugt die Pumpe an Hängen, in Kurven und beim Bremsen Luft an: Die Öldruckleuchte flackert, und bei Getriebe oder Hydraulik heult die Pumpe und die Hydraulikbewegungen werden langsamer. Jede so gefahrene Minute schädigt die Kurbelwellenlager oder die Pumpe: Halte an und füll den Stand auf. Eine Maschine mit zu wenig Kühlmittel, Getriebeöl oder Hydrauliköl läuft außerdem heiß.&#10;&#10;Kauf im Shop einen Behälter mit einem kompatiblen Produkt, bring ihn zur Maschine und füll den Stand auf. Alle für diesen Kreislauf vorgesehenen Produkte haben dieselbe Wirkung; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet."/>
+        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein verschlissener Motor verbraucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydrauliköl sinken nur durch ein Leck.&#10;&#10;Unter der Markierung benötigt die Maschine nur Nachfüllen und arbeitet weiterhin normal. Je tiefer der Stand sinkt, desto leichter saugt die Pumpe an Hängen Luft an: Die Öldruckleuchte flackert, und bei Getriebe oder Hydraulik heult die Pumpe und die Hydraulikbewegungen werden langsamer. Jede so gefahrene Minute schädigt die Kurbelwellenlager oder die Pumpe: Halte an und füll den Stand auf. Eine Maschine mit zu wenig Kühlmittel, Getriebeöl oder Hydrauliköl läuft außerdem heiß.&#10;&#10;Kauf im Shop einen Behälter mit einem kompatiblen Produkt, bring ihn zur Maschine und füll den Stand auf. Alle für diesen Kreislauf vorgesehenen Produkte haben dieselbe Wirkung; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Willkommen bei Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Hinweise deaktivieren"/>
         <text name="rms_tutorial_welcome_enable_button" text="Hinweise aktivieren"/>

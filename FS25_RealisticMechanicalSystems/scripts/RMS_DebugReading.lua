@@ -124,8 +124,8 @@ local CAUSES = {
     pef = {"PTO engagements", "engagements", function(_, spec) return string.format("%d engagements", spec.ptoEngagementCount) end},
     prf = {"PTO shaft angle", "shaft angle", function(_, spec) return string.format("%.0f deg at the joint", spec.ptoShaftAngle or 0) end},
     hef = {"Harvest overload", "overload", function(f) return "effort " .. pct(f.harvestEffort) end},
-    hgf = {"Grain flow", "grain flow", function(f) return string.format("%.0f t/h grain", f.harvestTonPerHour) end},
-    hsf = {"Chopper load", "chopper", function(f) return string.format("%.0f kW chopping", f.harvestChopperKw) end},
+    hgf = {"Grain flow", "grain flow", function(f) return "flow " .. pct(f.harvestGrain) end},
+    hsf = {"Chopper load", "chopper", function(f) return "load " .. pct(f.harvestChopper) end},
     hstf = {"Stones", "stones", function(f) return string.format("stone wear x%.2f", 1 + f.harvestStone) end},
     hrf = {"Rice", "rice", function() return "abrasive rice straw" end},
     hwf = {"Wet crop", "wet crop", function(f) return f.harvestSource == "rh" and "crop too damp" or "rain on the crop" end}
@@ -234,7 +234,9 @@ local function readHeader(vehicle, spec, reading)
         {"Life used", pct(lifeUsed)},
         {"Condition", pct(vehicle:getConditionLevel())},
         {"Reliability", string.format("%.2f", spec.reliability)},
-        {"Faults so far", string.format("%d (for reference, a powershift tractor sees about 16 in its life)", countFaults(vehicle, spec))},
+        -- the sourced count is a tractor's, no other machine has one
+        {"Faults so far", string.format(string.find(RMS_Fluids.getVehicleCategory(vehicle) or "", "^TRACTORS") ~= nil
+            and "%d (for reference, a powershift tractor sees about 16 in its life)" or "%d", countFaults(vehicle, spec))},
         {"Report", reportText}
     }
 
@@ -389,6 +391,7 @@ local ABUSE_READINGS = {
     fuel_dry = "tank run dry", park_brake = "parking brake on", pto_engagement = "PTO engaged high",
     stones = "stones", starter = "starter held", pto_angle = "PTO shaft angle", windup = "lock or 4WD on hard ground",
     filter = "clogged filter", trailer = "trailer too heavy", aftermarket_part = "aftermarket part fitted", used_part = "used part fitted",
+    oil = "unsuited engine oil",
 }
 
 local function readFaults(vehicle, spec, reading)
@@ -646,25 +649,32 @@ local function readMachine(vehicle, spec, reading)
     end
     readOilRows(spec, rows)
 
-    local levels = {}
-    if RMS_Fluids.hasCircuit(vehicle, "engineOil") then table.insert(levels, "oil " .. pct(spec.engineOilLevel)) end
-    if spec.systems.cooling.enabled ~= false then table.insert(levels, "coolant " .. pct(spec.coolantLevel)) end
-    if spec.systems.transmission.enabled ~= false then table.insert(levels, "transmission " .. pct(spec.transmissionOilLevel)) end
-    if spec.systems.hydraulics.enabled ~= false then table.insert(levels, "hydraulic " .. pct(RMS_Fluids.getLevel(vehicle, "hydraulicFluid"))) end
-    table.insert(rows, {"Levels", table.concat(levels, SEP)})
-    if vehicle.rootNode ~= nil then
-        local lean = RMS_Fluids.getSumpLean(vehicle)
-        local pickups = { string.format("oil leans %.0f°", math.deg(math.atan(lean))) }
-        for _, pickup in ipairs({ {"oil", "engineOil"}, {"transmission", "transmissionOil"}, {"hydraulic", "hydraulicFluid"} }) do
-            local partId = RMS_Fluids.PICKUP_PARTS[pickup[2]]
-            if RMS_Fluids.hasCircuit(vehicle, pickup[2]) and RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
-                local margin = math.deg(math.atan(math.max(RMS_Fluids.getPickupMargin(RMS_Fluids.getLevel(vehicle, pickup[2])), 0)))
-                table.insert(pickups, string.format("%s %s, air %.0f s", pickup[1],
-                    spec.pickupUncovered[pickup[2]] and "DRAWS AIR" or string.format("covered to %.0f°", margin), spec.pickupAirTime[partId] or 0))
-            end
+    -- each pump: the lean it stays covered to, the air it drew (server)
+    local function pickup(circuit)
+        local partId = RMS_Fluids.PICKUP_PARTS[circuit]
+        if not RMS_Fluids.hasCircuit(vehicle, circuit) or not RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
+            return ""
         end
-        table.insert(rows, {"Pickups", table.concat(pickups, SEP)})
+        local margin = math.deg(math.atan(math.max(RMS_Fluids.getPickupMargin(RMS_Fluids.getLevel(vehicle, circuit)), 0)))
+        local air = vehicle.isServer and (spec.pickupAirTime[partId] or 0) > 0 and string.format(", air %.0f s", spec.pickupAirTime[partId]) or ""
+        return (spec.pickupUncovered[circuit] and " DRAWS AIR" or string.format(" covered to %.0f°", margin)) .. air
     end
+    local levels = {}
+    if RMS_Fluids.hasCircuit(vehicle, "engineOil") then
+        local suited = RMS_Fluids.getNeedsLowAshOil(vehicle) and ", " .. pct(spec.engineOilSuitedShare or 1) .. " suited" or ""
+        table.insert(levels, "oil " .. pct(spec.engineOilLevel) .. pickup("engineOil") .. suited)
+    end
+    if spec.systems.cooling.enabled ~= false then table.insert(levels, "coolant " .. pct(spec.coolantLevel)) end
+    if spec.systems.transmission.enabled ~= false then
+        table.insert(levels, "transmission " .. pct(spec.transmissionOilLevel) .. pickup("transmissionOil"))
+    end
+    if spec.systems.hydraulics.enabled ~= false then
+        table.insert(levels, "hydraulic " .. pct(RMS_Fluids.getLevel(vehicle, "hydraulicFluid")) .. pickup("hydraulicFluid"))
+    end
+    if vehicle.isServer then
+        table.insert(levels, string.format("oil leans %.0f°", math.deg(math.atan(RMS_Fluids.getSumpLean(vehicle)))))
+    end
+    table.insert(rows, {"Levels", table.concat(levels, SEP)})
     local isRunning = vehicle:getIsMotorStarted()
     local stopped = spec.isElectricVehicle and "motor off" or "engine stopped"
     local losses = {}
@@ -703,7 +713,8 @@ local function readMachine(vehicle, spec, reading)
         table.insert(rows, smokeRow)
         table.insert(rows, gasRow)
         if spec.hasParticulateFilter then
-            table.insert(rows, {"DPF", string.format("soot %s  ·  %s  ·  engine %s", pct(spec.fuelState.particulateFilterLevel),
+            table.insert(rows, {"DPF", string.format("soot %s  ·  ash %s  ·  %s  ·  engine %s", pct(spec.fuelState.particulateFilterLevel),
+                pct(spec.fuelState.particulateFilterAsh or 0),
                 spec.fuelState.isParticulateFilterRegenerating and "regenerating" or "not regenerating",
                 spec.isEngineDerated and "derated" or "not derated")})
         end
@@ -836,8 +847,9 @@ local function readMachine(vehicle, spec, reading)
     end
 
     if vehicle:getIsAIActive() then
-        table.insert(rows, {"Worker", string.format("overload %.2f  ·  speed limit %s", spec.aiWorkerOverload,
-            spec.aiWorkerSpeedLimit ~= nil and string.format("%.1f km/h", spec.aiWorkerSpeedLimit) or "none")})
+        table.insert(rows, {"Worker", string.format("overload %.2f  ·  speed limit %s  ·  throttle without moving %.0f of %d s",
+            spec.aiWorkerOverload, spec.aiWorkerSpeedLimit ~= nil and string.format("%.1f km/h", spec.aiWorkerSpeedLimit) or "none",
+            (spec.aiWorkerBlockedMs or 0) / 1000, RMS_Config.CORE.AI_WORKER.BLOCKED_SECONDS)})
     end
     local addon = vehicle.spec_CVTaddon
     if RMS_Utils.hasCVTAddon(vehicle) and addon ~= nil then

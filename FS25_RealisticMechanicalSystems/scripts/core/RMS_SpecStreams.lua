@@ -112,7 +112,12 @@ local function writeFieldcareState(self, spec, streamId)
         streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCapacities[circuit], 0, 0))
         streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fluidCompatibility[circuit], 1, 0, 1))
     end
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilSuitedShare, 1, 0, 1))
     streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
+    -- the server alone follows the oil: lamp, whine and wear agree
+    for _, circuit in ipairs(RMS_Fluids.PICKUP_CIRCUITS) do
+        streamWriteBool(streamId, spec.pickupUncovered[circuit] == true)
+    end
 end
 
 local function readFieldcareState(self, spec, streamId)
@@ -134,7 +139,11 @@ local function readFieldcareState(self, spec, streamId)
         spec.fluidCapacities[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
         spec.fluidCompatibility[circuit] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
     end
+    spec.engineOilSuitedShare = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1, 0, 1)
     spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(streamReadString(streamId))
+    for _, circuit in ipairs(RMS_Fluids.PICKUP_CIRCUITS) do
+        spec.pickupUncovered[circuit] = streamReadBool(streamId)
+    end
     spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
     RMS_Fluids.updateEffects(self)
 end
@@ -268,6 +277,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterAsh, 0, 0, 1))
     streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
     streamWriteBool(streamId, spec.isEngineDerated == true)
 
@@ -374,6 +384,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     -- [Group 12] Exhaust deposits
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
     spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+    spec.fuelState.particulateFilterAsh = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
     spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
     spec.isEngineDerated = streamReadBool(streamId)
 
@@ -429,6 +440,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.wheelSlipIntensity, 0, 0, 1))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterAsh, 0, 0, 1))
             streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
             streamWriteBool(streamId, spec.isEngineDerated == true)
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.liftedMass, 0, 0))
@@ -542,6 +554,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.wheelSlipIntensity = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
             spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
             spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+            spec.fuelState.particulateFilterAsh = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
             spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
             spec.isEngineDerated = streamReadBool(streamId)
             spec.liftedMass = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)

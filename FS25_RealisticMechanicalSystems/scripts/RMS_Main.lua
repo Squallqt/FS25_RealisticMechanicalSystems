@@ -122,6 +122,17 @@ end
 
 RMS_Main.loadBreakdownTexts()
 
+---Adds the store categories of modDesc, read by the game for DLCs only
+function RMS_Main.loadStoreCategories()
+    local xmlFile = XMLFile.load("rmsModDesc", modDirectory .. "modDesc.xml")
+    xmlFile:iterate("modDesc.storeCategories.storeCategory", function(_, key)
+        g_storeManager:loadCategoryFromXML(xmlFile, key, modDirectory, modName, true)
+    end)
+    xmlFile:delete()
+end
+
+RMS_Main.loadStoreCategories()
+
 source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
 source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
@@ -946,8 +957,9 @@ function RMS_Main:loadMap()
         g_messageCenter:subscribe(MessageType.PERIOD_CHANGED, self.onPeriodChanged, self)
         g_messageCenter:subscribe(MessageType.DAY_CHANGED, self.onDayChanged, self)
     end
-    if RHM_Api ~= nil and RHM_Api.registerWearProvider ~= nil then
-        RHM_Api.registerWearProvider(RealisticMechanicalSystems.HARVEST_WEAR_PROVIDER)
+    local harvestApi = RMS_Utils.getHarvestModApi()
+    if harvestApi ~= nil and harvestApi.registerWearProvider ~= nil then
+        harvestApi.registerWearProvider(RealisticMechanicalSystems.HARVEST_WEAR_PROVIDER)
     end
 
     local soundsXmlFile = loadXMLFile("rmsSounds2D", Utils.getFilename("sounds/rms_sounds.xml", modDirectory))

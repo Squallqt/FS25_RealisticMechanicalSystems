@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Facilidad de mantenimiento baja"/>
         <text name="rms_shop_launch_year" text="Modelo lanzado en %d"/>
         <text name="rms_shop_launch_year_unknown" text="Año de lanzamiento desconocido"/>
+        <text name="rms_shop_category_maintenance" text="Mantenimiento"/>
         <text name="rms_owner_care_careful" text="Mantenimiento cuidadoso"/>
         <text name="rms_owner_care_regular" text="Mantenimiento regular"/>
         <text name="rms_owner_care_neglected" text="Mantenimiento descuidado"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="ángulo del cardán excesivo"/>
         <text name="rms_warranty_windup" text="bloqueo o 4x4 en suelo duro"/>
         <text name="rms_warranty_filter" text="filtro obstruido"/>
+        <text name="rms_warranty_oil" text="aceite de motor inadecuado"/>
         <text name="rms_warranty_trailer" text="remolque demasiado pesado"/>
         <text name="rms_warranty_aftermarket_part" text="pieza de posventa"/>
         <text name="rms_warranty_used_part" text="pieza usada"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Cables de arranque desconectados de %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Bidón de fluido"/>
-        <text name="rms_fluid_function_engine_oil" text="Aceite de motor para la reposición manual"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Aceite de motor, para todas las máquinas, también con AdBlue y filtro de partículas"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Aceite de motor, para máquinas sin AdBlue ni filtro de partículas"/>
         <text name="rms_fluid_function_utto" text="Aceite de transmisión e hidráulico para la reposición manual"/>
         <text name="rms_fluid_function_coolant" text="Refrigerante para la reposición manual"/>
         <text name="rms_fluid_pour_action" text="Verter: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Este producto no está previsto para este circuito. Lo contaminará y puede llegar a triplicar el desgaste de la transmisión y aumentar su calentamiento. Solo un cambio completo del fluido eliminará la contaminación. ¿Continuar?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Este producto no está previsto para este circuito. Lo contaminará y puede llegar a triplicar el desgaste de la hidráulica, aumentar su calentamiento y ralentizarla. Solo un cambio completo del fluido eliminará la contaminación. ¿Continuar?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Este producto no está previsto para este circuito. Lo contaminará y puede llegar a triplicar el desgaste de la transmisión y de la hidráulica, aumentar su calentamiento y ralentizar la hidráulica. Solo un cambio completo del fluido eliminará la contaminación. ¿Continuar?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Aceite de motor inadecuado"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Este motor usa AdBlue o tiene filtro de partículas: su manual exige un aceite hecho para ellos. Con este aceite, su cambio de aceite llegará hasta el doble de pronto. Además, un filtro de partículas se llena de ceniza 1,5 veces más rápido. ¿Continuar?"/>
         <text name="rms_fluid_error_no_circuit" text="Este vehículo no necesita una reposición de fluido"/>
         <text name="rms_fluid_error_motor_running" text="Detén el motor antes de transferir fluido"/>
         <text name="rms_fluid_error_vehicle_moving" text="El vehículo debe estar detenido"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluidos incluidos en el alquiler"/>
         <text name="rms_fluid_stock_required" text="Tomado de los envases de la zona del taller"/>
         <text name="rms_fluid_stock_missing" text="Faltan %s en la zona del taller"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Faltan %s de aceite adecuado para este motor en la zona del taller"/>
         <text name="rms_fluid_refill_work_order" text="Puesta a nivel de fluidos"/>
         <text name="rms_fluid_refill_dealer_supply" text="Suministro incluido en el presupuesto"/>
         <text name="rms_fluid_mode_top_up" text="reposición"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Devolución de la fianza"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nivel de fluido bajo"/>
-        <text name="rms_tutorial_fluid_level_message" text="Uno de los fluidos de esta máquina ha bajado por debajo de la marca de su indicador.&#10;&#10;El aceite de motor se consume con las horas, y un motor cansado bebe mucho más. El refrigerante, el aceite de transmisión y el aceite hidráulico solo bajan por una fuga.&#10;&#10;Por debajo de la marca la máquina solo pide una reposición y sigue trabajando con normalidad. Cuanto más baja el nivel, más fácilmente la bomba aspira aire en pendientes, curvas y frenadas: el testigo de presión de aceite parpadea y, en la transmisión o el sistema hidráulico, la bomba silba y los movimientos hidráulicos se vuelven más lentos. Cada minuto así daña los cojinetes de cigüeñal o la bomba: detente y repón el nivel. Una máquina falta de refrigerante, de aceite de transmisión o de aceite hidráulico también se calienta.&#10;&#10;Compra en la tienda un envase de producto compatible, llévalo hasta la máquina y repón el nivel. Todos los productos destinados a ese circuito tienen el mismo efecto; un fluido incorrecto solo contamina ese circuito. En el concesionario se suministran y se cobran los litros necesarios."/>
+        <text name="rms_tutorial_fluid_level_message" text="Uno de los fluidos de esta máquina ha bajado por debajo de la marca de su indicador.&#10;&#10;El aceite de motor se consume con las horas, y un motor cansado bebe mucho más. El refrigerante, el aceite de transmisión y el aceite hidráulico solo bajan por una fuga.&#10;&#10;Por debajo de la marca la máquina solo pide una reposición y sigue trabajando con normalidad. Cuanto más baja el nivel, más fácilmente la bomba aspira aire en pendientes: el testigo de presión de aceite parpadea y, en la transmisión o el sistema hidráulico, la bomba silba y los movimientos hidráulicos se vuelven más lentos. Cada minuto así daña los cojinetes de cigüeñal o la bomba: detente y repón el nivel. Una máquina falta de refrigerante, de aceite de transmisión o de aceite hidráulico también se calienta.&#10;&#10;Compra en la tienda un envase de producto compatible, llévalo hasta la máquina y repón el nivel. Todos los productos destinados a ese circuito tienen el mismo efecto; un fluido incorrecto solo contamina ese circuito. En el concesionario se suministran y se cobran los litros necesarios."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bienvenido a Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Desactivar consejos"/>
         <text name="rms_tutorial_welcome_enable_button" text="Activar consejos"/>

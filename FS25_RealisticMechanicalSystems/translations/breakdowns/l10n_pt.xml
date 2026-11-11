@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Falha crítica do filtro de partículas. Totalmente obstruído, já não deixa passar os gases: só a substituição devolve a potência ao motor."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturação do filtro de partículas. As regenerações não foram concluídas: o regime do motor fica limitado até uma delas ser bem-sucedida."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturação crítica do filtro de partículas. Demasiado carregado para se regenerar sozinho, exige uma regeneração de serviço na oficina; o regime continua limitado."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtro de partículas cheio de cinzas. As regenerações queimam a fuligem, não as cinzas que o óleo do motor deixa: o filtro tem de ser desmontado e limpo na oficina; o regime do motor está limitado."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Falha ligeira da embraiagem da ventoinha. A ventoinha reage menos eficientemente e o arrefecimento é ligeiramente degradado."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Falha moderada da embraiagem da ventoinha. O acionamento da ventoinha é irregular e a eficiência do arrefecimento diminui notavelmente."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Falha grave da embraiagem da ventoinha. A ventoinha já não fornece um caudal de ar suficiente e o motor sobreaquece com mais facilidade."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Colheita impossível: um órgão de colheita está partido"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Encravamento: a colheita parou"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Picador partido: a palha cai em fileira"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Picador partido: esta cultura já não pode ser colhida"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Picador partido: a palha cai sem ser picada"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Desgaste inicial das correias dos órgãos. Patinam um pouco em carga."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Desgaste moderado das correias dos órgãos. Um órgão abranda em carga e o alarme de regime por vezes para a colheita."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Desgaste grave das correias dos órgãos. O débito baixa e as paragens repetem-se."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Desgaste inicial do picador. A palha é cortada menos curta e o picador pede um pouco mais de potência."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Desgaste moderado do picador. O picador vibra e pede mais potência."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Desgaste grave do picador. O rotor está desequilibrado e consome muita potência."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Falha crítica do picador. Uma faca partiu-se: o picador está parado e a palha cai em fileira."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Falha crítica do picador. Uma faca partiu-se: o picador está parado e a palha cai sem ser picada, em fileira quando a cultura a forma."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Desgaste inicial dos rolos de alimentação. Agarram pior a cultura: a alimentação torna-se irregular."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Desgaste moderado dos rolos de alimentação. O comprimento de corte torna-se irregular e surgem encravamentos."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Desgaste grave dos rolos de alimentação. O débito baixa e os encravamentos repetem-se."/>

@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Fallo crítico del filtro de partículas. Totalmente obstruido, ya no deja pasar los gases: solo su sustitución devuelve la potencia al motor."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturación del filtro de partículas. Las regeneraciones no se han completado: el régimen del motor queda limitado hasta que una tenga éxito."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturación crítica del filtro de partículas. Demasiado cargado para regenerarse solo, necesita una regeneración de servicio en el taller; el régimen sigue limitado."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtro de partículas lleno de ceniza. Las regeneraciones queman el hollín, no la ceniza que deja el aceite de motor: hay que desmontar y limpiar el filtro en el taller; el régimen del motor está limitado."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Fallo leve del embrague del ventilador. El ventilador reacciona con menos eficacia y la refrigeración se degrada ligeramente."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Fallo moderado del embrague del ventilador. El acoplamiento del ventilador es irregular y la eficiencia de refrigeración baja notablemente."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Fallo severo del embrague del ventilador. El ventilador ya no aporta un caudal de aire suficiente y el motor se sobrecalienta con más facilidad."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Cosecha imposible: un órgano de cosecha está roto"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Atasco: la cosecha se ha detenido"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Picador roto: la paja cae en hilera"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Picador roto: este cultivo ya no se puede cosechar"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Picador roto: la paja cae sin picar"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Desgaste inicial de las correas de los órganos. Patinan un poco con carga."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Desgaste moderado de las correas de los órganos. Un órgano se ralentiza con carga y la alarma de régimen a veces detiene la cosecha."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Desgaste severo de las correas de los órganos. El rendimiento baja y las paradas se repiten."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Desgaste inicial del picador. La paja se pica menos corta y el picador pide algo más de potencia."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Desgaste moderado del picador. El picador vibra y pide más potencia."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Desgaste severo del picador. El rotor está desequilibrado y consume mucha potencia."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Fallo crítico del picador. Una cuchilla se ha roto: el picador está parado y la paja cae en hilera."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Fallo crítico del picador. Una cuchilla se ha roto: el picador está parado y la paja cae sin picar, en hilera cuando el cultivo la forma."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Desgaste inicial de los rodillos de alimentación. Agarran peor el cultivo: la alimentación se vuelve irregular."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Desgaste moderado de los rodillos de alimentación. La longitud de corte se vuelve desigual y aparecen atascos."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Desgaste severo de los rodillos de alimentación. El rendimiento baja y los atascos se repiten."/>

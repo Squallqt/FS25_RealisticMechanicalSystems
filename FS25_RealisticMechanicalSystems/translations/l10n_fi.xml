@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Huollon helppous pieni"/>
         <text name="rms_shop_launch_year" text="Malli lanseerattu %d"/>
         <text name="rms_shop_launch_year_unknown" text="Lanseerausvuosi tuntematon"/>
+        <text name="rms_shop_category_maintenance" text="Huolto"/>
         <text name="rms_owner_care_careful" text="Huolellinen huolto"/>
         <text name="rms_owner_care_regular" text="Säännöllinen huolto"/>
         <text name="rms_owner_care_neglected" text="Laiminlyöty huolto"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="nivelakselin kulma liian suuri"/>
         <text name="rms_warranty_windup" text="lukko tai 4WD kovalla alustalla"/>
         <text name="rms_warranty_filter" text="tukkeutunut suodatin"/>
+        <text name="rms_warranty_oil" text="sopimaton moottoriöljy"/>
         <text name="rms_warranty_trailer" text="liian raskas perävaunu"/>
         <text name="rms_warranty_aftermarket_part" text="tarvikeosa"/>
         <text name="rms_warranty_used_part" text="käytetty osa"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Käynnistyskaapelit irrotettu kohteesta %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Nestekanisteri"/>
-        <text name="rms_fluid_function_engine_oil" text="Moottoriöljy käsin tehtävään täydennykseen"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Moottoriöljy, kaikkiin koneisiin, myös AdBlue- ja hiukkassuodatinkoneisiin"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Moottoriöljy, koneisiin ilman AdBluea tai hiukkassuodatinta"/>
         <text name="rms_fluid_function_utto" text="Vaihteisto- ja hydrauliöljy käsin tehtävään täydennykseen"/>
         <text name="rms_fluid_function_coolant" text="Jäähdytysneste käsin tehtävään täydennykseen"/>
         <text name="rms_fluid_pour_action" text="Lisää: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa vaihteiston kulumisen ja lisätä sen lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa hydrauliikan kulumisen, lisätä sen lämpenemistä ja hidastaa sitä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa vaihteiston ja hydrauliikan kulumisen, lisätä niiden lämpenemistä ja hidastaa hydrauliikkaa. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Sopimaton moottoriöljy"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Tässä moottorissa on AdBlue tai hiukkassuodatin: sen ohjekirja vaatii niille tehdyn öljyn. Tällä öljyllä öljynvaihto tulee jopa kaksi kertaa aikaisemmin. Hiukkassuodatin täyttyy lisäksi tuhkasta 1,5 kertaa nopeammin. Jatketaanko?"/>
         <text name="rms_fluid_error_no_circuit" text="Tämä ajoneuvo ei tarvitse nesteen täydennystä"/>
         <text name="rms_fluid_error_motor_running" text="Sammuta moottori ennen nesteen siirtoa"/>
         <text name="rms_fluid_error_vehicle_moving" text="Ajoneuvon on oltava paikallaan"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Nesteet sisältyvät vuokraan"/>
         <text name="rms_fluid_stock_required" text="Otetaan korjaamoalueen säiliöistä"/>
         <text name="rms_fluid_stock_missing" text="Korjaamoalueelta puuttuu %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Korjaamoalueelta puuttuu %s tähän moottoriin sopivaa öljyä"/>
         <text name="rms_fluid_refill_work_order" text="Nesteiden täydennys"/>
         <text name="rms_fluid_refill_dealer_supply" text="Nesteet sisältyvät kustannusarvioon"/>
         <text name="rms_fluid_mode_top_up" text="täydennys"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vakuuden palautus"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nestetaso alhaalla"/>
-        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Mitä alemmas taso laskee, sitä helpommin pumppu imee ilmaa rinteissä, kaarteissa ja jarrutettaessa: öljynpaineen varoitusvalo vilkkuu, ja vaihteiston tai hydrauliikan puolella pumppu ulisee ja hydrauliset liikkeet hidastuvat. Jokainen näin kulunut minuutti vaurioittaa kampiakselin laakereita tai pumppua: pysähdy ja täydennä taso. Kone, jolta puuttuu jäähdytysnestettä, vaihteistoöljyä tai hydrauliöljyä, myös kuumenee.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, vie se koneen luo ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan."/>
+        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Mitä alemmas taso laskee, sitä helpommin pumppu imee ilmaa rinteissä: öljynpaineen varoitusvalo vilkkuu, ja vaihteiston tai hydrauliikan puolella pumppu ulisee ja hydrauliset liikkeet hidastuvat. Jokainen näin kulunut minuutti vaurioittaa kampiakselin laakereita tai pumppua: pysähdy ja täydennä taso. Kone, jolta puuttuu jäähdytysnestettä, vaihteistoöljyä tai hydrauliöljyä, myös kuumenee.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, vie se koneen luo ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Tervetuloa Realistic Mechanical Systems -modiin"/>
         <text name="rms_tutorial_welcome_disable_button" text="Poista vihjeet käytöstä"/>
         <text name="rms_tutorial_welcome_enable_button" text="Ota vihjeet käyttöön"/>

@@ -7,7 +7,7 @@
         <functions><function>$l10n_rms_fluid_function_utto</function></functions>
         <image>objects/fluids/products/motulTrh97/store_motulTrh97.png</image>
         <price>31</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>MOTUL</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Låg underhållsvänlighet"/>
         <text name="rms_shop_launch_year" text="Modellen lanserad %d"/>
         <text name="rms_shop_launch_year_unknown" text="Lanseringsår okänt"/>
+        <text name="rms_shop_category_maintenance" text="Underhåll"/>
         <text name="rms_owner_care_careful" text="Noggrant underhåll"/>
         <text name="rms_owner_care_regular" text="Regelbundet underhåll"/>
         <text name="rms_owner_care_neglected" text="Försummat underhåll"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="för stor kardanvinkel"/>
         <text name="rms_warranty_windup" text="spärr eller 4WD på fast mark"/>
         <text name="rms_warranty_filter" text="igensatt filter"/>
+        <text name="rms_warranty_oil" text="olämplig motorolja"/>
         <text name="rms_warranty_trailer" text="för tungt släp"/>
         <text name="rms_warranty_aftermarket_part" text="ooriginal del"/>
         <text name="rms_warranty_used_part" text="begagnad del"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startkablarna kopplades ur från %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Vätskedunk"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolja för manuell påfyllning"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolja, för alla maskiner, även med AdBlue och partikelfilter"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolja, för maskiner utan AdBlue och partikelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmissions- och hydraulolja för manuell påfyllning"/>
         <text name="rms_fluid_function_coolant" text="Kylvätska för manuell påfyllning"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på transmissionen och göra den varmare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på hydrauliken, göra den varmare och långsammare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på transmissionen och hydrauliken, göra dem varmare och göra hydrauliken långsammare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Olämplig motorolja"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Den här motorn använder AdBlue eller har partikelfilter: instruktionsboken kräver en olja som är gjord för dem. Med den här oljan kommer oljebytet upp till dubbelt så tidigt. Ett partikelfilter fylls dessutom med aska 1,5 gånger så snabbt. Fortsätta?"/>
         <text name="rms_fluid_error_no_circuit" text="Det här fordonet behöver ingen påfyllning av vätska"/>
         <text name="rms_fluid_error_motor_running" text="Stäng av motorn innan du överför vätska"/>
         <text name="rms_fluid_error_vehicle_moving" text="Fordonet måste stå stilla"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Vätskor ingår i hyran"/>
         <text name="rms_fluid_stock_required" text="Tas från dunkarna inom verkstadsområdet"/>
         <text name="rms_fluid_stock_missing" text="Det saknas %s inom verkstadsområdet"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Det saknas %s olja som passar den här motorn inom verkstadsområdet"/>
         <text name="rms_fluid_refill_work_order" text="Uppfyllning av vätskor"/>
         <text name="rms_fluid_refill_dealer_supply" text="Leverans ingår i prisförslaget"/>
         <text name="rms_fluid_mode_top_up" text="påfyllning"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Återbetald deposition"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Låg vätskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av vätskorna på den här maskinen har sjunkit under märket på sin mätare.&#10;&#10;Motorolja förbrukas med timmarna, och en sliten motor dricker långt mer av den. Kylvätska, transmissionsolja och hydraulolja sjunker bara vid ett läckage.&#10;&#10;Under märket ber maskinen bara om en påfyllning och arbetar fortfarande normalt. Ju lägre nivån blir, desto lättare suger pumpen luft i backar, i kurvor och vid inbromsning: oljetryckslampan blinkar, och på växellåds- eller hydraulsidan tjuter pumpen och de hydrauliska rörelserna blir långsammare. Varje minut på det sättet skadar vevaxellagren eller pumpen: stanna och fyll på nivån. En maskin som saknar kylvätska, transmissionsolja eller hydraulolja blir också varm.&#10;&#10;Köp en dunk med en lämplig produkt i butiken, ta med den till maskinen och fyll på nivån. Alla produkter för den kretsen har samma verkan; en felaktig vätska förorenar bara den kretsen. Hos återförsäljaren levereras och faktureras de liter som behövs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av vätskorna på den här maskinen har sjunkit under märket på sin mätare.&#10;&#10;Motorolja förbrukas med timmarna, och en sliten motor dricker långt mer av den. Kylvätska, transmissionsolja och hydraulolja sjunker bara vid ett läckage.&#10;&#10;Under märket ber maskinen bara om en påfyllning och arbetar fortfarande normalt. Ju lägre nivån blir, desto lättare suger pumpen luft i backar: oljetryckslampan blinkar, och på växellåds- eller hydraulsidan tjuter pumpen och de hydrauliska rörelserna blir långsammare. Varje minut på det sättet skadar vevaxellagren eller pumpen: stanna och fyll på nivån. En maskin som saknar kylvätska, transmissionsolja eller hydraulolja blir också varm.&#10;&#10;Köp en dunk med en lämplig produkt i butiken, ta med den till maskinen och fyll på nivån. Alla produkter för den kretsen har samma verkan; en felaktig vätska förorenar bara den kretsen. Hos återförsäljaren levereras och faktureras de liter som behövs."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Välkommen till Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Stäng av tipsen"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsen"/>

@@ -7,7 +7,7 @@
         <functions><function>$l10n_rms_fluid_function_coolant</function></functions>
         <image>objects/fluids/products/fuchsFricofinLd50/store_fuchsFricofinLd50.png</image>
         <price>22</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>FUCHS</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

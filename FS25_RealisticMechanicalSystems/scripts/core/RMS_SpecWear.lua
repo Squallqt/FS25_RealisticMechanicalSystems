@@ -138,8 +138,9 @@ function RealisticMechanicalSystems:updateServiceLevel(dt)
     local hourlyWear = self:getIsMotorStarted() and RMS_Config.CORE.BASE_SERVICE_WEAR * (1 + spec.extraServiceWear) or 0
     for _, clock in ipairs(self:getServiceClocks()) do
         if clock.intervalFactor ~= nil then
+            local oilShare = clock.key == "engine" and RMS_Fluids.getEngineOilIntervalShare(self) or 1
             spec[clock.levelKey] = math.max((spec[clock.levelKey] or spec.baseServiceLevel)
-                - hourlyWear / clock.intervalFactor / 3600000 * dt, 0)
+                - hourlyWear / clock.intervalFactor / oilShare / 3600000 * dt, 0)
         end
     end
 end
@@ -601,10 +602,13 @@ end
 local function getAttachedCutterData(spec_combine, fruitTypeIndex)
     local stone, isPickup, conversion = 1, false, nil
     for cutter in pairs(spec_combine.attachedCutters) do
-        if cutter.getCutterStoneMultiplier ~= nil then
+        local spec_cutter = cutter.spec_cutter
+        -- stones only reach a header at the ground, cutting or picking up
+        local isAtGround = spec_cutter == nil or spec_cutter.useWindrow == true
+            or (spec_cutter.currentCutHeight or 0) <= RMS_Config.CORE.HARVEST_FACTOR_DATA.STONE_CUT_HEIGHT
+        if cutter.getCutterStoneMultiplier ~= nil and isAtGround then
             stone = math.max(stone, cutter:getCutterStoneMultiplier())
         end
-        local spec_cutter = cutter.spec_cutter
         if spec_cutter ~= nil then
             isPickup = isPickup or spec_cutter.useWindrow == true
             conversion = conversion or spec_cutter.fruitTypeConverters[fruitTypeIndex]
@@ -613,56 +617,105 @@ local function getAttachedCutterData(spec_combine, fruitTypeIndex)
     return stone, isPickup, conversion
 end
 
-local function measureHarvestWork(vehicle, state, dt)
+-- the crop counted since the time of the last measure
+local function getHarvestInput(spec)
+    spec.harvestInput = spec.harvestInput or { liters = 0, time = g_currentMission.time }
+    return spec.harvestInput
+end
+
+---Counts the crop the cutters hand over, field bonuses included
+function RealisticMechanicalSystems.addCutterArea(self, superFunc, area, liters, inputFruitType, outputFillType, strawRatio, ...)
+    local applied = superFunc(self, area, liters, inputFruitType, outputFillType, strawRatio, ...)
+    local spec = self.spec_RealisticMechanicalSystems
+    if spec ~= nil and applied > 0 and liters > 0 then
+        local input = getHarvestInput(spec)
+        input.liters = input.liters + liters
+        -- a pickup hands over a windrow, its crop read from the grain
+        input.fruitTypeIndex = inputFruitType or g_fruitTypeManager:getFruitTypeIndexByFillTypeIndex(outputFillType)
+        input.fillTypeIndex, input.strawRatio = outputFillType, math.clamp(tonumber(strawRatio) or 1, 0, 1)
+    end
+    return applied
+end
+
+-- the straw of the crop as the combine buffers it, in t per l of grain
+local function getStrawPerGrainLiter(fruitDesc, conversion)
+    if fruitDesc.windrowLiterPerSqm == nil or fruitDesc.literPerSqm <= 0 then
+        return 0
+    end
+    -- a crop without windrow drops straw all the same
+    local windrowFillType = g_fruitTypeManager:getWindrowFillTypeIndexByFruitTypeIndex(fruitDesc.index) or FillType.STRAW
+    local cropPerLiter = 1 / (conversion ~= nil and conversion.conversionFactor or 1)
+    return cropPerLiter / fruitDesc.literPerSqm * fruitDesc.windrowLiterPerSqm
+        * g_fillTypeManager:getFillTypeByIndex(windrowFillType).massPerLiter
+end
+
+-- a flow against the flow of full work, a model being a + c * t/h
+local function getFullWorkShare(flow, model, engineKw)
+    local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
+    return flow * model.c / math.max(C.ROTARY_SHARE * engineKw - model.a, 1)
+end
+
+-- the crop taken in since the last measure, over the time really gone by
+local function measureHarvestWork(vehicle, state, input, elapsedMs)
     local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
     local spec_combine = vehicle.spec_combine
     local engineKw = math.max(tonumber(vehicle:getMotor().peakMotorPower) or 0, 1)
-    local hectares = spec_combine.workedHectars
-    local haPerHour = state.hectares ~= nil and math.max(hectares - state.hectares, 0) / (dt / 3600000) or 0
-    state.hectares = hectares
+    local liters = input.liters
+    input.liters = 0
 
-    local fruitTypeIndex = spec_combine.lastValidInputFruitType
+    local fruitTypeIndex = input.fruitTypeIndex or spec_combine.lastValidInputFruitType
     local fruitDesc = g_fruitTypeManager:getFruitTypeByIndex(fruitTypeIndex)
     local stone, isPickup, conversion = getAttachedCutterData(spec_combine, fruitTypeIndex)
     state.stone = stone - 1
     state.crop = fruitDesc ~= nil and fruitDesc.name or nil
     state.isRice = state.crop ~= nil and string.find(state.crop, "RICE", 1, true) ~= nil
 
+    local hours = elapsedMs / 3600000
+    local strawRatio = input.strawRatio or 1
     local grainTph, strawTph = 0, 0
-    if fruitDesc ~= nil and fruitDesc.fillType ~= nil then
-        local fillType = conversion ~= nil and g_fillTypeManager:getFillTypeByIndex(conversion.fillTypeIndex) or fruitDesc.fillType
-        -- from l/m2 to l/ha
-        grainTph = haPerHour * fruitDesc.literPerSqm * 10000 * (conversion ~= nil and conversion.conversionFactor or 1) * fillType.massPerLiter
-        if fruitDesc.hasWindrow and fruitDesc.windrowLiterPerSqm ~= nil then
-            strawTph = haPerHour * fruitDesc.windrowLiterPerSqm * 10000 * fruitDesc.windrowFillType.massPerLiter
-        end
+    local fillType = g_fillTypeManager:getFillTypeByIndex(input.fillTypeIndex)
+    if liters > 0 and fruitDesc ~= nil and fillType ~= nil then
+        grainTph = liters * fillType.massPerLiter / hours
+        -- the share of straw the header takes in with the grain
+        strawTph = liters * getStrawPerGrainLiter(fruitDesc, conversion) * strawRatio / hours
     end
 
     local isChopping = spec_combine.chopper.isAvailable and not spec_combine.isSwathActive
-    local rotaryKw, chopperKw
+        and vehicle.spec_RealisticMechanicalSystems.activeEffects.CHOPPER_FAILURE == nil
+    local rotaryKw, chopperKw = nil, 0
+    state.grain = 0
     if state.kind == "grain" then
-        local model = fruitDesc ~= nil and fruitDesc.hasWindrow and C.SMALL_GRAIN or C.MAIZE
-        rotaryKw = model.a + model.c * (model == C.SMALL_GRAIN and strawTph or grainTph)
-        chopperKw = isChopping and fruitDesc ~= nil and fruitDesc.hasWindrow and C.CHOPPER_ENERGY * grainTph or 0
+        -- the whole plant goes through on its straw, ears alone on their grain
+        local isWholePlant = fruitDesc ~= nil and fruitDesc.windrowLiterPerSqm ~= nil and strawRatio > C.WHOLE_PLANT_STRAW_RATIO
+        local model = isWholePlant and C.SMALL_GRAIN or C.MAIZE
+        local flow = isWholePlant and strawTph or grainTph
+        rotaryKw = model.a + model.c * flow
+        -- the elevators carry the grain of full work in this crop
+        state.grain = getFullWorkShare(flow, model, engineKw)
+        chopperKw = isChopping and C.CHOPPER_ENERGY * strawTph or 0
     elseif state.kind == "forage" and not isPickup then
-        rotaryKw = C.FORAGE.a + C.FORAGE.c * grainTph * C.FORAGE_DRY_MATTER
+        local flow = grainTph * C.FORAGE_DRY_MATTER
+        rotaryKw = C.FORAGE.a + C.FORAGE.c * flow
+        state.grain = getFullWorkShare(flow, C.FORAGE, engineKw)
     end
 
     local effort = rotaryKw ~= nil and rotaryKw / (C.ROTARY_SHARE * engineKw) or spec_combine.numAttachedCutters > 0 and vehicle:getCombineLoadPercentage() or 0
-    local chopper = chopperKw ~= nil and chopperKw / (C.CHOPPER_SHARE * engineKw) or 0
+    local chopper = chopperKw / (C.CHOPPER_SHARE * engineKw)
     state.source, state.isWet = "rms", vehicle:getIsThreshingDuringRain()
 
-    if RHM_Api ~= nil and RHM_Api.isActivelyHarvesting(vehicle) then
-        local power = RHM_Api.getPowerBreakdown(vehicle)
+    local api = RMS_Utils.getHarvestModApi()
+    if api ~= nil and api.isActivelyHarvesting(vehicle) then
+        local power = api.getPowerBreakdown(vehicle)
         local processHp = power.pProcess + power.pChopper + power.pSoil
         -- a provider that stops computing keeps its last powers unchanged
-        if power.effectiveHp > 0 and processHp > 0 and (RHM_Api.getEngineLoad(vehicle) > 0 or processHp ~= state.rhProcessHp) then
-            effort = processHp / (C.ROTARY_SHARE * power.effectiveHp)
-            chopper = power.pChopper / (C.CHOPPER_SHARE * power.effectiveHp)
-            grainTph = RHM_Api.getTonPerHour(vehicle)
+        if power.effectiveHp > 0 and processHp > 0 and (api.getEngineLoad(vehicle) > 0 or processHp ~= state.rhProcessHp) then
+            -- against the rated engine, not the power its difficulty adds
+            local ratedHp = engineKw * 1.35962
+            effort = processHp / (C.ROTARY_SHARE * ratedHp)
+            chopper = power.pChopper / (C.CHOPPER_SHARE * ratedHp)
             -- from hp to kW
             rotaryKw, chopperKw = processHp / 1.35962, power.pChopper / 1.35962
-            state.source, state.isWet = "rh", RHM_Api.isMoistureExceeded(vehicle)
+            state.source, state.isWet = "rh", api.isMoistureExceeded(vehicle)
         end
         state.rhProcessHp = processHp
     end
@@ -675,9 +728,8 @@ local function measureHarvestWork(vehicle, state, dt)
     state.enginePowerHp = peak * math.pi / 30 * 1.35962
 
     state.effort, state.chopper = effort, chopper
-    state.grain = grainTph * C.SMALL_GRAIN.c / (C.ROTARY_SHARE * engineKw)
-    state.tonPerHour, state.rotaryKw, state.chopperKw = grainTph, rotaryKw or 0, chopperKw or 0
-    state.tons = (state.tons or 0) + grainTph * dt / 3600000
+    state.tonPerHour, state.rotaryKw, state.chopperKw = grainTph, rotaryKw or 0, chopperKw
+    state.tons = (state.tons or 0) + grainTph * hours
 end
 
 ---Wears the harvest organs on the work they do, only while harvesting
@@ -696,21 +748,31 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
         spec.harvestState = state
     end
 
-    spec.isHarvestRunning = self:getIsMotorStarted() and self:getIsTurnedOn()
+    -- measured every step, so no crop is left over for later
+    local input = getHarvestInput(spec)
+    local now = g_currentMission.time
+    if now > input.time then
+        measureHarvestWork(self, state, input, now - input.time)
+        input.time = now
+    end
+
+    -- a header driven on its own still feeds the machine
+    spec.isHarvestRunning = state.effort ~= nil and self:getIsMotorStarted() and (self:getIsTurnedOn() or state.tonPerHour > 0)
     local wearRate = 0
     local factors = { harvestEffortFactor = 0, harvestGrainFactor = 0, harvestStrawFactor = 0, harvestStoneFactor = 0,
         harvestRiceFactor = 0, harvestWetFactor = 0, lubricationFactor = 0 }
     if spec.isHarvestRunning then
-        measureHarvestWork(self, state, dt)
         local work = C.BASE_RATE * state.effort
+        -- stones, rice straw and a damp crop only reach organs fed with crop
+        local cropWork = state.tonPerHour > 0 and work or 0
         local stone = state.stone * (spec.activeEffects.METAL_DETECTOR_OFF ~= nil and C.DETECTOR_OFF_STONE_MULTIPLIER or 1)
         local rates = {
             harvestEffortFactor = C.BASE_RATE * math.max(state.effort - 1, 0),
             harvestGrainFactor = C.BASE_RATE * math.max(state.grain - 1, 0),
             harvestStrawFactor = C.BASE_RATE * math.max(state.chopper - 1, 0),
-            harvestStoneFactor = work * stone,
-            harvestRiceFactor = state.isRice and work * C.RICE_MULTIPLIER or 0,
-            harvestWetFactor = state.isWet and work * C.WET_MULTIPLIER or 0,
+            harvestStoneFactor = cropWork * stone,
+            harvestRiceFactor = state.isRice and cropWork * C.RICE_MULTIPLIER or 0,
+            harvestWetFactor = state.isWet and cropWork * C.WET_MULTIPLIER or 0,
             lubricationFactor = work * (RMS_Greasing.getWearFactor(self) - 1)
         }
         wearRate = C.BASE_RATE * math.min(state.effort, 1)
@@ -725,16 +787,17 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
             wearRate = wearRate + factors[key]
         end
         factors.harvestEffort, factors.harvestGrain, factors.harvestChopper = state.effort, state.grain, state.chopper
-        factors.harvestTonPerHour, factors.harvestChopperKw, factors.harvestStone = state.tonPerHour, state.chopperKw, stone
+        factors.harvestStone = cropWork > 0 and stone or 0
         factors.harvestSource = state.source
     end
 
     self:updateSystemWear(dt, systemKey, wearRate, factors)
 end
 
+-- also asked while loading, before RMS builds the systems
 local function getHarvestSpec(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or spec.systems.harvest == nil or not spec.systems.harvest.enabled then
+    if spec == nil or spec.systems == nil or spec.isExcludedVehicle or spec.systems.harvest == nil or not spec.systems.harvest.enabled then
         return nil
     end
     return spec

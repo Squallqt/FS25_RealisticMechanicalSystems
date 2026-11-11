@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Facilità di manutenzione bassa"/>
         <text name="rms_shop_launch_year" text="Modello lanciato nel %d"/>
         <text name="rms_shop_launch_year_unknown" text="Anno di lancio sconosciuto"/>
+        <text name="rms_shop_category_maintenance" text="Manutenzione"/>
         <text name="rms_owner_care_careful" text="Manutenzione accurata"/>
         <text name="rms_owner_care_regular" text="Manutenzione regolare"/>
         <text name="rms_owner_care_neglected" text="Manutenzione trascurata"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="angolo del cardano eccessivo"/>
         <text name="rms_warranty_windup" text="blocco o 4RM su fondo duro"/>
         <text name="rms_warranty_filter" text="filtro intasato"/>
+        <text name="rms_warranty_oil" text="olio motore non adatto"/>
         <text name="rms_warranty_trailer" text="rimorchio troppo pesante"/>
         <text name="rms_warranty_aftermarket_part" text="ricambio compatibile"/>
         <text name="rms_warranty_used_part" text="ricambio usato"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Cavi di avviamento scollegati da %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Tanica di fluido"/>
-        <text name="rms_fluid_function_engine_oil" text="Olio motore per il rabbocco manuale"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Olio motore, per tutte le macchine, anche con AdBlue e filtro antiparticolato"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Olio motore, per macchine senza AdBlue né filtro antiparticolato"/>
         <text name="rms_fluid_function_utto" text="Olio per trasmissione e impianto idraulico per il rabbocco manuale"/>
         <text name="rms_fluid_function_coolant" text="Liquido di raffreddamento per il rabbocco manuale"/>
         <text name="rms_fluid_pour_action" text="Versa: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura della trasmissione e aumentarne il riscaldamento. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura dell'impianto idraulico, aumentarne il riscaldamento e rallentarlo. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura della trasmissione e dell'impianto idraulico, aumentarne il riscaldamento e rallentare l'impianto idraulico. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Olio motore non adatto"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Questo motore usa AdBlue o ha un filtro antiparticolato: il suo manuale richiede un olio fatto per questi sistemi. Con questo olio, il cambio dell'olio arriverà fino a due volte prima. Inoltre un filtro antiparticolato si riempie di cenere 1,5 volte più in fretta. Continuare?"/>
         <text name="rms_fluid_error_no_circuit" text="Questo veicolo non richiede alcun rabbocco di fluido"/>
         <text name="rms_fluid_error_motor_running" text="Spegni il motore prima di travasare il fluido"/>
         <text name="rms_fluid_error_vehicle_moving" text="Il veicolo deve essere fermo"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluidi inclusi nel noleggio"/>
         <text name="rms_fluid_stock_required" text="Prelevato dai contenitori nell'area dell'officina"/>
         <text name="rms_fluid_stock_missing" text="Mancano %s nell'area dell'officina"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Mancano %s di olio adatto a questo motore nell'area dell'officina"/>
         <text name="rms_fluid_refill_work_order" text="Ripristino dei livelli dei fluidi"/>
         <text name="rms_fluid_refill_dealer_supply" text="Fornitura inclusa nel preventivo"/>
         <text name="rms_fluid_mode_top_up" text="rabbocco"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Deposito restituito"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Livello del fluido basso"/>
-        <text name="rms_tutorial_fluid_level_message" text="Uno dei fluidi di questa macchina è sceso sotto il contrassegno della relativa astina.&#10;&#10;L'olio motore si consuma con le ore, e un motore usurato ne consuma molto di più. Il liquido di raffreddamento, l'olio della trasmissione e l'olio idraulico scendono solo in caso di perdita.&#10;&#10;Sotto il contrassegno, la macchina richiede solo un rabbocco e continua a lavorare normalmente. Più il livello scende, più facilmente la pompa aspira aria in pendenza, in curva e in frenata: la spia della pressione dell'olio lampeggia e, sul lato trasmissione o idraulico, la pompa fischia e i movimenti idraulici rallentano. Ogni minuto trascorso così danneggia le bronzine di banco o la pompa: fermati e ripristina il livello. Una macchina con poco liquido di raffreddamento, olio della trasmissione o olio idraulico inoltre si surriscalda.&#10;&#10;Acquista in negozio un contenitore di prodotto compatibile, portalo alla macchina e ripristina il livello. Tutti i prodotti destinati a quel circuito hanno lo stesso effetto; un fluido errato contamina solo quel circuito. In concessionaria, i litri necessari vengono forniti e addebitati."/>
+        <text name="rms_tutorial_fluid_level_message" text="Uno dei fluidi di questa macchina è sceso sotto il contrassegno della relativa astina.&#10;&#10;L'olio motore si consuma con le ore, e un motore usurato ne consuma molto di più. Il liquido di raffreddamento, l'olio della trasmissione e l'olio idraulico scendono solo in caso di perdita.&#10;&#10;Sotto il contrassegno, la macchina richiede solo un rabbocco e continua a lavorare normalmente. Più il livello scende, più facilmente la pompa aspira aria in pendenza: la spia della pressione dell'olio lampeggia e, sul lato trasmissione o idraulico, la pompa fischia e i movimenti idraulici rallentano. Ogni minuto trascorso così danneggia le bronzine di banco o la pompa: fermati e ripristina il livello. Una macchina con poco liquido di raffreddamento, olio della trasmissione o olio idraulico inoltre si surriscalda.&#10;&#10;Acquista in negozio un contenitore di prodotto compatibile, portalo alla macchina e ripristina il livello. Tutti i prodotti destinati a quel circuito hanno lo stesso effetto; un fluido errato contamina solo quel circuito. In concessionaria, i litri necessari vengono forniti e addebitati."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Benvenuto in Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Disattiva suggerimenti"/>
         <text name="rms_tutorial_welcome_enable_button" text="Attiva suggerimenti"/>

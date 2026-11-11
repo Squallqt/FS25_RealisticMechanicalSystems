@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Low ease of maintenance"/>
         <text name="rms_shop_launch_year" text="Model launched in %d"/>
         <text name="rms_shop_launch_year_unknown" text="Launch year unknown"/>
+        <text name="rms_shop_category_maintenance" text="Maintenance"/>
         <text name="rms_owner_care_careful" text="Careful maintenance"/>
         <text name="rms_owner_care_regular" text="Regular maintenance"/>
         <text name="rms_owner_care_neglected" text="Neglected maintenance"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="PTO shaft angle too steep"/>
         <text name="rms_warranty_windup" text="diff lock or 4WD on hard ground"/>
         <text name="rms_warranty_filter" text="clogged filter"/>
+        <text name="rms_warranty_oil" text="unsuited engine oil"/>
         <text name="rms_warranty_trailer" text="trailer too heavy"/>
         <text name="rms_warranty_aftermarket_part" text="aftermarket part"/>
         <text name="rms_warranty_used_part" text="used part"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Jumper cables disconnected from %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Fluid Container"/>
-        <text name="rms_fluid_function_engine_oil" text="Engine oil for manual top-up"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Engine oil, for every machine, AdBlue and particulate filter included"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Engine oil, for machines without AdBlue or particulate filter"/>
         <text name="rms_fluid_function_utto" text="Transmission and hydraulic oil for manual top-up"/>
         <text name="rms_fluid_function_coolant" text="Coolant for manual top-up"/>
         <text name="rms_fluid_pour_action" text="Pour: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="This product is not intended for this circuit. It will contaminate it and may wear the transmission up to three times faster and make it run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="This product is not intended for this circuit. It will contaminate it and may wear the hydraulics up to three times faster, make them run hotter and slow them down. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="This product is not intended for this circuit. It will contaminate it and may wear the transmission and hydraulics up to three times faster, make them run hotter and slow the hydraulics down. Only a complete fluid replacement will remove the contamination. Continue?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Unsuited Engine Oil"/>
+        <text name="rms_fluid_unsuited_oil_message" text="This engine runs on AdBlue or has a particulate filter: its manual asks for an oil made for them. With this oil, its oil change will come up to twice as early. A particulate filter also fills with ash 1.5 times as fast. Continue?"/>
         <text name="rms_fluid_error_no_circuit" text="This vehicle does not require a fluid top-up"/>
         <text name="rms_fluid_error_motor_running" text="Stop the engine before transferring fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="The vehicle must be stationary"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluids included in the lease"/>
         <text name="rms_fluid_stock_required" text="Drawn from the containers in the workshop zone"/>
         <text name="rms_fluid_stock_missing" text="%s missing in the workshop zone"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="%s of oil suited to this engine missing in the workshop zone"/>
         <text name="rms_fluid_refill_work_order" text="Fluid level top-up"/>
         <text name="rms_fluid_refill_dealer_supply" text="Fluid supply included in the estimate"/>
         <text name="rms_fluid_mode_top_up" text="top-up"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Deposit Refund"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Low Fluid Level"/>
-        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes, in turns and under braking: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
+        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welcome to Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Disable tips"/>
         <text name="rms_tutorial_welcome_enable_button" text="Enable tips"/>

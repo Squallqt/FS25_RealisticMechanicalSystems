@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Kemudahan perawatan rendah"/>
         <text name="rms_shop_launch_year" text="Model diluncurkan tahun %d"/>
         <text name="rms_shop_launch_year_unknown" text="Tahun peluncuran tidak diketahui"/>
+        <text name="rms_shop_category_maintenance" text="Perawatan"/>
         <text name="rms_owner_care_careful" text="Perawatan cermat"/>
         <text name="rms_owner_care_regular" text="Perawatan rutin"/>
         <text name="rms_owner_care_neglected" text="Perawatan terabaikan"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="sudut poros PTO terlalu besar"/>
         <text name="rms_warranty_windup" text="pengunci atau 4WD di tanah keras"/>
         <text name="rms_warranty_filter" text="filter tersumbat"/>
+        <text name="rms_warranty_oil" text="oli mesin tidak sesuai"/>
         <text name="rms_warranty_trailer" text="trailer terlalu berat"/>
         <text name="rms_warranty_aftermarket_part" text="suku cadang purnajual"/>
         <text name="rms_warranty_used_part" text="suku cadang bekas"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Kabel starter dilepas dari %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Wadah Fluida"/>
-        <text name="rms_fluid_function_engine_oil" text="Oli mesin untuk penambahan manual"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Oli mesin, untuk semua mesin, termasuk yang memakai AdBlue dan filter partikulat"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Oli mesin, untuk mesin tanpa AdBlue maupun filter partikulat"/>
         <text name="rms_fluid_function_utto" text="Oli transmisi dan hidraulis untuk penambahan manual"/>
         <text name="rms_fluid_function_coolant" text="Cairan pendingin untuk penambahan manual"/>
         <text name="rms_fluid_pour_action" text="Tuang: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan transmisi hingga tiga kali lipat serta meningkatkan suhu transmisi. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan hidraulis hingga tiga kali lipat, meningkatkan suhunya, dan memperlambatnya. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan transmisi dan hidraulis hingga tiga kali lipat, meningkatkan suhu keduanya, dan memperlambat hidraulis. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Oli Mesin Tidak Sesuai"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Mesin ini memakai AdBlue atau memiliki filter partikulat: buku petunjuknya meminta oli yang dibuat untuk itu. Dengan oli ini, penggantian oli akan tiba hingga dua kali lebih cepat. Filter partikulat juga terisi abu 1,5 kali lebih cepat. Lanjutkan?"/>
         <text name="rms_fluid_error_no_circuit" text="Kendaraan ini tidak memerlukan penambahan fluida"/>
         <text name="rms_fluid_error_motor_running" text="Matikan mesin sebelum memindahkan fluida"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kendaraan harus berhenti"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluida termasuk dalam sewa"/>
         <text name="rms_fluid_stock_required" text="Diambil dari wadah di area bengkel"/>
         <text name="rms_fluid_stock_missing" text="Kurang %s di area bengkel"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Kurang %s oli yang sesuai untuk mesin ini di area bengkel"/>
         <text name="rms_fluid_refill_work_order" text="Penambahan Fluida"/>
         <text name="rms_fluid_refill_dealer_supply" text="Pasokan fluida termasuk dalam perkiraan"/>
         <text name="rms_fluid_mode_top_up" text="penambahan"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Pengembalian deposit"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Ketinggian Fluida Rendah"/>
-        <text name="rms_tutorial_fluid_level_message" text="Salah satu fluida pada mesin ini telah turun di bawah tanda batas pada pengukurnya.&#10;&#10;Oli mesin berkurang seiring bertambahnya jam operasi, dan mesin yang aus mengonsumsi jauh lebih banyak oli. Cairan pendingin, oli transmisi, dan oli hidraulis hanya berkurang karena kebocoran.&#10;&#10;Saat berada di bawah tanda batas, mesin hanya memerlukan penambahan dan masih bekerja normal. Makin rendah ketinggiannya, makin mudah pompa mengisap udara di lereng, di tikungan, dan saat pengereman: lampu tekanan oli berkedip, dan di sisi transmisi atau hidraulis pompa berdesing serta gerakan hidraulis melambat. Setiap menit seperti ini merusak bantalan poros engkol atau pompa: berhentilah dan tambahkan fluidanya. Mesin yang kekurangan cairan pendingin, oli transmisi, atau oli hidraulis juga menjadi panas.&#10;&#10;Beli wadah produk yang kompatibel di toko, bawa ke mesin, lalu tambahkan fluidanya. Semua produk yang ditujukan untuk sirkuit tersebut memberikan efek yang sama; fluida yang salah hanya mencemari sirkuit itu. Di dealer, liter yang diperlukan disediakan dan ditagihkan."/>
+        <text name="rms_tutorial_fluid_level_message" text="Salah satu fluida pada mesin ini telah turun di bawah tanda batas pada pengukurnya.&#10;&#10;Oli mesin berkurang seiring bertambahnya jam operasi, dan mesin yang aus mengonsumsi jauh lebih banyak oli. Cairan pendingin, oli transmisi, dan oli hidraulis hanya berkurang karena kebocoran.&#10;&#10;Saat berada di bawah tanda batas, mesin hanya memerlukan penambahan dan masih bekerja normal. Makin rendah ketinggiannya, makin mudah pompa mengisap udara di lereng: lampu tekanan oli berkedip, dan di sisi transmisi atau hidraulis pompa berdesing serta gerakan hidraulis melambat. Setiap menit seperti ini merusak bantalan poros engkol atau pompa: berhentilah dan tambahkan fluidanya. Mesin yang kekurangan cairan pendingin, oli transmisi, atau oli hidraulis juga menjadi panas.&#10;&#10;Beli wadah produk yang kompatibel di toko, bawa ke mesin, lalu tambahkan fluidanya. Semua produk yang ditujukan untuk sirkuit tersebut memberikan efek yang sama; fluida yang salah hanya mencemari sirkuit itu. Di dealer, liter yang diperlukan disediakan dan ditagihkan."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Selamat Datang di Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Nonaktifkan kiat"/>
         <text name="rms_tutorial_welcome_enable_button" text="Aktifkan kiat"/>

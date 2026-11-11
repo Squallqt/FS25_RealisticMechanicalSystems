@@ -12,7 +12,7 @@
         <rotation>0</rotation>
         <brand>SKF</brand>
         <species>HANDTOOL</species>
-        <category>handtoolsMisc</category>
+        <category>rmsMaintenance</category>
     </storeData>
 
     <base canBeDropped="true" canBeSaved="true">

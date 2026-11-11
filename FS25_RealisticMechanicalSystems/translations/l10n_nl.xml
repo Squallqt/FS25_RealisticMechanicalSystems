@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Gering onderhoudsgemak"/>
         <text name="rms_shop_launch_year" text="Model geïntroduceerd in %d"/>
         <text name="rms_shop_launch_year_unknown" text="Introductiejaar onbekend"/>
+        <text name="rms_shop_category_maintenance" text="Onderhoud"/>
         <text name="rms_owner_care_careful" text="Zorgvuldig onderhoud"/>
         <text name="rms_owner_care_regular" text="Regelmatig onderhoud"/>
         <text name="rms_owner_care_neglected" text="Verwaarloosd onderhoud"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="hoek aftakas te groot"/>
         <text name="rms_warranty_windup" text="slot of 4WD op harde grond"/>
         <text name="rms_warranty_filter" text="verstopt filter"/>
+        <text name="rms_warranty_oil" text="ongeschikte motorolie"/>
         <text name="rms_warranty_trailer" text="aanhanger te zwaar"/>
         <text name="rms_warranty_aftermarket_part" text="aftermarket onderdeel"/>
         <text name="rms_warranty_used_part" text="gebruikt onderdeel"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startkabels losgekoppeld van %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Vloeistofkan"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolie voor handmatig bijvullen"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolie, voor alle machines, ook met AdBlue en roetfilter"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolie, voor machines zonder AdBlue of roetfilter"/>
         <text name="rms_fluid_function_utto" text="Transmissie- en hydrauliekolie voor handmatig bijvullen"/>
         <text name="rms_fluid_function_coolant" text="Koelvloeistof voor handmatig bijvullen"/>
         <text name="rms_fluid_pour_action" text="Bijvullen: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van de transmissie tot het drievoudige verhogen en de transmissie warmer laten lopen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van de hydrauliek tot het drievoudige verhogen, de hydrauliek warmer laten lopen en vertragen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van transmissie en hydrauliek tot het drievoudige verhogen, beide warmer laten lopen en de hydrauliek vertragen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Ongeschikte motorolie"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Deze motor gebruikt AdBlue of heeft een roetfilter: de handleiding schrijft een olie voor die daarvoor gemaakt is. Met deze olie komt de olieverversing tot twee keer zo vroeg. Een roetfilter loopt bovendien 1,5 keer zo snel vol met as. Doorgaan?"/>
         <text name="rms_fluid_error_no_circuit" text="Voor dit voertuig hoeven geen vloeistoffen te worden bijgevuld"/>
         <text name="rms_fluid_error_motor_running" text="Zet de motor uit voordat je vloeistof overdraagt"/>
         <text name="rms_fluid_error_vehicle_moving" text="Het voertuig moet stilstaan"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Vloeistoffen inbegrepen in de huur"/>
         <text name="rms_fluid_stock_required" text="Uit de kannen in de werkplaatszone"/>
         <text name="rms_fluid_stock_missing" text="Er ontbreekt %s in de werkplaatszone"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Er ontbreekt %s olie die geschikt is voor deze motor in de werkplaatszone"/>
         <text name="rms_fluid_refill_work_order" text="Vloeistoffen bijvullen"/>
         <text name="rms_fluid_refill_dealer_supply" text="Levering inbegrepen in de offerte"/>
         <text name="rms_fluid_mode_top_up" text="bijvullen"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Terugbetaalde borg"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Laag vloeistofniveau"/>
-        <text name="rms_tutorial_fluid_level_message" text="Een van de vloeistoffen van deze machine is onder de markering op de meter gezakt.&#10;&#10;Motorolie wordt met de bedrijfsuren verbruikt en een versleten motor verbruikt er veel meer van. Koelvloeistof, transmissieolie en hydrauliekolie dalen alleen door een lekkage.&#10;&#10;Onder de markering hoeft alleen te worden bijgevuld en werkt de machine nog normaal. Hoe lager het niveau, hoe makkelijker de pomp lucht aanzuigt op hellingen, in bochten en bij het remmen: het oliedruklampje knippert, en aan de kant van de transmissie of de hydrauliek giert de pomp en worden de hydraulische bewegingen trager. Elke minuut die zo verstrijkt beschadigt de krukaslagers of de pomp: stop en vul het niveau bij. Een machine met te weinig koelvloeistof, transmissieolie of hydrauliekolie wordt bovendien heet.&#10;&#10;Koop in de winkel een kan met een geschikt product, breng deze naar de machine en vul het niveau bij. Alle producten voor dit circuit hebben hetzelfde effect; een verkeerde vloeistof verontreinigt alleen dit circuit. Bij de dealer worden de benodigde liters geleverd en gefactureerd."/>
+        <text name="rms_tutorial_fluid_level_message" text="Een van de vloeistoffen van deze machine is onder de markering op de meter gezakt.&#10;&#10;Motorolie wordt met de bedrijfsuren verbruikt en een versleten motor verbruikt er veel meer van. Koelvloeistof, transmissieolie en hydrauliekolie dalen alleen door een lekkage.&#10;&#10;Onder de markering hoeft alleen te worden bijgevuld en werkt de machine nog normaal. Hoe lager het niveau, hoe makkelijker de pomp lucht aanzuigt op hellingen: het oliedruklampje knippert, en aan de kant van de transmissie of de hydrauliek giert de pomp en worden de hydraulische bewegingen trager. Elke minuut die zo verstrijkt beschadigt de krukaslagers of de pomp: stop en vul het niveau bij. Een machine met te weinig koelvloeistof, transmissieolie of hydrauliekolie wordt bovendien heet.&#10;&#10;Koop in de winkel een kan met een geschikt product, breng deze naar de machine en vul het niveau bij. Alle producten voor dit circuit hebben hetzelfde effect; een verkeerde vloeistof verontreinigt alleen dit circuit. Bij de dealer worden de benodigde liters geleverd en gefactureerd."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welkom bij Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tips uitschakelen"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tips inschakelen"/>

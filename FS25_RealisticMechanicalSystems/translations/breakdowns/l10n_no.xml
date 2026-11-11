@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritisk svikt i partikkelfilteret. Helt blokkert slipper det ikke lenger eksosen gjennom: bare utskifting gir motoren effekten tilbake."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikkelfilteret er mettet. Regenereringene er ikke blitt fullført: motorturtallet begrenses til en regenerering lykkes."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritisk metning av partikkelfilteret. Det er for fullt til å regenerere selv og trenger en serviceregenerering på verkstedet; turtallet forblir begrenset."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Partikkelfilter fullt av aske. Regenereringer brenner sotet, ikke asken motoroljen etterlater: filteret må demonteres og rengjøres på verkstedet; motorturtallet er begrenset."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lett svikt i viftekoblingen. Viften reagerer mindre effektivt, og kjøleevnen er litt forringet."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderat svikt i viftekoblingen. Viften kobler ujevnt til, og kjøleevnen faller tydelig."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Alvorlig svikt i viftekoblingen. Viften gir ikke lenger nok luft, og motoren overopphetes lettere."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Høsting umulig: en høstedel er ødelagt"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Tetting: høstingen har stoppet"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Halmkutter ødelagt: halmen faller i streng"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Halmkutter ødelagt: denne avlingen kan ikke lenger høstes"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Halmkutter ødelagt: halmen faller ukuttet"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Begynnende slitasje på drivreimene. De slurer litt under belastning."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Moderat slitasje på drivreimene. En del mister turtall under belastning, og turtallsalarmen stopper av og til høstingen."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Alvorlig slitasje på drivreimene. Kapasiteten faller, og stoppene kommer igjen og igjen."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Begynnende slitasje på halmkutteren. Halmen kuttes mindre kort, og kutteren krever litt mer effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Moderat slitasje på halmkutteren. Kutteren vibrerer og krever mer effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Alvorlig slitasje på halmkutteren. Rotoren er i ubalanse og krever mye effekt."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritisk svikt i halmkutteren. En kniv har knekt: kutteren står stille, og halmen faller i streng."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritisk svikt i halmkutteren. En kniv har knekt: kutteren står stille, og halmen faller ukuttet, i streng når avlingen danner en."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Begynnende slitasje på innmatingsvalsene. De griper avlingen dårligere: innmatingen blir ujevn."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Moderat slitasje på innmatingsvalsene. Kuttelengden blir ujevn, og det oppstår tettinger."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Alvorlig slitasje på innmatingsvalsene. Kapasiteten faller, og tettingene fortsetter."/>

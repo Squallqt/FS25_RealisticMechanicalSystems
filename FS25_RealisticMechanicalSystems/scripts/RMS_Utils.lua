@@ -2378,6 +2378,12 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
     return entry
 end
 
+---Returns the interface of the harvesting mod, kept in its own mod table
+function RMS_Utils.getHarvestModApi()
+    local modEnv = _G.FS25_RealisticHarvesting
+    return modEnv ~= nil and modEnv.RHM_Api or nil
+end
+
 ---Tells whether the CVT addon mod drives the transmission of this vehicle
 function RMS_Utils.hasCVTAddon(vehicle)
     local addon = vehicle ~= nil and vehicle.spec_CVTaddon or nil

@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="整備に手間がかかる"/>
         <text name="rms_shop_launch_year" text="%d年発売"/>
         <text name="rms_shop_launch_year_unknown" text="発売年不明"/>
+        <text name="rms_shop_category_maintenance" text="メンテナンス"/>
         <text name="rms_owner_care_careful" text="入念なメンテナンス"/>
         <text name="rms_owner_care_regular" text="定期的なメンテナンス"/>
         <text name="rms_owner_care_neglected" text="不十分なメンテナンス"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="PTOシャフト角度過大"/>
         <text name="rms_warranty_windup" text="硬い路面でのデフロック・4駆"/>
         <text name="rms_warranty_filter" text="フィルターの目詰まり"/>
+        <text name="rms_warranty_oil" text="適合しないエンジンオイル"/>
         <text name="rms_warranty_trailer" text="トレーラーの過積載"/>
         <text name="rms_warranty_aftermarket_part" text="社外品部品"/>
         <text name="rms_warranty_used_part" text="中古部品"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="ブースターケーブルを%sから取り外しました"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="油水類容器"/>
-        <text name="rms_fluid_function_engine_oil" text="手動補給用エンジンオイル"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="エンジンオイル、AdBlueや粒子状物質フィルター付きを含むすべての機械に"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="エンジンオイル、AdBlueと粒子状物質フィルターのない機械用"/>
         <text name="rms_fluid_function_utto" text="手動補給用ミッション・作動油"/>
         <text name="rms_fluid_function_coolant" text="手動補給用冷却液"/>
         <text name="rms_fluid_pour_action" text="補給：%s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="この製品は選択した回路用ではありません。回路が汚染され、ミッションの摩耗が最大3倍になり、発熱が増えるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="この製品は選択した回路用ではありません。回路が汚染され、油圧システムの摩耗が最大3倍になり、発熱が増えて動作が遅くなるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="この製品は選択した回路用ではありません。回路が汚染され、ミッションと油圧システムの摩耗が最大3倍になり、発熱が増えて油圧の動作が遅くなるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
+        <text name="rms_fluid_unsuited_oil_title" text="適合しないエンジンオイル"/>
+        <text name="rms_fluid_unsuited_oil_message" text="このエンジンはAdBlueを使うか、粒子状物質フィルターを備えています。取扱説明書はそれらに対応したオイルを指定しています。このオイルでは、オイル交換が最大2倍早くなります。粒子状物質フィルターも1.5倍の速さで灰がたまります。続けますか？"/>
         <text name="rms_fluid_error_no_circuit" text="この車両は油水類を補給する必要がありません"/>
         <text name="rms_fluid_error_motor_running" text="油水類を移送する前にエンジンを停止してください"/>
         <text name="rms_fluid_error_vehicle_moving" text="車両を停止させてください"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="油水類はリース料に含まれます"/>
         <text name="rms_fluid_stock_required" text="ワークショップ区域の容器から使用"/>
         <text name="rms_fluid_stock_missing" text="ワークショップ区域に %s 不足"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="ワークショップ区域にこのエンジンに合うオイル %s 不足"/>
         <text name="rms_fluid_refill_work_order" text="油水類の補給"/>
         <text name="rms_fluid_refill_dealer_supply" text="見積りに油水類の供給を含む"/>
         <text name="rms_fluid_mode_top_up" text="補給"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="保証金の返還"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油水類の残量低下"/>
-        <text name="rms_tutorial_fluid_level_message" text="この車両の油水類の一つが、ゲージの基準線を下回りました。&#10;&#10;エンジンオイルは稼働時間に応じて消費され、摩耗したエンジンでは消費量が大幅に増えます。冷却液、ミッションオイル、作動油はもれが発生した場合にだけ減少します。&#10;&#10;基準線を下回っただけなら補給が必要ですが、車両はまだ正常に作動します。量が減るほど、坂道、旋回、ブレーキ時にポンプが空気を吸いやすくなります。エンジンオイル圧の警告灯が点滅し、ミッションや油圧の側ではポンプが鳴り、油圧の動きが遅くなります。この状態で1分過ごすごとにクランクシャフト軸受やポンプが傷みます。停止して補給してください。冷却液、ミッションオイル、作動油が不足した車両は過熱もします。&#10;&#10;ショップで該当回路に適合する製品容器を購入し、車両まで運んで補給してください。その回路用の製品はすべて機械的に同等で、誤った油水類を入れた場合はその回路だけが汚染されます。ディーラーでは必要な量が供給され、料金が請求されます。"/>
+        <text name="rms_tutorial_fluid_level_message" text="この車両の油水類の一つが、ゲージの基準線を下回りました。&#10;&#10;エンジンオイルは稼働時間に応じて消費され、摩耗したエンジンでは消費量が大幅に増えます。冷却液、ミッションオイル、作動油はもれが発生した場合にだけ減少します。&#10;&#10;基準線を下回っただけなら補給が必要ですが、車両はまだ正常に作動します。量が減るほど、坂道でポンプが空気を吸いやすくなります。エンジンオイル圧の警告灯が点滅し、ミッションや油圧の側ではポンプが鳴り、油圧の動きが遅くなります。この状態で1分過ごすごとにクランクシャフト軸受やポンプが傷みます。停止して補給してください。冷却液、ミッションオイル、作動油が不足した車両は過熱もします。&#10;&#10;ショップで該当回路に適合する製品容器を購入し、車両まで運んで補給してください。その回路用の製品はすべて機械的に同等で、誤った油水類を入れた場合はその回路だけが汚染されます。ディーラーでは必要な量が供給され、料金が請求されます。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systemsへようこそ"/>
         <text name="rms_tutorial_welcome_disable_button" text="ヒントを無効化"/>
         <text name="rms_tutorial_welcome_enable_button" text="ヒントを有効化"/>

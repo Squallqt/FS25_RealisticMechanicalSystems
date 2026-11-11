@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Partikül filtresinde kritik arıza. Tamamen tıkandığından egzoz gazlarını artık geçirmez: yalnızca değiştirilmesi motor gücünü geri getirir."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikül filtresi doygunluğu. Rejenerasyonlar tamamlanmamıştır: biri başarıyla tamamlanana kadar motor devri sınırlanır."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Partikül filtresinde kritik doygunluk. Kendiliğinden rejenerasyon yapamayacak kadar doludur ve atölyede servis rejenerasyonu gerektirir; motor devri sınırlı kalır."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Partikül filtresi külle dolu. Rejenerasyon isi yakar, motor yağının bıraktığı külü değil: filtre atölyede sökülüp temizlenmeli; motor devri sınırlı."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Fan kavramasında hafif arıza. Fan daha az etkili tepki verir ve soğutma hafifçe zayıflar."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Fan kavramasında orta derecede arıza. Fanın devreye girmesi düzensizdir ve soğutma verimliliği belirgin şekilde düşer."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Fan kavramasında ciddi arıza. Fan artık yeterli hava akışı sağlamıyor ve motor daha kolay aşırı ısınıyor."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Hasat imkânsız: bir hasat organı bozuldu"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Tıkanma: hasat durdu"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Saman parçalayıcı bozuk: saman namlu halinde düşüyor"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Saman parçalayıcı bozuk: bu ürün artık hasat edilemez"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Saman parçalayıcı bozuk: saman parçalanmadan düşüyor"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Tahrik kayışlarında başlangıç aşınması. Yük altında biraz kayarlar."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Tahrik kayışlarında orta derecede aşınma. Bir organ yük altında yavaşlar ve devir alarmı zaman zaman hasadı durdurur."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Tahrik kayışlarında ciddi aşınma. Kapasite düşer ve duruşlar tekrar tekrar yaşanır."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Saman parçalayıcıda başlangıç aşınması. Saman daha az kısa doğranır ve parçalayıcı biraz daha fazla güç çeker."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Saman parçalayıcıda orta derecede aşınma. Parçalayıcı titrer ve daha fazla güç çeker."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Saman parçalayıcıda ciddi aşınma. Rotor balanssız ve çok güç çeker."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Saman parçalayıcıda kritik arıza. Bir bıçak kırıldı: parçalayıcı durdu ve saman namlu halinde düşüyor."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Saman parçalayıcıda kritik arıza. Bir bıçak kırıldı: parçalayıcı durdu ve saman parçalanmadan düşüyor, ürün namlu oluşturuyorsa namlu halinde."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Besleme merdanelerinde başlangıç aşınması. Ürünü daha kötü kavrarlar: besleme düzensizleşir."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Besleme merdanelerinde orta derecede aşınma. Kıyım boyu düzensizleşir ve tıkanmalar başlar."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Besleme merdanelerinde ciddi aşınma. Kapasite düşer ve tıkanmalar sürer."/>

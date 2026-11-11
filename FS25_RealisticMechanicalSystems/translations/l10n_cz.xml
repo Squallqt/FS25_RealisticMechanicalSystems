@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Nízká snadnost údržby"/>
         <text name="rms_shop_launch_year" text="Model uveden v roce %d"/>
         <text name="rms_shop_launch_year_unknown" text="Rok uvedení na trh neznámý"/>
+        <text name="rms_shop_category_maintenance" text="Údržba"/>
         <text name="rms_owner_care_careful" text="Pečlivá údržba"/>
         <text name="rms_owner_care_regular" text="Pravidelná údržba"/>
         <text name="rms_owner_care_neglected" text="Zanedbaná údržba"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="příliš velký úhel kloubového hřídele"/>
         <text name="rms_warranty_windup" text="uzávěrka nebo 4x4 na tvrdém povrchu"/>
         <text name="rms_warranty_filter" text="zanesený filtr"/>
+        <text name="rms_warranty_oil" text="nevhodný motorový olej"/>
         <text name="rms_warranty_trailer" text="příliš těžký přívěs"/>
         <text name="rms_warranty_aftermarket_part" text="díl z druhovýroby"/>
         <text name="rms_warranty_used_part" text="použitý díl"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startovací kabely odpojeny od %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Kanystr na kapalinu"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorový olej pro ruční doplnění"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorový olej, pro všechny stroje, i s AdBlue a filtrem pevných částic"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorový olej, pro stroje bez AdBlue a filtru pevných částic"/>
         <text name="rms_fluid_function_utto" text="Převodový a hydraulický olej pro ruční doplnění"/>
         <text name="rms_fluid_function_coolant" text="Chladicí kapalina pro ruční doplnění"/>
         <text name="rms_fluid_pour_action" text="Doplnit: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení převodovky a zvýšit její zahřívání. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení hydrauliky, zvýšit její zahřívání a zpomalit ji. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení převodovky a hydrauliky, zvýšit jejich zahřívání a zpomalit hydrauliku. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nevhodný motorový olej"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Tento motor používá AdBlue nebo má filtr pevných částic: jeho návod předepisuje olej určený pro ně. S tímto olejem přijde výměna oleje až dvakrát dříve. Filtr pevných částic se navíc zaplní popelem 1,5krát rychleji. Pokračovat?"/>
         <text name="rms_fluid_error_no_circuit" text="Toto vozidlo nevyžaduje doplnění žádné kapaliny"/>
         <text name="rms_fluid_error_motor_running" text="Před přečerpáním kapaliny vypni motor"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vozidlo musí stát"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Kapaliny zahrnuty v pronájmu"/>
         <text name="rms_fluid_stock_required" text="Z kanystrů v prostoru dílny"/>
         <text name="rms_fluid_stock_missing" text="V prostoru dílny chybí %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="V prostoru dílny chybí %s oleje vhodného pro tento motor"/>
         <text name="rms_fluid_refill_work_order" text="Doplnění provozních kapalin"/>
         <text name="rms_fluid_refill_dealer_supply" text="Dodávka zahrnuta v cenové nabídce"/>
         <text name="rms_fluid_mode_top_up" text="doplnění"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vrácená kauce"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nízká hladina kapaliny"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu, v zatáčkách a při brzdění: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Vítejte v Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Vypnout rady"/>
         <text name="rms_tutorial_welcome_enable_button" text="Zapnout rady"/>

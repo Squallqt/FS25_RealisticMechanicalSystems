@@ -309,9 +309,12 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#coolantCompatibility", spec.fluidCompatibility.coolant)
         xmlFile:setValue(key .. "#transmissionOilCompatibility", spec.fluidCompatibility.transmissionOil)
         xmlFile:setValue(key .. "#hydraulicFluidCompatibility", spec.fluidCompatibility.hydraulicFluid)
+        xmlFile:setValue(key .. "#engineOilSuitedShare", spec.engineOilSuitedShare or 1)
         xmlFile:setValue(key .. "#fluidLeakLossDebt", RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
         xmlFile:setValue(key .. "#wetStackingLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
         xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+        xmlFile:setValue(key .. "#particulateFilterAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterAsh, 0, 0, 1))
+        xmlFile:setValue(key .. "#particulateFilterOilAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterOilAsh, 0, 0, 1))
         xmlFile:setValue(key .. "#scrInducementHours", RealisticMechanicalSystems.sanitizeNumber(spec.scrInducementHours, 0, 0))
         xmlFile:setValue(key .. "#particulateFilterOverloaded", spec.fuelState.isParticulateFilterOverloaded == true)
         xmlFile:setValue(key .. "#greasing", RMS_Greasing.serialize(self))
@@ -416,6 +419,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
         transmissionOil = 1.0,
         hydraulicFluid = 1.0
     }
+    self.spec_RealisticMechanicalSystems.engineOilSuitedShare = 1
     self.spec_RealisticMechanicalSystems.fluidLeakLossDebt = {}
     self.spec_RealisticMechanicalSystems.fluidCapacityVersion = nil
     self.spec_RealisticMechanicalSystems.fluidCapacitySource = nil
@@ -520,6 +524,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.overloadLevel = 0
     self.spec_RealisticMechanicalSystems.aiWorkerOverload = 0
     self.spec_RealisticMechanicalSystems.aiWorkerSpeedLimit = nil
+    self.spec_RealisticMechanicalSystems.aiWorkerBlockedMs = 0
+    self.spec_RealisticMechanicalSystems.aiWorkerBlockedAt = nil
 
     self.spec_RealisticMechanicalSystems.systemWearNow = {}
     self.spec_RealisticMechanicalSystems.systemWearRateNow = {}
@@ -614,6 +620,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
         idleTimer = 0,
         wetStackingLevel = 0,
         particulateFilterLevel = 0,
+        particulateFilterAsh = 0,
+        particulateFilterOilAsh = 0,
         particulateFilterRegenerationMs = 0,
         isParticulateFilterRegenerating = false,
         isParticulateFilterOverloaded = false,
@@ -751,11 +759,14 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         transmissionOil = math.clamp(xmlFile:getValue(key .. "#transmissionOilCompatibility", 1) or 1, 0, 1),
         hydraulicFluid = math.clamp(xmlFile:getValue(key .. "#hydraulicFluidCompatibility", 1) or 1, 0, 1)
     }
+    spec.engineOilSuitedShare = math.clamp(xmlFile:getValue(key .. "#engineOilSuitedShare", 1) or 1, 0, 1)
     spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(xmlFile:getValue(key .. "#fluidLeakLossDebt", ""))
     spec.pendingFluidRequirements = RMS_Fluids.deserializeServiceRequirements(xmlFile:getValue(key .. "#pendingFluidRequirements", ""))
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#wetStackingLevel", spec.fuelState.wetStackingLevel), 0, 0, 1)
     spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterLevel", 0), 0, 0,
         RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+    spec.fuelState.particulateFilterAsh = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterAsh", 0), 0, 0, 1)
+    spec.fuelState.particulateFilterOilAsh = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterOilAsh", 0), 0, 0, 1)
     spec.scrInducementHours = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#scrInducementHours", 0), 0, 0)
     spec.fuelState.isParticulateFilterOverloaded = xmlFile:getValue(key .. "#particulateFilterOverloaded", false)
     RMS_Greasing.deserialize(self, xmlFile:getValue(key .. "#greasing"))

@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Ușurință redusă a întreținerii"/>
         <text name="rms_shop_launch_year" text="Model lansat în %d"/>
         <text name="rms_shop_launch_year_unknown" text="An de lansare necunoscut"/>
+        <text name="rms_shop_category_maintenance" text="Întreținere"/>
         <text name="rms_owner_care_careful" text="Întreținere atentă"/>
         <text name="rms_owner_care_regular" text="Întreținere regulată"/>
         <text name="rms_owner_care_neglected" text="Întreținere neglijată"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="unghi prea mare al cardanului"/>
         <text name="rms_warranty_windup" text="blocare sau 4x4 pe teren dur"/>
         <text name="rms_warranty_filter" text="filtru înfundat"/>
+        <text name="rms_warranty_oil" text="ulei de motor nepotrivit"/>
         <text name="rms_warranty_trailer" text="remorcă prea grea"/>
         <text name="rms_warranty_aftermarket_part" text="piesă compatibilă"/>
         <text name="rms_warranty_used_part" text="piesă folosită"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Cabluri de pornire deconectate de la %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Canistră de fluid"/>
-        <text name="rms_fluid_function_engine_oil" text="Ulei de motor pentru completare manuală"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Ulei de motor, pentru toate utilajele, inclusiv cu AdBlue și filtru de particule"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Ulei de motor, pentru utilaje fără AdBlue și fără filtru de particule"/>
         <text name="rms_fluid_function_utto" text="Ulei hidraulic și de transmisie pentru completare manuală"/>
         <text name="rms_fluid_function_coolant" text="Lichid de răcire pentru completare manuală"/>
         <text name="rms_fluid_pour_action" text="Toarnă: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura transmisiei și îi poate crește temperatura. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura sistemului hidraulic, îi poate crește temperatura și îl poate încetini. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura transmisiei și a sistemului hidraulic, le poate crește temperatura și poate încetini sistemul hidraulic. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Ulei de motor nepotrivit"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Acest motor folosește AdBlue sau are filtru de particule: manualul său cere un ulei făcut pentru ele. Cu acest ulei, schimbul de ulei va veni de până la două ori mai devreme. Un filtru de particule se umple și de cenușă de 1,5 ori mai repede. Continui?"/>
         <text name="rms_fluid_error_no_circuit" text="Acest vehicul nu necesită nicio completare de fluid"/>
         <text name="rms_fluid_error_motor_running" text="Oprește motorul înainte de a transfera fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vehiculul trebuie să fie staționar"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluide incluse în închiriere"/>
         <text name="rms_fluid_stock_required" text="Din canistrele din zona atelierului"/>
         <text name="rms_fluid_stock_missing" text="Lipsesc %s în zona atelierului"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Lipsesc %s de ulei potrivit pentru acest motor în zona atelierului"/>
         <text name="rms_fluid_refill_work_order" text="Completarea nivelului fluidelor"/>
         <text name="rms_fluid_refill_dealer_supply" text="Furnizare inclusă în deviz"/>
         <text name="rms_fluid_mode_top_up" text="completare"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Depozit returnat"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nivel scăzut al fluidului"/>
-        <text name="rms_tutorial_fluid_level_message" text="Unul dintre fluidele acestui utilaj a scăzut sub reperul indicatorului său.&#10;&#10;Uleiul de motor se consumă odată cu orele de funcționare, iar un motor uzat consumă mult mai mult. Lichidul de răcire, uleiul de transmisie și uleiul hidraulic scad numai din cauza unei scurgeri.&#10;&#10;Sub reper, utilajul necesită doar o completare și funcționează încă normal. Cu cât nivelul scade mai mult, cu atât pompa aspiră mai ușor aer în pante, în viraje și la frânare: martorul presiunii uleiului clipește, iar la transmisie sau la sistemul hidraulic pompa șuieră și mișcările hidraulice încetinesc. Fiecare minut petrecut astfel deteriorează cuzineții de palier sau pompa: oprește-te și completează nivelul. Un utilaj cu prea puțin lichid de răcire, ulei de transmisie sau ulei hidraulic se și încălzește.&#10;&#10;Cumpără din magazin o canistră cu un produs compatibil, du-o la utilaj și completează nivelul. Toate produsele destinate circuitului respectiv au același efect; un fluid necorespunzător contaminează numai acel circuit. La reprezentanță, litrii necesari sunt furnizați și facturați."/>
+        <text name="rms_tutorial_fluid_level_message" text="Unul dintre fluidele acestui utilaj a scăzut sub reperul indicatorului său.&#10;&#10;Uleiul de motor se consumă odată cu orele de funcționare, iar un motor uzat consumă mult mai mult. Lichidul de răcire, uleiul de transmisie și uleiul hidraulic scad numai din cauza unei scurgeri.&#10;&#10;Sub reper, utilajul necesită doar o completare și funcționează încă normal. Cu cât nivelul scade mai mult, cu atât pompa aspiră mai ușor aer în pante: martorul presiunii uleiului clipește, iar la transmisie sau la sistemul hidraulic pompa șuieră și mișcările hidraulice încetinesc. Fiecare minut petrecut astfel deteriorează cuzineții de palier sau pompa: oprește-te și completează nivelul. Un utilaj cu prea puțin lichid de răcire, ulei de transmisie sau ulei hidraulic se și încălzește.&#10;&#10;Cumpără din magazin o canistră cu un produs compatibil, du-o la utilaj și completează nivelul. Toate produsele destinate circuitului respectiv au același efect; un fluid necorespunzător contaminează numai acel circuit. La reprezentanță, litrii necesari sunt furnizați și facturați."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bun venit în Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Dezactivează sfaturile"/>
         <text name="rms_tutorial_welcome_enable_button" text="Activează sfaturile"/>

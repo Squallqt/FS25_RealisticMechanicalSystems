@@ -217,7 +217,7 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
 
 -- refused parts: abused, or fitted not new original; index saved
 RealisticMechanicalSystems.WARRANTY_ABUSES = { "impact", "heat", "low_level", "fuel_dry", "park_brake", "pto_engagement",
-    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part" }
+    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part", "oil" }
 RealisticMechanicalSystems.WARRANTY_ABUSE = {}
 for code, reason in ipairs(RealisticMechanicalSystems.WARRANTY_ABUSES) do
     RealisticMechanicalSystems.WARRANTY_ABUSE[reason] = code
@@ -451,7 +451,8 @@ local OVERLOAD_AVERAGE_PERIOD_MS = 60000
 local OVERLOAD_WINDOW_COMPACT_THRESHOLD = 256
 local OVERLOAD_FACTOR_ALIASES_BY_SYSTEM = {
     engine = { "mlf", "hmf", "lf" },
-    transmission = { "pof", "htf", "lf", "wsf", "hotf" }
+    transmission = { "pof", "htf", "lf", "wsf", "hotf" },
+    harvest = { "hef" }
 }
 
 local function resetOverloadAverage(systemData)
@@ -641,6 +642,9 @@ local function getSyncGroups()
         watch(function(_, spec) return RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt) end),
         watch("fieldInspectionSoundActive")
     }
+    for _, circuit in ipairs(RMS_Fluids.PICKUP_CIRCUITS) do
+        table.insert(fieldcare, watch(function(_, spec) return spec.pickupUncovered[circuit] == true end))
+    end
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         table.insert(fieldcare, watch(filter.stateKey, 0.005))
     end
@@ -851,10 +855,13 @@ local SAVEGAME_ATTRIBUTES = {
     { "coolantCompatibility", "FLOAT", "Coolant mixture compatibility" },
     { "transmissionOilCompatibility", "FLOAT", "Transmission oil mixture compatibility" },
     { "hydraulicFluidCompatibility", "FLOAT", "Hydraulic fluid mixture compatibility" },
+    { "engineOilSuitedShare", "FLOAT", "Share of the engine oil its manual asks for" },
     { "fluidLeakLossDebt", "STRING", "Unreplenished fluid loss by leak" },
     { "pendingFluidRequirements", "STRING", "Physical fluid reserved for the running service" },
     { "wetStackingLevel", "FLOAT", "Wet stacking deposit level" },
     { "particulateFilterLevel", "FLOAT", "Particulate filter soot level, 1 calling a regeneration" },
+    { "particulateFilterAsh", "FLOAT", "Particulate filter ash, 1 calling a cleaning" },
+    { "particulateFilterOilAsh", "FLOAT", "Part of the filter ash left by an unsuited engine oil" },
     { "scrInducementHours", "FLOAT", "Engine hours since an AdBlue fault was confirmed" },
     { "particulateFilterOverloaded", "BOOL", "Whether the particulate filter overload is shown as a breakdown" },
     { "greasing", "STRING", "Grease points due, hours elapsed and hours late per interval, then the worked day" },
@@ -1009,6 +1016,9 @@ function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateMotorTemperature", RealisticMechanicalSystems.updateMotorTemperature)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "addToPhysics", RMS_Drivetrain.addToPhysics)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "brake", RMS_Drivetrain.brake)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "addCutterArea", RealisticMechanicalSystems.addCutterArea)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "processCombineChopperArea", RMS_Breakdowns.processCombineChopperArea)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "setIsSwathActive", RMS_Breakdowns.setIsSwathActive)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateSteeringAngle", RMS_Steering.updateSteeringAngle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateArticulatedAxisRotation", RMS_Steering.updateArticulatedAxisRotation)
 end
@@ -1102,6 +1112,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateFieldInspectionSound", RMS_Consumables.updateFieldInspectionSound)
 
     SpecializationUtil.registerFunction(vehicleType, "updateAiWorkerSpeed", RealisticMechanicalSystems.updateAiWorkerSpeed)
+    SpecializationUtil.registerFunction(vehicleType, "updateAiWorkerBlocked", RealisticMechanicalSystems.updateAiWorkerBlocked)
     SpecializationUtil.registerFunction(vehicleType, "isWarrantyRepairCovered", RealisticMechanicalSystems.isWarrantyRepairCovered)
     SpecializationUtil.registerFunction(vehicleType, "getWarrantyLimits", RealisticMechanicalSystems.getWarrantyLimits)
     SpecializationUtil.registerFunction(vehicleType, "getIsUsedPartWarrantyCovered", RealisticMechanicalSystems.getIsUsedPartWarrantyCovered)
@@ -1880,7 +1891,9 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
 
     self:getSmoothedTemperature(updateDt)
 
-    RMS_Fluids.updatePickups(self, updateDt)
+    if self.isServer then
+        RMS_Fluids.updatePickups(self, updateDt)
+    end
     if self.isClient then
         RMS_Breakdowns.updateAerationWhines(self)
     end
@@ -1920,6 +1933,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     if self.isServer and self.getDamageAmount ~= nil and self:getDamageAmount() ~= 0 then self:setDamageAmount(0.0, true) end
     
     self:updateAiWorkerSpeed(updateDt)
+    self:updateAiWorkerBlocked(updateDt)
 
     if self.isClient then
         RMS_Exhaust.update(self)

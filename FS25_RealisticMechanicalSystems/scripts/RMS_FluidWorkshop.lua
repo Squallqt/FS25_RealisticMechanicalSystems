@@ -308,7 +308,8 @@ function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirem
         local candidates = {}
         for _, container in ipairs(containers) do
             if container.available > RMS_Fluids.EPSILON
-                and RMS_Fluids.getIsProductCompatible(container.productKey, requirement.circuit) then
+                and RMS_Fluids.getIsProductCompatible(container.productKey, requirement.circuit)
+                and RMS_Fluids.getIsProductSuited(vehicle, container.productKey, requirement.circuit) then
                 table.insert(candidates, container)
             end
         end
@@ -365,10 +366,11 @@ function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType
     return shortages
 end
 
-local function getDealerPricePerLiter(circuit)
+local function getDealerPricePerLiter(vehicle, circuit)
     local cheapestPerLiter = nil
-    for _, product in pairs(RMS_Fluids.PRODUCTS) do
-        if product.isStoreItem == true and product.compatibleCircuits[circuit] then
+    for productKey, product in pairs(RMS_Fluids.PRODUCTS) do
+        if product.isStoreItem == true and product.compatibleCircuits[circuit]
+            and RMS_Fluids.getIsProductSuited(vehicle, productKey, circuit) then
             for _, capacity in ipairs(product.capacities) do
                 if capacity >= 200 and product.storePrices ~= nil and product.storePrices[capacity] ~= nil then
                     local perLiter = product.storePrices[capacity] / capacity
@@ -381,10 +383,10 @@ local function getDealerPricePerLiter(circuit)
 end
 
 ---Returns the dealer price of the reserved fluids
-function RMS_FluidWorkshop.getDealerFluidPrice(requirements)
+function RMS_FluidWorkshop.getDealerFluidPrice(vehicle, requirements)
     local total = 0
     for circuit, liters in pairs(RMS_Fluids.getRequiredLitersByCircuit(requirements)) do
-        local pricePerLiter = getDealerPricePerLiter(circuit)
+        local pricePerLiter = getDealerPricePerLiter(vehicle, circuit)
         if pricePerLiter == nil then
             return nil
         end
@@ -420,7 +422,7 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
                 mode = requirement.mode,
                 liters = liters,
                 price = isFluidBilled and liters * RMS_FluidWorkshop.getUncoveredFluidShare(
-                    vehicle, requirement, serviceType, workshopType) * getDealerPricePerLiter(requirement.circuit) or 0
+                    vehicle, requirement, serviceType, workshopType) * getDealerPricePerLiter(vehicle, requirement.circuit) or 0
             })
         end
     end
@@ -453,7 +455,7 @@ function RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopTyp
     end
 
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
-    if RMS_FluidWorkshop.getDealerFluidPrice(requirements) == nil then return nil end
+    if RMS_FluidWorkshop.getDealerFluidPrice(vehicle, requirements) == nil then return nil end
     local total = 0
     for _, line in ipairs(RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo,
         servicePrice, requirements, true)) do total = total + line.price end
@@ -464,7 +466,7 @@ end
 function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, optionOne, optionTwo)
     local isFluidBilled = getIsFluidBilled(vehicle, serviceType, workshopType)
-    if isFluidBilled and RMS_FluidWorkshop.getDealerFluidPrice(requirements) == nil then
+    if isFluidBilled and RMS_FluidWorkshop.getDealerFluidPrice(vehicle, requirements) == nil then
         return nil
     end
     return RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, optionOne, optionTwo,
@@ -598,7 +600,7 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
 
     if getIsFluidSupplied(vehicle, serviceType, workshopType) then
         if isFluidBilled then
-            if RMS_FluidWorkshop.getDealerFluidPrice(requirements) == nil then
+            if RMS_FluidWorkshop.getDealerFluidPrice(vehicle, requirements) == nil then
                 return false, RMS_FluidWorkshop.RESULT.PRICE_UNAVAILABLE
             end
         end

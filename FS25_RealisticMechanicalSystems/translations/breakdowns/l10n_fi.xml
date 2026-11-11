@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Hiukkassuodattimessa on kriittinen vika. Täysin tukossa se ei enää päästä pakokaasuja läpi: vain vaihto palauttaa moottorin tehon."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Hiukkassuodatin on täynnä nokea. Regeneroinnit eivät ole valmistuneet: moottorin kierroslukua rajoitetaan, kunnes jokin regenerointi onnistuu."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Hiukkassuodattimen kriittinen nokikuormitus. Se on liian täynnä regeneroituakseen itse ja vaatii huoltoregeneroinnin korjaamolla; kierrosluku pysyy rajoitettuna."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Hiukkassuodatin täynnä tuhkaa. Regeneroinnit polttavat noen, eivät moottoriöljyn jättämää tuhkaa: suodatin on irrotettava ja puhdistettava korjaamolla; moottorin kierrokset on rajoitettu."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lievä tuuletinkytkimen toimintahäiriö. Tuuletin reagoi tehottomammin ja jäähdytys heikkenee hieman."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kohtalainen tuuletinkytkimen toimintahäiriö. Tuulettimen kytkeytyminen on epäsäännöllistä ja jäähdytystehokkuus laskee selvästi."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Vakava tuuletinkytkimen toimintahäiriö. Tuuletin ei enää tuota riittävää ilmavirtaa ja moottori ylikuumenee helpommin."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Korjuu mahdoton: korjuuosa on rikki"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Tukos: korjuu on pysähtynyt"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Silppuri rikki: oljet putoavat karhoon"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Silppuri rikki: tätä kasvia ei voi enää korjata"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Silppuri rikki: oljet putoavat silppuamatta"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Vetohihnojen alkava kuluminen. Ne luistavat hieman kuormituksessa."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Vetohihnojen kohtalainen kuluminen. Osa hidastuu kuormituksessa, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Vetohihnojen vakava kuluminen. Kapasiteetti laskee, ja pysähdykset toistuvat yhä uudelleen."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Olkisilppurin alkava kuluminen. Oljet silppuuntuvat pidemmiksi, ja silppuri vie hieman enemmän tehoa."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Olkisilppurin kohtalainen kuluminen. Silppuri tärisee ja vie enemmän tehoa."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Olkisilppurin vakava kuluminen. Roottori on epätasapainossa ja vie paljon tehoa."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Olkisilppurissa on kriittinen vika. Terä on katkennut: silppuri on pysähtynyt ja oljet putoavat karhoon."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Olkisilppurissa on kriittinen vika. Terä on katkennut: silppuri on pysähtynyt ja oljet putoavat silppuamatta, karhoon kun kasvi muodostaa sellaisen."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Syöttötelojen alkava kuluminen. Ne tarttuvat kasvustoon huonommin: syöttö muuttuu epätasaiseksi."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Syöttötelojen kohtalainen kuluminen. Silppupituus muuttuu epätasaiseksi, ja tukoksia syntyy."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Syöttötelojen vakava kuluminen. Kapasiteetti laskee, ja tukokset jatkuvat."/>

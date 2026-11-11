@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritické selhání filtru pevných částic. Zcela ucpaný již nepropouští plyny: výkon motoru obnoví pouze výměna."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Nasycení filtru pevných částic. Regenerace nebyly dokončeny: otáčky motoru jsou omezené, dokud se některá nezdaří."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritické nasycení filtru pevných částic. Je příliš zanesený pro samostatnou regeneraci a vyžaduje servisní regeneraci v dílně; otáčky zůstávají omezené."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtr pevných částic plný popela. Regenerace spaluje saze, ne popel z motorového oleje: filtr je nutné v dílně demontovat a vyčistit; otáčky motoru jsou omezeny."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lehká porucha spojky ventilátoru. Ventilátor reaguje méně účinně a chlazení je mírně zhoršeno."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Střední porucha spojky ventilátoru. Spínání ventilátoru je nepravidelné a účinnost chlazení znatelně klesá."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Silná porucha spojky ventilátoru. Ventilátor už nezajišťuje dostatečný průtok vzduchu a motor se snadněji přehřívá."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Sklizeň nemožná: sklízecí ústrojí je rozbité"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Ucpání: sklizeň se zastavila"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Drtič rozbitý: sláma padá do řádku"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Drtič rozbitý: tuto plodinu už nelze sklízet"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Drtič rozbitý: sláma padá nepodrcená"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Počínající opotřebení hnacích řemenů. Pod zatížením mírně prokluzují."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Střední opotřebení hnacích řemenů. Ústrojí pod zatížením zpomaluje a alarm otáček občas zastaví sklizeň."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Silné opotřebení hnacích řemenů. Výkonnost klesá a zastavení se stále opakují."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Počínající opotřebení drtiče slámy. Sláma je řezána méně nakrátko a drtič bere o něco více výkonu."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Střední opotřebení drtiče slámy. Drtič vibruje a bere více výkonu."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Silné opotřebení drtiče slámy. Rotor je nevyvážený a bere hodně výkonu."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritické selhání drtiče slámy. Nůž se zlomil: drtič stojí a sláma padá do řádku."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritické selhání drtiče slámy. Nůž se zlomil: drtič stojí a sláma padá nepodrcená, do řádku, pokud ho plodina tvoří."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Počínající opotřebení vkládacích válců. Hůře zachytávají hmotu: podávání je nerovnoměrné."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Střední opotřebení vkládacích válců. Délka řezanky je nerovnoměrná a objevují se ucpávky."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Silné opotřebení vkládacích válců. Výkonnost klesá a ucpávky se stále vracejí."/>

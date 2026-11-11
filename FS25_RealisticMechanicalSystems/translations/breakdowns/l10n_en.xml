@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Critical particulate filter failure. Fully blocked, it no longer lets the gases through: only a replacement gives the engine its power back."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Particulate filter overload. Regenerations have not completed: engine speed is limited until one succeeds."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Critical particulate filter overload. Too loaded to regenerate on its own, it needs a service regeneration at the workshop; engine speed stays limited."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Particulate filter full of ash. Regenerations burn the soot, not the ash the engine oil leaves: the filter must be removed and cleaned at the workshop; engine speed is limited."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Light fan clutch failure. The fan responds less effectively and cooling is slightly degraded."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderate fan clutch failure. Fan engagement is erratic and cooling efficiency drops noticeably."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Severe fan clutch failure. The fan no longer provides enough airflow and the engine overheats more easily."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Harvesting impossible: a harvesting part is broken"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Blockage: harvesting has stopped"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Chopper broken: the straw drops in a swath"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Chopper broken: this crop can no longer be harvested"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Chopper broken: the straw falls unchopped"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Early wear of the drive belts. They slip a little under load."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Moderate wear of the drive belts. A part slows down under load and the speed alarm sometimes stops harvesting."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Severe wear of the drive belts. Throughput drops and the stops come back again and again."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Early wear of the straw chopper. The straw is cut less short and the chopper takes a little more power."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Moderate wear of the straw chopper. The chopper vibrates and takes more power."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Severe wear of the straw chopper. The rotor is out of balance and takes a lot of power."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Critical straw chopper failure. A knife has broken: the chopper is stopped and the straw drops in a swath."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Critical straw chopper failure. A knife has broken: the chopper is stopped and the straw falls unchopped, in a swath when the crop makes one."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Early wear of the feed rolls. They grip the crop less well: the feed becomes uneven."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Moderate wear of the feed rolls. The length of cut becomes uneven and blockages appear."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Severe wear of the feed rolls. Throughput drops and the blockages keep coming."/>

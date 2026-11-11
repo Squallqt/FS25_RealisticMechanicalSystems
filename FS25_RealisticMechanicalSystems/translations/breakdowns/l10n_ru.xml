@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Критический отказ сажевого фильтра. Полностью забитый фильтр больше не пропускает газы: только замена возвращает двигателю мощность."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Переполнение сажевого фильтра. Регенерации не завершились: обороты двигателя ограничены, пока одна из них не завершится успешно."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Критическое переполнение сажевого фильтра. Он слишком заполнен для самостоятельной регенерации и требует сервисной регенерации в мастерской; обороты остаются ограниченными."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Сажевый фильтр забит золой. Регенерация сжигает сажу, но не золу от моторного масла: фильтр нужно снять и очистить в мастерской; обороты двигателя ограничены."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Лёгкая неисправность муфты вентилятора. Вентилятор реагирует менее эффективно, охлаждение слегка ухудшается."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Умеренная неисправность муфты вентилятора. Включение вентилятора становится нестабильным, эффективность охлаждения заметно падает."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Сильная неисправность муфты вентилятора. Вентилятор не обеспечивает достаточный поток воздуха, двигатель легче перегревается."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Уборка невозможна: уборочный узел сломан"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Забивание: уборка остановлена"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Измельчитель сломан: солома падает в валок"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Измельчитель сломан: эту культуру больше нельзя убирать"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Измельчитель сломан: солома падает неизмельчённой"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Начальный износ приводных ремней. Под нагрузкой они немного проскальзывают."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Умеренный износ приводных ремней. Узел замедляется под нагрузкой, и сигнал оборотов иногда останавливает уборку."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Сильный износ приводных ремней. Производительность падает, остановки повторяются снова и снова."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Начальный износ измельчителя соломы. Солома режется менее мелко, измельчитель берёт немного больше мощности."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Умеренный износ измельчителя соломы. Измельчитель вибрирует и берёт больше мощности."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Сильный износ измельчителя соломы. Ротор разбалансирован и берёт много мощности."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Критический отказ измельчителя соломы. Нож сломался: измельчитель стоит, солома падает в валок."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Критический отказ измельчителя соломы. Нож сломался: измельчитель стоит, солома падает неизмельчённой, в валок, если культура его образует."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Начальный износ питающих вальцов. Они хуже захватывают массу: подача становится неравномерной."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Умеренный износ питающих вальцов. Длина резки становится неравномерной, появляются забивания."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Сильный износ питающих вальцов. Производительность падает, забивания не прекращаются."/>

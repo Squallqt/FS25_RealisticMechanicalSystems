@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Facilité d'entretien faible"/>
         <text name="rms_shop_launch_year" text="Modèle lancé en %d"/>
         <text name="rms_shop_launch_year_unknown" text="Année de lancement inconnue"/>
+        <text name="rms_shop_category_maintenance" text="Entretien"/>
         <text name="rms_owner_care_careful" text="Entretien soigné"/>
         <text name="rms_owner_care_regular" text="Entretien régulier"/>
         <text name="rms_owner_care_neglected" text="Entretien négligé"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="angle de cardan excessif"/>
         <text name="rms_warranty_windup" text="blocage ou 4RM sur sol dur"/>
         <text name="rms_warranty_filter" text="filtre colmaté"/>
+        <text name="rms_warranty_oil" text="huile moteur non adaptée"/>
         <text name="rms_warranty_trailer" text="remorque trop lourde"/>
         <text name="rms_warranty_aftermarket_part" text="pièce adaptable"/>
         <text name="rms_warranty_used_part" text="pièce d'occasion"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Câbles de démarrage déconnectés de %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Bidon de fluide"/>
-        <text name="rms_fluid_function_engine_oil" text="Huile moteur pour l'appoint manuel"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Huile moteur, pour toutes les machines, AdBlue et filtre à particules compris"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Huile moteur, pour machines sans AdBlue ni filtre à particules"/>
         <text name="rms_fluid_function_utto" text="Huile de transmission et hydraulique pour l'appoint manuel"/>
         <text name="rms_fluid_function_coolant" text="Liquide de refroidissement pour l'appoint manuel"/>
         <text name="rms_fluid_pour_action" text="Verser : %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Ce produit n'est pas prévu pour ce circuit. Il le contaminera et pourra user la transmission jusqu'à trois fois plus vite et la faire chauffer davantage. Seule une vidange complète supprimera la contamination. Continuer ?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ce produit n'est pas prévu pour ce circuit. Il le contaminera et pourra user l'hydraulique jusqu'à trois fois plus vite, la faire chauffer davantage et la ralentir. Seule une vidange complète supprimera la contamination. Continuer ?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ce produit n'est pas prévu pour ce circuit. Il le contaminera et pourra user la transmission et l'hydraulique jusqu'à trois fois plus vite, les faire chauffer davantage et ralentir l'hydraulique. Seule une vidange complète supprimera la contamination. Continuer ?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Huile moteur non adaptée"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ce moteur a de l'AdBlue ou un filtre à particules : sa notice demande une huile faite pour eux. Avec cette huile, sa vidange reviendra jusqu'à deux fois plus tôt. Un filtre à particules se remplit aussi de cendres 1,5 fois plus vite. Continuer ?"/>
         <text name="rms_fluid_error_no_circuit" text="Ce véhicule ne nécessite aucun appoint de fluide"/>
         <text name="rms_fluid_error_motor_running" text="Arrêtez le moteur avant de transférer du fluide"/>
         <text name="rms_fluid_error_vehicle_moving" text="Le véhicule doit être immobile"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluides compris dans la location"/>
         <text name="rms_fluid_stock_required" text="Pris dans les bidons de la zone"/>
         <text name="rms_fluid_stock_missing" text="Il manque %s dans la zone"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Il manque %s d'huile adaptée à ce moteur dans la zone"/>
         <text name="rms_fluid_refill_work_order" text="Mise à niveau des fluides"/>
         <text name="rms_fluid_refill_dealer_supply" text="Fourniture incluse dans le devis"/>
         <text name="rms_fluid_mode_top_up" text="appoint"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Caution rendue"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niveau de fluide bas"/>
-        <text name="rms_tutorial_fluid_level_message" text="Un des fluides de cette machine est descendu sous le repère de sa jauge.&#10;&#10;L'huile moteur se consomme avec les heures, et un moteur fatigué en boit beaucoup plus. Le liquide de refroidissement, l'huile de transmission et l'huile hydraulique ne baissent que par une fuite.&#10;&#10;Sous le repère, la machine réclame seulement un appoint et travaille encore normalement. Plus le niveau baisse, plus sa pompe aspire facilement de l'air dans les pentes, les virages et les freinages : le voyant de pression d'huile clignote, et côté boîte ou hydraulique, la pompe siffle et les mouvements hydrauliques ralentissent. Chaque minute passée ainsi abîme les coussinets de vilebrequin ou la pompe : arrêtez-vous et refaites le niveau. Une machine qui manque de liquide de refroidissement, d'huile de boîte ou d'huile hydraulique chauffe aussi.&#10;&#10;Achetez au magasin un contenant de produit compatible, apportez-le à la machine et refaites le niveau. Tous les produits destinés à ce circuit ont le même effet ; un mauvais fluide contamine uniquement ce circuit. Chez le concessionnaire, les litres nécessaires sont fournis et facturés."/>
+        <text name="rms_tutorial_fluid_level_message" text="Un des fluides de cette machine est descendu sous le repère de sa jauge.&#10;&#10;L'huile moteur se consomme avec les heures, et un moteur fatigué en boit beaucoup plus. Le liquide de refroidissement, l'huile de transmission et l'huile hydraulique ne baissent que par une fuite.&#10;&#10;Sous le repère, la machine réclame seulement un appoint et travaille encore normalement. Plus le niveau baisse, plus sa pompe aspire facilement de l'air dans les pentes : le voyant de pression d'huile clignote, et côté boîte ou hydraulique, la pompe siffle et les mouvements hydrauliques ralentissent. Chaque minute passée ainsi abîme les coussinets de vilebrequin ou la pompe : arrêtez-vous et refaites le niveau. Une machine qui manque de liquide de refroidissement, d'huile de boîte ou d'huile hydraulique chauffe aussi.&#10;&#10;Achetez au magasin un contenant de produit compatible, apportez-le à la machine et refaites le niveau. Tous les produits destinés à ce circuit ont le même effet ; un mauvais fluide contamine uniquement ce circuit. Chez le concessionnaire, les litres nécessaires sont fournis et facturés."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bienvenue dans Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Désactiver les conseils"/>
         <text name="rms_tutorial_welcome_enable_button" text="Activer les conseils"/>

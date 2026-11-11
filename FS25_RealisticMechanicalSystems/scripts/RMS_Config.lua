@@ -142,9 +142,12 @@ RMS_Config = {
             SMALL_GRAIN = { a = 20, c = 3.6 },
             MAIZE = { a = 35, c = 1.6 },
             FORAGE = { a = 6, c = 3.3 },
-            FORAGE_WINDROW_C = 4.0,
             FORAGE_DRY_MATTER = 0.35,
-            -- kWh per t of grain
+            -- straw taken in past which the game spreads it: whole plant
+            WHOLE_PLANT_STRAW_RATIO = 0.5,
+            -- m, highest cut close to the ground: soybean and maize
+            STONE_CUT_HEIGHT = 0.20,
+            -- kWh per t of straw
             CHOPPER_ENERGY = 1.75,
             WET_MULTIPLIER = 1.0,
             RICE_MULTIPLIER = 0.5,
@@ -297,7 +300,11 @@ RMS_Config = {
             RESUME_RATE = 0.5,
             RELEASE_MARGIN = 3,
             -- seconds
-            OVERLOAD_SMOOTHING = 2
+            OVERLOAD_SMOOTHING = 2,
+            -- seconds, past the game's 5 s and Courseplay's 15 s
+            BLOCKED_SECONDS = 20,
+            -- m
+            BLOCKED_DISTANCE = 1
         },
         WORN_PART_RAMP_START = 0.34,
         WORN_PART_SYMPTOMS = {
@@ -618,6 +625,7 @@ RMS_Config = {
             NOX_SENSOR_FAILURE = {hours = 1.5, category = "diagnostic", mobileRequirement = "MOBILE_DIAGNOSTIC"},
             PARTICULATE_FILTER_FAILURE = {hours = 6.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             PARTICULATE_FILTER_SOOT_OVERLOAD = {hours = 1.4, category = "diagnostic", mobileRequirement = "MOBILE_DIAGNOSTIC"},
+            PARTICULATE_FILTER_ASH = {hours = 6.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             TRACTION_BATTERY_CELL_FAULT = {hours = 9.5, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             HV_CONTACTOR_FAILURE = {hours = 1.4, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             GEARBOX_BEARING_FAILURE = {hours = 18, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
@@ -1065,12 +1073,14 @@ RMS_Config = {
         PICKUP_MIN_MARK_ANGLE = 30,
         -- s of air drawn by a pump, summed, for each stage of its fault
         PICKUP_STAGE_SECONDS = 60,
-        -- s the oil takes to follow the slope and the accelerations
+        -- s the oil takes to follow the slope
         PICKUP_SMOOTHING_SECONDS = 0.5,
         -- deg back under its limit before a pump draws oil again
         PICKUP_HYSTERESIS_ANGLE = 3,
         -- share of its speed a hydraulic function keeps while its pump draws air
         PICKUP_HYDRAULIC_SPEED = 0.5,
+        -- share of its oil interval an engine keeps on an unsuited oil
+        UNSUITED_ENGINE_OIL_INTERVAL = 0.5,
     },
 
     -- drive mode, differential lock and park brake
@@ -1306,7 +1316,11 @@ RMS_Config = {
             REGENERATION_COOLANT = 70,
             DERATE_LEVEL = 1.14,
             SERVICE_LEVEL = 1.44,
-            DERATE_RPM = 1500
+            DERATE_RPM = 1500,
+            -- work hours between ash cleanings, on the right oil
+            ASH_CLEANING_HOURS = 5500,
+            -- ash of an unsuited oil against the right one
+            UNSUITED_OIL_ASH = 1.5
         },
         SCR_INDUCEMENT = {
             DOSING = { LOW_HOURS = 10, SEVERE_HOURS = 20 },
@@ -1469,6 +1483,7 @@ RMS_Config = {
                 [1] = { ecu = "ENGINE", spn = 3251, warning = 1, critical = 1 },
                 [2] = { ecu = "ENGINE", spn = 3251, warning = 0, critical = 0 } } },
             PARTICULATE_FILTER_SOOT_OVERLOAD = { ecu = "ENGINE", spn = 524135, warning = 14, critical = 0 },
+            PARTICULATE_FILTER_ASH = { ecu = "ENGINE", spn = 3251, warning = 0, critical = 0 },
             THERMOSTAT_MALFUNCTION = { branches = { [2] = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0 } } },
             COOLANT_PUMP_FAILURE = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0 },
             THERMAL_WATER_PUMP = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0, branches = { [2] = { ecu = "ENGINE", spn = 111, warning = 1, critical = 1 } } },

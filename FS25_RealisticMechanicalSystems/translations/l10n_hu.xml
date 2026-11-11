@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Gyenge karbantarthatóság"/>
         <text name="rms_shop_launch_year" text="Modell bevezetése: %d"/>
         <text name="rms_shop_launch_year_unknown" text="Bevezetés éve ismeretlen"/>
+        <text name="rms_shop_category_maintenance" text="Karbantartás"/>
         <text name="rms_owner_care_careful" text="Gondos karbantartás"/>
         <text name="rms_owner_care_regular" text="Rendszeres karbantartás"/>
         <text name="rms_owner_care_neglected" text="Elhanyagolt karbantartás"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="túl nagy kardántengely-szög"/>
         <text name="rms_warranty_windup" text="zár vagy 4WD kemény talajon"/>
         <text name="rms_warranty_filter" text="eltömődött szűrő"/>
+        <text name="rms_warranty_oil" text="nem megfelelő motorolaj"/>
         <text name="rms_warranty_trailer" text="túl nehéz pótkocsi"/>
         <text name="rms_warranty_aftermarket_part" text="utángyártott alkatrész"/>
         <text name="rms_warranty_used_part" text="használt alkatrész"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Indítókábel leválasztva erről: %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Folyadékos kanna"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolaj kézi utántöltéshez"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolaj, minden géphez, AdBlue-val és részecskeszűrővel is"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolaj, AdBlue és részecskeszűrő nélküli gépekhez"/>
         <text name="rms_fluid_function_utto" text="Hajtómű- és hidraulikaolaj kézi utántöltéshez"/>
         <text name="rms_fluid_function_coolant" text="Hűtőfolyadék kézi utántöltéshez"/>
         <text name="rms_fluid_pour_action" text="Betöltés: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó kopását, valamint fokozhatja a melegedését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a hidraulika kopását, fokozhatja a melegedését és lassíthatja a működését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó és a hidraulika kopását, fokozhatja a melegedésüket és lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nem megfelelő motorolaj"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ez a motor AdBlue-t használ, vagy részecskeszűrője van: a kezelési kézikönyve ezekhez készült olajat ír elő. Ezzel az olajjal az olajcsere akár kétszer olyan hamar esedékes. A részecskeszűrő ráadásul 1,5-szer gyorsabban telik meg hamuval. Folytatod?"/>
         <text name="rms_fluid_error_no_circuit" text="Ennél a járműnél nincs szükség folyadék utántöltésére"/>
         <text name="rms_fluid_error_motor_running" text="Állítsd le a motort a folyadék áttöltése előtt"/>
         <text name="rms_fluid_error_vehicle_moving" text="A járműnek állnia kell"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="A folyadékokat a lízing tartalmazza"/>
         <text name="rms_fluid_stock_required" text="A műhely területén lévő edényekből"/>
         <text name="rms_fluid_stock_missing" text="%s hiányzik a műhely területén"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="%s ehhez a motorhoz megfelelő olaj hiányzik a műhely területén"/>
         <text name="rms_fluid_refill_work_order" text="Folyadékszintek utántöltése"/>
         <text name="rms_fluid_refill_dealer_supply" text="A folyadékellátás szerepel az árajánlatban"/>
         <text name="rms_fluid_mode_top_up" text="utántöltés"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Visszakapott kaució"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Alacsony folyadékszint"/>
-        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Minél lejjebb száll a szint, annál könnyebben szív levegőt a szivattyú lejtőn, kanyarban és fékezéskor: az olajnyomás-lámpa villog, a váltó vagy a hidraulika oldalán pedig a szivattyú sípol, és a hidraulikus mozgások lelassulnak. Minden így eltöltött perc rongálja a főtengelycsapágyakat vagy a szivattyút: állj meg, és töltsd fel a szintet. Hűtőfolyadék, váltóolaj vagy hidraulikaolaj hiányában a gép emellett melegszik is.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
+        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Minél lejjebb száll a szint, annál könnyebben szív levegőt a szivattyú lejtőn: az olajnyomás-lámpa villog, a váltó vagy a hidraulika oldalán pedig a szivattyú sípol, és a hidraulikus mozgások lelassulnak. Minden így eltöltött perc rongálja a főtengelycsapágyakat vagy a szivattyút: állj meg, és töltsd fel a szintet. Hűtőfolyadék, váltóolaj vagy hidraulikaolaj hiányában a gép emellett melegszik is.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Üdvözöl a Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tippek kikapcsolása"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tippek bekapcsolása"/>

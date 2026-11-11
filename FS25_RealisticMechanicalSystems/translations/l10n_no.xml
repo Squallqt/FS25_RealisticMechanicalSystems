@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Lav vedlikeholdsvennlighet"/>
         <text name="rms_shop_launch_year" text="Modell lansert i %d"/>
         <text name="rms_shop_launch_year_unknown" text="Lanseringsår ukjent"/>
+        <text name="rms_shop_category_maintenance" text="Vedlikehold"/>
         <text name="rms_owner_care_careful" text="Nøye vedlikehold"/>
         <text name="rms_owner_care_regular" text="Jevnlig vedlikehold"/>
         <text name="rms_owner_care_neglected" text="Forsømt vedlikehold"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="for stor vinkel på kardangaksel"/>
         <text name="rms_warranty_windup" text="sperre eller 4WD på fast underlag"/>
         <text name="rms_warranty_filter" text="tett filter"/>
+        <text name="rms_warranty_oil" text="uegnet motorolje"/>
         <text name="rms_warranty_trailer" text="for tung henger"/>
         <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
         <text name="rms_warranty_used_part" text="brukt del"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startkablene ble koblet fra %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Væskekanne"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolje til manuell påfylling"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolje, til alle maskiner, også med AdBlue og partikkelfilter"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolje, til maskiner uten AdBlue og partikkelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmisjons- og hydraulikkolje til manuell påfylling"/>
         <text name="rms_fluid_function_coolant" text="Kjølevæske til manuell påfylling"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på transmisjonen og gjøre den varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på hydraulikken, gjøre den varmere og langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på transmisjonen og hydraulikken, gjøre dem varmere og gjøre hydraulikken langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Uegnet motorolje"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Denne motoren bruker AdBlue eller har partikkelfilter: instruksjonsboken krever en olje laget for dem. Med denne oljen kommer oljeskiftet opptil dobbelt så tidlig. Et partikkelfilter fylles dessuten 1,5 ganger så fort med aske. Fortsette?"/>
         <text name="rms_fluid_error_no_circuit" text="Dette kjøretøyet trenger ikke påfylling av væske"/>
         <text name="rms_fluid_error_motor_running" text="Slå av motoren før du overfører væske"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kjøretøyet må stå stille"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Væsker inkludert i leasingen"/>
         <text name="rms_fluid_stock_required" text="Tas fra kannene i verkstedområdet"/>
         <text name="rms_fluid_stock_missing" text="Det mangler %s i verkstedområdet"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Det mangler %s olje som passer til denne motoren i verkstedområdet"/>
         <text name="rms_fluid_refill_work_order" text="Oppfylling av væsker"/>
         <text name="rms_fluid_refill_dealer_supply" text="Levering inngår i prisoverslaget"/>
         <text name="rms_fluid_mode_top_up" text="påfylling"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Tilbakebetalt depositum"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Lavt væskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker, i svinger og ved oppbremsing: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Slå av tipsene"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsene"/>

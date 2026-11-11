@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritieke uitval van het roetfilter. Volledig verstopt, laat het geen uitlaatgas meer door: alleen vervanging herstelt het motorvermogen."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Roetfilter verzadigd. De regeneraties zijn niet voltooid: het motortoerental blijft begrensd tot een regeneratie slaagt."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritieke verzadiging van het roetfilter. Het is te vol om zelf te regenereren en heeft een serviceregeneratie in de werkplaats nodig; het toerental blijft begrensd."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Roetfilter vol as. Regeneraties verbranden het roet, niet de as die de motorolie achterlaat: het filter moet in de werkplaats worden uitgebouwd en gereinigd; het motortoerental is begrensd."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lichte storing van de ventilatorkoppeling. De ventilator reageert minder doeltreffend en de koeling is licht verminderd."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Matige storing van de ventilatorkoppeling. De ventilator schakelt onregelmatig in en de koelefficiëntie neemt duidelijk af."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ernstige storing van de ventilatorkoppeling. De ventilator levert niet meer genoeg lucht en de motor raakt gemakkelijker oververhit."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Oogsten onmogelijk: een oogstonderdeel is kapot"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Verstopping: het oogsten is gestopt"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Hakselaar kapot: het stro valt in een zwad"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Hakselaar kapot: dit gewas kan niet meer worden geoogst"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Hakselaar kapot: het stro valt ongehakseld"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Beginnende slijtage van de aandrijfriemen. Ze slippen een beetje onder belasting."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Matige slijtage van de aandrijfriemen. Een onderdeel loopt terug onder belasting en het toerentalalarm stopt soms het oogsten."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Ernstige slijtage van de aandrijfriemen. De doorvoer daalt en het oogsten stopt steeds weer."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Beginnende slijtage van de strohakselaar. Het stro wordt minder kort gehakseld en de hakselaar vraagt iets meer vermogen."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Matige slijtage van de strohakselaar. De hakselaar trilt en vraagt meer vermogen."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Ernstige slijtage van de strohakselaar. De rotor is uit balans en vraagt veel vermogen."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritieke uitval van de strohakselaar. Een mes is gebroken: de hakselaar staat stil en het stro valt in een zwad."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritieke uitval van de strohakselaar. Een mes is gebroken: de hakselaar staat stil en het stro valt ongehakseld, in een zwad als het gewas er een vormt."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Beginnende slijtage van de invoerrollen. Ze grijpen het gewas slechter: de invoer wordt onregelmatig."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Matige slijtage van de invoerrollen. De haksellengte wordt onregelmatig en er ontstaan verstoppingen."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Ernstige slijtage van de invoerrollen. De doorvoer daalt en de verstoppingen blijven komen."/>

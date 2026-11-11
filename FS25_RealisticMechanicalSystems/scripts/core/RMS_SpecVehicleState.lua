@@ -770,10 +770,19 @@ local function updateFuelState(vehicle, dt)
             isDiesel = spec.isDieselVehicle,
             isMotorStarted = true
         })
+        fuelState.particulateFilterAsh, fuelState.particulateFilterOilAsh = RMS_Exhaust.calculateParticulateFilterAsh({
+            ash = fuelState.particulateFilterAsh,
+            oilAsh = fuelState.particulateFilterOilAsh,
+            isStageV = spec.hasParticulateFilter == true,
+            isMotorStarted = true,
+            suitedShare = spec.engineOilSuitedShare,
+            dt = dt
+        })
         fuelState.particulateFilterLevel, fuelState.particulateFilterRegenerationMs, fuelState.isParticulateFilterRegenerating =
             RMS_Exhaust.calculateParticulateFilterLoad({
                 currentLevel = fuelState.particulateFilterLevel,
                 regenerationMs = fuelState.particulateFilterRegenerationMs,
+                ash = fuelState.particulateFilterAsh,
                 isStageV = spec.hasParticulateFilter == true,
                 isBlocked = spec.activeEffects.PARTICULATE_FILTER_BLOCKED ~= nil,
                 isMotorStarted = true,

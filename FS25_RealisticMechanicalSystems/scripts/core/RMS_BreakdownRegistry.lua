@@ -475,6 +475,7 @@ local stagePartPrices = {
     NOX_SENSOR_FAILURE = { 0.1907 },
     PARTICULATE_FILTER_FAILURE = { 1.957, 1.957, 1.957, 1.957 },
     PARTICULATE_FILTER_SOOT_OVERLOAD = { 0.0, 0.1548 },
+    PARTICULATE_FILTER_ASH = { 0.2748 },
     TRACTION_BATTERY_CELL_FAULT = { 45.88, 45.88, 45.88, 45.88 },
     HV_CONTACTOR_FAILURE = { 0.3363, 0.3363, 0.3363, 0.3363 },
     HARVEST_DRIVE_BELT_WEAR = { 0.0185, 0.0185, 0.02774, 0.03699 },
@@ -2591,6 +2592,13 @@ addBreakdown("PARTICULATE_FILTER_SOOT_OVERLOAD", {
         detectionChance = 1.0, lamps = { { db.DPF, color.CRITICAL }, { db.ENGINE, color.CRITICAL } } }
 })
 
+addBreakdown("PARTICULATE_FILTER_ASH", {
+    isSelectable = false, system = systems.FUEL, part = parts.PARTICULATE_FILTER, isApplicable = getHasParticulateFilter
+}, {
+    { { "PARTICULATE_FILTER_BLOCKED", 1 }, severity = CRITICAL, description = "rms_breakdowns_particulate_filter_ash_stage1_description",
+        detectionChance = 1.0, lamps = { { db.DPF, color.CRITICAL } } }
+})
+
 addBreakdown("TRACTION_BATTERY_CELL_FAULT", {
     system = systems.FUEL, part = parts.TRACTION_BATTERY, isApplicable = getIsElectricVehicle,
         causes = { primary = { "ddf", "bhf" }, secondary = {} }, component = "TRACTION_BATTERY", progress = 1.4
@@ -2679,8 +2687,10 @@ local function getHarvestSymptoms(profile)
         return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop() } }
     elseif profile == "detector" then
         return { { blockage(30) }, { blockage(10) }, { { "METAL_DETECTOR_OFF", 1.0 } } }
+    elseif profile == "shares" then
+        return { { grainLoss(0.01) }, { grainLoss(0.02), powerDemand(0.05) }, { grainLoss(0.04), powerDemand(0.10) }, { stop() } }
     end
-    return { { grainLoss(0.01) }, { grainLoss(0.02), powerDemand(0.05) }, { grainLoss(0.04), powerDemand(0.10) }, { stop() } }
+    error("unknown harvest symptoms " .. tostring(profile))
 end
 
 -- def={part, isApplicable, component, causes, symptoms, texts, progress}

@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Mała łatwość obsługi"/>
         <text name="rms_shop_launch_year" text="Model wprowadzony w %d"/>
         <text name="rms_shop_launch_year_unknown" text="Rok wprowadzenia na rynek nieznany"/>
+        <text name="rms_shop_category_maintenance" text="Obsługa techniczna"/>
         <text name="rms_owner_care_careful" text="Staranna obsługa techniczna"/>
         <text name="rms_owner_care_regular" text="Regularna obsługa techniczna"/>
         <text name="rms_owner_care_neglected" text="Zaniedbana obsługa techniczna"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="za duży kąt wału WOM"/>
         <text name="rms_warranty_windup" text="blokada lub 4WD na twardym podłożu"/>
         <text name="rms_warranty_filter" text="zapchany filtr"/>
+        <text name="rms_warranty_oil" text="nieodpowiedni olej silnikowy"/>
         <text name="rms_warranty_trailer" text="za ciężka przyczepa"/>
         <text name="rms_warranty_aftermarket_part" text="zamiennik"/>
         <text name="rms_warranty_used_part" text="część używana"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Kable rozruchowe odłączone od %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Kanister z płynem"/>
-        <text name="rms_fluid_function_engine_oil" text="Olej silnikowy do ręcznego uzupełniania"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Olej silnikowy, do wszystkich maszyn, także z AdBlue i filtrem cząstek stałych"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Olej silnikowy, do maszyn bez AdBlue i filtra cząstek stałych"/>
         <text name="rms_fluid_function_utto" text="Olej przekładniowy i hydrauliczny do ręcznego uzupełniania"/>
         <text name="rms_fluid_function_coolant" text="Płyn chłodniczy do ręcznego uzupełniania"/>
         <text name="rms_fluid_pour_action" text="Wlej: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie skrzyni biegów oraz podnieść jej temperaturę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie układu hydraulicznego, podnieść jego temperaturę i spowolnić jego pracę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie skrzyni biegów i układu hydraulicznego, podnieść ich temperaturę i spowolnić hydraulikę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nieodpowiedni olej silnikowy"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ten silnik korzysta z AdBlue lub ma filtr cząstek stałych: jego instrukcja wymaga oleju przeznaczonego do nich. Z tym olejem wymiana oleju przypadnie nawet dwa razy wcześniej. Filtr cząstek stałych zapełni się też popiołem 1,5 raza szybciej. Kontynuować?"/>
         <text name="rms_fluid_error_no_circuit" text="Ten pojazd nie wymaga uzupełniania płynu"/>
         <text name="rms_fluid_error_motor_running" text="Wyłącz silnik przed przelaniem płynu"/>
         <text name="rms_fluid_error_vehicle_moving" text="Pojazd musi stać nieruchomo"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Płyny w cenie wypożyczenia"/>
         <text name="rms_fluid_stock_required" text="Z pojemników w strefie warsztatu"/>
         <text name="rms_fluid_stock_missing" text="W strefie warsztatu brakuje %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="W strefie warsztatu brakuje %s oleju odpowiedniego dla tego silnika"/>
         <text name="rms_fluid_refill_work_order" text="Uzupełnienie poziomu płynów"/>
         <text name="rms_fluid_refill_dealer_supply" text="Płyny uwzględnione w kosztorysie"/>
         <text name="rms_fluid_mode_top_up" text="uzupełnienie"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Zwrot kaucji"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niski poziom płynu"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny spadł poniżej oznaczenia na wskaźniku.&#10;&#10;Olej silnikowy ubywa wraz z godzinami pracy, a zużyty silnik zużywa go znacznie więcej. Płyn chłodniczy, olej przekładniowy i olej hydrauliczny ubywają tylko wskutek wycieku.&#10;&#10;Poniżej oznaczenia maszyna wymaga jedynie uzupełnienia i nadal pracuje normalnie. Im niżej spada poziom, tym łatwiej pompa zasysa powietrze na stokach, w zakrętach i podczas hamowania: kontrolka ciśnienia oleju miga, a po stronie skrzyni biegów lub hydrauliki pompa wyje i ruchy hydrauliczne zwalniają. Każda tak spędzona minuta uszkadza panewki wału korbowego lub pompę: zatrzymaj się i uzupełnij poziom. Maszyna z niedoborem płynu chłodniczego, oleju przekładniowego lub hydraulicznego również się przegrzewa.&#10;&#10;Kup w sklepie pojemnik z odpowiednim produktem, dostarcz go do maszyny i uzupełnij poziom. Wszystkie produkty przeznaczone do danego obiegu mają ten sam efekt; niewłaściwy płyn zanieczyszcza tylko ten obieg. U dealera potrzebne litry są dostarczane i doliczane do rachunku."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny spadł poniżej oznaczenia na wskaźniku.&#10;&#10;Olej silnikowy ubywa wraz z godzinami pracy, a zużyty silnik zużywa go znacznie więcej. Płyn chłodniczy, olej przekładniowy i olej hydrauliczny ubywają tylko wskutek wycieku.&#10;&#10;Poniżej oznaczenia maszyna wymaga jedynie uzupełnienia i nadal pracuje normalnie. Im niżej spada poziom, tym łatwiej pompa zasysa powietrze na stokach: kontrolka ciśnienia oleju miga, a po stronie skrzyni biegów lub hydrauliki pompa wyje i ruchy hydrauliczne zwalniają. Każda tak spędzona minuta uszkadza panewki wału korbowego lub pompę: zatrzymaj się i uzupełnij poziom. Maszyna z niedoborem płynu chłodniczego, oleju przekładniowego lub hydraulicznego również się przegrzewa.&#10;&#10;Kup w sklepie pojemnik z odpowiednim produktem, dostarcz go do maszyny i uzupełnij poziom. Wszystkie produkty przeznaczone do danego obiegu mają ten sam efekt; niewłaściwy płyn zanieczyszcza tylko ten obieg. U dealera potrzebne litry są dostarczane i doliczane do rachunku."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Witamy w Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Wyłącz wskazówki"/>
         <text name="rms_tutorial_welcome_enable_button" text="Włącz wskazówki"/>

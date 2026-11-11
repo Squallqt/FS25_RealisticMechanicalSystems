@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="保養便利性低"/>
         <text name="rms_shop_launch_year" text="%d年上市"/>
         <text name="rms_shop_launch_year_unknown" text="上市年份不詳"/>
+        <text name="rms_shop_category_maintenance" text="保養"/>
         <text name="rms_owner_care_careful" text="精心保養"/>
         <text name="rms_owner_care_regular" text="定期保養"/>
         <text name="rms_owner_care_neglected" text="疏於保養"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="傳動軸角度過大"/>
         <text name="rms_warranty_windup" text="硬地面使用差速鎖或四驅"/>
         <text name="rms_warranty_filter" text="濾清器堵塞"/>
+        <text name="rms_warranty_oil" text="不合適的機油"/>
         <text name="rms_warranty_trailer" text="拖車過重"/>
         <text name="rms_warranty_aftermarket_part" text="副廠零件"/>
         <text name="rms_warranty_used_part" text="二手零件"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="已從%s斷開跨接電線"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="油液容器"/>
-        <text name="rms_fluid_function_engine_oil" text="手動補充用發動機機油"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="發動機機油，適用於所有機械，包括帶 AdBlue 和微粒過濾器的機械"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="發動機機油，適用於沒有 AdBlue 和微粒過濾器的機械"/>
         <text name="rms_fluid_function_utto" text="手動補充用變速箱與液壓油"/>
         <text name="rms_fluid_function_coolant" text="手動補充用冷卻液"/>
         <text name="rms_fluid_pour_action" text="加注：%s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="此產品不適用於該回路。它會污染回路，並可能使變速箱磨損增加至3倍、變速箱溫度升高。只有完全更換油液才能清除污染。是否繼續？"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="此產品不適用於該回路。它會污染回路，並可能使液壓系統磨損增加至3倍、溫度升高並使液壓功能變慢。只有完全更換油液才能清除污染。是否繼續？"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="此產品不適用於該回路。它會污染回路，並可能使變速箱和液壓系統磨損增加至3倍、溫度升高並使液壓功能變慢。只有完全更換油液才能清除污染。是否繼續？"/>
+        <text name="rms_fluid_unsuited_oil_title" text="不適用的發動機機油"/>
+        <text name="rms_fluid_unsuited_oil_message" text="這台發動機使用 AdBlue 或裝有微粒過濾器：其說明書要求使用為它們設計的機油。使用這種機油，換油間隔最多縮短一半。微粒過濾器積滿灰分的速度也會快 1.5 倍。是否繼續？"/>
         <text name="rms_fluid_error_no_circuit" text="此機具不需要補充任何油液"/>
         <text name="rms_fluid_error_motor_running" text="輸送油液前請關閉發動機"/>
         <text name="rms_fluid_error_vehicle_moving" text="機具必須保持靜止"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="油液已包含在租賃中"/>
         <text name="rms_fluid_stock_required" text="取自維修廠區域內的油液容器"/>
         <text name="rms_fluid_stock_missing" text="維修廠區域內還缺 %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="維修廠區域內還缺 %s 適合這台發動機的機油"/>
         <text name="rms_fluid_refill_work_order" text="補足油液"/>
         <text name="rms_fluid_refill_dealer_supply" text="報價中包含油液供應"/>
         <text name="rms_fluid_mode_top_up" text="補充"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="押金退還"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油液液位過低"/>
-        <text name="rms_tutorial_fluid_level_message" text="此機器的一種油液已經降到液位標記以下。&#10;&#10;發動機機油會隨工作小時增加而消耗，磨損的發動機會消耗更多機油。冷卻液、變速箱油和液壓油只會因外流而減少。&#10;&#10;液位剛低於標記時，機器只需補充油液，仍可正常工作。液位越低，泵在坡道、轉彎和制動時越容易吸入空氣：機油壓力警告燈會閃爍；在變速箱或液壓一側，泵會發出異響，液壓動作變慢。每這樣運轉一分鐘，都會損傷曲軸軸瓦或泵：請停車並補足液位。冷卻液、變速箱油或液壓油不足的機器也會過熱。&#10;&#10;請在商店購買一桶相容產品，帶到機器旁並補足液位。適用於同一回路的產品作用相同；錯誤油液只會污染對應回路。在經銷商處，所需油液會直接供應並收費。"/>
+        <text name="rms_tutorial_fluid_level_message" text="此機器的一種油液已經降到液位標記以下。&#10;&#10;發動機機油會隨工作小時增加而消耗，磨損的發動機會消耗更多機油。冷卻液、變速箱油和液壓油只會因外流而減少。&#10;&#10;液位剛低於標記時，機器只需補充油液，仍可正常工作。液位越低，泵在坡道上越容易吸入空氣：機油壓力警告燈會閃爍；在變速箱或液壓一側，泵會發出異響，液壓動作變慢。每這樣運轉一分鐘，都會損傷曲軸軸瓦或泵：請停車並補足液位。冷卻液、變速箱油或液壓油不足的機器也會過熱。&#10;&#10;請在商店購買一桶相容產品，帶到機器旁並補足液位。適用於同一回路的產品作用相同；錯誤油液只會污染對應回路。在經銷商處，所需油液會直接供應並收費。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="歡迎使用Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="停用提示"/>
         <text name="rms_tutorial_welcome_enable_button" text="啟用提示"/>

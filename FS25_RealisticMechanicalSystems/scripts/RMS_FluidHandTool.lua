@@ -523,7 +523,9 @@ local function startPour(handTool)
         return
     end
 
-    if not spec.targetIsCompatible and (spec.confirmedVehicle ~= target or spec.confirmedCircuit ~= circuit) then
+    local isUnsuited = spec.targetIsCompatible
+        and not RMS_Fluids.getIsProductSuited(target, spec.container:getRMSFluidProductKey(), circuit)
+    if (not spec.targetIsCompatible or isUnsuited) and (spec.confirmedVehicle ~= target or spec.confirmedCircuit ~= circuit) then
         YesNoDialog.show(
             function(confirmed)
                 if confirmed then
@@ -531,8 +533,8 @@ local function startPour(handTool)
                 end
             end,
             nil,
-            g_i18n:getText(RMS_Fluids.getIncompatibleMessageKey(target, circuit)),
-            g_i18n:getText("rms_fluid_incompatible_title")
+            g_i18n:getText(isUnsuited and "rms_fluid_unsuited_oil_message" or RMS_Fluids.getIncompatibleMessageKey(target, circuit)),
+            g_i18n:getText(isUnsuited and "rms_fluid_unsuited_oil_title" or "rms_fluid_incompatible_title")
         )
         return
     end

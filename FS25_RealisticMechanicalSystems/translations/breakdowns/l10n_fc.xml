@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Défaillance critique du filtre à particules. Entièrement bouché, il ne laisse plus passer les gaz : seul son remplacement rend la puissance au moteur."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturation du filtre à particules. Les régénérations n'ont pas abouti : le régime moteur est bridé jusqu'à ce que l'une d'elles réussisse."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturation critique du filtre à particules. Trop chargé pour se régénérer seul, il demande une régénération de service à l'atelier ; le régime reste bridé."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtre à particules plein de cendres. Les régénérations brûlent la suie, pas les cendres que laisse l'huile moteur : il faut déposer et nettoyer le filtre à l'atelier ; le régime moteur est bridé."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Défaillance légère de l'embrayage de ventilateur. Le ventilateur réagit moins efficacement et le refroidissement est légèrement dégradé."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Défaillance modérée de l'embrayage de ventilateur. L'engagement du ventilateur est irrégulier et l'efficacité du refroidissement baisse nettement."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Défaillance sévère de l'embrayage de ventilateur. Le ventilateur ne fournit plus un débit d'air suffisant et le moteur surchauffe plus facilement."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Récolte impossible : un organe est cassé"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Bourrage : la récolte s'est arrêtée"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Broyeur cassé : la paille tombe en andain"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Broyeur cassé : cette culture ne peut plus être récoltée"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Broyeur cassé : la paille tombe sans être broyée"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Usure naissante des courroies des organes. Elles patinent un peu sous la charge."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Usure modérée des courroies des organes. Un organe ralentit sous la charge et l'alarme de régime arrête parfois la récolte."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Usure sévère des courroies des organes. Le débit baisse et les arrêts se répètent."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Usure naissante du broyeur. La paille est hachée moins court et le broyeur demande un peu plus de puissance."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Usure modérée du broyeur. Le broyeur vibre et demande plus de puissance."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Usure sévère du broyeur. Le rotor est déséquilibré et prend beaucoup de puissance."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Défaillance critique du broyeur. Un couteau a cassé : le broyeur est arrêté et la paille tombe en andain."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Défaillance critique du broyeur. Un couteau a cassé : le broyeur est arrêté et la paille tombe sans être broyée, en andain quand la culture en fait un."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Usure naissante des rouleaux d'alimentation. Ils accrochent moins bien la récolte : l'alimentation devient irrégulière."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Usure modérée des rouleaux d'alimentation. La longueur de coupe devient inégale et des bourrages apparaissent."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Usure sévère des rouleaux d'alimentation. Le débit baisse et les bourrages se répètent."/>

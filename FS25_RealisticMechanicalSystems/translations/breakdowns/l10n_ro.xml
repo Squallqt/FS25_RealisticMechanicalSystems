@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Defecțiune critică a filtrului de particule. Complet blocat, nu mai lasă gazele să treacă: doar înlocuirea redă puterea motorului."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturare a filtrului de particule. Regenerările nu s-au încheiat: turația motorului este limitată până când una reușește."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturare critică a filtrului de particule. Prea încărcat pentru a se regenera singur, necesită o regenerare de service la atelier; turația rămâne limitată."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtru de particule plin de cenușă. Regenerările ard funinginea, nu cenușa lăsată de uleiul de motor: filtrul trebuie demontat și curățat în atelier; turația motorului este limitată."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Defecțiune ușoară a ambreiajului ventilatorului. Ventilatorul răspunde mai puțin eficient, iar răcirea este ușor afectată."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Defecțiune moderată a ambreiajului ventilatorului. Cuplarea ventilatorului este neregulată, iar eficiența răcirii scade vizibil."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Defecțiune gravă a ambreiajului ventilatorului. Ventilatorul nu mai asigură un debit de aer suficient, iar motorul se supraîncălzește mai ușor."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Recoltare imposibilă: un organ de recoltare este rupt"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Înfundare: recoltarea s-a oprit"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Tocător defect: paiele cad în brazdă"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Tocător defect: această cultură nu mai poate fi recoltată"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Tocător defect: paiele cad netocate"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Uzură incipientă a curelelor de transmisie. Patinează puțin sub sarcină."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Uzură moderată a curelelor de transmisie. Un organ încetinește sub sarcină, iar alarma de turație oprește uneori recoltarea."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Uzură gravă a curelelor de transmisie. Debitul scade, iar opririle revin mereu."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Uzură incipientă a tocătorului de paie. Paiele sunt tocate mai puțin mărunt, iar tocătorul cere puțin mai multă putere."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Uzură moderată a tocătorului de paie. Tocătorul vibrează și cere mai multă putere."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Uzură gravă a tocătorului de paie. Rotorul este dezechilibrat și consumă multă putere."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Defecțiune critică a tocătorului de paie. Un cuțit s-a rupt: tocătorul stă, iar paiele cad în brazdă."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Defecțiune critică a tocătorului de paie. Un cuțit s-a rupt: tocătorul stă, iar paiele cad netocate, în brazdă când cultura formează una."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Uzură incipientă a valțurilor de alimentare. Prind mai prost masa: alimentarea devine neregulată."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Uzură moderată a valțurilor de alimentare. Lungimea de tocare devine neregulată și apar înfundări."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Uzură gravă a valțurilor de alimentare. Debitul scade, iar înfundările revin mereu."/>

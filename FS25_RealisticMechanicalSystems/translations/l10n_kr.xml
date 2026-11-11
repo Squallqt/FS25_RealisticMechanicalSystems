@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="정비 편의성 낮음"/>
         <text name="rms_shop_launch_year" text="%d년 출시 모델"/>
         <text name="rms_shop_launch_year_unknown" text="출시 연도 알 수 없음"/>
+        <text name="rms_shop_category_maintenance" text="정비"/>
         <text name="rms_owner_care_careful" text="세심한 정비"/>
         <text name="rms_owner_care_regular" text="정기적인 정비"/>
         <text name="rms_owner_care_neglected" text="소홀한 정비"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="PTO 축 각도 과다"/>
         <text name="rms_warranty_windup" text="단단한 노면의 차동 잠금·4WD"/>
         <text name="rms_warranty_filter" text="필터 막힘"/>
+        <text name="rms_warranty_oil" text="맞지 않는 엔진 오일"/>
         <text name="rms_warranty_trailer" text="트레일러 과중량"/>
         <text name="rms_warranty_aftermarket_part" text="애프터마켓 부품"/>
         <text name="rms_warranty_used_part" text="중고 부품"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="점프 케이블이 %s에서 분리되었습니다"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="유체 용기"/>
-        <text name="rms_fluid_function_engine_oil" text="수동 보충용 엔진 오일"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="엔진 오일, AdBlue와 매연저감 필터가 있는 기계를 포함한 모든 기계용"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="엔진 오일, AdBlue와 매연저감 필터가 없는 기계용"/>
         <text name="rms_fluid_function_utto" text="수동 보충용 변속기 및 유압 오일"/>
         <text name="rms_fluid_function_coolant" text="수동 보충용 열 교환액"/>
         <text name="rms_fluid_pour_action" text="보충: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 변속기 마모를 최대 3배까지 증가시키고 변속기 발열을 높일 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 유압 마모를 최대 3배까지 증가시키고 발열을 높이며 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 변속기와 유압 마모를 최대 3배까지 증가시키고 발열을 높이며 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="부적합한 엔진 오일"/>
+        <text name="rms_fluid_unsuited_oil_message" text="이 엔진은 AdBlue를 사용하거나 매연저감 필터가 있습니다. 취급 설명서는 이에 맞는 오일을 요구합니다. 이 오일로는 오일 교환이 최대 두 배 빨리 돌아옵니다. 매연저감 필터에도 재가 1.5배 빨리 쌓입니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_error_no_circuit" text="이 차량은 유체 보충이 필요하지 않습니다"/>
         <text name="rms_fluid_error_motor_running" text="유체를 이송하기 전에 엔진을 끄십시오"/>
         <text name="rms_fluid_error_vehicle_moving" text="차량이 정지해 있어야 합니다"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="유체는 임대 비용에 포함"/>
         <text name="rms_fluid_stock_required" text="정비소 구역의 용기에서 사용"/>
         <text name="rms_fluid_stock_missing" text="정비소 구역에 %s 부족"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="정비소 구역에 이 엔진에 맞는 오일 %s 부족"/>
         <text name="rms_fluid_refill_work_order" text="유체 레벨 보충"/>
         <text name="rms_fluid_refill_dealer_supply" text="견적에 유체 공급 비용 포함"/>
         <text name="rms_fluid_mode_top_up" text="보충"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="보증금 반환"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="낮은 유체 수준"/>
-        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며 노후한 엔진은 훨씬 더 많이 소모합니다. 열 교환액, 변속기 오일 및 유압 오일은 누출될 때만 줄어듭니다.&#10;&#10;기준선 아래에서는 보충만 필요하며 장비는 여전히 정상 작동합니다. 수준이 낮아질수록 경사지, 선회, 제동 시 펌프가 공기를 더 쉽게 빨아들입니다. 엔진 오일 압력 경고등이 깜박이고, 변속기나 유압 쪽에서는 펌프가 소음을 내며 유압 동작이 느려집니다. 이렇게 보내는 1분마다 주 베어링이나 펌프가 손상됩니다. 정지하고 보충하십시오. 열 교환액, 변속기 오일 또는 유압 오일이 부족한 장비는 과열되기도 합니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비까지 가져가 보충하십시오. 해당 회로용 제품은 모두 같은 효과를 내며 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 리터만큼 공급하고 비용을 청구합니다."/>
+        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며 노후한 엔진은 훨씬 더 많이 소모합니다. 열 교환액, 변속기 오일 및 유압 오일은 누출될 때만 줄어듭니다.&#10;&#10;기준선 아래에서는 보충만 필요하며 장비는 여전히 정상 작동합니다. 수준이 낮아질수록 경사지에서 펌프가 공기를 더 쉽게 빨아들입니다. 엔진 오일 압력 경고등이 깜박이고, 변속기나 유압 쪽에서는 펌프가 소음을 내며 유압 동작이 느려집니다. 이렇게 보내는 1분마다 주 베어링이나 펌프가 손상됩니다. 정지하고 보충하십시오. 열 교환액, 변속기 오일 또는 유압 오일이 부족한 장비는 과열되기도 합니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비까지 가져가 보충하십시오. 해당 회로용 제품은 모두 같은 효과를 내며 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 리터만큼 공급하고 비용을 청구합니다."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems에 오신 것을 환영합니다"/>
         <text name="rms_tutorial_welcome_disable_button" text="팁 끄기"/>
         <text name="rms_tutorial_welcome_enable_button" text="팁 켜기"/>

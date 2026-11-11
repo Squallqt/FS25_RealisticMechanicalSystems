@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Guasto critico del filtro antiparticolato. Completamente ostruito, non lascia più passare i gas: solo la sostituzione restituisce potenza al motore."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturazione del filtro antiparticolato. Le rigenerazioni non sono state completate: il regime del motore resta limitato finché una non riesce."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturazione critica del filtro antiparticolato. Troppo carico per rigenerarsi da solo, richiede una rigenerazione di servizio in officina; il regime resta limitato."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtro antiparticolato pieno di cenere. Le rigenerazioni bruciano la fuliggine, non la cenere lasciata dall'olio motore: il filtro va smontato e pulito in officina; il regime del motore è limitato."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Malfunzionamento lieve del giunto della ventola. La ventola reagisce meno efficacemente e il raffreddamento è leggermente compromesso."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Malfunzionamento moderato del giunto della ventola. L'innesto della ventola è irregolare e l'efficienza del raffreddamento cala sensibilmente."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Grave malfunzionamento del giunto della ventola. La ventola non fornisce più un flusso d'aria sufficiente e il motore si surriscalda più facilmente."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Raccolta impossibile: un organo di raccolta è rotto"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Intasamento: la raccolta si è fermata"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Trinciapaglia rotto: la paglia cade in andana"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Trinciapaglia rotto: questa coltura non si può più raccogliere"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Trinciapaglia rotto: la paglia cade senza essere trinciata"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Usura iniziale delle cinghie degli organi. Slittano un po' sotto carico."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Usura moderata delle cinghie degli organi. Un organo rallenta sotto carico e l'allarme di regime a volte ferma la raccolta."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Usura grave delle cinghie degli organi. La resa cala e le fermate si ripetono."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Usura iniziale del trinciapaglia. La paglia è tagliata meno corta e il trinciapaglia chiede un po' più di potenza."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Usura moderata del trinciapaglia. Il trinciapaglia vibra e chiede più potenza."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Usura grave del trinciapaglia. Il rotore è sbilanciato e assorbe molta potenza."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Guasto critico del trinciapaglia. Un coltello si è rotto: il trinciapaglia è fermo e la paglia cade in andana."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Guasto critico del trinciapaglia. Un coltello si è rotto: il trinciapaglia è fermo e la paglia cade senza essere trinciata, in andana quando la coltura la forma."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Usura iniziale dei rulli di alimentazione. Afferrano peggio il prodotto: l'alimentazione diventa irregolare."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Usura moderata dei rulli di alimentazione. La lunghezza di taglio diventa irregolare e compaiono intasamenti."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Usura grave dei rulli di alimentazione. La resa cala e gli intasamenti si ripetono."/>

@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Facilidade de manutenção baixa"/>
         <text name="rms_shop_launch_year" text="Modelo lançado em %d"/>
         <text name="rms_shop_launch_year_unknown" text="Ano de lançamento desconhecido"/>
+        <text name="rms_shop_category_maintenance" text="Manutenção"/>
         <text name="rms_owner_care_careful" text="Manutenção cuidadosa"/>
         <text name="rms_owner_care_regular" text="Manutenção regular"/>
         <text name="rms_owner_care_neglected" text="Manutenção negligenciada"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="ângulo do cardã excessivo"/>
         <text name="rms_warranty_windup" text="bloqueio ou 4WD em piso duro"/>
         <text name="rms_warranty_filter" text="filtro entupido"/>
+        <text name="rms_warranty_oil" text="óleo de motor inadequado"/>
         <text name="rms_warranty_trailer" text="reboque demasiado pesado"/>
         <text name="rms_warranty_aftermarket_part" text="peça adaptável"/>
         <text name="rms_warranty_used_part" text="peça usada"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Cabos de arranque desligados de %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Bidão de fluido"/>
-        <text name="rms_fluid_function_engine_oil" text="Óleo de motor para atesto manual"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Óleo de motor, para todas as máquinas, incluindo com AdBlue e filtro de partículas"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Óleo de motor, para máquinas sem AdBlue nem filtro de partículas"/>
         <text name="rms_fluid_function_utto" text="Óleo de transmissão e hidráulico para atesto manual"/>
         <text name="rms_fluid_function_coolant" text="Líquido de arrefecimento para atesto manual"/>
         <text name="rms_fluid_pour_action" text="Adicionar: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Este produto não é indicado para este circuito. Contaminará a mistura e poderá chegar a triplicar o desgaste da transmissão e aumentar o seu aquecimento. Apenas uma substituição completa do fluido removerá a contaminação. Continuar?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Este produto não é indicado para este circuito. Contaminará a mistura e poderá chegar a triplicar o desgaste da hidráulica, aumentar o seu aquecimento e torná-la mais lenta. Apenas uma substituição completa do fluido removerá a contaminação. Continuar?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Este produto não é indicado para este circuito. Contaminará a mistura e poderá chegar a triplicar o desgaste da transmissão e da hidráulica, aumentar o seu aquecimento e tornar a hidráulica mais lenta. Apenas uma substituição completa do fluido removerá a contaminação. Continuar?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Óleo de motor inadequado"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Este motor usa AdBlue ou tem filtro de partículas: o seu manual exige um óleo feito para eles. Com este óleo, a mudança de óleo chegará até duas vezes mais cedo. Um filtro de partículas também se enche de cinzas 1,5 vezes mais depressa. Continuar?"/>
         <text name="rms_fluid_error_no_circuit" text="Este veículo não necessita de atesto de fluido"/>
         <text name="rms_fluid_error_motor_running" text="Desliga o motor antes de transferir fluido"/>
         <text name="rms_fluid_error_vehicle_moving" text="O veículo tem de estar parado"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Fluidos incluídos no aluguer"/>
         <text name="rms_fluid_stock_required" text="Retirado dos recipientes na zona da oficina"/>
         <text name="rms_fluid_stock_missing" text="Faltam %s na zona da oficina"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Faltam %s de óleo adequado a este motor na zona da oficina"/>
         <text name="rms_fluid_refill_work_order" text="Atesto dos níveis de fluidos"/>
         <text name="rms_fluid_refill_dealer_supply" text="Fornecimento incluído no orçamento"/>
         <text name="rms_fluid_mode_top_up" text="atesto"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Caução devolvida"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nível de fluido baixo"/>
-        <text name="rms_tutorial_fluid_level_message" text="Um dos fluidos desta máquina desceu abaixo da marca do respetivo indicador.&#10;&#10;O óleo do motor é consumido com as horas, e um motor cansado bebe muito mais. O líquido de arrefecimento, o óleo da transmissão e o óleo hidráulico só descem devido a uma fuga.&#10;&#10;Abaixo da marca, a máquina precisa apenas de um atesto e continua a trabalhar normalmente. Quanto mais o nível desce, mais facilmente a bomba aspira ar em declives, curvas e travagens: a luz da pressão do óleo pisca e, do lado da transmissão ou do sistema hidráulico, a bomba assobia e os movimentos hidráulicos ficam mais lentos. Cada minuto assim danifica os bronzes da cambota ou a bomba: para e repõe o nível. Uma máquina com pouco líquido de arrefecimento, óleo da transmissão ou óleo hidráulico também aquece.&#10;&#10;Compra na loja um recipiente de produto compatível, leva-o até à máquina e repõe o nível. Todos os produtos destinados a esse circuito têm o mesmo efeito; um fluido incorreto contamina apenas esse circuito. No concessionário, os litros necessários são fornecidos e cobrados."/>
+        <text name="rms_tutorial_fluid_level_message" text="Um dos fluidos desta máquina desceu abaixo da marca do respetivo indicador.&#10;&#10;O óleo do motor é consumido com as horas, e um motor cansado bebe muito mais. O líquido de arrefecimento, o óleo da transmissão e o óleo hidráulico só descem devido a uma fuga.&#10;&#10;Abaixo da marca, a máquina precisa apenas de um atesto e continua a trabalhar normalmente. Quanto mais o nível desce, mais facilmente a bomba aspira ar em declives: a luz da pressão do óleo pisca e, do lado da transmissão ou do sistema hidráulico, a bomba assobia e os movimentos hidráulicos ficam mais lentos. Cada minuto assim danifica os bronzes da cambota ou a bomba: para e repõe o nível. Uma máquina com pouco líquido de arrefecimento, óleo da transmissão ou óleo hidráulico também aquece.&#10;&#10;Compra na loja um recipiente de produto compatível, leva-o até à máquina e repõe o nível. Todos os produtos destinados a esse circuito têm o mesmo efeito; um fluido incorreto contamina apenas esse circuito. No concessionário, os litros necessários são fornecidos e cobrados."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bem-vindo ao Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Desativar dicas"/>
         <text name="rms_tutorial_welcome_enable_button" text="Ativar dicas"/>

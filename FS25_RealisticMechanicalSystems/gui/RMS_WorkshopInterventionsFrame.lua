@@ -868,7 +868,9 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
                 group.price = (group.price or 0) + row.price
             end
             if shortages[row.circuit] ~= nil then
-                table.insert(group.lines, { isAlert = true, note = string.format(g_i18n:getText("rms_fluid_stock_missing"),
+                local missingKey = row.circuit == "engineOil" and RMS_Fluids.getNeedsLowAshOil(vehicle)
+                    and "rms_fluid_stock_missing_low_ash" or "rms_fluid_stock_missing"
+                table.insert(group.lines, { isAlert = true, note = string.format(g_i18n:getText(missingKey),
                     RMS_FluidWorkshop.formatLiters(shortages[row.circuit]) .. " " .. g_i18n:getText("unit_literShort")) })
             end
         else

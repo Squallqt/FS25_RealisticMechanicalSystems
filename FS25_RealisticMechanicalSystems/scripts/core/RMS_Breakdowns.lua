@@ -617,6 +617,20 @@ function RMS_Breakdowns.updateParticulateFilterOverload(vehicle)
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
     end
     fuelState.isParticulateFilterOverloaded = stage > 0
+
+    -- a filter taken out for cleaning or exchange leaves its ash
+    local isOut = spec.activeBreakdowns.PARTICULATE_FILTER_ASH ~= nil or spec.activeBreakdowns.PARTICULATE_FILTER_FAILURE ~= nil
+    if fuelState.isFilterOut and not isOut then
+        fuelState.particulateFilterAsh, fuelState.particulateFilterOilAsh = 0, 0
+    end
+    if spec.activeBreakdowns.PARTICULATE_FILTER_ASH == nil and fuelState.particulateFilterAsh >= 1 then
+        if fuelState.particulateFilterOilAsh > 0 then
+            spec.partAbuse.PARTICULATE_FILTER_ASH = RealisticMechanicalSystems.WARRANTY_ABUSE.oil
+        end
+        vehicle:addBreakdown("PARTICULATE_FILTER_ASH", { stage = 1, isVisible = true })
+        isOut = true
+    end
+    fuelState.isFilterOut = isOut
 end
 
 function RMS_Breakdowns.updateEngineDerate(vehicle, dt)
@@ -1773,11 +1787,12 @@ RMS_Breakdowns.EffectApplicators.HARVEST_POWER_DEMAND = {
     remove = function(vehicle) setHarvestPowerDemand(vehicle, 0) end
 }
 
--- the mean time in minutes of a blockage while the machine harvests
+-- the mean time in minutes of a blockage while crop feeds the machine
 local function updateHarvestBlockage(vehicle, dt)
-    local effect = vehicle.spec_RealisticMechanicalSystems.activeEffects.HARVEST_BLOCKAGE_CHANCE
-    if vehicle.isServer and vehicle:getIsTurnedOn() and vehicle:getLastSpeed() > 0.5
-        and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, effect.value) then
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local state = spec.harvestState
+    if vehicle.isServer and vehicle:getIsTurnedOn() and state ~= nil and (state.tonPerHour or 0) > 0
+        and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, spec.activeEffects.HARVEST_BLOCKAGE_CHANCE.value) then
         vehicle:setIsTurnedOn(false)
         RMS_Breakdowns.soundShaftAlarm(vehicle)
         showWarning(vehicle, RMS_Breakdowns.WORK_STOP_MESSAGES.HARVEST_BLOCKAGE_CHANCE, 4000)
@@ -1805,28 +1820,98 @@ RMS_Breakdowns.EffectApplicators.HARVEST_FAILURE = {
     remove = function(vehicle) stopFrameUpdate(vehicle, "HARVEST_FAILURE") end
 }
 
--- a crop without windrow is spread by the chopper, the harvest stops
+-- the crop in the combine, its grain tank first, then its last cut
+local function getCombineFruit(vehicle)
+    local spec_combine = vehicle.spec_combine
+    local fillType = vehicle:getFillUnitFillType(spec_combine.bufferFillUnitIndex or spec_combine.fillUnitIndex)
+    local fruitType = g_fruitTypeManager:getFruitTypeIndexByFillTypeIndex(fillType)
+    if fruitType == nil or fruitType == FruitType.UNKNOWN then
+        fruitType = spec_combine.lastValidInputFruitType
+    end
+    return g_fruitTypeManager:getFruitTypeByIndex(fruitType)
+end
+
+-- a broken chopper on a crop the game lays in a swath: it cannot chop it
+local function getIsChopperLocked(vehicle)
+    local spec = getLoadedSpec(vehicle)
+    if spec == nil or spec.activeEffects.CHOPPER_FAILURE == nil or vehicle.spec_combine == nil
+        or not vehicle.spec_combine.swath.isAvailable then
+        return false
+    end
+    local fruitDesc = getCombineFruit(vehicle)
+    return fruitDesc ~= nil and fruitDesc.hasWindrow == true
+end
+
+-- the chopper stands still: straw in a swath, or falling unchopped
 local function updateChopperFailure(vehicle)
     local spec_combine = vehicle.spec_combine
-    if not vehicle.isServer or spec_combine == nil or spec_combine.isSwathActive or not vehicle:getIsTurnedOn() then
+    local state = RMS_Breakdowns.getEffectState(vehicle, "CHOPPER_FAILURE")
+    if spec_combine == nil or not vehicle:getIsTurnedOn() then
+        state.status, state.isStill = "IDLE", nil
         return
     end
-    local fruitDesc = g_fruitTypeManager:getFruitTypeByIndex(spec_combine.lastValidInputFruitType)
-    local isSwath = spec_combine.swath.isAvailable and fruitDesc ~= nil and fruitDesc.hasWindrow
-    if isSwath then
-        vehicle:setIsSwathActive(true)
-    else
-        vehicle:setIsTurnedOn(false)
+    -- the game starts the chopper drive each time the threshing starts
+    if vehicle.isClient and not state.isStill then
+        state.isStill = true
+        g_animationManager:stopAnimations(spec_combine.chopperAnimationNodes)
+        g_soundManager:stopSample(spec_combine.samples.chopperStart)
+        g_soundManager:stopSample(spec_combine.samples.chopperWork)
     end
-    RMS_Breakdowns.soundShaftAlarm(vehicle)
-    RMS_EffectSyncEvent.send(vehicle, "CHOPPER_FAILURE", isSwath and "SWATH" or "STOPPED")
-    showWarning(vehicle, isSwath and "rms_breakdowns_chopper_failure_message" or "rms_breakdowns_chopper_failure_spread_message", 4000)
+    local fruitDesc = getCombineFruit(vehicle)
+    if not vehicle.isServer or fruitDesc == nil then
+        return
+    end
+    local isSwath = getIsChopperLocked(vehicle)
+    if isSwath and not spec_combine.isSwathActive then
+        vehicle:setIsSwathActive(true)
+    end
+    -- the shaft monitor sounds once the crop feeds the stopped chopper
+    if state.status == "IDLE" then
+        state.status = "ALARMED"
+        RMS_Breakdowns.soundShaftAlarm(vehicle)
+        RMS_EffectSyncEvent.send(vehicle, "CHOPPER_FAILURE", isSwath and "SWATH" or "UNCHOPPED")
+        showWarning(vehicle, isSwath and "rms_breakdowns_chopper_failure_message" or "rms_breakdowns_chopper_failure_unchopped_message", 4000)
+    end
 end
 
 RMS_Breakdowns.EffectApplicators.CHOPPER_FAILURE = {
     apply = function(vehicle) startFrameUpdate(vehicle, "CHOPPER_FAILURE", updateChopperFailure) end,
     remove = function(vehicle) stopFrameUpdate(vehicle, "CHOPPER_FAILURE") end
 }
+
+---Lets the straw of a broken chopper fall unchopped, stubble unshredded
+function RMS_Breakdowns.processCombineChopperArea(vehicle, superFunc, workArea, ...)
+    local spec = getLoadedSpec(vehicle)
+    if spec == nil or spec.activeEffects.CHOPPER_FAILURE == nil then
+        return superFunc(vehicle, workArea, ...)
+    end
+    local spec_combine = vehicle.spec_combine
+    if not spec_combine.isSwathActive then
+        local parameters = spec_combine.workAreaParameters
+        parameters.droppedLiters = parameters.litersToDrop
+    end
+    return 0, 0
+end
+
+---Keeps the swath of a broken chopper, whoever asks to chop again
+-- @param boolean? noEventSend true when the change came over the network
+function RMS_Breakdowns.setIsSwathActive(vehicle, superFunc, isSwathActive, noEventSend, ...)
+    if not isSwathActive and not noEventSend and getIsChopperLocked(vehicle) then
+        return
+    end
+    return superFunc(vehicle, isSwathActive, noEventSend, ...)
+end
+
+---Tells the driver who asks to chop that the chopper is broken
+function RMS_Breakdowns.actionEventToggleChopper(vehicle, superFunc, ...)
+    if vehicle.spec_combine.isSwathActive and getIsChopperLocked(vehicle) then
+        showWarning(vehicle, "rms_breakdowns_chopper_failure_message", 4000)
+        return
+    end
+    return superFunc(vehicle, ...)
+end
+
+Combine.actionEventToggleChopper = Utils.overwrittenFunction(Combine.actionEventToggleChopper, RMS_Breakdowns.actionEventToggleChopper)
 
 -- a turn on refused by a broken harvest or a PTO engagement that slips
 local function getTurnOnRefusal(vehicle, rootVehicle, spec)

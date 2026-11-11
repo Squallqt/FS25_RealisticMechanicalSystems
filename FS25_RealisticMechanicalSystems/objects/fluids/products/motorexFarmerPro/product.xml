@@ -4,10 +4,10 @@
     <storeData>
         <name>Farmer Pro SAE 10W/40</name>
         <specs><weight/></specs>
-        <functions><function>$l10n_rms_fluid_function_engine_oil</function></functions>
+        <functions><function>$l10n_rms_fluid_function_engine_oil_low_ash</function></functions>
         <image>objects/fluids/products/motorexFarmerPro/store_motorexFarmerPro.png</image>
         <price>47</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>MOTOREX</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

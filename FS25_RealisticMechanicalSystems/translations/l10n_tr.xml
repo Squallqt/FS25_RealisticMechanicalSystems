@@ -136,6 +136,7 @@
         <text name="rms_shop_service_access_demanding" text="Düşük bakım kolaylığı"/>
         <text name="rms_shop_launch_year" text="Modelin Piyasaya Çıkışı: %d"/>
         <text name="rms_shop_launch_year_unknown" text="Piyasaya Çıkış Yılı Bilinmiyor"/>
+        <text name="rms_shop_category_maintenance" text="Bakım"/>
         <text name="rms_owner_care_careful" text="Özenli bakım"/>
         <text name="rms_owner_care_regular" text="Düzenli bakım"/>
         <text name="rms_owner_care_neglected" text="İhmal edilmiş bakım"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_pto_angle" text="kardan açısı çok büyük"/>
         <text name="rms_warranty_windup" text="kilit veya 4WD sert zeminde"/>
         <text name="rms_warranty_filter" text="tıkalı filtre"/>
+        <text name="rms_warranty_oil" text="uygun olmayan motor yağı"/>
         <text name="rms_warranty_trailer" text="römork çok ağır"/>
         <text name="rms_warranty_aftermarket_part" text="yan sanayi parça"/>
         <text name="rms_warranty_used_part" text="kullanılmış parça"/>
@@ -635,7 +637,8 @@
         <text name="rms_jumper_cables_disconnected" text="Takviye kabloları %s aracından çıkarıldı"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Sıvı bidonu"/>
-        <text name="rms_fluid_function_engine_oil" text="Elle takviye için motor yağı"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motor yağı, AdBlue ve partikül filtreli olanlar dahil tüm makineler için"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motor yağı, AdBlue ve partikül filtresi olmayan makineler için"/>
         <text name="rms_fluid_function_utto" text="Manuel takviye için şanzıman ve hidrolik yağı"/>
         <text name="rms_fluid_function_coolant" text="Manuel soğutma sıvısı takviyesi için"/>
         <text name="rms_fluid_pour_action" text="Ekle: %s"/>
@@ -670,6 +673,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman aşınmasını 3 katına kadar çıkarabilir ve şanzımanın ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, hidrolik aşınmasını 3 katına kadar çıkarabilir, hidroliğin ısınmasını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman ve hidrolik aşınmasını 3 katına kadar çıkarabilir, ısınmalarını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Uygun Olmayan Motor Yağı"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: kullanım kılavuzu bunlar için yapılmış bir yağ istiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_circuit" text="Bu araç için sıvı takviyesi gerekmiyor"/>
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
         <text name="rms_fluid_error_vehicle_moving" text="Araç hareketsiz olmalı"/>
@@ -678,6 +683,7 @@
         <text name="rms_fluid_lease_covered" text="Sıvılar kiralamaya dahil"/>
         <text name="rms_fluid_stock_required" text="Atölye bölgesindeki kaplardan alınır"/>
         <text name="rms_fluid_stock_missing" text="Atölye bölgesinde %s eksik"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Atölye bölgesinde bu motora uygun %s yağ eksik"/>
         <text name="rms_fluid_refill_work_order" text="Sıvı seviyelerini tamamlama"/>
         <text name="rms_fluid_refill_dealer_supply" text="Sıvı tedariki teklife dahildir"/>
         <text name="rms_fluid_mode_top_up" text="tamamlama"/>
@@ -932,7 +938,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Depozito iadesi"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Sıvı Seviyesi Düşük"/>
-        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda, virajlarda ve frenlemede daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
+        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems’e Hoş Geldin"/>
         <text name="rms_tutorial_welcome_disable_button" text="İpuçlarını Devre Dışı Bırak"/>
         <text name="rms_tutorial_welcome_enable_button" text="İpuçlarını Etkinleştir"/>

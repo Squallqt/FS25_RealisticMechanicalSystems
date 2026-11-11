@@ -177,7 +177,8 @@ function RMS_Exhaust.calculateParticulateFilterLoad(input)
     if level >= 1 and level < config.SERVICE_LEVEL and isWarm then
         local regenerationMs = getNumber(input.regenerationMs, 0, 0) + dt
         if regenerationMs >= config.REGENERATION_MS then
-            return 0, 0, false
+            -- the ash stays: the filter fills again sooner
+            return getNumber(input.ash, 0, 0, 1), 0, false
         end
         return level, regenerationMs, true
     end
@@ -187,6 +188,22 @@ function RMS_Exhaust.calculateParticulateFilterLoad(input)
     level = level + (1 - load / config.PASSIVE_LOAD) / config.FILL_HOURS * hours
 
     return clamp(level, 0, config.SERVICE_LEVEL), 0, false
+end
+
+---Returns the filter ash, 1 calling a cleaning, and its oil part
+function RMS_Exhaust.calculateParticulateFilterAsh(input)
+    local config = RMS_Config.EXHAUST.PARTICULATE_FILTER
+    local ash, oilAsh = getNumber(input.ash, 0, 0, 1), getNumber(input.oilAsh, 0, 0, 1)
+    if input.isStageV ~= true or input.isMotorStarted ~= true then
+        return ash, oilAsh
+    end
+
+    local C = RMS_Config.CORE
+    local workHours = getNumber(input.dt, 0, 0) / (60 * 60 * 1000) * C.BASE_SYSTEMS_WEAR * C.MACHINE_LIFE_HOURS
+    local base = workHours / config.ASH_CLEANING_HOURS
+    local extra = base * (1 - getNumber(input.suitedShare, 1, 0, 1)) * (config.UNSUITED_OIL_ASH - 1)
+
+    return math.min(ash + base + extra, 1), math.min(oilAsh + extra, 1)
 end
 
 ---Returns the target soot, oil and unburnt fractions of the engine

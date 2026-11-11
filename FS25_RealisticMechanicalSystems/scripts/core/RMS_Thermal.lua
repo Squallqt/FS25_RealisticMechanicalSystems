@@ -142,18 +142,14 @@ function RMS_Thermal.initializeEngineTemperature(vehicle)
         getTemperature(spec.engineTemperature, getTemperature(spec.rawEngineTemperature, RMS_Utils.getAmbientTemperature())))
 end
 
----Reads the shared native engine temperature
+---Reads the engine temperature RMS keeps, put back over another mod's
 function RMS_Thermal.getEngineTemperature(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil then return RMS_Utils.getAmbientTemperature() end
     local native = getManagedMotorTemperature(vehicle)
-    local fallback = getTemperature(spec.rawEngineTemperature, getTemperature(spec.engineTemperature, RMS_Utils.getAmbientTemperature()))
-    local temperature = native ~= nil and getTemperature(native.value, fallback) or fallback
-    if vehicle.isServer and native ~= nil and getTemperature(spec.rawEngineTemperature, nil) ~= nil
-        and temperature ~= spec.rawEngineTemperature then
-        spec._thermalEngineWorldTime = RMS_Thermal.getWorldTimeMS()
-        spec._thermalEngineAmbient = RMS_Utils.getAmbientTemperature()
-    end
+    local nativeValue = native ~= nil and getTemperature(native.value, nil) or nil
+    local temperature = getTemperature(spec.rawEngineTemperature, getTemperature(spec.engineTemperature,
+        nativeValue or RMS_Utils.getAmbientTemperature()))
     if native ~= nil and native.value ~= temperature then
         native.value = temperature
     end
