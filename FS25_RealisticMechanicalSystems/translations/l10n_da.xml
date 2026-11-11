@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="En kabinestøddæmper har en stor lækage og er løbet tom."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Der er oliespor og misfarvede samlinger omkring turboladeren."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Der er kraftige oliespor, misfarvede samlinger og sodspor omkring turboladeren."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Et væskeniveau er faldet under sit mærke."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Flere væskeniveauer er faldet under deres mærke."/>
+        <text name="rms_inspection_hint_fluid_low" text="Under MIN-mærket: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Meget lavt niveau: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Fyld op fra dunken eller hos forhandleren."/>
         <text name="rms_inspection_hint_service_engine" text="Motorolieskiftet er overskredet: slidt olie øger sliddet på motor og indsprøjtning. Ethvert service skifter olien sammen med filtrene."/>
         <text name="rms_inspection_hint_service_transmission" text="Transmissionsolieskiftet er overskredet: slidt olie øger sliddet på alt det, den smører. Det service, værkstedet anbefaler, skifter olien sammen med filteret."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hydraulikolieskiftet er overskredet: slidt olie øger sliddet på hydrauliksystemet. Det service, værkstedet anbefaler, skifter olien sammen med filteret."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Tilbagebetalt depositum"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Lavt væskeniveau"/>
-        <text name="rms_tutorial_fluid_level_message" text="En af væskerne på denne maskine er faldet under mærket på sin måler.&#10;&#10;Motorolie bruges op med timerne, og en slidt motor drikker langt mere af den. Kølevæske, transmissionsolie og hydraulikolie falder kun ved en lækage.&#10;&#10;Under mærket beder maskinen kun om en påfyldning og arbejder stadig normalt. Det er, når et niveau falder rigtigt lavt, at skaderne begynder: en maskine, der mangler kølevæske eller transmissionsolie, bliver varm, og en maskine, der mangler motorolie eller hydraulikolie, slides langt hurtigere.&#10;&#10;Køb en dunk med et egnet produkt i butikken, tag den med hen til maskinen, og fyld niveauet op. Alle produkter til den kreds har samme virkning; en forkert væske forurener kun den kreds. Hos forhandleren leveres og faktureres de nødvendige liter."/>
+        <text name="rms_tutorial_fluid_level_message" text="En af væskerne på denne maskine er faldet under mærket på sin måler.&#10;&#10;Motorolie bruges op med timerne, og en slidt motor drikker langt mere af den. Kølevæske, transmissionsolie og hydraulikolie falder kun ved en lækage.&#10;&#10;Under mærket beder maskinen kun om en påfyldning og arbejder stadig normalt. Jo lavere niveauet bliver, jo lettere suger pumpen luft på skråninger, i sving og ved opbremsning: olietrykslampen blinker, og ved gearkasse eller hydraulik hviner pumpen, og de hydrauliske bevægelser bliver langsommere. Hvert minut på den måde skader krumtapslejerne eller pumpen: stands og fyld niveauet op. En maskine, der mangler kølevæske, transmissionsolie eller hydraulikolie, bliver også varm.&#10;&#10;Køb en dunk med et egnet produkt i butikken, tag den med hen til maskinen, og fyld niveauet op. Alle produkter til den kreds har samme virkning; en forkert væske forurener kun den kreds. Hos forhandleren leveres og faktureres de nødvendige liter."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Slå tips fra"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå tips til"/>

@@ -631,7 +631,7 @@ end
 
 -- the year dashboards got each telltale
 local TELLTALE_YEARS = { engine = 1990, transmission = 1990, brakes = 1980, battery = 1950, coolant = 1950, warning = 1990,
-    service = 1970, oil = 1950 }
+    service = 1970, oil = 0 }
 
 ---Tells whether the dashboard of a machine carries a telltale
 function RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, indicatorId)
@@ -1391,6 +1391,7 @@ end
 -- @param integer? donorHours work hours of the offered donor machine
 function RealisticMechanicalSystems.recordPartWarranty(vehicle, partId, partType, isPaid, donorHours)
     local R, spec = RealisticMechanicalSystems, vehicle.spec_RealisticMechanicalSystems
+    spec.pickupAirTime[partId] = nil
     if RMS_Consumables.getFilterOfBreakdown(partId) ~= nil then return end
     if partType == R.PART_TYPES.USED and donorHours ~= nil and R.getIsUsedPartGuaranteed(partId, donorHours) then
         if isPaid then spec.usedPartWarranty[partId] = vehicle.age + 3 end

@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="운전실 충격 흡수기에 심한 누출이 있어 내부가 비었습니다."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="터보차저 주변에 오일 흔적과 변색된 연결부가 보입니다."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="터보차저 주변에 심한 오일 흔적, 변색된 연결부 및 그을음 흔적이 보입니다."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="한 유체의 레벨이 기준선 아래로 내려갔습니다."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="여러 유체의 레벨이 기준선 아래로 내려갔습니다."/>
+        <text name="rms_inspection_hint_fluid_low" text="MIN 기준선 아래: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="매우 낮은 수준: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="용기로 보충하거나 대리점에서 보충."/>
         <text name="rms_inspection_hint_service_engine" text="엔진 오일 교환 시기가 지났습니다. 열화된 오일은 엔진과 분사 계통의 마모를 앞당깁니다. 모든 정비에서 필터와 함께 교환합니다."/>
         <text name="rms_inspection_hint_service_transmission" text="변속기 오일 교환 시기가 지났습니다. 열화된 오일은 오일이 윤활하는 모든 부분의 마모를 앞당깁니다. 정비소가 권장하는 정비에서 필터와 함께 교환합니다."/>
         <text name="rms_inspection_hint_service_hydraulic" text="유압유 교환 시기가 지났습니다. 열화된 오일은 유압 계통의 마모를 앞당깁니다. 정비소가 권장하는 정비에서 필터와 함께 교환합니다."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="보증금 반환"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="낮은 유체 수준"/>
-        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며 노후한 엔진은 훨씬 더 많이 소모합니다. 열 교환액, 변속기 오일 및 유압 오일은 누출될 때만 줄어듭니다.&#10;&#10;기준선 아래에서는 보충만 필요하며 장비는 여전히 정상 작동합니다. 수준이 매우 낮아지면 손상이 시작됩니다. 열 교환액이나 변속기 오일이 부족한 장비는 과열되고 엔진 오일이나 유압 오일이 부족한 장비는 훨씬 빨리 마모됩니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비까지 가져가 보충하십시오. 해당 회로용 제품은 모두 같은 효과를 내며 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 리터만큼 공급하고 비용을 청구합니다."/>
+        <text name="rms_tutorial_fluid_level_message" text="이 장비의 유체 중 하나가 게이지의 기준선 아래로 내려갔습니다.&#10;&#10;엔진 오일은 가동 시간에 따라 소모되며 노후한 엔진은 훨씬 더 많이 소모합니다. 열 교환액, 변속기 오일 및 유압 오일은 누출될 때만 줄어듭니다.&#10;&#10;기준선 아래에서는 보충만 필요하며 장비는 여전히 정상 작동합니다. 수준이 낮아질수록 경사지, 선회, 제동 시 펌프가 공기를 더 쉽게 빨아들입니다. 엔진 오일 압력 경고등이 깜박이고, 변속기나 유압 쪽에서는 펌프가 소음을 내며 유압 동작이 느려집니다. 이렇게 보내는 1분마다 주 베어링이나 펌프가 손상됩니다. 정지하고 보충하십시오. 열 교환액, 변속기 오일 또는 유압 오일이 부족한 장비는 과열되기도 합니다.&#10;&#10;상점에서 해당 회로와 호환되는 제품 용기를 구입해 장비까지 가져가 보충하십시오. 해당 회로용 제품은 모두 같은 효과를 내며 잘못된 유체는 그 회로만 오염시킵니다. 판매점에서는 필요한 리터만큼 공급하고 비용을 청구합니다."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems에 오신 것을 환영합니다"/>
         <text name="rms_tutorial_welcome_disable_button" text="팁 끄기"/>
         <text name="rms_tutorial_welcome_enable_button" text="팁 켜기"/>

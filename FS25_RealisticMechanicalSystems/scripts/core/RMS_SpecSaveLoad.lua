@@ -334,6 +334,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#systemsState", RMS_Utils.serializeSystemsState(spec.systems))
         xmlFile:setValue(key .. "#partWear", RMS_Utils.serializeNumericMap(spec.partWear))
         xmlFile:setValue(key .. "#partAbuse", RMS_Utils.serializeNumericMap(spec.partAbuse))
+        xmlFile:setValue(key .. "#pickupAirTime", RMS_Utils.serializeNumericMap(spec.pickupAirTime))
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
         xmlFile:setValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount or 0)
         xmlFile:setValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence or 0)
@@ -375,6 +376,9 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.partWarranty = {}
     self.spec_RealisticMechanicalSystems.usedPartWarranty = {}
     self.spec_RealisticMechanicalSystems.partAbuse = {}
+    self.spec_RealisticMechanicalSystems.pickupAirTime = {}
+    self.spec_RealisticMechanicalSystems.pickupUncovered = {}
+    self.spec_RealisticMechanicalSystems.aerationWhining = {}
     self.spec_RealisticMechanicalSystems.warrantyVoided = false
     self.spec_RealisticMechanicalSystems.remapMotor = 0
     self.spec_RealisticMechanicalSystems.remapAge = 0
@@ -793,6 +797,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingOverhaulPartTarget = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartTarget", ""))
     spec.partWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWear", ""))
     spec.partAbuse = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partAbuse", ""))
+    spec.pickupAirTime = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pickupAirTime", ""))
     local loadedFactorStatsFlat = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#factorStats", ""))
 
     local loadedSystemsStateRaw = RMS_Utils.deserializeSystemsState(xmlFile:getValue(key .. "#systemsState", ""))

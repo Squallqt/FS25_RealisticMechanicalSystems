@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Một giảm chấn ca bin rò rỉ nhiều và đã cạn."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Có thể thấy vết dầu và các đầu nối bị sẫm màu quanh bộ tăng áp."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Có thể thấy nhiều vết dầu, các đầu nối bị sẫm màu và vết muội quanh bộ tăng áp."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Mức của một chất lỏng đã xuống dưới vạch đánh dấu."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Mức của nhiều chất lỏng đã xuống dưới vạch đánh dấu."/>
+        <text name="rms_inspection_hint_fluid_low" text="Dưới vạch MIN: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Mức rất thấp: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Bổ sung bằng bình, hoặc tại đại lý."/>
         <text name="rms_inspection_hint_service_engine" text="Đã quá hạn thay dầu động cơ: dầu cũ làm động cơ và hệ thống phun mòn nhanh hơn. Mọi mức bảo dưỡng đều thay dầu cùng các bộ lọc."/>
         <text name="rms_inspection_hint_service_transmission" text="Đã quá hạn thay dầu hộp số: dầu cũ làm mọi bộ phận được nó bôi trơn mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay dầu cùng bộ lọc."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Đã quá hạn thay dầu thủy lực: dầu cũ làm hệ thống thủy lực mòn nhanh hơn. Mức bảo dưỡng được khuyến nghị tại xưởng sẽ thay dầu cùng bộ lọc."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Hoàn tiền đặt cọc"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Mức chất lỏng thấp"/>
-        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã giảm xuống dưới vạch đánh dấu trên đồng hồ.&#10;&#10;Dầu động cơ bị tiêu hao theo giờ hoạt động, và động cơ đã mòn tiêu thụ nhiều dầu hơn hẳn. Nước làm mát, dầu hộp số và dầu thủy lực chỉ giảm khi có rò rỉ.&#10;&#10;Khi mức chất lỏng chỉ thấp hơn vạch đánh dấu, máy mới cần bổ sung và vẫn hoạt động bình thường. Hư hại bắt đầu khi mức chất lỏng thực sự xuống thấp: máy thiếu nước làm mát hoặc dầu hộp số sẽ nóng lên, còn máy thiếu dầu động cơ hoặc dầu thủy lực sẽ mòn nhanh hơn nhiều.&#10;&#10;Mua một bình sản phẩm tương thích trong cửa hàng, mang đến chỗ máy và bổ sung đến đúng mức. Mọi sản phẩm dành cho mạch đó đều có cùng tác dụng; chất lỏng không phù hợp chỉ làm nhiễm bẩn mạch đó. Tại đại lý, số lít cần thiết được cung cấp và tính phí."/>
+        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã giảm xuống dưới vạch đánh dấu trên đồng hồ.&#10;&#10;Dầu động cơ bị tiêu hao theo giờ hoạt động, và động cơ đã mòn tiêu thụ nhiều dầu hơn hẳn. Nước làm mát, dầu hộp số và dầu thủy lực chỉ giảm khi có rò rỉ.&#10;&#10;Khi mức chất lỏng chỉ thấp hơn vạch đánh dấu, máy mới cần bổ sung và vẫn hoạt động bình thường. Mức càng thấp, bơm càng dễ hút phải không khí khi lên dốc, vào cua và phanh: đèn áp suất dầu nhấp nháy, còn ở phía hộp số hoặc thủy lực, bơm rít lên và các chuyển động thủy lực chậm lại. Mỗi phút như vậy đều làm hỏng bạc trục khuỷu hoặc bơm: hãy dừng lại và bổ sung đến đúng mức. Máy thiếu nước làm mát, dầu hộp số hoặc dầu thủy lực cũng sẽ nóng lên.&#10;&#10;Mua một bình sản phẩm tương thích trong cửa hàng, mang đến chỗ máy và bổ sung đến đúng mức. Mọi sản phẩm dành cho mạch đó đều có cùng tác dụng; chất lỏng không phù hợp chỉ làm nhiễm bẩn mạch đó. Tại đại lý, số lít cần thiết được cung cấp và tính phí."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Chào mừng bạn đến với Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tắt mẹo"/>
         <text name="rms_tutorial_welcome_enable_button" text="Bật mẹo"/>

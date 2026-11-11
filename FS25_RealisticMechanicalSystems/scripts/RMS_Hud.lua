@@ -701,9 +701,9 @@ function RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
     return RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
 end
 
----Tells whether the level of the engine oil lights the oil lamp
+---Tells whether the engine oil pump draws air, lighting the oil lamp
 function RMS_Hud.getIsOilPressureLow(spec)
-    return (tonumber(spec.engineOilLevel) or 1) <= RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
+    return spec.pickupUncovered ~= nil and spec.pickupUncovered.engineOil == true
 end
 
 ---Returns the coolant lamp colour key for the drive temperature

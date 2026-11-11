@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Bir kabin amortisöründe büyük kaçak vardır ve amortisör boşalmıştır."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboşarjın çevresinde yağ izleri ve kararmış bağlantı noktaları görülüyor."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboşarj çevresinde yoğun yağ izleri, kararmış bağlantı noktaları ve kurum lekeleri görülmektedir."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Bir sıvı seviyesi işaretinin altına düştü."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Birden fazla sıvı seviyesi işaretinin altına düştü."/>
+        <text name="rms_inspection_hint_fluid_low" text="MIN işaretinin altında: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Seviye çok düşük: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Bidonla veya bayide tamamla."/>
         <text name="rms_inspection_hint_service_engine" text="Motor yağı değişimi gecikti: yıpranmış yağ motorun ve enjeksiyonun aşınmasını hızlandırır. Her bakım yağı filtreleriyle birlikte değiştirir."/>
         <text name="rms_inspection_hint_service_transmission" text="Şanzıman yağı değişimi gecikti: yıpranmış yağ yağladığı her şeyin aşınmasını hızlandırır. Atölyede önerilen bakım yağı filtresiyle birlikte değiştirir."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hidrolik yağı değişimi gecikti: yıpranmış yağ hidrolik sistemin aşınmasını hızlandırır. Atölyede önerilen bakım yağı filtresiyle birlikte değiştirir."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Depozito iadesi"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Sıvı Seviyesi Düşük"/>
-        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Hasar ancak seviye çok düştüğünde başlar: soğutma sıvısı veya şanzıman yağı eksik makine ısınır; motor yağı veya hidrolik yağı eksik makine çok daha hızlı aşınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
+        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda, virajlarda ve frenlemede daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems’e Hoş Geldin"/>
         <text name="rms_tutorial_welcome_disable_button" text="İpuçlarını Devre Dışı Bırak"/>
         <text name="rms_tutorial_welcome_enable_button" text="İpuçlarını Etkinleştir"/>

@@ -694,7 +694,7 @@ function RMS_FluidHandTool.draw()
     local isLevelDone = not display.isPouring and capacity - liters <= RMS_FluidHandTool.LEVEL_TOLERANCE
     local isEmptied = not display.isPouring and not isLevelDone and display.containerLiters <= RMS_FluidHandTool.LEVEL_TOLERANCE
     local fill, fillColor = RMS_Fluids.getGaugeFill(RMS_Fluids.getLevel(display.vehicle, display.circuit), HUD.COLOR.ACTIVE)
-    local active, warning, critical = HUD.COLOR.ACTIVE, RMS_Breakdowns.COLORS.WARNING, RMS_Breakdowns.COLORS.CRITICAL
+    local active, warning = HUD.COLOR.ACTIVE, RMS_Breakdowns.COLORS.WARNING
     local unit = g_i18n:getText("unit_literShort")
 
     local width, height = hud:scalePixelToScreenWidth(560), hud:scalePixelToScreenHeight(142)
@@ -727,7 +727,7 @@ function RMS_FluidHandTool.draw()
     elseif isEmptied then
         statusKey, statusColor = display.containerCapacity > RMS_FluidContainer.CARRIED_CAPACITY and "rms_fluid_drum_empty" or "rms_fluid_container_empty", warning
     elseif fill <= 0 then
-        statusKey, statusColor = "rms_fluid_level_under_gauge", critical
+        statusKey, statusColor = "rms_fluid_level_under_gauge", fillColor
     end
 
     setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_MIDDLE)
@@ -770,7 +770,7 @@ function RMS_FluidHandTool.draw()
     if fill > 0 then
         drawFilledRect(trackX, barY, trackWidth * fill, barHeight, fillColor[1], fillColor[2], fillColor[3], 1)
     else
-        drawFilledRect(trackX, barY, hud:scalePixelToScreenWidth(6), barHeight, critical[1], critical[2], critical[3], 1)
+        drawFilledRect(trackX, barY, hud:scalePixelToScreenWidth(6), barHeight, fillColor[1], fillColor[2], fillColor[3], 1)
     end
     local zone = RMS_FluidHandTool.gaugeZone
     zone:setDimension(maxX - minX, barHeight)

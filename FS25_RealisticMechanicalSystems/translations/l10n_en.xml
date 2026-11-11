@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="A cab damper has a major leak and has emptied."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Oily traces and darkened connections are visible around the turbocharger."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Heavy oily traces, darkened connections, and soot marks are visible around the turbocharger."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="A fluid level has dropped below its mark."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Several fluid levels have dropped below their marks."/>
+        <text name="rms_inspection_hint_fluid_low" text="Below the MIN mark: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Very low level: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Top up from a container, or at the dealer."/>
         <text name="rms_inspection_hint_service_engine" text="The engine oil change is overdue: worn oil speeds up engine and injection wear. Every service changes it along with its filters."/>
         <text name="rms_inspection_hint_service_transmission" text="The transmission oil change is overdue: worn oil speeds up the wear of everything it lubricates. The service recommended at the workshop changes it along with its filter."/>
         <text name="rms_inspection_hint_service_hydraulic" text="The hydraulic oil change is overdue: worn oil speeds up hydraulic system wear. The service recommended at the workshop changes it along with its filter."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Deposit Refund"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Low Fluid Level"/>
-        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. It is when a level falls really low that the damage starts: a machine short of coolant or of transmission oil runs hot, and a machine short of engine oil or of hydraulic oil wears far faster.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
+        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes, in turns and under braking: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welcome to Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Disable tips"/>
         <text name="rms_tutorial_welcome_enable_button" text="Enable tips"/>

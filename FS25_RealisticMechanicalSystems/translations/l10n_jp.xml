@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="キャビンダンパーに大量もれがあり、空になっています。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="ターボチャージャー周辺にオイルの跡があり、接続部が変色しています。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="ターボチャージャー周辺に大量のオイル跡、変色した接続部、すすの跡が見えます。"/>
-        <text name="rms_inspection_hint_fluid_level_low" text="油水類の一つが基準線を下回っています。"/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="複数の油水類が基準線を下回っています。"/>
+        <text name="rms_inspection_hint_fluid_low" text="MIN基準線以下：%s。"/>
+        <text name="rms_inspection_hint_fluid_very_low" text="量が非常に少ない：%s。"/>
+        <text name="rms_inspection_hint_fluid_top_up" text="容器で補給するか、ディーラーで補給。"/>
         <text name="rms_inspection_hint_service_engine" text="エンジンオイル交換時期を過ぎています。劣化したオイルはエンジンと噴射系の摩耗を早めます。どの整備でもフィルターごと交換できます。"/>
         <text name="rms_inspection_hint_service_transmission" text="ミッションオイルの交換時期を過ぎています。劣化したオイルは可動部全体の摩耗を早めます。推奨整備でフィルターごと交換できます。"/>
         <text name="rms_inspection_hint_service_hydraulic" text="作動油の交換時期を過ぎています。劣化したオイルは油圧システムの摩耗を早めます。推奨整備でフィルターごと交換できます。"/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="保証金の返還"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油水類の残量低下"/>
-        <text name="rms_tutorial_fluid_level_message" text="この車両の油水類の一つが、ゲージの基準線を下回りました。&#10;&#10;エンジンオイルは稼働時間に応じて消費され、摩耗したエンジンでは消費量が大幅に増えます。冷却液、ミッションオイル、作動油はもれが発生した場合にだけ減少します。&#10;&#10;基準線を下回っただけなら補給が必要ですが、車両はまだ正常に作動します。実際の損傷は量が著しく低下すると始まります。冷却液やミッションオイルが不足すると車両が過熱し、エンジンオイルや作動油が不足すると摩耗が大幅に速まります。&#10;&#10;ショップで該当回路に適合する製品容器を購入し、車両まで運んで補給してください。その回路用の製品はすべて機械的に同等で、誤った油水類を入れた場合はその回路だけが汚染されます。ディーラーでは必要な量が供給され、料金が請求されます。"/>
+        <text name="rms_tutorial_fluid_level_message" text="この車両の油水類の一つが、ゲージの基準線を下回りました。&#10;&#10;エンジンオイルは稼働時間に応じて消費され、摩耗したエンジンでは消費量が大幅に増えます。冷却液、ミッションオイル、作動油はもれが発生した場合にだけ減少します。&#10;&#10;基準線を下回っただけなら補給が必要ですが、車両はまだ正常に作動します。量が減るほど、坂道、旋回、ブレーキ時にポンプが空気を吸いやすくなります。エンジンオイル圧の警告灯が点滅し、ミッションや油圧の側ではポンプが鳴り、油圧の動きが遅くなります。この状態で1分過ごすごとにクランクシャフト軸受やポンプが傷みます。停止して補給してください。冷却液、ミッションオイル、作動油が不足した車両は過熱もします。&#10;&#10;ショップで該当回路に適合する製品容器を購入し、車両まで運んで補給してください。その回路用の製品はすべて機械的に同等で、誤った油水類を入れた場合はその回路だけが汚染されます。ディーラーでは必要な量が供給され、料金が請求されます。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systemsへようこそ"/>
         <text name="rms_tutorial_welcome_disable_button" text="ヒントを無効化"/>
         <text name="rms_tutorial_welcome_enable_button" text="ヒントを有効化"/>

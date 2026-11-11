@@ -482,10 +482,92 @@ RMS_Fluids.GAUGE_MAX_POSITION = 0.8
 
 ---Reads a level on the level gauge
 function RMS_Fluids.getGaugeFill(level, green)
-    local minMark = RMS_Config.FLUIDS.LEVEL_MIN_MARK
-    local stretch = (1 - minMark) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
+    local C = RMS_Config.FLUIDS
+    local stretch = (1 - C.LEVEL_MIN_MARK) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
     local fill = RMS_Fluids.GAUGE_MAX_POSITION - (1 - level) / stretch
-    return math.max(fill, 0), level < minMark and RMS_Breakdowns.COLORS.WARNING or green
+    local color = level <= C.LEVEL_VERY_LOW and RMS_Breakdowns.COLORS.CRITICAL
+        or level < C.LEVEL_MIN_MARK and RMS_Breakdowns.COLORS.WARNING or green
+    return math.max(fill, 0), color
+end
+
+-- circuit = part an air-drawing pump of that sump fails
+RMS_Fluids.PICKUP_PARTS = { engineOil = "MAIN_BEARINGS", transmissionOil = "TRANSMISSION_PUMP_MALFUNCTION",
+    hydraulicFluid = "HYDRAULIC_PUMP_MALFUNCTION" }
+RMS_Fluids.GRAVITY = 9.81
+
+---Returns the tangent of the lean a sump keeps its pump covered to
+function RMS_Fluids.getPickupMargin(level)
+    local C = RMS_Config.FLUIDS
+    return math.tan(math.rad(C.PICKUP_MIN_MARK_ANGLE)) * (level - C.LEVEL_CRITICALLY_LOW)
+        / (C.LEVEL_MIN_MARK - C.LEVEL_CRITICALLY_LOW)
+end
+
+RMS_Fluids.PICKUP_MAX_LEAN = 10
+
+---Returns the tangents of the oil's lean, across and along
+local function getSumpTilt(vehicle, lateral, longitudinal)
+    local g, maxLean = RMS_Fluids.GRAVITY, RMS_Fluids.PICKUP_MAX_LEAN
+    local _, sideY = localDirectionToWorld(vehicle.rootNode, 1, 0, 0)
+    local _, upY = localDirectionToWorld(vehicle.rootNode, 0, 1, 0)
+    local _, frontY = localDirectionToWorld(vehicle.rootNode, 0, 0, 1)
+    if upY <= 0 then
+        return maxLean, maxLean
+    end
+    -- gravity in the machine axes, less the acceleration the oil lags
+    local down = g * upY
+    return math.clamp((-g * sideY - lateral) / down, -maxLean, maxLean), math.clamp((-g * frontY - longitudinal) / down, -maxLean, maxLean)
+end
+
+---Returns the tangent of the lean of the oil in a sump
+function RMS_Fluids.getSumpLean(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    return math.sqrt((spec.sumpLeanX or 0) ^ 2 + (spec.sumpLeanZ or 0) ^ 2)
+end
+
+---Tells whether the pump of a sump draws air
+-- @param boolean wasUncovered drawing air until now, then until the oil is back under the hysteresis
+function RMS_Fluids.getIsPickupUncovered(vehicle, circuit, lean, wasUncovered)
+    local partId = RMS_Fluids.PICKUP_PARTS[circuit]
+    if partId == nil or not RMS_Fluids.hasCircuit(vehicle, circuit) or not RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
+        return false
+    end
+    local margin = RMS_Fluids.getPickupMargin(RMS_Fluids.getLevel(vehicle, circuit))
+    if wasUncovered then
+        return math.atan(lean) > math.atan(margin) - math.rad(RMS_Config.FLUIDS.PICKUP_HYSTERESIS_ANGLE)
+    end
+    return lean >= margin
+end
+
+---Follows the lean of the sumps; the server sums the air drawn
+function RMS_Fluids.updatePickups(vehicle, dt)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local seconds = dt / 1000
+    if seconds <= 0 or vehicle.rootNode == nil then
+        return
+    end
+
+    local frontX, _, frontZ = localDirectionToWorld(vehicle.rootNode, 0, 0, 1)
+    local heading = math.atan2(frontX, frontZ)
+    local turn = spec.sumpHeading ~= nil and (heading - spec.sumpHeading + math.pi) % (2 * math.pi) - math.pi or 0
+    spec.sumpHeading = heading
+    -- from m/ms to m/s, then from m/ms/ms to m/s/s
+    local speed = (vehicle.lastSpeedReal or 0) * 1000 * (vehicle.movingDirection or 0)
+    local lateral = turn / seconds * speed
+    local longitudinal = (vehicle.lastSpeedAcceleration or 0) * 1000000
+    local leanX, leanZ = getSumpTilt(vehicle, lateral, longitudinal)
+    local blend = math.min(seconds / RMS_Config.FLUIDS.PICKUP_SMOOTHING_SECONDS, 1)
+    spec.sumpLeanX = (spec.sumpLeanX or leanX) * (1 - blend) + leanX * blend
+    spec.sumpLeanZ = (spec.sumpLeanZ or leanZ) * (1 - blend) + leanZ * blend
+
+    local lean = RMS_Fluids.getSumpLean(vehicle)
+    local isCounted = vehicle.isServer and vehicle:getIsMotorStarted() and not RealisticMechanicalSystems.isMissionVehicle(vehicle)
+    for circuit, partId in pairs(RMS_Fluids.PICKUP_PARTS) do
+        local isUncovered = RMS_Fluids.getIsPickupUncovered(vehicle, circuit, lean, spec.pickupUncovered[circuit])
+        spec.pickupUncovered[circuit] = isUncovered
+        if isUncovered and isCounted then
+            spec.pickupAirTime[partId] = (spec.pickupAirTime[partId] or 0) + seconds
+        end
+    end
 end
 
 ---Returns the current circuit quantity in liters
@@ -751,10 +833,13 @@ function RMS_Fluids.getSystemWearMultiplier(vehicle, systemKey)
     return wearMultiplier
 end
 
----Adds fluid contamination to the existing breakdown hydraulic modifier
+---Adds a contaminated or air-drawing fluid to the breakdown modifier
 function RMS_Fluids.getHydraulicSpeedModifier(vehicle, breakdownModifier)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     local fluidModifier = tonumber(spec ~= nil and spec.fluidHydraulicSpeedModifier or 0) or 0
+    if spec ~= nil and spec.pickupUncovered ~= nil and spec.pickupUncovered.hydraulicFluid then
+        fluidModifier = fluidModifier - (1 - RMS_Config.FLUIDS.PICKUP_HYDRAULIC_SPEED)
+    end
     local currentModifier = tonumber(breakdownModifier or 0) or 0
     return math.max(currentModifier + fluidModifier, -1)
 end

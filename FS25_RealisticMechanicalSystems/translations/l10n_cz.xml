@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Tlumič kabiny vykazuje velký únik a vyprázdnil se."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="V oblasti turbodmychadla jsou patrné mastné stopy a ztmavlé spoje."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="V oblasti turbodmychadla jsou viditelné silné mastné stopy, ztmavlé spoje a stopy sazí."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Hladina jedné z kapalin klesla pod svou značku."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Hladina několika kapalin klesla pod svou značku."/>
+        <text name="rms_inspection_hint_fluid_low" text="Pod značkou MIN: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Velmi nízká hladina: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Doplnit z kanystru, nebo u prodejce."/>
         <text name="rms_inspection_hint_service_engine" text="Výměna motorového oleje je po termínu: opotřebovaný olej urychluje opotřebení motoru a vstřikování. Každá údržba jej vymění i s filtry."/>
         <text name="rms_inspection_hint_service_transmission" text="Výměna převodového oleje je po termínu: opotřebovaný olej urychluje opotřebení všeho, co maže. Údržba doporučená v dílně jej vymění i s filtrem."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Výměna hydraulického oleje je po termínu: opotřebovaný olej urychluje opotřebení hydraulického systému. Údržba doporučená v dílně jej vymění i s filtrem."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vrácená kauce"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nízká hladina kapaliny"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Poškození začíná, až když hladina klesne opravdu nízko: stroj s nedostatkem chladicí kapaliny nebo převodového oleje se přehřívá a stroj s nedostatkem motorového nebo hydraulického oleje se opotřebovává mnohem rychleji.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu, v zatáčkách a při brzdění: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Vítejte v Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Vypnout rady"/>
         <text name="rms_tutorial_welcome_enable_button" text="Zapnout rady"/>

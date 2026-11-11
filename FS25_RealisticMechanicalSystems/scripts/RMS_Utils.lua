@@ -761,6 +761,7 @@ function RMS_Utils.setLevelGauge(fillElement, underElement, trackWidth, level)
     underElement:setVisible(fill <= 0)
     fillElement:setSize(GuiUtils.alignValueToScreenPixels(trackWidth * fill, true), nil)
     fillElement:setImageColor(nil, color[1], color[2], color[3], color[4])
+    underElement:setImageColor(nil, color[1], color[2], color[3], color[4])
 end
 
 ---Returns the squared distance past a threshold, 0 on the safe side of it

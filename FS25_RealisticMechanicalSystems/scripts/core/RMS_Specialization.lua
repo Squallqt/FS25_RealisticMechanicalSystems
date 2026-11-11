@@ -876,6 +876,7 @@ local SAVEGAME_ATTRIBUTES = {
     { "systemsState", "STRING", "Condition and switch of each system" },
     { "partWear", "STRING", "Wear of each part" },
     { "partAbuse", "STRING", "Abuse that last wore each part, refusing its warranty" },
+    { "pickupAirTime", "STRING", "Seconds each pump has drawn air since its part was fitted" },
     { "factorStats", "STRING", "Wear gathered by each cause, system by system" },
     { "pendingOverhaulPartStart", "STRING", "Wear of each part at the start of the running overhaul" },
     { "pendingOverhaulPartTarget", "STRING", "Wear the running overhaul brings each part to" },
@@ -1878,6 +1879,11 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     end
 
     self:getSmoothedTemperature(updateDt)
+
+    RMS_Fluids.updatePickups(self, updateDt)
+    if self.isClient then
+        RMS_Breakdowns.updateAerationWhines(self)
+    end
 
     syncFuelConsumption(self)
 

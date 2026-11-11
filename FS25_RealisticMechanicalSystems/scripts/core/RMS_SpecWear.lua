@@ -138,9 +138,8 @@ function RealisticMechanicalSystems:updateServiceLevel(dt)
     local hourlyWear = self:getIsMotorStarted() and RMS_Config.CORE.BASE_SERVICE_WEAR * (1 + spec.extraServiceWear) or 0
     for _, clock in ipairs(self:getServiceClocks()) do
         if clock.intervalFactor ~= nil then
-            local volume = math.max(RMS_Fluids.getLevel(self, clock.circuits[1]), 0.01)
             spec[clock.levelKey] = math.max((spec[clock.levelKey] or spec.baseServiceLevel)
-                - hourlyWear / clock.intervalFactor / volume / 3600000 * dt, 0)
+                - hourlyWear / clock.intervalFactor / 3600000 * dt, 0)
         end
     end
 end
@@ -1009,10 +1008,6 @@ local function getHeatLevels(key)
     return levels.limit, levels.release
 end
 
-local function getLowLevels()
-    return -RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW, -RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
-end
-
 -- i={partId, firstStage, abuse, levels or getLevels, read}
 local DIRECT_FAILURES = {
     { partId = "CYLINDER_HEAD_GASKET", firstStage = 2, abuse = "heat", levels = "ENGINE_HEAT",
@@ -1024,16 +1019,24 @@ local DIRECT_FAILURES = {
         read = function(spec) return spec.crankingSeconds end },
     { partId = "PTO_OUTPUT_SHAFT_FAILURE", abuse = "pto_angle", read = function(spec) return spec.ptoShaftAngle or 0 end,
         getLevels = function(_, spec) return getHeatLevels(spec.isPtoImplementRaised and "PTO_SHAFT_ANGLE_TURNING" or "PTO_SHAFT_ANGLE") end },
-    -- the oil lamp lights once the pump draws air
-    { partId = "MAIN_BEARINGS", firstStage = 3, abuse = "low_level", read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end,
-        getLevels = getLowLevels },
-    { partId = "ENGINE_JAM", abuse = "low_level", read = function(spec) return -(tonumber(spec.engineOilLevel) or 1) end,
-        getLevels = function() return 0, 0 end },
-    { partId = "TRANSMISSION_PUMP_MALFUNCTION", abuse = "low_level",
-        read = function(spec) return -(tonumber(spec.transmissionOilLevel) or 1) end, getLevels = getLowLevels },
-    { partId = "HYDRAULIC_PUMP_MALFUNCTION", abuse = "low_level",
-        read = function(spec) return -(tonumber(spec.hydraulicFluidLevel) or 1) end, getLevels = getLowLevels },
 }
+
+---Fails a part one stage for each span of air its pump has drawn
+local function failAirDrawingParts(vehicle, spec)
+    for _, partId in pairs(RMS_Fluids.PICKUP_PARTS) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[partId]
+        local stage = math.min(math.floor((spec.pickupAirTime[partId] or 0) / RMS_Config.FLUIDS.PICKUP_STAGE_SECONDS), #definition.stages)
+        local breakdown = spec.activeBreakdowns[partId]
+        if stage > (breakdown ~= nil and breakdown.stage or 0) and definition.isApplicable(vehicle) then
+            spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE.low_level
+            if breakdown ~= nil then
+                vehicle:changeBreakdownStage(partId, stage)
+            else
+                vehicle:addBreakdown(partId, stage)
+            end
+        end
+    end
+end
 
 local function failPart(vehicle, failure)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1071,4 +1074,5 @@ function RealisticMechanicalSystems:updateDirectFailures(dt)
             spec.directFailureLatches[index] = nil
         end
     end
+    failAirDrawingParts(self, spec)
 end

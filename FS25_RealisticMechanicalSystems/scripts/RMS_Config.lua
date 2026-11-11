@@ -1059,7 +1059,18 @@ RMS_Config = {
         LEVEL_MIN_MARK = 0.85,
         LEVEL_LOW = 0.70,
         LEVEL_VERY_LOW = 0.50,
+        -- a pump draws air on level ground from this level down
         LEVEL_CRITICALLY_LOW = 0.30,
+        -- deg of lean a sump at its MIN mark keeps its pump covered to
+        PICKUP_MIN_MARK_ANGLE = 30,
+        -- s of air drawn by a pump, summed, for each stage of its fault
+        PICKUP_STAGE_SECONDS = 60,
+        -- s the oil takes to follow the slope and the accelerations
+        PICKUP_SMOOTHING_SECONDS = 0.5,
+        -- deg back under its limit before a pump draws oil again
+        PICKUP_HYSTERESIS_ANGLE = 3,
+        -- share of its speed a hydraulic function keeps while its pump draws air
+        PICKUP_HYDRAULIC_SPEED = 0.5,
     },
 
     -- drive mode, differential lock and park brake

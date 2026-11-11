@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Ohjaamon iskunvaimentimessa on suuri vuoto ja se on tyhjentynyt."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboahtimen ympärillä näkyy öljyisiä jälkiä ja tummentuneita liitäntöjä."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboahtimen ympärillä näkyy runsaasti öljyisiä jälkiä, tummentuneita liitäntöjä ja nokijälkiä."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Yhden nesteen taso on laskenut merkin alapuolelle."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Usean nesteen taso on laskenut merkin alapuolelle."/>
+        <text name="rms_inspection_hint_fluid_low" text="MIN-merkin alapuolella: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Erittäin alhainen taso: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Täydennä kanisterista tai jälleenmyyjällä."/>
         <text name="rms_inspection_hint_service_engine" text="Moottoriöljyn vaihto on myöhässä: kulunut öljy nopeuttaa moottorin ja ruiskutuksen kulumista. Jokainen huolto vaihtaa öljyn suodattimineen."/>
         <text name="rms_inspection_hint_service_transmission" text="Vaihteistoöljyn vaihto on myöhässä: kulunut öljy nopeuttaa kaiken voitelemansa kulumista. Korjaamon suosittelema huolto vaihtaa öljyn suodattimineen."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hydrauliöljyn vaihto on myöhässä: kulunut öljy nopeuttaa hydraulijärjestelmän kulumista. Korjaamon suosittelema huolto vaihtaa öljyn suodattimineen."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vakuuden palautus"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nestetaso alhaalla"/>
-        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Vauriot alkavat vasta, kun taso laskee todella alas: liian vähäinen jäähdytysneste tai vaihteistoöljy kuumentaa konetta, ja liian vähäinen moottoriöljy tai hydrauliöljy nopeuttaa kulumista huomattavasti.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, vie se koneen luo ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan."/>
+        <text name="rms_tutorial_fluid_level_message" text="Yksi tämän koneen nesteistä on laskenut mittarin merkin alapuolelle.&#10;&#10;Moottoriöljyä kuluu käyttötuntien myötä, ja kulunut moottori kuluttaa sitä paljon enemmän. Jäähdytysneste, vaihteistoöljy ja hydrauliöljy vähenevät vain vuodon vuoksi.&#10;&#10;Merkin alapuolella kone tarvitsee vain täydennyksen ja toimii edelleen normaalisti. Mitä alemmas taso laskee, sitä helpommin pumppu imee ilmaa rinteissä, kaarteissa ja jarrutettaessa: öljynpaineen varoitusvalo vilkkuu, ja vaihteiston tai hydrauliikan puolella pumppu ulisee ja hydrauliset liikkeet hidastuvat. Jokainen näin kulunut minuutti vaurioittaa kampiakselin laakereita tai pumppua: pysähdy ja täydennä taso. Kone, jolta puuttuu jäähdytysnestettä, vaihteistoöljyä tai hydrauliöljyä, myös kuumenee.&#10;&#10;Osta kaupasta yhteensopivan tuotteen säiliö, vie se koneen luo ja täydennä nestetaso. Kaikilla tähän piiriin tarkoitetuilla tuotteilla on sama vaikutus; väärä neste saastuttaa vain kyseisen piirin. Jälleenmyyjän korjaamossa tarvittavat litrat toimitetaan ja laskutetaan."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Tervetuloa Realistic Mechanical Systems -modiin"/>
         <text name="rms_tutorial_welcome_disable_button" text="Poista vihjeet käytöstä"/>
         <text name="rms_tutorial_welcome_enable_button" text="Ota vihjeet käyttöön"/>

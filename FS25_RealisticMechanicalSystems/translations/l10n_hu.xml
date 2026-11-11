@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="A fülke egyik lengéscsillapítója erősen szivárog és kiürült."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Olajos nyomok és elsötétedett csatlakozások láthatók a turbófeltöltő környékén."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Erős olajos nyomok, elsötétedett csatlakozások és koromnyomok láthatók a turbófeltöltő környékén."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Az egyik folyadékszint a jelzés alá csökkent."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Több folyadékszint a jelzés alá csökkent."/>
+        <text name="rms_inspection_hint_fluid_low" text="A MIN jelzés alatt: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Nagyon alacsony szint: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Utántöltés kannából vagy a kereskedőnél."/>
         <text name="rms_inspection_hint_service_engine" text="A motorolajcsere késésben van: az elhasznált olaj gyorsítja a motor és a befecskendezés kopását. Minden karbantartás a szűrőkkel együtt cseréli az olajat."/>
         <text name="rms_inspection_hint_service_transmission" text="A váltóolajcsere késésben van: az elhasznált olaj gyorsítja mindannak a kopását, amit ken. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
         <text name="rms_inspection_hint_service_hydraulic" text="A hidraulikaolaj-csere késésben van: az elhasznált olaj gyorsítja a hidraulikarendszer kopását. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Visszakapott kaució"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Alacsony folyadékszint"/>
-        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Akkor kerül pénzbe, ha egy szint tényleg mélyre esik: hűtőfolyadék vagy váltóolaj hiányában a gép melegszik, motorolaj vagy hidraulikaolaj hiányában pedig sokkal gyorsabban kopik.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
+        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Minél lejjebb száll a szint, annál könnyebben szív levegőt a szivattyú lejtőn, kanyarban és fékezéskor: az olajnyomás-lámpa villog, a váltó vagy a hidraulika oldalán pedig a szivattyú sípol, és a hidraulikus mozgások lelassulnak. Minden így eltöltött perc rongálja a főtengelycsapágyakat vagy a szivattyút: állj meg, és töltsd fel a szintet. Hűtőfolyadék, váltóolaj vagy hidraulikaolaj hiányában a gép emellett melegszik is.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Üdvözöl a Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tippek kikapcsolása"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tippek bekapcsolása"/>

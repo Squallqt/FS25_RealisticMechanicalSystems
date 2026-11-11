@@ -652,6 +652,19 @@ local function readMachine(vehicle, spec, reading)
     if spec.systems.transmission.enabled ~= false then table.insert(levels, "transmission " .. pct(spec.transmissionOilLevel)) end
     if spec.systems.hydraulics.enabled ~= false then table.insert(levels, "hydraulic " .. pct(RMS_Fluids.getLevel(vehicle, "hydraulicFluid"))) end
     table.insert(rows, {"Levels", table.concat(levels, SEP)})
+    if vehicle.rootNode ~= nil then
+        local lean = RMS_Fluids.getSumpLean(vehicle)
+        local pickups = { string.format("oil leans %.0f°", math.deg(math.atan(lean))) }
+        for _, pickup in ipairs({ {"oil", "engineOil"}, {"transmission", "transmissionOil"}, {"hydraulic", "hydraulicFluid"} }) do
+            local partId = RMS_Fluids.PICKUP_PARTS[pickup[2]]
+            if RMS_Fluids.hasCircuit(vehicle, pickup[2]) and RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
+                local margin = math.deg(math.atan(math.max(RMS_Fluids.getPickupMargin(RMS_Fluids.getLevel(vehicle, pickup[2])), 0)))
+                table.insert(pickups, string.format("%s %s, air %.0f s", pickup[1],
+                    spec.pickupUncovered[pickup[2]] and "DRAWS AIR" or string.format("covered to %.0f°", margin), spec.pickupAirTime[partId] or 0))
+            end
+        end
+        table.insert(rows, {"Pickups", table.concat(pickups, SEP)})
+    end
     local isRunning = vehicle:getIsMotorStarted()
     local stopped = spec.isElectricVehicle and "motor off" or "engine stopped"
     local losses = {}

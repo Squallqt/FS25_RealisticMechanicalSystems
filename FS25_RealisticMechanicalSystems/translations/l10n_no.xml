@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="En hyttestøtdemper har en stor lekkasje og har rent tom."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Det er oljespor og misfargede koblinger rundt turboladeren."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Det er kraftige oljespor, misfargede koblinger og sotspor rundt turboladeren."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Et væskenivå har falt under merket sitt."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Flere væskenivåer har falt under merket sitt."/>
+        <text name="rms_inspection_hint_fluid_low" text="Under MIN-merket: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Svært lavt nivå: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Fyll på fra kannen eller hos forhandleren."/>
         <text name="rms_inspection_hint_service_engine" text="Motoroljeskiftet er overskredet: slitt olje øker slitasjen på motor og innsprøytning. Enhver service skifter oljen sammen med filtrene."/>
         <text name="rms_inspection_hint_service_transmission" text="Transmisjonsoljeskiftet er overskredet: slitt olje øker slitasjen på alt den smører. Servicen verkstedet anbefaler, skifter oljen sammen med filteret."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hydraulikkoljeskiftet er overskredet: slitt olje øker slitasjen på hydraulikksystemet. Servicen verkstedet anbefaler, skifter oljen sammen med filteret."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Tilbakebetalt depositum"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Lavt væskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Det er når et nivå faller riktig lavt at skadene begynner: en maskin som mangler kjølevæske eller transmisjonsolje, blir varm, og en maskin som mangler motorolje eller hydraulikkolje, slites langt raskere.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker, i svinger og ved oppbremsing: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Slå av tipsene"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsene"/>

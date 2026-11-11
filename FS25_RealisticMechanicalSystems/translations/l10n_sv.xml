@@ -844,8 +844,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="En hyttstötdämpare har ett stort läckage och har tömts."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Det finns oljespår och missfärgade kopplingar runt turboaggregatet."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Det finns kraftiga oljespår, missfärgade kopplingar och sotspår runt turboaggregatet."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="En vätskenivå har sjunkit under sitt märke."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Flera vätskenivåer har sjunkit under sitt märke."/>
+        <text name="rms_inspection_hint_fluid_low" text="Under MIN-märket: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Mycket låg nivå: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Fyll på från dunken eller hos återförsäljaren."/>
         <text name="rms_inspection_hint_service_engine" text="Motoroljebytet är överskridet: sliten olja ökar slitaget på motor och insprutning. Varje service byter oljan tillsammans med filtren."/>
         <text name="rms_inspection_hint_service_transmission" text="Transmissionsoljebytet är överskridet: sliten olja ökar slitaget på allt den smörjer. Den service verkstaden rekommenderar byter oljan tillsammans med filtret."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hydrauloljebytet är överskridet: sliten olja ökar slitaget på hydraulsystemet. Den service verkstaden rekommenderar byter oljan tillsammans med filtret."/>
@@ -931,7 +932,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Återbetald deposition"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Låg vätskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av vätskorna på den här maskinen har sjunkit under märket på sin mätare.&#10;&#10;Motorolja förbrukas med timmarna, och en sliten motor dricker långt mer av den. Kylvätska, transmissionsolja och hydraulolja sjunker bara vid ett läckage.&#10;&#10;Under märket ber maskinen bara om en påfyllning och arbetar fortfarande normalt. Det är när en nivå sjunker riktigt lågt som skadorna börjar: en maskin som saknar kylvätska eller transmissionsolja blir varm, och en maskin som saknar motorolja eller hydraulolja slits långt snabbare.&#10;&#10;Köp en dunk med en lämplig produkt i butiken, ta med den till maskinen och fyll på nivån. Alla produkter för den kretsen har samma verkan; en felaktig vätska förorenar bara den kretsen. Hos återförsäljaren levereras och faktureras de liter som behövs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av vätskorna på den här maskinen har sjunkit under märket på sin mätare.&#10;&#10;Motorolja förbrukas med timmarna, och en sliten motor dricker långt mer av den. Kylvätska, transmissionsolja och hydraulolja sjunker bara vid ett läckage.&#10;&#10;Under märket ber maskinen bara om en påfyllning och arbetar fortfarande normalt. Ju lägre nivån blir, desto lättare suger pumpen luft i backar, i kurvor och vid inbromsning: oljetryckslampan blinkar, och på växellåds- eller hydraulsidan tjuter pumpen och de hydrauliska rörelserna blir långsammare. Varje minut på det sättet skadar vevaxellagren eller pumpen: stanna och fyll på nivån. En maskin som saknar kylvätska, transmissionsolja eller hydraulolja blir också varm.&#10;&#10;Köp en dunk med en lämplig produkt i butiken, ta med den till maskinen och fyll på nivån. Alla produkter för den kretsen har samma verkan; en felaktig vätska förorenar bara den kretsen. Hos återförsäljaren levereras och faktureras de liter som behövs."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Välkommen till Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Stäng av tipsen"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsen"/>

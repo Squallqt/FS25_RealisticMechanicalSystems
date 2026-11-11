@@ -40,6 +40,7 @@ DAILY CARE
 - Air Blower clears the cooling pack and removes loose dust from the air filter
 - SKF grease gun, loaded with SKF grease cartridges bought one at a time or up to twelve in a carton. Each machine and implement has its own grease points, to grease every working day, every few working days or every few months: each click greases one, a display shows the grease left in the cartridge and each point greased, and greasing late wears the machine faster. The fleet page lists every implement with its grease points and shows the tractor power it requires, and standing next to a machine or implement shows the points due or the next greasing
 - An incompatible product contaminates its circuit: wear can triple, heat can rise and hydraulics can slow down; only a complete fluid replacement clears the contamination
+- A low fluid lets its pump draw air on slopes, in turns and under braking: the oil pressure light flickers, the gearbox and hydraulic pumps whine and the hydraulics slow, and each minute of it damages the crankshaft bearings or the pump; the pre-shift check names a low fluid and says when not to work
 
 SIMULATION
 - Engine and oil temperatures driven by work, weather and radiator fouling; traction batteries warm during work and charging
@@ -66,7 +67,8 @@ Mod for Farming Simulator
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.2:
-- Reworked wear and breakdowns: a new machine rarely fails, an old or mistreated one far more often, and overheating, running dry or a starter used without rest break the part
+- Reworked wear and breakdowns: a new machine rarely fails, an old or mistreated one far more often, and overheating or a starter used without rest break the part
+- Reworked low fluid levels: the pump draws air on slopes, in turns and under braking, the oil pressure light flickers and each minute of it damages the bearings or the pump; the pre-shift check names the low fluid
 - Added warranty refusal for faults caused by misuse or on a part fitted aftermarket or used
 - Added the required tractor power to the implement cards of the fleet page
 - Added the number of maintenances done to the workshop summary
@@ -318,6 +320,7 @@ TÄGLICHE PFLEGE
 - Das Druckluftgebläse reinigt das Kühlerpaket und entfernt losen Staub aus dem Luftfilter
 - SKF-Fettpresse, geladen mit SKF-Fettkartuschen, einzeln oder bis zu zwölf im Karton gekauft. Jede Maschine und jedes Anbaugerät hat eigene Schmierstellen, an jedem Arbeitstag, alle paar Arbeitstage oder alle paar Monate abzuschmieren: Jeder Klick schmiert eine, eine Anzeige zeigt das Fett in der Kartusche und jede abgeschmierte Stelle, und verspätetes Abschmieren verschleißt die Maschine schneller. Die Fuhrpark-Seite listet jedes Anbaugerät mit seinen Schmierstellen und zeigt die benötigte Traktorleistung, und zu Fuß neben einer Maschine oder einem Anbaugerät erscheinen die fälligen Schmierstellen oder das nächste Abschmieren
 - Ein ungeeignetes Produkt verunreinigt seinen Kreislauf: Der Verschleiß kann sich verdreifachen, die Erwärmung steigen und die Hydraulik langsamer werden; nur ein vollständiger Flüssigkeitswechsel beseitigt die Verunreinigung
+- Bei niedrigem Stand saugt die Pumpe an Hängen, in Kurven und beim Bremsen Luft: Die Öldruckleuchte flackert, Getriebe- und Hydraulikpumpe heulen, die Hydraulik wird langsamer, und jede Minute davon schädigt die Kurbelwellenlager oder die Pumpe; die Kontrolle vor Schichtbeginn nennt die niedrige Flüssigkeit und sagt, wann nicht gearbeitet werden darf
 
 SIMULATION
 - Motor- und Öltemperaturen nach Arbeit, Wetter und Kühlerverschmutzung; Traktionsbatterien erwärmen sich beim Arbeiten und Laden
@@ -344,7 +347,8 @@ Mod for Farming Simulator
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.2:
-- Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung, Trockenlauf oder ein Anlasser ohne Ruhepause beschädigen das Teil
+- Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung oder ein Anlasser ohne Ruhepause beschädigen das Teil
+- Niedrige Flüssigkeitsstände überarbeitet: Die Pumpe saugt an Hängen, in Kurven und beim Bremsen Luft, die Öldruckleuchte flackert und jede Minute davon schädigt die Lager oder die Pumpe; die Kontrolle vor Schichtbeginn nennt die niedrige Flüssigkeit
 - Garantieablehnung bei Schäden durch Fehlbedienung oder an einem eingebauten Nachbau- oder Gebrauchtteil hinzugefügt
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
 - Anzahl der durchgeführten Wartungen in der Werkstattübersicht hinzugefügt
@@ -596,6 +600,7 @@ ENTRETIEN QUOTIDIEN
 - La soufflette nettoie le bloc de refroidissement et retire la poussière superficielle du filtre à air
 - Pistolet à graisse SKF, chargé de cartouches de graisse SKF achetées à l'unité ou jusqu'à douze dans un carton. Chaque machine et chaque outil attelé a ses propres graisseurs, à graisser chaque jour de travail, tous les quelques jours de travail ou tous les quelques mois : chaque clic en graisse un, un affichage montre la graisse restant dans la cartouche et chaque graisseur fait, et un graissage en retard use la machine plus vite. Le parc de matériel liste chaque outil avec ses graisseurs et affiche la puissance de tracteur requise, et à pied près d'une machine ou d'un outil s'affichent les graisseurs à faire ou le prochain graissage
 - Un produit incompatible contamine son circuit : l'usure peut être multipliée par trois, la chauffe augmenter et l'hydraulique ralentir ; seule une vidange complète supprime la contamination
+- Un fluide bas fait aspirer de l'air à sa pompe dans les pentes, les virages et les freinages : le voyant de pression d'huile clignote, les pompes de boîte et d'hydraulique sifflent et l'hydraulique ralentit, et chaque minute ainsi abîme les coussinets de vilebrequin ou la pompe ; le contrôle avant prise de poste nomme le fluide bas et dit quand ne pas travailler
 
 SIMULATION
 - Températures du moteur et des huiles selon le travail, la météo et l'encrassement du radiateur ; les batteries de traction chauffent au travail et en recharge
@@ -622,7 +627,8 @@ Mod for Farming Simulator
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.2 :
-- Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une machine vieille ou malmenée bien plus souvent, et la surchauffe, la marche à sec ou un démarreur sans repos cassent la pièce
+- Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une machine vieille ou malmenée bien plus souvent, et la surchauffe ou un démarreur sans repos cassent la pièce
+- Refonte des niveaux bas : la pompe aspire de l'air dans les pentes, les virages et les freinages, le voyant de pression d'huile clignote et chaque minute ainsi abîme les coussinets ou la pompe ; le contrôle avant prise de poste nomme le fluide bas
 - Ajout du refus de garantie pour les pannes dues à un mauvais usage ou à une pièce posée adaptable ou d'occasion
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
 - Ajout du nombre d'entretiens effectués à la synthèse de l'atelier

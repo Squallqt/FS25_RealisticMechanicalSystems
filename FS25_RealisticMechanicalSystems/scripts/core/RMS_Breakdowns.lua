@@ -1582,6 +1582,34 @@ for _, noise in ipairs({
     RMS_Breakdowns.EffectApplicators[noise[1]] = createEngineNoiseEffectApplicator(noise[1], noise[2], noise[3])
 end
 
+-- circuit = {effect of the pump's faults, sample}
+local AERATION_WHINES = { transmissionOil = { "TRANSMISSION_PUMP_NOISE_EFFECT", "transmissionPump" },
+    hydraulicFluid = { "HYDRAULIC_PUMP_NOISE_EFFECT", "hydraulicPump" } }
+local AERATION_WHINE_VOLUME = 0.8
+
+---Makes a pump whine while it draws air, its faults aside
+function RMS_Breakdowns.updateAerationWhines(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    for circuit, whine in pairs(AERATION_WHINES) do
+        local sample = spec.samples ~= nil and spec.samples[whine[2]] or nil
+        if sample ~= nil and (spec.activeEffects == nil or spec.activeEffects[whine[1]] == nil) then
+            local isWhining = spec.pickupUncovered[circuit] == true and vehicle:getIsMotorStarted()
+            if isWhining then
+                sample.rmsOriginalLoops = sample.rmsOriginalLoops or sample.loops
+                sample.rmsOriginalVolumeScale = sample.rmsOriginalVolumeScale or sample.volumeScale
+                sample.loops = 0
+                sample.volumeScale = sample.rmsOriginalVolumeScale * AERATION_WHINE_VOLUME
+                RMS_SoundManager.setSamplePlaying(sample, true)
+            elseif spec.aerationWhining[circuit] then
+                silenceNoise(sample)
+            end
+            spec.aerationWhining[circuit] = isWhining
+        else
+            spec.aerationWhining[circuit] = false
+        end
+    end
+end
+
 RMS_Breakdowns.EffectApplicators.STEERING_LINKAGE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_LINKAGE_NOISE_EFFECT",
     "steeringLinkage", getIsSteeringMoving)
 RMS_Breakdowns.EffectApplicators.STEERING_KNUCKLE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_KNUCKLE_NOISE_EFFECT",
