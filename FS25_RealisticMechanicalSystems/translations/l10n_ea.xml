@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Elegir el procedimiento"/>
         <text name="rms_ws_section_work_order" text="Orden de reparación"/>
         <text name="rms_ws_section_recap" text="Recapitulación"/>
-        <text name="rms_ws_section_parts" text="Piezas afectadas"/>
         <text name="rms_ws_section_history" text="Historial"/>
         <text name="rms_ws_label_last_check" text="Última comprobación"/>
         <text name="rms_ws_reading_outdated" text="Recomprobar"/>
-        <text name="rms_ws_label_more_parts" text="+ %s más"/>
         <text name="rms_ws_label_committed_cost" text="Costo comprometido"/>
         <text name="rms_ws_label_finish_time" text="Hora de finalización"/>
         <text name="rms_ws_label_total_estimate" text="Total estimado"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Costo por hora de funcionamiento"/>
         <text name="rms_log_invoice_title" text="Detalle de la factura"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Tarifa fija de taller"/>
-        <text name="rms_log_invoice_labour" text="Mano de obra"/>
         <text name="rms_log_invoice_filters" text="Filtros"/>
         <text name="rms_log_cancelled_desc" text="Procedimiento cancelado"/>
         <text name="rms_log_ownership_months_title" text="Duración de propiedad"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Incluida"/>
         <text name="rms_ws_levels_mechanical" text="Mecánicas"/>
         <text name="rms_ws_levels_every_level" text="En cada nivel: radiador limpio y engrase."/>
-        <text name="rms_ws_quality_risk" text="Riesgo de defecto"/>
+        <text name="rms_ws_quality_part_wear" text="Desgaste de la pieza"/>
+        <text name="rms_ws_quality_factory_kept" text="Conserva la garantía de fábrica"/>
+        <text name="rms_ws_quality_factory_lost" text="Pierde la garantía de fábrica"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtros sin defecto"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtro a veces defectuoso"/>
+        <text name="rms_ws_quality_filter_often" text="Filtro defectuoso más a menudo"/>
         <text name="rms_ws_quality_reference" text="Precio de referencia"/>
-        <text name="rms_ws_quality_donor" text="Máquina de %d h"/>
-        <text name="rms_ws_quality_donors" text="Máquinas de %d a %d h"/>
+        <text name="rms_ws_quality_donor" text="Desmontada de una máquina de %d h"/>
+        <text name="rms_ws_quality_donors" text="Desmontadas de máquinas de %d a %d h"/>
         <text name="rms_ws_quality_new_part" text="Pieza nueva"/>
         <text name="rms_ws_quality_used_warranty" text="Garantía de 3 meses"/>
         <text name="rms_ws_quality_partial_warranty" text="Garantía parcial"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Pieza averiada"/>
         <text name="rms_ws_repair_row_part_detail" text="Origen de la avería"/>
         <text name="rms_ws_repair_part_replaced" text="Sustituida"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Piezas desgastadas"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="En el mismo sistema"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Sustituidas"/>
         <text name="rms_ws_repair_row_quality" text="Calidad de las piezas"/>
         <text name="rms_ws_repair_row_quality_detail" text="Elegida en las tarjetas de abajo"/>
         <text name="rms_ws_repair_quality_choice" text="A elegir"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Garantía de fábrica:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Garantía de la pieza:"/>
         <text name="rms_ws_quote_warranty_covered" text="cubierta"/>
-        <text name="rms_ws_quote_warranty_part" text="cubierta, %d meses más"/>
         <text name="rms_ws_quote_warranty_used" text="solo la pieza cubierta"/>
         <text name="rms_ws_quote_warranty_expired" text="terminada"/>
         <text name="rms_ws_quote_warranty_own" text="no cubierta en el taller personal"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Evaluado"/>
         <text name="rms_ws_inspection_maintenance_note" text="Un mantenimiento también hace esta búsqueda de averías, como la inspección estándar."/>
         <text name="rms_ws_quote_title" text="Detalle del presupuesto"/>
+        <text name="rms_ws_quote_empty_title" text="Tu presupuesto aparecerá aquí"/>
+        <text name="rms_ws_quote_empty_text" text="Elige una intervención de la lista"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Sin presupuesto por ahora"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Elige otra intervención de la lista"/>
+        <text name="rms_ws_repair_row_around" text="Piezas adyacentes"/>
+        <text name="rms_ws_repair_row_around_detail" text="Reacondicionamiento y piezas desgastadas"/>
+        <text name="rms_ws_repair_around_count" text="%d sustituidas"/>
+        <text name="rms_ws_repair_around_none" text="Ninguna"/>
+        <text name="rms_ws_quote_labour" text="Mano de obra · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Piezas de la falla · %s"/>
+        <text name="rms_ws_quote_preventive" text="Sustitución preventiva · %s"/>
+        <text name="rms_ws_quote_supplies" text="Materiales"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Reacondicionamiento del motor · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Reacondicionamiento de la culata · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Piezas desgastadas · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Garantía de fábrica"/>
+        <text name="rms_ws_quote_cover_part" text="Garantía de la pieza"/>
+        <text name="rms_ws_quote_cover_used" text="Garantía de la pieza usada"/>
+        <text name="rms_ws_quote_cover_full" text="Mano de obra y piezas cubiertas"/>
+        <text name="rms_ws_quote_cover_part_only" text="Solo la pieza, la mano de obra se paga"/>
+        <text name="rms_ws_quote_filters" text="Filtros · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Piezas desgastadas · última inspección completa"/>
         <text name="rms_ws_quote_oil_filter" text="Filtro de aceite"/>
         <text name="rms_bodywork_touchup" text="Retoques"/>
         <text name="rms_bodywork_full" text="Repintado completo"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Ninguna avería ni pieza desgastada"/>
         <text name="rms_report_worn_part_risk" text="Riesgo ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Ajuste: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Sustitución: reparación avanzada o revisión"/>
+        <text name="rms_report_worn_part_replace" text="%s · Sustitución preventiva en el taller"/>
         <text name="rms_report_overall_assessment_title" text="Evaluación del estado general"/>
         <text name="rms_report_overall_assessment_condition" text="Nivel de estado"/>
         <text name="rms_report_recommendations_title" text="Conclusión y recomendaciones"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Degradación por edad"/>
         <text name="rms_tutorial_age_degradation_message" text="En RMS, los vehículos pierden progresivamente parte de su rendimiento original a medida que envejecen.&#10;&#10;Después de aproximadamente un tercio de su vida útil, el desgaste por edad reduce ligeramente algunas características importantes, como la potencia o la frenada. El efecto se refuerza después y se hace claramente visible al final de la vida útil.&#10;&#10;Esta degradación se puede desactivar en la configuración del mod."/>
         <text name="rms_tutorial_poor_consumables_title" text="Consumibles de baja calidad"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Tu %s recibió consumibles de baja calidad en su último mantenimiento. Eso ocurre con las calidades baratas.&#10;&#10;El intervalo de mantenimiento se acorta y el desgaste de los componentes aumenta ligeramente. Un nuevo mantenimiento corrige el problema. Una inspección visual o estándar avisa del intervalo reducido; solo una inspección completa identifica los consumibles en cuestión."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Tu %s recibió un filtro defectuoso en su último mantenimiento. Eso ocurre con las calidades baratas.&#10;&#10;Este filtro deja pasar la suciedad: el circuito que protege se desgasta más rápido hasta que se cambia el filtro. Un nuevo mantenimiento lo cambia. Solo una inspección completa lo identifica."/>
         <text name="rms_tutorial_poor_parts_title" text="Piezas de baja calidad"/>
         <text name="rms_tutorial_poor_parts_message" text="Tu %s recibió una pieza de baja calidad durante una reparación. Lo más probable es que la avería vuelva pronto.&#10;&#10;Puedes esperar a que ocurra o lanzar una inspección completa, que identifica con confiabilidad la pieza en cuestión."/>
         <text name="rms_tutorial_park_brake_title" text="Freno de estacionamiento"/>

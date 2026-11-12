@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Procedure kiezen"/>
         <text name="rms_ws_section_work_order" text="Werkplaatsopdracht"/>
         <text name="rms_ws_section_recap" text="Samenvatting"/>
-        <text name="rms_ws_section_parts" text="Betrokken onderdelen"/>
         <text name="rms_ws_section_history" text="Historie"/>
         <text name="rms_ws_label_last_check" text="Laatste controle"/>
         <text name="rms_ws_reading_outdated" text="Hercontrole"/>
-        <text name="rms_ws_label_more_parts" text="+ nog %s"/>
         <text name="rms_ws_label_committed_cost" text="Reeds aangegane kosten"/>
         <text name="rms_ws_label_finish_time" text="Eindtijd"/>
         <text name="rms_ws_label_total_estimate" text="Geschat totaal"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Kosten per bedrijfsuur"/>
         <text name="rms_log_invoice_title" text="Factuurdetails"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Vast werkplaatstarief"/>
-        <text name="rms_log_invoice_labour" text="Arbeidsloon"/>
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure geannuleerd"/>
         <text name="rms_log_ownership_months_title" text="Bezitstijd"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Inbegrepen"/>
         <text name="rms_ws_levels_mechanical" text="Mechanisch"/>
         <text name="rms_ws_levels_every_level" text="Bij elk niveau: radiateur gereinigd en smeren."/>
-        <text name="rms_ws_quality_risk" text="Kans op defect"/>
+        <text name="rms_ws_quality_part_wear" text="Slijtage van het onderdeel"/>
+        <text name="rms_ws_quality_factory_kept" text="Fabrieksgarantie blijft"/>
+        <text name="rms_ws_quality_factory_lost" text="Fabrieksgarantie vervalt"/>
+        <text name="rms_ws_quality_filters_sound" text="Filters zonder defect"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filter soms defect"/>
+        <text name="rms_ws_quality_filter_often" text="Filter vaker defect"/>
         <text name="rms_ws_quality_reference" text="Referentieprijs"/>
-        <text name="rms_ws_quality_donor" text="Machine met %d h"/>
-        <text name="rms_ws_quality_donors" text="Machines met %d tot %d h"/>
+        <text name="rms_ws_quality_donor" text="Uit een machine met %d h"/>
+        <text name="rms_ws_quality_donors" text="Uit machines met %d tot %d h"/>
         <text name="rms_ws_quality_new_part" text="Nieuw onderdeel"/>
         <text name="rms_ws_quality_used_warranty" text="3 maanden garantie"/>
         <text name="rms_ws_quality_partial_warranty" text="Gedeeltelijke garantie"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Uitgevallen onderdeel"/>
         <text name="rms_ws_repair_row_part_detail" text="Oorzaak van de storing"/>
         <text name="rms_ws_repair_part_replaced" text="Vervangen"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Versleten onderdelen"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="In hetzelfde systeem"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Vervangen"/>
         <text name="rms_ws_repair_row_quality" text="Kwaliteit onderdelen"/>
         <text name="rms_ws_repair_row_quality_detail" text="Gekozen op de kaarten hieronder"/>
         <text name="rms_ws_repair_quality_choice" text="Naar keuze"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Fabrieksgarantie:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Onderdeelgarantie:"/>
         <text name="rms_ws_quote_warranty_covered" text="gedekt"/>
-        <text name="rms_ws_quote_warranty_part" text="gedekt, nog %d maanden"/>
         <text name="rms_ws_quote_warranty_used" text="alleen onderdeel gedekt"/>
         <text name="rms_ws_quote_warranty_expired" text="verlopen"/>
         <text name="rms_ws_quote_warranty_own" text="niet gedekt in de eigen werkplaats"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Beoordeeld"/>
         <text name="rms_ws_inspection_maintenance_note" text="Een onderhoudsbeurt zoekt ook naar storingen, zoals de standaardinspectie."/>
         <text name="rms_ws_quote_title" text="Offertedetails"/>
+        <text name="rms_ws_quote_empty_title" text="Je offerte verschijnt hier"/>
+        <text name="rms_ws_quote_empty_text" text="Kies een werkzaamheid uit de lijst"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Voorlopig geen offerte"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Kies een andere werkzaamheid uit de lijst"/>
+        <text name="rms_ws_repair_row_around" text="Omliggende onderdelen"/>
+        <text name="rms_ws_repair_row_around_detail" text="Revisie en versleten onderdelen"/>
+        <text name="rms_ws_repair_around_count" text="%d vervangen"/>
+        <text name="rms_ws_repair_around_none" text="Geen"/>
+        <text name="rms_ws_quote_labour" text="Arbeidsloon · %s u"/>
+        <text name="rms_ws_quote_parts_fault" text="Onderdelen van de storing · %s"/>
+        <text name="rms_ws_quote_preventive" text="Preventieve vervanging · %s"/>
+        <text name="rms_ws_quote_supplies" text="Materialen"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motorrevisie · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Cilinderkoprevisie · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Versleten onderdelen · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Fabrieksgarantie"/>
+        <text name="rms_ws_quote_cover_part" text="Onderdeelgarantie"/>
+        <text name="rms_ws_quote_cover_used" text="Garantie op gebruikt onderdeel"/>
+        <text name="rms_ws_quote_cover_full" text="Arbeid en onderdelen gedekt"/>
+        <text name="rms_ws_quote_cover_part_only" text="Alleen het onderdeel, arbeid blijft verschuldigd"/>
+        <text name="rms_ws_quote_filters" text="Filters · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Versleten onderdelen · laatste volledige inspectie"/>
         <text name="rms_ws_quote_oil_filter" text="Oliefilter"/>
         <text name="rms_bodywork_touchup" text="Lak bijwerken"/>
         <text name="rms_bodywork_full" text="Volledig opnieuw spuiten"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Geen storingen of versleten onderdelen"/>
         <text name="rms_report_worn_part_risk" text="Risico ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Afstelling: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Vervanging: grondige reparatie of revisie"/>
+        <text name="rms_report_worn_part_replace" text="%s · Preventieve vervanging in de werkplaats"/>
         <text name="rms_report_overall_assessment_title" text="Algemene conditiebeoordeling"/>
         <text name="rms_report_overall_assessment_condition" text="Algemene conditie"/>
         <text name="rms_report_recommendations_title" text="Conclusie en aanbevelingen"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Leeftijdsgebonden slijtage"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS verliezen voertuigen bij het ouder worden geleidelijk een deel van hun oorspronkelijke prestaties.&#10;&#10;Na ongeveer een derde van hun levensduur vermindert leeftijdsgebonden slijtage belangrijke eigenschappen zoals vermogen of remwerking licht. Het effect wordt daarna sterker en is tegen het einde van de levensduur duidelijk zichtbaar.&#10;&#10;Deze verslechtering kan in de modinstellingen worden uitgeschakeld."/>
         <text name="rms_tutorial_poor_consumables_title" text="Verbruiksmaterialen van slechte kwaliteit"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s kreeg bij het laatste onderhoud verbruiksmaterialen van slechte kwaliteit. Dit kan gebeuren wanneer voor een goedkope kwaliteit wordt gekozen.&#10;&#10;Het onderhoudsinterval is korter en de slijtage van componenten is licht verhoogd. Opnieuw onderhoud uitvoeren verhelpt het probleem. Een visuele of standaardinspectie meldt het verkorte interval; alleen een volledige inspectie identificeert de betrokken verbruiksmaterialen."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s kreeg bij het laatste onderhoud een defect filter. Dit kan gebeuren wanneer voor een goedkope kwaliteit wordt gekozen.&#10;&#10;Dit filter laat vuil door: het circuit dat het beschermt, slijt sneller tot het filter wordt vervangen. Nieuw onderhoud vervangt het. Alleen een volledige inspectie identificeert het."/>
         <text name="rms_tutorial_poor_parts_title" text="Onderdelen van slechte kwaliteit"/>
         <text name="rms_tutorial_poor_parts_message" text="%s kreeg tijdens een reparatie een onderdeel van slechte kwaliteit. De storing keert waarschijnlijk snel terug.&#10;&#10;Je kunt wachten totdat dat gebeurt of een volledige inspectie uitvoeren, die het betrokken onderdeel betrouwbaar identificeert."/>
         <text name="rms_tutorial_park_brake_title" text="Parkeerrem"/>

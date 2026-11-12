@@ -312,7 +312,8 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#engineOilSuitedShare", spec.engineOilSuitedShare or 1)
         xmlFile:setValue(key .. "#fluidLeakLossDebt", RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
         xmlFile:setValue(key .. "#wetStackingLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
-        xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+        xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0,
+            RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
         xmlFile:setValue(key .. "#particulateFilterAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterAsh, 0, 0, 1))
         xmlFile:setValue(key .. "#particulateFilterOilAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterOilAsh, 0, 0, 1))
         xmlFile:setValue(key .. "#scrInducementHours", RealisticMechanicalSystems.sanitizeNumber(spec.scrInducementHours, 0, 0))
@@ -328,6 +329,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pendingServiceInvoice", RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
         xmlFile:setValue(key .. "#pendingInspectionQueue", table.concat(spec.pendingInspectionQueue or {}, ","))
         xmlFile:setValue(key .. "#pendingRepairQueue", table.concat(spec.pendingRepairQueue or {}, ","))
+        xmlFile:setValue(key .. "#pendingPreventiveParts", RMS_Utils.serializeNumericMap(spec.pendingPreventiveParts or {}))
         xmlFile:setValue(key .. "#pendingFluidRequirements", RMS_Fluids.serializeServiceRequirements(spec.pendingFluidRequirements))
         xmlFile:setValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex or 0)
         xmlFile:setValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime or 0)
@@ -378,6 +380,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.warrantyPlan = 1
     self.spec_RealisticMechanicalSystems.partWarranty = {}
     self.spec_RealisticMechanicalSystems.usedPartWarranty = {}
+    self.spec_RealisticMechanicalSystems.preventiveParts = {}
     self.spec_RealisticMechanicalSystems.partAbuse = {}
     self.spec_RealisticMechanicalSystems.pickupAirTime = {}
     self.spec_RealisticMechanicalSystems.pickupUncovered = {}
@@ -428,8 +431,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.transmissionOilLeakRate = 0
     self.spec_RealisticMechanicalSystems.hydraulicFluidLeakRate = 0
 
-    self.spec_RealisticMechanicalSystems.extraConditionWear = 0
-    self.spec_RealisticMechanicalSystems.extraServiceWear = 0
     self.spec_RealisticMechanicalSystems.extraEngineHeat = 0
     self.spec_RealisticMechanicalSystems.extraTransmissionHeat = 0
     self.spec_RealisticMechanicalSystems.extraHydraulicHeat = 0
@@ -647,6 +648,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.pendingServiceInvoice = nil
     self.spec_RealisticMechanicalSystems.pendingInspectionQueue = {}
     self.spec_RealisticMechanicalSystems.pendingRepairQueue = {}
+    self.spec_RealisticMechanicalSystems.pendingPreventiveParts = {}
     self.spec_RealisticMechanicalSystems.pendingProgressStepIndex = 0
     self.spec_RealisticMechanicalSystems.pendingProgressTotalTime = 0
     self.spec_RealisticMechanicalSystems.pendingProgressElapsedTime = 0
@@ -798,6 +800,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingSelectedBreakdowns = splitSavedIds(xmlFile:getValue(key .. "#pendingSelectedBreakdowns", ""))
     spec.pendingInspectionQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingInspectionQueue", ""))
     spec.pendingRepairQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingRepairQueue", ""))
+    spec.pendingPreventiveParts = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingPreventiveParts", ""))
 
     spec.pendingProgressStepIndex = xmlFile:getValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex)
     spec.pendingProgressTotalTime = xmlFile:getValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime)
@@ -868,7 +871,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     local defaults = {
         serviceLevel = spec.baseServiceLevel, conditionLevel = spec.baseConditionLevel, maintenanceTimer = 0,
         currentState = RealisticMechanicalSystems.STATUS.READY,
-        pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {},
+        pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {}, pendingPreventiveParts = {},
         pendingProgressStepIndex = 0, pendingProgressTotalTime = 0, pendingProgressElapsedTime = 0,
         pendingOverhaulPartStart = {}, pendingOverhaulPartTarget = {}
     }

@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Vorgang wählen"/>
         <text name="rms_ws_section_work_order" text="Werkstattauftrag"/>
         <text name="rms_ws_section_recap" text="Zusammenfassung"/>
-        <text name="rms_ws_section_parts" text="Betroffene Teile"/>
         <text name="rms_ws_section_history" text="Verlauf"/>
         <text name="rms_ws_label_last_check" text="Letzte Kontrolle"/>
         <text name="rms_ws_reading_outdated" text="Erneut prüfen"/>
-        <text name="rms_ws_label_more_parts" text="+ %s weitere"/>
         <text name="rms_ws_label_committed_cost" text="Gebundene Kosten"/>
         <text name="rms_ws_label_finish_time" text="Endzeit"/>
         <text name="rms_ws_label_total_estimate" text="Geschätzte Summe"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Kosten pro Betriebsstunde"/>
         <text name="rms_log_invoice_title" text="Rechnungsdetails"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Werkstattpauschale"/>
-        <text name="rms_log_invoice_labour" text="Arbeitslohn"/>
         <text name="rms_log_invoice_filters" text="Filter"/>
         <text name="rms_log_cancelled_desc" text="Vorgang abgebrochen"/>
         <text name="rms_log_ownership_months_title" text="Besitzdauer"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Inbegriffen"/>
         <text name="rms_ws_levels_mechanical" text="Mechanisch"/>
         <text name="rms_ws_levels_every_level" text="Bei jeder Stufe: Kühler gereinigt und Maschine abgeschmiert."/>
-        <text name="rms_ws_quality_risk" text="Defektrisiko"/>
+        <text name="rms_ws_quality_part_wear" text="Teileverschleiß"/>
+        <text name="rms_ws_quality_factory_kept" text="Werksgarantie bleibt"/>
+        <text name="rms_ws_quality_factory_lost" text="Werksgarantie entfällt"/>
+        <text name="rms_ws_quality_filters_sound" text="Filter ohne Defekt"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filter manchmal defekt"/>
+        <text name="rms_ws_quality_filter_often" text="Filter öfter defekt"/>
         <text name="rms_ws_quality_reference" text="Referenzpreis"/>
-        <text name="rms_ws_quality_donor" text="Maschine mit %d h"/>
-        <text name="rms_ws_quality_donors" text="Maschinen mit %d bis %d h"/>
+        <text name="rms_ws_quality_donor" text="Ausgebaut aus Maschine mit %d h"/>
+        <text name="rms_ws_quality_donors" text="Ausgebaut aus Maschinen mit %d bis %d h"/>
         <text name="rms_ws_quality_new_part" text="Neuteil"/>
         <text name="rms_ws_quality_used_warranty" text="3 Monate Garantie"/>
         <text name="rms_ws_quality_partial_warranty" text="Teilweise Garantie"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Ausgefallenes Teil"/>
         <text name="rms_ws_repair_row_part_detail" text="Ursache des Schadens"/>
         <text name="rms_ws_repair_part_replaced" text="Ersetzt"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Verschlissene Teile"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Im selben System"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Ersetzt"/>
         <text name="rms_ws_repair_row_quality" text="Teilequalität"/>
         <text name="rms_ws_repair_row_quality_detail" text="Auf den Karten unten gewählt"/>
         <text name="rms_ws_repair_quality_choice" text="Nach Wahl"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Werksgarantie:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Teilegarantie:"/>
         <text name="rms_ws_quote_warranty_covered" text="übernommen"/>
-        <text name="rms_ws_quote_warranty_part" text="übernommen, noch %d Monate"/>
         <text name="rms_ws_quote_warranty_used" text="nur das Teil übernommen"/>
         <text name="rms_ws_quote_warranty_expired" text="abgelaufen"/>
         <text name="rms_ws_quote_warranty_own" text="nicht in der eigenen Werkstatt gedeckt"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Bewertet"/>
         <text name="rms_ws_inspection_maintenance_note" text="Eine Wartung führt diese Fehlersuche ebenfalls durch, wie die Standardinspektion."/>
         <text name="rms_ws_quote_title" text="Kostenvoranschlag"/>
+        <text name="rms_ws_quote_empty_title" text="Dein Kostenvoranschlag erscheint hier"/>
+        <text name="rms_ws_quote_empty_text" text="Wähle einen Vorgang aus der Liste"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Vorerst kein Kostenvoranschlag"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Wähle einen anderen Vorgang aus der Liste"/>
+        <text name="rms_ws_repair_row_around" text="Umliegende Teile"/>
+        <text name="rms_ws_repair_row_around_detail" text="Instandsetzung und verschlissene Teile"/>
+        <text name="rms_ws_repair_around_count" text="%d ersetzt"/>
+        <text name="rms_ws_repair_around_none" text="Keine"/>
+        <text name="rms_ws_quote_labour" text="Arbeitslohn · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Teile des Schadens · %s"/>
+        <text name="rms_ws_quote_preventive" text="Vorbeugender Austausch · %s"/>
+        <text name="rms_ws_quote_supplies" text="Material"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motorinstandsetzung · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Zylinderkopf-Instandsetzung · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Verschlissene Teile · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Werksgarantie"/>
+        <text name="rms_ws_quote_cover_part" text="Teilegarantie"/>
+        <text name="rms_ws_quote_cover_used" text="Gebrauchtteil-Garantie"/>
+        <text name="rms_ws_quote_cover_full" text="Arbeit und Teile übernommen"/>
+        <text name="rms_ws_quote_cover_part_only" text="Nur das Teil, Arbeitslohn bleibt fällig"/>
+        <text name="rms_ws_quote_filters" text="Filter · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Verschlissene Teile · letzte vollständige Inspektion"/>
         <text name="rms_ws_quote_oil_filter" text="Ölfilter"/>
         <text name="rms_bodywork_touchup" text="Lackausbesserung"/>
         <text name="rms_bodywork_full" text="Komplette Neulackierung"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Weder Schäden noch verschlissene Teile"/>
         <text name="rms_report_worn_part_risk" text="Risiko ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Einstellung: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Austausch: gründliche Reparatur oder Überholung"/>
+        <text name="rms_report_worn_part_replace" text="%s · Vorbeugender Austausch in der Werkstatt"/>
         <text name="rms_report_overall_assessment_title" text="Gesamtzustandsbewertung"/>
         <text name="rms_report_overall_assessment_condition" text="Zustandsniveau"/>
         <text name="rms_report_recommendations_title" text="Fazit und Empfehlungen"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Altersbedingter Verschleiß"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS verlieren Fahrzeuge mit zunehmendem Alter nach und nach einen Teil ihrer ursprünglichen Leistung.&#10;&#10;Nach etwa einem Drittel der Lebensdauer verringert der altersbedingte Verschleiß wichtige Eigenschaften leicht, etwa Leistung oder Bremswirkung. Der Effekt verstärkt sich danach und wird gegen Ende der Lebensdauer deutlich sichtbar.&#10;&#10;Diese Alterung lässt sich in den Einstellungen des Mods abschalten."/>
         <text name="rms_tutorial_poor_consumables_title" text="Minderwertige Verbrauchsmaterialien"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung minderwertige Verbrauchsmaterialien erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Das Wartungsintervall ist verkürzt und der Bauteilverschleiß leicht erhöht. Eine neue Wartung behebt das Problem. Eine visuelle oder Standardinspektion meldet das verkürzte Intervall; nur eine vollständige Inspektion benennt die betroffenen Verbrauchsmaterialien."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung einen defekten Filter erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Dieser Filter lässt Schmutz durch: Der Kreislauf, den er schützt, verschleißt bis zum Filterwechsel schneller. Eine neue Wartung wechselt ihn. Nur eine vollständige Inspektion benennt ihn."/>
         <text name="rms_tutorial_poor_parts_title" text="Minderwertige Ersatzteile"/>
         <text name="rms_tutorial_poor_parts_message" text="Dein %s hat bei einer Reparatur ein minderwertiges Ersatzteil erhalten. Der Schaden wird wahrscheinlich bald zurückkehren.&#10;&#10;Du kannst abwarten, bis er wiederkommt, oder eine vollständige Inspektion durchführen, die das betroffene Teil zuverlässig benennt."/>
         <text name="rms_tutorial_park_brake_title" text="Feststellbremse"/>

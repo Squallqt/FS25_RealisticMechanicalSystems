@@ -197,6 +197,15 @@ local function getLevelRows(vehicle, workshopType)
     return rows
 end
 
+---Counts the parts a thorough repair adds to the standard one
+function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
+    local R, count = RealisticMechanicalSystems, 0
+    for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.HIGH, R.PART_TYPES.OEM, workshopType)) do
+        count = count + #line.kitParts + #line.wornParts
+    end
+    return count
+end
+
 local function getRepairRows(vehicle, workshopType)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
     local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
@@ -233,12 +242,15 @@ local function getRepairRows(vehicle, workshopType)
             return g_i18n:getText("rms_ws_repair_fault_removed"), 2
         end })
     table.insert(rows, { name = "rms_ws_repair_row_part", detail = "rms_ws_repair_row_part_detail", getCell = replaces("rms_ws_repair_part_replaced") })
-    table.insert(rows, { name = "rms_ws_repair_row_worn_parts", detail = "rms_ws_repair_row_worn_parts_detail",
+    local added = RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
+    table.insert(rows, { name = "rms_ws_repair_row_around", detail = "rms_ws_repair_row_around_detail",
         getCell = function(method)
-            if method == REPAIR.HIGH then
-                return g_i18n:getText("rms_ws_repair_worn_parts_replaced"), 2
+            if method ~= REPAIR.HIGH then
+                return "-", 0
+            elseif added == 0 then
+                return g_i18n:getText("rms_ws_repair_around_none"), 1
             end
-            return "-", 0
+            return string.format(g_i18n:getText("rms_ws_repair_around_count"), added), 2
         end })
     table.insert(rows, { name = "rms_ws_repair_row_quality", detail = "rms_ws_repair_row_quality_detail",
         getCell = replaces(isCovered and RealisticMechanicalSystems.PART_TYPES.OEM or "rms_ws_repair_quality_choice") })
@@ -420,13 +432,18 @@ RMS_WorkshopOrders.ORDERS = {
             if hasRunning then
                 table.insert(choices, REPAIR.LOW)
             end
-            if hasPicked then
+            -- a worn part picked for a preventive replacement opens the repair alone
+            if hasPicked or #RealisticMechanicalSystems.getPreventiveParts(vehicle) > 0 then
                 table.insert(choices, REPAIR.MEDIUM)
                 table.insert(choices, REPAIR.HIGH)
             end
             return choices
         end,
         getDefaultChoice = function() return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM end,
+        -- a thorough repair that fits nothing more is greyed
+        isChoiceLocked = function(vehicle, choice, workshopType)
+            return choice == RealisticMechanicalSystems.REPAIR_TYPES.HIGH and RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType) == 0
+        end,
         promptKey = "rms_option_menu_option_one_title_repair",
         getRows = getRepairRows,
         getCorner = getWarrantyCorner,

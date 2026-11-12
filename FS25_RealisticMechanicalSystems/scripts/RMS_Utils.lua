@@ -861,6 +861,67 @@ function RMS_Utils.getIsPartWorn(partId, wear)
     return wear >= RMS_Utils.getPartB10Wear(partId) and RMS_Utils.getPartRiskRatio(partId, wear) >= RMS_Config.CORE.WORN_PART_RISK_RATIO
 end
 
+RMS_Utils.WORN_PARTS_SHOWN = 3
+
+---Lists the worn parts a complete report found, most at risk first
+-- @param integer count most parts listed
+-- @param function? isKept tells whether a part is still listed
+-- @return table entries partId, title, severity and text of each worn part
+function RMS_Utils.getWornPartEntries(vehicle, conditionData, count, isKept)
+    local R = RealisticMechanicalSystems
+    local activeBreakdowns, adjusted, worn = conditionData.activeBreakdowns or {}, {}, {}
+    for _, partId in ipairs(R.MAJOR_SERVICE_CHECKS) do
+        adjusted[partId] = true
+    end
+    local systemParts = vehicle.spec_RealisticMechanicalSystems.systemParts
+    for systemKey, system in pairs(conditionData.systems or {}) do
+        if system.enabled ~= false then
+            for _, partId in ipairs(systemParts[systemKey]) do
+                local wear = conditionData.partWear[partId]
+                if wear ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear)
+                    and (isKept == nil or isKept(partId)) then
+                    table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
+                end
+            end
+        end
+    end
+    table.sort(worn, function(a, b)
+        if a.ratio ~= b.ratio then
+            return a.ratio > b.ratio
+        end
+        return a.partId < b.partId
+    end)
+    local entries = {}
+    for index = 1, math.min(#worn, count) do
+        local part = worn[index]
+        local systemName = g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, RMS_Utils.getSystemNameByKey(R.SYSTEMS, part.systemKey)))
+        local text = adjusted[part.partId]
+            and string.format(g_i18n:getText("rms_report_worn_part_adjust"), systemName,
+                RMS_Utils.formatMaintenanceLevel(vehicle, R.MAINTENANCE_TYPES.PREVENTIVE))
+            or string.format(g_i18n:getText("rms_report_worn_part_replace"), systemName)
+        table.insert(entries, { partId = part.partId, title = RMS_Utils.getBreakdownPartName(part.partId, vehicle),
+            severity = string.format(g_i18n:getText("rms_report_worn_part_risk"), g_i18n:formatNumber(part.ratio, 1)), text = text })
+    end
+    return entries
+end
+
+---Lists the worn parts of the last complete report still on the machine
+-- @return table entries partId, title, severity and text of the three most at risk
+function RMS_Utils.getInspectedWornParts(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    for index = #(spec.maintenanceLog or {}), 1, -1 do
+        local entry = spec.maintenanceLog[index]
+        if entry.conditionData ~= nil and RealisticMechanicalSystems.getIsCompleteReport(entry) then
+            local found = entry.conditionData.partWear
+            -- a part replaced since, or broken since, has left the list
+            return RMS_Utils.getWornPartEntries(vehicle, entry.conditionData, RMS_Utils.WORN_PARTS_SHOWN, function(partId)
+                return vehicle:getActiveBreakdowns()[partId] == nil and (spec.partWear[partId] or 0) >= found[partId]
+            end)
+        end
+    end
+    return {}
+end
+
 function RMS_Utils.getPartB10Wear(partId)
     local C = RMS_Config.CORE
     local life = C.COMPONENT_LIVES[RMS_Breakdowns.BreakdownRegistry[partId].component]
@@ -2314,10 +2375,25 @@ end
 function RMS_Utils.serializeInvoice(invoice)
     local lines = {}
     for _, line in ipairs(invoice or {}) do
-        lines[#lines + 1] = string.format("%s,%s,%s,%.6f,%.4f,%s", tostring(line.kind or ""), tostring(line.key or ""),
+        local text = string.format("%s,%s,%s,%.6f,%.4f,%s", tostring(line.kind or ""), tostring(line.key or ""),
             tostring(line.mode or ""), tonumber(line.liters) or 0, tonumber(line.price) or 0, line.warrantyReason or "")
+        if line.labour ~= nil then
+            text = text .. string.format(",%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%s,%s,%s,%s,%s", line.labour, line.hours, line.parts,
+                line.kit, line.worn, line.gross, line.partType or "", line.repairType or "", table.concat(line.ownParts, "|"),
+                table.concat(line.kitParts, "|"), table.concat(line.wornParts, "|")) .. (line.months ~= nil and "," .. line.months or "")
+        end
+        lines[#lines + 1] = text
     end
     return table.concat(lines, ";")
+end
+
+---Splits a list of part ids written by serializeInvoice
+local function splitParts(text)
+    local parts = {}
+    for partId in string.gmatch(text or "", "[^|]+") do
+        table.insert(parts, partId)
+    end
+    return parts
 end
 
 ---Rebuilds invoice lines from their serialized form
@@ -2328,16 +2404,24 @@ function RMS_Utils.deserializeInvoice(serialized)
 
     local invoice = {}
     for value in string.gmatch(serialized, "[^;]+") do
-        local kind, key, mode, liters, price, warrantyReason = string.match(value, "^([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),?([^,]*)$")
+        local fields = {}
+        for field in string.gmatch(value .. ",", "([^,]*),") do
+            table.insert(fields, field)
+        end
+        local kind = fields[1]
         if kind ~= nil and kind ~= "" then
-            table.insert(invoice, {
-                kind = kind,
-                key = key,
-                mode = mode ~= "" and mode or nil,
-                liters = tonumber(liters) or 0,
-                price = tonumber(price) or 0,
-                warrantyReason = warrantyReason ~= "" and warrantyReason or nil
-            })
+            local line = { kind = kind, key = fields[2] or "", mode = fields[3] ~= "" and fields[3] or nil,
+                liters = tonumber(fields[4]) or 0, price = tonumber(fields[5]) or 0,
+                warrantyReason = fields[6] ~= nil and fields[6] ~= "" and fields[6] or nil }
+            -- the costs of a repair, logged since the quote shows them
+            if #fields >= 17 then
+                line.labour, line.hours, line.parts = tonumber(fields[7]), tonumber(fields[8]), tonumber(fields[9])
+                line.kit, line.worn, line.gross = tonumber(fields[10]), tonumber(fields[11]), tonumber(fields[12])
+                line.partType, line.repairType = fields[13], fields[14]
+                line.ownParts, line.kitParts, line.wornParts = splitParts(fields[15]), splitParts(fields[16]), splitParts(fields[17])
+                line.months = tonumber(fields[18])
+            end
+            table.insert(invoice, line)
         end
     end
     return invoice
@@ -2653,10 +2737,17 @@ function RMS_Utils.fitRowText(labelElement, valueElement, labelText, valueText)
 end
 
 
-function RMS_Utils.mirrorSelectionToChildren(element)
+---Gives the children of an element its selection, a row its highlight
+-- @param table? row list row whose highlight the children take as their focus
+function RMS_Utils.mirrorSelectionToChildren(element, row)
     for _, child in ipairs(element.elements) do
         child.getIsSelected = function()
             return element:getIsSelected()
+        end
+        if row ~= nil then
+            child.getIsFocused = function()
+                return row:getIsSelected() or row:getIsHighlighted()
+            end
         end
     end
 end

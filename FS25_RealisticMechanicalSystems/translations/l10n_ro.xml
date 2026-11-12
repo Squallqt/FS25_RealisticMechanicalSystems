@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Alege intervenția"/>
         <text name="rms_ws_section_work_order" text="Comandă de reparație"/>
         <text name="rms_ws_section_recap" text="Recapitulare"/>
-        <text name="rms_ws_section_parts" text="Piese vizate"/>
         <text name="rms_ws_section_history" text="Istoric"/>
         <text name="rms_ws_label_last_check" text="Ultima verificare"/>
         <text name="rms_ws_reading_outdated" text="De reverificat"/>
-        <text name="rms_ws_label_more_parts" text="+ încă %s"/>
         <text name="rms_ws_label_committed_cost" text="Cost angajat"/>
         <text name="rms_ws_label_finish_time" text="Ora finalizării"/>
         <text name="rms_ws_label_total_estimate" text="Total estimat"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Cost pe oră de funcționare"/>
         <text name="rms_log_invoice_title" text="Detaliile facturii"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Tarif fix atelier"/>
-        <text name="rms_log_invoice_labour" text="Manoperă"/>
         <text name="rms_log_invoice_filters" text="Filtre"/>
         <text name="rms_log_cancelled_desc" text="Intervenție anulată"/>
         <text name="rms_log_ownership_months_title" text="Durata deținerii"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Inclusă"/>
         <text name="rms_ws_levels_mechanical" text="Mecanice"/>
         <text name="rms_ws_levels_every_level" text="La fiecare nivel: radiator curățat și lubrifiere."/>
-        <text name="rms_ws_quality_risk" text="Risc de defect"/>
+        <text name="rms_ws_quality_part_wear" text="Uzura piesei"/>
+        <text name="rms_ws_quality_factory_kept" text="Păstrează garanția de fabrică"/>
+        <text name="rms_ws_quality_factory_lost" text="Pierde garanția de fabrică"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtre fără defecte"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtru uneori defect"/>
+        <text name="rms_ws_quality_filter_often" text="Filtru defect mai des"/>
         <text name="rms_ws_quality_reference" text="Preț de referință"/>
-        <text name="rms_ws_quality_donor" text="Utilaj cu %d h"/>
-        <text name="rms_ws_quality_donors" text="Utilaje cu %d până la %d h"/>
+        <text name="rms_ws_quality_donor" text="Demontată de pe un utilaj cu %d h"/>
+        <text name="rms_ws_quality_donors" text="Demontate de pe utilaje cu %d–%d h"/>
         <text name="rms_ws_quality_new_part" text="Piesă nouă"/>
         <text name="rms_ws_quality_used_warranty" text="Garanție de 3 luni"/>
         <text name="rms_ws_quality_partial_warranty" text="Garanție parțială"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Piesă defectă"/>
         <text name="rms_ws_repair_row_part_detail" text="Cauza avariei"/>
         <text name="rms_ws_repair_part_replaced" text="Înlocuită"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Piese uzate"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="În același sistem"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Înlocuite"/>
         <text name="rms_ws_repair_row_quality" text="Calitatea pieselor"/>
         <text name="rms_ws_repair_row_quality_detail" text="Aleasă pe cardurile de mai jos"/>
         <text name="rms_ws_repair_quality_choice" text="La alegere"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Garanție de fabrică:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Garanția piesei:"/>
         <text name="rms_ws_quote_warranty_covered" text="acoperită"/>
-        <text name="rms_ws_quote_warranty_part" text="acoperită, încă %d luni"/>
         <text name="rms_ws_quote_warranty_used" text="doar piesa acoperită"/>
         <text name="rms_ws_quote_warranty_expired" text="expirată"/>
         <text name="rms_ws_quote_warranty_own" text="neacoperită în atelierul propriu"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Evaluat"/>
         <text name="rms_ws_inspection_maintenance_note" text="O întreținere face și această căutare a avariilor, ca inspecția standard."/>
         <text name="rms_ws_quote_title" text="Detaliile devizului"/>
+        <text name="rms_ws_quote_empty_title" text="Devizul tău va apărea aici"/>
+        <text name="rms_ws_quote_empty_text" text="Alege o intervenție din listă"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Deocamdată niciun deviz"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Alege altă intervenție din listă"/>
+        <text name="rms_ws_repair_row_around" text="Piese din jur"/>
+        <text name="rms_ws_repair_row_around_detail" text="Recondiționare și piese uzate"/>
+        <text name="rms_ws_repair_around_count" text="%d înlocuite"/>
+        <text name="rms_ws_repair_around_none" text="Niciuna"/>
+        <text name="rms_ws_quote_labour" text="Manoperă · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Piesele defecțiunii · %s"/>
+        <text name="rms_ws_quote_preventive" text="Înlocuire preventivă · %s"/>
+        <text name="rms_ws_quote_supplies" text="Consumabile"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Recondiționarea motorului · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Recondiționarea chiulasei · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Piese uzate · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Garanție de fabrică"/>
+        <text name="rms_ws_quote_cover_part" text="Garanția piesei"/>
+        <text name="rms_ws_quote_cover_used" text="Garanția piesei folosite"/>
+        <text name="rms_ws_quote_cover_full" text="Manoperă și piese acoperite"/>
+        <text name="rms_ws_quote_cover_part_only" text="Doar piesa, manopera rămâne de plată"/>
+        <text name="rms_ws_quote_filters" text="Filtre · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Piese uzate · ultima inspecție completă"/>
         <text name="rms_ws_quote_oil_filter" text="Filtru de ulei"/>
         <text name="rms_bodywork_touchup" text="Retușuri"/>
         <text name="rms_bodywork_full" text="Revopsire completă"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Nicio avarie și nicio piesă uzată"/>
         <text name="rms_report_worn_part_risk" text="Risc ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Reglaj: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Înlocuire: reparație avansată sau recondiționare"/>
+        <text name="rms_report_worn_part_replace" text="%s · Înlocuire preventivă în atelier"/>
         <text name="rms_report_overall_assessment_title" text="Evaluarea generală a stării"/>
         <text name="rms_report_overall_assessment_condition" text="Nivelul stării"/>
         <text name="rms_report_recommendations_title" text="Concluzie și recomandări"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Degradare cauzată de vechime"/>
         <text name="rms_tutorial_age_degradation_message" text="În RMS, vehiculele pierd treptat o parte din performanțele inițiale pe măsură ce îmbătrânesc.&#10;&#10;După aproximativ o treime din durata lor de viață, uzura cauzată de vechime reduce ușor unele caracteristici importante, precum puterea sau frânarea. Efectul se accentuează apoi și devine clar vizibil spre sfârșitul duratei de viață.&#10;&#10;Această degradare poate fi dezactivată din setările modului."/>
         <text name="rms_tutorial_poor_consumables_title" text="Consumabile de calitate slabă"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s a primit consumabile de calitate slabă la ultima întreținere. Acest lucru se întâmplă în cazul variantelor ieftine.&#10;&#10;Intervalul de întreținere este scurtat, iar uzura componentelor crește ușor. O nouă întreținere remediază problema. O inspecție vizuală sau standard semnalează intervalul scurtat; numai o inspecție completă identifică respectivele consumabile."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s a primit un filtru defect la ultima întreținere. Acest lucru se întâmplă în cazul variantelor ieftine.&#10;&#10;Acest filtru lasă să treacă impuritățile: circuitul pe care îl protejează se uzează mai repede până la schimbarea filtrului. O nouă întreținere îl înlocuiește. Numai o inspecție completă îl identifică."/>
         <text name="rms_tutorial_poor_parts_title" text="Piese de calitate slabă"/>
         <text name="rms_tutorial_poor_parts_message" text="%s a primit o piesă de calitate slabă în timpul unei reparații. Cel mai probabil, avaria va reapărea în curând.&#10;&#10;Poți aștepta să reapară sau poți efectua o inspecție completă, care identifică în mod fiabil piesa în cauză."/>
         <text name="rms_tutorial_park_brake_title" text="Frână de parcare"/>

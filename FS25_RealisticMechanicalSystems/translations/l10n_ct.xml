@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="選擇作業"/>
         <text name="rms_ws_section_work_order" text="維修工單"/>
         <text name="rms_ws_section_recap" text="摘要"/>
-        <text name="rms_ws_section_parts" text="相關零組件"/>
         <text name="rms_ws_section_history" text="歷史紀錄"/>
         <text name="rms_ws_label_last_check" text="上次檢查"/>
         <text name="rms_ws_reading_outdated" text="需重新檢查"/>
-        <text name="rms_ws_label_more_parts" text="另有%s個"/>
         <text name="rms_ws_label_committed_cost" text="已發生費用"/>
         <text name="rms_ws_label_finish_time" text="完成時間"/>
         <text name="rms_ws_label_total_estimate" text="報價總額"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="每工作小時費用"/>
         <text name="rms_log_invoice_title" text="帳單明細"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="維修廠固定費用"/>
-        <text name="rms_log_invoice_labour" text="工時費"/>
         <text name="rms_log_invoice_filters" text="濾清器"/>
         <text name="rms_log_cancelled_desc" text="作業已取消"/>
         <text name="rms_log_ownership_months_title" text="持有時間"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="包含"/>
         <text name="rms_ws_levels_mechanical" text="機械類"/>
         <text name="rms_ws_levels_every_level" text="每個級別：清潔散熱器並加注黃油。"/>
-        <text name="rms_ws_quality_risk" text="品質問題風險"/>
+        <text name="rms_ws_quality_part_wear" text="零件磨損"/>
+        <text name="rms_ws_quality_factory_kept" text="保留原廠保固"/>
+        <text name="rms_ws_quality_factory_lost" text="失去原廠保固"/>
+        <text name="rms_ws_quality_filters_sound" text="濾清器無品質問題"/>
+        <text name="rms_ws_quality_filter_sometimes" text="濾清器偶有品質問題"/>
+        <text name="rms_ws_quality_filter_often" text="濾清器較常有品質問題"/>
         <text name="rms_ws_quality_reference" text="參考價格"/>
-        <text name="rms_ws_quality_donor" text="原車工時：%d h"/>
-        <text name="rms_ws_quality_donors" text="原車工時：%d至%d h"/>
+        <text name="rms_ws_quality_donor" text="拆自%d h的車輛"/>
+        <text name="rms_ws_quality_donors" text="拆自%d至%d h的車輛"/>
         <text name="rms_ws_quality_new_part" text="全新零件"/>
         <text name="rms_ws_quality_used_warranty" text="保固3個月"/>
         <text name="rms_ws_quality_partial_warranty" text="部分保固"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="失效零件"/>
         <text name="rms_ws_repair_row_part_detail" text="故障原因"/>
         <text name="rms_ws_repair_part_replaced" text="更換"/>
-        <text name="rms_ws_repair_row_worn_parts" text="磨損零件"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="同一系統內"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="更換"/>
         <text name="rms_ws_repair_row_quality" text="零件品質"/>
         <text name="rms_ws_repair_row_quality_detail" text="在下方卡片中選擇"/>
         <text name="rms_ws_repair_quality_choice" text="可選"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="原廠保固："/>
         <text name="rms_ws_quote_warranty_label_part" text="零件保固："/>
         <text name="rms_ws_quote_warranty_covered" text="有效"/>
-        <text name="rms_ws_quote_warranty_part" text="有效，剩餘%d個月"/>
         <text name="rms_ws_quote_warranty_used" text="僅限零件"/>
         <text name="rms_ws_quote_warranty_expired" text="已到期"/>
         <text name="rms_ws_quote_warranty_own" text="自有維修廠不予保固"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="已評定"/>
         <text name="rms_ws_inspection_maintenance_note" text="保養也會像標準檢查一樣進行這項故障排查。"/>
         <text name="rms_ws_quote_title" text="報價明細"/>
+        <text name="rms_ws_quote_empty_title" text="報價將顯示在這裡"/>
+        <text name="rms_ws_quote_empty_text" text="請從列表中選擇一項作業"/>
+        <text name="rms_ws_quote_empty_title_refused" text="暫無報價"/>
+        <text name="rms_ws_quote_empty_text_refused" text="請從列表中選擇其他作業"/>
+        <text name="rms_ws_repair_row_around" text="周邊零件"/>
+        <text name="rms_ws_repair_row_around_detail" text="大修及磨損零件"/>
+        <text name="rms_ws_repair_around_count" text="更換 %d 個"/>
+        <text name="rms_ws_repair_around_none" text="無"/>
+        <text name="rms_ws_quote_labour" text="工時費 · %s 小時"/>
+        <text name="rms_ws_quote_parts_fault" text="故障零件 · %s"/>
+        <text name="rms_ws_quote_preventive" text="預防性更換 · %s"/>
+        <text name="rms_ws_quote_supplies" text="耗材"/>
+        <text name="rms_ws_quote_rebuild_engine" text="引擎大修 · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="汽缸蓋大修 · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="磨損零件 · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="原廠保固"/>
+        <text name="rms_ws_quote_cover_part" text="零件保固"/>
+        <text name="rms_ws_quote_cover_used" text="二手零件保固"/>
+        <text name="rms_ws_quote_cover_full" text="工時與零件皆保固"/>
+        <text name="rms_ws_quote_cover_part_only" text="僅限零件，工時費需支付"/>
+        <text name="rms_ws_quote_filters" text="濾清器 · %s"/>
+        <text name="rms_ws_diag_worn_title" text="磨損零件 · 最近一次完整檢查"/>
         <text name="rms_ws_quote_oil_filter" text="機油濾清器"/>
         <text name="rms_bodywork_touchup" text="補漆"/>
         <text name="rms_bodywork_full" text="完整噴漆"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="未檢測到故障或磨損零件"/>
         <text name="rms_report_worn_part_risk" text="風險 ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · 調整：%s"/>
-        <text name="rms_report_worn_part_replace" text="%s · 更換：深入修理或大修"/>
+        <text name="rms_report_worn_part_replace" text="%s · 在維修廠預防性更換"/>
         <text name="rms_report_overall_assessment_title" text="總體狀況評定"/>
         <text name="rms_report_overall_assessment_condition" text="狀況水準"/>
         <text name="rms_report_recommendations_title" text="結論與建議"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="老化導致的退化"/>
         <text name="rms_tutorial_age_degradation_message" text="在RMS中，機具會隨使用年限增加而逐漸失去一部分原有性能。&#10;&#10;達到約三分之一使用期限後，老化磨損會略微降低功率和煞車等重要特性。此影響隨後會不斷加劇，並在使用期限末期變得十分明顯。&#10;&#10;可以在模組設定中停用這種退化。"/>
         <text name="rms_tutorial_poor_consumables_title" text="低品質耗材"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s在上次保養中使用了低品質耗材。選擇便宜等級時會出現這種情況。&#10;&#10;保養間隔已經縮短，零組件磨損也略有增加。再次進行保養即可解決問題。目視檢查或標準檢查會報告縮短的間隔；只有全面檢查才能確定相關耗材。"/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s在上次保養中裝上了品質有問題的濾清器。選擇便宜等級時會出現這種情況。&#10;&#10;這個濾清器會讓雜質通過，在更換濾清器之前，它所保護的系統磨損更快。再次進行保養即可更換。只有全面檢查才能確定這個濾清器。"/>
         <text name="rms_tutorial_poor_parts_title" text="低品質零組件"/>
         <text name="rms_tutorial_poor_parts_message" text="%s在修理時使用了低品質零組件。故障很可能會在不久後再次出現。&#10;&#10;可以等待故障復發，也可以進行全面檢查，以可靠確定有品質問題的零組件。"/>
         <text name="rms_tutorial_park_brake_title" text="駐車煞車"/>

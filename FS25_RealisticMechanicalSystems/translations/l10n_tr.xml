@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="İşlemi Seç"/>
         <text name="rms_ws_section_work_order" text="İş Emri"/>
         <text name="rms_ws_section_recap" text="Genel Bakış"/>
-        <text name="rms_ws_section_parts" text="İlgili Parçalar"/>
         <text name="rms_ws_section_history" text="Geçmiş"/>
         <text name="rms_ws_label_last_check" text="Son Kontrol"/>
         <text name="rms_ws_reading_outdated" text="Tekrar Kontrol"/>
-        <text name="rms_ws_label_more_parts" text="+ %s daha"/>
         <text name="rms_ws_label_committed_cost" text="Taahhüt Edilen Maliyet"/>
         <text name="rms_ws_label_finish_time" text="Bitiş Saati"/>
         <text name="rms_ws_label_total_estimate" text="Tahmini Toplam"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Çalışma Saati Başına Maliyet"/>
         <text name="rms_log_invoice_title" text="Fatura Ayrıntıları"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Atölye Sabit Ücreti"/>
-        <text name="rms_log_invoice_labour" text="İşçilik"/>
         <text name="rms_log_invoice_filters" text="Filtreler"/>
         <text name="rms_log_cancelled_desc" text="İşlem iptal edildi"/>
         <text name="rms_log_ownership_months_title" text="Mülkiyet Süresi"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Dahil"/>
         <text name="rms_ws_levels_mechanical" text="Mekanik"/>
         <text name="rms_ws_levels_every_level" text="Her seviyede: radyatör temizliği ve gresleme."/>
-        <text name="rms_ws_quality_risk" text="Kusur riski"/>
+        <text name="rms_ws_quality_part_wear" text="Parça aşınması"/>
+        <text name="rms_ws_quality_factory_kept" text="Fabrika Garantisi Korunur"/>
+        <text name="rms_ws_quality_factory_lost" text="Fabrika Garantisi Kalkar"/>
+        <text name="rms_ws_quality_filters_sound" text="Kusursuz Filtreler"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtre Bazen Kusurlu"/>
+        <text name="rms_ws_quality_filter_often" text="Filtre Daha Sık Kusurlu"/>
         <text name="rms_ws_quality_reference" text="Referans fiyat"/>
-        <text name="rms_ws_quality_donor" text="Kaynak Makine: %d h"/>
-        <text name="rms_ws_quality_donors" text="Kaynak Makineler: %d ile %d h"/>
+        <text name="rms_ws_quality_donor" text="%d h Makineden Sökülmüş"/>
+        <text name="rms_ws_quality_donors" text="%d–%d h Makinelerden Sökülmüş"/>
         <text name="rms_ws_quality_new_part" text="Yeni Parça"/>
         <text name="rms_ws_quality_used_warranty" text="3 Ay Garanti"/>
         <text name="rms_ws_quality_partial_warranty" text="Kısmi Garanti"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Arızalı Parça"/>
         <text name="rms_ws_repair_row_part_detail" text="Arızanın kaynağı"/>
         <text name="rms_ws_repair_part_replaced" text="Değiştirildi"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Aşınmış Parçalar"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Aynı sistemde"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Değiştirildi"/>
         <text name="rms_ws_repair_row_quality" text="Parça Kalitesi"/>
         <text name="rms_ws_repair_row_quality_detail" text="Aşağıdaki kartlardan seçilir"/>
         <text name="rms_ws_repair_quality_choice" text="Seçime Bağlı"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Fabrika garantisi:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Parça garantisi:"/>
         <text name="rms_ws_quote_warranty_covered" text="kapsamda"/>
-        <text name="rms_ws_quote_warranty_part" text="kapsamda, %d ay daha"/>
         <text name="rms_ws_quote_warranty_used" text="yalnızca parça kapsamda"/>
         <text name="rms_ws_quote_warranty_expired" text="sona erdi"/>
         <text name="rms_ws_quote_warranty_own" text="kendi atölyende kapsam dışı"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Belirlendi"/>
         <text name="rms_ws_inspection_maintenance_note" text="Bakım da standart muayene gibi bu arıza aramasını yapar."/>
         <text name="rms_ws_quote_title" text="Teklif Ayrıntıları"/>
+        <text name="rms_ws_quote_empty_title" text="Teklifiniz burada görünecek"/>
+        <text name="rms_ws_quote_empty_text" text="Listeden bir işlem seçin"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Şimdilik teklif yok"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Listeden başka bir işlem seçin"/>
+        <text name="rms_ws_repair_row_around" text="Çevre parçalar"/>
+        <text name="rms_ws_repair_row_around_detail" text="Revizyon ve aşınmış parçalar"/>
+        <text name="rms_ws_repair_around_count" text="%d değiştirildi"/>
+        <text name="rms_ws_repair_around_none" text="Yok"/>
+        <text name="rms_ws_quote_labour" text="İşçilik · %s sa"/>
+        <text name="rms_ws_quote_parts_fault" text="Arıza parçaları · %s"/>
+        <text name="rms_ws_quote_preventive" text="Önleyici değişim · %s"/>
+        <text name="rms_ws_quote_supplies" text="Sarf malzemesi"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motor revizyonu · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Silindir kapağı revizyonu · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Aşınmış parçalar · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Fabrika garantisi"/>
+        <text name="rms_ws_quote_cover_part" text="Parça garantisi"/>
+        <text name="rms_ws_quote_cover_used" text="İkinci el parça garantisi"/>
+        <text name="rms_ws_quote_cover_full" text="İşçilik ve parçalar karşılanır"/>
+        <text name="rms_ws_quote_cover_part_only" text="Yalnızca parça, işçilik ödenir"/>
+        <text name="rms_ws_quote_filters" text="Filtreler · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Aşınmış parçalar · son tam muayene"/>
         <text name="rms_ws_quote_oil_filter" text="Yağ Filtresi"/>
         <text name="rms_bodywork_touchup" text="Boya Rötuşları"/>
         <text name="rms_bodywork_full" text="Tam Yeniden Boyama"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Arıza veya aşınmış parça yok"/>
         <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Ayar: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Değişim: gelişmiş onarım veya revizyon"/>
+        <text name="rms_report_worn_part_replace" text="%s · Atölyede önleyici değişim"/>
         <text name="rms_report_overall_assessment_title" text="Genel Durum Değerlendirmesi"/>
         <text name="rms_report_overall_assessment_condition" text="Durum Seviyesi"/>
         <text name="rms_report_recommendations_title" text="Sonuç ve Öneriler"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Yaşlanmaya Bağlı Bozulma"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Bu aşınma mod ayarlarından devre dışı bırakılabilir."/>
         <text name="rms_tutorial_poor_consumables_title" text="Kalitesiz Sarf Malzemeleri"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda düşük kaliteli sarf malzemeleri kullanıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bakım aralığı kısalır ve bileşen aşınması biraz artar. Yeni bir bakım sorunu giderir. Görsel veya standart muayene kısalan aralığı bildirir; yalnızca kapsamlı muayene ilgili sarf malzemelerini belirler."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda kusurlu bir filtre takıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bu filtre kiri geçirir: koruduğu devre, filtre değiştirilene kadar daha hızlı aşınır. Yeni bir bakım filtreyi değiştirir. Yalnızca kapsamlı muayene bu filtreyi belirler."/>
         <text name="rms_tutorial_poor_parts_title" text="Kalitesiz Parçalar"/>
         <text name="rms_tutorial_poor_parts_message" text="%s için onarımda düşük kaliteli bir parça takıldı. Arıza büyük olasılıkla yakında yeniden ortaya çıkacak.&#10;&#10;Tekrar etmesini bekle veya kusurlu parçayı güvenilir biçimde belirleyen kapsamlı bir muayene başlat."/>
         <text name="rms_tutorial_park_brake_title" text="El Freni"/>

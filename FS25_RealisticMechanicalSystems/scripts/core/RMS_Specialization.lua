@@ -875,6 +875,7 @@ local SAVEGAME_ATTRIBUTES = {
     { "pendingServiceInvoice", "STRING", "Invoice lines of the running service" },
     { "pendingInspectionQueue", "STRING", "Breakdowns the running inspection has yet to find" },
     { "pendingRepairQueue", "STRING", "Breakdowns the running repair has yet to clear" },
+    { "pendingPreventiveParts", "STRING", "Worn parts the running repair replaces in prevention, with their donor hours" },
     { "pendingProgressStepIndex", "INT", "Step the running service is at" },
     { "pendingProgressTotalTime", "FLOAT", "Length of the running service, in ms" },
     { "pendingProgressElapsedTime", "FLOAT", "Time the running service has run, in ms" },
@@ -1318,8 +1319,8 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
             parts[partId] = { rate = getHistoryWearRate(spec, systemKey, index, partId, care), age = 0, life = drawPartLife(partId),
                 renewal = { partId } }
             for _, group in ipairs(C.RENEWAL_GROUPS) do
-                if table.hasElement(group, partId) then
-                    parts[partId].renewal = group
+                if table.hasElement(group.parts, partId) then
+                    parts[partId].renewal = group.parts
                     break
                 end
             end

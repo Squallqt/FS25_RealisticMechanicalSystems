@@ -34,6 +34,119 @@ function RealisticMechanicalSystems.getFaultRepairOptions(vehicle, breakdownId, 
     return optionOne, optionTwo
 end
 
+---Returns the faults a repair puts right, in the order it works on them
+function RealisticMechanicalSystems.getRepairQueue(vehicle, optionOne, workshopType)
+    local ids = {}
+    for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
+        if getIsFaultInRepair(vehicle, id, breakdown, optionOne, workshopType) then
+            table.insert(ids, id)
+        end
+    end
+    table.sort(ids)
+    return ids
+end
+
+---Returns the rebuild kit a part belongs to, the first that lists it
+-- @return table? group key, price share and parts of the kit
+function RealisticMechanicalSystems.getRenewalGroup(partId)
+    for _, group in ipairs(RMS_Config.CORE.RENEWAL_GROUPS) do
+        if table.hasElement(group.parts, partId) then
+            return group
+        end
+    end
+    return nil
+end
+
+---Lists the worn parts picked for a preventive replacement, by id
+-- @return table parts ids still listed by the last complete report
+function RealisticMechanicalSystems.getPreventiveParts(vehicle)
+    local picked, parts = vehicle.spec_RealisticMechanicalSystems.preventiveParts, {}
+    for _, entry in ipairs(RMS_Utils.getInspectedWornParts(vehicle)) do
+        if picked[entry.partId] ~= nil then
+            table.insert(parts, entry.partId)
+        end
+    end
+    table.sort(parts)
+    return parts
+end
+
+---Picks a worn part for a preventive replacement, or puts it back
+function RealisticMechanicalSystems.togglePreventivePart(vehicle, partId)
+    local picked = vehicle.spec_RealisticMechanicalSystems.preventiveParts
+    -- a used part offered for it comes from a donor drawn once
+    picked[partId] = picked[partId] == nil and (RealisticMechanicalSystems.drawUsedPartDonorHours(partId) or 0) or nil
+end
+
+---Lists the parts a repair of a fault fits, the fault's own first
+-- @param table partWear wear of each tracked part before this fault's repair
+-- @param function isBroken tells whether a part still waits for the repair of its own fault
+function RealisticMechanicalSystems.getRepairFittedParts(vehicle, breakdownId, stage, repairType, partWear, isBroken)
+    local parts = { breakdownId }
+    local function fit(partId)
+        if partWear[partId] ~= nil and not isBroken(partId) and not table.hasElement(parts, partId) then
+            table.insert(parts, partId)
+        end
+    end
+    local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
+    for _, partId in ipairs(definition.stages[stage].renews or {}) do
+        fit(partId)
+    end
+    if repairType == RealisticMechanicalSystems.REPAIR_TYPES.HIGH then
+        local group = RealisticMechanicalSystems.getRenewalGroup(breakdownId)
+        for _, partId in ipairs(group ~= nil and group.parts or {}) do
+            fit(partId)
+        end
+        local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system)
+        for _, partId in ipairs(vehicle.spec_RealisticMechanicalSystems.systemParts[systemKey]) do
+            if RMS_Utils.getIsPartWorn(partId, partWear[partId]) then
+                fit(partId)
+            end
+        end
+    end
+    return parts
+end
+
+---Lists the parts a repair replaces beside each fault's own part
+-- @return table parts breakdown ids by the fault whose repair replaces them, each part listed once
+function RealisticMechanicalSystems.getRepairReplacedParts(vehicle, optionOne, optionTwo, workshopType)
+    local R = RealisticMechanicalSystems
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local partWear, listed, replaced = RMS_Utils.shallowCopy(spec.partWear), {}, {}
+    local queue = R.getRepairQueue(vehicle, optionOne, workshopType)
+    -- the faults still waiting keep their parts, as during the work
+    local waiting = {}
+    for id in pairs(spec.activeBreakdowns) do
+        waiting[id] = true
+    end
+    local function isBroken(partId)
+        return waiting[partId] == true
+    end
+    for _, id in ipairs(queue) do
+        listed[id] = true
+    end
+
+    for _, id in ipairs(queue) do
+        local fault = spec.activeBreakdowns[id]
+        local repairType, partType = R.getFaultRepairOptions(vehicle, id, optionOne, optionTwo, workshopType)
+        replaced[id] = {}
+        if repairType ~= R.REPAIR_TYPES.LOW then
+            waiting[id] = nil
+            local wear = partType == R.PART_TYPES.USED and fault.usedPartHours ~= nil
+                and fault.usedPartHours / RMS_Config.CORE.MACHINE_LIFE_HOURS or 0
+            for _, partId in ipairs(R.getRepairFittedParts(vehicle, id, fault.stage, repairType, partWear, isBroken)) do
+                if partWear[partId] ~= nil then
+                    partWear[partId] = wear
+                end
+                if not listed[partId] then
+                    listed[partId] = true
+                    table.insert(replaced[id], partId)
+                end
+            end
+        end
+    end
+    return replaced
+end
+
 local function getIsSelectableBreakdown(breakdownId)
     local breakdownDef = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if breakdownDef == nil or breakdownDef.isSelectable ~= true then
@@ -115,11 +228,23 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
         end
         return hours
     elseif serviceType == states.REPAIR then
-        local hours = 0
+        local R, hours = RealisticMechanicalSystems, 0
         for id, breakdown in pairs(vehicle:getActiveBreakdowns() or {}) do
             if getIsFaultInRepair(vehicle, id, breakdown, optionOne, workshopType) then
-                local repairType = RealisticMechanicalSystems.getFaultRepairOptions(vehicle, id, optionOne, optionTwo, workshopType)
-                hours = hours + RealisticMechanicalSystems.getRepairLabourHours(vehicle, id, repairType)
+                local repairType = R.getFaultRepairOptions(vehicle, id, optionOne, optionTwo, workshopType)
+                hours = hours + R.getRepairLabourHours(vehicle, id, repairType)
+            end
+        end
+        -- a part picked in prevention adds its work, unless already fitted
+        if optionOne ~= R.REPAIR_TYPES.LOW then
+            local fitted = {}
+            for _, parts in pairs(R.getRepairReplacedParts(vehicle, optionOne, optionTwo, workshopType)) do
+                for _, partId in ipairs(parts) do
+                    fitted[partId] = true
+                end
+            end
+            for _, id in ipairs(R.getPreventiveParts(vehicle)) do
+                hours = hours + (fitted[id] and 0 or R.getRepairLabourHours(vehicle, id, R.REPAIR_TYPES.MEDIUM))
             end
         end
         return hours
@@ -181,7 +306,8 @@ local function getServiceWorkDurationMs(vehicle, serviceType, optionOne, optionT
 end
 
 ---Lists a running service fills, emptied when it starts or ends
-local PENDING_SERVICE_LISTS = { "pendingSelectedBreakdowns", "pendingInspectionQueue", "pendingRepairQueue", "pendingServiceClockStart",
+local PENDING_SERVICE_LISTS = { "pendingSelectedBreakdowns", "pendingInspectionQueue", "pendingRepairQueue", "pendingPreventiveParts",
+    "pendingServiceClockStart",
     "pendingServiceClockTarget", "pendingOverhaulPartStart", "pendingOverhaulPartTarget", "pendingFluidRequirements" }
 
 ---Clears the state a running service keeps
@@ -341,20 +467,16 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     end
 
     if type == states.MAINTENANCE then
-        if self:hasBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES") then
-            self:removeBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES")
-        end
         repairPrice = self:getServicePrice(type, optionOne, optionTwo)
 
     elseif type == states.REPAIR then
-        local idsToRepair = {}
-        for id, breakdown in pairs(self:getActiveBreakdowns()) do
-            if getIsFaultInRepair(self, id, breakdown, optionOne, workshopType) then
-                table.insert(idsToRepair, id)
+        spec.pendingRepairQueue = RealisticMechanicalSystems.getRepairQueue(self, optionOne, workshopType)
+        spec.pendingPreventiveParts = {}
+        for _, line in ipairs(self:getRepairPriceLines(optionOne, optionTwo, workshopType)) do
+            if line.isPreventive then
+                spec.pendingPreventiveParts[line.breakdownId] = spec.preventiveParts[line.breakdownId]
             end
         end
-
-        spec.pendingRepairQueue = RMS_Utils.shallowCopy(idsToRepair)
         repairPrice = self:getServicePrice(type, optionOne, optionTwo)
 
     elseif type == states.REFILL then
@@ -461,34 +583,14 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
         if optionTwo == RealisticMechanicalSystems.PART_TYPES.USED and donorHours ~= nil then
             wear = donorHours / RMS_Config.CORE.MACHINE_LIFE_HOURS
         end
-        local renewedParts = { breakdownId }
-        for _, partId in ipairs(RMS_Breakdowns.BreakdownRegistry[breakdownId].stages[stage].renews or {}) do
-            if not vehicle:hasBreakdown(partId) then
-                table.insert(renewedParts, partId)
-            end
-        end
-        for _, group in ipairs(RMS_Config.CORE.RENEWAL_GROUPS) do
-            if table.hasElement(group, breakdownId) then
-                for _, partId in ipairs(group) do
-                    if partId ~= breakdownId and not vehicle:hasBreakdown(partId) then
-                        table.insert(renewedParts, partId)
-                    end
-                end
-                break
-            end
-        end
-        if optionOne == RealisticMechanicalSystems.REPAIR_TYPES.HIGH then
-            for _, partId in ipairs(spec.systemParts[systemKey]) do
-                if not vehicle:hasBreakdown(partId) and RMS_Utils.getIsPartWorn(partId, spec.partWear[partId]) then
-                    table.insert(renewedParts, partId)
-                end
-            end
-        end
+        local renewedParts = RealisticMechanicalSystems.getRepairFittedParts(vehicle, breakdownId, stage, optionOne, spec.partWear,
+            function(partId) return vehicle:hasBreakdown(partId) end)
         for _, partId in ipairs(renewedParts) do
             RealisticMechanicalSystems.recordPartWarranty(vehicle, partId, optionTwo, isPaid, donorHours)
             RealisticMechanicalSystems.markFittedPart(vehicle, partId, optionTwo)
             if spec.partWear[partId] ~= nil then
-                spec.partWear[partId] = wear
+                -- its failures draw from its own wear, not across the old part's
+                spec.partWear[partId], spec.partDrawnWear[partId] = wear, wear
             end
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -506,12 +608,30 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
     end
 end
 
+---Fits a worn part replaced in prevention, as a repair fits a part
+-- @param integer donorHours work hours of the donor machine of a used part, 0 for none
+local function fitPreventivePart(vehicle, spec, partId, partType, donorHours)
+    local R, C = RealisticMechanicalSystems, RMS_Config.MAINTENANCE
+    local donor = donorHours > 0 and donorHours or nil
+    local wear = partType == R.PART_TYPES.USED and donor ~= nil and donor / RMS_Config.CORE.MACHINE_LIFE_HOURS or 0
+    R.recordPartWarranty(vehicle, partId, partType, true, donor)
+    R.markFittedPart(vehicle, partId, partType)
+    if spec.partWear[partId] ~= nil then
+        spec.partWear[partId], spec.partDrawnWear[partId] = wear, wear
+    end
+    R.refreshSystemCondition(spec, RMS_Utils.getSystemKey(R.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[partId].system))
+    if RMS_Consumables.getFilterOfBreakdown(partId) ~= nil then
+        RMS_Consumables.renewFilters(vehicle, partId)
+    elseif math.random() < C.PARTS_BREAKDOWN_CHANCES[RMS_Utils.getKeyByValue(R.PART_TYPES, partType)] then
+        vehicle:addBreakdown(partId, { stage = 1, isVisible = false, isActive = false, source = R.BREAKDOWN_SOURCES.POOR_PARTS })
+    end
+end
+
 ---Advances the running service through its step queue
 function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
     local spec = self.spec_RealisticMechanicalSystems
     local states = RealisticMechanicalSystems.STATUS
     local vehicleState = self:getCurrentStatus()
-    local C = RMS_Config.MAINTENANCE
 
     if vehicleState == states.READY
         or (not ignoreWorkshopHours and not RMS_Main:isWorkshopTypeOpen(spec.workshopType)) then
@@ -531,7 +651,6 @@ function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
     local serviceType = spec.currentState
     local optionOne = spec.serviceOptionOne
     local optionTwo = spec.serviceOptionTwo
-    local optionTwoKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)
 
     if serviceType == states.INSPECTION or serviceType == states.MAINTENANCE then
         local steps = #spec.pendingInspectionQueue
@@ -595,10 +714,6 @@ function RealisticMechanicalSystems:processService(dt, ignoreWorkshopHours)
 
     if (spec.maintenanceTimer or 0) <= 0 then
         spec.maintenanceTimer = 0
-        if serviceType == states.MAINTENANCE and math.random() < C.PARTS_BREAKDOWN_CHANCES[optionTwoKey] then
-            self:addBreakdown('MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES', 1)
-            log_dbg("Added breakdown 'MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES' due to poor quality consumables chance.")
-        end
         self:completeService()
     end
 end
@@ -709,6 +824,10 @@ function RealisticMechanicalSystems:completeService()
         end
 
         RMS_Consumables.renewFilters(self, nil, optionOne)
+        local defectChance = RMS_Config.MAINTENANCE.PARTS_BREAKDOWN_CHANCES[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)]
+        if math.random() < defectChance then
+            RMS_Consumables.addDefectiveFilter(self, optionOne)
+        end
         for index = #selectedBreakdowns, 1, -1 do
             if not self:hasBreakdown(selectedBreakdowns[index]) then
                 table.remove(selectedBreakdowns, index)
@@ -752,6 +871,15 @@ function RealisticMechanicalSystems:completeService()
             spec.pendingProgressStepIndex = spec.pendingProgressStepIndex + 1
             local breakdownId = repairQueue[spec.pendingProgressStepIndex]
             processPendingRepairStep(self, spec, breakdownId, optionOne, optionTwo)
+        end
+        local preventive = {}
+        for partId in pairs(spec.pendingPreventiveParts or {}) do
+            table.insert(preventive, partId)
+        end
+        table.sort(preventive)
+        for _, partId in ipairs(preventive) do
+            fitPreventivePart(self, spec, partId, optionTwo, spec.pendingPreventiveParts[partId])
+            spec.preventiveParts[partId] = nil
         end
 
         selectedBreakdowns = RMS_Utils.shallowCopy(spec.pendingSelectedBreakdowns or {})
@@ -1413,9 +1541,9 @@ function RealisticMechanicalSystems.markFittedPart(vehicle, partId, partType)
 end
 
 ---Draws the donor machine of a fault's used part; a filter has none
--- @return integer? hours work hours of the donor machine
+-- @return integer? hours work hours of the donor machine, nil for a fault no repair fixes
 function RealisticMechanicalSystems.drawUsedPartDonorHours(breakdownId)
-    if RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
+    if RMS_Breakdowns.BreakdownRegistry[breakdownId].isSelectable and RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
         local donors = RMS_Config.MAINTENANCE.USED_PART_DONOR_HOURS
         return donors[math.random(#donors)]
     end
@@ -1454,6 +1582,17 @@ function RealisticMechanicalSystems:getUsedPartOfferSummary(repairType, workshop
             minimum, maximum = math.min(minimum or hours, hours), math.max(maximum or hours, hours)
             count = count + 1
             if RealisticMechanicalSystems.getIsUsedPartGuaranteed(id, fault.usedPartHours) then guaranteed = guaranteed + 1 end
+        end
+    end
+    if repairType ~= RealisticMechanicalSystems.REPAIR_TYPES.LOW then
+        for _, id in ipairs(RealisticMechanicalSystems.getPreventiveParts(self)) do
+            local donorHours = self.spec_RealisticMechanicalSystems.preventiveParts[id]
+            if donorHours > 0 then
+                local hours = RealisticMechanicalSystems.getUsedPartMeterHours(donorHours)
+                minimum, maximum = math.min(minimum or hours, hours), math.max(maximum or hours, hours)
+                count = count + 1
+                if RealisticMechanicalSystems.getIsUsedPartGuaranteed(id, donorHours) then guaranteed = guaranteed + 1 end
+            end
         end
     end
     return minimum, maximum, count, guaranteed
@@ -1579,19 +1718,90 @@ local function getStagePartsShare(vehicle, breakdownId, stage)
     return total / #share
 end
 
-local function getBreakdownPartsPrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
+---Bills a share of the reference value in parts of a quality
+local function getPartsPrice(vehicle, share, repairType, partType, workshopType)
     local C = RMS_Config.MAINTENANCE
     local workshopKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, workshopType)
-    return getBilledPrice(getStagePartsShare(vehicle, breakdownId, stage) / 100 * C.REPAIR_REFERENCE_VALUE
-        * getSizeScale(vehicle, C.PARTS_POWER_EXPONENT, "parts")
-        * C.PARTS_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType)]
+    -- a quick fix fits no part
+    local qualityScale = repairType == RealisticMechanicalSystems.REPAIR_TYPES.LOW and 1
+        or C.PARTS_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType)]
+    return getBilledPrice(share / 100 * C.REPAIR_REFERENCE_VALUE
+        * getSizeScale(vehicle, C.PARTS_POWER_EXPONENT, "parts") * qualityScale
         * C.REPAIR_PRICE_MULTIPLIERS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)]
         * RMS_Config.WORKSHOP.PRICE_MULTIPLIERS[workshopKey])
+end
+
+local function getBreakdownPartsPrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
+    return getPartsPrice(vehicle, getStagePartsShare(vehicle, breakdownId, stage), repairType, partType, workshopType)
 end
 
 local function getBreakdownLinePrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
     return getBreakdownPartsPrice(vehicle, breakdownId, stage, repairType, partType, workshopType)
         + getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, repairType), workshopType)
+end
+
+---Splits the parts a repair fits: the fault's, its kit, worn ones
+-- @param table added parts its repair replaces beyond the fault's own part, as the quote lists them
+-- @return table own the fault's part and those its stage broke, table kit, table worn
+local function getAddedParts(breakdownId, stage, added)
+    local renews = RMS_Breakdowns.BreakdownRegistry[breakdownId].stages[stage].renews or {}
+    local group = RealisticMechanicalSystems.getRenewalGroup(breakdownId)
+    local own, kit, worn = { breakdownId }, {}, {}
+    for _, partId in ipairs(added) do
+        if table.hasElement(renews, partId) then
+            table.insert(own, partId)
+        else
+            table.insert((group ~= nil and table.hasElement(group.parts, partId)) and kit or worn, partId)
+        end
+    end
+    return own, kit, worn
+end
+
+---Prices one fault of an order: labour, its parts, kit and worn parts
+-- @param table added parts its repair replaces beyond its own, as the quote lists them
+-- @param table rebuilt kits an earlier fault of the order already paid
+-- @return table costs labourHours, labour, parts, kit, worn, ownParts, kitParts, wornParts, partType
+local function getBreakdownCosts(vehicle, breakdownId, stage, repairType, partType, workshopType, added, rebuilt)
+    local R = RealisticMechanicalSystems
+    local hours = R.getRepairLabourHours(vehicle, breakdownId, repairType)
+    local share = getStagePartsShare(vehicle, breakdownId, stage)
+    local costs = { labourHours = hours, labour = getLabourPrice(hours, workshopType), kit = 0, worn = 0, partType = partType,
+        repairType = repairType }
+    costs.ownParts, costs.kitParts, costs.wornParts = getAddedParts(breakdownId, stage, added)
+    if repairType ~= R.REPAIR_TYPES.HIGH then
+        costs.parts = getPartsPrice(vehicle, share, repairType, partType, workshopType)
+        return costs
+    end
+    local group = R.getRenewalGroup(breakdownId)
+    -- a kit an earlier fault paid only adds what this stage broke beyond it
+    local kitShare = group ~= nil and group.price or 0
+    local partsShare = rebuilt[group] and math.max(share - kitShare, 0) or share
+    costs.parts = getPartsPrice(vehicle, partsShare, repairType, partType, workshopType)
+    if group ~= nil and not rebuilt[group] then
+        rebuilt[group] = true
+        costs.kit = getPartsPrice(vehicle, math.max(kitShare - share, 0), repairType, partType, workshopType)
+    end
+    local wornShare = 0
+    for _, partId in ipairs(costs.wornParts) do
+        wornShare = wornShare + getStagePartsShare(vehicle, partId, 1)
+    end
+    costs.worn = getPartsPrice(vehicle, wornShare, repairType, partType, workshopType)
+    return costs
+end
+
+---Returns what the farm pays of a fault's costs, after any warranty
+local function getPaidPrice(vehicle, breakdownId, costs, repairType, partType, workshopType)
+    local R = RealisticMechanicalSystems
+    if R.getIsUsedPartWarrantyCovered(vehicle, breakdownId, repairType, partType) then
+        return costs.labour
+    end
+    if vehicle:isWarrantyRepairCovered(workshopType, breakdownId) then
+        if workshopType == R.WORKSHOP.MOBILE then
+            return math.max(costs.labour - getLabourPrice(costs.labourHours, R.WORKSHOP.DEALER), 0)
+        end
+        return 0
+    end
+    return costs.labour + costs.parts + costs.kit + costs.worn
 end
 
 ---Returns the price of a service
@@ -1678,26 +1888,49 @@ end
 ---Returns the price of each breakdown a repair puts right
 -- @return table lines breakdownId and price of each repaired breakdown, sorted by id
 function RealisticMechanicalSystems:getRepairPriceLines(optionOne, optionTwo, workshopTypeOverride, allBreakdowns)
+    local R = RealisticMechanicalSystems
     local workshopType = workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType
-    local lines = {}
-
+    local ids = {}
     for id, breakdown in pairs(self:getActiveBreakdowns()) do
-        if getIsFaultInRepair(self, id, breakdown, optionOne, workshopType) or (allBreakdowns and getIsSelectableBreakdown(id)) then
-            if RMS_Breakdowns.BreakdownRegistry[id] ~= nil then
-                local repairType, partType = RealisticMechanicalSystems.getFaultRepairOptions(self, id, optionOne, optionTwo, workshopType)
-                local isCovered, reason = self:isWarrantyRepairCovered(workshopType, id)
-                if RealisticMechanicalSystems.getIsUsedPartWarrantyCovered(self, id, repairType, partType) then
-                    isCovered, reason = true, "used"
-                end
-                local linePrice = self:getBreakdownRepairPrice(id, breakdown.stage, partType, workshopType, repairType)
-                table.insert(lines, { breakdownId = id, price = linePrice, warranty = isCovered, warrantyReason = reason })
+        if (getIsFaultInRepair(self, id, breakdown, optionOne, workshopType) or (allBreakdowns and getIsSelectableBreakdown(id)))
+            and RMS_Breakdowns.BreakdownRegistry[id] ~= nil then
+            table.insert(ids, id)
+        end
+    end
+    table.sort(ids)
+
+    local replaced, rebuilt, lines = R.getRepairReplacedParts(self, optionOne, optionTwo, workshopType), {}, {}
+    for _, id in ipairs(ids) do
+        local repairType, partType = R.getFaultRepairOptions(self, id, optionOne, optionTwo, workshopType)
+        local isCovered, reason = self:isWarrantyRepairCovered(workshopType, id)
+        if R.getIsUsedPartWarrantyCovered(self, id, repairType, partType) then
+            isCovered, reason = true, "used"
+        end
+        local costs = getBreakdownCosts(self, id, self:getActiveBreakdowns()[id].stage, repairType, partType, workshopType,
+            replaced[id] or {}, rebuilt)
+        costs.breakdownId, costs.warranty, costs.warrantyReason = id, isCovered, reason
+        costs.gross = costs.labour + costs.parts + costs.kit + costs.worn
+        costs.price = getPaidPrice(self, id, costs, repairType, partType, workshopType)
+        table.insert(lines, costs)
+    end
+    -- a quick fix fits no part; a thorough one may fit it already
+    if optionOne ~= R.REPAIR_TYPES.LOW then
+        local fitted = {}
+        for _, parts in pairs(replaced) do
+            for _, partId in ipairs(parts) do
+                fitted[partId] = true
+            end
+        end
+        for _, id in ipairs(R.getPreventiveParts(self)) do
+            if not fitted[id] then
+                local costs = getBreakdownCosts(self, id, 1, R.REPAIR_TYPES.MEDIUM, optionTwo, workshopType, {}, {})
+                costs.breakdownId, costs.isPreventive, costs.warranty = id, true, false
+                costs.gross = costs.labour + costs.parts
+                costs.price = costs.gross
+                table.insert(lines, costs)
             end
         end
     end
-
-    table.sort(lines, function(a, b)
-        return a.breakdownId < b.breakdownId
-    end)
     return lines
 end
 
@@ -1710,18 +1943,11 @@ function RealisticMechanicalSystems:getBreakdownRepairPrice(breakdownId, breakdo
 
     local workshopType = workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType
     repairType = repairType or RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
-    if RealisticMechanicalSystems.getIsUsedPartWarrantyCovered(self, breakdownId, repairType, partType) then
-        return getLabourPrice(RealisticMechanicalSystems.getRepairLabourHours(self, breakdownId, repairType), workshopType)
-    end
-    if self:isWarrantyRepairCovered(workshopType, breakdownId) then
-        if workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE then
-            local hours = RealisticMechanicalSystems.getRepairLabourHours(self, breakdownId, repairType)
-            return math.max(getLabourPrice(hours, workshopType)
-                - getLabourPrice(hours, RealisticMechanicalSystems.WORKSHOP.DEALER), 0)
-        end
-        return 0
-    end
-    return getBreakdownLinePrice(self, breakdownId, breakdownStage, repairType, partType, workshopType)
+    local added = RealisticMechanicalSystems.getRepairFittedParts(self, breakdownId, breakdownStage, repairType,
+        self.spec_RealisticMechanicalSystems.partWear, function(partId) return self:getActiveBreakdowns()[partId] ~= nil end)
+    table.remove(added, 1)
+    local costs = getBreakdownCosts(self, breakdownId, breakdownStage, repairType, partType, workshopType, added, {})
+    return getPaidPrice(self, breakdownId, costs, repairType, partType, workshopType)
 end
 
 function RealisticMechanicalSystems:getPartReplacementPrice(partId)

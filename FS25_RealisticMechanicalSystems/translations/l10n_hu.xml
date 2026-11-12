@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Eljárás kiválasztása"/>
         <text name="rms_ws_section_work_order" text="Munkalap"/>
         <text name="rms_ws_section_recap" text="Áttekintés"/>
-        <text name="rms_ws_section_parts" text="Érintett alkatrészek"/>
         <text name="rms_ws_section_history" text="Előzmények"/>
         <text name="rms_ws_label_last_check" text="Utolsó ellenőrzés"/>
         <text name="rms_ws_reading_outdated" text="Ellenőrizendő"/>
-        <text name="rms_ws_label_more_parts" text="+ %s további"/>
         <text name="rms_ws_label_committed_cost" text="Lekötött költség"/>
         <text name="rms_ws_label_finish_time" text="Befejezési idő"/>
         <text name="rms_ws_label_total_estimate" text="Becsült összeg"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Üzemóránkénti költség"/>
         <text name="rms_log_invoice_title" text="Számla részletei"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Műhelyátalány"/>
-        <text name="rms_log_invoice_labour" text="Munkadíj"/>
         <text name="rms_log_invoice_filters" text="Szűrők"/>
         <text name="rms_log_cancelled_desc" text="Eljárás megszakítva"/>
         <text name="rms_log_ownership_months_title" text="Tulajdonlás időtartama"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Tartalmazza"/>
         <text name="rms_ws_levels_mechanical" text="Mechanikai"/>
         <text name="rms_ws_levels_every_level" text="Minden szinten: hűtőtisztítás és kenés."/>
-        <text name="rms_ws_quality_risk" text="Hibakockázat"/>
+        <text name="rms_ws_quality_part_wear" text="Alkatrész kopása"/>
+        <text name="rms_ws_quality_factory_kept" text="Gyári garancia megmarad"/>
+        <text name="rms_ws_quality_factory_lost" text="Gyári garancia megszűnik"/>
+        <text name="rms_ws_quality_filters_sound" text="Hibátlan szűrők"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Szűrő néha hibás"/>
+        <text name="rms_ws_quality_filter_often" text="Szűrő gyakrabban hibás"/>
         <text name="rms_ws_quality_reference" text="Referenciaár"/>
-        <text name="rms_ws_quality_donor" text="Forrásgép: %d h"/>
-        <text name="rms_ws_quality_donors" text="Forrásgépek: %d és %d h között"/>
+        <text name="rms_ws_quality_donor" text="Kiszerelve egy %d h-s gépből"/>
+        <text name="rms_ws_quality_donors" text="Kiszerelve %d–%d h-s gépekből"/>
         <text name="rms_ws_quality_new_part" text="Új alkatrész"/>
         <text name="rms_ws_quality_used_warranty" text="3 hónap garancia"/>
         <text name="rms_ws_quality_partial_warranty" text="Részleges garancia"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Hibás alkatrész"/>
         <text name="rms_ws_repair_row_part_detail" text="A meghibásodás oka"/>
         <text name="rms_ws_repair_part_replaced" text="Kicserélve"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Kopott alkatrészek"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Ugyanabban a rendszerben"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Kicserélve"/>
         <text name="rms_ws_repair_row_quality" text="Alkatrészminőség"/>
         <text name="rms_ws_repair_row_quality_detail" text="Az alábbi kártyákon választható"/>
         <text name="rms_ws_repair_quality_choice" text="Választható"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Gyári garancia:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Alkatrész-garancia:"/>
         <text name="rms_ws_quote_warranty_covered" text="fedezi"/>
-        <text name="rms_ws_quote_warranty_part" text="fedezi, még %d hónap"/>
         <text name="rms_ws_quote_warranty_used" text="csak az alkatrészt fedezi"/>
         <text name="rms_ws_quote_warranty_expired" text="lejárt"/>
         <text name="rms_ws_quote_warranty_own" text="saját műhelyben nem fedezett"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Értékelve"/>
         <text name="rms_ws_inspection_maintenance_note" text="A karbantartás is elvégzi ezt a hibakeresést, akárcsak a normál átvizsgálás."/>
         <text name="rms_ws_quote_title" text="Árajánlat részletei"/>
+        <text name="rms_ws_quote_empty_title" text="Itt jelenik meg az árajánlat"/>
+        <text name="rms_ws_quote_empty_text" text="Válassz egy beavatkozást a listából"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Egyelőre nincs árajánlat"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Válassz másik beavatkozást a listából"/>
+        <text name="rms_ws_repair_row_around" text="Környező alkatrészek"/>
+        <text name="rms_ws_repair_row_around_detail" text="Felújítás és kopott alkatrészek"/>
+        <text name="rms_ws_repair_around_count" text="%d cserélve"/>
+        <text name="rms_ws_repair_around_none" text="Nincs"/>
+        <text name="rms_ws_quote_labour" text="Munkadíj · %s ó"/>
+        <text name="rms_ws_quote_parts_fault" text="A hiba alkatrészei · %s"/>
+        <text name="rms_ws_quote_preventive" text="Megelőző csere · %s"/>
+        <text name="rms_ws_quote_supplies" text="Anyagok"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motorfelújítás · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Hengerfej-felújítás · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Kopott alkatrészek · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Gyári garancia"/>
+        <text name="rms_ws_quote_cover_part" text="Alkatrész-garancia"/>
+        <text name="rms_ws_quote_cover_used" text="Használt alkatrész garanciája"/>
+        <text name="rms_ws_quote_cover_full" text="Munkadíj és alkatrészek fedezve"/>
+        <text name="rms_ws_quote_cover_part_only" text="Csak az alkatrész, a munkadíj fizetendő"/>
+        <text name="rms_ws_quote_filters" text="Szűrők · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Kopott alkatrészek · utolsó teljes átvizsgálás"/>
         <text name="rms_ws_quote_oil_filter" text="Olajszűrő"/>
         <text name="rms_bodywork_touchup" text="Fényezés javítása"/>
         <text name="rms_bodywork_full" text="Teljes újrafényezés"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Nincs meghibásodás és kopott alkatrész"/>
         <text name="rms_report_worn_part_risk" text="Kockázat ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Beállítás: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Csere: alapos javítás vagy nagyjavítás"/>
+        <text name="rms_report_worn_part_replace" text="%s · Megelőző csere a műhelyben"/>
         <text name="rms_report_overall_assessment_title" text="Általános állapotértékelés"/>
         <text name="rms_report_overall_assessment_condition" text="Állapotszint"/>
         <text name="rms_report_recommendations_title" text="Következtetés és ajánlások"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Életkor miatti állapotromlás"/>
         <text name="rms_tutorial_age_degradation_message" text="Az RMS-ben a járművek fokozatosan veszítenek eredeti teljesítményükből, ahogy öregednek.&#10;&#10;A jármű élettartamának nagyjából egyharmada után az életkor miatti kopás elkezdi enyhén csökkenteni néhány fontos jellemzőt, például a teljesítményt vagy a fékezést. A hatás ezután erősödik, és az élettartam vége felé jól láthatóvá válik.&#10;&#10;Ez a kopás kikapcsolható a mod beállításaiban."/>
         <text name="rms_tutorial_poor_consumables_title" text="Gyenge minőségű fogyóanyagok"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s gyenge minőségű fogyóanyagokat kapott a legutóbbi karbantartás során. Ez az olcsóbb minőségeknél fordulhat elő.&#10;&#10;A karbantartási intervallum lerövidül, és az alkatrészek kopása kissé megnő. Egy újabb karbantartás megoldja a problémát. A vizuális vagy normál átvizsgálás jelzi a lerövidült intervallumot; csak a teljes átvizsgálás azonosítja közvetlenül az érintett fogyóanyagokat."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s hibás szűrőt kapott a legutóbbi karbantartás során. Ez az olcsóbb minőségeknél fordulhat elő.&#10;&#10;Ez a szűrő átengedi a szennyeződést: az általa védett rendszer a szűrő cseréjéig gyorsabban kopik. Egy újabb karbantartás kicseréli. Csak a teljes átvizsgálás azonosítja."/>
         <text name="rms_tutorial_poor_parts_title" text="Gyenge minőségű alkatrészek"/>
         <text name="rms_tutorial_poor_parts_message" text="%s gyenge minőségű alkatrészt kapott egy javítás során. A meghibásodás nagy valószínűséggel hamarosan visszatér.&#10;&#10;Megvárhatod, amíg ez megtörténik, vagy elvégezhetsz egy teljes átvizsgálást, amely megbízhatóan azonosítja az érintett alkatrészt."/>
         <text name="rms_tutorial_park_brake_title" text="Rögzítőfék"/>

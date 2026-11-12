@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="작업 선택"/>
         <text name="rms_ws_section_work_order" text="정비 작업 지시서"/>
         <text name="rms_ws_section_recap" text="요약 정보"/>
-        <text name="rms_ws_section_parts" text="대상 부품"/>
         <text name="rms_ws_section_history" text="이력"/>
         <text name="rms_ws_label_last_check" text="최근 점검"/>
         <text name="rms_ws_reading_outdated" text="재점검 필요"/>
-        <text name="rms_ws_label_more_parts" text="+ %s개 더"/>
         <text name="rms_ws_label_committed_cost" text="확정 비용"/>
         <text name="rms_ws_label_finish_time" text="완료 예정"/>
         <text name="rms_ws_label_total_estimate" text="예상 합계"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="가동 시간당 비용"/>
         <text name="rms_log_invoice_title" text="청구 내역"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="정비소 정액 요금"/>
-        <text name="rms_log_invoice_labour" text="공임"/>
         <text name="rms_log_invoice_filters" text="필터"/>
         <text name="rms_log_cancelled_desc" text="작업 취소됨"/>
         <text name="rms_log_ownership_months_title" text="보유 기간"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="포함"/>
         <text name="rms_ws_levels_mechanical" text="기계"/>
         <text name="rms_ws_levels_every_level" text="모든 단계: 라디에이터 청소와 그리스 주입."/>
-        <text name="rms_ws_quality_risk" text="결함 위험"/>
+        <text name="rms_ws_quality_part_wear" text="부품 마모"/>
+        <text name="rms_ws_quality_factory_kept" text="공장 보증 유지"/>
+        <text name="rms_ws_quality_factory_lost" text="공장 보증 상실"/>
+        <text name="rms_ws_quality_filters_sound" text="결함 없는 필터"/>
+        <text name="rms_ws_quality_filter_sometimes" text="필터 때때로 결함"/>
+        <text name="rms_ws_quality_filter_often" text="필터 결함 더 자주"/>
         <text name="rms_ws_quality_reference" text="기준 가격"/>
-        <text name="rms_ws_quality_donor" text="원래 기계: %d h"/>
-        <text name="rms_ws_quality_donors" text="원래 기계: %d~%d h"/>
+        <text name="rms_ws_quality_donor" text="%d h 기계에서 분리"/>
+        <text name="rms_ws_quality_donors" text="%d~%d h 기계에서 분리"/>
         <text name="rms_ws_quality_new_part" text="새 부품"/>
         <text name="rms_ws_quality_used_warranty" text="3개월 보증"/>
         <text name="rms_ws_quality_partial_warranty" text="일부 보증"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="고장 부품"/>
         <text name="rms_ws_repair_row_part_detail" text="고장의 원인"/>
         <text name="rms_ws_repair_part_replaced" text="교체"/>
-        <text name="rms_ws_repair_row_worn_parts" text="마모된 부품"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="같은 시스템 내"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="교체"/>
         <text name="rms_ws_repair_row_quality" text="부품 품질"/>
         <text name="rms_ws_repair_row_quality_detail" text="아래 카드에서 선택"/>
         <text name="rms_ws_repair_quality_choice" text="선택 가능"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="공장 보증:"/>
         <text name="rms_ws_quote_warranty_label_part" text="부품 보증:"/>
         <text name="rms_ws_quote_warranty_covered" text="적용"/>
-        <text name="rms_ws_quote_warranty_part" text="적용, %d개월 남음"/>
         <text name="rms_ws_quote_warranty_used" text="부품만 적용"/>
         <text name="rms_ws_quote_warranty_expired" text="만료"/>
         <text name="rms_ws_quote_warranty_own" text="자가 정비소에서는 미적용"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="산정"/>
         <text name="rms_ws_inspection_maintenance_note" text="정비에서도 표준 점검처럼 이 고장 탐색을 합니다."/>
         <text name="rms_ws_quote_title" text="견적 내역"/>
+        <text name="rms_ws_quote_empty_title" text="견적이 여기에 표시됩니다"/>
+        <text name="rms_ws_quote_empty_text" text="목록에서 작업을 선택하세요"/>
+        <text name="rms_ws_quote_empty_title_refused" text="아직 견적이 없습니다"/>
+        <text name="rms_ws_quote_empty_text_refused" text="목록에서 다른 작업을 선택하세요"/>
+        <text name="rms_ws_repair_row_around" text="주변 부품"/>
+        <text name="rms_ws_repair_row_around_detail" text="오버홀 및 마모 부품"/>
+        <text name="rms_ws_repair_around_count" text="%d개 교체"/>
+        <text name="rms_ws_repair_around_none" text="없음"/>
+        <text name="rms_ws_quote_labour" text="공임 · %s시간"/>
+        <text name="rms_ws_quote_parts_fault" text="고장 부품 · %s"/>
+        <text name="rms_ws_quote_preventive" text="예방 교체 · %s"/>
+        <text name="rms_ws_quote_supplies" text="소모품"/>
+        <text name="rms_ws_quote_rebuild_engine" text="엔진 오버홀 · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="실린더 헤드 오버홀 · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="마모 부품 · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="공장 보증"/>
+        <text name="rms_ws_quote_cover_part" text="부품 보증"/>
+        <text name="rms_ws_quote_cover_used" text="중고 부품 보증"/>
+        <text name="rms_ws_quote_cover_full" text="공임 및 부품 보증 적용"/>
+        <text name="rms_ws_quote_cover_part_only" text="부품만 적용, 공임은 유료"/>
+        <text name="rms_ws_quote_filters" text="필터 · %s"/>
+        <text name="rms_ws_diag_worn_title" text="마모 부품 · 최근 정밀 점검"/>
         <text name="rms_ws_quote_oil_filter" text="오일 필터"/>
         <text name="rms_bodywork_touchup" text="도장 보수"/>
         <text name="rms_bodywork_full" text="전체 재도장"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="고장이나 마모된 부품 없음"/>
         <text name="rms_report_worn_part_risk" text="위험 ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · 조정: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · 교체: 정밀 수리 또는 오버홀"/>
+        <text name="rms_report_worn_part_replace" text="%s · 정비소에서 예방 교체"/>
         <text name="rms_report_overall_assessment_title" text="전반적인 상태 평가"/>
         <text name="rms_report_overall_assessment_condition" text="상태 수준"/>
         <text name="rms_report_recommendations_title" text="결론 및 권장 사항"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="노후 성능 저하"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS에서는 차량이 오래될수록 원래 성능의 일부를 서서히 잃습니다.&#10;&#10;차량 수명의 약 3분의 1이 지나면 노후 마모가 출력이나 제동 성능 같은 일부 중요한 특성을 조금씩 낮추기 시작합니다. 이후 이 효과는 더 강해지며, 수명 말기에 특히 확연하게 나타납니다.&#10;&#10;이 노후 마모는 모드 설정에서 끌 수 있습니다."/>
         <text name="rms_tutorial_poor_consumables_title" text="저품질 소모품"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s 차량의 최근 정비에 저품질 소모품이 사용되었습니다. 저렴한 등급을 선택하면 이런 일이 발생합니다.&#10;&#10;정비 주기가 짧아지고 구성품 마모가 약간 증가했습니다. 새로 정비하면 문제가 해결됩니다. 육안 점검이나 표준 점검은 짧아진 주기를 알리며 종합 점검만 원인이 된 소모품을 식별합니다."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s 차량의 최근 정비에 결함 필터가 장착되었습니다. 저렴한 등급을 선택하면 이런 일이 발생합니다.&#10;&#10;이 필터는 오염물을 통과시키므로 필터를 교체할 때까지 해당 계통이 더 빨리 마모됩니다. 새로 정비하면 필터가 교체됩니다. 종합 점검만 이 필터를 식별합니다."/>
         <text name="rms_tutorial_poor_parts_title" text="저품질 부품"/>
         <text name="rms_tutorial_poor_parts_message" text="%s 차량의 수리에 저품질 부품이 사용되었습니다. 고장이 곧 다시 발생할 가능성이 높습니다.&#10;&#10;고장이 재발할 때까지 기다리거나 결함 부품을 확실하게 식별하는 종합 점검을 실시할 수 있습니다."/>
         <text name="rms_tutorial_park_brake_title" text="주차 브레이크"/>

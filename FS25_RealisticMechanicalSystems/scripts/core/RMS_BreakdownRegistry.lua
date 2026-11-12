@@ -757,15 +757,15 @@ for aggregation, effectIds in pairs({
         "TRANSMISSION_PUMP_NOISE_EFFECT", "TRANSMISSION_SLIP_EFFECT", "TURBO_WHISTLE_NOISE_EFFECT", "VALVE_TRAIN_NOISE_EFFECT",
         "WATER_PUMP_BEARING_NOISE_EFFECT", "WHEEL_HUB_BEARING_NOISE_EFFECT", "WHEEL_SEIZURE_EFFECT",
         "WHEEL_SEIZURE_GRIND_NOISE_EFFECT" },
-    sum = { "CONDITION_WEAR_MODIFIER", "ELECTRICAL_LEAKAGE_EFFECT", "ENGINE_HEAT_MODIFIER", "ENGINE_TORQUE_MODIFIER",
+    sum = { "ELECTRICAL_LEAKAGE_EFFECT", "ENGINE_HEAT_MODIFIER", "ENGINE_TORQUE_MODIFIER",
         "FUEL_CONSUMPTION_MODIFIER", "HARVEST_GRAIN_LOSS", "HARVEST_POWER_DEMAND", "HYDRAULIC_HEAT_MODIFIER",
-        "SERVICE_WEAR_MODIFIER", "TRACTION_BATTERY_CAPACITY_MODIFIER", "TRANSMISSION_HEAT_MODIFIER" },
+        "TRACTION_BATTERY_CAPACITY_MODIFIER", "TRANSMISSION_HEAT_MODIFIER" },
     boolean_or = { "BEACON_LIGHTS_FAILURE", "CHOPPER_FAILURE", "DIFF_LOCK_ENGAGE_FAILURE", "DIFF_LOCK_STUCK_ENGAGED",
         "EMPTY_EFFECT", "ENGINE_FAILURE", "FOUR_WD_ENGAGE_FAILURE", "FOUR_WD_STUCK_ENGAGED", "FRONT_PTO_FAILURE",
         "FRONT_WORK_LIGHTS_FAILURE", "HARVEST_FAILURE", "HIGH_BEAM_FAILURE", "HYDRAULIC_FUNCTION_BLOCKED_EFFECT",
         "LIFT_CONTROL_FAILURE", "LIGHTS_FAILURE", "LOW_BEAM_FAILURE", "METAL_DETECTOR_OFF", "NOX_MONITORING_FAILURE",
         "PARTICULATE_FILTER_BLOCKED", "PTO_FAILURE", "REAR_WORK_LIGHTS_FAILURE", "SCR_DOSING_FAILURE",
-        "SELF_DISAPPEARING_BREAKDOWN_EFFECT", "TURN_LIGHTS_FAILURE" }
+        "TURN_LIGHTS_FAILURE" }
 }) do
     for _, effectId in ipairs(effectIds) do
         AGGREGATIONS[effectId] = aggregation
@@ -959,12 +959,11 @@ addBreakdown("STRESS_OVERLOAD", {
     { { "EMPTY_EFFECT", 1.0, { reason = "BREAKDOWN" } }, severity = CRITICAL, lamps = { { db.WARNING, color.CRITICAL } } }
 })
 
+-- its way is the defectBranch of the defective filter
 addBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES", {
-    isSelectable = false, part = parts.CONSUMABLES, isApplicable = always, isCanProgress = always
+    isSelectable = false, part = parts.CONSUMABLES, isApplicable = always, isCanProgress = never, branches = 2
 }, {
-    { { "CONDITION_WEAR_MODIFIER", 0.33 }, { "SERVICE_WEAR_MODIFIER", 0.33 }, severity = "", progressMultiplier = 5.0 },
-    { { "SELF_DISAPPEARING_BREAKDOWN_EFFECT", 1.0, { breakdownId = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES" } },
-        severity = "" }
+    { severity = "" }
 })
 
 addBreakdown("ENGINE_THERMAL_PROTECTION", {
@@ -1217,9 +1216,11 @@ addBreakdown("OIL_PUMP_MALFUNCTION", {
     { { "ENGINE_TORQUE_MODIFIER", -0.05 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.3 }, { "ENGINE_HEAT_MODIFIER", 0.05 } },
     { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.5 }, { "ENGINE_HEAT_MODIFIER", 0.15 },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.8 },
+    { renews = { "MAIN_BEARINGS", "CONROD_BEARINGS" },
+        { "ENGINE_TORQUE_MODIFIER", -0.17 }, { "ENGINE_STALLS_CHANCE", 10.0 }, { "ENGINE_KNOCKING_NOISE_EFFECT", 0.8 },
         { "ENGINE_HEAT_MODIFIER", 0.35 }, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
+    { renews = { "MAIN_BEARINGS", "CONROD_BEARINGS" },
+        stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
 addBreakdown("PISTONS", {
@@ -1227,11 +1228,14 @@ addBreakdown("PISTONS", {
         causes = { primary = { "sf", "cmf", "hmf" }, secondary = { "mlf", "lf" } }, component = "ENGINE_PISTON",
         branches = 2, progress = 1.4
 }, {
-    { },
-    { { "EXHAUST_OIL", 0.2 }, { "PISTON_SLAP_NOISE_EFFECT", 0.5 } },
-    { { "EXHAUST_OIL", 0.4 }, { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_HARD_START_MODIFIER", 3 },
+    { renews = { "CYLINDER_LINERS", "PISTON_RINGS" } },
+    { renews = { "CYLINDER_LINERS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET" },
+        { "EXHAUST_OIL", 0.2 }, { "PISTON_SLAP_NOISE_EFFECT", 0.5 } },
+    { renews = { "CYLINDER_LINERS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET" },
+        { "EXHAUST_OIL", 0.4 }, { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "ENGINE_HARD_START_MODIFIER", 3 },
         { "PISTON_SLAP_NOISE_EFFECT", 0.8 }, lamps = { { db.ENGINE, color.WARNING } } },
-    { stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
+    { renews = { "CYLINDER_LINERS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET", "MAIN_BEARINGS", "CONROD_BEARINGS" },
+        stopEngine({ starter = true }), lamps = { { db.ENGINE, color.CRITICAL } } }
 })
 
 addBreakdown("PISTON_RINGS", {
@@ -1240,16 +1244,19 @@ addBreakdown("PISTON_RINGS", {
         branches = 3, progress = 1.4
 }, {
     { },
-    { { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 3, branch = 1 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 3, branch = 1 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.05, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 3, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05, branch = 3 },
         { "EXHAUST_OIL", 0.2, branch = 2 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
+    { renews = { "PISTONS", "CYLINDER_LINERS", "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 6, branch = 1 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.1, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 6, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1, branch = 3 },
         { "EXHAUST_OIL", 0.4, branch = 2 },
         lamps = { { db.ENGINE, color.WARNING, branch = 1 }, { db.ENGINE, color.WARNING, branch = 3 } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
+    { renews = { "PISTONS", "CYLINDER_LINERS", "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
         { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 3 },
         { "ENGINE_HARD_START_MODIFIER", 9, branch = 3 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 3 },
         { "EXHAUST_OIL", 0.65, branch = 2 }, { "EXHAUST_OIL", 0.65, branch = 3 },
@@ -1261,14 +1268,17 @@ addBreakdown("CYLINDER_LINERS", {
         causes = { primary = { "sf", "cmf", "hmf" }, secondary = { "mlf", "lf" } }, component = "CYLINDER_LINER",
         branches = 2, progress = 1.4, hints = { [2] = "cylinder_liners" }
 }, {
-    { },
-    { { "EXHAUST_OIL", 0.25, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 },
+    { renews = { "PISTONS", "PISTON_RINGS" } },
+    { renews = { "PISTONS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET" },
+        { "EXHAUST_OIL", 0.25, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.04, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.08, branch = 2 }, { "PISTON_SLAP_NOISE_EFFECT", 0.5, branch = 1 }, hint = true },
-    { { "EXHAUST_OIL", 0.5, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 },
+    { renews = { "PISTONS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET" },
+        { "EXHAUST_OIL", 0.5, branch = 1 }, { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.25, branch = 2 }, { "EXHAUST_UNBURNT", 0.3, branch = 2 },
         { "PISTON_SLAP_NOISE_EFFECT", 0.8, branch = 1 },
         lamps = { { db.ENGINE, color.WARNING, branch = 1 }, { db.COOLANT, color.WARNING, branch = 2 } }, hint = true },
-    { { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 1 },
+    { renews = { "PISTONS", "PISTON_RINGS", "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 2 }, { "EXHAUST_UNBURNT", 0.5, branch = 2 },
         lamps = { { db.ENGINE, color.CRITICAL, branch = 1 }, { db.COOLANT, color.CRITICAL, branch = 2 } }, hint = true }
 })
@@ -1278,14 +1288,18 @@ addBreakdown("INLET_VALVES", {
         causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
-    { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
+    { renews = { "CYLINDER_HEAD_GASKET", "PISTONS", "CYLINDER_LINERS", "PISTON_RINGS", "CYLINDER_HEAD" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
@@ -1297,14 +1311,18 @@ addBreakdown("EXHAUST_VALVES", {
         causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
-    { { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.04 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 } },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.09 }, { "FUEL_CONSUMPTION_MODIFIER", 0.1 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 } },
         lamps = { { db.ENGINE, color.WARNING } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 } },
         { "ENGINE_STALLS_CHANCE", 10.0 }, lamps = { { db.ENGINE, color.CRITICAL } } },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
+    { renews = { "CYLINDER_HEAD_GASKET", "PISTONS", "CYLINDER_LINERS", "PISTON_RINGS", "CYLINDER_HEAD" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 },
         { "ENGINE_HESITATION_CHANCE", 0.15, { amplitude = 1.0, duration = 500, motorLoad = 0.5 }, branch = 1 },
         { "ENGINE_STALLS_CHANCE", 10.0, branch = 1 }, { "FUEL_CONSUMPTION_MODIFIER", 0.2, branch = 1 },
         { "ENGINE_FAILURE", 1.0, { disableAi = true, reason = "BREAKDOWN", starter = true }, branch = 2 },
@@ -1316,12 +1334,16 @@ addBreakdown("VALVE_GUIDES_SEALS", {
         causes = { primary = { "sf", "cmf" }, secondary = { "hmf", "mlf" } }, component = "ENGINE_VALVE",
         branches = 2, progress = 1.4
 }, {
-    { { "VALVE_TRAIN_NOISE_EFFECT", 0.5, branch = 1 }, { "EXHAUST_OIL", 0.2 } },
-    { { "VALVE_TRAIN_NOISE_EFFECT", 0.7, branch = 1 }, { "EXHAUST_OIL", 0.4 } },
-    { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "VALVE_TRAIN_NOISE_EFFECT", 0.5, branch = 1 }, { "EXHAUST_OIL", 0.2 } },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "VALVE_TRAIN_NOISE_EFFECT", 0.7, branch = 1 }, { "EXHAUST_OIL", 0.4 } },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
         { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } },
-    { { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
+    { renews = { "CYLINDER_HEAD_GASKET" },
+        { "VALVE_TRAIN_NOISE_EFFECT", 1.0, branch = 1 }, { "EXHAUST_OIL", 0.65 },
         { "ENGINE_HESITATION_CHANCE", 0.3, { amplitude = 0.6, duration = 300, motorLoad = 0.8 }, branch = 1 },
         { "ENGINE_TORQUE_MODIFIER", -0.09, branch = 1 }, lamps = { { db.ENGINE, color.CRITICAL, branch = 1 } } }
 })
@@ -1361,7 +1383,8 @@ addBreakdown("CYLINDER_HEAD_GASKET", {
         { "COOLANT_LEAK_RATE", 0.25, branch = 3 }, { "EXHAUST_UNBURNT", 0.3, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.WARNING, branch = 2 }, { db.COOLANT, color.WARNING, branch = 3 } },
         hint = true },
-    { { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
+    { renews = { "CYLINDER_HEAD" },
+        { "ENGINE_TORQUE_MODIFIER", -0.22, branch = 1 }, { "ENGINE_HARD_START_MODIFIER", 9, branch = 1 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 1 }, { "COOLANT_LEAK_RATE", 0.8, branch = 2 },
         { "COOLANT_LEAK_RATE", 0.8, branch = 3 }, { "EXHAUST_UNBURNT", 0.5, branch = 1 },
         lamps = { { db.COOLANT, color.CRITICAL, branch = 1 }, { db.COOLANT, color.CRITICAL, branch = 2 }, { db.COOLANT, color.CRITICAL, branch = 3 } },

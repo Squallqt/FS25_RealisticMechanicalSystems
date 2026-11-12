@@ -57,6 +57,25 @@
                                 </BoxLayout>
                                 <Text profile="rms_workshopBreakdownText" position="516px -8px" size="151px 26px" name="rms_tableBreakdownPrice" textAlignment="right" />
                                 <Text profile="rms_workshopBreakdownText" position="120px -38px" size="547px 26px" name="rms_tableBreakdownDisc" textLayoutMode="scrolling" textScrollOnFocusOnly="false" />
+                                <Text profile="rms_workshopBreakdownCover" position="516px -38px" size="151px 26px" name="rms_tableBreakdownCover" textAlignment="right" />
+                            </ListItem>
+<ListItem profile="rms_workshopWornTitleRow" name="wornTitleTemplate" size="683px 52px" updateChildrenState="false">
+                                <GuiElement profile="rms_workshopBlock" position="0px -12px" size="683px 32px">
+                                    <RoundCorner profile="rms_workshopSectionAccent" />
+                                    <Text profile="rms_workshopSectionTitle" position="16px 0px" size="667px 32px" text="$l10n_rms_ws_diag_worn_title" />
+                                    <RoundCorner profile="rms_workshopSectionLine" position="16px 0px" size="667px 1px" />
+                                </GuiElement>
+                            </ListItem>
+                            <ListItem profile="rms_workshopTableRow" name="wornRowTemplate" size="683px 72px" updateChildrenState="false" handleFocus="true">
+                                <RoundCorner profile="rms_logRowSurface" name="wornSurface" />
+                                <Button profile="rms_workshopSelectionToggle" position="14px -16px" name="wornSelect" handleFocus="false">
+                                    <RoundCorner profile="rms_workshopSelectionToggleBg" />
+                                    <Bitmap profile="rms_workshopSelectionIcon" imageSliceId="gui.tick" />
+                                </Button>
+                                <Bitmap profile="rms_workshopIconWide" position="64px -20px" name="wornIcon" imageSliceId="gui.contextAction_icon_repairAlert" />
+                                <Text profile="rms_workshopBreakdownName" position="120px -8px" size="390px 26px" name="wornName" textBold="true" />
+                                <Text profile="rms_workshopBreakdownText" position="516px -8px" size="151px 26px" name="wornRisk" textAlignment="right" textBold="true" />
+                                <Text profile="rms_workshopWornDetail" position="120px -38px" size="547px 26px" name="wornDetail" />
                             </ListItem>
                         </SmoothList>
                         <ThreePartBitmap profile="rms_listSliderBox" position="0px 0px" size="6px 100%">
@@ -81,14 +100,33 @@
                         <RoundCorner profile="rms_workshopSurfaceSoft" />
                         <GuiElement profile="rms_workshopBlock" position="16px -12px" size="320px 20px">
                             <RoundCorner profile="rms_workshopSubsectionAccent" position="3px 0px" />
-                            <Text profile="rms_workshopListLabel" position="12px 0px" size="308px 18px" text="$l10n_rms_ws_section_parts" />
+                            <Text profile="rms_workshopListLabel" id="diagnosticQuoteOptions" position="12px 0px" size="308px 18px" />
                         </GuiElement>
-                        <SmoothList profile="rms_workshopPackedList" id="diagnosticSelectedPartsTable" position="16px -44px" size="320px 288px" handleFocus="false">
-                            <ListItem profile="rms_workshopQuotePartRow" name="diagnosticEstimatePartRowTemplate" size="320px 18px" updateChildrenState="false">
-                                <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 18px" text="·" />
-                                <Text profile="rms_workshopQuotePart" position="12px 0px" size="308px 18px" name="diagnosticEstimatePart" />
+                        <SmoothList profile="rms_workshopPackedList" id="diagnosticQuoteList" position="12px -44px" size="316px 288px" handleFocus="false">
+                            <ListItem profile="rms_workshopRecapQuoteHeadRow" name="quoteHead" size="316px 20px">
+                                <Text profile="rms_workshopRecapQuoteHead" name="quoteName" position="0px 0px" size="248px 20px" />
+                                <Text profile="rms_workshopRecapQuoteHeadAmount" name="quoteAmount" position="254px 0px" size="62px 20px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteHeadGapRow" name="quoteHeadGap" size="316px 27px">
+                                <RoundCorner profile="rms_workshopRule" name="quoteRule" position="0px -3px" size="316px 1px" />
+                                <Text profile="rms_workshopRecapQuoteHead" name="quoteName" position="0px -7px" size="248px 20px" />
+                                <Text profile="rms_workshopRecapQuoteHeadAmount" name="quoteAmount" position="254px -7px" size="62px 20px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteRow" name="quoteLine" size="316px 17px">
+                                <Text profile="rms_workshopRecapQuoteName" name="quoteName" position="12px 0px" size="236px 17px" />
+                                <Text profile="rms_workshopRecapQuoteAmount" name="quoteAmount" position="254px 0px" size="62px 17px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteNoteRow" name="quoteNote" size="316px 16px">
+                                <Bitmap profile="rms_workshopRecapQuoteBullet" name="quoteNoteBullet" position="26px -5.5px" size="5px 5px" />
+                                <Text profile="rms_workshopRecapQuoteName" name="quoteNoteText" position="37px 0px" size="279px 16px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteNoteRow" name="quoteAlert" size="316px 16px">
+                                <Text profile="rms_workshopRecapQuoteAlert" name="quoteAlertText" position="12px 0px" size="304px 16px" />
                             </ListItem>
                         </SmoothList>
+                        <ThreePartBitmap profile="rms_listSliderBox" id="diagnosticQuoteSliderBox" position="-12px -44px" size="6px 288px">
+                            <Slider profile="fs25_listSlider" dataElementId="diagnosticQuoteList" />
+                        </ThreePartBitmap>
                     </GuiElement>
                     <GuiElement profile="rms_workshopBlock" position="20px -420px" size="352px 60px">
                         <RoundCorner profile="rms_workshopSurfaceSoft" />

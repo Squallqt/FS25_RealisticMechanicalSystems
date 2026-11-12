@@ -187,10 +187,6 @@ function RMS_Breakdowns.onStarterCaught(vehicle)
     end
 end
 
-RMS_Breakdowns.EffectApplicators.SELF_DISAPPEARING_BREAKDOWN_EFFECT = {
-    apply = function(vehicle, effect) vehicle:removeBreakdown(effect.extraData.breakdownId) end
-}
-
 -- the game never stops an engine running or starting when it may not run
 local function stopRunningEngine(vehicle)
     local motorState = vehicle:getMotorState()
@@ -1241,8 +1237,6 @@ end
 
 -- {spec field, value at rest, lowest value}, rest + effect value
 local SPEC_VALUES = {
-    CONDITION_WEAR_MODIFIER = { "extraConditionWear", 0 },
-    SERVICE_WEAR_MODIFIER = { "extraServiceWear", 0 },
     ENGINE_HEAT_MODIFIER = { "extraEngineHeat", 0 },
     TRANSMISSION_HEAT_MODIFIER = { "extraTransmissionHeat", 0 },
     HYDRAULIC_HEAT_MODIFIER = { "extraHydraulicHeat", 0 },

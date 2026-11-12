@@ -410,7 +410,10 @@ local function readFaults(vehicle, spec, reading)
         if breakdown.usedPartHours ~= nil then
             table.insert(info, string.format("donor %d h", RealisticMechanicalSystems.getUsedPartMeterHours(breakdown.usedPartHours)))
         end
-        if breakdown.branch ~= nil and breakdown.branch > 0 then
+        local defective = breakdownId == "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES" and RMS_Consumables.getDefectiveFilter(vehicle) or nil
+        if defective ~= nil then
+            table.insert(info, RMS_DebugReading.getPartName(defective.breakdownId) .. " defective, its circuit wears as in bypass until changed")
+        elseif breakdown.branch ~= nil and breakdown.branch > 0 then
             table.insert(info, "way " .. breakdown.branch)
         end
         table.insert(info, breakdown.isVisible and "seen" or "hidden")

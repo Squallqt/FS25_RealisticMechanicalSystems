@@ -104,12 +104,15 @@ local function getDescription(vehicle, entry)
     return description
 end
 
+-- invoice list in reference pixels, as laid out in the XML
+local INVOICE_WIDTH, INVOICE_HEIGHT = 457, 154
+
 ---Creates the page
 function RMS_WorkshopRecordFrame.new()
     local self = RMS_WorkshopPage.new(nil, RMS_WorkshopRecordFrame_mt)
     self.entries = {}
     self.detailItems = {}
-    self.invoiceRows = {}
+    self.invoiceRows, self.invoiceHeight = {}, 0
     return self
 end
 
@@ -235,7 +238,7 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
         self.selectedLogPrice:setText("-")
         self.selectedLogSummary:setText(g_i18n:getText("rms_log_empty"))
         self.selectedLogDetailsHeader:setVisible(false)
-        self.detailItems, self.invoiceRows = {}, {}
+        self.detailItems, self.invoiceRows, self.invoiceHeight = {}, {}, 0
     else
         local typeText, color, iconSliceId = RMS_Utils.getLogTypePresentation(entry)
         local presentation = getPresentation(self.vehicle, entry)
@@ -251,21 +254,28 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
         local location = getLocation(entry)
         self.selectedLogLocation:setText((location ~= "" and location .. " · " or "") .. "ODO "
             .. RMS_Utils.formatOdometerKilometers(entry.conditionData ~= nil and entry.conditionData.odometerKilometers or nil))
-        self.invoiceRows = entry.isCompleted ~= false and entry.invoice ~= nil
-            and RMS_FluidWorkshop.getInvoiceRows(self.vehicle, entry.type, entry.optionOne, entry.invoice, true) or {}
+        local groups = entry.isCompleted ~= false and entry.invoice ~= nil and RMS_FluidWorkshop.getQuoteGroups(self.vehicle,
+            entry.type, entry.optionOne, entry.optionTwo, entry.invoice, entry.location) or {}
+        self.invoiceRows, self.invoiceHeight = RMS_FluidWorkshop.getQuoteRows(groups)
         local hasInvoice = #self.invoiceRows > 0
         local detailLabel = hasInvoice and g_i18n:getText("rms_log_invoice_title") or presentation.detailLabel
         self.selectedLogDetailsLabel:setText(detailLabel)
         self.selectedLogDetailsHeader:setVisible(detailLabel ~= "")
         self.detailItems = hasInvoice and {} or presentation.detailItems
     end
-    self.invoiceTable:reloadData()
+    RMS_Utils.reloadListTemplates(self.invoiceTable)
     self.invoiceTable:setVisible(#self.invoiceRows > 0)
+    self.invoiceSliderBox:setVisible(self.invoiceHeight > INVOICE_HEIGHT)
     self.detailPartsTable:reloadData()
     self.detailPartsTable:setVisible(#self.detailItems > 0)
     self.detailIdentityRow:invalidateLayout()
     RMS_Utils.fitValuePills(self)
     self.dialog:updateButtons()
+end
+
+---Template of a row of the invoice, the only list with several
+function RMS_WorkshopRecordFrame:getCellTypeForItemInSection(_list, _section, index)
+    return RMS_FluidWorkshop.getQuoteCellType(self.invoiceRows[index])
 end
 
 ---Rows of a list
@@ -284,9 +294,7 @@ function RMS_WorkshopRecordFrame:populateCellForItemInSection(list, _section, in
         RMS_Utils.populateTwoColumnTextRow(self.detailItems, index, cell, "detailPartLeft", "detailPartRight", "detailPartRightBullet")
         return
     elseif list == self.invoiceTable then
-        local row = self.invoiceRows[index]
-        cell:getAttribute("invoiceLabel"):setText(row.label)
-        cell:getAttribute("invoiceAmount"):setText(row.price ~= nil and g_i18n:formatMoney(row.price, 0, true, false) or "")
+        RMS_FluidWorkshop.populateQuoteCell(cell, self.invoiceRows[index], self.invoiceTable.size[1] / INVOICE_WIDTH, INVOICE_WIDTH)
         return
     end
 

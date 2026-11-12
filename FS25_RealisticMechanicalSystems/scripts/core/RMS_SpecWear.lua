@@ -120,12 +120,19 @@ local function getExpiredServiceFactor(vehicle, systemKey, C)
     return math.min(severity * C.SERVICE_EXPIRED_MULTIPLIER * 2 ^ doublings, C.SERVICE_EXPIRED_MAX)
 end
 
-local function getFilterBypassFactor(spec, wearRate, stateKey)
-    local C = RMS_Config.CORE.HYDRAULICS_FACTOR_DATA
-    if RMS_Consumables.getFilterStage(spec[stateKey or "hydraulicFilterClogging"]) < C.FILTER_BYPASS_STAGE then
+local function getIsFilterBypassed(spec, stateKey)
+    return RMS_Consumables.getFilterStage(spec[stateKey]) >= RMS_Config.CORE.HYDRAULICS_FACTOR_DATA.FILTER_BYPASS_STAGE
+end
+
+-- a clogged filter opens its bypass, a defective one lets dirt pass
+local function getFilterBypassFactor(vehicle, wearRate, stateKey)
+    stateKey = stateKey or "hydraulicFilterClogging"
+    local defective = RMS_Consumables.getDefectiveFilter(vehicle)
+    if not getIsFilterBypassed(vehicle.spec_RealisticMechanicalSystems, stateKey)
+        and (defective == nil or defective.stateKey ~= stateKey) then
         return 0
     end
-    return wearRate * C.FILTER_BYPASS_MULTIPLIER
+    return wearRate * RMS_Config.CORE.HYDRAULICS_FACTOR_DATA.FILTER_BYPASS_MULTIPLIER
 end
 
 ---Runs the hourly service clocks down while the engine runs
@@ -135,7 +142,7 @@ function RealisticMechanicalSystems:updateServiceLevel(dt)
         return
     end
 
-    local hourlyWear = self:getIsMotorStarted() and RMS_Config.CORE.BASE_SERVICE_WEAR * (1 + spec.extraServiceWear) or 0
+    local hourlyWear = self:getIsMotorStarted() and RMS_Config.CORE.BASE_SERVICE_WEAR or 0
     for _, clock in ipairs(self:getServiceClocks()) do
         if clock.intervalFactor ~= nil then
             local oilShare = clock.key == "engine" and RMS_Fluids.getEngineOilIntervalShare(self) or 1
@@ -177,8 +184,9 @@ local CAUSE_ABUSES = {
     hstf = function() return "stones" end,
     dwf = function(vehicle) return RMS_Drivetrain.getIsWindupChosen(vehicle) and "windup" or nil end,
     aicf = function() return "filter" end,
-    hfbf = function() return "filter" end,
-    tfbf = function() return "filter" end,
+    -- a defective filter wears unwarned: only a clogged one is abuse
+    hfbf = function(_, spec) return getIsFilterBypassed(spec, "hydraulicFilterClogging") and "filter" or nil end,
+    tfbf = function(_, spec) return getIsFilterBypassed(spec, "transmissionFilterClogging") and "filter" or nil end,
     htf = function() return "trailer" end,
     bmf = function() return "trailer" end,
 }
@@ -202,8 +210,7 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
     local dtMultiplier = RMS_Config.CORE.BASE_SYSTEMS_WEAR / (60 * 60 * 1000) * dt
     local isLent = isMissionVehicle(self)
     -- a lent machine does not wear; helpers ease off on its causes
-    local scale = isLent and 0
-        or (1 + spec.extraConditionWear) / reliability * RMS_Fluids.getSystemWearMultiplier(self, systemKey) * dtMultiplier
+    local scale = isLent and 0 or RMS_Fluids.getSystemWearMultiplier(self, systemKey) / reliability * dtMultiplier
 
     local causeRates, causeTotal = {}, 0
     for key, value in pairs(factors) do
@@ -246,7 +253,7 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
     end
 
     spec.systemWearNow[systemKey] = factors
-    spec.systemWearRateNow[systemKey] = wearRate * (1 + spec.extraConditionWear) / reliability
+    spec.systemWearRateNow[systemKey] = wearRate / reliability
 end
 
 ---Wears the parts of a system at once, the cause on the parts it reaches
@@ -486,9 +493,9 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
 
     if isRunning then
         if RMS_Fluids.getSumpCircuit(self, "hydraulicFluid") == "transmissionOil" then
-            addCause(wear, "filterBypassFactor", getFilterBypassFactor(spec, wear.rate))
+            addCause(wear, "filterBypassFactor", getFilterBypassFactor(self, wear.rate))
         else
-            addCause(wear, "transmissionFilterBypassFactor", getFilterBypassFactor(spec, wear.rate, "transmissionFilterClogging"))
+            addCause(wear, "transmissionFilterBypassFactor", getFilterBypassFactor(self, wear.rate, "transmissionFilterClogging"))
         end
     end
 
@@ -552,7 +559,7 @@ function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
         addCause(wear, "expiredServiceFactor", getExpiredServiceFactor(self, "hydraulics", C))
     end
 
-    addCause(wear, "filterBypassFactor", getFilterBypassFactor(spec, wear.rate))
+    addCause(wear, "filterBypassFactor", getFilterBypassFactor(self, wear.rate))
 
     finishWear(self, dt, RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system.name), wear, {
         heavyLiftMassRatio = liftRatio, vibSignal = vibSignal, isHydraulicActive = spec.isHydraulicActive == true })

@@ -109,13 +109,31 @@
                                 <Text profile="rms_logDetailPart" position="247.5px 0px" size="207.5px 22px" name="detailPartRight" />
                             </ListItem>
                         </SmoothList>
-                        <SmoothList profile="rms_workshopPackedList" id="invoiceTable" position="18px -74px" size="471px 154px" handleFocus="false">
-                            <ListItem profile="rms_logDetailPartRow" name="invoiceRowTemplate" size="471px 22px" updateChildrenState="false">
-                                <Text profile="rms_workshopListBullet" position="0px 0px" size="8px 22px" text="·" />
-                                <Text profile="rms_logDetailPart" position="12px 0px" size="335px 22px" name="invoiceLabel" />
-                                <Text profile="rms_logInvoiceAmount" position="355px 0px" size="116px 22px" name="invoiceAmount" />
+                        <SmoothList profile="rms_workshopPackedList" id="invoiceTable" position="18px -74px" size="457px 154px" handleFocus="false">
+                            <ListItem profile="rms_workshopRecapQuoteHeadRow" name="quoteHead" size="457px 20px">
+                                <Text profile="rms_workshopRecapQuoteHead" name="quoteName" position="0px 0px" size="389px 20px" />
+                                <Text profile="rms_workshopRecapQuoteHeadAmount" name="quoteAmount" position="395px 0px" size="62px 20px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteHeadGapRow" name="quoteHeadGap" size="457px 27px">
+                                <RoundCorner profile="rms_workshopRule" name="quoteRule" position="0px -3px" size="457px 1px" />
+                                <Text profile="rms_workshopRecapQuoteHead" name="quoteName" position="0px -7px" size="389px 20px" />
+                                <Text profile="rms_workshopRecapQuoteHeadAmount" name="quoteAmount" position="395px -7px" size="62px 20px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteRow" name="quoteLine" size="457px 17px">
+                                <Text profile="rms_workshopRecapQuoteName" name="quoteName" position="12px 0px" size="377px 17px" />
+                                <Text profile="rms_workshopRecapQuoteAmount" name="quoteAmount" position="395px 0px" size="62px 17px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteNoteRow" name="quoteNote" size="457px 16px">
+                                <Bitmap profile="rms_workshopRecapQuoteBullet" name="quoteNoteBullet" position="26px -5.5px" size="5px 5px" />
+                                <Text profile="rms_workshopRecapQuoteName" name="quoteNoteText" position="37px 0px" size="420px 16px" />
+                            </ListItem>
+                            <ListItem profile="rms_workshopRecapQuoteNoteRow" name="quoteAlert" size="457px 16px">
+                                <Text profile="rms_workshopRecapQuoteAlert" name="quoteAlertText" position="12px 0px" size="445px 16px" />
                             </ListItem>
                         </SmoothList>
+                        <ThreePartBitmap profile="rms_listSliderBox" id="invoiceSliderBox" position="-18px -74px" size="6px 154px">
+                            <Slider profile="fs25_listSlider" dataElementId="invoiceTable" />
+                        </ThreePartBitmap>
                     </GuiElement>
                 </GuiElement>
             </BoxLayout>

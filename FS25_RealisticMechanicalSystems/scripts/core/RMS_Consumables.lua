@@ -3,6 +3,7 @@
 ---Vehicle consumables and field inspection.
 RMS_Consumables = RMS_Consumables or {}
 
+local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 local OIL_SMOKE_OF_WORN_ENGINE
 for _, symptom in ipairs(RMS_Config.CORE.WORN_PART_SYMPTOMS) do
     if symptom.effect == "EXHAUST_OIL" then
@@ -161,7 +162,9 @@ RMS_Consumables.FILTERS = {
         breakdownId = "HYDRAULIC_FILTER_CLOGGING",
         getCloggingMultiplier = function(spec)
             return spec.isHydraulicActive and RMS_Config.FIELD_CARE.HYDRAULIC_FILTER_ACTIVE_MULTIPLIER or 1
-        end
+        end,
+        -- way of the poor consumables breakdown naming this filter
+        defectBranch = 1
     },
     {
         stateKey = "transmissionFilterClogging",
@@ -169,7 +172,8 @@ RMS_Consumables.FILTERS = {
         breakdownId = "TRANSMISSION_FILTER_CLOGGING",
         getCloggingMultiplier = function(spec)
             return 1
-        end
+        end,
+        defectBranch = 2
     },
     {
         stateKey = "adBlueFilterClogging",
@@ -269,16 +273,56 @@ function RMS_Consumables.syncFilterBreakdowns(vehicle)
     end
 end
 
+-- a maintenance changes the filters of its level that are due
+local function getIsChangedBy(vehicle, filter, maintenanceType)
+    return maintenanceType == nil or (filter.maintenanceType == nil
+        or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType)
+        and RMS_Consumables.getIsFilterDue(vehicle, filter)
+end
+
+---Returns the defective filter a poor maintenance fitted, nil when none
+function RMS_Consumables.getDefectiveFilter(vehicle)
+    local breakdown = vehicle.spec_RealisticMechanicalSystems.activeBreakdowns[POOR_CONSUMABLES]
+    if breakdown ~= nil then
+        for _, filter in ipairs(RMS_Consumables.FILTERS) do
+            if filter.defectBranch ~= nil and filter.defectBranch == breakdown.branch then
+                return filter
+            end
+        end
+    end
+    return nil
+end
+
+---Returns the filters a service changes that can be defective
+function RMS_Consumables.getDefectiveFilterCandidates(vehicle, maintenanceType)
+    local filters = {}
+    for _, filter in ipairs(RMS_Consumables.FILTERS) do
+        if filter.defectBranch ~= nil and RMS_Consumables.getHasFilter(vehicle, filter)
+            and getIsChangedBy(vehicle, filter, maintenanceType) then
+            table.insert(filters, filter)
+        end
+    end
+    return filters
+end
+
+---Fits one defective filter with a bypass among those a service changed
+function RMS_Consumables.addDefectiveFilter(vehicle, maintenanceType)
+    local filters = RMS_Consumables.getDefectiveFilterCandidates(vehicle, maintenanceType)
+    if #filters > 0 then
+        vehicle:addBreakdown(POOR_CONSUMABLES, { stage = 1, branch = filters[math.random(#filters)].defectBranch })
+    end
+end
+
 -- @param string? breakdownId breakdown of the one filter replaced, every filter when nil
 function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
-        if (breakdownId == nil or breakdownId == filter.breakdownId)
-            and (maintenanceType == nil or (filter.maintenanceType == nil
-                or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType)
-                and RMS_Consumables.getIsFilterDue(vehicle, filter)) then
+        if (breakdownId == nil or breakdownId == filter.breakdownId) and getIsChangedBy(vehicle, filter, maintenanceType) then
             spec[filter.stateKey] = 0
             vehicle:removeBreakdown(filter.breakdownId)
+            if RMS_Consumables.getDefectiveFilter(vehicle) == filter then
+                vehicle:removeBreakdown(POOR_CONSUMABLES)
+            end
         end
     end
 end

@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Valitse toimenpide"/>
         <text name="rms_ws_section_work_order" text="Korjaustilaus"/>
         <text name="rms_ws_section_recap" text="Kooste"/>
-        <text name="rms_ws_section_parts" text="Kyseiset osat"/>
         <text name="rms_ws_section_history" text="Historia"/>
         <text name="rms_ws_label_last_check" text="Viimeisin tarkistus"/>
         <text name="rms_ws_reading_outdated" text="Tarkistettava"/>
-        <text name="rms_ws_label_more_parts" text="+ %s muuta"/>
         <text name="rms_ws_label_committed_cost" text="Sitoutunut kustannus"/>
         <text name="rms_ws_label_finish_time" text="Valmistumisaika"/>
         <text name="rms_ws_label_total_estimate" text="Arvioitu yhteensä"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Kustannus käyttötuntia kohden"/>
         <text name="rms_log_invoice_title" text="Laskun erittely"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Korjaamon kiinteä hinta"/>
-        <text name="rms_log_invoice_labour" text="Työ"/>
         <text name="rms_log_invoice_filters" text="Suodattimet"/>
         <text name="rms_log_cancelled_desc" text="Toimenpide peruttu"/>
         <text name="rms_log_ownership_months_title" text="Omistusaika"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Sisältyy"/>
         <text name="rms_ws_levels_mechanical" text="Mekaaniset"/>
         <text name="rms_ws_levels_every_level" text="Joka tasolla: jäähdyttimen puhdistus ja voitelu."/>
-        <text name="rms_ws_quality_risk" text="Vikariski"/>
+        <text name="rms_ws_quality_part_wear" text="Osan kuluminen"/>
+        <text name="rms_ws_quality_factory_kept" text="Tehdastakuu säilyy"/>
+        <text name="rms_ws_quality_factory_lost" text="Tehdastakuu raukeaa"/>
+        <text name="rms_ws_quality_filters_sound" text="Virheettömät suodattimet"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Suodatin joskus viallinen"/>
+        <text name="rms_ws_quality_filter_often" text="Suodatin useammin viallinen"/>
         <text name="rms_ws_quality_reference" text="Vertailuhinta"/>
-        <text name="rms_ws_quality_donor" text="Lähtökone: %d h"/>
-        <text name="rms_ws_quality_donors" text="Lähtökoneet: %d–%d h"/>
+        <text name="rms_ws_quality_donor" text="Purettu koneesta, %d h"/>
+        <text name="rms_ws_quality_donors" text="Purettu koneista, %d–%d h"/>
         <text name="rms_ws_quality_new_part" text="Uusi osa"/>
         <text name="rms_ws_quality_used_warranty" text="3 kuukauden takuu"/>
         <text name="rms_ws_quality_partial_warranty" text="Osittainen takuu"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Viallinen osa"/>
         <text name="rms_ws_repair_row_part_detail" text="Vian aiheuttaja"/>
         <text name="rms_ws_repair_part_replaced" text="Vaihdettu"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Kuluneet osat"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Samassa järjestelmässä"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Vaihdettu"/>
         <text name="rms_ws_repair_row_quality" text="Osien laatu"/>
         <text name="rms_ws_repair_row_quality_detail" text="Valitaan alla olevista korteista"/>
         <text name="rms_ws_repair_quality_choice" text="Oma valinta"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Tehdastakuu:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Osan takuu:"/>
         <text name="rms_ws_quote_warranty_covered" text="katettu"/>
-        <text name="rms_ws_quote_warranty_part" text="katettu, vielä %d kuukautta"/>
         <text name="rms_ws_quote_warranty_used" text="vain osa katettu"/>
         <text name="rms_ws_quote_warranty_expired" text="päättynyt"/>
         <text name="rms_ws_quote_warranty_own" text="ei kateta omassa korjaamossa"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Arvioitu"/>
         <text name="rms_ws_inspection_maintenance_note" text="Myös huolto tekee tämän vianetsinnän, kuten vakiotarkastus."/>
         <text name="rms_ws_quote_title" text="Tarjouksen erittely"/>
+        <text name="rms_ws_quote_empty_title" text="Tarjouksesi näkyy tässä"/>
+        <text name="rms_ws_quote_empty_text" text="Valitse toimenpide luettelosta"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Ei tarjousta toistaiseksi"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Valitse toinen toimenpide luettelosta"/>
+        <text name="rms_ws_repair_row_around" text="Ympäröivät osat"/>
+        <text name="rms_ws_repair_row_around_detail" text="Kunnostus ja kuluneet osat"/>
+        <text name="rms_ws_repair_around_count" text="%d vaihdettu"/>
+        <text name="rms_ws_repair_around_none" text="Ei yhtään"/>
+        <text name="rms_ws_quote_labour" text="Työ · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Vian osat · %s"/>
+        <text name="rms_ws_quote_preventive" text="Ennakoiva vaihto · %s"/>
+        <text name="rms_ws_quote_supplies" text="Tarvikkeet"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Moottorin kunnostus · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Sylinterikannen kunnostus · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Kuluneet osat · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Tehdastakuu"/>
+        <text name="rms_ws_quote_cover_part" text="Osan takuu"/>
+        <text name="rms_ws_quote_cover_used" text="Käytetyn osan takuu"/>
+        <text name="rms_ws_quote_cover_full" text="Työ ja osat katettu"/>
+        <text name="rms_ws_quote_cover_part_only" text="Vain osa, työ maksetaan"/>
+        <text name="rms_ws_quote_filters" text="Suodattimet · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Kuluneet osat · viimeisin täysi tarkastus"/>
         <text name="rms_ws_quote_oil_filter" text="Öljynsuodatin"/>
         <text name="rms_bodywork_touchup" text="Maalin paikkaukset"/>
         <text name="rms_bodywork_full" text="Täysi uudelleenmaalaus"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Ei vikoja eikä kuluneita osia"/>
         <text name="rms_report_worn_part_risk" text="Riski ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Säätö: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Vaihto: perusteellinen korjaus tai peruskorjaus"/>
+        <text name="rms_report_worn_part_replace" text="%s · Ennakoiva vaihto korjaamolla"/>
         <text name="rms_report_overall_assessment_title" text="Kokonaiskunnon arviointi"/>
         <text name="rms_report_overall_assessment_condition" text="Kuntotaso"/>
         <text name="rms_report_recommendations_title" text="Johtopäätökset ja suositukset"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Ikääntymisrapautuminen"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS:ssä ajoneuvot menettävät vähitellen osan alkuperäisestä suorituskyvystään ikääntyessään.&#10;&#10;Noin kolmanneksen jälkeen käyttöiästä ikääntymiseen liittyvä kuluminen alkaa hieman heikentää joitakin tärkeitä ominaisuuksia, kuten tehoa tai jarrutusta. Vaikutus voimistuu sen jälkeen ja on selvästi havaittavissa käyttöiän lopussa.&#10;&#10;Tämä kuluminen voidaan poistaa käytöstä modin asetuksissa."/>
         <text name="rms_tutorial_poor_consumables_title" text="Heikkolaatuiset kulutustarvikkeet"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Kone %s: viime huollossa asennettiin heikkolaatuisia kulutustarvikkeita. Näin voi käydä edullisten laatuluokkien kanssa.&#10;&#10;Huoltoväli lyhenee ja komponenttien kuluminen kasvaa hieman. Uusi huolto korjaa ongelman. Visuaalinen tai standarditarkastus ilmoittaa lyhentyneestä huoltovälistä; vain täydellinen tarkastus tunnistaa kyseiset kulutustarvikkeet."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Kone %s: viime huollossa asennettiin viallinen suodatin. Näin voi käydä edullisten laatuluokkien kanssa.&#10;&#10;Suodatin päästää epäpuhtaudet läpi: sen suojaama piiri kuluu nopeammin, kunnes suodatin vaihdetaan. Uusi huolto vaihtaa sen. Vain täydellinen tarkastus tunnistaa sen."/>
         <text name="rms_tutorial_poor_parts_title" text="Heikkolaatuiset osat"/>
         <text name="rms_tutorial_poor_parts_message" text="Kone %s: korjauksen yhteydessä asennettiin heikkolaatuinen osa. Vika palaa todennäköisesti pian.&#10;&#10;Voit odottaa sen palaamista tai tehdä täydellisen tarkastuksen, joka tunnistaa kyseisen osan luotettavasti."/>
         <text name="rms_tutorial_park_brake_title" text="Seisontajarru"/>

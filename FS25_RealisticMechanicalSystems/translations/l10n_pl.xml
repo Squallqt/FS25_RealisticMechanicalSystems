@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Wybierz czynność"/>
         <text name="rms_ws_section_work_order" text="Zlecenie naprawy"/>
         <text name="rms_ws_section_recap" text="Zestawienie"/>
-        <text name="rms_ws_section_parts" text="Uwzględnione części"/>
         <text name="rms_ws_section_history" text="Historia"/>
         <text name="rms_ws_label_last_check" text="Ostatnia kontrola"/>
         <text name="rms_ws_reading_outdated" text="Do kontroli"/>
-        <text name="rms_ws_label_more_parts" text="+ %s więcej"/>
         <text name="rms_ws_label_committed_cost" text="Poniesiony koszt"/>
         <text name="rms_ws_label_finish_time" text="Godzina zakończenia"/>
         <text name="rms_ws_label_total_estimate" text="Szacowana suma"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Koszt na godzinę pracy"/>
         <text name="rms_log_invoice_title" text="Szczegóły faktury"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Ryczałt warsztatowy"/>
-        <text name="rms_log_invoice_labour" text="Robocizna"/>
         <text name="rms_log_invoice_filters" text="Filtry"/>
         <text name="rms_log_cancelled_desc" text="Czynność anulowana"/>
         <text name="rms_log_ownership_months_title" text="Okres posiadania"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Wliczone"/>
         <text name="rms_ws_levels_mechanical" text="Mechaniczne"/>
         <text name="rms_ws_levels_every_level" text="Na każdym poziomie: czyszczenie chłodnicy i smarowanie."/>
-        <text name="rms_ws_quality_risk" text="Ryzyko wady"/>
+        <text name="rms_ws_quality_part_wear" text="Zużycie części"/>
+        <text name="rms_ws_quality_factory_kept" text="Gwarancja fabryczna zachowana"/>
+        <text name="rms_ws_quality_factory_lost" text="Utrata gwarancji fabrycznej"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtry bez wad"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtr czasem wadliwy"/>
+        <text name="rms_ws_quality_filter_often" text="Filtr częściej wadliwy"/>
         <text name="rms_ws_quality_reference" text="Cena odniesienia"/>
-        <text name="rms_ws_quality_donor" text="Maszyna z %d h"/>
-        <text name="rms_ws_quality_donors" text="Maszyny z %d do %d h"/>
+        <text name="rms_ws_quality_donor" text="Z demontażu maszyny z %d h"/>
+        <text name="rms_ws_quality_donors" text="Z demontażu maszyn z %d do %d h"/>
         <text name="rms_ws_quality_new_part" text="Nowa część"/>
         <text name="rms_ws_quality_used_warranty" text="Gwarancja 3 miesiące"/>
         <text name="rms_ws_quality_partial_warranty" text="Częściowa gwarancja"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Uszkodzona część"/>
         <text name="rms_ws_repair_row_part_detail" text="Przyczyna awarii"/>
         <text name="rms_ws_repair_part_replaced" text="Wymieniona"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Zużyte części"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="W tym samym układzie"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Wymienione"/>
         <text name="rms_ws_repair_row_quality" text="Jakość części"/>
         <text name="rms_ws_repair_row_quality_detail" text="Wybierana na kartach poniżej"/>
         <text name="rms_ws_repair_quality_choice" text="Do wyboru"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Gwarancja fabryczna:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Gwarancja części:"/>
         <text name="rms_ws_quote_warranty_covered" text="obejmuje"/>
-        <text name="rms_ws_quote_warranty_part" text="obejmuje, jeszcze %d mies."/>
         <text name="rms_ws_quote_warranty_used" text="obejmuje tylko część"/>
         <text name="rms_ws_quote_warranty_expired" text="wygasła"/>
         <text name="rms_ws_quote_warranty_own" text="nie obejmuje własnego warsztatu"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Oceniono"/>
         <text name="rms_ws_inspection_maintenance_note" text="Obsługa techniczna też wykonuje to wyszukiwanie awarii, jak przegląd standardowy."/>
         <text name="rms_ws_quote_title" text="Szczegóły kosztorysu"/>
+        <text name="rms_ws_quote_empty_title" text="Tutaj pojawi się Twój kosztorys"/>
+        <text name="rms_ws_quote_empty_text" text="Wybierz usługę z listy"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Na razie brak kosztorysu"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Wybierz inną usługę z listy"/>
+        <text name="rms_ws_repair_row_around" text="Części sąsiednie"/>
+        <text name="rms_ws_repair_row_around_detail" text="Remont i zużyte części"/>
+        <text name="rms_ws_repair_around_count" text="Wymieniono: %d"/>
+        <text name="rms_ws_repair_around_none" text="Brak"/>
+        <text name="rms_ws_quote_labour" text="Robocizna · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Części do usterki · %s"/>
+        <text name="rms_ws_quote_preventive" text="Wymiana zapobiegawcza · %s"/>
+        <text name="rms_ws_quote_supplies" text="Materiały"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Remont silnika · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Remont głowicy · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Zużyte części · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Gwarancja fabryczna"/>
+        <text name="rms_ws_quote_cover_part" text="Gwarancja części"/>
+        <text name="rms_ws_quote_cover_used" text="Gwarancja części używanej"/>
+        <text name="rms_ws_quote_cover_full" text="Robocizna i części pokryte"/>
+        <text name="rms_ws_quote_cover_part_only" text="Tylko część, robocizna płatna"/>
+        <text name="rms_ws_quote_filters" text="Filtry · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Zużyte części · ostatnia pełna inspekcja"/>
         <text name="rms_ws_quote_oil_filter" text="Filtr oleju"/>
         <text name="rms_bodywork_touchup" text="Poprawki lakiernicze"/>
         <text name="rms_bodywork_full" text="Pełne ponowne lakierowanie"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Brak awarii i zużytych części"/>
         <text name="rms_report_worn_part_risk" text="Ryzyko ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Regulacja: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Wymiana: naprawa zaawansowana lub remont kapitalny"/>
+        <text name="rms_report_worn_part_replace" text="%s · Wymiana zapobiegawcza w warsztacie"/>
         <text name="rms_report_overall_assessment_title" text="Ogólna ocena techniczna"/>
         <text name="rms_report_overall_assessment_condition" text="Stan ogólny"/>
         <text name="rms_report_recommendations_title" text="Podsumowanie i zalecenia"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Starzenie się pojazdu"/>
         <text name="rms_tutorial_age_degradation_message" text="W RMS pojazdy stopniowo tracą część swoich pierwotnych osiągów wraz z wiekiem.&#10;&#10;Po około jednej trzeciej okresu eksploatacji zużycie związane z wiekiem zaczyna nieznacznie obniżać ważne parametry, takie jak moc czy skuteczność hamowania. Efekt narasta i staje się wyraźny pod koniec życia pojazdu.&#10;&#10;Tę degradację można wyłączyć w ustawieniach moda."/>
         <text name="rms_tutorial_poor_consumables_title" text="Słabej jakości materiały eksploatacyjne"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Podczas ostatniej obsługi technicznej pojazdu %s użyto materiałów eksploatacyjnych niskiej jakości. Zdarza się to przy wyborze tańszych klas.&#10;&#10;Okres międzyobsługowy jest skrócony, a zużycie podzespołów nieznacznie wzrosło. Ponowna obsługa techniczna usuwa ten problem. Przegląd wizualny lub standardowy sygnalizuje skrócony okres; tylko pełny przegląd wskazuje wadliwe materiały eksploatacyjne."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Podczas ostatniej obsługi technicznej pojazdu %s założono wadliwy filtr. Zdarza się to przy wyborze tańszych klas.&#10;&#10;Ten filtr przepuszcza zanieczyszczenia: układ, który chroni, zużywa się szybciej aż do wymiany filtra. Ponowna obsługa techniczna go wymienia. Tylko pełny przegląd go wskazuje."/>
         <text name="rms_tutorial_poor_parts_title" text="Słabej jakości części"/>
         <text name="rms_tutorial_poor_parts_message" text="Podczas naprawy pojazdu %s zamontowano część niskiej jakości. Awaria najprawdopodobniej wkrótce powróci.&#10;&#10;Możesz poczekać na jej powrót albo wykonać pełny przegląd, który niezawodnie wskaże wadliwą część."/>
         <text name="rms_tutorial_park_brake_title" text="Hamulec postojowy"/>

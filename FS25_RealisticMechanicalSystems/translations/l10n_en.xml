@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Choose the Procedure"/>
         <text name="rms_ws_section_work_order" text="Repair Order"/>
         <text name="rms_ws_section_recap" text="Recap"/>
-        <text name="rms_ws_section_parts" text="Parts Involved"/>
         <text name="rms_ws_section_history" text="History"/>
         <text name="rms_ws_label_last_check" text="Last Check"/>
         <text name="rms_ws_reading_outdated" text="Recheck"/>
-        <text name="rms_ws_label_more_parts" text="+ %s more"/>
         <text name="rms_ws_label_committed_cost" text="Committed Cost"/>
         <text name="rms_ws_label_finish_time" text="Finish Time"/>
         <text name="rms_ws_label_total_estimate" text="Estimated Total"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Cost per Operating Hour"/>
         <text name="rms_log_invoice_title" text="Invoice Details"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Workshop Flat Rate"/>
-        <text name="rms_log_invoice_labour" text="Labor"/>
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure canceled"/>
         <text name="rms_log_ownership_months_title" text="Ownership Duration"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Included"/>
         <text name="rms_ws_levels_mechanical" text="Mechanical"/>
         <text name="rms_ws_levels_every_level" text="At every level: radiator cleaned and machine greased."/>
-        <text name="rms_ws_quality_risk" text="Defect risk"/>
+        <text name="rms_ws_quality_part_wear" text="Part wear"/>
+        <text name="rms_ws_quality_factory_kept" text="Factory Warranty Kept"/>
+        <text name="rms_ws_quality_factory_lost" text="Factory Warranty Lost"/>
+        <text name="rms_ws_quality_filters_sound" text="Defect-Free Filters"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filter Sometimes Defective"/>
+        <text name="rms_ws_quality_filter_often" text="Filter More Often Defective"/>
         <text name="rms_ws_quality_reference" text="Reference price"/>
-        <text name="rms_ws_quality_donor" text="Donor Machine: %d h"/>
-        <text name="rms_ws_quality_donors" text="Donor Machines: %d to %d h"/>
+        <text name="rms_ws_quality_donor" text="Taken from a machine with %d h"/>
+        <text name="rms_ws_quality_donors" text="Taken from machines with %d to %d h"/>
         <text name="rms_ws_quality_new_part" text="New Part"/>
         <text name="rms_ws_quality_used_warranty" text="3-Month Warranty"/>
         <text name="rms_ws_quality_partial_warranty" text="Partial Warranty"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Failed Part"/>
         <text name="rms_ws_repair_row_part_detail" text="Cause of the breakdown"/>
         <text name="rms_ws_repair_part_replaced" text="Replaced"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Worn Parts"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="In the same system"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Replaced"/>
         <text name="rms_ws_repair_row_quality" text="Part Quality"/>
         <text name="rms_ws_repair_row_quality_detail" text="Picked on the cards below"/>
         <text name="rms_ws_repair_quality_choice" text="Your choice"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Factory warranty:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Part warranty:"/>
         <text name="rms_ws_quote_warranty_covered" text="covered"/>
-        <text name="rms_ws_quote_warranty_part" text="covered, %d months left"/>
         <text name="rms_ws_quote_warranty_used" text="part only covered"/>
         <text name="rms_ws_quote_warranty_expired" text="expired"/>
         <text name="rms_ws_quote_warranty_own" text="not covered at the farm workshop"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Assessed"/>
         <text name="rms_ws_inspection_maintenance_note" text="A service runs this fault search too, as the standard inspection does."/>
         <text name="rms_ws_quote_title" text="Quote Details"/>
+        <text name="rms_ws_quote_empty_title" text="Your quote will appear here"/>
+        <text name="rms_ws_quote_empty_text" text="Choose a procedure from the list"/>
+        <text name="rms_ws_quote_empty_title_refused" text="No quote for now"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Choose another procedure from the list"/>
+        <text name="rms_ws_repair_row_around" text="Surrounding parts"/>
+        <text name="rms_ws_repair_row_around_detail" text="Rebuild and worn parts"/>
+        <text name="rms_ws_repair_around_count" text="%d replaced"/>
+        <text name="rms_ws_repair_around_none" text="None"/>
+        <text name="rms_ws_quote_labour" text="Labor · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Fault parts · %s"/>
+        <text name="rms_ws_quote_preventive" text="Preventive replacement · %s"/>
+        <text name="rms_ws_quote_supplies" text="Supplies"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Engine rebuild · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Cylinder head rebuild · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Worn parts · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Factory warranty"/>
+        <text name="rms_ws_quote_cover_part" text="Part warranty"/>
+        <text name="rms_ws_quote_cover_used" text="Used part warranty"/>
+        <text name="rms_ws_quote_cover_full" text="Labor and parts covered"/>
+        <text name="rms_ws_quote_cover_part_only" text="Part only, labor still due"/>
+        <text name="rms_ws_quote_filters" text="Filters · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Worn parts · last full inspection"/>
         <text name="rms_ws_quote_oil_filter" text="Oil Filter"/>
         <text name="rms_bodywork_touchup" text="Touch-Ups"/>
         <text name="rms_bodywork_full" text="Full Repaint"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="No breakdowns or worn parts"/>
         <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Adjustment: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Replacement: advanced repair or overhaul"/>
+        <text name="rms_report_worn_part_replace" text="%s · Preventive replacement at the workshop"/>
         <text name="rms_report_overall_assessment_title" text="Overall Condition Assessment"/>
         <text name="rms_report_overall_assessment_condition" text="Condition Level"/>
         <text name="rms_report_recommendations_title" text="Conclusion and Recommendations"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Age Degradation"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;This degradation can be disabled in the mod settings."/>
         <text name="rms_tutorial_poor_consumables_title" text="Poor-Quality Consumables"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Your %s received poor-quality consumables at its last maintenance. This happens with the cheaper grades.&#10;&#10;The maintenance interval is shortened and component wear slightly increased. New maintenance fixes the problem. A visual or standard inspection reports the shortened interval; only a complete inspection identifies the consumables involved."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Your %s received a defective filter at its last maintenance. This happens with the cheaper grades.&#10;&#10;The filter lets dirt through: the circuit it protects wears faster until the filter is changed. New maintenance changes it. Only a complete inspection identifies it."/>
         <text name="rms_tutorial_poor_parts_title" text="Poor-Quality Parts"/>
         <text name="rms_tutorial_poor_parts_message" text="Your %s received a poor-quality part during a repair. The breakdown will most likely return soon.&#10;&#10;You can wait for it to come back, or run a complete inspection, which identifies the faulty part reliably."/>
         <text name="rms_tutorial_park_brake_title" text="Parking Brake"/>

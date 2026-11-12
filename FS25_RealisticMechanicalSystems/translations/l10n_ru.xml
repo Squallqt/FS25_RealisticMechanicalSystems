@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Выбрать работу"/>
         <text name="rms_ws_section_work_order" text="Заказ-наряд"/>
         <text name="rms_ws_section_recap" text="Итог"/>
-        <text name="rms_ws_section_parts" text="Затрагиваемые детали"/>
         <text name="rms_ws_section_history" text="История"/>
         <text name="rms_ws_label_last_check" text="Последняя проверка"/>
         <text name="rms_ws_reading_outdated" text="Перепроверить"/>
-        <text name="rms_ws_label_more_parts" text="+ ещё %s"/>
         <text name="rms_ws_label_committed_cost" text="Затраченные средства"/>
         <text name="rms_ws_label_finish_time" text="Время окончания"/>
         <text name="rms_ws_label_total_estimate" text="Итого по смете"/>
@@ -194,7 +192,6 @@
         <text name="rms_log_cost_per_hour_title" text="Затраты на моточас"/>
         <text name="rms_log_invoice_title" text="Детализация счёта"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Фиксированный тариф мастерской"/>
-        <text name="rms_log_invoice_labour" text="Работа"/>
         <text name="rms_log_invoice_filters" text="Фильтры"/>
         <text name="rms_log_cancelled_desc" text="Работа отменена"/>
         <text name="rms_log_ownership_months_title" text="Срок владения"/>
@@ -341,10 +338,15 @@
         <text name="rms_ws_levels_included" text="Включён"/>
         <text name="rms_ws_levels_mechanical" text="Механические"/>
         <text name="rms_ws_levels_every_level" text="На каждом уровне: очистка радиатора и смазка."/>
-        <text name="rms_ws_quality_risk" text="Риск дефекта"/>
+        <text name="rms_ws_quality_part_wear" text="Износ детали"/>
+        <text name="rms_ws_quality_factory_kept" text="Заводская гарантия сохраняется"/>
+        <text name="rms_ws_quality_factory_lost" text="Заводская гарантия теряется"/>
+        <text name="rms_ws_quality_filters_sound" text="Фильтры без дефектов"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Фильтр иногда с дефектом"/>
+        <text name="rms_ws_quality_filter_often" text="Фильтр чаще с дефектом"/>
         <text name="rms_ws_quality_reference" text="Базовая цена"/>
-        <text name="rms_ws_quality_donor" text="Машина с %d h"/>
-        <text name="rms_ws_quality_donors" text="Машины от %d до %d h"/>
+        <text name="rms_ws_quality_donor" text="Снята с машины с %d h"/>
+        <text name="rms_ws_quality_donors" text="Сняты с машин от %d до %d h"/>
         <text name="rms_ws_quality_new_part" text="Новая деталь"/>
         <text name="rms_ws_quality_used_warranty" text="Гарантия 3 мес."/>
         <text name="rms_ws_quality_partial_warranty" text="Частичная гарантия"/>
@@ -364,9 +366,6 @@
         <text name="rms_ws_repair_row_part" text="Отказавшая деталь"/>
         <text name="rms_ws_repair_row_part_detail" text="Причина неисправности"/>
         <text name="rms_ws_repair_part_replaced" text="Заменена"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Изношенные детали"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="В той же системе"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Заменены"/>
         <text name="rms_ws_repair_row_quality" text="Качество деталей"/>
         <text name="rms_ws_repair_row_quality_detail" text="Выбирается на карточках ниже"/>
         <text name="rms_ws_repair_quality_choice" text="На выбор"/>
@@ -375,7 +374,6 @@
         <text name="rms_ws_quote_warranty_label_factory" text="Заводская гарантия:"/>
         <text name="rms_ws_quote_warranty_label_part" text="Гарантия детали:"/>
         <text name="rms_ws_quote_warranty_covered" text="покрывается"/>
-        <text name="rms_ws_quote_warranty_part" text="покрывается, ещё %d мес."/>
         <text name="rms_ws_quote_warranty_used" text="покрывается только деталь"/>
         <text name="rms_ws_quote_warranty_expired" text="истекла"/>
         <text name="rms_ws_quote_warranty_own" text="не покрывается в собственной мастерской"/>
@@ -455,6 +453,28 @@
         <text name="rms_ws_inspection_assessed" text="Оценён"/>
         <text name="rms_ws_inspection_maintenance_note" text="Техобслуживание тоже выполняет этот поиск неисправностей, как стандартный осмотр."/>
         <text name="rms_ws_quote_title" text="Детализация сметы"/>
+        <text name="rms_ws_quote_empty_title" text="Здесь появится ваша смета"/>
+        <text name="rms_ws_quote_empty_text" text="Выберите работу из списка"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Пока сметы нет"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Выберите другую работу из списка"/>
+        <text name="rms_ws_repair_row_around" text="Соседние детали"/>
+        <text name="rms_ws_repair_row_around_detail" text="Восстановление и изношенные детали"/>
+        <text name="rms_ws_repair_around_count" text="Заменено: %d"/>
+        <text name="rms_ws_repair_around_none" text="Нет"/>
+        <text name="rms_ws_quote_labour" text="Работа · %s ч"/>
+        <text name="rms_ws_quote_parts_fault" text="Детали неисправности · %s"/>
+        <text name="rms_ws_quote_preventive" text="Профилактическая замена · %s"/>
+        <text name="rms_ws_quote_supplies" text="Расходные материалы"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Капремонт двигателя · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Ремонт ГБЦ · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Изношенные детали · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Заводская гарантия"/>
+        <text name="rms_ws_quote_cover_part" text="Гарантия детали"/>
+        <text name="rms_ws_quote_cover_used" text="Гарантия б/у детали"/>
+        <text name="rms_ws_quote_cover_full" text="Работа и детали покрыты"/>
+        <text name="rms_ws_quote_cover_part_only" text="Только деталь, работа оплачивается"/>
+        <text name="rms_ws_quote_filters" text="Фильтры · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Изношенные детали · последний полный осмотр"/>
         <text name="rms_ws_quote_oil_filter" text="Масляный фильтр"/>
         <text name="rms_bodywork_touchup" text="Подкраска"/>
         <text name="rms_bodywork_full" text="Полная перекраска"/>
@@ -522,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Неисправностей и изношенных деталей нет"/>
         <text name="rms_report_worn_part_risk" text="Риск ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Регулировка: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Замена: углублённый ремонт или капитальный ремонт"/>
+        <text name="rms_report_worn_part_replace" text="%s · Профилактическая замена в мастерской"/>
         <text name="rms_report_overall_assessment_title" text="Общая оценка состояния"/>
         <text name="rms_report_overall_assessment_condition" text="Уровень состояния"/>
         <text name="rms_report_recommendations_title" text="Выводы и рекомендации"/>
@@ -966,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Возрастной износ"/>
         <text name="rms_tutorial_age_degradation_message" text="В RMS техника с возрастом постепенно теряет часть своих первоначальных характеристик.&#10;&#10;Примерно после трети срока службы возрастной износ начинает понемногу снижать некоторые важные параметры, такие как мощность или эффективность тормозов. Затем этот эффект усиливается и становится хорошо заметен ближе к концу срока службы.&#10;&#10;Возрастной износ можно отключить в настройках мода."/>
         <text name="rms_tutorial_poor_consumables_title" text="Некачественные расходники"/>
-        <text name="rms_tutorial_poor_consumables_message" text="При последнем техобслуживании для %s использовали некачественные расходные материалы. Так бывает с экономичными материалами.&#10;&#10;Интервал техобслуживания сокращён, а износ компонентов немного повышен. Повторное техобслуживание исправит проблему. Визуальный или стандартный осмотр сообщит о сокращённом интервале; только полный осмотр выявит расходные материалы."/>
+        <text name="rms_tutorial_poor_consumables_message" text="При последнем техобслуживании для %s установили дефектный фильтр. Так бывает с экономичными материалами.&#10;&#10;Этот фильтр пропускает загрязнения: система, которую он защищает, изнашивается быстрее до замены фильтра. Повторное техобслуживание заменит его. Только полный осмотр выявит его."/>
         <text name="rms_tutorial_poor_parts_title" text="Некачественные запчасти"/>
         <text name="rms_tutorial_poor_parts_message" text="При ремонте на %s установили некачественную запчасть. Неисправность, вероятно, скоро повторится.&#10;&#10;Можно дождаться её возвращения или сразу провести полный осмотр, который надёжно выявит некачественную деталь."/>
         <text name="rms_tutorial_park_brake_title" text="Стояночный тормоз"/>

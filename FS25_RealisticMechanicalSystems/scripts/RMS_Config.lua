@@ -348,10 +348,13 @@ RMS_Config = {
             { effect = "HARVEST_POWER_DEMAND", system = "HARVEST", amplitude = 0.15, exponent = 3, aggregation = "sum",
                 combustion = { "FORAGE_KNIFE_WEAR", "SHEAR_BAR_WEAR" } },
         },
+        -- price: % of REPAIR_REFERENCE_VALUE
         RENEWAL_GROUPS = {
-            { "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" },
-            { "PISTONS", "PISTON_RINGS", "CYLINDER_LINERS", "MAIN_BEARINGS", "CONROD_BEARINGS",
-                "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" },
+            { key = "head", price = 0.8469,
+                parts = { "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" } },
+            { key = "engine", price = 1.509,
+                parts = { "PISTONS", "PISTON_RINGS", "CYLINDER_LINERS", "MAIN_BEARINGS", "CONROD_BEARINGS",
+                    "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" } },
         },
 
 
@@ -706,7 +709,7 @@ RMS_Config = {
         REPAIR_PRICE_MULTIPLIERS = {
             LOW    = 0.2,
             MEDIUM = 1.0,
-            HIGH   = 2.0,
+            HIGH   = 1.0,
         },
         OVERHAUL_PRICE_MULTIPLIERS = {
             STANDARD = 0.5,
