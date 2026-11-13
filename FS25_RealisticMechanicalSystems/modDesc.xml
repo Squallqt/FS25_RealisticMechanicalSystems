@@ -72,25 +72,25 @@ Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
 - Added engine remapping at the dealer
-- Added a Maintenance category to the shop's Objects, gathering the oils, coolants, grease cartridges and hand tools of RMS
-- Added engine oils by machine: an engine on AdBlue or with a particulate filter needs an oil made for them, and any other oil brings its oil change up to twice as early; each brand sells both, the cheaper one for machines without them: Motorex Farmer Pro or Farmer UNI 15W/40, Motul AGRI TEKNO LA or AGRI TEKNO 15W-40, FUCHS Agrifarm MOT X-LA or MOT 15W-40
-- Added ash in the particulate filter: the engine oil leaves ash that regenerations do not burn, so they come more and more often; after about 46 hours (5,500 hours of real work, sooner on an unsuited oil) the full filter holds the engine back until the workshop removes and cleans it
-- Added preventive replacement: a worn part found by the last complete inspection can be picked in the Diagnostic and Estimate page like a fault, and the repair replaces it, with or without a fault to repair
-- Reworked wear and breakdowns: a new machine rarely fails, an old or mistreated one far more often, and overheating or a starter used without rest break the part
-- Reworked low fluid levels: under the MIN mark the pump draws air on slopes, the oil pressure light flickers and each minute of it damages the bearings or the pump; the pre-shift check names the low fluid and no longer asks to clean the radiator when only the air filter is dirty
-- Reworked the warranty: a covered fault is repaired at the workshop as a Standard repair with original parts, a fault caused by misuse or on a part fitted aftermarket or used is refused, and the quote shows for each part what the player pays and why the warranty refuses it
-- Reworked part quality: the cards show the wear of a used part, the machine it was taken from and the factory warranty kept or lost, a cheap maintenance can fit a defective filter that wears its circuit until it is changed
-- Reworked repair methods: a Standard repair replaces the failed part and what its fault damaged, an Advanced repair also rebuilds the engine or the cylinder head and replaces the worn parts around it, at the price of those parts, and is greyed out when it would replace nothing more; a Temporary repair fits no part
-- Reworked the quote: the Diagnostic and Estimate, Procedures and Technical Record pages show the same detailed quote, with the labour hours, each part replaced, the warranty and what it pays, the price below it, a flat rate the work it covers; the diagnostic also lists the worn parts found by the last complete inspection
-- Reworked greasing: only real work counts, machines due for greasing show in the fleet alerts, self-propelled balers and wood chippers, MacDon headers and onion planters are greased, and flatbed trailers sold among the bale loaders are no longer greased as bale loaders
-- Reworked starting: a machine with a flat battery can now start on the charger's starting aid or on jumper cables, its voltmeter showing the voltage it receives, and other players in multiplayer hear a hard start as the driver does
-- Reworked the battery trolley: it now stands on its own brakes instead of being locked to the ground, and entering it no longer causes an error with some driving mods
-- Reworked the harvesting parts of self-propelled harvesters: their wear follows the crop taken in, an overload lights the warning and slows AI workers, a broken straw chopper no longer stops the harvest, and the integration with Realistic Harvesting now takes effect
-- Improved the workshop counts: the summary shows the maintenances done, and a cancelled overhaul no longer counts as done in the workshop or on the fleet page
-- Fixed a parked machine left running shutting off on its own after a few minutes when the player is far away
-- Fixed AI workers and Courseplay pushing at full throttle against an obstacle they cannot get past: after 20 seconds without moving they stop and the game reports them blocked
-- Fixed the engine temperature jumping up when getting back into a machine left running, with some dashboard mods installed
-- Removed the jobs chained at the workshop: once a job is done, order the repair or the overdue maintenance from its results
+- Added a Maintenance shop category for the RMS oils, coolants, grease and hand tools
+- Added engine oils by machine from Motorex, Motul and FUCHS: an engine with AdBlue or a particulate filter needs an oil made for it, or its oil change comes up to twice as early
+- Added ash in the particulate filter: regenerations come more and more often, until the full filter holds the engine back and needs a workshop cleaning
+- Added preventive replacement of the worn parts found by the last complete inspection
+- Reworked wear and breakdowns: new machines rarely fail, old or mistreated ones far more often, and overheating, a starter held too long or a PTO shaft bent too far breaks the part
+- Reworked low fluid levels: below the MIN mark, slopes make the pump draw air, flicker the oil light and damage bearings or pumps; the pre-shift check names the low fluid and no longer mistakes a dirty air filter for the radiator
+- Reworked the warranty: covered faults are repaired as Standard with original parts, misuse and aftermarket or used parts are refused, and the quote shows why
+- Reworked part quality: the cards show a used part's wear, origin and factory warranty, and a cheap maintenance can fit a defective filter
+- Reworked repair methods: Standard replaces the failed part and what it damaged, Advanced also rebuilds the engine or cylinder head with the worn parts around it, Temporary fits no part
+- Reworked the quote: the same detailed quote on every workshop page, with labour, parts, warranty and the worn parts found by the last inspection
+- Reworked greasing: only real work counts, machines due show in the fleet alerts, self-propelled balers, wood chippers, MacDon headers and onion planters are greased, and flatbed trailers no longer as bale loaders
+- Reworked starting: a flat battery can start on the charger's starting aid or on jumper cables, and other players hear a hard start in multiplayer
+- Reworked the battery trolley: it stands on its own brakes, and entering it no longer causes an error with some driving mods
+- Reworked the harvesting parts of self-propelled harvesters: wear follows the crop taken in, an overload lights the warning and slows AI workers, a broken straw chopper no longer stops the harvest, and Realistic Harvesting now takes effect
+- Improved the workshop counts: the summary shows the maintenances done, and a cancelled overhaul no longer counts as done
+- Fixed a machine left running shutting off on its own when the player is far away
+- Fixed AI workers and Courseplay pushing against an obstacle: after 20 seconds without moving they stop as blocked
+- Fixed the engine temperature jumping when getting back into a running machine with some dashboard mods
+- Removed the jobs chained at the workshop: order the repair or overdue maintenance from a job's results
 
 Changelog 1.0.0.0-beta.1:
 - Reworked machine production years and their period equipment
@@ -357,25 +357,25 @@ Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
 - Motoroptimierung beim Händler hinzugefügt
-- Kategorie Wartung bei den Objekten des Shops hinzugefügt, die Öle, Kühlmittel, Fettkartuschen und Handwerkzeuge von RMS zusammenfasst
-- Motoröle je nach Maschine hinzugefügt: Ein Motor mit AdBlue oder Partikelfilter braucht ein dafür ausgelegtes Öl, mit jedem anderen wird sein Ölwechsel bis zu doppelt so früh fällig; jede Marke führt beide, das günstigere für Maschinen ohne beides: Motorex Farmer Pro oder Farmer UNI 15W/40, Motul AGRI TEKNO LA oder AGRI TEKNO 15W-40, FUCHS Agrifarm MOT X-LA oder MOT 15W-40
-- Asche im Partikelfilter hinzugefügt: Das Motoröl hinterlässt Asche, die keine Regeneration verbrennt, sodass diese immer öfter kommen; nach etwa 46 Stunden (5.500 echte Arbeitsstunden, mit einem ungeeigneten Öl früher) bremst der volle Filter den Motor, bis die Werkstatt ihn ausbaut und reinigt
-- Vorbeugender Austausch hinzugefügt: Ein von der letzten vollständigen Inspektion gefundenes verschlissenes Teil lässt sich auf der Seite Diagnose und Kostenvoranschlag wie ein Schaden auswählen, und die Reparatur ersetzt es, mit oder ohne zu behebenden Schaden
-- Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung oder ein Anlasser ohne Ruhepause beschädigen das Teil
-- Niedrige Flüssigkeitsstände überarbeitet: Unter der MIN-Markierung saugt die Pumpe an Hängen Luft, die Öldruckleuchte flackert und jede Minute davon schädigt die Lager oder die Pumpe; die Kontrolle vor Schichtbeginn nennt die niedrige Flüssigkeit und verlangt keine Kühlerreinigung mehr, wenn nur der Luftfilter verschmutzt ist
-- Garantie überarbeitet: Ein gedeckter Schaden wird in der Werkstatt als Standard-Reparatur mit Originalteilen behoben, ein Schaden durch Fehlbedienung oder an einem eingebauten Nachbau- oder Gebrauchtteil wird abgelehnt, und der Kostenvoranschlag zeigt für jedes Teil, was der Spieler zahlt und warum die Garantie es ablehnt
-- Teilequalität überarbeitet: Die Karten zeigen den Verschleiß eines Gebrauchtteils, die Maschine, aus der es ausgebaut wurde, und ob die Werksgarantie bleibt, eine günstige Wartung kann einen defekten Filter einbauen, der seinen Kreislauf bis zum Wechsel verschleißt
-- Reparaturarten überarbeitet: Eine Standard-Reparatur ersetzt das defekte Teil und das, was der Schaden beschädigt hat, eine gründliche Reparatur setzt zusätzlich den Motor oder den Zylinderkopf instand und ersetzt die verschlissenen Teile daneben, zum Preis dieser Teile, und ist ausgegraut, wenn sie nichts weiter ersetzen würde; eine Behelfsreparatur baut kein Teil ein
-- Kostenvoranschlag überarbeitet: Die Seiten Diagnose und Kostenvoranschlag, Vorgänge und Technische Akte zeigen denselben ausführlichen Kostenvoranschlag mit den Arbeitsstunden, jedem ersetzten Teil, der Garantie und dem, was sie übernimmt, den Preis darunter, eine Pauschale die Arbeit, die sie umfasst; die Diagnose listet außerdem die verschlissenen Teile der letzten vollständigen Inspektion
-- Abschmieren überarbeitet: Nur echte Arbeit zählt, abzuschmierende Maschinen erscheinen in den Warnungen der Fuhrpark-Seite, selbstfahrende Pressen und Holzhacker, MacDon-Schneidwerke und Zwiebelpflanzmaschinen werden abgeschmiert, und Plattformanhänger aus der Kategorie Ballenlader werden nicht mehr wie Ballenlader abgeschmiert
-- Starten überarbeitet: Eine Maschine mit leerer Batterie kann nun mit der Starthilfe des Ladegeräts oder mit Starthilfekabeln starten, ihr Voltmeter zeigt die Spannung, die sie erhält, und andere Spieler im Mehrspielermodus hören einen schweren Start wie der Fahrer
-- Batteriewagen überarbeitet: Er steht nun auf seinen eigenen Bremsen, statt am Boden fixiert zu sein, und das Einsteigen mit einigen Fahr-Mods verursacht keinen Fehler mehr
-- Ernteorgane selbstfahrender Erntemaschinen überarbeitet: Ihr Verschleiß folgt dem aufgenommenen Erntegut, eine Überlastung schaltet die Warnung ein und bremst KI-Helfer, ein defekter Strohhäcksler stoppt die Ernte nicht mehr, und die Integration mit Realistic Harvesting wirkt jetzt
-- Werkstattzählungen verbessert: Die Übersicht zeigt die durchgeführten Wartungen, und eine abgebrochene Überholung zählt in der Werkstatt und auf der Fuhrpark-Seite nicht mehr als durchgeführt
-- Selbstständiges Abschalten einer laufend abgestellten Maschine nach einigen Minuten, wenn der Spieler weit entfernt ist, behoben
-- Fehler behoben, durch den KI-Helfer und Courseplay mit Vollgas gegen ein Hindernis drückten, an dem sie nicht vorbeikommen: Nach 20 Sekunden ohne Bewegung halten sie an, und das Spiel meldet sie als blockiert
-- Motortemperatur behoben, die beim Wiedereinsteigen in eine laufend abgestellte Maschine mit manchen Armaturenbrett-Mods hochsprang
-- Angeschlossene Werkstattarbeiten entfernt: Nach Abschluss einer Arbeit werden die Reparatur oder die überfällige Wartung anhand ihrer Ergebnisse beauftragt
+- Shop-Kategorie Wartung für Öle, Kühlmittel, Fett und Handwerkzeuge von RMS hinzugefügt
+- Motoröle je nach Maschine von Motorex, Motul und FUCHS hinzugefügt: Ein Motor mit AdBlue oder Partikelfilter braucht ein dafür ausgelegtes Öl, sonst wird sein Ölwechsel bis zu doppelt so früh fällig
+- Asche im Partikelfilter hinzugefügt: Regenerationen kommen immer öfter, bis der volle Filter den Motor bremst und in der Werkstatt gereinigt werden muss
+- Vorbeugender Austausch der bei der letzten vollständigen Inspektion gefundenen verschlissenen Teile hinzugefügt
+- Verschleiß und Defekte überarbeitet: Neue Maschinen fallen selten aus, alte oder schlecht behandelte weit häufiger, und Überhitzung, ein zu lange betätigter Anlasser oder eine zu stark abgewinkelte Gelenkwelle beschädigen das Teil
+- Niedrige Flüssigkeitsstände überarbeitet: Unter MIN saugt die Pumpe an Hängen Luft, die Öldruckleuchte flackert und Lager oder Pumpen nehmen Schaden; die Kontrolle vor Schichtbeginn nennt die niedrige Flüssigkeit und verwechselt einen verschmutzten Luftfilter nicht mehr mit dem Kühler
+- Garantie überarbeitet: Gedeckte Schäden werden als Standard-Reparatur mit Originalteilen behoben, Fehlbedienung sowie Nachbau- oder Gebrauchtteile werden abgelehnt, und der Kostenvoranschlag zeigt warum
+- Teilequalität überarbeitet: Die Karten zeigen Verschleiß, Herkunft und Werksgarantie eines Gebrauchtteils, und eine günstige Wartung kann einen defekten Filter einbauen
+- Reparaturarten überarbeitet: Standard ersetzt das defekte Teil und was es beschädigt hat, Gründlich setzt zusätzlich Motor oder Zylinderkopf samt der verschlissenen Teile daneben instand, die Behelfsreparatur baut kein Teil ein
+- Kostenvoranschlag überarbeitet: Derselbe ausführliche Kostenvoranschlag auf allen Werkstattseiten, mit Arbeitszeit, Teilen, Garantie und den bei der letzten Inspektion gefundenen verschlissenen Teilen
+- Abschmieren überarbeitet: Nur echte Arbeit zählt, fällige Maschinen erscheinen in den Fuhrpark-Warnungen, selbstfahrende Pressen, Holzhacker, MacDon-Schneidwerke und Zwiebelpflanzmaschinen werden abgeschmiert, und Plattformanhänger nicht mehr wie Ballenlader
+- Starten überarbeitet: Eine leere Batterie kann mit der Starthilfe des Ladegeräts oder mit Starthilfekabeln starten, und andere Spieler hören einen schweren Start im Mehrspielermodus
+- Batteriewagen überarbeitet: Er steht auf seinen eigenen Bremsen, und das Einsteigen mit einigen Fahr-Mods verursacht keinen Fehler mehr
+- Ernteorgane selbstfahrender Erntemaschinen überarbeitet: Der Verschleiß folgt dem aufgenommenen Erntegut, eine Überlastung schaltet die Warnung ein und bremst KI-Helfer, ein defekter Strohhäcksler stoppt die Ernte nicht mehr, und Realistic Harvesting wirkt jetzt
+- Werkstattzählungen verbessert: Die Übersicht zeigt die durchgeführten Wartungen, und eine abgebrochene Überholung zählt nicht mehr als durchgeführt
+- Selbstständiges Abschalten einer laufend abgestellten Maschine, wenn der Spieler weit entfernt ist, behoben
+- KI-Helfer und Courseplay, die gegen ein Hindernis drückten, behoben: Nach 20 Sekunden ohne Bewegung halten sie als blockiert an
+- Hochspringende Motortemperatur beim Wiedereinsteigen in eine laufende Maschine mit manchen Armaturenbrett-Mods behoben
+- Angeschlossene Werkstattarbeiten entfernt: Reparatur oder überfällige Wartung werden aus den Ergebnissen einer Arbeit beauftragt
 
 Changelog 1.0.0.0-beta.1:
 - Baujahre der Maschinen und ihre zeitgemäße Ausstattung überarbeitet
@@ -642,25 +642,25 @@ Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSyste
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
 - Ajout de la reprogrammation moteur chez le concessionnaire
-- Ajout d'une catégorie Entretien parmi les Objets du magasin, qui réunit les huiles, liquides de refroidissement, cartouches de graisse et outils à main de RMS
-- Ajout des huiles moteur selon la machine : un moteur à AdBlue ou à filtre à particules demande une huile faite pour eux, et toute autre huile fait revenir sa vidange jusqu'à deux fois plus tôt ; chaque marque vend les deux, la moins chère pour les machines qui n'en ont pas : Motorex Farmer Pro ou Farmer UNI 15W/40, Motul AGRI TEKNO LA ou AGRI TEKNO 15W-40, FUCHS Agrifarm MOT X-LA ou MOT 15W-40
-- Ajout des cendres dans le filtre à particules : l'huile moteur laisse des cendres qu'aucune régénération ne brûle, si bien qu'elles reviennent de plus en plus souvent ; après environ 46 heures (5 500 heures de vrai travail, plus tôt avec une huile non adaptée), le filtre plein bride le moteur jusqu'à ce que l'atelier le dépose et le nettoie
-- Ajout du remplacement préventif : une pièce usée relevée par la dernière inspection complète se choisit sur la page Diagnostic et devis comme une panne, et la réparation la remplace, avec ou sans panne à réparer
-- Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une machine vieille ou malmenée bien plus souvent, et la surchauffe ou un démarreur sans repos cassent la pièce
-- Refonte des niveaux bas : sous le repère MIN, la pompe aspire de l'air dans les pentes, le voyant de pression d'huile clignote et chaque minute ainsi abîme les coussinets ou la pompe ; le contrôle avant prise de poste nomme le fluide bas et ne demande plus de nettoyer le radiateur quand seul le filtre à air est encrassé
-- Refonte de la garantie : une panne couverte est réparée à l'atelier en Standard, pièces d'origine, une panne due à un mauvais usage ou sur une pièce posée adaptable ou d'occasion est refusée, et le devis indique pour chaque pièce ce que le joueur paie et pourquoi la garantie la refuse
-- Refonte de la qualité des pièces : les cartes montrent l'usure d'une pièce d'occasion, la machine d'où elle est démontée et la garantie usine gardée ou perdue, un entretien bon marché peut poser un filtre défectueux qui use son circuit jusqu'à son changement
-- Refonte des méthodes de réparation : une réparation Standard remplace la pièce en panne et ce que la panne a abîmé, une réparation Approfondie refait en plus le moteur ou la culasse et remplace les pièces usées autour, au prix de ces pièces, et se grise quand elle ne remplacerait rien de plus ; une réparation de fortune ne pose aucune pièce
-- Refonte du devis : les pages Diagnostic et devis, Interventions et Dossier technique montrent le même devis détaillé, avec les heures de main-d'œuvre, chaque pièce remplacée, la garantie et ce qu'elle paie, le prix dessous, un forfait le travail qu'il comprend ; le diagnostic liste aussi les pièces usées relevées par la dernière inspection complète
-- Refonte du graissage : seul un vrai travail compte, les machines à graisser figurent dans les alertes du parc de matériel, les presses et broyeurs automoteurs, les barres de coupe MacDon et les planteuses d'oignons se graissent, et les plateaux vendus parmi les ramasseuses de balles ne sont plus graissés comme elles
-- Refonte du démarrage : une machine à la batterie à plat peut désormais démarrer avec l'aide au démarrage du chargeur ou les câbles de démarrage, son voltmètre affichant la tension qu'elle reçoit, et les autres joueurs en multijoueur entendent un démarrage difficile comme le conducteur
-- Refonte du chariot de batterie : il tient désormais sur ses propres freins au lieu d'être bloqué au sol, et monter dedans avec certains mods de conduite ne provoque plus d'erreur
-- Refonte des organes de récolte des automotrices : leur usure suit la récolte avalée, une surcharge allume le voyant et ralentit les ouvriers, un broyeur cassé n'arrête plus la récolte, et l'intégration avec Realistic Harvesting agit désormais
-- Amélioration des comptes de l'atelier : la synthèse indique les entretiens effectués, et une révision annulée ne compte plus comme effectuée à l'atelier ni dans le parc de matériel
-- Correction d'une machine garée moteur en marche qui s'arrêtait seule au bout de quelques minutes quand le joueur est loin
-- Correction des ouvriers IA et de Courseplay qui forçaient à plein régime contre un obstacle infranchissable : après 20 secondes sans avancer, ils s'arrêtent et le jeu les signale bloqués
-- Correction de la température du moteur qui bondissait en remontant dans une machine laissée en marche, avec certains mods de tableau de bord
-- Suppression des travaux enchaînés à l'atelier : une fois l'intervention terminée, la réparation ou l'entretien en retard se commande d'après ses résultats
+- Ajout d'une catégorie Entretien au magasin pour les huiles, liquides de refroidissement, graisses et outils à main de RMS
+- Ajout des huiles moteur selon la machine, chez Motorex, Motul et FUCHS : un moteur à AdBlue ou à filtre à particules demande une huile faite pour lui, sinon sa vidange revient jusqu'à deux fois plus tôt
+- Ajout des cendres dans le filtre à particules : les régénérations reviennent de plus en plus souvent, jusqu'à ce que le filtre plein bride le moteur et doive être nettoyé à l'atelier
+- Ajout du remplacement préventif des pièces usées relevées par la dernière inspection complète
+- Refonte de l'usure et des pannes : une machine neuve tombe rarement en panne, une vieille ou malmenée bien plus souvent, et la surchauffe, un démarreur tenu trop longtemps ou un cardan trop plié cassent la pièce
+- Refonte des niveaux bas : sous le MIN, la pompe aspire de l'air dans les pentes, le voyant d'huile clignote et coussinets ou pompes s'abîment ; le contrôle avant prise de poste nomme le fluide bas et ne confond plus filtre à air et radiateur
+- Refonte de la garantie : une panne couverte est réparée en Standard avec des pièces d'origine, un mauvais usage et les pièces adaptables ou d'occasion sont refusés, et le devis dit pourquoi
+- Refonte de la qualité des pièces : les cartes montrent l'usure, la provenance et la garantie usine d'une pièce d'occasion, et un entretien bon marché peut poser un filtre défectueux
+- Refonte des méthodes de réparation : Standard remplace la pièce en panne et ce qu'elle a abîmé, Approfondie refait en plus le moteur ou la culasse avec les pièces usées autour, la réparation de fortune ne pose aucune pièce
+- Refonte du devis : le même devis détaillé sur toutes les pages de l'atelier, avec main-d'œuvre, pièces, garantie et pièces usées relevées par la dernière inspection
+- Refonte du graissage : seul un vrai travail compte, les machines à graisser figurent dans les alertes du parc, les presses et broyeurs automoteurs, les barres de coupe MacDon et les planteuses d'oignons se graissent, et les plateaux ne sont plus graissés comme des ramasseuses de balles
+- Refonte du démarrage : une batterie à plat peut démarrer avec l'aide au démarrage du chargeur ou les câbles, et les autres joueurs entendent un démarrage difficile en multijoueur
+- Refonte du chariot de batterie : il tient sur ses propres freins, et y monter avec certains mods de conduite ne provoque plus d'erreur
+- Refonte des organes de récolte des automotrices : leur usure suit la récolte avalée, une surcharge allume le voyant et ralentit les ouvriers, un broyeur cassé n'arrête plus la récolte, et Realistic Harvesting agit désormais
+- Amélioration des comptes de l'atelier : la synthèse indique les entretiens effectués, et une révision annulée ne compte plus comme effectuée
+- Correction d'une machine laissée moteur en marche qui s'arrêtait seule quand le joueur est loin
+- Correction des ouvriers IA et de Courseplay qui forçaient contre un obstacle : après 20 secondes sans avancer, ils s'arrêtent, signalés bloqués
+- Correction de la température moteur qui bondissait en remontant dans une machine en marche, avec certains mods de tableau de bord
+- Suppression des travaux enchaînés à l'atelier : la réparation ou l'entretien en retard se commande d'après les résultats de l'intervention
 
 Changelog 1.0.0.0-beta.1 :
 - Refonte des années des machines et de leurs équipements d'époque

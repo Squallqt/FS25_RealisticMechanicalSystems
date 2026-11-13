@@ -585,9 +585,8 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         if utilization > C.LOAD_FACTOR_THRESHOLD then
             addCause(wear, "ptoLoadFactor", RMS_Utils.calculatePtoLoadFactor(utilization, C))
         end
-        local angle = math.min(spec.ptoShaftAngle or 0, C.SHAFT_ANGLE_WEAR_MAX)
-        if angle > C.SHAFT_ANGLE_REFERENCE then
-            addCause(wear, "ptoRaisedFactor", C.SHAFT_ANGLE_LIFE_FACTOR ^ ((angle - C.SHAFT_ANGLE_REFERENCE) / 10) - 1)
+        if spec.ptoShaftWear > 0 then
+            addCause(wear, "ptoRaisedFactor", spec.ptoShaftWear)
         end
         addCause(wear, "expiredServiceFactor", getExpiredServiceFactor(self, "pto", C))
     end
@@ -1087,8 +1086,8 @@ local DIRECT_FAILURES = {
     { partId = "HYDRAULIC_PUMP_MALFUNCTION", abuse = "heat", levels = "HYDRAULIC_HEAT", read = getHydraulicOilTemperature },
     { partId = "STARTER_FAILURE", abuse = "starter", levels = "STARTER_CRANKING", whileCranking = true,
         read = function(spec) return spec.crankingSeconds end },
-    { partId = "PTO_OUTPUT_SHAFT_FAILURE", abuse = "pto_angle", read = function(spec) return spec.ptoShaftAngle or 0 end,
-        getLevels = function(_, spec) return getHeatLevels(spec.isPtoImplementRaised and "PTO_SHAFT_ANGLE_TURNING" or "PTO_SHAFT_ANGLE") end },
+    { partId = "PTO_OUTPUT_SHAFT_FAILURE", abuse = "pto_angle", read = function(spec) return spec.ptoShaftAngle end,
+        getLevels = function(_, spec) return spec.ptoShaftLimit, RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.release end },
 }
 
 ---Fails a part one stage for each span of air its pump has drawn

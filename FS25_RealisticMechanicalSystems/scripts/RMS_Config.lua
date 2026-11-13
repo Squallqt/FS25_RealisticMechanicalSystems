@@ -120,12 +120,15 @@ RMS_Config = {
             LOAD_FACTOR_MULTIPLIER = 2.9,
             OVERLOAD_FACTOR_FULL_EFFECT = 1.20,
             OVERLOAD_FACTOR_MULTIPLIER = 6.1,
-            -- deg
+            -- deg per cross the maker rates its life at
             SHAFT_ANGLE_REFERENCE = 5,
-            -- per 10 deg
-            SHAFT_ANGLE_LIFE_FACTOR = 300 / 90,
-            -- deg
-            SHAFT_ANGLE_WEAR_MAX = 25,
+            -- deg, life coefficient of a cross
+            SHAFT_CROSS_LIFE = { { 3, 422 }, { 5, 300 }, { 7, 221 }, { 10, 150 }, { 12, 121 },
+                { 15, 90 }, { 17, 74 }, { 20, 53 }, { 22, 41 }, { 25, 27 } },
+            -- life of a cross against the torque it carries
+            SHAFT_TORQUE_EXPONENT = 3,
+            -- shafts of the game drawn wide-angle at both ends
+            SHAFT_WIDE_BOTH_ENDS = { walterscheidWWZ = true, walterscheidW_SC25 = true },
             RAISED_TUTORIAL_MS = 20000,
             ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
             ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
@@ -248,6 +251,8 @@ RMS_Config = {
             PTO_SHAFT_ANGLE = { limit = 35, release = 25 },
             -- joint deg turning without work
             PTO_SHAFT_ANGLE_TURNING = { limit = 45, release = 25 },
+            -- joint deg of a wide-angle joint
+            PTO_SHAFT_ANGLE_WIDE = { limit = 80, release = 25 },
             -- s cranked; rest: s that clear them
             STARTER_CRANKING = { limit = 30, release = 0, rest = 120 },
         },

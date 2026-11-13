@@ -811,6 +811,8 @@ local function updatePtoState(vehicle)
         spec.ptoUtilization = 0
         spec.isPtoImplementRaised = false
         spec.ptoShaftAngle = 0
+        spec.ptoShaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit
+        spec.ptoShaftWear = 0
         if type(spec.ptoPreviousActiveLinks) ~= "table" or next(spec.ptoPreviousActiveLinks) ~= nil then
             spec.ptoPreviousActiveLinks = {}
         end
@@ -840,7 +842,10 @@ local function updatePtoState(vehicle)
     end
     spec.ptoPreviousActiveLinks = ptoData.activeLinks
     spec.isPtoImplementRaised = ptoData.isRaised
-    spec.ptoShaftAngle = vehicle:getIsAIActive() and 0 or ptoData.shaftAngle
+    local isAIActive = vehicle:getIsAIActive()
+    spec.ptoShaftAngle = isAIActive and 0 or ptoData.shaftAngle
+    spec.ptoShaftLimit = ptoData.shaftLimit
+    spec.ptoShaftWear = isAIActive and 0 or ptoData.shaftWear
 
     spec.ptoLastRpmShare = RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
 end

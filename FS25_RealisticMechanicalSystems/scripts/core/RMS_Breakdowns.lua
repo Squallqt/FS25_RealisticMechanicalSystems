@@ -1984,6 +1984,24 @@ TurnOnVehicle.actionEventTurnOnAll = Utils.overwrittenFunction(TurnOnVehicle.act
 TurnOnVehicle.actionControllerTurnOnEvent = Utils.overwrittenFunction(TurnOnVehicle.actionControllerTurnOnEvent,
     RMS_Breakdowns.actionControllerTurnOnEvent)
 
+---Keeps the shaft file of the game, which names its joints
+function RMS_Breakdowns.loadPowerTakeOffFromConfigFile(vehicle, superFunc, powerTakeOff, xmlFilename)
+    powerTakeOff.rmsShaftModel = tostring(xmlFilename):match("([^/\\]+)%.xml$")
+    return superFunc(vehicle, powerTakeOff, xmlFilename)
+end
+
+---Forgets the working position of a shaft coupled again
+function RMS_Breakdowns.attachPowerTakeOff(vehicle, superFunc, attachableObject, inputJointDescIndex, jointDescIndex)
+    for _, output in ipairs(vehicle:getOutputPowerTakeOffsByJointDescIndex(jointDescIndex)) do
+        output.rmsShaft = nil
+    end
+    return superFunc(vehicle, attachableObject, inputJointDescIndex, jointDescIndex)
+end
+
+PowerTakeOffs.loadPowerTakeOffFromConfigFile = Utils.overwrittenFunction(PowerTakeOffs.loadPowerTakeOffFromConfigFile,
+    RMS_Breakdowns.loadPowerTakeOffFromConfigFile)
+PowerTakeOffs.attachPowerTakeOff = Utils.overwrittenFunction(PowerTakeOffs.attachPowerTakeOff, RMS_Breakdowns.attachPowerTakeOff)
+
 ---Blocks the AI helper from starting a vehicle whose engine cannot run
 function RMS_Breakdowns.getCanStartAIVehicle(self, superFunc, ...)
     if not superFunc(self, ...) then

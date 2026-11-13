@@ -122,7 +122,8 @@ local CAUSES = {
     idfg = {"Sudden damage", "damage", function() return "" end},
     plf = {"PTO load", "PTO load", function(_, spec) return pct(spec.ptoUtilization) .. " of its power" end},
     pef = {"PTO engagements", "engagements", function(_, spec) return string.format("%d engagements", spec.ptoEngagementCount) end},
-    prf = {"PTO shaft angle", "shaft angle", function(_, spec) return string.format("%.0f deg at the joint", spec.ptoShaftAngle or 0) end},
+    prf = {"PTO shaft angle", "shaft angle", function(_, spec)
+        return string.format("%.0f of %.0f deg at the joint", spec.ptoShaftAngle, spec.ptoShaftLimit) end},
     hef = {"Harvest overload", "overload", function(f) return "effort " .. pct(f.harvestEffort) end},
     hgf = {"Grain flow", "grain flow", function(f) return "flow " .. pct(f.harvestGrain) end},
     hsf = {"Chopper load", "chopper", function(f) return "load " .. pct(f.harvestChopper) end},

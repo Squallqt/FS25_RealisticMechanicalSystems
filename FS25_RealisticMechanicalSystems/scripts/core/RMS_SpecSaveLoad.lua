@@ -577,6 +577,9 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.isPtoEngagementShock = false
     self.spec_RealisticMechanicalSystems.ptoLastRpmShare = 0
     self.spec_RealisticMechanicalSystems.isPtoImplementRaised = false
+    self.spec_RealisticMechanicalSystems.ptoShaftAngle = 0
+    self.spec_RealisticMechanicalSystems.ptoShaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit
+    self.spec_RealisticMechanicalSystems.ptoShaftWear = 0
     self.spec_RealisticMechanicalSystems.ptoShockSequence = 0
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedShockSequence = 0
     self.spec_RealisticMechanicalSystems.ptoRaisedTutorialTimer = 0
