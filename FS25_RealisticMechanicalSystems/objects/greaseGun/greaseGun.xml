@@ -1,5 +1,5 @@
 <handTool type="greaseGun" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
-    <annotation>SKF LAGH 400 one-hand grease gun, 370 mm, 1.28 kg, with its 300 mm flexible hose.</annotation>
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
     <storeData>
         <name>$l10n_rms_grease_gun_name</name>
         <functions>

@@ -33,6 +33,8 @@ WORKSHOP
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
 - A complete inspection can reveal hidden faults, defective repair parts and a defective filter, and shows exact condition values; some faults can remain undetected
+- A worn part found by a complete inspection can be replaced before it fails, picked in the quote like a fault
+- The fleet page shows the tractor power each implement needs
 
 DAILY CARE
 - Telwin Doctor Charge 155 Connect on a trolley: connect it near a vehicle to charge its battery at the current it accepts, or for starting aid (START); charging follows the game's time speed and resumes when the save is loaded
@@ -318,6 +320,8 @@ WERKSTATT
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Inspektion, Wartung und Reparatur, Neulackierung, Überholung oder Motoroptimierung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
 - Eine vollständige Inspektion kann verborgene Fehler, defekte Reparaturteile und einen defekten Filter aufdecken und zeigt exakte Zustandswerte; manche Defekte können unentdeckt bleiben
+- Ein bei einer vollständigen Inspektion gefundenes verschlissenes Teil lässt sich vor dem Ausfall ersetzen und wird im Kostenvoranschlag wie ein Schaden gewählt
+- Die Fuhrpark-Seite zeigt die Traktorleistung, die jedes Gerät braucht
 
 TÄGLICHE PFLEGE
 - Telwin Doctor Charge 155 Connect auf einem Wagen: neben einem Fahrzeug anschließen, um seine Batterie mit dem Strom zu laden, den sie aufnimmt, oder für die Starthilfe (START); das Laden folgt der Zeitgeschwindigkeit im Spiel und wird beim Laden des Spielstands fortgesetzt
@@ -603,6 +607,8 @@ ATELIER
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément les inspections, l'entretien et les réparations, la peinture, les révisions ou la reprogrammation moteur
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
 - Une inspection complète peut révéler les pannes cachées, les pièces de réparation défectueuses et un filtre défectueux, et donne les valeurs exactes ; certaines pannes peuvent rester indétectées
+- Une pièce usée relevée par une inspection complète peut être remplacée avant de lâcher, choisie dans le devis comme une panne
+- Le parc de matériel indique la puissance de tracteur dont chaque outil a besoin
 
 ENTRETIEN QUOTIDIEN
 - Telwin Doctor Charge 155 Connect sur chariot : branchez-le près d'un véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START) ; la recharge suit la vitesse du temps de la partie et reprend au chargement de la sauvegarde

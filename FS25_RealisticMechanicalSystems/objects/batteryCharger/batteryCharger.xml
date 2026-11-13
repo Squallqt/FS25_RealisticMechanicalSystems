@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <vehicle type="rmsBatteryCharger">
-    <annotation>TELWIN Doctor Charge 155 Connect with Diagnostic trolley. Rated 12 V charging current: 150 A.</annotation>
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
     <storeData>
         <name>$l10n_rms_charger_name</name>
         <functions>
