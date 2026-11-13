@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Eljárás kiválasztása"/>
         <text name="rms_ws_section_work_order" text="Munkalap"/>
         <text name="rms_ws_section_recap" text="Áttekintés"/>
-        <text name="rms_ws_section_parts" text="Érintett alkatrészek"/>
         <text name="rms_ws_section_history" text="Előzmények"/>
         <text name="rms_ws_label_last_check" text="Utolsó ellenőrzés"/>
         <text name="rms_ws_reading_outdated" text="Ellenőrizendő"/>
-        <text name="rms_ws_label_more_parts" text="+ %s további"/>
         <text name="rms_ws_label_committed_cost" text="Lekötött költség"/>
         <text name="rms_ws_label_finish_time" text="Befejezési idő"/>
         <text name="rms_ws_label_total_estimate" text="Becsült összeg"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Gyenge karbantarthatóság"/>
         <text name="rms_shop_launch_year" text="Modell bevezetése: %d"/>
         <text name="rms_shop_launch_year_unknown" text="Bevezetés éve ismeretlen"/>
+        <text name="rms_shop_category_maintenance" text="Karbantartás"/>
         <text name="rms_owner_care_careful" text="Gondos karbantartás"/>
         <text name="rms_owner_care_regular" text="Rendszeres karbantartás"/>
         <text name="rms_owner_care_neglected" text="Elhanyagolt karbantartás"/>
+        <text name="rms_ws_label_maintenance_count" text="Elvégzett karbantartások"/>
         <text name="rms_ws_label_overhaul_count" text="Elvégzett nagyjavítások"/>
         <text name="rms_ws_label_maintenance_log" text="Karbantartási napló"/>
         <text name="rms_ws_label_last_maintenance" text="Utolsó karbantartás"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Üzemóránkénti költség"/>
         <text name="rms_log_invoice_title" text="Számla részletei"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Műhelyátalány"/>
-        <text name="rms_log_invoice_labour" text="Munkadíj"/>
         <text name="rms_log_invoice_filters" text="Szűrők"/>
         <text name="rms_log_cancelled_desc" text="Eljárás megszakítva"/>
         <text name="rms_log_ownership_months_title" text="Tulajdonlás időtartama"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="A jármű új fényezést kapott"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Átlagos meghibásodási intervallum"/>
         <text name="rms_log_average_maintenance_interval_title" text="Átlagos karbantartási intervallum"/>
         <text name="rms_log_performed" text="Elvégzett eljárás: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Hővédelem: a teljesítménykorlátozás megszűnt"/>
         <text name="rms_breakdown_at_progress_message" text="folyamatban"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="A motor hideg! Csökkentsd a terhelést!"/>
+        <text name="rms_spec_cold_engine_message" text="A motor hideg! Amíg fel nem melegszik, kopik."/>
         <text name="rms_spec_overheat_engine_message" text="Figyelem! A motor túlmelegszik."/>
         <text name="rms_spec_overheat_transmission_message" text="Figyelem! A váltó túlmelegszik."/>
         <text name="rms_spec_overhaul_partial" text="Részleges"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="Ebben a hónapban"/>
         <text name="rms_spec_tomorrow_at" text="holnap ekkor: "/>
         <text name="rms_spec_never" text="Soha"/>
-        <text name="rms_spec_next_planned_service_notification" text="Ütemezett eljárás elindult: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Az ütemezett %s megszakítva: nincs elég pénz"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Az ütemezett %s nem indult el: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="holnapután ekkor: "/>
         <text name="rms_spec_day_s" text="nap"/>
         <text name="rms_spec_day_one" text="nap"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Fogyóanyagok minősége"/>
         <text name="rms_option_menu_option_two_title_repair" text="Pótalkatrészek minősége"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Nagyjavításra váró rendszer"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Ha az eljárás meghibásodásokat tár fel, automatikusan normál javítás következik eredeti alkatrészekkel."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="A javítás után automatikusan az ajánlott karbantartás következik eredeti fogyóanyagokkal."/>
         <text name="rms_option_menu_price_text" text="Ár"/>
-        <text name="rms_option_menu_perform_repair" text="Automatikus javítás"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatikus karbantartás"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garanciális javítás"/>
         <text name="rms_option_menu_lease_service_text" text="A lízing tartalmazza"/>
         <text name="rms_option_menu_duration_text" text="Időtartam"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Tartalmazza"/>
         <text name="rms_ws_levels_mechanical" text="Mechanikai"/>
         <text name="rms_ws_levels_every_level" text="Minden szinten: hűtőtisztítás és kenés."/>
-        <text name="rms_ws_quality_risk" text="Hibakockázat"/>
+        <text name="rms_ws_quality_part_wear" text="Alkatrész kopása"/>
+        <text name="rms_ws_quality_factory_kept" text="Gyári garancia megmarad"/>
+        <text name="rms_ws_quality_factory_lost" text="Gyári garancia megszűnik"/>
+        <text name="rms_ws_quality_filters_sound" text="Hibátlan szűrők"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Szűrő néha hibás"/>
+        <text name="rms_ws_quality_filter_often" text="Szűrő gyakrabban hibás"/>
         <text name="rms_ws_quality_reference" text="Referenciaár"/>
-        <text name="rms_ws_quality_donor" text="Forrásgép: %d h"/>
-        <text name="rms_ws_quality_donors" text="Forrásgépek: %d és %d h között"/>
+        <text name="rms_ws_quality_donor" text="Kiszerelve egy %d h-s gépből"/>
+        <text name="rms_ws_quality_donors" text="Kiszerelve %d–%d h-s gépekből"/>
         <text name="rms_ws_quality_new_part" text="Új alkatrész"/>
         <text name="rms_ws_quality_used_warranty" text="3 hónap garancia"/>
         <text name="rms_ws_quality_partial_warranty" text="Részleges garancia"/>
         <text name="rms_ws_quality_no_warranty" text="Nincs garancia"/>
         <text name="rms_ws_quality_oem_warranty" text="12 hónap garancia"/>
         <text name="rms_ws_quality_factory_warranty" text="Gyári garancia"/>
-        <text name="rms_warranty_used" text="Bontói garancia: csak az alkatrész"/>
+        <text name="rms_ws_quality_part_warranty" text="Garancia még %d hónap"/>
         <text name="rms_ws_quality_delta" text="%s az eredetihez"/>
         <text name="rms_ws_repair_row_faults" text="Kezelt meghibásodások"/>
         <text name="rms_ws_repair_row_faults_detail" text="A kijelöltek közül"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Hibás alkatrész"/>
         <text name="rms_ws_repair_row_part_detail" text="A meghibásodás oka"/>
         <text name="rms_ws_repair_part_replaced" text="Kicserélve"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Kopott alkatrészek"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Ugyanabban a rendszerben"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Kicserélve"/>
         <text name="rms_ws_repair_row_quality" text="Alkatrészminőség"/>
         <text name="rms_ws_repair_row_quality_detail" text="Az alábbi kártyákon választható"/>
         <text name="rms_ws_repair_quality_choice" text="Választható"/>
         <text name="rms_ws_warranty_title" text="Garancia"/>
+        <text name="rms_ws_quote_warranty_label" text="Garancia:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Gyári garancia:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Alkatrész-garancia:"/>
+        <text name="rms_ws_quote_warranty_covered" text="fedezi"/>
+        <text name="rms_ws_quote_warranty_used" text="csak az alkatrészt fedezi"/>
+        <text name="rms_ws_quote_warranty_expired" text="lejárt"/>
+        <text name="rms_ws_quote_warranty_own" text="saját műhelyben nem fedezett"/>
+        <text name="rms_ws_quote_warranty_lease" text="lízing esetén nem fedezett"/>
+        <text name="rms_ws_quote_warranty_remapped" text="elveszett, optimalizált motor"/>
+        <text name="rms_ws_quote_warranty_refused" text="elutasítva, %s"/>
         <text name="rms_ws_warranty_covered" text="Érvényes"/>
         <text name="rms_ws_warranty_not_covered" text="Nem érvényes"/>
         <text name="rms_ws_warranty_terms" text="Gyári: %d hónap vagy %s h"/>
+        <text name="rms_ws_warranty_refused" text="Elutasítva: %s"/>
         <text name="rms_ws_badge_warranty" text="Garancia"/>
         <text name="rms_warranty_base" text="%d hónap vagy %s h (az árban)"/>
         <text name="rms_warranty_extension" text="%d hónap vagy %s h"/>
         <text name="rms_warranty_partial" text="Részben fedezett"/>
         <text name="rms_warranty_own" text="Saját műhelyben nem fedezett"/>
-        <text name="rms_warranty_factory" text="Eredeti alkatrészek és munkadíj fedezve"/>
-        <text name="rms_warranty_part" text="Alkatrész fedezve a gép %d hónapos koráig"/>
+        <text name="rms_warranty_part" text="Alkatrész-garancia: még %d hónap"/>
         <text name="rms_warranty_lease" text="Lízing esetén a javítás nem fedezett"/>
-        <text name="rms_warranty_expired" text="Garancia lejárt"/>
-        <text name="rms_warranty_overdue" text="Elutasítva: elmaradt karbantartás"/>
-        <text name="rms_warranty_impact" text="Elutasítva: ütközési sérülés"/>
-        <text name="rms_warranty_options" text="Csere eredeti alkatrészekkel szükséges"/>
+        <text name="rms_warranty_overdue" text="elmaradt karbantartás"/>
+        <text name="rms_warranty_impact" text="ütközési sérülés"/>
         <text name="rms_warranty_mobile" text="Fizetendő: mobil műhely munkadíjtöbblete"/>
         <text name="rms_warranty_remapped" text="Garancia elveszett: optimalizált motor"/>
+        <text name="rms_warranty_heat" text="túlmelegedés"/>
+        <text name="rms_warranty_low_level" text="túl alacsony olajszint"/>
+        <text name="rms_warranty_fuel_dry" text="kiürített tartály"/>
+        <text name="rms_warranty_park_brake" text="behúzott rögzítőfék"/>
+        <text name="rms_warranty_pto_engagement" text="TLT bekapcsolási lökés"/>
+        <text name="rms_warranty_stones" text="felszívott kövek"/>
+        <text name="rms_warranty_starter" text="túlterhelt önindító"/>
+        <text name="rms_warranty_pto_angle" text="túl nagy kardántengely-szög"/>
+        <text name="rms_warranty_windup" text="zár vagy 4WD kemény talajon"/>
+        <text name="rms_warranty_filter" text="eltömődött szűrő"/>
+        <text name="rms_warranty_oil" text="nem megfelelő motorolaj"/>
+        <text name="rms_warranty_trailer" text="túl nehéz pótkocsi"/>
+        <text name="rms_warranty_aftermarket_part" text="utángyártott alkatrész"/>
+        <text name="rms_warranty_used_part" text="használt alkatrész"/>
+        <text name="rms_warranty_imposed" text="Normál javítás eredeti alkatrészekkel"/>
+        <text name="rms_warranty_partial_imposed" text="A fedezett hiba Normál javítással, eredeti alkatrészekkel"/>
         <text name="rms_ws_overhaul_row_systems" text="Kezelt rendszerek"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Rendbe hozva"/>
         <text name="rms_ws_overhaul_systems_one" text="Egy választható"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Értékelve"/>
         <text name="rms_ws_inspection_maintenance_note" text="A karbantartás is elvégzi ezt a hibakeresést, akárcsak a normál átvizsgálás."/>
         <text name="rms_ws_quote_title" text="Árajánlat részletei"/>
+        <text name="rms_ws_quote_empty_title" text="Itt jelenik meg az árajánlat"/>
+        <text name="rms_ws_quote_empty_text" text="Válassz egy beavatkozást a listából"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Egyelőre nincs árajánlat"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Válassz másik beavatkozást a listából"/>
+        <text name="rms_ws_repair_row_around" text="Környező alkatrészek"/>
+        <text name="rms_ws_repair_row_around_detail" text="Felújítás és kopott alkatrészek"/>
+        <text name="rms_ws_repair_around_count" text="%d cserélve"/>
+        <text name="rms_ws_repair_around_none" text="Nincs"/>
+        <text name="rms_ws_quote_labour" text="Munkadíj · %s ó"/>
+        <text name="rms_ws_quote_parts_fault" text="A hiba alkatrészei · %s"/>
+        <text name="rms_ws_quote_preventive" text="Megelőző csere · %s"/>
+        <text name="rms_ws_quote_supplies" text="Anyagok"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motorfelújítás · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Hengerfej-felújítás · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Kopott alkatrészek · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Gyári garancia"/>
+        <text name="rms_ws_quote_cover_part" text="Alkatrész-garancia"/>
+        <text name="rms_ws_quote_cover_used" text="Használt alkatrész garanciája"/>
+        <text name="rms_ws_quote_cover_full" text="Munkadíj és alkatrészek fedezve"/>
+        <text name="rms_ws_quote_cover_part_only" text="Csak az alkatrész, a munkadíj fizetendő"/>
+        <text name="rms_ws_quote_filters" text="Szűrők · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Kopott alkatrészek · utolsó teljes átvizsgálás"/>
         <text name="rms_ws_quote_oil_filter" text="Olajszűrő"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="A következő eljárás külön kerül felszámításra. A szükséges folyadékokat az induláskor biztosítják vagy veszik ki a készletből."/>
         <text name="rms_bodywork_touchup" text="Fényezés javítása"/>
         <text name="rms_bodywork_full" text="Teljes újrafényezés"/>
         <text name="rms_bodywork_colors_title" text="A jármű színei"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="A gyári szoftverrel sem tér vissza"/>
         <text name="rms_remap_free" text="Ingyenes"/>
         <text name="rms_remap_unavailable" text="Motoroptimalizálás nem elérhető"/>
-        <text name="rms_remap_refusal_dealer" text="A kereskedő nem optimalizál motorokat."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="A tuner a gazdaságba jön: használd a gazdaság műhelyét vagy a mobil műhelyt."/>
+        <text name="rms_ws_overhaul_unavailable" text="Nagyjavítás nem elérhető"/>
+        <text name="rms_remap_refusal_top" text="Már a széria legerősebb motorja: csak tuner megy tovább, a gazdaság vagy a mobil műhelyben."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Tuner optimalizálta: csak a tuner állítja vissza, a gazdaság vagy a mobil műhelyben."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Kereskedő optimalizálta: csak a kereskedő állítja vissza."/>
+        <text name="rms_remap_curves_maker" text="A gyártó által megadott görbék"/>
+        <text name="rms_remap_curves_dealer_measured" text="A kereskedő fékpadja, előtte és utána"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="A kereskedő megőrzi a gyári szoftvert"/>
         <text name="rms_remap_refusal_leased" text="Bérelt gép motorja nem optimalizálható."/>
         <text name="rms_remap_refusal_not_eligible" text="Ennek a motornak nincs átprogramozható vezérlője."/>
         <text name="rms_remap_confirm_title" text="Motor optimalizálása?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Nincs meghibásodás és kopott alkatrész"/>
         <text name="rms_report_worn_part_risk" text="Kockázat ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Beállítás: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Csere: alapos javítás vagy nagyjavítás"/>
+        <text name="rms_report_worn_part_replace" text="%s · Megelőző csere a műhelyben"/>
         <text name="rms_report_overall_assessment_title" text="Általános állapotértékelés"/>
         <text name="rms_report_overall_assessment_condition" text="Állapotszint"/>
         <text name="rms_report_recommendations_title" text="Következtetés és ajánlások"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Légfúvó"/>
         <text name="rms_air_blower_no_vehicle" text="Nincs jármű tisztítási hatótávban"/>
         <text name="rms_air_blower_function" text="Hűtők és légszűrők tisztítására használható"/>
-        <text name="rms_air_blower_action" text="Hűtő és légszűrő tisztítása"/>
+        <text name="rms_air_blower_action" text="Hűtő és légszűrő tisztítása."/>
+        <text name="rms_air_blower_action_radiator" text="Hűtő tisztítása."/>
+        <text name="rms_air_blower_action_air_filter" text="Légszűrő tisztítása."/>
         <text name="rms_air_blower_action_short" text="Kifúvatás"/>
         <text name="rms_air_blower_already_clean" text="%s: a hűtő és a légszűrő már tiszta"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: a hűtő tiszta. A légszűrő elérte a kifúvással történő tisztítás határát. A műhely a(z) %s karbantartástól kezdve cseréli"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Indítókábel leválasztva erről: %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Folyadékos kanna"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolaj kézi utántöltéshez"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolaj, minden géphez, AdBlue-val és részecskeszűrővel is"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolaj, AdBlue és részecskeszűrő nélküli gépekhez"/>
         <text name="rms_fluid_function_utto" text="Hajtómű- és hidraulikaolaj kézi utántöltéshez"/>
         <text name="rms_fluid_function_coolant" text="Hűtőfolyadék kézi utántöltéshez"/>
         <text name="rms_fluid_pour_action" text="Betöltés: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó kopását, valamint fokozhatja a melegedését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a hidraulika kopását, fokozhatja a melegedését és lassíthatja a működését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó és a hidraulika kopását, fokozhatja a melegedésüket és lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nem megfelelő motorolaj"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ez a motor AdBlue-t használ, vagy részecskeszűrője van: a kezelési kézikönyve ezekhez készült olajat ír elő. Ezzel az olajjal az olajcsere akár kétszer olyan hamar esedékes. A részecskeszűrő ráadásul 1,5-szer gyorsabban telik meg hamuval. Folytatod?"/>
         <text name="rms_fluid_error_no_circuit" text="Ennél a járműnél nincs szükség folyadék utántöltésére"/>
         <text name="rms_fluid_error_motor_running" text="Állítsd le a motort a folyadék áttöltése előtt"/>
         <text name="rms_fluid_error_vehicle_moving" text="A járműnek állnia kell"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="A folyadékokat a lízing tartalmazza"/>
         <text name="rms_fluid_stock_required" text="A műhely területén lévő edényekből"/>
         <text name="rms_fluid_stock_missing" text="%s hiányzik a műhely területén"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="%s ehhez a motorhoz megfelelő olaj hiányzik a műhely területén"/>
         <text name="rms_fluid_refill_work_order" text="Folyadékszintek utántöltése"/>
         <text name="rms_fluid_refill_dealer_supply" text="A folyadékellátás szerepel az árajánlatban"/>
         <text name="rms_fluid_mode_top_up" text="utántöltés"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="A fülke egyik lengéscsillapítója erősen szivárog és kiürült."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Olajos nyomok és elsötétedett csatlakozások láthatók a turbófeltöltő környékén."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Erős olajos nyomok, elsötétedett csatlakozások és koromnyomok láthatók a turbófeltöltő környékén."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Az egyik folyadékszint a jelzés alá csökkent."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Több folyadékszint a jelzés alá csökkent."/>
+        <text name="rms_inspection_hint_fluid_low" text="A MIN jelzés alatt: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Nagyon alacsony szint: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Utántöltés kannából vagy a kereskedőnél."/>
         <text name="rms_inspection_hint_service_engine" text="A motorolajcsere késésben van: az elhasznált olaj gyorsítja a motor és a befecskendezés kopását. Minden karbantartás a szűrőkkel együtt cseréli az olajat."/>
         <text name="rms_inspection_hint_service_transmission" text="A váltóolajcsere késésben van: az elhasznált olaj gyorsítja mindannak a kopását, amit ken. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
         <text name="rms_inspection_hint_service_hydraulic" text="A hidraulikaolaj-csere késésben van: az elhasznált olaj gyorsítja a hidraulikarendszer kopását. A műhelyben ajánlott karbantartás a szűrővel együtt cseréli az olajat."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Visszakapott kaució"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Alacsony folyadékszint"/>
-        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Akkor kerül pénzbe, ha egy szint tényleg mélyre esik: hűtőfolyadék vagy váltóolaj hiányában a gép melegszik, motorolaj vagy hidraulikaolaj hiányában pedig sokkal gyorsabban kopik.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
+        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérőjén lévő jelzés alá süllyedt.&#10;&#10;A motorolaj az üzemórákkal fogy, és egy fáradt motor sokkal többet fogyaszt belőle. A hűtőfolyadék, a váltóolaj és a hidraulikaolaj csak szivárgás miatt csökken.&#10;&#10;A jelzés alatt a gép csak utántöltést kér, továbbra is rendesen dolgozik. Minél lejjebb száll a szint, annál könnyebben szív levegőt a szivattyú lejtőn: az olajnyomás-lámpa villog, a váltó vagy a hidraulika oldalán pedig a szivattyú sípol, és a hidraulikus mozgások lelassulnak. Minden így eltöltött perc rongálja a főtengelycsapágyakat vagy a szivattyút: állj meg, és töltsd fel a szintet. Hűtőfolyadék, váltóolaj vagy hidraulikaolaj hiányában a gép emellett melegszik is.&#10;&#10;Vásárolj a boltban megfelelő terméket tartalmazó edényt, vidd a géphez, és töltsd fel a szintet. Az adott körhöz való minden termék mechanikailag egyenértékű; a nem megfelelő folyadék csak azt a kört szennyezi. A márkakereskedés biztosítja és felszámítja a szükséges litereket."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Üdvözöl a Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tippek kikapcsolása"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tippek bekapcsolása"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Életkor miatti állapotromlás"/>
         <text name="rms_tutorial_age_degradation_message" text="Az RMS-ben a járművek fokozatosan veszítenek eredeti teljesítményükből, ahogy öregednek.&#10;&#10;A jármű élettartamának nagyjából egyharmada után az életkor miatti kopás elkezdi enyhén csökkenteni néhány fontos jellemzőt, például a teljesítményt vagy a fékezést. A hatás ezután erősödik, és az élettartam vége felé jól láthatóvá válik.&#10;&#10;Ez a kopás kikapcsolható a mod beállításaiban."/>
         <text name="rms_tutorial_poor_consumables_title" text="Gyenge minőségű fogyóanyagok"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s gyenge minőségű fogyóanyagokat kapott a legutóbbi karbantartás során. Ez az olcsóbb minőségeknél fordulhat elő.&#10;&#10;A karbantartási intervallum lerövidül, és az alkatrészek kopása kissé megnő. Egy újabb karbantartás megoldja a problémát. A vizuális vagy normál átvizsgálás jelzi a lerövidült intervallumot; csak a teljes átvizsgálás azonosítja közvetlenül az érintett fogyóanyagokat."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s hibás szűrőt kapott a legutóbbi karbantartás során. Ez az olcsóbb minőségeknél fordulhat elő.&#10;&#10;Ez a szűrő átengedi a szennyeződést: az általa védett rendszer a szűrő cseréjéig gyorsabban kopik. Egy újabb karbantartás kicseréli. Csak a teljes átvizsgálás azonosítja."/>
         <text name="rms_tutorial_poor_parts_title" text="Gyenge minőségű alkatrészek"/>
         <text name="rms_tutorial_poor_parts_message" text="%s gyenge minőségű alkatrészt kapott egy javítás során. A meghibásodás nagy valószínűséggel hamarosan visszatér.&#10;&#10;Megvárhatod, amíg ez megtörténik, vagy elvégezhetsz egy teljes átvizsgálást, amely megbízhatóan azonosítja az érintett alkatrészt."/>
         <text name="rms_tutorial_park_brake_title" text="Rögzítőfék"/>

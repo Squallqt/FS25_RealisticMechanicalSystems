@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritisk svigt i partikelfilteret. Helt blokeret lader det ikke længere udstødningsgassen passere: kun en udskiftning giver motoren effekten tilbage."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfilteret er mættet. Regenereringerne er ikke blevet fuldført: motorens omdrejningstal begrænses, indtil en regenerering lykkes."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritisk mætning af partikelfilteret. Det er for fyldt til selv at regenerere og kræver en serviceregenerering på værkstedet; omdrejningstallet forbliver begrænset."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Partikelfilter fuldt af aske. Regenereringer brænder soden, ikke den aske motorolien efterlader: filteret skal afmonteres og renses på værkstedet; motorens omdrejninger er begrænset."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Let svigt i ventilatorkoblingen. Ventilatoren reagerer mindre effektivt, og køleevnen er en smule forringet."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Moderat svigt i ventilatorkoblingen. Ventilatoren kobler uregelmæssigt til, og køleevnen falder tydeligt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Alvorligt svigt i ventilatorkoblingen. Ventilatoren giver ikke længere luft nok, og motoren overopheder lettere."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Høst umulig: en høstdel er i stykker"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Tilstopning: høsten er stoppet"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Snitter i stykker: halmen falder i skår"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Snitter i stykker: denne afgrøde kan ikke længere høstes"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Snitter i stykker: halmen falder usnittet"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Begyndende slid på drivremmene. De glider lidt under belastning."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Moderat slid på drivremmene. En del sakker under belastning, og omdrejningsalarmen stopper af og til høsten."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Alvorligt slid på drivremmene. Kapaciteten falder, og stoppene kommer igen og igen."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Begyndende slid på halmsnitteren. Halmen snittes mindre kort, og snitteren kræver lidt mere effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Moderat slid på halmsnitteren. Snitteren vibrerer og kræver mere effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Alvorligt slid på halmsnitteren. Rotoren er i ubalance og kræver meget effekt."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritisk svigt i halmsnitteren. En kniv er knækket: snitteren står stille, og halmen falder i skår."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritisk svigt i halmsnitteren. En kniv er knækket: snitteren står stille, og halmen falder usnittet, i skår når afgrøden danner et."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Begyndende slid på indføringsvalserne. De griber afgrøden dårligere: indføringen bliver ujævn."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Moderat slid på indføringsvalserne. Snitlængden bliver ujævn, og der opstår tilstopninger."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Alvorligt slid på indføringsvalserne. Kapaciteten falder, og tilstopningerne bliver ved."/>

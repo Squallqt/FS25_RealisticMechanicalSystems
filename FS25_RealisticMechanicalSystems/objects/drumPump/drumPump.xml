@@ -1,5 +1,5 @@
 <handTool type="rmsDrumPump" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
-    <annotation>Macnaught BOP 60 battery pump for 205 L drums (BP205S-UNA).</annotation>
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
     <storeData>
         <name>$l10n_rms_drum_pump_name</name>
         <functions>
@@ -12,7 +12,7 @@
         <rotation>0</rotation>
         <brand>MACNAUGHT</brand>
         <species>HANDTOOL</species>
-        <category>handtoolsMisc</category>
+        <category>rmsMaintenance</category>
     </storeData>
 
     <base canBeDropped="true" canBeSaved="true">

@@ -64,7 +64,7 @@ local CLIENT_EVENTS = {
     end,
     CHOPPER_FAILURE = function(vehicle, event)
         RMS_Breakdowns.showWarning(vehicle, event.status == "SWATH" and "rms_breakdowns_chopper_failure_message"
-            or "rms_breakdowns_chopper_failure_spread_message", 4000)
+            or "rms_breakdowns_chopper_failure_unchopped_message", 4000)
     end,
     BRAKE_FORCE_MODIFIER = function(vehicle) playSample(vehicle, "brakes") end,
     POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT = function(vehicle) playSample(vehicle, "powershiftClunk") end,

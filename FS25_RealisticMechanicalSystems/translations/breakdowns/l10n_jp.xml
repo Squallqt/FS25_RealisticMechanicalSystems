@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="粒子状物質フィルターに重大な不具合が発生しています。完全に詰まって排気を通せず、交換しない限りエンジン出力は戻りません。"/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="粒子状物質フィルターが飽和しています。再生が完了していないため、再生が成功するまでエンジン回転数が制限されます。"/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="粒子状物質フィルターが重大な飽和状態です。自動再生できないほどすすが堆積し、工場でのサービス再生が必要です。回転数は制限されたままです。"/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="粒子状物質フィルターが灰で満杯です。再生はすすを燃やしますが、エンジンオイルが残す灰は燃やせません。工場でフィルターを外して清掃する必要があります。エンジン回転数は制限されています。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="ファンクラッチに軽度の不具合が発生しています。ファンの応答が遅くなり、冷却性能がわずかに低下します。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="ファンクラッチに中度の不具合が発生しています。ファンの作動が不安定になり、冷却効率が明らかに低下します。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="ファンクラッチに重度の不具合が発生しています。ファンが十分な風量を生み出せず、エンジンが過熱しやすくなります。"/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="収穫不能：収穫部品が壊れています"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="詰まり：収穫が停止しました"/>
         <text name="rms_breakdowns_chopper_failure_message" text="チョッパー故障：わらが列状に落ちます"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="チョッパー故障：この作物はもう収穫できません"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="チョッパー故障：わらが細断されずに落ちます"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="駆動ベルトが摩耗し始めています。負荷がかかると少し滑ります。"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="駆動ベルトが中度に摩耗しています。負荷で回転が落ちる部品があり、回転数警報でときどき収穫が止まります。"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="駆動ベルトが重度に摩耗しています。処理量が落ち、停止が何度も繰り返されます。"/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="ストローチョッパーが摩耗し始めています。わらが短く切れなくなり、チョッパーの必要動力が少し増えます。"/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="ストローチョッパーが中度に摩耗しています。チョッパーが揺れ、必要動力が増えます。"/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="ストローチョッパーが重度に摩耗しています。ローターのバランスが崩れ、多くの動力を消費します。"/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="ストローチョッパーに重大な不具合が発生しています。ナイフが折れました：チョッパーが止まり、わらが列状に落ちます。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="ストローチョッパーに重大な不具合が発生しています。ナイフが折れました：チョッパーが止まり、わらが細断されずに落ちます。列状にできる作物では列状に落ちます。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="フィードロールが摩耗し始めています。作物をつかむ力が落ち、送り込みが不均一になります。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="フィードロールが中度に摩耗しています。切断長が不均一になり、詰まりが発生します。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="フィードロールが重度に摩耗しています。処理量が落ち、詰まりが続きます。"/>

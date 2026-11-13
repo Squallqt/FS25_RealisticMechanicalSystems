@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Velg prosedyre"/>
         <text name="rms_ws_section_work_order" text="Verkstedsordre"/>
         <text name="rms_ws_section_recap" text="Sammendrag"/>
-        <text name="rms_ws_section_parts" text="Berørte deler"/>
         <text name="rms_ws_section_history" text="Historikk"/>
         <text name="rms_ws_label_last_check" text="Siste kontroll"/>
         <text name="rms_ws_reading_outdated" text="Sjekk på nytt"/>
-        <text name="rms_ws_label_more_parts" text="+ %s til"/>
         <text name="rms_ws_label_committed_cost" text="Påløpte kostnader"/>
         <text name="rms_ws_label_finish_time" text="Sluttidspunkt"/>
         <text name="rms_ws_label_total_estimate" text="Anslått totalt"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Lav vedlikeholdsvennlighet"/>
         <text name="rms_shop_launch_year" text="Modell lansert i %d"/>
         <text name="rms_shop_launch_year_unknown" text="Lanseringsår ukjent"/>
+        <text name="rms_shop_category_maintenance" text="Vedlikehold"/>
         <text name="rms_owner_care_careful" text="Nøye vedlikehold"/>
         <text name="rms_owner_care_regular" text="Jevnlig vedlikehold"/>
         <text name="rms_owner_care_neglected" text="Forsømt vedlikehold"/>
+        <text name="rms_ws_label_maintenance_count" text="Utførte vedlikehold"/>
         <text name="rms_ws_label_overhaul_count" text="Utførte overhalinger"/>
         <text name="rms_ws_label_maintenance_log" text="Vedlikeholdslogg"/>
         <text name="rms_ws_label_last_maintenance" text="Siste vedlikehold"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Kostnader per driftstime"/>
         <text name="rms_log_invoice_title" text="Fakturadetaljer"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Fast verkstedpris"/>
-        <text name="rms_log_invoice_labour" text="Arbeid"/>
         <text name="rms_log_invoice_filters" text="Filtre"/>
         <text name="rms_log_cancelled_desc" text="Prosedyre avbrutt"/>
         <text name="rms_log_ownership_months_title" text="Eiertid"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Kjøretøyet er lakkert om"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Gjennomsnittlig feilintervall"/>
         <text name="rms_log_average_maintenance_interval_title" text="Gjennomsnittlig vedlikeholdsintervall"/>
         <text name="rms_log_performed" text="Prosedyre utført: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Termisk vern: effektbegrensningen opphevet"/>
         <text name="rms_breakdown_at_progress_message" text="pågår"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Advarsel! Motoren er kald, senk belastningen."/>
+        <text name="rms_spec_cold_engine_message" text="Advarsel! Motoren er kald: den slites til den er varm."/>
         <text name="rms_spec_overheat_engine_message" text="Advarsel! Motoren overopphetes."/>
         <text name="rms_spec_overheat_transmission_message" text="Advarsel! Transmisjonen overopphetes."/>
         <text name="rms_spec_overhaul_partial" text="Delvis"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="Denne måneden"/>
         <text name="rms_spec_tomorrow_at" text="i morgen kl. "/>
         <text name="rms_spec_never" text="Aldri"/>
-        <text name="rms_spec_next_planned_service_notification" text="Planlagt prosedyre startet: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Planlagt prosedyre avbrutt på grunn av manglende midler: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Den planlagte prosedyren (%s) startet ikke: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="i overmorgen kl. "/>
         <text name="rms_spec_day_s" text="dager"/>
         <text name="rms_spec_day_one" text="dag"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kvalitet på forbruksmateriell"/>
         <text name="rms_option_menu_option_two_title_repair" text="Kvalitet på reservedeler"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="System som skal overhales"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Hvis prosedyren avdekker feil, følger det automatisk en standardreparasjon med originaldeler."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Etter reparasjonen følger automatisk den anbefalte servicen med originalt forbruksmateriell."/>
         <text name="rms_option_menu_price_text" text="Pris"/>
-        <text name="rms_option_menu_perform_repair" text="Automatisk reparasjon"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatisk vedlikehold"/>
         <text name="rms_option_menu_warranty_repair_text" text="Reparasjon på garanti"/>
         <text name="rms_option_menu_lease_service_text" text="Inkludert i leasingen"/>
         <text name="rms_option_menu_duration_text" text="Varighet"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Inkludert"/>
         <text name="rms_ws_levels_mechanical" text="Mekaniske"/>
         <text name="rms_ws_levels_every_level" text="På hvert nivå: kjøler renset og smøring."/>
-        <text name="rms_ws_quality_risk" text="Fare for defekt"/>
+        <text name="rms_ws_quality_part_wear" text="Delens slitasje"/>
+        <text name="rms_ws_quality_factory_kept" text="Fabrikkgarantien beholdes"/>
+        <text name="rms_ws_quality_factory_lost" text="Fabrikkgarantien bortfaller"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtre uten defekt"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filter iblant defekt"/>
+        <text name="rms_ws_quality_filter_often" text="Filter oftere defekt"/>
         <text name="rms_ws_quality_reference" text="Referansepris"/>
-        <text name="rms_ws_quality_donor" text="Maskin med %d h"/>
-        <text name="rms_ws_quality_donors" text="Maskiner med %d til %d h"/>
+        <text name="rms_ws_quality_donor" text="Demontert fra maskin med %d h"/>
+        <text name="rms_ws_quality_donors" text="Demontert fra maskiner med %d til %d h"/>
         <text name="rms_ws_quality_new_part" text="Ny del"/>
         <text name="rms_ws_quality_used_warranty" text="3 måneders garanti"/>
         <text name="rms_ws_quality_partial_warranty" text="Delvis garanti"/>
         <text name="rms_ws_quality_no_warranty" text="Ingen garanti"/>
         <text name="rms_ws_quality_oem_warranty" text="12 måneders garanti"/>
         <text name="rms_ws_quality_factory_warranty" text="Fabrikkgaranti"/>
-        <text name="rms_warranty_used" text="Opphuggergaranti: bare delen"/>
+        <text name="rms_ws_quality_part_warranty" text="Garanti %d måneder til"/>
         <text name="rms_ws_quality_delta" text="%s mot original"/>
         <text name="rms_ws_repair_row_faults" text="Behandlede feil"/>
         <text name="rms_ws_repair_row_faults_detail" text="Blant de avkryssede"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Defekt del"/>
         <text name="rms_ws_repair_row_part_detail" text="Årsaken til feilen"/>
         <text name="rms_ws_repair_part_replaced" text="Skiftet"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Slitte deler"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="I samme system"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Skiftet"/>
         <text name="rms_ws_repair_row_quality" text="Kvalitet på deler"/>
         <text name="rms_ws_repair_row_quality_detail" text="Valgt på kortene nedenfor"/>
         <text name="rms_ws_repair_quality_choice" text="Etter valg"/>
         <text name="rms_ws_warranty_title" text="Garanti"/>
+        <text name="rms_ws_quote_warranty_label" text="Garanti:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Fabrikkgaranti:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Garanti på delen:"/>
+        <text name="rms_ws_quote_warranty_covered" text="dekket"/>
+        <text name="rms_ws_quote_warranty_used" text="bare delen dekket"/>
+        <text name="rms_ws_quote_warranty_expired" text="utløpt"/>
+        <text name="rms_ws_quote_warranty_own" text="ikke dekket på eget verksted"/>
+        <text name="rms_ws_quote_warranty_lease" text="ikke dekket ved leasing"/>
+        <text name="rms_ws_quote_warranty_remapped" text="bortfalt, motor optimalisert"/>
+        <text name="rms_ws_quote_warranty_refused" text="avvist, %s"/>
         <text name="rms_ws_warranty_covered" text="Gjelder"/>
         <text name="rms_ws_warranty_not_covered" text="Gjelder ikke"/>
         <text name="rms_ws_warranty_terms" text="Fabrikk: %d måneder eller %s h"/>
+        <text name="rms_ws_warranty_refused" text="Avvist: %s"/>
         <text name="rms_ws_badge_warranty" text="Garanti"/>
         <text name="rms_warranty_base" text="%d måneder eller %s h (inkludert)"/>
         <text name="rms_warranty_extension" text="%d måneder eller %s h"/>
         <text name="rms_warranty_partial" text="Delvis dekket"/>
         <text name="rms_warranty_own" text="Ikke dekket på eget verksted"/>
-        <text name="rms_warranty_factory" text="Originaldeler og arbeid dekket"/>
-        <text name="rms_warranty_part" text="Del dekket til maskinen er %d måneder gammel"/>
+        <text name="rms_warranty_part" text="Garanti på delen: %d måneder til"/>
         <text name="rms_warranty_lease" text="Reparasjon ikke dekket ved leasing"/>
-        <text name="rms_warranty_expired" text="Garantien er utløpt"/>
-        <text name="rms_warranty_overdue" text="Avvist: vedlikehold forfalt"/>
-        <text name="rms_warranty_impact" text="Avvist: støtskade"/>
-        <text name="rms_warranty_options" text="Utskifting med originaldeler kreves"/>
+        <text name="rms_warranty_overdue" text="vedlikehold forfalt"/>
+        <text name="rms_warranty_impact" text="støtskade"/>
         <text name="rms_warranty_mobile" text="Du betaler ekstra arbeidskostnad for mobilt verksted"/>
         <text name="rms_warranty_remapped" text="Garanti bortfalt: motor optimalisert"/>
+        <text name="rms_warranty_heat" text="overoppheting"/>
+        <text name="rms_warranty_low_level" text="oljenivå for lavt"/>
+        <text name="rms_warranty_fuel_dry" text="tank kjørt tom"/>
+        <text name="rms_warranty_park_brake" text="parkeringsbrems satt på"/>
+        <text name="rms_warranty_pto_engagement" text="rykk ved innkobling av kraftuttak"/>
+        <text name="rms_warranty_stones" text="stein tatt inn"/>
+        <text name="rms_warranty_starter" text="startmotor overbelastet"/>
+        <text name="rms_warranty_pto_angle" text="for stor vinkel på kardangaksel"/>
+        <text name="rms_warranty_windup" text="sperre eller 4WD på fast underlag"/>
+        <text name="rms_warranty_filter" text="tett filter"/>
+        <text name="rms_warranty_oil" text="uegnet motorolje"/>
+        <text name="rms_warranty_trailer" text="for tung henger"/>
+        <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
+        <text name="rms_warranty_used_part" text="brukt del"/>
+        <text name="rms_warranty_imposed" text="Standard reparasjon med originaldeler"/>
+        <text name="rms_warranty_partial_imposed" text="Dekket feil reparert som Standard med originaldeler"/>
         <text name="rms_ws_overhaul_row_systems" text="Behandlede systemer"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Satt i stand"/>
         <text name="rms_ws_overhaul_systems_one" text="Ett etter valg"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Vurdert"/>
         <text name="rms_ws_inspection_maintenance_note" text="En service gjør også denne feilsøkingen, som standardinspeksjonen."/>
         <text name="rms_ws_quote_title" text="Tilbudsdetaljer"/>
+        <text name="rms_ws_quote_empty_title" text="Tilbudet ditt vises her"/>
+        <text name="rms_ws_quote_empty_text" text="Velg et inngrep fra listen"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Ikke noe tilbud foreløpig"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Velg et annet inngrep fra listen"/>
+        <text name="rms_ws_repair_row_around" text="Omkringliggende deler"/>
+        <text name="rms_ws_repair_row_around_detail" text="Overhaling og slitte deler"/>
+        <text name="rms_ws_repair_around_count" text="%d skiftet"/>
+        <text name="rms_ws_repair_around_none" text="Ingen"/>
+        <text name="rms_ws_quote_labour" text="Arbeid · %s t"/>
+        <text name="rms_ws_quote_parts_fault" text="Deler til feilen · %s"/>
+        <text name="rms_ws_quote_preventive" text="Forebyggende utskifting · %s"/>
+        <text name="rms_ws_quote_supplies" text="Materiell"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motoroverhaling · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Topplokkoverhaling · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Slitte deler · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Fabrikkgaranti"/>
+        <text name="rms_ws_quote_cover_part" text="Garanti på delen"/>
+        <text name="rms_ws_quote_cover_used" text="Garanti på brukt del"/>
+        <text name="rms_ws_quote_cover_full" text="Arbeid og deler dekket"/>
+        <text name="rms_ws_quote_cover_part_only" text="Bare delen, arbeid må fortsatt betales"/>
+        <text name="rms_ws_quote_filters" text="Filtre · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Slitte deler · siste fullstendige inspeksjon"/>
         <text name="rms_ws_quote_oil_filter" text="Oljefilter"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Den neste prosedyren faktureres for seg. De nødvendige væskene leveres eller tas fra lageret når den starter."/>
         <text name="rms_bodywork_touchup" text="Lakkreparasjoner"/>
         <text name="rms_bodywork_full" text="Full omlakkering"/>
         <text name="rms_bodywork_colors_title" text="Kjøretøyets farger"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="Den kommer ikke tilbake med originalprogramvaren"/>
         <text name="rms_remap_free" text="Gratis"/>
         <text name="rms_remap_unavailable" text="Motoroptimalisering utilgjengelig"/>
-        <text name="rms_remap_refusal_dealer" text="Forhandleren optimaliserer ikke motorer."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="En tuner kommer til gården: bruk gårdsverkstedet eller det mobile verkstedet."/>
+        <text name="rms_ws_overhaul_unavailable" text="Overhaling utilgjengelig"/>
+        <text name="rms_remap_refusal_top" text="Allerede seriens største motor: bare en tuner går lenger, i gårdsverkstedet eller det mobile verkstedet."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Optimalisert av en tuner: bare tuneren setter den tilbake, i gårdsverkstedet eller det mobile verkstedet."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Optimalisert av forhandleren: bare forhandleren setter den tilbake."/>
+        <text name="rms_remap_curves_maker" text="Kurver oppgitt av produsenten"/>
+        <text name="rms_remap_curves_dealer_measured" text="Forhandlerens effektbenk, før og etter"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Forhandleren lagrer originalprogramvaren"/>
         <text name="rms_remap_refusal_leased" text="En leaset maskin kan ikke optimaliseres."/>
         <text name="rms_remap_refusal_not_eligible" text="Denne motoren har ingen programmerbar styreenhet."/>
         <text name="rms_remap_confirm_title" text="Optimalisere motoren?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Ingen feil eller slitte deler"/>
         <text name="rms_report_worn_part_risk" text="Risiko ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Justering: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Utskifting: grundig reparasjon eller overhaling"/>
+        <text name="rms_report_worn_part_replace" text="%s · Forebyggende utskifting på verkstedet"/>
         <text name="rms_report_overall_assessment_title" text="Samlet vurdering av tilstanden"/>
         <text name="rms_report_overall_assessment_condition" text="Tilstandsnivå"/>
         <text name="rms_report_recommendations_title" text="Konklusjon og anbefalinger"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Trykkluftblåser"/>
         <text name="rms_air_blower_no_vehicle" text="Ingen kjøretøy innen rengjøringsavstand"/>
         <text name="rms_air_blower_function" text="Brukes til å rense kjølere og luftfiltre"/>
-        <text name="rms_air_blower_action" text="Rens kjøleren og luftfilteret"/>
+        <text name="rms_air_blower_action" text="Rens kjøleren og luftfilteret."/>
+        <text name="rms_air_blower_action_radiator" text="Rens kjøleren."/>
+        <text name="rms_air_blower_action_air_filter" text="Rens luftfilteret."/>
         <text name="rms_air_blower_action_short" text="Blås rent"/>
         <text name="rms_air_blower_already_clean" text="%s: kjøleren og luftfilteret er allerede rene"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: kjøleren er ren. Luftfilteret har nådd grensen for rengjøring med trykkluft. Verkstedet skifter det fra service %s og oppover"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startkablene ble koblet fra %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Væskekanne"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorolje til manuell påfylling"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorolje, til alle maskiner, også med AdBlue og partikkelfilter"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorolje, til maskiner uten AdBlue og partikkelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmisjons- og hydraulikkolje til manuell påfylling"/>
         <text name="rms_fluid_function_coolant" text="Kjølevæske til manuell påfylling"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på transmisjonen og gjøre den varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på hydraulikken, gjøre den varmere og langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på transmisjonen og hydraulikken, gjøre dem varmere og gjøre hydraulikken langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Uegnet motorolje"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Denne motoren bruker AdBlue eller har partikkelfilter: instruksjonsboken krever en olje laget for dem. Med denne oljen kommer oljeskiftet opptil dobbelt så tidlig. Et partikkelfilter fylles dessuten 1,5 ganger så fort med aske. Fortsette?"/>
         <text name="rms_fluid_error_no_circuit" text="Dette kjøretøyet trenger ikke påfylling av væske"/>
         <text name="rms_fluid_error_motor_running" text="Slå av motoren før du overfører væske"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kjøretøyet må stå stille"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Væsker inkludert i leasingen"/>
         <text name="rms_fluid_stock_required" text="Tas fra kannene i verkstedområdet"/>
         <text name="rms_fluid_stock_missing" text="Det mangler %s i verkstedområdet"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Det mangler %s olje som passer til denne motoren i verkstedområdet"/>
         <text name="rms_fluid_refill_work_order" text="Oppfylling av væsker"/>
         <text name="rms_fluid_refill_dealer_supply" text="Levering inngår i prisoverslaget"/>
         <text name="rms_fluid_mode_top_up" text="påfylling"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="En hyttestøtdemper har en stor lekkasje og har rent tom."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Det er oljespor og misfargede koblinger rundt turboladeren."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Det er kraftige oljespor, misfargede koblinger og sotspor rundt turboladeren."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Et væskenivå har falt under merket sitt."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Flere væskenivåer har falt under merket sitt."/>
+        <text name="rms_inspection_hint_fluid_low" text="Under MIN-merket: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Svært lavt nivå: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Fyll på fra kannen eller hos forhandleren."/>
         <text name="rms_inspection_hint_service_engine" text="Motoroljeskiftet er overskredet: slitt olje øker slitasjen på motor og innsprøytning. Enhver service skifter oljen sammen med filtrene."/>
         <text name="rms_inspection_hint_service_transmission" text="Transmisjonsoljeskiftet er overskredet: slitt olje øker slitasjen på alt den smører. Servicen verkstedet anbefaler, skifter oljen sammen med filteret."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hydraulikkoljeskiftet er overskredet: slitt olje øker slitasjen på hydraulikksystemet. Servicen verkstedet anbefaler, skifter oljen sammen med filteret."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Tilbakebetalt depositum"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Lavt væskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Det er når et nivå faller riktig lavt at skadene begynner: en maskin som mangler kjølevæske eller transmisjonsolje, blir varm, og en maskin som mangler motorolje eller hydraulikkolje, slites langt raskere.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Slå av tipsene"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsene"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Aldersbetinget forringelse"/>
         <text name="rms_tutorial_age_degradation_message" text="I RMS mister kjøretøy etter hvert en del av sin opprinnelige ytelse når de blir eldre.&#10;&#10;Etter omtrent en tredjedel av levetiden senker den aldersbetingede slitasjen enkelte viktige egenskaper litt, som effekt eller bremseevne. Virkningen forsterkes deretter og blir tydelig synlig sist i levetiden.&#10;&#10;Denne forringelsen kan slås av i modinnstillingene."/>
         <text name="rms_tutorial_poor_consumables_title" text="Forbruksmateriell av dårlig kvalitet"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s fikk forbruksmateriell av dårlig kvalitet ved sitt siste vedlikehold. Det skjer med de billige kvalitetene.&#10;&#10;Vedlikeholdsintervallet blir kortere, og slitasjen på komponentene stiger litt. Et nytt vedlikehold retter problemet. En visuell eller standard inspeksjon melder om det forkortede intervallet; bare en fullstendig inspeksjon peker ut forbruksmateriellet det gjelder."/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s fikk et defekt filter ved sitt siste vedlikehold. Det skjer med de billige kvalitetene.&#10;&#10;Filteret slipper gjennom smuss: kretsen det beskytter, slites raskere til filteret skiftes. Et nytt vedlikehold skifter det. Bare en fullstendig inspeksjon peker det ut."/>
         <text name="rms_tutorial_poor_parts_title" text="Deler av dårlig kvalitet"/>
         <text name="rms_tutorial_poor_parts_message" text="%s fikk en del av dårlig kvalitet ved en reparasjon. Feilen kommer sannsynligvis snart tilbake.&#10;&#10;Du kan vente på at den kommer igjen, eller kjøre en fullstendig inspeksjon, som pålitelig peker ut delen det gjelder."/>
         <text name="rms_tutorial_park_brake_title" text="Parkeringsbrems"/>

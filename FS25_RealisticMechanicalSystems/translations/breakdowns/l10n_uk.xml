@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Критична відмова сажового фільтра. Повністю забитий фільтр більше не пропускає гази: лише заміна повертає двигуну потужність."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Переповнення сажового фільтра. Регенерації не завершилися: оберти двигуна обмежені, доки одна з них не завершиться успішно."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Критичне переповнення сажового фільтра. Він надто заповнений для самостійної регенерації й потребує сервісної регенерації в майстерні; оберти залишаються обмеженими."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Сажовий фільтр забитий золою. Регенерація спалює сажу, але не золу від моторної оливи: фільтр треба зняти й очистити в майстерні; оберти двигуна обмежені."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Легка несправність муфти вентилятора. Вентилятор реагує менш ефективно, охолодження злегка погіршується."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Помірна несправність муфти вентилятора. Вентилятор вмикається нерівномірно, а ефективність охолодження помітно знижується."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Сильна несправність муфти вентилятора. Вентилятор більше не забезпечує достатнього потоку повітря, тому двигун легше перегрівається."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Збирання неможливе: збиральний вузол зламано"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Забивання: збирання зупинилося"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Подрібнювач зламано: солома падає у валок"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Подрібнювач зламано: цю культуру більше не можна збирати"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Подрібнювач зламано: солома падає неподрібненою"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Початковий знос привідних пасів. Під навантаженням вони трохи прослизають."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Помірний знос привідних пасів. Вузол сповільнюється під навантаженням, і сигнал обертів іноді зупиняє збирання."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Сильний знос привідних пасів. Продуктивність падає, зупинки повторюються знову і знову."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Початковий знос подрібнювача соломи. Солома ріжеться менш дрібно, подрібнювач бере трохи більше потужності."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Помірний знос подрібнювача соломи. Подрібнювач вібрує і бере більше потужності."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Сильний знос подрібнювача соломи. Ротор розбалансований і бере багато потужності."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Критична відмова подрібнювача соломи. Ніж зламався: подрібнювач стоїть, солома падає у валок."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Критична відмова подрібнювача соломи. Ніж зламався: подрібнювач стоїть, солома падає неподрібненою, у валок, якщо культура його утворює."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Початковий знос живильних вальців. Вони гірше захоплюють масу: подача стає нерівномірною."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Помірний знос живильних вальців. Довжина різання стає нерівномірною, з’являються забивання."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Сильний знос живильних вальців. Продуктивність падає, забивання не припиняються."/>

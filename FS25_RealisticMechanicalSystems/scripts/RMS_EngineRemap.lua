@@ -47,8 +47,28 @@ function RMS_EngineRemap.getIsEligible(vehicle)
         and vehicle.propertyState == VehiclePropertyState.OWNED and RMS_Utils.getUsesEngineECUProfile(vehicle)
 end
 
----Returns the gain from the engine's place in its store item
-function RMS_EngineRemap.getGain(vehicle)
+---Returns the dealer gain, up to the largest engine of the store item
+function RMS_EngineRemap.getDealerGain(vehicle)
+    local _, high = getFamilyPower(vehicle)
+    local power = RMS_Fluids.getEnginePower(vehicle)
+    return high ~= nil and power > 0 and math.max(high / power - 1, 0) or 0
+end
+
+---Tells whether the dealer remaps, with the factory software
+function RMS_EngineRemap.getIsDealer(workshopType)
+    return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
+end
+
+---Returns the gain of a remap at a workshop, or of the software fitted
+-- @param string? workshopType nil for the software fitted
+function RMS_EngineRemap.getGain(vehicle, workshopType)
+    local isDealer = RMS_EngineRemap.getIsDealer(workshopType)
+    if workshopType == nil then
+        isDealer = vehicle.spec_RealisticMechanicalSystems.remapByDealer == true
+    end
+    if isDealer then
+        return RMS_EngineRemap.getDealerGain(vehicle)
+    end
     local low, high = getFamilyPower(vehicle)
     local power = RMS_Fluids.getEnginePower(vehicle)
     if low == nil or high <= low then
@@ -97,9 +117,10 @@ function RMS_EngineRemap.getOverloadRatio(vehicle)
 end
 
 ---Tells whether the remap takes full load past what the block holds
-function RMS_EngineRemap.getIsBeyondBlock(vehicle)
+-- @param string? workshopType nil for the software fitted
+function RMS_EngineRemap.getIsBeyondBlock(vehicle, workshopType)
     local threshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
-    return 1 + RMS_EngineRemap.getGain(vehicle) > threshold * getBlockRatio(vehicle)
+    return 1 + RMS_EngineRemap.getGain(vehicle, workshopType) > threshold * getBlockRatio(vehicle)
 end
 
 ---Returns the stock peaks of the engine
@@ -128,9 +149,9 @@ function RMS_EngineRemap.getDurationHours(option)
     return RMS_EngineRemap.DURATION_HOURS[option] or 0
 end
 
----Returns the machine age in months up to which a restore is free
+---Returns the age in months up to which a tuner restore is free
 function RMS_EngineRemap.getFreeRestoreUntil(vehicle)
-    if not RMS_EngineRemap.getIsRemapped(vehicle) then
+    if not RMS_EngineRemap.getIsRemapped(vehicle) or vehicle.spec_RealisticMechanicalSystems.remapByDealer then
         return nil
     end
     return (vehicle.spec_RealisticMechanicalSystems.remapAge or 0) + RMS_EngineRemap.FREE_RESTORE_MONTHS
@@ -147,25 +168,20 @@ function RMS_EngineRemap.getOption(vehicle)
     return RMS_EngineRemap.getIsRemapped(vehicle) and RMS_EngineRemap.RESTORE or RMS_EngineRemap.REMAP
 end
 
----Tells whether the tuner comes to a workshop: never to the dealer
-function RMS_EngineRemap.getIsTunerAt(workshopType)
-    return workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER
-end
-
----Tells whether a workshop does the service, and why not
+---Tells whether a workshop remaps or restores, and why not
 function RMS_EngineRemap.getAvailability(vehicle, workshopType, option)
     if not RMS_EngineRemap.getIsEligible(vehicle) then
         return false, vehicle.propertyState ~= VehiclePropertyState.OWNED and "leased" or "notEligible"
     end
-    if not RMS_EngineRemap.getIsTunerAt(workshopType) then
-        return false, "dealer"
+    local isDealer = RMS_EngineRemap.getIsDealer(workshopType)
+    if RMS_EngineRemap.getIsRemapped(vehicle) then
+        if isDealer ~= (vehicle.spec_RealisticMechanicalSystems.remapByDealer == true) then
+            return false, isDealer and "byTuner" or "byDealer"
+        end
+    elseif isDealer and RMS_EngineRemap.getDealerGain(vehicle) <= 0 then
+        return false, "top"
     end
     return option == nil or option == RMS_EngineRemap.getOption(vehicle), nil
-end
-
-local function getIsFactoryTermRunning(vehicle)
-    local months, hours = vehicle:getWarrantyLimits()
-    return (vehicle.age or 0) < months and RealisticMechanicalSystems.getRealOperatingHours(vehicle) < hours
 end
 
 ---Returns the fitted parts whose warranty runs, the first to end first
@@ -187,7 +203,7 @@ function RMS_EngineRemap.getIsWarrantyActive(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.warrantyVoided then
         return false
     end
-    return getIsFactoryTermRunning(vehicle) or #RMS_EngineRemap.getCoveredParts(vehicle) > 0
+    return RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle) or #RMS_EngineRemap.getCoveredParts(vehicle) > 0
 end
 
 local function getRangeEnds(vehicle)
@@ -211,8 +227,11 @@ function RMS_EngineRemap.getOffer(vehicle, workshopType)
     local item = items ~= nil and items[index] or nil
     local stockHp, stockTorque = RMS_EngineRemap.getStockPeaks(vehicle)
     offer.engineName = item ~= nil and item.name or vehicle:getName()
-    offer.gain = RMS_EngineRemap.getGain(vehicle)
-    offer.isBeyondBlock = RMS_EngineRemap.getIsBeyondBlock(vehicle)
+    offer.isDealer = RMS_EngineRemap.getIsRemapped(vehicle) and vehicle.spec_RealisticMechanicalSystems.remapByDealer == true
+        or not RMS_EngineRemap.getIsRemapped(vehicle) and RMS_EngineRemap.getIsDealer(workshopType)
+    local gainWorkshop = not RMS_EngineRemap.getIsRemapped(vehicle) and workshopType or nil
+    offer.gain = RMS_EngineRemap.getGain(vehicle, gainWorkshop)
+    offer.isBeyondBlock = RMS_EngineRemap.getIsBeyondBlock(vehicle, gainWorkshop)
     offer.stockHp, offer.stockTorque = stockHp, stockTorque
     offer.remapHp, offer.remapTorque = stockHp * (1 + offer.gain), stockTorque * (1 + offer.gain)
     offer.lowEngine, offer.highEngine = getRangeEnds(vehicle)
@@ -222,18 +241,19 @@ function RMS_EngineRemap.getOffer(vehicle, workshopType)
     offer.restorePrice = math.floor(RMS_Utils.getGamePrice(RMS_EngineRemap.RESTORE_PRICE) / 10 + 0.5) * 10
     offer.warrantyActive = RMS_EngineRemap.getIsWarrantyActive(vehicle)
     offer.warrantyVoided = vehicle.spec_RealisticMechanicalSystems.warrantyVoided == true
-    offer.factoryTerm = getIsFactoryTermRunning(vehicle)
+    offer.factoryTerm = RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle)
     offer.coveredParts = RMS_EngineRemap.getCoveredParts(vehicle)
     return offer
 end
 
 ---Samples the stock and remapped curves for the bench chart
 -- @return table curve rpm, stockTorque, remapTorque (Nm), stockHp, remapHp lists and peakRpm
-function RMS_EngineRemap.getCurve(vehicle)
+-- @param string? workshopType of a remap to come, nil for the software fitted
+function RMS_EngineRemap.getCurve(vehicle, workshopType)
     local motor = vehicle.spec_motorized.motor
     local torqueCurve = motor:getTorqueCurve()
     local keyframes = torqueCurve.keyframes
-    local factor = 1 + RMS_EngineRemap.getGain(vehicle)
+    local factor = 1 + RMS_EngineRemap.getGain(vehicle, workshopType)
     local curve = { rpm = {}, stockTorque = {}, remapTorque = {}, stockHp = {}, remapHp = {},
         peakRpm = motor.peakMotorPowerRotSpeed * 30 / math.pi }
     local last = keyframes[#keyframes].time
@@ -261,6 +281,7 @@ function RMS_EngineRemap.complete(vehicle, option)
         local _, index = getMotorItems(vehicle)
         spec.remapMotor = index
         spec.remapAge = vehicle.age or 0
+        spec.remapByDealer = RMS_EngineRemap.getIsDealer(spec.workshopType)
         spec.remapGain = RMS_EngineRemap.getGain(vehicle)
         spec.warrantyVoided = true
         spec.partWarranty = {}
@@ -274,6 +295,7 @@ function RMS_EngineRemap.reset(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.remapMotor = 0
     spec.remapAge = 0
+    spec.remapByDealer = false
     spec.remapGain = nil
 end
 

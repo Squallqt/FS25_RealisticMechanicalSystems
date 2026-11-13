@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----AI worker easing off while the machine is overloaded
+---AI worker easing off under overload, stopped when it cannot move
 
 local function getAiWorkerSpeedLimit(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -37,6 +37,38 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
         spec.aiWorkerSpeedLimit = spec.aiWorkerSpeedLimit + C.RESUME_RATE * seconds
         if spec.aiWorkerSpeedLimit > self:getLastSpeed() + C.RELEASE_MARGIN then
             spec.aiWorkerSpeedLimit = nil
+        end
+    end
+end
+
+---Stops a helper pushing on the spot once the native recoveries had time
+function RealisticMechanicalSystems:updateAiWorkerBlocked(dt)
+    if not self.isServer then return end
+    local spec = self.spec_RealisticMechanicalSystems
+
+    -- AutoDrive stops and restarts on its own when stuck
+    local routeDriver = self.ad
+    local driverState = routeDriver ~= nil and routeDriver.stateModule or nil
+    local isAutoDriving = driverState ~= nil and driverState.isActive ~= nil and driverState:isActive()
+    if not self:getIsAIActive() or isAutoDriving then
+        spec.aiWorkerBlockedMs, spec.aiWorkerBlockedAt = 0, nil
+        return
+    end
+
+    local C = RMS_Config.CORE.AI_WORKER
+    local x, _, z = getWorldTranslation(self.rootNode)
+    local anchor = spec.aiWorkerBlockedAt
+    if anchor == nil or MathUtil.vector2Length(x - anchor[1], z - anchor[2]) > C.BLOCKED_DISTANCE then
+        spec.aiWorkerBlockedMs, spec.aiWorkerBlockedAt = 0, { x, z }
+    end
+
+    -- accelerator asked by the helper, before the gearbox
+    local motor = self:getMotor()
+    if self:getIsMotorStarted() and motor ~= nil and (tonumber(motor.lastAcceleratorPedal) or 0) ~= 0 then
+        spec.aiWorkerBlockedMs = spec.aiWorkerBlockedMs + dt
+        if spec.aiWorkerBlockedMs >= C.BLOCKED_SECONDS * 1000 and self.stopCurrentAIJob ~= nil then
+            spec.aiWorkerBlockedMs, spec.aiWorkerBlockedAt = 0, nil
+            self:stopCurrentAIJob(AIMessageErrorBlockedByObject.new())
         end
     end
 end

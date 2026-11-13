@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Krytyczna awaria filtra cząstek stałych. Całkowicie zatkany nie przepuszcza już spalin: tylko wymiana przywraca moc silnika."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Nasycenie filtra cząstek stałych. Regeneracje nie zostały zakończone: obroty silnika są ograniczone, aż jedna z nich się powiedzie."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Krytyczne nasycenie filtra cząstek stałych. Jest zbyt zapełniony, aby sam się zregenerować, i wymaga regeneracji serwisowej w warsztacie; obroty pozostają ograniczone."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtr cząstek stałych pełen popiołu. Regeneracje spalają sadzę, nie popiół z oleju silnikowego: filtr trzeba wymontować i wyczyścić w warsztacie; obroty silnika są ograniczone."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lekkie uszkodzenie sprzęgła wentylatora. Wentylator reaguje mniej skutecznie, a chłodzenie jest nieznacznie osłabione."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Umiarkowane uszkodzenie sprzęgła wentylatora. Załączanie wentylatora jest nieregularne, a skuteczność chłodzenia wyraźnie spada."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Poważne uszkodzenie sprzęgła wentylatora. Wentylator nie zapewnia już wystarczającego przepływu powietrza, a silnik łatwiej się przegrzewa."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Zbiór niemożliwy: zespół żniwny jest uszkodzony"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Zapchanie: zbiór został zatrzymany"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Rozdrabniacz uszkodzony: słoma spada w pokos"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Rozdrabniacz uszkodzony: tej uprawy nie można już zbierać"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Rozdrabniacz uszkodzony: słoma spada nierozdrobniona"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Początkowe zużycie pasów napędowych. Lekko ślizgają się pod obciążeniem."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Umiarkowane zużycie pasów napędowych. Zespół zwalnia pod obciążeniem, a alarm obrotów czasem zatrzymuje zbiór."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Poważne zużycie pasów napędowych. Wydajność spada, a postoje wciąż się powtarzają."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Początkowe zużycie rozdrabniacza słomy. Słoma jest cięta mniej krótko, a rozdrabniacz pobiera trochę więcej mocy."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Umiarkowane zużycie rozdrabniacza słomy. Rozdrabniacz drga i pobiera więcej mocy."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Poważne zużycie rozdrabniacza słomy. Wirnik jest niewyważony i pobiera dużo mocy."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Krytyczna awaria rozdrabniacza słomy. Nóż pękł: rozdrabniacz stoi, a słoma spada w pokos."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Krytyczna awaria rozdrabniacza słomy. Nóż pękł: rozdrabniacz stoi, a słoma spada nierozdrobniona, w pokos, gdy uprawa go tworzy."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Początkowe zużycie walców podających. Gorzej chwytają masę: podawanie staje się nierówne."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Umiarkowane zużycie walców podających. Długość cięcia staje się nierówna i pojawiają się zapchania."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Poważne zużycie walców podających. Wydajność spada, a zapchania wciąż wracają."/>

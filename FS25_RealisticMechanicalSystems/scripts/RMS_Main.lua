@@ -122,6 +122,17 @@ end
 
 RMS_Main.loadBreakdownTexts()
 
+---Adds the store categories of modDesc, read by the game for DLCs only
+function RMS_Main.loadStoreCategories()
+    local xmlFile = XMLFile.load("rmsModDesc", modDirectory .. "modDesc.xml")
+    xmlFile:iterate("modDesc.storeCategories.storeCategory", function(_, key)
+        g_storeManager:loadCategoryFromXML(xmlFile, key, modDirectory, modName, true)
+    end)
+    xmlFile:delete()
+end
+
+RMS_Main.loadStoreCategories()
+
 source(g_currentModDirectory .. "scripts/RMS_Config.lua")
 source(g_currentModDirectory .. "scripts/RMS_Utils.lua")
 source(g_currentModDirectory .. "scripts/RMS_Fluids.lua")
@@ -214,14 +225,6 @@ end
 
 ---Attaches RMS to the machines and the greasing to the implements
 function RMS_Main.registerSpecializationToVehicles()
-	if g_modIsLoaded["FS25_AdvancedDamageSystem"] then
-		if not RMS_Main.conflictLogged then
-			Logging.warning("RMS: Advanced Damage System is loaded, RMS stays out. Keep only one of the two.")
-			RMS_Main.conflictLogged = true
-		end
-		return
-	end
-
 	for _, vehicleType in pairs(g_vehicleTypeManager.types) do
 		if getIsTypeManagedByRMS(vehicleType) then
 			addSpecialization(vehicleType, "RealisticMechanicalSystems")
@@ -321,7 +324,7 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
         screenInstance.rmsOriginalRepairCallback = button.onClickCallback
     end
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil or spec.isExcludedVehicle then
+    if spec == nil or spec.isExcludedVehicle or RealisticMechanicalSystems.isMissionVehicle(vehicle) then
         button.onClickCallback = screenInstance.rmsOriginalRepairCallback
         return
     end
@@ -379,6 +382,7 @@ function RMS_Main.hookRepaintButton(screenInstance, vehicle)
 
     local isRmsVehicle = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
         and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+        and not RealisticMechanicalSystems.isMissionVehicle(vehicle)
     if isRmsVehicle then
         button.onClickCallback = function()
             RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance), RealisticMechanicalSystems.STATUS.BODYWORK)
@@ -601,11 +605,9 @@ function RMS_Main.loadVehicleSales(saleSystem, superFunc, xmlFilename)
     return isLoaded
 end
 
-if not g_modIsLoaded["FS25_AdvancedDamageSystem"] then
-    g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
-    g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
-    g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
-end
+g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
+g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
+g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
 
 ---Moves the entry a test picks to a position of a list
 local function moveEntry(list, isEntry, position)
@@ -792,7 +794,6 @@ RMS_Main.updateAlphaTimer = 0
 RMS_Main.workshopCheckTimer = 0
 RMS_Main.isWorkshopOpen = true
 RMS_Main.currentWeather = WeatherType.SUN
-RMS_Main.currentWeatherFactor = 1.0
 
 ---Tells whether the time of day falls within the opening hours
 function RMS_Main:evaluateWorkshopState()
@@ -865,24 +866,9 @@ function RMS_Main:onDayChanged()
     end
 end
 
----Weather setting that scales the wear of a machine left outside
-RMS_Main.WEATHER_FACTOR_SETTINGS = {
-    RAIN = "RAIN_FACTOR",
-    SNOW = "SNOW_FACTOR",
-    HAIL = "HAIL_FACTOR"
-}
-
----Reads the current weather and the wear factor it gives
+---Reads the current weather
 function RMS_Main.updateWeather()
-    local weather = g_currentMission.environment.weather:getCurrentWeatherType()
-    local factor = 1.0
-    for name, setting in pairs(RMS_Main.WEATHER_FACTOR_SETTINGS) do
-        if WeatherType[name] == weather then
-            factor = RMS_Config.CORE[setting] or 1.0
-        end
-    end
-    RMS_Main.currentWeather = weather
-    RMS_Main.currentWeatherFactor = factor
+    RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
 end
 
 ---Steps a tracked machine; weather and shelter every meta step
@@ -933,6 +919,10 @@ function RMS_Main:update(dt)
         local spec = vehicle.spec_RealisticMechanicalSystems
         if spec ~= nil and not spec.isExcludedVehicle and vehicle.isActive ~= true and vehicle:getMotorState() == MotorState.ON then
             vehicle:raiseActive()
+            -- a sleeping vehicle never runs the game's motor stop timer
+            if vehicle.isServer and getIsSleeping(vehicle.rootNode) then
+                vehicle.spec_motorized.motorStopTimer = vehicle.spec_motorized.motorStopTimerDuration
+            end
         end
     end
 
@@ -967,8 +957,9 @@ function RMS_Main:loadMap()
         g_messageCenter:subscribe(MessageType.PERIOD_CHANGED, self.onPeriodChanged, self)
         g_messageCenter:subscribe(MessageType.DAY_CHANGED, self.onDayChanged, self)
     end
-    if RHM_Api ~= nil and RHM_Api.registerWearProvider ~= nil then
-        RHM_Api.registerWearProvider(RealisticMechanicalSystems.HARVEST_WEAR_PROVIDER)
+    local harvestApi = RMS_Utils.getHarvestModApi()
+    if harvestApi ~= nil and harvestApi.registerWearProvider ~= nil then
+        harvestApi.registerWearProvider(RealisticMechanicalSystems.HARVEST_WEAR_PROVIDER)
     end
 
     local soundsXmlFile = loadXMLFile("rmsSounds2D", Utils.getFilename("sounds/rms_sounds.xml", modDirectory))

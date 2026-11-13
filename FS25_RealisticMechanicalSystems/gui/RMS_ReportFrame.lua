@@ -7,7 +7,6 @@ local RMS_ReportFrame_mt = Class(RMS_ReportFrame, FrameElement)
 local WEAR_NORMAL_PERCENT = 10
 local WEAR_HIGH_PERCENT = 30
 local WEAR_CAUSE_MIN_PERCENT = 1
-local WORN_PARTS_SHOWN = 3
 local WEAR_CAUSES_SHOWN = 3
 local ASSESSMENT_ROWS = 3
 local SPEC_ROWS = 9
@@ -618,50 +617,12 @@ function RMS_ReportFrame:renderSpecRows()
 end
 
 function RMS_ReportFrame:addWornPartRows()
-    local conditionData = self.lastReport.conditionData
-    local systems = conditionData.systems or {}
-    local activeBreakdowns = conditionData.activeBreakdowns or {}
-    local adjusted = {}
-    for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
-        adjusted[partId] = true
-    end
-
-    local worn = {}
-    local systemParts = self.vehicle.spec_RealisticMechanicalSystems.systemParts
-    for systemKey, system in pairs(systems) do
-        if system.enabled ~= false then
-            for _, partId in ipairs(systemParts[systemKey]) do
-                local wear = conditionData.partWear[partId]
-                if wear ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear) then
-                    table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
-                end
-            end
-        end
-    end
-    table.sort(worn, function(a, b)
-        if a.ratio ~= b.ratio then
-            return a.ratio > b.ratio
-        end
-        return a.partId < b.partId
-    end)
-
-    local count = math.min(#worn, WORN_PARTS_SHOWN)
     local color = { RMS_Utils.getValueColorInverted(3, 1, 1, 2, 3, false) }
-    for index = 1, count do
-        local entry = worn[index]
-        local systemName = getSystemName(self.vehicle, entry.systemKey)
-        local text = adjusted[entry.partId]
-            and string.format(g_i18n:getText("rms_report_worn_part_adjust"), systemName,
-                RMS_Utils.formatMaintenanceLevel(self.vehicle, RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE))
-            or string.format(g_i18n:getText("rms_report_worn_part_replace"), systemName)
-        table.insert(self.breakdownsData, {
-            title = RMS_Utils.getBreakdownPartName(entry.partId, self.vehicle),
-            severity = string.format(g_i18n:getText("rms_report_worn_part_risk"), g_i18n:formatNumber(entry.ratio, 1)),
-            text = text,
-            color = color
-        })
+    local entries = RMS_Utils.getWornPartEntries(self.vehicle, self.lastReport.conditionData, RMS_Utils.WORN_PARTS_SHOWN)
+    for _, entry in ipairs(entries) do
+        table.insert(self.breakdownsData, { title = entry.title, severity = entry.severity, text = entry.text, color = color })
     end
-    return count
+    return #entries
 end
 
 ---Fills one detected breakdown or worn part

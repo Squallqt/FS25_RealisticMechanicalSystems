@@ -168,10 +168,6 @@ local LOG_ENTRY_FIELDS = {
     entryText("location", "UNKNOWN"),
     entryText("optionOne", "NONE"),
     entryText("optionTwo", "NONE"),
-    {
-        write = function(entry) return tostring(entry.optionThree or false) end,
-        read = function(entry, _, raw) entry.optionThree = RMS_Utils.normalizeBoolValue(raw, false) end
-    },
     entryFlag("isVisible", true),
     entryFlag("isCompleted", true),
     conditionNumber("year", 0),
@@ -552,6 +548,138 @@ function RMS_Utils.getFrontPtoOutput(vehicle)
     return nil
 end
 
+---Unit line of a shaft from its tractor joint to its implement joint
+-- @return float? x nil when the shaft is collapsed
+function RMS_Utils.getPtoShaftLine(output)
+    local input = output.connectedInput
+    local offset = input.zOffset or 0
+    local x1, y1, z1 = localToWorld(output.outputNode, 0, 0, offset)
+    local x2, y2, z2 = localToWorld(input.inputNode, 0, 0, -offset)
+    local x, y, z = x2 - x1, y2 - y1, z2 - z1
+    local length = math.sqrt(x * x + y * y + z * z)
+    if length < 0.001 then
+        return nil
+    end
+    return x / length, y / length, z / length
+end
+
+---Line of the shaft in the frame of one of its ends
+local function getLocalLine(node, x, y, z)
+    local lx, ly, lz = worldDirectionToLocal(node, x, y, z)
+    local length = math.max(math.sqrt(lx * lx + ly * ly + lz * lz), 0.001)
+    return lx / length, ly / length, lz / length
+end
+
+---Angle in deg between two lines of a shaft, which never folds back
+local function getBend(ax, ay, az, bx, by, bz)
+    return math.deg(math.acos(math.clamp(math.abs(ax * bx + ay * by + az * bz), 0, 1)))
+end
+
+---Bends of a mounted shaft against the line it had last lowered
+local function getMountedBends(output, x, y, z, isLowered)
+    local tx, ty, tz = getLocalLine(output.outputNode, x, y, z)
+    local ix, iy, iz = getLocalLine(output.connectedInput.inputNode, x, y, z)
+    local work = output.rmsShaft
+    if isLowered then
+        work = work or {}
+        work[1], work[2], work[3], work[4], work[5], work[6] = tx, ty, tz, ix, iy, iz
+        output.rmsShaft = work
+    end
+    -- never lowered since coupled: no working position yet
+    if work == nil then
+        return 0, 0
+    end
+    return getBend(work[1], work[2], work[3], tx, ty, tz), getBend(work[4], work[5], work[6], ix, iy, iz)
+end
+
+---Bends of a towed shaft against itself swung in line about the hitch
+-- @return boolean isTractorNearer the turn falls mostly on the tractor joint
+local function getTowedBends(vehicleObj, output, consumer, hitch)
+    local input = output.connectedInput
+    -- the frames carrying both ends: an articulated tractor's rear one
+    local root = vehicleObj:getParentComponent(output.outputNode)
+    local body = consumer:getParentComponent(input.inputNode)
+    local offset = input.zOffset or 0
+    local ax, ay, az = worldToLocal(root, localToWorld(output.outputNode, 0, 0, offset))
+    local bx, by, bz = worldToLocal(root, localToWorld(input.inputNode, 0, 0, -offset))
+    local hx, hy, hz = worldToLocal(root, getWorldTranslation(hitch.node))
+    local isTractorNearer = (ax - hx) ^ 2 + (ay - hy) ^ 2 + (az - hz) ^ 2 <= (bx - hx) ^ 2 + (by - hy) ^ 2 + (bz - hz) ^ 2
+    local fx, _, fz = worldDirectionToLocal(root, localDirectionToWorld(body, 0, 0, 1))
+    local yaw = math.atan2(fx, fz)
+    local c, s = math.cos(yaw), math.sin(yaw)
+    local dx, dz = bx - hx, bz - hz
+    local cx, cz = hx + dx * c - dz * s, hz + dx * s + dz * c
+    local lx, ly, lz = bx - ax, by - ay, bz - az
+    local mx, my, mz = cx - ax, by - ay, cz - az
+    local l = math.max(math.sqrt(lx * lx + ly * ly + lz * lz), 0.001)
+    local m = math.max(math.sqrt(mx * mx + my * my + mz * mz), 0.001)
+    lx, ly, lz, mx, my, mz = lx / l, ly / l, lz / l, mx / m, my / m, mz / m
+    -- in line, then turned with the implement
+    local tx, tz = mx * c + mz * s, mz * c - mx * s
+    return getBend(lx, ly, lz, mx, my, mz), getBend(lx, ly, lz, tx, my, tz), isTractorNearer
+end
+
+---Life coefficient of a cardan cross at a joint angle
+local function getCrossLife(angle)
+    local points = RMS_Config.CORE.PTO_FACTOR_DATA.SHAFT_CROSS_LIFE
+    angle = math.clamp(angle, points[1][1], points[#points][1])
+    for i = 2, #points do
+        local low, high = points[i - 1], points[i]
+        if angle <= high[1] then
+            return low[2] + (high[2] - low[2]) * (angle - low[1]) / (high[1] - low[1])
+        end
+    end
+    return points[#points][2]
+end
+
+---Keeps the joint nearest its limit and the wear of the worst cross
+-- @param float bend deg of the joint, aligned at work
+-- @param boolean isWide wide-angle joint: two crosses share its angle
+-- @param boolean isUnderPower implement at work: a plain joint holds less
+-- @param float torqueShare torque against the one the driveline is built for
+local function addJointStrain(data, bend, isWide, isUnderPower, torqueShare)
+    local C = RMS_Config.CORE.PTO_FACTOR_DATA
+    local levels = RMS_Config.CORE.DIRECT_FAILURES
+    local limit = (isWide and levels.PTO_SHAFT_ANGLE_WIDE or isUnderPower and levels.PTO_SHAFT_ANGLE
+        or levels.PTO_SHAFT_ANGLE_TURNING).limit
+    if bend / limit > data.shaftAngle / data.shaftLimit then
+        data.shaftAngle, data.shaftLimit = bend, limit
+    end
+    -- a cross lasts its rated life up to its rating angle
+    local cross = math.max(bend / (isWide and 2 or 1), C.SHAFT_ANGLE_REFERENCE)
+    local lifeLoss = getCrossLife(C.SHAFT_ANGLE_REFERENCE) / getCrossLife(cross) - 1
+    data.shaftWear = math.max(data.shaftWear, lifeLoss * torqueShare ^ C.SHAFT_TORQUE_EXPONENT)
+end
+
+---Bends both joints of a shaft; an engaged one strains the data
+local function addShaftStrain(vehicleObj, output, consumer, isEngaged, torqueShare, data)
+    local x, y, z = RMS_Utils.getPtoShaftLine(output)
+    if x == nil then
+        return
+    end
+    -- at work: a towed implement in line, a mounted one lowered
+    local hitch = consumer:getActiveInputAttacherJoint()
+    local isTowed = hitch ~= nil and not consumer:getAllowsLowering()
+    local isLowered = consumer.getIsLowered == nil or consumer:getIsLowered(true)
+    local tractorBend, implementBend, isTractorNearer
+    if isTowed then
+        tractorBend, implementBend, isTractorNearer = getTowedBends(vehicleObj, output, consumer, hitch)
+    else
+        tractorBend, implementBend = getMountedBends(output, x, y, z, isLowered)
+    end
+    if not isEngaged then
+        return
+    end
+
+    -- two crosses where the game draws a wide-angle joint
+    local input = output.connectedInput
+    local isDouble = input.endJoint2 ~= nil
+    local isWideBothEnds = RMS_Config.CORE.PTO_FACTOR_DATA.SHAFT_WIDE_BOTH_ENDS[input.rmsShaftModel] == true
+    -- a towed implement turns on a wide-angle joint nearest its hitch
+    addJointStrain(data, tractorBend, isDouble or isTowed and isTractorNearer, isLowered, torqueShare)
+    addJointStrain(data, implementBend, isDouble and isWideBothEnds or isTowed and not isTractorNearer, isLowered, torqueShare)
+end
+
 local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounted)
     if vehicleObj == nil or visited[vehicleObj] then
         return
@@ -591,13 +719,19 @@ local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounte
                 if isEngaged or measuredRpm > 0 or torque > 0 then
                     data.isActive = true
                 end
+                local neededMaxPower = consumer.spec_powerConsumer ~= nil
+                    and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
+                local ratedTorque = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
+                local torqueShare = ratedTorque > 0 and math.clamp(torque / ratedTorque, 0, 1) or 0
+                -- a harvester drives its header through a fixed drive
+                if vehicleObj.spec_combine == nil then
+                    addShaftStrain(vehicleObj, output, consumer, isEngaged, torqueShare, data)
+                end
                 if isEngaged then
                     data.activeLinks[consumer] = true
 
                     if consumer.spec_sprayer == nil then
-                        local neededMaxPower = consumer.spec_powerConsumer ~= nil
-                            and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
-                        data.engagementTorques[consumer] = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
+                        data.engagementTorques[consumer] = ratedTorque
 
                         if vehicleObj.spec_combine == nil
                             and consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
@@ -624,7 +758,10 @@ function RMS_Utils.getConnectedPtoData(vehicle, side)
         connectedVehicles = {},
         activeLinks = {},
         engagementTorques = {},
-        isRaised = false
+        isRaised = false,
+        shaftAngle = 0,
+        shaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit,
+        shaftWear = 0
     }
     local visited = {}
 
@@ -725,16 +862,7 @@ function RMS_Utils.setLevelGauge(fillElement, underElement, trackWidth, level)
     underElement:setVisible(fill <= 0)
     fillElement:setSize(GuiUtils.alignValueToScreenPixels(trackWidth * fill, true), nil)
     fillElement:setImageColor(nil, color[1], color[2], color[3], color[4])
-end
-
--- @return float shortage 0 above that level, up to 1 on an empty circuit
-function RMS_Utils.getFluidShortage(level)
-    local start = RMS_Config.FLUIDS.LEVEL_MIN_MARK
-    if start <= 0 then
-        return 0
-    end
-
-    return math.clamp((start - math.clamp(tonumber(level) or 1, 0, 1)) / start, 0, 1)
+    underElement:setImageColor(nil, color[1], color[2], color[3], color[4])
 end
 
 ---Returns the squared distance past a threshold, 0 on the safe side of it
@@ -774,6 +902,40 @@ function RMS_Utils.getEngineLuggingSeverity(motor, motorLoad, loadThreshold)
     return loadShare * loadShare * rpmShare * rpmShare
 end
 
+---Returns the torque against the torque at peak power the block holds
+function RMS_Utils.getRatedTorqueRatio(vehicle, stockLoad)
+    local motor = vehicle.spec_motorized.motor
+    local sanitize = RealisticMechanicalSystems.sanitizeNumber
+    local ratedSpeed = sanitize(motor.peakMotorPowerRotSpeed, 0, 0)
+    local rated = ratedSpeed > 0 and sanitize(motor.peakMotorPower, 0, 0) / ratedSpeed or 0
+    local rpm = sanitize(motor:getLastRealMotorRpm(), ratedSpeed * 30 / math.pi, 0)
+    local rise = rated > 0 and sanitize(motor:getTorqueCurve():get(rpm), rated, 0) / rated or 1
+    return stockLoad * rise / RMS_EngineRemap.getOverloadRatio(vehicle)
+end
+
+---Life law past the rated level: wear grows as the ratio to the exponent
+function RMS_Utils.getLifeLawFactor(ratio, exponent)
+    return ratio > 1 and ratio ^ exponent - 1 or 0
+end
+
+---Wear of a cold circuit, as liners wear by their start temperature
+function RMS_Utils.getColdWearFactor(temperature, reference)
+    local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
+    if temperature >= reference then
+        return 0
+    end
+    local measured = C.COLD_MOTOR_TEMP_THRESHOLD - C.COLD_MOTOR_MEASURED_MIN
+    return math.exp(C.COLD_MOTOR_WEAR_SLOPE * math.min(reference - temperature, measured)) - 1
+end
+
+---Wear past a temperature, life halved every HEAT_HALVING_K
+function RMS_Utils.getHeatWearFactor(temperature, reference)
+    if temperature <= reference then
+        return 0
+    end
+    return 2 ^ ((temperature - reference) / RMS_Config.CORE.HEAT_HALVING_K) - 1
+end
+
 function RMS_Utils.getPartFailureChance(partId, fromWear, toWear)
     local C = RMS_Config.CORE
     local life = C.COMPONENT_LIVES[RMS_Breakdowns.BreakdownRegistry[partId].component]
@@ -797,7 +959,68 @@ function RMS_Utils.getPartRiskRatio(partId, wear)
 end
 
 function RMS_Utils.getIsPartWorn(partId, wear)
-    return wear >= RMS_Utils.getPartB10Wear(partId) and RMS_Utils.getPartRiskRatio(partId, wear) >= RMS_Config.CORE.RISK_RATIO_HIGH
+    return wear >= RMS_Utils.getPartB10Wear(partId) and RMS_Utils.getPartRiskRatio(partId, wear) >= RMS_Config.CORE.WORN_PART_RISK_RATIO
+end
+
+RMS_Utils.WORN_PARTS_SHOWN = 3
+
+---Lists the worn parts a complete report found, most at risk first
+-- @param integer count most parts listed
+-- @param function? isKept tells whether a part is still listed
+-- @return table entries partId, title, severity and text of each worn part
+function RMS_Utils.getWornPartEntries(vehicle, conditionData, count, isKept)
+    local R = RealisticMechanicalSystems
+    local activeBreakdowns, adjusted, worn = conditionData.activeBreakdowns or {}, {}, {}
+    for _, partId in ipairs(R.MAJOR_SERVICE_CHECKS) do
+        adjusted[partId] = true
+    end
+    local systemParts = vehicle.spec_RealisticMechanicalSystems.systemParts
+    for systemKey, system in pairs(conditionData.systems or {}) do
+        if system.enabled ~= false then
+            for _, partId in ipairs(systemParts[systemKey]) do
+                local wear = conditionData.partWear[partId]
+                if wear ~= nil and activeBreakdowns[partId] == nil and RMS_Utils.getIsPartWorn(partId, wear)
+                    and (isKept == nil or isKept(partId)) then
+                    table.insert(worn, { partId = partId, systemKey = systemKey, ratio = RMS_Utils.getPartRiskRatio(partId, wear) })
+                end
+            end
+        end
+    end
+    table.sort(worn, function(a, b)
+        if a.ratio ~= b.ratio then
+            return a.ratio > b.ratio
+        end
+        return a.partId < b.partId
+    end)
+    local entries = {}
+    for index = 1, math.min(#worn, count) do
+        local part = worn[index]
+        local systemName = g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, RMS_Utils.getSystemNameByKey(R.SYSTEMS, part.systemKey)))
+        local text = adjusted[part.partId]
+            and string.format(g_i18n:getText("rms_report_worn_part_adjust"), systemName,
+                RMS_Utils.formatMaintenanceLevel(vehicle, R.MAINTENANCE_TYPES.PREVENTIVE))
+            or string.format(g_i18n:getText("rms_report_worn_part_replace"), systemName)
+        table.insert(entries, { partId = part.partId, title = RMS_Utils.getBreakdownPartName(part.partId, vehicle),
+            severity = string.format(g_i18n:getText("rms_report_worn_part_risk"), g_i18n:formatNumber(part.ratio, 1)), text = text })
+    end
+    return entries
+end
+
+---Lists the worn parts of the last complete report still on the machine
+-- @return table entries partId, title, severity and text of the three most at risk
+function RMS_Utils.getInspectedWornParts(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    for index = #(spec.maintenanceLog or {}), 1, -1 do
+        local entry = spec.maintenanceLog[index]
+        if entry.conditionData ~= nil and RealisticMechanicalSystems.getIsCompleteReport(entry) then
+            local found = entry.conditionData.partWear
+            -- a part replaced since, or broken since, has left the list
+            return RMS_Utils.getWornPartEntries(vehicle, entry.conditionData, RMS_Utils.WORN_PARTS_SHOWN, function(partId)
+                return vehicle:getActiveBreakdowns()[partId] == nil and (spec.partWear[partId] or 0) >= found[partId]
+            end)
+        end
+    end
+    return {}
 end
 
 function RMS_Utils.getPartB10Wear(partId)
@@ -989,7 +1212,7 @@ function RMS_Utils.serializeBreakdowns(breakdownsTable)
             breakdown.progressTimer or 0, toFlag(breakdown.isVisible), toFlag(breakdown.isSelectedForRepair),
             toFlag(breakdown.isActive ~= false), math.max(tonumber(breakdown.resumeTimer) or 0, 0),
             toCount(breakdown.source), toCount(breakdown.effectTargetIndex), toCount(breakdown.branch),
-            overdue == nil and -1 or toFlag(overdue), breakdown.usedPartHours or "", toFlag(breakdown.warrantyImpact)))
+            overdue == nil and -1 or toFlag(overdue), breakdown.usedPartHours or "", toCount(breakdown.warrantyAbuse)))
     end
     return table.concat(entries, ";")
 end
@@ -1044,7 +1267,7 @@ function RMS_Utils.deserializeBreakdowns(breakdownString)
                 source = tonumber(fields[8]) or RealisticMechanicalSystems.BREAKDOWN_SOURCES.RANDOM,
                 effectTargetIndex = toCount(fields[9]),
                 branch = toCount(fields[10]),
-                warrantyImpact = tonumber(fields[13]) == 1,
+                warrantyAbuse = RealisticMechanicalSystems.WARRANTY_ABUSES[toCount(fields[13])] and toCount(fields[13]) or nil,
                 usedPartHours = tonumber(fields[12])
             }
             -- -1: no warranty verdict saved
@@ -1308,9 +1531,7 @@ function RMS_Utils.formatOdometerKilometers(kilometers)
     if kilometers == nil or kilometers ~= kilometers or kilometers < 0 or kilometers == math.huge then
         return g_i18n:getText("rms_odometer_not_recorded")
     end
-    local value = g_i18n:formatNumber(kilometers, 1)
-    local decimalPattern = g_i18n.decimalSeparator:gsub("(%W)", "%%%1")
-    return (value:gsub(decimalPattern .. "(%d)$", ".%1")) .. " km"
+    return g_i18n:formatNumber(kilometers, 1) .. " km"
 end
 
 
@@ -1403,12 +1624,13 @@ function RMS_Utils.formatPower(hp)
 end
 
 ---Names the first option of a service
-function RMS_Utils.formatServiceOption(vehicle, serviceType, optionOne)
+-- @param string? workshopType of a remap to come, nil for the software fitted
+function RMS_Utils.formatServiceOption(vehicle, serviceType, optionOne, workshopType)
     if serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE then
         return RMS_Utils.formatMaintenanceLevel(vehicle, optionOne)
     elseif serviceType == RealisticMechanicalSystems.STATUS.REMAP and vehicle.spec_motorized ~= nil then
         local stockHp = RMS_EngineRemap.getStockPeaks(vehicle)
-        local power = optionOne == RMS_EngineRemap.REMAP and stockHp * (1 + RMS_EngineRemap.getGain(vehicle)) or stockHp
+        local power = optionOne == RMS_EngineRemap.REMAP and stockHp * (1 + RMS_EngineRemap.getGain(vehicle, workshopType)) or stockHp
         return string.format("%s · %s", g_i18n:getText(optionOne), RMS_Utils.formatPower(power))
     end
     return g_i18n:getText(optionOne)
@@ -1534,13 +1756,6 @@ RMS_Utils.COLOR = {
     }
 }
 
-RMS_Utils.LOG_ICON_PROFILES = {
-    square = {row = "rms_logTypeIcon", detail = "rms_logDetailIcon"},
-    wide = {row = "rms_logTypeIconWide", detail = "rms_logDetailIconWide"},
-    maintenance = {row = "rms_logTypeIconMaintenance", detail = "rms_logDetailIconMaintenance"},
-    refill = {row = "rms_logTypeIconRefill", detail = "rms_logDetailIconRefill"}
-}
-
 ---Entries of the maintenance log the record shows, newest first
 function RMS_Utils.getVisibleLogEntries(vehicle)
     local log = vehicle.spec_RealisticMechanicalSystems.maintenanceLog
@@ -1591,24 +1806,24 @@ function RMS_Utils.getLogTypePresentation(entry)
     local entryType = entry ~= nil and entry.type or nil
 
     if entryType == status.REPAIR then
-        return g_i18n:getText("rms_ws_action_repair"), {0.88, 0.12, 0.12, 1}, "gui.contextAction_icon_repair", "wide"
+        return g_i18n:getText("rms_ws_action_repair"), {0.88, 0.12, 0.12, 1}, "gui.contextAction_icon_repair"
     elseif entryType == status.MAINTENANCE then
-        return g_i18n:getText("rms_ws_action_maintenance"), RMS_Utils.COLOR.HIGHLIGHT, "rms_Hud.maintenance", "maintenance"
+        return g_i18n:getText("rms_ws_action_maintenance"), RMS_Utils.COLOR.HIGHLIGHT, "rms_Hud.maintenance"
     elseif entryType == status.INSPECTION then
-        return g_i18n:getText("rms_ws_action_inspection"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_search", "square"
+        return g_i18n:getText("rms_ws_action_inspection"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_search"
     elseif entryType == status.OVERHAUL then
-        return g_i18n:getText("rms_ws_action_overhaul"), {1, 0.5, 0, 1}, "gui.icon_ingameMenu_options", "square"
+        return g_i18n:getText("rms_ws_action_overhaul"), {1, 0.5, 0, 1}, "gui.icon_ingameMenu_options"
     elseif entryType == status.REFILL then
-        return g_i18n:getText("rms_ws_action_refill"), RMS_Utils.COLOR.HIGHLIGHT, "rms_WorkshopFluids.engineOil", "refill"
+        return g_i18n:getText("rms_ws_action_refill"), RMS_Utils.COLOR.HIGHLIGHT, "rms_WorkshopFluids.engineOil"
     elseif entryType == status.BODYWORK then
-        return g_i18n:getText("rms_spec_state_bodywork"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_machines", "square"
+        return g_i18n:getText("rms_spec_state_bodywork"), {1, 1, 1, 1}, "gui.icon_vehicleDealer_machines"
     elseif entryType == status.REMAP then
-        return g_i18n:getText("rms_spec_state_remap"), RMS_Utils.COLOR.HIGHLIGHT, "gui.storeAttribute_power", "square"
+        return g_i18n:getText("rms_spec_state_remap"), RMS_Utils.COLOR.HIGHLIGHT, "gui.storeAttribute_power"
     elseif entryType == RealisticMechanicalSystems.LOG_DIAGNOSTIC_READING then
-        return g_i18n:getText("rms_diagnostic_log_title"), {1, 1, 1, 1}, "rms_Diagnostic.stethoscope", "square"
+        return g_i18n:getText("rms_diagnostic_log_title"), {1, 1, 1, 1}, "rms_Diagnostic.stethoscope"
     end
 
-    return "-", {1, 1, 1, 1}, "gui.icon_ingameMenu_options", "square"
+    return "-", {1, 1, 1, 1}, "gui.icon_ingameMenu_options"
 end
 
 local function populateTextColumnsRow(items, index, cell, columns)
@@ -2067,8 +2282,8 @@ function RMS_Utils.getMarketValue(vehicle)
         hours * C.BASE_SYSTEMS_WEAR * C.MACHINE_LIFE_HOURS)
     local repaintPrice = (RMS_Bodywork.getPrice(vehicle, RMS_Bodywork.FULL, R.WORKSHOP.DEALER) or 0)
         * math.sqrt(vehicle:getWearTotalAmount())
-    local repairPrice = vehicle:getServicePrice(R.STATUS.REPAIR, R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, false, R.WORKSHOP.DEALER, true)
-    local overhaulPrice = vehicle:getServicePrice(R.STATUS.OVERHAUL, R.OVERHAUL_TYPES.FULL, nil, false, R.WORKSHOP.DEALER)
+    local repairPrice = vehicle:getServicePrice(R.STATUS.REPAIR, R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, R.WORKSHOP.DEALER, true)
+    local overhaulPrice = vehicle:getServicePrice(R.STATUS.OVERHAUL, R.OVERHAUL_TYPES.FULL, nil, R.WORKSHOP.DEALER)
     local deduction = math.min(repairPrice + R.getCatchUpPrice(vehicle, hours), overhaulPrice)
     return math.max(price * share - deduction - repaintPrice, price * 0.03)
 end
@@ -2114,6 +2329,45 @@ function RMS_Utils.getVehicleFacts(vehicle, isTracked, isDirectSell)
         third,
         { label = valueLabel, value = value ~= nil and g_i18n:formatMoney(value, 0, true, false) or "-", icon = RMS_Utils.getCurrencySlice() }
     }
+end
+
+-- slice width and height, larger side of its drawing, atlas pixels
+RMS_Utils.ICON_DRAWINGS = {
+    ["gui.icon_vehicleDealer_search"] = { 72, 72, 62 },
+    ["gui.icon_ingameMenu_options"] = { 72, 72, 59 },
+    ["gui.icon_vehicleDealer_machines"] = { 72, 72, 61 },
+    ["gui.storeAttribute_power"] = { 36, 36, 34 },
+    ["gui.contextAction_icon_repairAlert"] = { 64, 48, 39 },
+    ["gui.contextAction_icon_repair"] = { 64, 48, 42 },
+    ["gui.icon_construction_buildings"] = { 72, 72, 59 },
+    ["gui.icon_calendar"] = { 48, 48, 37 },
+    ["gui.icon_clock"] = { 48, 48, 34 },
+    ["gui.icon_ingameMenu_statistics"] = { 72, 72, 58 },
+    ["gui.storeAttribute_operatingHours"] = { 36, 36, 33 },
+    ["gui.storeAttribute_condition"] = { 36, 36, 31 },
+    ["ui_elements.currency_euro"] = { 48, 48, 38 },
+    ["ui_elements.currency_dollar"] = { 48, 48, 38 },
+    ["ui_elements.currency_pound"] = { 48, 48, 38 },
+    ["rms_Hud.maintenance"] = { 72, 72, 59 },
+    ["rms_WorkshopFluids.engineOil"] = { 128, 128, 111 },
+    ["rms_Diagnostic.stethoscope"] = { 160, 160, 142 }
+}
+-- share of its slot the drawing fills
+local ICON_FILL = 0.84
+-- most stretch of a slice: 1.1 times on a 1440 px screen
+local ICON_MAX_SCALE = 1.1 / 1440
+
+---Fits a pictogram so its drawing fills its slot like the others
+-- @param table element picture, its slot the size of its first fit
+function RMS_Utils.fitIcon(element)
+    local width, height, drawing = unpack(RMS_Utils.ICON_DRAWINGS[element.overlay.sliceId])
+    element.rmsIconSlot = element.rmsIconSlot or element.size[2]
+    local scale = math.min(ICON_FILL * element.rmsIconSlot / drawing, ICON_MAX_SCALE)
+    local newWidth, newHeight = width * scale * g_screenHeight / g_screenWidth, height * scale
+    -- the same centre, whatever the pivot
+    element:setPosition(element.position[1] + (newWidth - element.size[1]) * (element.pivot[1] - 0.5),
+        element.position[2] + (newHeight - element.size[2]) * (element.pivot[2] - 0.5))
+    element:setSize(newWidth, newHeight)
 end
 
 ---Writes the facts of a vehicle in rows cloned from one template
@@ -2222,10 +2476,25 @@ end
 function RMS_Utils.serializeInvoice(invoice)
     local lines = {}
     for _, line in ipairs(invoice or {}) do
-        lines[#lines + 1] = string.format("%s,%s,%s,%.6f,%.4f,%s", tostring(line.kind or ""), tostring(line.key or ""),
+        local text = string.format("%s,%s,%s,%.6f,%.4f,%s", tostring(line.kind or ""), tostring(line.key or ""),
             tostring(line.mode or ""), tonumber(line.liters) or 0, tonumber(line.price) or 0, line.warrantyReason or "")
+        if line.labour ~= nil then
+            text = text .. string.format(",%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%s,%s,%s,%s,%s", line.labour, line.hours, line.parts,
+                line.kit, line.worn, line.gross, line.partType or "", line.repairType or "", table.concat(line.ownParts, "|"),
+                table.concat(line.kitParts, "|"), table.concat(line.wornParts, "|")) .. (line.months ~= nil and "," .. line.months or "")
+        end
+        lines[#lines + 1] = text
     end
     return table.concat(lines, ";")
+end
+
+---Splits a list of part ids written by serializeInvoice
+local function splitParts(text)
+    local parts = {}
+    for partId in string.gmatch(text or "", "[^|]+") do
+        table.insert(parts, partId)
+    end
+    return parts
 end
 
 ---Rebuilds invoice lines from their serialized form
@@ -2236,16 +2505,24 @@ function RMS_Utils.deserializeInvoice(serialized)
 
     local invoice = {}
     for value in string.gmatch(serialized, "[^;]+") do
-        local kind, key, mode, liters, price, warrantyReason = string.match(value, "^([^,]*),([^,]*),([^,]*),([^,]*),([^,]*),?([^,]*)$")
+        local fields = {}
+        for field in string.gmatch(value .. ",", "([^,]*),") do
+            table.insert(fields, field)
+        end
+        local kind = fields[1]
         if kind ~= nil and kind ~= "" then
-            table.insert(invoice, {
-                kind = kind,
-                key = key,
-                mode = mode ~= "" and mode or nil,
-                liters = tonumber(liters) or 0,
-                price = tonumber(price) or 0,
-                warrantyReason = warrantyReason ~= "" and warrantyReason or nil
-            })
+            local line = { kind = kind, key = fields[2] or "", mode = fields[3] ~= "" and fields[3] or nil,
+                liters = tonumber(fields[4]) or 0, price = tonumber(fields[5]) or 0,
+                warrantyReason = fields[6] ~= nil and fields[6] ~= "" and fields[6] or nil }
+            -- the costs of a repair, logged since the quote shows them
+            if #fields >= 17 then
+                line.labour, line.hours, line.parts = tonumber(fields[7]), tonumber(fields[8]), tonumber(fields[9])
+                line.kit, line.worn, line.gross = tonumber(fields[10]), tonumber(fields[11]), tonumber(fields[12])
+                line.partType, line.repairType = fields[13], fields[14]
+                line.ownParts, line.kitParts, line.wornParts = splitParts(fields[15]), splitParts(fields[16]), splitParts(fields[17])
+                line.months = tonumber(fields[18])
+            end
+            table.insert(invoice, line)
         end
     end
     return invoice
@@ -2284,6 +2561,12 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
         end
     end
     return entry
+end
+
+---Returns the interface of the harvesting mod, kept in its own mod table
+function RMS_Utils.getHarvestModApi()
+    local modEnv = _G.FS25_RealisticHarvesting
+    return modEnv ~= nil and modEnv.RHM_Api or nil
 end
 
 ---Tells whether the CVT addon mod drives the transmission of this vehicle
@@ -2348,13 +2631,14 @@ function RMS_Utils.getFanDrive(vehicle)
     return "DIRECT"
 end
 
----Returns the power to trailer mass thresholds, trucks having their own
-function RMS_Utils.getHeavyTrailerRatioLevels(isTruck)
+---Returns the power to mass levels of a heavy load
+function RMS_Utils.getHeavyTrailerRatioLevels(vehicle)
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
-    if isTruck then
+    if vehicle.spec_RealisticMechanicalSystems.isTruck then
         return C.HEAVY_TRAILER_TRUCK_MASS_RATIO_THRESHOLD, C.HEAVY_TRAILER_TRUCK_MASS_RATIO_FULL_EFFECT
     end
-    return C.HEAVY_TRAILER_MASS_RATIO_THRESHOLD, C.HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT
+    local powerPerOwnMass = vehicle:getMotor().peakMotorPower * 1.36 / math.max(vehicle:getTotalMass(true), 0.01)
+    return powerPerOwnMass / C.HEAVY_TRAILER_MASS_RATIO_THRESHOLD, powerPerOwnMass / C.HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT
 end
 
 ---Builds a logger printing only while debug mode is on
@@ -2554,10 +2838,17 @@ function RMS_Utils.fitRowText(labelElement, valueElement, labelText, valueText)
 end
 
 
-function RMS_Utils.mirrorSelectionToChildren(element)
+---Gives the children of an element its selection, a row its highlight
+-- @param table? row list row whose highlight the children take as their focus
+function RMS_Utils.mirrorSelectionToChildren(element, row)
     for _, child in ipairs(element.elements) do
         child.getIsSelected = function()
             return element:getIsSelected()
+        end
+        if row ~= nil then
+            child.getIsFocused = function()
+                return row:getIsSelected() or row:getIsHighlighted()
+            end
         end
     end
 end

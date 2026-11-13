@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Wybierz czynność"/>
         <text name="rms_ws_section_work_order" text="Zlecenie naprawy"/>
         <text name="rms_ws_section_recap" text="Zestawienie"/>
-        <text name="rms_ws_section_parts" text="Uwzględnione części"/>
         <text name="rms_ws_section_history" text="Historia"/>
         <text name="rms_ws_label_last_check" text="Ostatnia kontrola"/>
         <text name="rms_ws_reading_outdated" text="Do kontroli"/>
-        <text name="rms_ws_label_more_parts" text="+ %s więcej"/>
         <text name="rms_ws_label_committed_cost" text="Poniesiony koszt"/>
         <text name="rms_ws_label_finish_time" text="Godzina zakończenia"/>
         <text name="rms_ws_label_total_estimate" text="Szacowana suma"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Mała łatwość obsługi"/>
         <text name="rms_shop_launch_year" text="Model wprowadzony w %d"/>
         <text name="rms_shop_launch_year_unknown" text="Rok wprowadzenia na rynek nieznany"/>
+        <text name="rms_shop_category_maintenance" text="Obsługa techniczna"/>
         <text name="rms_owner_care_careful" text="Staranna obsługa techniczna"/>
         <text name="rms_owner_care_regular" text="Regularna obsługa techniczna"/>
         <text name="rms_owner_care_neglected" text="Zaniedbana obsługa techniczna"/>
+        <text name="rms_ws_label_maintenance_count" text="Wykonane obsługi techniczne"/>
         <text name="rms_ws_label_overhaul_count" text="Wykonane remonty"/>
         <text name="rms_ws_label_maintenance_log" text="Historia obsługi"/>
         <text name="rms_ws_label_last_maintenance" text="Ostatnia obsługa"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Koszt na godzinę pracy"/>
         <text name="rms_log_invoice_title" text="Szczegóły faktury"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Ryczałt warsztatowy"/>
-        <text name="rms_log_invoice_labour" text="Robocizna"/>
         <text name="rms_log_invoice_filters" text="Filtry"/>
         <text name="rms_log_cancelled_desc" text="Czynność anulowana"/>
         <text name="rms_log_ownership_months_title" text="Okres posiadania"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Pojazd został odmalowany"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Średni odstęp między awariami"/>
         <text name="rms_log_average_maintenance_interval_title" text="Średni okres międzyobsługowy"/>
         <text name="rms_log_performed" text="Przeprowadzono: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Ochrona termiczna: ograniczenie mocy zniesione"/>
         <text name="rms_breakdown_at_progress_message" text="w toku"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Uwaga! Silnik jest zimny, zmniejsz obciążenie."/>
+        <text name="rms_spec_cold_engine_message" text="Uwaga! Silnik jest zimny: zużywa się, dopóki się nie rozgrzeje."/>
         <text name="rms_spec_overheat_engine_message" text="Uwaga! Przegrzanie silnika."/>
         <text name="rms_spec_overheat_transmission_message" text="Uwaga! Przegrzanie skrzyni biegów."/>
         <text name="rms_spec_overhaul_partial" text="Częściowy"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="W tym miesiącu"/>
         <text name="rms_spec_tomorrow_at" text="Jutro o godzinie "/>
         <text name="rms_spec_never" text="Nigdy"/>
-        <text name="rms_spec_next_planned_service_notification" text="Rozpoczęto zaplanowaną czynność: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Zaplanowana czynność anulowana z powodu braku wystarczających środków: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Nie udało się uruchomić zaplanowanej czynności %s: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="Pojutrze o godzinie "/>
         <text name="rms_spec_day_s" text="dni"/>
         <text name="rms_spec_day_one" text="dzień"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Jakość materiałów eksploatacyjnych"/>
         <text name="rms_option_menu_option_two_title_repair" text="Jakość części zamiennych"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Układ"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Jeśli czynność ujawni awarie, automatycznie rozpocznie się standardowa naprawa z użyciem oryginalnych części."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Po naprawie automatycznie rozpocznie się zalecany przegląd z użyciem oryginalnych materiałów eksploatacyjnych."/>
         <text name="rms_option_menu_price_text" text="Koszt"/>
-        <text name="rms_option_menu_perform_repair" text="Automatyczna naprawa"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatyczna obsługa techniczna"/>
         <text name="rms_option_menu_warranty_repair_text" text="Naprawa gwarancyjna"/>
         <text name="rms_option_menu_lease_service_text" text="W cenie wypożyczenia"/>
         <text name="rms_option_menu_duration_text" text="Czas trwania"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Wliczone"/>
         <text name="rms_ws_levels_mechanical" text="Mechaniczne"/>
         <text name="rms_ws_levels_every_level" text="Na każdym poziomie: czyszczenie chłodnicy i smarowanie."/>
-        <text name="rms_ws_quality_risk" text="Ryzyko wady"/>
+        <text name="rms_ws_quality_part_wear" text="Zużycie części"/>
+        <text name="rms_ws_quality_factory_kept" text="Gwarancja fabryczna zachowana"/>
+        <text name="rms_ws_quality_factory_lost" text="Utrata gwarancji fabrycznej"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtry bez wad"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtr czasem wadliwy"/>
+        <text name="rms_ws_quality_filter_often" text="Filtr częściej wadliwy"/>
         <text name="rms_ws_quality_reference" text="Cena odniesienia"/>
-        <text name="rms_ws_quality_donor" text="Maszyna z %d h"/>
-        <text name="rms_ws_quality_donors" text="Maszyny z %d do %d h"/>
+        <text name="rms_ws_quality_donor" text="Z demontażu maszyny z %d h"/>
+        <text name="rms_ws_quality_donors" text="Z demontażu maszyn z %d do %d h"/>
         <text name="rms_ws_quality_new_part" text="Nowa część"/>
         <text name="rms_ws_quality_used_warranty" text="Gwarancja 3 miesiące"/>
         <text name="rms_ws_quality_partial_warranty" text="Częściowa gwarancja"/>
         <text name="rms_ws_quality_no_warranty" text="Bez gwarancji"/>
         <text name="rms_ws_quality_oem_warranty" text="Gwarancja 12 miesięcy"/>
         <text name="rms_ws_quality_factory_warranty" text="Gwarancja fabryczna"/>
-        <text name="rms_warranty_used" text="Gwarancja szrotu: tylko część"/>
+        <text name="rms_ws_quality_part_warranty" text="Gwarancja jeszcze %d mies."/>
         <text name="rms_ws_quality_delta" text="%s wobec oryginału"/>
         <text name="rms_ws_repair_row_faults" text="Objęte awarie"/>
         <text name="rms_ws_repair_row_faults_detail" text="Spośród zaznaczonych"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Uszkodzona część"/>
         <text name="rms_ws_repair_row_part_detail" text="Przyczyna awarii"/>
         <text name="rms_ws_repair_part_replaced" text="Wymieniona"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Zużyte części"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="W tym samym układzie"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Wymienione"/>
         <text name="rms_ws_repair_row_quality" text="Jakość części"/>
         <text name="rms_ws_repair_row_quality_detail" text="Wybierana na kartach poniżej"/>
         <text name="rms_ws_repair_quality_choice" text="Do wyboru"/>
         <text name="rms_ws_warranty_title" text="Gwarancja"/>
+        <text name="rms_ws_quote_warranty_label" text="Gwarancja:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Gwarancja fabryczna:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Gwarancja części:"/>
+        <text name="rms_ws_quote_warranty_covered" text="obejmuje"/>
+        <text name="rms_ws_quote_warranty_used" text="obejmuje tylko część"/>
+        <text name="rms_ws_quote_warranty_expired" text="wygasła"/>
+        <text name="rms_ws_quote_warranty_own" text="nie obejmuje własnego warsztatu"/>
+        <text name="rms_ws_quote_warranty_lease" text="nie obejmuje wypożyczenia"/>
+        <text name="rms_ws_quote_warranty_remapped" text="utracona, silnik po chiptuningu"/>
+        <text name="rms_ws_quote_warranty_refused" text="odmowa, %s"/>
         <text name="rms_ws_warranty_covered" text="Obowiązuje"/>
         <text name="rms_ws_warranty_not_covered" text="Nie obowiązuje"/>
         <text name="rms_ws_warranty_terms" text="Fabryczna: %d miesięcy lub %s h"/>
+        <text name="rms_ws_warranty_refused" text="Odmowa: %s"/>
         <text name="rms_ws_badge_warranty" text="Gwarancja"/>
         <text name="rms_warranty_base" text="%d miesięcy lub %s h (w cenie)"/>
         <text name="rms_warranty_extension" text="%d miesięcy lub %s h"/>
         <text name="rms_warranty_partial" text="Częściowo objęta"/>
         <text name="rms_warranty_own" text="Nie obejmuje własnego warsztatu"/>
-        <text name="rms_warranty_factory" text="Oryginalne części i robocizna objęte"/>
-        <text name="rms_warranty_part" text="Część objęta do wieku maszyny %d miesięcy"/>
+        <text name="rms_warranty_part" text="Gwarancja części: jeszcze %d mies."/>
         <text name="rms_warranty_lease" text="Naprawa nieobjęta przy wypożyczeniu"/>
-        <text name="rms_warranty_expired" text="Gwarancja wygasła"/>
-        <text name="rms_warranty_overdue" text="Odmowa: zaległa obsługa techniczna"/>
-        <text name="rms_warranty_impact" text="Odmowa: uszkodzenie od uderzenia"/>
-        <text name="rms_warranty_options" text="Wymagana wymiana na oryginalne części"/>
+        <text name="rms_warranty_overdue" text="zaległa obsługa techniczna"/>
+        <text name="rms_warranty_impact" text="uszkodzenie od uderzenia"/>
         <text name="rms_warranty_mobile" text="Płacisz za dodatkową robociznę warsztatu mobilnego"/>
         <text name="rms_warranty_remapped" text="Utrata gwarancji: silnik po chiptuningu"/>
+        <text name="rms_warranty_heat" text="przegrzanie"/>
+        <text name="rms_warranty_low_level" text="za niski poziom oleju"/>
+        <text name="rms_warranty_fuel_dry" text="zbiornik opróżniony do dna"/>
+        <text name="rms_warranty_park_brake" text="zaciągnięty hamulec postojowy"/>
+        <text name="rms_warranty_pto_engagement" text="szarpnięcie przy włączaniu WOM"/>
+        <text name="rms_warranty_stones" text="połknięte kamienie"/>
+        <text name="rms_warranty_starter" text="przeciążony rozrusznik"/>
+        <text name="rms_warranty_pto_angle" text="za duży kąt wału WOM"/>
+        <text name="rms_warranty_windup" text="blokada lub 4WD na twardym podłożu"/>
+        <text name="rms_warranty_filter" text="zapchany filtr"/>
+        <text name="rms_warranty_oil" text="nieodpowiedni olej silnikowy"/>
+        <text name="rms_warranty_trailer" text="za ciężka przyczepa"/>
+        <text name="rms_warranty_aftermarket_part" text="zamiennik"/>
+        <text name="rms_warranty_used_part" text="część używana"/>
+        <text name="rms_warranty_imposed" text="Standardowa z oryginalnymi częściami"/>
+        <text name="rms_warranty_partial_imposed" text="Objęta usterka naprawiona jako Standardowa z oryginalnymi częściami"/>
         <text name="rms_ws_overhaul_row_systems" text="Objęte układy"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Przywrócone do sprawności"/>
         <text name="rms_ws_overhaul_systems_one" text="Jeden do wyboru"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Oceniono"/>
         <text name="rms_ws_inspection_maintenance_note" text="Obsługa techniczna też wykonuje to wyszukiwanie awarii, jak przegląd standardowy."/>
         <text name="rms_ws_quote_title" text="Szczegóły kosztorysu"/>
+        <text name="rms_ws_quote_empty_title" text="Tutaj pojawi się Twój kosztorys"/>
+        <text name="rms_ws_quote_empty_text" text="Wybierz usługę z listy"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Na razie brak kosztorysu"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Wybierz inną usługę z listy"/>
+        <text name="rms_ws_repair_row_around" text="Części sąsiednie"/>
+        <text name="rms_ws_repair_row_around_detail" text="Remont i zużyte części"/>
+        <text name="rms_ws_repair_around_count" text="Wymieniono: %d"/>
+        <text name="rms_ws_repair_around_none" text="Brak"/>
+        <text name="rms_ws_quote_labour" text="Robocizna · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Części do usterki · %s"/>
+        <text name="rms_ws_quote_preventive" text="Wymiana zapobiegawcza · %s"/>
+        <text name="rms_ws_quote_supplies" text="Materiały"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Remont silnika · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Remont głowicy · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Zużyte części · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Gwarancja fabryczna"/>
+        <text name="rms_ws_quote_cover_part" text="Gwarancja części"/>
+        <text name="rms_ws_quote_cover_used" text="Gwarancja części używanej"/>
+        <text name="rms_ws_quote_cover_full" text="Robocizna i części pokryte"/>
+        <text name="rms_ws_quote_cover_part_only" text="Tylko część, robocizna płatna"/>
+        <text name="rms_ws_quote_filters" text="Filtry · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Zużyte części · ostatnia pełna inspekcja"/>
         <text name="rms_ws_quote_oil_filter" text="Filtr oleju"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Kolejna czynność jest rozliczana osobno. Wymagane płyny są dostarczane lub pobierane z zapasu w chwili jej rozpoczęcia."/>
         <text name="rms_bodywork_touchup" text="Poprawki lakiernicze"/>
         <text name="rms_bodywork_full" text="Pełne ponowne lakierowanie"/>
         <text name="rms_bodywork_colors_title" text="Kolory pojazdu"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="Fabryczne oprogramowanie jej nie przywróci"/>
         <text name="rms_remap_free" text="Bezpłatnie"/>
         <text name="rms_remap_unavailable" text="Chiptuning niedostępny"/>
-        <text name="rms_remap_refusal_dealer" text="Dealer nie wykonuje chiptuningu silników."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Tuner przyjedzie do gospodarstwa: użyj warsztatu gospodarstwa lub mobilnego."/>
+        <text name="rms_ws_overhaul_unavailable" text="Remont kapitalny niedostępny"/>
+        <text name="rms_remap_refusal_top" text="To już najmocniejszy silnik w gamie: dalej idzie tylko tuner, w warsztacie gospodarstwa lub mobilnym."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Zmodyfikowany przez tunera: przywraca tylko tuner, w warsztacie gospodarstwa lub mobilnym."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Zmodyfikowany przez dealera: przywraca tylko dealer."/>
+        <text name="rms_remap_curves_maker" text="Krzywe deklarowane przez producenta"/>
+        <text name="rms_remap_curves_dealer_measured" text="Hamownia dealera, przed i po"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Dealer zachowuje fabryczne oprogramowanie"/>
         <text name="rms_remap_refusal_leased" text="Nie można wykonać chiptuningu wypożyczonej maszyny."/>
         <text name="rms_remap_refusal_not_eligible" text="Ten silnik nie ma sterownika do przeprogramowania."/>
         <text name="rms_remap_confirm_title" text="Wykonać chiptuning silnika?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Brak awarii i zużytych części"/>
         <text name="rms_report_worn_part_risk" text="Ryzyko ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Regulacja: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Wymiana: naprawa zaawansowana lub remont kapitalny"/>
+        <text name="rms_report_worn_part_replace" text="%s · Wymiana zapobiegawcza w warsztacie"/>
         <text name="rms_report_overall_assessment_title" text="Ogólna ocena techniczna"/>
         <text name="rms_report_overall_assessment_condition" text="Stan ogólny"/>
         <text name="rms_report_recommendations_title" text="Podsumowanie i zalecenia"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Dmuchawa sprężonego powietrza"/>
         <text name="rms_air_blower_no_vehicle" text="Nie wykryto pojazdu w strefie czyszczenia"/>
         <text name="rms_air_blower_function" text="Służy do oczyszczania chłodnic i filtrów powietrza"/>
-        <text name="rms_air_blower_action" text="Wyczyść chłodnicę i filtr powietrza"/>
+        <text name="rms_air_blower_action" text="Wyczyść chłodnicę i filtr powietrza."/>
+        <text name="rms_air_blower_action_radiator" text="Wyczyść chłodnicę."/>
+        <text name="rms_air_blower_action_air_filter" text="Wyczyść filtr powietrza."/>
         <text name="rms_air_blower_action_short" text="Przedmuchaj"/>
         <text name="rms_air_blower_already_clean" text="%s: chłodnica i filtr powietrza są już czyste"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: chłodnica jest czysta. Filtr powietrza osiągnął granicę czyszczenia przez przedmuchiwanie. Warsztat wymienia go od przeglądu %s"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Kable rozruchowe odłączone od %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Kanister z płynem"/>
-        <text name="rms_fluid_function_engine_oil" text="Olej silnikowy do ręcznego uzupełniania"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Olej silnikowy, do wszystkich maszyn, także z AdBlue i filtrem cząstek stałych"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Olej silnikowy, do maszyn bez AdBlue i filtra cząstek stałych"/>
         <text name="rms_fluid_function_utto" text="Olej przekładniowy i hydrauliczny do ręcznego uzupełniania"/>
         <text name="rms_fluid_function_coolant" text="Płyn chłodniczy do ręcznego uzupełniania"/>
         <text name="rms_fluid_pour_action" text="Wlej: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie skrzyni biegów oraz podnieść jej temperaturę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie układu hydraulicznego, podnieść jego temperaturę i spowolnić jego pracę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie skrzyni biegów i układu hydraulicznego, podnieść ich temperaturę i spowolnić hydraulikę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nieodpowiedni olej silnikowy"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ten silnik korzysta z AdBlue lub ma filtr cząstek stałych: jego instrukcja wymaga oleju przeznaczonego do nich. Z tym olejem wymiana oleju przypadnie nawet dwa razy wcześniej. Filtr cząstek stałych zapełni się też popiołem 1,5 raza szybciej. Kontynuować?"/>
         <text name="rms_fluid_error_no_circuit" text="Ten pojazd nie wymaga uzupełniania płynu"/>
         <text name="rms_fluid_error_motor_running" text="Wyłącz silnik przed przelaniem płynu"/>
         <text name="rms_fluid_error_vehicle_moving" text="Pojazd musi stać nieruchomo"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Płyny w cenie wypożyczenia"/>
         <text name="rms_fluid_stock_required" text="Z pojemników w strefie warsztatu"/>
         <text name="rms_fluid_stock_missing" text="W strefie warsztatu brakuje %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="W strefie warsztatu brakuje %s oleju odpowiedniego dla tego silnika"/>
         <text name="rms_fluid_refill_work_order" text="Uzupełnienie poziomu płynów"/>
         <text name="rms_fluid_refill_dealer_supply" text="Płyny uwzględnione w kosztorysie"/>
         <text name="rms_fluid_mode_top_up" text="uzupełnienie"/>
@@ -683,7 +732,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Nie używać"/>
         <text name="rms_inspection_verdict_stop_message" text="Jeden punkt wymaga usunięcia przed użyciem. Nie używaj tej maszyny w obecnym stanie."/>
         <text name="rms_inspection_service_due_in" text="%s za %s"/>
-        <text name="rms_inspection_service_overdue" text="%s opóźniona o %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: opóźnienie %s"/>
         <text name="rms_inspection_status_slightly_low" text="Lekko niski"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lekko zapchany"/>
         <text name="rms_inspection_status_grease_due" text="Do smarowania"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Amortyzator kabiny ma duży wyciek i jest pusty."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Widoczne są ślady oleju oraz przyciemnione połączenia w okolicy turbosprężarki."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Widoczne są intensywne ślady oleju, przyciemnione połączenia oraz osady sadzy w okolicy turbosprężarki."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Poziom jednego z płynów spadł poniżej oznaczenia na wskaźniku."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Poziom kilku płynów spadł poniżej oznaczenia na wskaźniku."/>
+        <text name="rms_inspection_hint_fluid_low" text="Poniżej oznaczenia MIN: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Bardzo niski poziom: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Uzupełnij z kanistra lub u dealera."/>
         <text name="rms_inspection_hint_service_engine" text="Wymiana oleju silnikowego jest opóźniona: zużyty olej przyspiesza zużycie silnika i wtrysku. Każdy przegląd wymienia go razem z filtrami."/>
         <text name="rms_inspection_hint_service_transmission" text="Wymiana oleju przekładniowego jest opóźniona: zużyty olej przyspiesza zużycie wszystkiego, co smaruje. Przegląd zalecany w warsztacie wymienia go razem z filtrem."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Wymiana oleju hydraulicznego jest opóźniona: zużyty olej przyspiesza zużycie układu hydraulicznego. Przegląd zalecany w warsztacie wymienia go razem z filtrem."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Zwrot kaucji"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niski poziom płynu"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny spadł poniżej oznaczenia na wskaźniku.&#10;&#10;Olej silnikowy ubywa wraz z godzinami pracy, a zużyty silnik zużywa go znacznie więcej. Płyn chłodniczy, olej przekładniowy i olej hydrauliczny ubywają tylko wskutek wycieku.&#10;&#10;Poniżej oznaczenia maszyna wymaga jedynie uzupełnienia i nadal pracuje normalnie. Uszkodzenia zaczynają się dopiero wtedy, gdy poziom spadnie naprawdę nisko: niedobór płynu chłodniczego lub oleju przekładniowego powoduje przegrzewanie, a niedobór oleju silnikowego lub hydraulicznego znacznie przyspiesza zużycie.&#10;&#10;Kup w sklepie pojemnik z odpowiednim produktem, dostarcz go do maszyny i uzupełnij poziom. Wszystkie produkty przeznaczone do danego obiegu mają ten sam efekt; niewłaściwy płyn zanieczyszcza tylko ten obieg. U dealera potrzebne litry są dostarczane i doliczane do rachunku."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny spadł poniżej oznaczenia na wskaźniku.&#10;&#10;Olej silnikowy ubywa wraz z godzinami pracy, a zużyty silnik zużywa go znacznie więcej. Płyn chłodniczy, olej przekładniowy i olej hydrauliczny ubywają tylko wskutek wycieku.&#10;&#10;Poniżej oznaczenia maszyna wymaga jedynie uzupełnienia i nadal pracuje normalnie. Im niżej spada poziom, tym łatwiej pompa zasysa powietrze na stokach: kontrolka ciśnienia oleju miga, a po stronie skrzyni biegów lub hydrauliki pompa wyje i ruchy hydrauliczne zwalniają. Każda tak spędzona minuta uszkadza panewki wału korbowego lub pompę: zatrzymaj się i uzupełnij poziom. Maszyna z niedoborem płynu chłodniczego, oleju przekładniowego lub hydraulicznego również się przegrzewa.&#10;&#10;Kup w sklepie pojemnik z odpowiednim produktem, dostarcz go do maszyny i uzupełnij poziom. Wszystkie produkty przeznaczone do danego obiegu mają ten sam efekt; niewłaściwy płyn zanieczyszcza tylko ten obieg. U dealera potrzebne litry są dostarczane i doliczane do rachunku."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Witamy w Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Wyłącz wskazówki"/>
         <text name="rms_tutorial_welcome_enable_button" text="Włącz wskazówki"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Starzenie się pojazdu"/>
         <text name="rms_tutorial_age_degradation_message" text="W RMS pojazdy stopniowo tracą część swoich pierwotnych osiągów wraz z wiekiem.&#10;&#10;Po około jednej trzeciej okresu eksploatacji zużycie związane z wiekiem zaczyna nieznacznie obniżać ważne parametry, takie jak moc czy skuteczność hamowania. Efekt narasta i staje się wyraźny pod koniec życia pojazdu.&#10;&#10;Tę degradację można wyłączyć w ustawieniach moda."/>
         <text name="rms_tutorial_poor_consumables_title" text="Słabej jakości materiały eksploatacyjne"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Podczas ostatniej obsługi technicznej pojazdu %s użyto materiałów eksploatacyjnych niskiej jakości. Zdarza się to przy wyborze tańszych klas.&#10;&#10;Okres międzyobsługowy jest skrócony, a zużycie podzespołów nieznacznie wzrosło. Ponowna obsługa techniczna usuwa ten problem. Przegląd wizualny lub standardowy sygnalizuje skrócony okres; tylko pełny przegląd wskazuje wadliwe materiały eksploatacyjne."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Podczas ostatniej obsługi technicznej pojazdu %s założono wadliwy filtr. Zdarza się to przy wyborze tańszych klas.&#10;&#10;Ten filtr przepuszcza zanieczyszczenia: układ, który chroni, zużywa się szybciej aż do wymiany filtra. Ponowna obsługa techniczna go wymienia. Tylko pełny przegląd go wskazuje."/>
         <text name="rms_tutorial_poor_parts_title" text="Słabej jakości części"/>
         <text name="rms_tutorial_poor_parts_message" text="Podczas naprawy pojazdu %s zamontowano część niskiej jakości. Awaria najprawdopodobniej wkrótce powróci.&#10;&#10;Możesz poczekać na jej powrót albo wykonać pełny przegląd, który niezawodnie wskaże wadliwą część."/>
         <text name="rms_tutorial_park_brake_title" text="Hamulec postojowy"/>

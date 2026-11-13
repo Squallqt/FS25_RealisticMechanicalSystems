@@ -464,6 +464,17 @@ function RMS_Drivetrain.getIsFrontAxleDriven(vehicle)
     return getEffectiveFourWheelDrive(vehicle, RMS_Drivetrain.getState(vehicle))
 end
 
+---Tells whether the driver chose the diff lock or the 4WD by hand
+function RMS_Drivetrain.getIsWindupChosen(vehicle)
+    local state = RMS_Drivetrain.getState(vehicle)
+    local effects = vehicle.spec_RealisticMechanicalSystems.activeEffects
+    if state.diffLockEngaged then
+        return state.diffLockRequested and effects.DIFF_LOCK_STUCK_ENGAGED == nil
+    end
+    return state.driveMode == RMS_Drivetrain.MODE.FOUR_WD and effects.FOUR_WD_STUCK_ENGAGED == nil
+        and state.layout ~= nil and state.layout.isPermanentAllWheelDrive ~= true
+end
+
 local function getTargetSpeedRatio(original, lockEngaged)
     local C = getConfig()
 
@@ -1173,7 +1184,8 @@ local function updateWindupModel(vehicle, state, spec, dt)
     if state.diffLockEngaged and state.windupStress >= 1.0 and not state._windupDamageLatched then
         local transmissionSystem = spec.systems ~= nil and spec.systems.transmission or nil
         if transmissionSystem ~= nil and transmissionSystem.enabled == true and vehicle.applyInstantDamageToSystem ~= nil then
-            vehicle:applyInstantDamageToSystem(RealisticMechanicalSystems.SYSTEMS.TRANSMISSION, C.WINDUP_INSTANT_DAMAGE)
+            vehicle:applyInstantDamageToSystem(RealisticMechanicalSystems.SYSTEMS.TRANSMISSION, C.WINDUP_INSTANT_DAMAGE, nil,
+                RMS_Drivetrain.getIsWindupChosen(vehicle) and "windup" or nil)
             state._windupDamageLatched = true
             state.windupStress = 0.5
             RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.WEAR)
@@ -1181,7 +1193,7 @@ local function updateWindupModel(vehicle, state, spec, dt)
     end
 
     if state.windupStress > 0 and isWindingUp then
-        state.windupWearFactor = state.windupStress * C.WINDUP_WEAR_MULTIPLIER * windupFactor
+        state.windupWearFactor = (1 + state.windupStress) ^ C.WINDUP_GEAR_EXPONENT - 1
     else
         state.windupWearFactor = 0
     end

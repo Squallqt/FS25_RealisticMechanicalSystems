@@ -4,10 +4,10 @@
     <storeData>
         <name>Agrifarm MOT X-LA 10W40</name>
         <specs><weight/></specs>
-        <functions><function>$l10n_rms_fluid_function_engine_oil</function></functions>
+        <functions><function>$l10n_rms_fluid_function_engine_oil_low_ash</function></functions>
         <image>objects/fluids/products/fuchsMotXla/store_fuchsMotXla.png</image>
         <price>35</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>FUCHS</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

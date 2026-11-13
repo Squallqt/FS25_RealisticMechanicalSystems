@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Обрати роботу"/>
         <text name="rms_ws_section_work_order" text="Наряд-замовлення"/>
         <text name="rms_ws_section_recap" text="Підсумок"/>
-        <text name="rms_ws_section_parts" text="Задіяні деталі"/>
         <text name="rms_ws_section_history" text="Історія"/>
         <text name="rms_ws_label_last_check" text="Остання перевірка"/>
         <text name="rms_ws_reading_outdated" text="На перевірку"/>
-        <text name="rms_ws_label_more_parts" text="+ ще %s"/>
         <text name="rms_ws_label_committed_cost" text="Витрачені кошти"/>
         <text name="rms_ws_label_finish_time" text="Час завершення"/>
         <text name="rms_ws_label_total_estimate" text="Орієнтовна сума"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Низька зручність сервісу"/>
         <text name="rms_shop_launch_year" text="Модель вийшла на ринок у %d"/>
         <text name="rms_shop_launch_year_unknown" text="Рік виходу на ринок невідомий"/>
+        <text name="rms_shop_category_maintenance" text="Обслуговування"/>
         <text name="rms_owner_care_careful" text="Ретельне обслуговування"/>
         <text name="rms_owner_care_regular" text="Регулярне обслуговування"/>
         <text name="rms_owner_care_neglected" text="Занедбане обслуговування"/>
+        <text name="rms_ws_label_maintenance_count" text="Виконано обслуговувань"/>
         <text name="rms_ws_label_overhaul_count" text="Виконано капітальних ремонтів"/>
         <text name="rms_ws_label_maintenance_log" text="Журнал обслуговування"/>
         <text name="rms_ws_label_last_maintenance" text="Останнє обслуговування"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Вартість на мотогодину"/>
         <text name="rms_log_invoice_title" text="Деталізація рахунку"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Фіксований тариф майстерні"/>
-        <text name="rms_log_invoice_labour" text="Робота"/>
         <text name="rms_log_invoice_filters" text="Фільтри"/>
         <text name="rms_log_cancelled_desc" text="Роботу скасовано"/>
         <text name="rms_log_ownership_months_title" text="Тривалість володіння"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Транспортний засіб було перефарбовано"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Середній інтервал між несправностями"/>
         <text name="rms_log_average_maintenance_interval_title" text="Середній інтервал між обслуговуваннями"/>
         <text name="rms_log_performed" text="Виконана робота: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Тепловий захист: обмеження потужності знято"/>
         <text name="rms_breakdown_at_progress_message" text="триває"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Увага! Холодний двигун, зменште навантаження."/>
+        <text name="rms_spec_cold_engine_message" text="Увага! Холодний двигун: він зношується, доки не прогріється."/>
         <text name="rms_spec_overheat_engine_message" text="Увага! Перегрів двигуна."/>
         <text name="rms_spec_overheat_transmission_message" text="Увага! Перегрів трансмісії."/>
         <text name="rms_spec_overhaul_partial" text="Частковий"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="Цього місяця"/>
         <text name="rms_spec_tomorrow_at" text="завтра о "/>
         <text name="rms_spec_never" text="Ніколи"/>
-        <text name="rms_spec_next_planned_service_notification" text="Заплановану роботу розпочато: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Заплановану роботу %s скасовано через брак коштів"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Заплановану роботу (%s) не розпочато: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="післязавтра о "/>
         <text name="rms_spec_day_s" text="дн."/>
         <text name="rms_spec_day_one" text="дн."/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Якість витратних матеріалів"/>
         <text name="rms_option_menu_option_two_title_repair" text="Якість запасних частин"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Система для капітального ремонту"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Якщо робота виявляє несправності, автоматично розпочинає стандартний ремонт з оригінальними деталями."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Після ремонту автоматично виконує рекомендоване ТО з оригінальними витратними матеріалами."/>
         <text name="rms_option_menu_price_text" text="Ціна"/>
-        <text name="rms_option_menu_perform_repair" text="Автоматичний ремонт"/>
-        <text name="rms_option_menu_perform_maintenance" text="Автоматичне обслуговування"/>
         <text name="rms_option_menu_warranty_repair_text" text="Гарантійний ремонт"/>
         <text name="rms_option_menu_lease_service_text" text="Входить в оренду"/>
         <text name="rms_option_menu_duration_text" text="Тривалість"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Включено"/>
         <text name="rms_ws_levels_mechanical" text="Механічні"/>
         <text name="rms_ws_levels_every_level" text="На кожному рівні: очищення радіатора і змащування."/>
-        <text name="rms_ws_quality_risk" text="Ризик дефекту"/>
+        <text name="rms_ws_quality_part_wear" text="Знос деталі"/>
+        <text name="rms_ws_quality_factory_kept" text="Заводська гарантія зберігається"/>
+        <text name="rms_ws_quality_factory_lost" text="Заводська гарантія втрачається"/>
+        <text name="rms_ws_quality_filters_sound" text="Фільтри без дефектів"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Фільтр іноді з дефектом"/>
+        <text name="rms_ws_quality_filter_often" text="Фільтр частіше з дефектом"/>
         <text name="rms_ws_quality_reference" text="Базова ціна"/>
-        <text name="rms_ws_quality_donor" text="Машина з %d h"/>
-        <text name="rms_ws_quality_donors" text="Машини від %d до %d h"/>
+        <text name="rms_ws_quality_donor" text="Знята з машини з %d h"/>
+        <text name="rms_ws_quality_donors" text="Зняті з машин від %d до %d h"/>
         <text name="rms_ws_quality_new_part" text="Нова деталь"/>
         <text name="rms_ws_quality_used_warranty" text="Гарантія 3 міс."/>
         <text name="rms_ws_quality_partial_warranty" text="Часткова гарантія"/>
         <text name="rms_ws_quality_no_warranty" text="Без гарантії"/>
         <text name="rms_ws_quality_oem_warranty" text="Гарантія 12 міс."/>
         <text name="rms_ws_quality_factory_warranty" text="Заводська гарантія"/>
-        <text name="rms_warranty_used" text="Гарантія розбірки: лише деталь"/>
+        <text name="rms_ws_quality_part_warranty" text="Гарантія ще %d міс."/>
         <text name="rms_ws_quality_delta" text="%s до оригіналу"/>
         <text name="rms_ws_repair_row_faults" text="Усувані несправності"/>
         <text name="rms_ws_repair_row_faults_detail" text="З позначених"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Несправна деталь"/>
         <text name="rms_ws_repair_row_part_detail" text="Причина несправності"/>
         <text name="rms_ws_repair_part_replaced" text="Замінена"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Зношені деталі"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="У тій самій системі"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Замінені"/>
         <text name="rms_ws_repair_row_quality" text="Якість деталей"/>
         <text name="rms_ws_repair_row_quality_detail" text="Вибирається на картках нижче"/>
         <text name="rms_ws_repair_quality_choice" text="На вибір"/>
         <text name="rms_ws_warranty_title" text="Гарантія"/>
+        <text name="rms_ws_quote_warranty_label" text="Гарантія:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Заводська гарантія:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Гарантія деталі:"/>
+        <text name="rms_ws_quote_warranty_covered" text="покривається"/>
+        <text name="rms_ws_quote_warranty_used" text="покривається лише деталь"/>
+        <text name="rms_ws_quote_warranty_expired" text="закінчилася"/>
+        <text name="rms_ws_quote_warranty_own" text="не покривається у власній майстерні"/>
+        <text name="rms_ws_quote_warranty_lease" text="не покривається під час оренди"/>
+        <text name="rms_ws_quote_warranty_remapped" text="втрачено, чип-тюнінг двигуна"/>
+        <text name="rms_ws_quote_warranty_refused" text="відмова, %s"/>
         <text name="rms_ws_warranty_covered" text="Діє"/>
         <text name="rms_ws_warranty_not_covered" text="Не діє"/>
         <text name="rms_ws_warranty_terms" text="Заводська: %d міс. або %s h"/>
+        <text name="rms_ws_warranty_refused" text="Відмова: %s"/>
         <text name="rms_ws_badge_warranty" text="Гарантія"/>
         <text name="rms_warranty_base" text="%d міс. або %s h (включено)"/>
         <text name="rms_warranty_extension" text="%d міс. або %s h"/>
         <text name="rms_warranty_partial" text="Частково покривається"/>
         <text name="rms_warranty_own" text="Не покривається у власній майстерні"/>
-        <text name="rms_warranty_factory" text="Оригінальні деталі та робота покриваються"/>
-        <text name="rms_warranty_part" text="Деталь покривається до віку машини %d місяців"/>
+        <text name="rms_warranty_part" text="Гарантія деталі: ще %d міс."/>
         <text name="rms_warranty_lease" text="Ремонт не покривається під час оренди"/>
-        <text name="rms_warranty_expired" text="Гарантія закінчилася"/>
-        <text name="rms_warranty_overdue" text="Відмова: прострочене обслуговування"/>
-        <text name="rms_warranty_impact" text="Відмова: пошкодження від удару"/>
-        <text name="rms_warranty_options" text="Потрібна заміна оригінальними деталями"/>
+        <text name="rms_warranty_overdue" text="прострочене обслуговування"/>
+        <text name="rms_warranty_impact" text="пошкодження від удару"/>
         <text name="rms_warranty_mobile" text="До сплати: доплата за роботу мобільної майстерні"/>
         <text name="rms_warranty_remapped" text="Гарантію втрачено: чип-тюнінг двигуна"/>
+        <text name="rms_warranty_heat" text="перегрів"/>
+        <text name="rms_warranty_low_level" text="надто низький рівень оливи"/>
+        <text name="rms_warranty_fuel_dry" text="бак вироблено досуха"/>
+        <text name="rms_warranty_park_brake" text="затягнуто стоянкове гальмо"/>
+        <text name="rms_warranty_pto_engagement" text="ривок під час увімкнення ВВП"/>
+        <text name="rms_warranty_stones" text="потрапляння каміння"/>
+        <text name="rms_warranty_starter" text="перевантаження стартера"/>
+        <text name="rms_warranty_pto_angle" text="надто великий кут карданного вала"/>
+        <text name="rms_warranty_windup" text="блокування або 4WD на твердому ґрунті"/>
+        <text name="rms_warranty_filter" text="забитий фільтр"/>
+        <text name="rms_warranty_oil" text="невідповідна моторна олива"/>
+        <text name="rms_warranty_trailer" text="надто важкий причіп"/>
+        <text name="rms_warranty_aftermarket_part" text="неоригінальна деталь"/>
+        <text name="rms_warranty_used_part" text="вживана деталь"/>
+        <text name="rms_warranty_imposed" text="Стандартний, оригінальні деталі"/>
+        <text name="rms_warranty_partial_imposed" text="Покрита несправність: Стандартний ремонт, оригінальні деталі"/>
         <text name="rms_ws_overhaul_row_systems" text="Відновлювані системи"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Приводяться до ладу"/>
         <text name="rms_ws_overhaul_systems_one" text="Одна на вибір"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Оцінено"/>
         <text name="rms_ws_inspection_maintenance_note" text="Обслуговування теж виконує цей пошук несправностей, як стандартний огляд."/>
         <text name="rms_ws_quote_title" text="Деталізація кошторису"/>
+        <text name="rms_ws_quote_empty_title" text="Тут з'явиться ваш кошторис"/>
+        <text name="rms_ws_quote_empty_text" text="Виберіть роботу зі списку"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Поки що кошторису немає"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Виберіть іншу роботу зі списку"/>
+        <text name="rms_ws_repair_row_around" text="Сусідні деталі"/>
+        <text name="rms_ws_repair_row_around_detail" text="Відновлення та зношені деталі"/>
+        <text name="rms_ws_repair_around_count" text="Замінено: %d"/>
+        <text name="rms_ws_repair_around_none" text="Немає"/>
+        <text name="rms_ws_quote_labour" text="Робота · %s год"/>
+        <text name="rms_ws_quote_parts_fault" text="Деталі несправності · %s"/>
+        <text name="rms_ws_quote_preventive" text="Профілактична заміна · %s"/>
+        <text name="rms_ws_quote_supplies" text="Витратні матеріали"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Капремонт двигуна · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Ремонт ГБЦ · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Зношені деталі · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Заводська гарантія"/>
+        <text name="rms_ws_quote_cover_part" text="Гарантія деталі"/>
+        <text name="rms_ws_quote_cover_used" text="Гарантія вживаної деталі"/>
+        <text name="rms_ws_quote_cover_full" text="Робота і деталі покриті"/>
+        <text name="rms_ws_quote_cover_part_only" text="Лише деталь, робота оплачується"/>
+        <text name="rms_ws_quote_filters" text="Фільтри · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Зношені деталі · останній повний огляд"/>
         <text name="rms_ws_quote_oil_filter" text="Оливний фільтр"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Наступна робота оплачується окремо. Потрібні рідини надає майстерня або їх беруть із вашого запасу на початку роботи."/>
         <text name="rms_bodywork_touchup" text="Підфарбування"/>
         <text name="rms_bodywork_full" text="Повне перефарбування"/>
         <text name="rms_bodywork_colors_title" text="Кольори машини"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="Заводська прошивка не поверне гарантію"/>
         <text name="rms_remap_free" text="Безкоштовно"/>
         <text name="rms_remap_unavailable" text="Чип-тюнінг недоступний"/>
-        <text name="rms_remap_refusal_dealer" text="Дилер не виконує чип-тюнінг двигунів."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Тюнер приїде на ферму: скористайтеся майстернею ферми або мобільною майстернею."/>
+        <text name="rms_ws_overhaul_unavailable" text="Капітальний ремонт недоступний"/>
+        <text name="rms_remap_refusal_top" text="Уже найпотужніший двигун лінійки: далі йде лише тюнер, у майстерні ферми або мобільній."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Прошитий тюнером: повернути заводську прошивку може лише він, у майстерні ферми або мобільній."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Прошитий дилером: повернути заводську прошивку може лише дилер."/>
+        <text name="rms_remap_curves_maker" text="Криві, заявлені виробником"/>
+        <text name="rms_remap_curves_dealer_measured" text="Стенд дилера, до та після"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Дилер зберігає заводську прошивку"/>
         <text name="rms_remap_refusal_leased" text="Чип-тюнінг орендованої машини неможливий."/>
         <text name="rms_remap_refusal_not_eligible" text="Цей двигун не має блока керування для перепрошивки."/>
         <text name="rms_remap_confirm_title" text="Виконати чип-тюнінг?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Несправностей і зношених деталей немає"/>
         <text name="rms_report_worn_part_risk" text="Ризик ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Регулювання: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Заміна: поглиблений ремонт або капітальний ремонт"/>
+        <text name="rms_report_worn_part_replace" text="%s · Профілактична заміна в майстерні"/>
         <text name="rms_report_overall_assessment_title" text="Загальна оцінка стану"/>
         <text name="rms_report_overall_assessment_condition" text="Рівень стану"/>
         <text name="rms_report_recommendations_title" text="Висновки та рекомендації"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Повітродувка"/>
         <text name="rms_air_blower_no_vehicle" text="У зоні доступу немає техніки для очищення"/>
         <text name="rms_air_blower_function" text="Використовується для чищення радіаторів та повітряних фільтрів"/>
-        <text name="rms_air_blower_action" text="Очистити радіатор та повітряний фільтр"/>
+        <text name="rms_air_blower_action" text="Очистити радіатор та повітряний фільтр."/>
+        <text name="rms_air_blower_action_radiator" text="Очистити радіатор."/>
+        <text name="rms_air_blower_action_air_filter" text="Очистити повітряний фільтр."/>
         <text name="rms_air_blower_action_short" text="Продути"/>
         <text name="rms_air_blower_already_clean" text="%s: радіатор та повітряний фільтр вже чисті"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: радіатор чистий. Повітряний фільтр досяг межі очищення продуванням. Майстерня замінює його починаючи з ТО %s"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Пускові дроти від’єднано від %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Каністра з рідиною"/>
-        <text name="rms_fluid_function_engine_oil" text="Моторна олива для ручного доливання"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Моторна олива, для всіх машин, зокрема з AdBlue і сажовим фільтром"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Моторна олива, для машин без AdBlue і сажового фільтра"/>
         <text name="rms_fluid_function_utto" text="Трансмісійна та гідравлічна олива для ручного доливання"/>
         <text name="rms_fluid_function_coolant" text="Охолоджувальна рідина для ручного доливання"/>
         <text name="rms_fluid_pour_action" text="Долити: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Цей продукт не призначений для цієї системи. Він забруднить її та може у 3 рази прискорити знос трансмісії й посилити її нагрівання. Лише повна заміна рідини усуне забруднення. Продовжити?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Цей продукт не призначений для цієї системи. Він забруднить її та може у 3 рази прискорити знос гідравліки, посилити її нагрівання й сповільнити її роботу. Лише повна заміна рідини усуне забруднення. Продовжити?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Цей продукт не призначений для цієї системи. Він забруднить її та може у 3 рази прискорити знос трансмісії й гідравліки, посилити їх нагрівання й сповільнити роботу гідравліки. Лише повна заміна рідини усуне забруднення. Продовжити?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Невідповідна моторна олива"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Цей двигун працює з AdBlue або має сажовий фільтр: його інструкція вимагає оливи, призначеної для них. З цією оливою заміна оливи знадобиться до двох разів раніше. Сажовий фільтр до того ж забивається золою в 1,5 раза швидше. Продовжити?"/>
         <text name="rms_fluid_error_no_circuit" text="Цій машині не потрібне доливання рідини"/>
         <text name="rms_fluid_error_motor_running" text="Заглушіть двигун перед переливанням рідини"/>
         <text name="rms_fluid_error_vehicle_moving" text="Машина має стояти нерухомо"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Рідини входять в оренду"/>
         <text name="rms_fluid_stock_required" text="З ємностей у зоні майстерні"/>
         <text name="rms_fluid_stock_missing" text="У зоні майстерні бракує %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="У зоні бракує %s оливи для цього двигуна"/>
         <text name="rms_fluid_refill_work_order" text="Доливання технічних рідин"/>
         <text name="rms_fluid_refill_dealer_supply" text="Рідини включено до кошторису"/>
         <text name="rms_fluid_mode_top_up" text="доливання"/>
@@ -683,7 +732,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Не використовувати"/>
         <text name="rms_inspection_verdict_stop_message" text="Один пункт потребує усунення перед використанням. Не працюйте на цій машині в такому стані."/>
         <text name="rms_inspection_service_due_in" text="%s через %s"/>
-        <text name="rms_inspection_service_overdue" text="%s прострочена на %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: затримка %s"/>
         <text name="rms_inspection_status_slightly_low" text="Трохи низький"/>
         <text name="rms_inspection_status_slightly_dirty" text="Злегка забитий"/>
         <text name="rms_inspection_status_grease_due" text="Час змастити"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Амортизатор кабіни має сильний витік і спорожнів."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Навколо турбокомпресора видно сліди оливи й потемнілі з’єднання."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Навколо турбокомпресора видно значні сліди оливи, потемнілі з’єднання та кіптяву."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Рівень однієї з рідин опустився нижче позначки."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Рівень кількох рідин опустився нижче позначки."/>
+        <text name="rms_inspection_hint_fluid_low" text="Нижче позначки MIN: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Дуже низький рівень: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Долити з каністри або в дилера."/>
         <text name="rms_inspection_hint_service_engine" text="Заміну моторної оливи прострочено: зношена олива прискорює знос двигуна та системи впорскування. Будь-яке ТО замінює її разом із фільтрами."/>
         <text name="rms_inspection_hint_service_transmission" text="Заміну трансмісійної оливи прострочено: зношена олива прискорює знос усього, що вона змащує. Рекомендоване в майстерні ТО замінює її разом із фільтром."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Заміну гідравлічної оливи прострочено: зношена олива прискорює знос гідросистеми. Рекомендоване в майстерні ТО замінює її разом із фільтром."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Повернення застави"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Низький рівень рідини"/>
-        <text name="rms_tutorial_fluid_level_message" text="Рівень однієї з рідин цієї техніки опустився нижче позначки на покажчику.&#10;&#10;Моторна олива витрачається з мотогодинами, а зношений двигун споживає її значно більше. Рівень охолоджувальної рідини, трансмісійної та гідравлічної оливи знижується лише через витік.&#10;&#10;Нижче позначки техніка потребує лише доливання й продовжує працювати нормально. Пошкодження починаються, коли рівень стає справді низьким: нестача охолоджувальної рідини або трансмісійної оливи спричиняє перегрів, а нестача моторної чи гідравлічної оливи значно прискорює знос.&#10;&#10;Придбайте в магазині ємність із сумісним продуктом, доставте її до техніки та долийте рідину. Усі продукти для цієї системи мають однаковий ефект; невідповідна рідина забруднює лише цю систему. У дилера потрібні літри надаються й оплачуються."/>
+        <text name="rms_tutorial_fluid_level_message" text="Рівень однієї з рідин цієї техніки опустився нижче позначки на покажчику.&#10;&#10;Моторна олива витрачається з мотогодинами, а зношений двигун споживає її значно більше. Рівень охолоджувальної рідини, трансмісійної та гідравлічної оливи знижується лише через витік.&#10;&#10;Нижче позначки техніка потребує лише доливання й продовжує працювати нормально. Що нижчий рівень, то легше насос засмоктує повітря на схилах: індикатор тиску оливи блимає, а з боку трансмісії чи гідравліки насос виє і гідравлічні рухи сповільнюються. Кожна така хвилина пошкоджує корінні вкладиші або насос: зупиніться й долийте рідину. Техніка з нестачею охолоджувальної рідини, трансмісійної чи гідравлічної оливи до того ж перегрівається.&#10;&#10;Придбайте в магазині ємність із сумісним продуктом, доставте її до техніки та долийте рідину. Усі продукти для цієї системи мають однаковий ефект; невідповідна рідина забруднює лише цю систему. У дилера потрібні літри надаються й оплачуються."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Ласкаво просимо до Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Вимкнути підказки"/>
         <text name="rms_tutorial_welcome_enable_button" text="Увімкнути підказки"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Вікова деградація"/>
         <text name="rms_tutorial_age_degradation_message" text="У RMS техніка з віком поступово втрачає частину своїх початкових характеристик.&#10;&#10;Приблизно після третини терміну служби вікова деградація починає трохи знижувати деякі важливі параметри, такі як потужність або ефективність гальм. Далі цей ефект посилюється й стає добре помітним ближче до кінця терміну служби.&#10;&#10;Вікову деградацію можна вимкнути в налаштуваннях моду."/>
         <text name="rms_tutorial_poor_consumables_title" text="Неякісні витратні матеріали"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Під час останнього обслуговування техніка %s отримала неякісні витратні матеріали. Таке трапляється з бюджетною якістю.&#10;&#10;Інтервал обслуговування скорочено, а знос компонентів трохи підвищено. Нове обслуговування усуне проблему. Візуальний або стандартний огляд повідомить про скорочений інтервал; лише повний огляд визначить причетні витратні матеріали."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Під час останнього обслуговування техніка %s отримала дефектний фільтр. Таке трапляється з бюджетною якістю.&#10;&#10;Цей фільтр пропускає забруднення: система, яку він захищає, зношується швидше до заміни фільтра. Нове обслуговування замінить його. Лише повний огляд виявить його."/>
         <text name="rms_tutorial_poor_parts_title" text="Неякісні запчастини"/>
         <text name="rms_tutorial_poor_parts_message" text="Під час ремонту на техніку %s встановили неякісну деталь. Несправність, імовірно, незабаром з’явиться знову.&#10;&#10;Ви можете зачекати на її повернення або виконати повний огляд, який надійно визначить причетну деталь."/>
         <text name="rms_tutorial_park_brake_title" text="Стоянкове гальмо"/>

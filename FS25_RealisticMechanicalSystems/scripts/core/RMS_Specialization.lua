@@ -199,24 +199,41 @@ source(g_currentModDirectory .. "scripts/core/RMS_ElectricDrive.lua")
 
 -- the short name each wear cause is saved under, system by system
 RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
-    expiredServiceFactor = "sf", lowFluidFactor = "flf", instantDamageFactor = "idfg",
+    expiredServiceFactor = "sf", instantDamageFactor = "idfg",
     motorLoadFactor = "mlf", airFilterCloggingFactor = "aicf", coldMotorFactor = "cmf", hotMotorFactor = "hmf",
     pullOverloadFactor = "pof", heavyTrailerFactor = "htf", luggingFactor = "lf", wheelSlipFactor = "wsf",
     drivetrainWindupFactor = "dwf", coldTransFactor = "ctf", hotTransFactor = "hotf",
     heavyLiftFactor = "hlf", operatingFactor = "of", coldOilFactor = "cof", hotOilFactor = "hof", vibFactor = "vf",
     filterBypassFactor = "hfbf", transmissionFilterBypassFactor = "tfbf",
     highCoolingFactor = "hcf", overheatFactor = "ohf", coldShockFactor = "csf",
-    weatherExposureFactor = "wef", lightsFactor = "ltf", crankingStressFactor = "crf",
+    weatherExposureFactor = "wef", crankingStressFactor = "crf",
     steerLoadFactor = "slf", brakeMassFactor = "bmf", parkBrakeDragFactor = "pbf", terrainImpactFactor = "tif", lubricationFactor = "lubf",
     lowFuelStarvationFactor = "lff", coldFuelFactor = "cff", idleDepositFactor = "idf", highPressureFactor = "hpf",
-    deepDischargeFactor = "ddf", highDrawFactor = "hdf", batteryHeatFactor = "bhf",
+    deepDischargeFactor = "ddf", batteryHeatFactor = "bhf",
     ptoLoadFactor = "plf", ptoEngagementFactor = "pef", ptoRaisedFactor = "prf",
     harvestEffortFactor = "hef", harvestGrainFactor = "hgf", harvestStrawFactor = "hsf", harvestStoneFactor = "hstf",
     harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
 }
 
+-- refused parts: abused, or fitted not new original; index saved
+RealisticMechanicalSystems.WARRANTY_ABUSES = { "impact", "heat", "low_level", "fuel_dry", "park_brake", "pto_engagement",
+    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part", "oil" }
+RealisticMechanicalSystems.WARRANTY_ABUSE = {}
+for code, reason in ipairs(RealisticMechanicalSystems.WARRANTY_ABUSES) do
+    RealisticMechanicalSystems.WARRANTY_ABUSE[reason] = code
+end
+
+---Tells whether a warranty reason refuses the fault it is given for
+function RealisticMechanicalSystems.getIsWarrantyRefusal(reason)
+    return reason == "overdue" or RealisticMechanicalSystems.WARRANTY_ABUSE[reason] ~= nil
+end
+
 RealisticMechanicalSystems.FACTOR_STATS_KEYS = {}
 for _, alias in pairs(RealisticMechanicalSystems.FACTOR_STATS_ALIASES) do
+    RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
+end
+-- no longer measured: a saved game still holds what they wore
+for _, alias in ipairs({ "flf", "ltf", "hdf" }) do
     RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] = true
 end
 
@@ -352,7 +369,6 @@ RealisticMechanicalSystems.getTransmissionType = getTransmissionType
 RealisticMechanicalSystems.getTransmissionNameFromXML = getTransmissionNameFromXML
 
 local hasCVTAddon = RMS_Utils.hasCVTAddon
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
 
 local function refreshExclusionState(spec)
     if spec.isExcludedByUser ~= nil then
@@ -435,7 +451,8 @@ local OVERLOAD_AVERAGE_PERIOD_MS = 60000
 local OVERLOAD_WINDOW_COMPACT_THRESHOLD = 256
 local OVERLOAD_FACTOR_ALIASES_BY_SYSTEM = {
     engine = { "mlf", "hmf", "lf" },
-    transmission = { "pof", "htf", "lf", "wsf", "hotf" }
+    transmission = { "pof", "htf", "lf", "wsf", "hotf" },
+    harvest = { "hef" }
 }
 
 local function resetOverloadAverage(systemData)
@@ -625,6 +642,9 @@ local function getSyncGroups()
         watch(function(_, spec) return RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt) end),
         watch("fieldInspectionSoundActive")
     }
+    for _, circuit in ipairs(RMS_Fluids.PICKUP_CIRCUITS) do
+        table.insert(fieldcare, watch(function(_, spec) return spec.pickupUncovered[circuit] == true end))
+    end
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         table.insert(fieldcare, watch(filter.stateKey, 0.005))
     end
@@ -634,9 +654,9 @@ local function getSyncGroups()
     end
 
     syncGroups = {
-        { group = GROUP.STATE, watches = { watch("currentState"), watch("plannedState"), watch("maintenanceTimer", 1.0) } },
+        { group = GROUP.STATE, watches = { watch("currentState"), watch("maintenanceTimer", 1.0) } },
         { group = GROUP.SERVICE_CONTEXT, watches = {
-            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("serviceOptionThree"), watch("workshopType") } },
+            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("workshopType") } },
         { group = GROUP.TELEMETRY, watches = {
             watch(getSyncOperatingTime, 60000.0), watchNumber("realOperatingTime", 0, 60000.0), watch("_fuelUsageRaw", 0.3),
             watchNumber("dynamicMotorLoad", 0, 0.01), watchNumber("wheelSlipIntensity", 0, 0.01), watch("liftedMass", 10.0) } },
@@ -653,7 +673,7 @@ local function getSyncGroups()
         { group = GROUP.WEAR, watches = {
             watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
             watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
-            watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("conditionLevel", 0.001),
+            watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("remapByDealer"), watch("conditionLevel", 0.001),
             watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("ptoRaisedTooLong"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
@@ -804,10 +824,10 @@ local SAVEGAME_ATTRIBUTES = {
     { "warrantyVoided", "BOOL", "Warranty lost to an engine remap" },
     { "remapMotor", "INT", "Engine configuration remapped, 0 on stock software" },
     { "remapAge", "INT", "Machine age in months at the remap" },
+    { "remapByDealer", "BOOL", "Remap by the dealer, factory software" },
     { "condition", "FLOAT", "Overall condition of the machine" },
     { "breakdowns", "STRING", "Breakdowns on the machine, encoded" },
     { "state", "STRING", "Service under way, ready when none" },
-    { "plannedState", "STRING", "Service ordered next" },
     { "maintenanceTimer", "FLOAT", "Time left of the running service, in ms" },
     { "realOperatingTime", "FLOAT", "Working time counted by RMS, in ms" },
     { "engineTemperature", "FLOAT", "Engine coolant temperature, in degrees" },
@@ -835,10 +855,13 @@ local SAVEGAME_ATTRIBUTES = {
     { "coolantCompatibility", "FLOAT", "Coolant mixture compatibility" },
     { "transmissionOilCompatibility", "FLOAT", "Transmission oil mixture compatibility" },
     { "hydraulicFluidCompatibility", "FLOAT", "Hydraulic fluid mixture compatibility" },
+    { "engineOilSuitedShare", "FLOAT", "Share of the engine oil its manual asks for" },
     { "fluidLeakLossDebt", "STRING", "Unreplenished fluid loss by leak" },
     { "pendingFluidRequirements", "STRING", "Physical fluid reserved for the running service" },
     { "wetStackingLevel", "FLOAT", "Wet stacking deposit level" },
     { "particulateFilterLevel", "FLOAT", "Particulate filter soot level, 1 calling a regeneration" },
+    { "particulateFilterAsh", "FLOAT", "Particulate filter ash, 1 calling a cleaning" },
+    { "particulateFilterOilAsh", "FLOAT", "Part of the filter ash left by an unsuited engine oil" },
     { "scrInducementHours", "FLOAT", "Engine hours since an AdBlue fault was confirmed" },
     { "particulateFilterOverloaded", "BOOL", "Whether the particulate filter overload is shown as a breakdown" },
     { "greasing", "STRING", "Grease points due, hours elapsed and hours late per interval, then the worked day" },
@@ -846,13 +869,13 @@ local SAVEGAME_ATTRIBUTES = {
     { "transmissionThermostatState", "FLOAT", "Opening of the transmission oil thermostat, 0 to 1" },
     { "serviceOptionOne", "STRING", "First choice of the running service" },
     { "serviceOptionTwo", "STRING", "Second choice of the running service" },
-    { "serviceOptionThree", "BOOL", "Third choice of the running service" },
     { "workshopType", "STRING", "Workshop doing the running service" },
     { "pendingSelectedBreakdowns", "STRING", "Breakdowns the running service repairs" },
     { "pendingServicePrice", "FLOAT", "Price of the running service" },
     { "pendingServiceInvoice", "STRING", "Invoice lines of the running service" },
     { "pendingInspectionQueue", "STRING", "Breakdowns the running inspection has yet to find" },
     { "pendingRepairQueue", "STRING", "Breakdowns the running repair has yet to clear" },
+    { "pendingPreventiveParts", "STRING", "Worn parts the running repair replaces in prevention, with their donor hours" },
     { "pendingProgressStepIndex", "INT", "Step the running service is at" },
     { "pendingProgressTotalTime", "FLOAT", "Length of the running service, in ms" },
     { "pendingProgressElapsedTime", "FLOAT", "Time the running service has run, in ms" },
@@ -860,7 +883,8 @@ local SAVEGAME_ATTRIBUTES = {
     { "pendingServiceClockTarget", "STRING", "Service clock levels the running service restores" },
     { "systemsState", "STRING", "Condition and switch of each system" },
     { "partWear", "STRING", "Wear of each part" },
-    { "partImpactWear", "STRING", "Wear each part took from collisions" },
+    { "partAbuse", "STRING", "Abuse that last wore each part, refusing its warranty" },
+    { "pickupAirTime", "STRING", "Seconds each pump has drawn air since its part was fitted" },
     { "factorStats", "STRING", "Wear gathered by each cause, system by system" },
     { "pendingOverhaulPartStart", "STRING", "Wear of each part at the start of the running overhaul" },
     { "pendingOverhaulPartTarget", "STRING", "Wear the running overhaul brings each part to" },
@@ -880,7 +904,6 @@ local LOG_ENTRY_ATTRIBUTES = {
     { "location", "STRING", "Workshop of the service" },
     { "optionOne", "STRING", "First choice of the service" },
     { "optionTwo", "STRING", "Second choice of the service" },
-    { "optionThree", "BOOL", "Third choice of the service" },
     { "isVisible", "STRING", "Whether the record shows the entry" },
     { "isCompleted", "BOOL", "Whether the service ran to its end" },
     { "invoice", "STRING", "Invoice Lines" }
@@ -994,6 +1017,9 @@ function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateMotorTemperature", RealisticMechanicalSystems.updateMotorTemperature)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "addToPhysics", RMS_Drivetrain.addToPhysics)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "brake", RMS_Drivetrain.brake)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "addCutterArea", RealisticMechanicalSystems.addCutterArea)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "processCombineChopperArea", RMS_Breakdowns.processCombineChopperArea)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "setIsSwathActive", RMS_Breakdowns.setIsSwathActive)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateSteeringAngle", RMS_Steering.updateSteeringAngle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateArticulatedAxisRotation", RMS_Steering.updateArticulatedAxisRotation)
 end
@@ -1047,6 +1073,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateElectricalSystem", RealisticMechanicalSystems.updateElectricalSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateChassisSystem", RealisticMechanicalSystems.updateChassisSystem)
     SpecializationUtil.registerFunction(vehicleType, "updateFuelSystem", RealisticMechanicalSystems.updateFuelSystem)
+    SpecializationUtil.registerFunction(vehicleType, "updateDirectFailures", RealisticMechanicalSystems.updateDirectFailures)
     SpecializationUtil.registerFunction(vehicleType, "applyInstantDamageToSystem", RealisticMechanicalSystems.applyInstantDamageToSystem)
     
     SpecializationUtil.registerFunction(vehicleType, "isUnderService", RealisticMechanicalSystems.isUnderService)
@@ -1086,6 +1113,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "updateFieldInspectionSound", RMS_Consumables.updateFieldInspectionSound)
 
     SpecializationUtil.registerFunction(vehicleType, "updateAiWorkerSpeed", RealisticMechanicalSystems.updateAiWorkerSpeed)
+    SpecializationUtil.registerFunction(vehicleType, "updateAiWorkerBlocked", RealisticMechanicalSystems.updateAiWorkerBlocked)
     SpecializationUtil.registerFunction(vehicleType, "isWarrantyRepairCovered", RealisticMechanicalSystems.isWarrantyRepairCovered)
     SpecializationUtil.registerFunction(vehicleType, "getWarrantyLimits", RealisticMechanicalSystems.getWarrantyLimits)
     SpecializationUtil.registerFunction(vehicleType, "getIsUsedPartWarrantyCovered", RealisticMechanicalSystems.getIsUsedPartWarrantyCovered)
@@ -1116,7 +1144,7 @@ function RealisticMechanicalSystems.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getMaintenanceTypes", RealisticMechanicalSystems.getMaintenanceTypes)
     SpecializationUtil.registerFunction(vehicleType, "getMaintenanceLevelInterval", RealisticMechanicalSystems.getMaintenanceLevelInterval)
     SpecializationUtil.registerFunction(vehicleType, "getLastServiceOptions", RealisticMechanicalSystems.getLastServiceOptions)
-    SpecializationUtil.registerFunction(vehicleType, "getOverhaulPerformedCount", RealisticMechanicalSystems.getOverhaulPerformedCount)
+    SpecializationUtil.registerFunction(vehicleType, "getPerformedServiceCount", RealisticMechanicalSystems.getPerformedServiceCount)
     
 end
 
@@ -1291,8 +1319,8 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
             parts[partId] = { rate = getHistoryWearRate(spec, systemKey, index, partId, care), age = 0, life = drawPartLife(partId),
                 renewal = { partId } }
             for _, group in ipairs(C.RENEWAL_GROUPS) do
-                if table.hasElement(group, partId) then
-                    parts[partId].renewal = group
+                if table.hasElement(group.parts, partId) then
+                    parts[partId].renewal = group.parts
                     break
                 end
             end
@@ -1332,7 +1360,7 @@ function RealisticMechanicalSystems.initializeUsedVehicle(vehicle, care, withBre
     for systemKey, systemParts in pairs(spec.systemParts) do
         for _, partId in ipairs(systemParts) do
             spec.partWear[partId] = parts[partId].age
-            spec.partImpactWear[partId] = nil
+            spec.partAbuse[partId] = nil
             spec.partDrawnWear[partId] = nil
         end
         RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -1465,7 +1493,7 @@ local function initializeNewToRMS(vehicle, spec)
     if (not isUsed or isMission) and (spec.maintenanceLog == nil or #spec.maintenanceLog == 0) then
         local TYPES = RealisticMechanicalSystems.INSPECTION_TYPES
         vehicle:addEntryToMaintenanceLog(RealisticMechanicalSystems.STATUS.INSPECTION, isMission and TYPES.STANDARD or TYPES.COMPLETE,
-            "NONE", false, 0)
+            "NONE", 0)
     end
 end
 
@@ -1569,69 +1597,38 @@ local function getColdEngineStress(vehicle)
             or engineTemperature >= C.COLD_MOTOR_TEMP_THRESHOLD then
         return 0
     end
-
-    local motorLoad = math.clamp(spec._smoothedMotorLoad, 0, 1)
-    if motorLoad <= C.COLD_MOTOR_LOAD_THRESHOLD then
-        return 0
-    end
-
-    local motor = vehicle.spec_motorized.motor
-    local rpmLoad = math.clamp(motor:getLastRealMotorRpm() / motor.maxRpm, 0, 1)
-    local temperatureFactor = RMS_Utils.calculateQuadraticMultiplier(
-        engineTemperature,
-        C.COLD_MOTOR_TEMP_THRESHOLD,
-        true
-    )
-    local loadFactor = math.clamp(RMS_Utils.calculateQuadraticMultiplier(
-        motorLoad,
-        C.COLD_MOTOR_LOAD_THRESHOLD,
-        false
-    ), 0, 1)
-    local rpmFactor = 1 - C.COLD_MOTOR_RPM_INFLUENCE
-        + C.COLD_MOTOR_RPM_INFLUENCE * rpmLoad * rpmLoad
-
-    return temperatureFactor * loadFactor * rpmFactor
+    local below = C.COLD_MOTOR_TEMP_THRESHOLD - math.max(engineTemperature, C.COLD_MOTOR_MEASURED_MIN)
+    return math.exp(C.COLD_MOTOR_WEAR_SLOPE * below) - 1
 end
 RealisticMechanicalSystems.getColdEngineStress = getColdEngineStress
 
 ---Delay before the same blinking warning shows again, in ms
 local BLINKING_WARNING_REPEAT_MS = 180000
 
----Motor load the engine reports, 0 when it reports none
-local function getReportedMotorLoad(vehicle)
-    if vehicle.getMotorLoad ~= nil then
-        return tonumber(vehicle:getMotorLoad()) or 0
-    elseif vehicle.getMotorLoadPercentage ~= nil then
-        return tonumber(vehicle:getMotorLoadPercentage()) or 0
-    end
-    return 0
-end
-
----Cold or hot engine or hot CVT warning, with the cold stress
-local function getThermalWarning(vehicle, spec, motor, dt)
+---Cold engine, or past an alert temperature
+local function getThermalWarning(vehicle, spec, dt)
     local ENGINE = RMS_Config.CORE.ENGINE_FACTOR_DATA
-    local rpmShare = (tonumber(motor:getLastModulatedMotorRpm()) or 0) / math.max(tonumber(motor.maxRpm) or 0, 0.0001)
-    local message, coldStress = nil, 0
+    local message, isCold = nil, false
     -- -90 and below: no temperature read yet
     if spec.engineTemperature > -90 then
-        coldStress = getColdEngineStress(vehicle)
-        if coldStress > 0 then
+        isCold = spec.engineTemperature < ENGINE.COLD_MOTOR_TEMP_THRESHOLD
+        if isCold then
             spec.coldEngineExposureMs = spec.coldEngineExposureMs + dt
             if spec.coldEngineExposureMs >= ENGINE.COLD_MOTOR_WARNING_EXPOSURE_MS and not spec.coldEngineWarningShown then
                 message = COLD_ENGINE_WARNING_MESSAGE
             end
         end
-        if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_THRESHOLD + 5 and getReportedMotorLoad(vehicle) > 0.3 then
+        if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_WARNING
+            and vehicle:getMotorLoadPercentage() > ENGINE.OVERHEAT_MOTOR_WARNING_LOAD then
             message = "rms_spec_overheat_engine_message"
         end
     end
 
-    local transmissionLimit = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_THRESHOLD + 5
-    if message == nil and hasCVTTransmission(vehicle) and spec.transmissionTemperature > -90
-        and spec.transmissionTemperature >= transmissionLimit and rpmShare > 0.75 then
+    local transmissionLimit = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.OVERHEAT_TRANSMISSION_WARNING
+    if message == nil and spec.transmissionTemperature > -90 and spec.transmissionTemperature >= transmissionLimit then
         message = "rms_spec_overheat_transmission_message"
     end
-    return message, coldStress
+    return message, isCold
 end
 
 ---Blinks a thermal or breakdown warning, again after a delay
@@ -1655,11 +1652,11 @@ local function syncBlinkingWarning(vehicle, dt)
     local isAiActive = vehicle:getIsAIActive()
     local isUnderService = vehicle:isUnderService()
     local motor = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.motor or nil
-    local message, coldStress = nil, 0
+    local message, isCold = nil, false
     if vehicle:getIsMotorStarted() and isDriven and not isAiActive and not spec.isElectricVehicle and motor ~= nil then
-        message, coldStress = getThermalWarning(vehicle, spec, motor, dt)
+        message, isCold = getThermalWarning(vehicle, spec, dt)
     end
-    if coldStress == 0 then
+    if not isCold then
         spec.coldEngineExposureMs = math.max(spec.coldEngineExposureMs - dt, 0)
     end
 
@@ -1895,6 +1892,13 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
 
     self:getSmoothedTemperature(updateDt)
 
+    if self.isServer then
+        RMS_Fluids.updatePickups(self, updateDt)
+    end
+    if self.isClient then
+        RMS_Breakdowns.updateAerationWhines(self)
+    end
+
     syncFuelConsumption(self)
 
     getSmoothedMotorLoad(self, updateDt)
@@ -1930,6 +1934,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     if self.isServer and self.getDamageAmount ~= nil and self:getDamageAmount() ~= 0 then self:setDamageAmount(0.0, true) end
     
     self:updateAiWorkerSpeed(updateDt)
+    self:updateAiWorkerBlocked(updateDt)
 
     if self.isClient then
         RMS_Exhaust.update(self)
@@ -1986,9 +1991,21 @@ end
 local SYSTEM_WEAR_UPDATES = { "updateEngineSystem", "updateTransmissionSystem", "updateHydraulicsSystem", "updatePtoSystem",
     "updateHarvestSystem", "updateCoolingSystem", "updateElectricalSystem", "updateChassisSystem", "updateFuelSystem" }
 
+---Tells the clients a lent machine now belongs to its farm
+local function syncPropertyState(vehicle, spec)
+    if vehicle.isServer and spec.syncedPropertyState ~= vehicle.propertyState then
+        if spec.syncedPropertyState ~= nil then
+            RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.STATE)
+        end
+        spec.syncedPropertyState = vehicle.propertyState
+    end
+end
+RealisticMechanicalSystems.syncPropertyState = syncPropertyState
+
 function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
     local spec = self.spec_RealisticMechanicalSystems
     if spec.isExcludedVehicle then return end
+    syncPropertyState(self, spec)
 
     -- RMS counts its own working time, from the game's when first seen
     local gameTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -2023,10 +2040,11 @@ function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
         for _, updateSystem in ipairs(SYSTEM_WEAR_UPDATES) do
             self[updateSystem](self, dt)
         end
+        self:updateDirectFailures(dt)
         self:updateConditionLevel()
         self:processWornParts()
         if not isMissionVehicle then
-            RMS_Greasing.update(self, operatingDt)
+            RMS_Greasing.updateMachine(self, operatingDt)
             self:updateFluidLevels(operatingDt)
             self:updateFilterClogging(operatingDt)
         end

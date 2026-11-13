@@ -74,7 +74,7 @@ local function getCosts(vehicle)
     local dirt = vehicle.getDirtAmount ~= nil and math.min(vehicle:getDirtAmount(), 1) or 0
     return {
         overdueMaintenance = getOverdueServiceCost(vehicle),
-        repair = vehicle:getServicePrice(rms.STATUS.REPAIR, rms.REPAIR_TYPES.MEDIUM, rms.PART_TYPES.OEM, false, rms.WORKSHOP.DEALER, true),
+        repair = vehicle:getServicePrice(rms.STATUS.REPAIR, rms.REPAIR_TYPES.MEDIUM, rms.PART_TYPES.OEM, rms.WORKSHOP.DEALER, true),
         washing = getDeposit(vehicle) * RMS_Leasing.WASH_DEPOSIT_SHARE * dirt
     }
 end

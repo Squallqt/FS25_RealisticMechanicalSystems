@@ -7,7 +7,7 @@
         <functions><function>$l10n_rms_grease_cartridge_function</function></functions>
         <image>objects/greaseCartridge/store_greaseCartridge.png</image>
         <price>17</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>SKF</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

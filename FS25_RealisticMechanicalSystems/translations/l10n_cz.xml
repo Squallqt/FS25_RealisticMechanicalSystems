@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Vybrat úkon"/>
         <text name="rms_ws_section_work_order" text="Zakázkový list"/>
         <text name="rms_ws_section_recap" text="Souhrn"/>
-        <text name="rms_ws_section_parts" text="Dotčené díly"/>
         <text name="rms_ws_section_history" text="Historie"/>
         <text name="rms_ws_label_last_check" text="Poslední kontrola"/>
         <text name="rms_ws_reading_outdated" text="Ke kontrole"/>
-        <text name="rms_ws_label_more_parts" text="+ %s dalších"/>
         <text name="rms_ws_label_committed_cost" text="Vynaložené náklady"/>
         <text name="rms_ws_label_finish_time" text="Čas dokončení"/>
         <text name="rms_ws_label_total_estimate" text="Odhad celkem"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Nízká snadnost údržby"/>
         <text name="rms_shop_launch_year" text="Model uveden v roce %d"/>
         <text name="rms_shop_launch_year_unknown" text="Rok uvedení na trh neznámý"/>
+        <text name="rms_shop_category_maintenance" text="Údržba"/>
         <text name="rms_owner_care_careful" text="Pečlivá údržba"/>
         <text name="rms_owner_care_regular" text="Pravidelná údržba"/>
         <text name="rms_owner_care_neglected" text="Zanedbaná údržba"/>
+        <text name="rms_ws_label_maintenance_count" text="Provedené údržby"/>
         <text name="rms_ws_label_overhaul_count" text="Provedené generální opravy"/>
         <text name="rms_ws_label_maintenance_log" text="Deník údržby"/>
         <text name="rms_ws_label_last_maintenance" text="Poslední údržba"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Náklady na provozní hodinu"/>
         <text name="rms_log_invoice_title" text="Rozpis faktury"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Paušál dílny"/>
-        <text name="rms_log_invoice_labour" text="Práce"/>
         <text name="rms_log_invoice_filters" text="Filtry"/>
         <text name="rms_log_cancelled_desc" text="Úkon byl zrušen"/>
         <text name="rms_log_ownership_months_title" text="Doba vlastnictví"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Vozidlo bylo přelakováno"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Průměrný interval mezi poruchami"/>
         <text name="rms_log_average_maintenance_interval_title" text="Průměrný interval mezi údržbami"/>
         <text name="rms_log_performed" text="Provedený úkon: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Tepelná ochrana: omezení výkonu zrušeno"/>
         <text name="rms_breakdown_at_progress_message" text="probíhá"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Pozor! Studený motor, sniž zatížení"/>
+        <text name="rms_spec_cold_engine_message" text="Pozor! Studený motor: opotřebovává se, dokud se nezahřeje."/>
         <text name="rms_spec_overheat_engine_message" text="Varování! Přehřívání motoru"/>
         <text name="rms_spec_overheat_transmission_message" text="Varování! Přehřívání převodovky"/>
         <text name="rms_spec_overhaul_partial" text="Částečná"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="Tento měsíc"/>
         <text name="rms_spec_tomorrow_at" text="zítra v "/>
         <text name="rms_spec_never" text="Nikdy"/>
-        <text name="rms_spec_next_planned_service_notification" text="Plánovaný úkon zahájen: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Plánovaný úkon byl zrušen kvůli nedostatku financí: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Plánovaný úkon (%s) nebyl spuštěn: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="pozítří v "/>
         <text name="rms_spec_day_s" text="dní"/>
         <text name="rms_spec_day_one" text="den"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Kvalita spotřebního materiálu"/>
         <text name="rms_option_menu_option_two_title_repair" text="Kvalita náhradních dílů"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Systém ke generální opravě"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="Pokud úkon odhalí poruchy, automaticky na něj naváže standardní oprava s originálními díly."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Po opravě automaticky naváže doporučená údržba s originálními spotřebními materiály."/>
         <text name="rms_option_menu_price_text" text="Cena"/>
-        <text name="rms_option_menu_perform_repair" text="Automatická oprava"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatická údržba"/>
         <text name="rms_option_menu_warranty_repair_text" text="Záruční oprava"/>
         <text name="rms_option_menu_lease_service_text" text="Zahrnuto v pronájmu"/>
         <text name="rms_option_menu_duration_text" text="Trvání"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Zahrnuto"/>
         <text name="rms_ws_levels_mechanical" text="Mechanické"/>
         <text name="rms_ws_levels_every_level" text="Na každé úrovni: vyčištěný chladič a mazání."/>
-        <text name="rms_ws_quality_risk" text="Riziko vady"/>
+        <text name="rms_ws_quality_part_wear" text="Opotřebení dílu"/>
+        <text name="rms_ws_quality_factory_kept" text="Záruka výrobce zůstává"/>
+        <text name="rms_ws_quality_factory_lost" text="Záruka výrobce zaniká"/>
+        <text name="rms_ws_quality_filters_sound" text="Filtry bez vady"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtr občas vadný"/>
+        <text name="rms_ws_quality_filter_often" text="Filtr častěji vadný"/>
         <text name="rms_ws_quality_reference" text="Referenční cena"/>
-        <text name="rms_ws_quality_donor" text="Stroj s %d h"/>
-        <text name="rms_ws_quality_donors" text="Stroje s %d až %d h"/>
+        <text name="rms_ws_quality_donor" text="Demontováno ze stroje s %d h"/>
+        <text name="rms_ws_quality_donors" text="Demontováno ze strojů s %d až %d h"/>
         <text name="rms_ws_quality_new_part" text="Nový díl"/>
         <text name="rms_ws_quality_used_warranty" text="Záruka 3 měsíce"/>
         <text name="rms_ws_quality_partial_warranty" text="Částečná záruka"/>
         <text name="rms_ws_quality_no_warranty" text="Bez záruky"/>
         <text name="rms_ws_quality_oem_warranty" text="Záruka 12 měsíců"/>
         <text name="rms_ws_quality_factory_warranty" text="Záruka výrobce"/>
-        <text name="rms_warranty_used" text="Záruka vrakoviště: pouze díl"/>
+        <text name="rms_ws_quality_part_warranty" text="Záruka ještě %d měsíců"/>
         <text name="rms_ws_quality_delta" text="%s oproti originálu"/>
         <text name="rms_ws_repair_row_faults" text="Řešené poruchy"/>
         <text name="rms_ws_repair_row_faults_detail" text="Ze zaškrtnutých"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Vadná součást"/>
         <text name="rms_ws_repair_row_part_detail" text="Příčina poruchy"/>
         <text name="rms_ws_repair_part_replaced" text="Vyměněna"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Opotřebené součásti"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Ve stejném systému"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Vyměněny"/>
         <text name="rms_ws_repair_row_quality" text="Kvalita dílů"/>
         <text name="rms_ws_repair_row_quality_detail" text="Volí se na kartách níže"/>
         <text name="rms_ws_repair_quality_choice" text="Podle volby"/>
         <text name="rms_ws_warranty_title" text="Záruka"/>
+        <text name="rms_ws_quote_warranty_label" text="Záruka:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Záruka výrobce:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Záruka dílu:"/>
+        <text name="rms_ws_quote_warranty_covered" text="kryto"/>
+        <text name="rms_ws_quote_warranty_used" text="kryt pouze díl"/>
+        <text name="rms_ws_quote_warranty_expired" text="skončila"/>
+        <text name="rms_ws_quote_warranty_own" text="nekryto ve vlastní dílně"/>
+        <text name="rms_ws_quote_warranty_lease" text="nekryto při pronájmu"/>
+        <text name="rms_ws_quote_warranty_remapped" text="zanikla, motor po chiptuningu"/>
+        <text name="rms_ws_quote_warranty_refused" text="zamítnuto, %s"/>
         <text name="rms_ws_warranty_covered" text="Platí"/>
         <text name="rms_ws_warranty_not_covered" text="Neplatí"/>
         <text name="rms_ws_warranty_terms" text="Výrobce: %d měsíců nebo %s h"/>
+        <text name="rms_ws_warranty_refused" text="Zamítnuto: %s"/>
         <text name="rms_ws_badge_warranty" text="Záruka"/>
         <text name="rms_warranty_base" text="%d měsíců nebo %s h (v ceně)"/>
         <text name="rms_warranty_extension" text="%d měsíců nebo %s h"/>
         <text name="rms_warranty_partial" text="Částečně kryto"/>
         <text name="rms_warranty_own" text="Nekryto ve vlastní dílně"/>
-        <text name="rms_warranty_factory" text="Originální díly a práce kryty"/>
-        <text name="rms_warranty_part" text="Díl kryt do stáří stroje %d měsíců"/>
+        <text name="rms_warranty_part" text="Záruka dílu: ještě %d měsíců"/>
         <text name="rms_warranty_lease" text="Oprava není kryta při pronájmu"/>
-        <text name="rms_warranty_expired" text="Záruka skončila"/>
-        <text name="rms_warranty_overdue" text="Zamítnuto: údržba po termínu"/>
-        <text name="rms_warranty_impact" text="Zamítnuto: poškození nárazem"/>
-        <text name="rms_warranty_options" text="Nutná výměna za originální díly"/>
+        <text name="rms_warranty_overdue" text="údržba po termínu"/>
+        <text name="rms_warranty_impact" text="poškození nárazem"/>
         <text name="rms_warranty_mobile" text="K úhradě: příplatek za práci mobilní dílny"/>
         <text name="rms_warranty_remapped" text="Záruka zanikla: motor po chiptuningu"/>
+        <text name="rms_warranty_heat" text="přehřátí"/>
+        <text name="rms_warranty_low_level" text="příliš nízká hladina oleje"/>
+        <text name="rms_warranty_fuel_dry" text="vyjetá nádrž"/>
+        <text name="rms_warranty_park_brake" text="zatažená parkovací brzda"/>
+        <text name="rms_warranty_pto_engagement" text="ráz při zapnutí vývodového hřídele"/>
+        <text name="rms_warranty_stones" text="nasáté kameny"/>
+        <text name="rms_warranty_starter" text="přetížený startér"/>
+        <text name="rms_warranty_pto_angle" text="příliš velký úhel kloubového hřídele"/>
+        <text name="rms_warranty_windup" text="uzávěrka nebo 4x4 na tvrdém povrchu"/>
+        <text name="rms_warranty_filter" text="zanesený filtr"/>
+        <text name="rms_warranty_oil" text="nevhodný motorový olej"/>
+        <text name="rms_warranty_trailer" text="příliš těžký přívěs"/>
+        <text name="rms_warranty_aftermarket_part" text="díl z druhovýroby"/>
+        <text name="rms_warranty_used_part" text="použitý díl"/>
+        <text name="rms_warranty_imposed" text="Standardní oprava s originálními díly"/>
+        <text name="rms_warranty_partial_imposed" text="Krytá porucha opravena jako Standardní s originálními díly"/>
         <text name="rms_ws_overhaul_row_systems" text="Řešené systémy"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Obnovené"/>
         <text name="rms_ws_overhaul_systems_one" text="Jeden podle volby"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Vyhodnoceno"/>
         <text name="rms_ws_inspection_maintenance_note" text="I údržba provede toto hledání poruch, jako standardní prohlídka."/>
         <text name="rms_ws_quote_title" text="Rozpis nabídky"/>
+        <text name="rms_ws_quote_empty_title" text="Zde se zobrazí váš rozpočet"/>
+        <text name="rms_ws_quote_empty_text" text="Vyberte zásah ze seznamu"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Zatím žádný rozpočet"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Vyberte jiný zásah ze seznamu"/>
+        <text name="rms_ws_repair_row_around" text="Okolní díly"/>
+        <text name="rms_ws_repair_row_around_detail" text="Repase a opotřebené díly"/>
+        <text name="rms_ws_repair_around_count" text="Vyměněno: %d"/>
+        <text name="rms_ws_repair_around_none" text="Žádné"/>
+        <text name="rms_ws_quote_labour" text="Práce · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Díly poruchy · %s"/>
+        <text name="rms_ws_quote_preventive" text="Preventivní výměna · %s"/>
+        <text name="rms_ws_quote_supplies" text="Spotřební materiál"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Repase motoru · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Repase hlavy válců · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Opotřebené díly · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Záruka výrobce"/>
+        <text name="rms_ws_quote_cover_part" text="Záruka dílu"/>
+        <text name="rms_ws_quote_cover_used" text="Záruka použitého dílu"/>
+        <text name="rms_ws_quote_cover_full" text="Práce a díly hrazeny"/>
+        <text name="rms_ws_quote_cover_part_only" text="Pouze díl, práce se platí"/>
+        <text name="rms_ws_quote_filters" text="Filtry · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Opotřebené díly · poslední úplná prohlídka"/>
         <text name="rms_ws_quote_oil_filter" text="Olejový filtr"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Následující úkon je účtován samostatně. Potřebné kapaliny budou dodány nebo odebrány ze zásoby při jeho zahájení."/>
         <text name="rms_bodywork_touchup" text="Opravy laku"/>
         <text name="rms_bodywork_full" text="Úplné přelakování"/>
         <text name="rms_bodywork_colors_title" text="Barvy vozidla"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="Původní software ji neobnoví"/>
         <text name="rms_remap_free" text="Zdarma"/>
         <text name="rms_remap_unavailable" text="Chiptuning není dostupný"/>
-        <text name="rms_remap_refusal_dealer" text="Prodejce neprovádí chiptuning motorů."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Úpravce přijede na farmu: použij dílnu na farmě nebo mobilní dílnu."/>
+        <text name="rms_ws_overhaul_unavailable" text="Generální oprava není dostupná"/>
+        <text name="rms_remap_refusal_top" text="Už nejsilnější motor řady: dál jde jen úpravce, v dílně na farmě nebo v mobilní dílně."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Upraveno úpravcem: vrátí jen on, v dílně na farmě nebo v mobilní dílně."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Upraveno prodejcem: vrátí jen prodejce."/>
+        <text name="rms_remap_curves_maker" text="Křivky uváděné výrobcem"/>
+        <text name="rms_remap_curves_dealer_measured" text="Brzda prodejce, před a po"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Prodejce uchová původní software"/>
         <text name="rms_remap_refusal_leased" text="Pronajatý stroj nelze upravit chiptuningem."/>
         <text name="rms_remap_refusal_not_eligible" text="Tento motor nemá programovatelnou řídicí jednotku."/>
         <text name="rms_remap_confirm_title" text="Provést chiptuning motoru?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Žádné poruchy ani opotřebené součásti"/>
         <text name="rms_report_worn_part_risk" text="Riziko ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Seřízení: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Výměna: důkladná oprava nebo generální oprava"/>
+        <text name="rms_report_worn_part_replace" text="%s · Preventivní výměna v dílně"/>
         <text name="rms_report_overall_assessment_title" text="Celkové posouzení stavu"/>
         <text name="rms_report_overall_assessment_condition" text="Úroveň stavu"/>
         <text name="rms_report_recommendations_title" text="Závěr a doporučení"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Ofukovací pistole"/>
         <text name="rms_air_blower_no_vehicle" text="V dosahu čištění není žádné vozidlo"/>
         <text name="rms_air_blower_function" text="Používá se k čištění chladičů a vzduchových filtrů"/>
-        <text name="rms_air_blower_action" text="Vyčistit chladič a vzduchový filtr"/>
+        <text name="rms_air_blower_action" text="Vyčistit chladič a vzduchový filtr."/>
+        <text name="rms_air_blower_action_radiator" text="Vyčistit chladič."/>
+        <text name="rms_air_blower_action_air_filter" text="Vyčistit vzduchový filtr."/>
         <text name="rms_air_blower_action_short" text="Ofoukat"/>
         <text name="rms_air_blower_already_clean" text="%s: chladič a vzduchový filtr jsou již čisté"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: chladič je čistý. Vzduchový filtr dosáhl limitu čištění profouknutím. Dílna jej vymění od údržby %s"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Startovací kabely odpojeny od %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Kanystr na kapalinu"/>
-        <text name="rms_fluid_function_engine_oil" text="Motorový olej pro ruční doplnění"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motorový olej, pro všechny stroje, i s AdBlue a filtrem pevných částic"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motorový olej, pro stroje bez AdBlue a filtru pevných částic"/>
         <text name="rms_fluid_function_utto" text="Převodový a hydraulický olej pro ruční doplnění"/>
         <text name="rms_fluid_function_coolant" text="Chladicí kapalina pro ruční doplnění"/>
         <text name="rms_fluid_pour_action" text="Doplnit: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení převodovky a zvýšit její zahřívání. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení hydrauliky, zvýšit její zahřívání a zpomalit ji. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení převodovky a hydrauliky, zvýšit jejich zahřívání a zpomalit hydrauliku. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Nevhodný motorový olej"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Tento motor používá AdBlue nebo má filtr pevných částic: jeho návod předepisuje olej určený pro ně. S tímto olejem přijde výměna oleje až dvakrát dříve. Filtr pevných částic se navíc zaplní popelem 1,5krát rychleji. Pokračovat?"/>
         <text name="rms_fluid_error_no_circuit" text="Toto vozidlo nevyžaduje doplnění žádné kapaliny"/>
         <text name="rms_fluid_error_motor_running" text="Před přečerpáním kapaliny vypni motor"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vozidlo musí stát"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Kapaliny zahrnuty v pronájmu"/>
         <text name="rms_fluid_stock_required" text="Z kanystrů v prostoru dílny"/>
         <text name="rms_fluid_stock_missing" text="V prostoru dílny chybí %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="V prostoru dílny chybí %s oleje vhodného pro tento motor"/>
         <text name="rms_fluid_refill_work_order" text="Doplnění provozních kapalin"/>
         <text name="rms_fluid_refill_dealer_supply" text="Dodávka zahrnuta v cenové nabídce"/>
         <text name="rms_fluid_mode_top_up" text="doplnění"/>
@@ -683,7 +732,7 @@
         <text name="rms_inspection_verdict_stop_title" text="Nepoužívat"/>
         <text name="rms_inspection_verdict_stop_message" text="Jeden bod je kritický. S tímto strojem nepracuj, dokud to nevyřešíš."/>
         <text name="rms_inspection_service_due_in" text="%s za %s"/>
-        <text name="rms_inspection_service_overdue" text="%s překročena o %s"/>
+        <text name="rms_inspection_service_overdue" text="%s: zpoždění %s"/>
         <text name="rms_inspection_status_slightly_low" text="Mírně nízká"/>
         <text name="rms_inspection_status_slightly_dirty" text="Mírně zanesený"/>
         <text name="rms_inspection_status_grease_due" text="Namazat"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Tlumič kabiny vykazuje velký únik a vyprázdnil se."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="V oblasti turbodmychadla jsou patrné mastné stopy a ztmavlé spoje."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="V oblasti turbodmychadla jsou viditelné silné mastné stopy, ztmavlé spoje a stopy sazí."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Hladina jedné z kapalin klesla pod svou značku."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Hladina několika kapalin klesla pod svou značku."/>
+        <text name="rms_inspection_hint_fluid_low" text="Pod značkou MIN: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Velmi nízká hladina: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Doplnit z kanystru, nebo u prodejce."/>
         <text name="rms_inspection_hint_service_engine" text="Výměna motorového oleje je po termínu: opotřebovaný olej urychluje opotřebení motoru a vstřikování. Každá údržba jej vymění i s filtry."/>
         <text name="rms_inspection_hint_service_transmission" text="Výměna převodového oleje je po termínu: opotřebovaný olej urychluje opotřebení všeho, co maže. Údržba doporučená v dílně jej vymění i s filtrem."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Výměna hydraulického oleje je po termínu: opotřebovaný olej urychluje opotřebení hydraulického systému. Údržba doporučená v dílně jej vymění i s filtrem."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vrácená kauce"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nízká hladina kapaliny"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Poškození začíná, až když hladina klesne opravdu nízko: stroj s nedostatkem chladicí kapaliny nebo převodového oleje se přehřívá a stroj s nedostatkem motorového nebo hydraulického oleje se opotřebovává mnohem rychleji.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Vítejte v Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Vypnout rady"/>
         <text name="rms_tutorial_welcome_enable_button" text="Zapnout rady"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Zhoršování stářím"/>
         <text name="rms_tutorial_age_degradation_message" text="V RMS vozidla s věkem postupně ztrácejí část své původní výkonnosti.&#10;&#10;Přibližně po první třetině životnosti opotřebení související s věkem mírně snižuje některé důležité vlastnosti, například výkon nebo účinnost brzd. Účinek potom zesiluje a na konci životnosti je jasně patrný.&#10;&#10;Tuto degradaci lze vypnout v parametrech modu."/>
         <text name="rms_tutorial_poor_consumables_title" text="Nekvalitní spotřební materiál"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Stroj %s dostal při poslední údržbě nekvalitní spotřební materiál. To se stává u levných variant.&#10;&#10;Interval údržby se zkrátil a opotřebení součástí se mírně zvýšilo. Nová údržba problém napraví. Vizuální nebo standardní prohlídka upozorní na zkrácený interval; pouze úplná prohlídka určí příslušný spotřební materiál."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Stroj %s dostal při poslední údržbě vadný filtr. To se stává u levných variant.&#10;&#10;Tento filtr propouští nečistoty: okruh, který chrání, se až do výměny filtru opotřebovává rychleji. Nová údržba ho vymění. Pouze úplná prohlídka ho určí."/>
         <text name="rms_tutorial_poor_parts_title" text="Nekvalitní díly"/>
         <text name="rms_tutorial_poor_parts_message" text="Stroj %s dostal při opravě nekvalitní díl. Porucha se pravděpodobně brzy vrátí.&#10;&#10;Můžeš počkat, až se vrátí, nebo zahájit úplnou prohlídku, která spolehlivě určí příslušný díl."/>
         <text name="rms_tutorial_park_brake_title" text="Parkovací brzda"/>

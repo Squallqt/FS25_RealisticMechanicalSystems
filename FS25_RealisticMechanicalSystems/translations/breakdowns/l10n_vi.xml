@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Bộ lọc hạt hư hỏng nghiêm trọng. Bị bít hoàn toàn, bộ lọc không còn cho khí thải đi qua: chỉ việc thay thế mới khôi phục công suất động cơ."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Bộ lọc hạt bão hòa. Các lần tái sinh không hoàn tất: vòng tua động cơ bị giới hạn cho đến khi một lần tái sinh thành công."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Bộ lọc hạt bão hòa nghiêm trọng. Quá đầy để tự tái sinh, bộ lọc cần được tái sinh bảo dưỡng tại xưởng; vòng tua vẫn bị giới hạn."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Bộ lọc hạt đầy tro. Tái sinh đốt muội than, không đốt tro do dầu động cơ để lại: phải tháo và làm sạch bộ lọc tại xưởng; vòng tua động cơ bị giới hạn."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Ly hợp quạt hư hỏng nhẹ. Quạt phản ứng kém hiệu quả hơn và khả năng làm mát giảm nhẹ."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Ly hợp quạt hư hỏng ở mức trung bình. Quạt gài không đều và hiệu quả làm mát giảm rõ rệt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Ly hợp quạt hư hỏng nặng. Quạt không còn tạo đủ lưu lượng khí và động cơ dễ quá nhiệt hơn."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Không thể thu hoạch: một bộ phận thu hoạch bị hỏng"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Tắc nghẽn: việc thu hoạch đã dừng"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Máy băm rơm hỏng: rơm rơi thành hàng"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Máy băm rơm hỏng: không thể thu hoạch loại cây này nữa"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Máy băm rơm hỏng: rơm rơi xuống mà không được băm"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Dây đai truyền động bắt đầu mòn. Dây đai hơi trượt khi chịu tải."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Dây đai truyền động bị mòn ở mức trung bình. Một bộ phận chậm lại khi chịu tải và cảnh báo vòng quay đôi khi dừng việc thu hoạch."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Dây đai truyền động bị mòn nặng. Năng suất giảm và các lần dừng cứ lặp lại."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Máy băm rơm bắt đầu mòn. Rơm được băm kém ngắn hơn và máy băm tốn thêm chút công suất."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Máy băm rơm bị mòn ở mức trung bình. Máy băm rung và tốn nhiều công suất hơn."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Máy băm rơm bị mòn nặng. Rôto mất cân bằng và tốn rất nhiều công suất."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Máy băm rơm hư hỏng nghiêm trọng. Một lưỡi dao bị gãy: máy băm dừng và rơm rơi thành hàng."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Máy băm rơm hư hỏng nghiêm trọng. Một lưỡi dao bị gãy: máy băm dừng và rơm rơi xuống mà không được băm, thành hàng khi cây trồng tạo hàng."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Trục cuốn tiếp liệu bắt đầu mòn. Trục kẹp cây kém hơn: việc cấp liệu trở nên không đều."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Trục cuốn tiếp liệu bị mòn ở mức trung bình. Chiều dài cắt không đều và xuất hiện tắc nghẽn."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Trục cuốn tiếp liệu bị mòn nặng. Năng suất giảm và tắc nghẽn liên tục."/>

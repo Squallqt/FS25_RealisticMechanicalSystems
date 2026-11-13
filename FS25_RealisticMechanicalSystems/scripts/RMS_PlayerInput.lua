@@ -4,7 +4,6 @@
 RMS_PlayerInput = {}
 
 RMS_PlayerInput.HOLD_TIME = 600
-RMS_PlayerInput.MAX_DISTANCE = 6
 RMS_PlayerInput.CANCEL_MESSAGE_TIME = 1500
 RMS_PlayerInput.WARNING_DURATION = 2000
 
@@ -49,8 +48,7 @@ local function followInspection(player, dt)
     local inspection = machine.spec_RealisticMechanicalSystems.fieldInspection
     if not inspection.isActive or not player.isControlled then
         endInspection(false)
-    elseif not getIsFreeOnFoot(player) or getFacedMachine(player) ~= machine
-        or machine:getDistanceToNode(player.rootNode) > RMS_PlayerInput.MAX_DISTANCE then
+    elseif not getIsFreeOnFoot(player) or getFacedMachine(player) ~= machine then
         endInspection(false, "rms_field_inspection_cancelled")
     else
         inspection.elapsedTime = math.min(inspection.elapsedTime + dt, inspection.duration)

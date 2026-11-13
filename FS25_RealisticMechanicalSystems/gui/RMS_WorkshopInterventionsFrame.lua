@@ -10,13 +10,15 @@ local STATUS = RealisticMechanicalSystems.STATUS
 local ACTIONS = {
     { service = STATUS.INSPECTION, label = "rms_ws_action_choice_inspection", icon = "rms_workshopActionIcon", slice = "gui.icon_vehicleDealer_search" },
     { service = STATUS.MAINTENANCE, label = "rms_ws_action_choice_maintenance", icon = "rms_workshopMaintenanceActionIcon" },
-    { service = STATUS.REPAIR, label = "rms_ws_action_choice_repair", icon = "rms_workshopActionIconWideLarge", slice = "gui.contextAction_icon_repairAlert" },
+    { service = STATUS.REPAIR, label = "rms_ws_action_choice_repair", icon = "rms_workshopActionIcon", slice = "gui.contextAction_icon_repairAlert" },
     { service = STATUS.OVERHAUL, label = "rms_ws_action_choice_overhaul", icon = "rms_workshopActionIcon", slice = "gui.icon_ingameMenu_options" },
     { service = STATUS.REFILL, label = "rms_ws_action_choice_refill", icon = "rms_workshopOilActionIcon" },
     { service = STATUS.BODYWORK, label = "rms_ws_action_choice_bodywork", icon = "rms_workshopActionIcon", slice = "gui.icon_vehicleDealer_machines" },
     { service = STATUS.REMAP, label = "rms_ws_action_choice_remap", icon = "rms_workshopActionIcon", slice = "gui.storeAttribute_power" }
 }
 
+-- a line of the recap sheet in reference pixels
+local SHEET_WIDTH, SHEET_GAP = 348, 8
 local RECAP_FIGURES = {
     { label = "rms_option_menu_duration_text", field = "duration" },
     { label = "rms_ws_label_finish_time", field = "finish" }
@@ -24,28 +26,29 @@ local RECAP_FIGURES = {
 
 -- table geometry in reference pixels, as laid out in the XML
 local TABLE_WIDTH, TABLE_HEIGHT, LABEL_WIDTH, COLUMN_GAP = 619, 472, 220, 8
+local ORDER_WIDTH, NOTE_TEXT_X = 647, 26
 local HEADER, FREQUENCY, ROW, BOTTOM = 112, 16, 44, 8
 local MAX_ROWS, MAX_COLUMNS = 8, 3
 local CELL_PROFILES = { [2] = "rms_workshopLevelCellDone", [1] = "rms_workshopLevelCellLight", [0] = "rms_workshopLevelCellNone" }
 local SYSTEM_WIDTH, SYSTEM_HEIGHT, SYSTEM_GAP, SYSTEMS_PER_ROW, MAX_SYSTEMS = 148, 48, 9, 4, 8
-local QUALITY_WIDTH, QUALITY_GAP = 201, 8
-local QUALITY_RISK_LOW, QUALITY_RISK_HIGH, QUALITY_GAUGE_MIN = 0.2, 0.4, 0.04
-local FOLLOW_UP_X, FOLLOW_UP_GAP = 365, 12
-local COLOR_ROW, COLOR_GAP = 77, 8
-local QUALITY_KEYS = {
-    [RealisticMechanicalSystems.PART_TYPES.USED] = "rms_spec_consumable_types_used",
-    [RealisticMechanicalSystems.PART_TYPES.AFTERMARKET] = "rms_spec_consumable_types_aftermarket",
-    [RealisticMechanicalSystems.PART_TYPES.OEM] = "rms_spec_consumable_types_oem"
+local QUALITY_WIDTH, QUALITY_GAP, QUALITY_GAUGE_MIN = 201, 8, 0.04
+-- top of a card's moving lines in px: a part, filters, a price alone
+local QUALITY_LAYOUTS = {
+    part = { origin = 78, factory = 110, delta = 129 },
+    filter = { origin = 55, delta = 71 },
+    bare = { delta = 55 }
 }
+-- card height in px, its name's top margin kept under its last line
+local QUALITY_HEIGHTS = { [QUALITY_LAYOUTS.part] = 154, [QUALITY_LAYOUTS.filter] = 96, [QUALITY_LAYOUTS.bare] = 80 }
+local COLOR_ROW, COLOR_GAP = 77, 8
 local COVER_TEXTS = {
     warranty = { price = "rms_option_menu_warranty_repair_text", fluids = "rms_fluid_warranty_covered" },
     lease = { price = "rms_option_menu_lease_service_text", fluids = "rms_fluid_lease_covered" }
 }
-local QUOTE_GROUP_KEYS = { repair = "rms_ws_action_repair", fluid = "rms_ws_section_fluids" }
-local QUOTE_WIDTH, QUOTE_HEIGHT, QUOTE_TOP, QUOTE_BOTTOM, QUOTE_LIST = 372, 168, 28, 8, 132
-local QUOTE_HEAD, QUOTE_HEAD_GAP, QUOTE_LINE, QUOTE_NOTE = 20, 7, 17, 16
-local QUOTE_ROW_WIDTH, QUOTE_SLIDER_ROOM, QUOTE_AMOUNT, QUOTE_GAP = 348, 12, 62, 6
-local QUOTE_INDENT, QUOTE_BULLET_X, QUOTE_BULLET_TEXT = 12, 2, 13
+-- flat rates whose option names the work alone: a full repaint, a remap
+local FLAT_RATE_NAMED = { [STATUS.BODYWORK] = true, [STATUS.REMAP] = true }
+-- the slider lane stays kept: rows never change width
+local QUOTE_WIDTH, QUOTE_HEIGHT, QUOTE_LIST, QUOTE_ROW_WIDTH = 372, 202, 166, 334
 -- $preset_colorDisabled and $preset_fs25_colorMainDark
 local COLOR_DISABLED = { 0.3, 0.3, 0.3, 1 }
 local COLOR_MAIN_DARK = { 0.00439, 0.00478, 0.00368, 1 }
@@ -83,7 +86,8 @@ end
 
 ---Says why an intervention has nothing to do here
 function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType)
-    if serviceType == STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle) then
+    if serviceType == STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
+        and #RealisticMechanicalSystems.getPreventiveParts(vehicle) == 0 then
         for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
             if breakdown.isVisible and RMS_Breakdowns.BreakdownRegistry[id].isSelectable then
                 return g_i18n:getText("rms_ws_reason_repair_unselected"), false
@@ -98,10 +102,8 @@ function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType,
         return g_i18n:getText("rms_ws_reason_refill_dealer"), false
     elseif serviceType == STATUS.REMAP then
         local _, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType)
-        if refusal == "dealer" then
-            return g_i18n:getText("rms_remap_refusal_dealer") .. " " .. g_i18n:getText("rms_remap_refusal_farm_mobile_hint"), false
-        elseif refusal ~= nil then
-            return g_i18n:getText(refusal == "leased" and "rms_remap_refusal_leased" or "rms_remap_refusal_not_eligible"), false
+        if refusal ~= nil then
+            return g_i18n:getText(RMS_FluidWorkshop.RESULT_TEXT_KEYS[RMS_FluidWorkshop.REMAP_REFUSALS[refusal]]), false
         end
     end
     return nil, false
@@ -109,13 +111,20 @@ end
 
 ---Tells whether the workshop never does an intervention, its card greyed
 function RMS_WorkshopInterventionsFrame.getIsRefusedHere(vehicle, serviceType, workshopType)
-    if serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL then
+    if serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL or serviceType == STATUS.REMAP then
         return false
     end
     return RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType) ~= nil
 end
 
 local cloneTemplate = RMS_Utils.cloneTemplate
+
+-- each layout of the cells hooks a block's first focusable to scroll
+local function keepInPlaceOnFocus(element)
+    if element.scrollingFocusEnter_orig ~= nil then
+        element.onFocusEnter = element.scrollingFocusEnter_orig
+    end
+end
 
 local formatPower = RMS_Utils.formatPower
 
@@ -129,6 +138,17 @@ local function formatServiceDuration(serviceType, duration, format)
         return g_i18n:getText("rms_option_menu_duration_instant")
     end
     return format(duration)
+end
+
+---Writes a price, or who pays it when the farm does not
+-- @param string? coverKey "warranty" or "lease"
+local function formatPrice(price, coverKey)
+    if price == nil then
+        return g_i18n:getText("rms_fluid_service_price_unavailable")
+    elseif coverKey ~= nil and price <= RMS_Fluids.EPSILON then
+        return g_i18n:getText(COVER_TEXTS[coverKey].price)
+    end
+    return g_i18n:formatMoney(price, 0, true, false)
 end
 
 local function getLostWarranty(vehicle, offer, isRestore)
@@ -149,7 +169,7 @@ local function getLostWarranty(vehicle, offer, isRestore)
         for _, name in ipairs(names[expiry]) do
             table.insert(lines, { note = name })
         end
-        table.insert(lines, { note = string.format(g_i18n:getText("rms_warranty_part"), expiry) })
+        table.insert(lines, { note = string.format(g_i18n:getText("rms_warranty_part"), expiry - vehicle.age) })
     end
     table.insert(lines, { note = g_i18n:getText(isRestore and "rms_remap_warranty_not_back" or "rms_remap_warranty_lost_detail") })
     return { label = g_i18n:getText("rms_ws_warranty_title"), value = g_i18n:getText("rms_remap_warranty_lost"), isLoss = not isRestore,
@@ -192,12 +212,7 @@ function RMS_WorkshopInterventionsFrame:initialize(dialog)
     for index, card in ipairs(self.qualityCards) do
         card:setPosition((index - 1) * (QUALITY_WIDTH + QUALITY_GAP) * self.unitX, 0)
     end
-    self.followUpButtons = cloneTemplate(self.followUpTemplate, 2)
-    for index, button in ipairs(self.followUpButtons) do
-        button:setPosition((FOLLOW_UP_X + (index - 1) * (button.size[1] / self.unitX + FOLLOW_UP_GAP)) * self.unitX, nil)
-        button:getDescendantByName("text"):setText(g_i18n:getText(index == 2 and BinaryOptionElement.STRING_YES or BinaryOptionElement.STRING_NO))
-    end
-    for _, cards in ipairs({ self.systemCards, self.qualityCards, self.followUpButtons }) do
+    for _, cards in ipairs({ self.systemCards, self.qualityCards }) do
         for _, card in ipairs(cards) do
             RMS_Utils.insetCardBackground(card)
         end
@@ -227,13 +242,13 @@ function RMS_WorkshopInterventionsFrame:initialize(dialog)
         if entry.slice ~= nil then
             icon:setImageSlice(nil, entry.slice)
         end
+        RMS_Utils.fitIcon(icon)
     end
+    RMS_Utils.fitIcon(self.readyIcon)
+    RMS_Utils.fitIcon(self.refillEmptyIcon)
     self.recapFigures = cloneTemplate(self.recapFigureTemplate, #RECAP_FIGURES)
-    for index, entry in ipairs(RECAP_FIGURES) do
-        self.recapFigures[index]:getDescendantByName("label"):setText(g_i18n:getText(entry.label))
-    end
 
-    for _, group in ipairs({ self.actionButtons, self.tableColumns, self.systemCards, self.qualityCards, self.followUpButtons }) do
+    for _, group in ipairs({ self.actionButtons, self.tableColumns, self.systemCards, self.qualityCards }) do
         for _, button in ipairs(group) do
             RMS_Utils.mirrorSelectionToChildren(button)
         end
@@ -242,6 +257,7 @@ function RMS_WorkshopInterventionsFrame:initialize(dialog)
     self.quoteList:setDelegate(self)
     self.cornerNameColor = { unpack(self.cornerName.textColor) }
     self.readyHintColor = { unpack(self.readyHint.textColor) }
+    self.tableWidth = TABLE_WIDTH
 end
 
 ---Lays out the remap chart legend, one stroke and name per entry
@@ -277,7 +293,6 @@ function RMS_WorkshopInterventionsFrame:selectService(serviceType)
     local order = RMS_WorkshopOrders.ORDERS[serviceType]
     self.serviceType = serviceType
     self.choice = order.getDefaultChoice ~= nil and order.getDefaultChoice(vehicle, workshopType) or nil
-    self.followUp = false
     self.bodyworkColors = {}
     if serviceType == STATUS.OVERHAUL then
         self.optionTwo = RMS_Utils.getEligibleOverhaulSystems(vehicle)[1]
@@ -289,12 +304,27 @@ function RMS_WorkshopInterventionsFrame:selectService(serviceType)
     self.resetScroll = true
 end
 
+---Returns the method and quality the open order imposes, if any
+function RMS_WorkshopInterventionsFrame:getImposed()
+    local order = RMS_WorkshopOrders.ORDERS[self.serviceType]
+    if order ~= nil and order.getImposed ~= nil then
+        return order.getImposed(self.vehicle, self.workshopType)
+    end
+end
+
+---Whether a choice of the open order is a quick fix, which fits no part
+local function getIsQuickFix(frame, choice)
+    return frame.serviceType == STATUS.REPAIR and choice == RealisticMechanicalSystems.REPAIR_TYPES.LOW
+end
+
 ---Second option a choice of the open order sends
 function RMS_WorkshopInterventionsFrame:getOptionTwo(choice)
     if self.serviceType == STATUS.OVERHAUL then
         return choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and self.optionTwo or "NONE"
     elseif self.serviceType == STATUS.BODYWORK then
         return choice == RMS_Bodywork.FULL and RMS_Bodywork.encodeColors(self.vehicle, self.bodyworkColors) or nil
+    elseif getIsQuickFix(self, choice) then
+        return "NONE"
     elseif self.serviceType == STATUS.MAINTENANCE or self.serviceType == STATUS.REPAIR then
         return self.optionTwo
     end
@@ -315,7 +345,8 @@ function RMS_WorkshopInterventionsFrame:refresh(state)
     self.remapPanel:setVisible(hasOrder and self.serviceType == STATUS.REMAP)
     self.orderScroll:setVisible(hasOrder and self.serviceType ~= STATUS.REMAP)
     self.orderSliderBox:setVisible(false)
-    self.startButton:setVisible(hasOrder)
+    -- a service the workshop cannot do keeps its start button, greyed
+    self.startButton:setVisible(hasOrder or self.refusedService ~= nil and not state.isUnderService)
     if state.isUnderService then
         self:updateProgress()
     elseif not hasOrder then
@@ -352,7 +383,7 @@ function RMS_WorkshopInterventionsFrame:updateReady()
     if self.refusedService ~= nil then
         text, isWarning = RMS_WorkshopInterventionsFrame.getUnavailableText(self.vehicle, self.refusedService, self.workshopType)
     end
-    local titleKeys = { [STATUS.REPAIR] = "rms_ws_action_choice_repair", [STATUS.OVERHAUL] = "rms_ws_action_choice_overhaul",
+    local titleKeys = { [STATUS.REPAIR] = "rms_ws_action_choice_repair", [STATUS.OVERHAUL] = "rms_ws_overhaul_unavailable",
         [STATUS.BODYWORK] = "rms_ws_action_choice_bodywork", [STATUS.REFILL] = "rms_ws_action_choice_refill",
         [STATUS.REMAP] = "rms_remap_unavailable" }
     local isRefusedHere = self.refusedService ~= nil
@@ -362,13 +393,13 @@ function RMS_WorkshopInterventionsFrame:updateReady()
         text = string.format(g_i18n:getText("rms_ws_status_closed_hint"), RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.OPEN_HOUR),
             RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.CLOSE_HOUR))
     end
-    self.readyIcon:setImageSlice(nil, self.refusedService == STATUS.REMAP and "gui.storeAttribute_power" or "gui.icon_construction_buildings")
     self.readyIcon:setImageColor(nil, unpack((isRefusedHere or isClosed) and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
     self.readyTitle:setText(g_i18n:getText(titleKeys[self.refusedService] or isClosed and "rms_ws_status_closed" or "rms_ws_status_ready_title"))
     self.readyHint:setText(text or g_i18n:getText("rms_ws_status_ready_hint"))
     self.readyHint:setTextColor(unpack(isWarning and RMS_Breakdowns.COLORS.WARNING or self.readyHintColor))
+    self.startButton:setDisabled(true)
     self:writeRecap({ type = g_i18n:getText(self.state.isOpen and "rms_ws_status_open" or "rms_ws_status_closed"),
-        options = g_i18n:getText(self.workshopType) })
+        options = g_i18n:getText(self.workshopType), isRefused = self.refusedService ~= nil })
 end
 
 ---Writes the running intervention and what it costs
@@ -377,7 +408,7 @@ function RMS_WorkshopInterventionsFrame:updateProgress()
     local spec = vehicle.spec_RealisticMechanicalSystems
     local options = {}
     if spec.serviceOptionOne ~= nil and spec.serviceOptionOne ~= "NONE" then
-        table.insert(options, RMS_Utils.formatServiceOption(vehicle, spec.currentState, spec.serviceOptionOne))
+        table.insert(options, RMS_Utils.formatServiceOption(vehicle, spec.currentState, spec.serviceOptionOne, spec.workshopType))
     end
     if spec.currentState ~= STATUS.BODYWORK and spec.serviceOptionTwo ~= nil and spec.serviceOptionTwo ~= "NONE" then
         table.insert(options, g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, spec.serviceOptionTwo)))
@@ -387,7 +418,9 @@ function RMS_WorkshopInterventionsFrame:updateProgress()
     self.progressDetail:setText(optionText)
     self:writeRecap({ type = RMS_Utils.formatServiceState(spec.currentState), options = optionText,
         priceLabel = g_i18n:getText("rms_ws_label_committed_cost"), price = g_i18n:formatMoney(spec.pendingServicePrice, 0, true, false),
-        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime()) })
+        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime()),
+        quote = self:getServiceQuote(spec.currentState, spec.serviceOptionOne, spec.serviceOptionTwo, spec.pendingServiceInvoice,
+            spec.workshopType) })
 end
 
 ---Draws the progress of the running intervention
@@ -410,6 +443,11 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     if #self.choices > 0 and RMS_Utils.getKeyByValue(self.choices, self.choice) == nil then
         self.choice = self.choices[1]
     end
+    if order.isChoiceLocked ~= nil and order.isChoiceLocked(vehicle, self.choice, workshopType) then
+        self.choice = order.getDefaultChoice(vehicle, workshopType)
+    end
+    local imposedChoice, imposedQuality = self:getImposed()
+    self.choice, self.optionTwo = imposedChoice or self.choice, imposedQuality or self.optionTwo
     local optionTwo = self:getOptionTwo(self.choice)
     local hasTable = #self.choices > 0
 
@@ -420,7 +458,6 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
         self:updateTable(order)
     end
     self.noteBlock:setVisible(order.noteKey ~= nil)
-    self.noteText:setText(order.noteKey ~= nil and g_i18n:getText(order.noteKey) or "")
     self.footer:setVisible(order.footerKeys ~= nil)
     if order.footerKeys ~= nil then
         self.footer:setText(g_i18n:getText(order.footerKeys[1]) .. " " .. g_i18n:getText(order.footerKeys[2]))
@@ -432,18 +469,13 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
         or refusalKey ~= nil and g_i18n:getText(refusalKey) or "")
 
     self:updateSecondOption(order)
-    self:updateFollowUp(order)
     self:updateRefill()
     self:updateColors()
 
     local coverKey = RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, self.choice, optionTwo, workshopType)
-    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, self.choice, optionTwo, self.followUp)
-    local duration = vehicle:getServiceDuration(serviceType, self.choice, optionTwo, self.followUp, workshopType)
-    local priceText = g_i18n:getText("rms_fluid_service_price_unavailable")
-    if price ~= nil then
-        priceText = coverKey ~= nil and price <= RMS_Fluids.EPSILON and g_i18n:getText(COVER_TEXTS[coverKey].price)
-            or g_i18n:formatMoney(price, 0, true, false)
-    end
+    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, self.choice, optionTwo)
+    local duration = vehicle:getServiceDuration(serviceType, self.choice, optionTwo, workshopType)
+    local priceText = formatPrice(price, coverKey)
     local typeText = RMS_Utils.formatServiceState(serviceType)
     if serviceType == STATUS.REFILL then
         typeText = g_i18n:getText("rms_fluid_refill_work_order")
@@ -452,8 +484,8 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
         type = typeText,
         options = self:getRecapOptions(optionTwo),
         price = priceText,
-        duration = formatServiceDuration(serviceType, duration, RMS_Utils.formatDuration),
-        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(serviceType, self.choice, optionTwo, self.followUp, workshopType)),
+        duration = formatServiceDuration(serviceType, duration, RMS_Utils.formatShortDuration),
+        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(serviceType, self.choice, optionTwo, workshopType)),
         quote = self:getQuote(optionTwo, coverKey)
     })
 
@@ -467,12 +499,39 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     self.startButton:setDisabled(not isValid or not isAllowed or not self.state.isOpen or price == nil or self.hasStockShortage)
 
     self.orderScroll:invalidateLayout()
+    for _, group in ipairs({ self.tableColumns, self.systemCards, self.qualityCards }) do
+        for _, button in ipairs(group) do
+            keepInPlaceOnFocus(button)
+        end
+    end
+    for _, row in pairs(self.colorRows) do
+        keepInPlaceOnFocus(row:getDescendantByName("button"))
+    end
     if self.resetScroll then
         self.orderScroll:scrollTo(0, false)
         self.resetScroll = false
     end
     self.orderScroll:raiseSliderUpdateEvent()
-    self.orderSliderBox:setVisible(self.orderSlider.needsSlider == true)
+    local hasSlider = self.orderSlider.needsSlider == true
+    self.orderSliderBox:setVisible(hasSlider)
+    -- a fitting order takes the lane of the hidden slider
+    local width = hasSlider and TABLE_WIDTH or ORDER_WIDTH
+    if hasTable and width ~= self.tableWidth then
+        self.tableWidth = width
+        self:updateTable(order)
+    end
+    if order.noteKey ~= nil then
+        self:updateNote(g_i18n:getText(order.noteKey))
+    end
+end
+
+---Centers the note of the table, its icon before its text
+function RMS_WorkshopInterventionsFrame:updateNote(text)
+    local ux, width = self.unitX, self.tableWidth
+    self.noteBlock:setSize(width * ux, nil)
+    self.noteText:setSize((width - NOTE_TEXT_X) * ux, nil)
+    self.noteText:setText(text)
+    self.noteIcon:setPosition((width * ux - self.noteText:getTextWidth()) / 2 - NOTE_TEXT_X / 2 * ux, nil)
 end
 
 ---Lays the table out and writes each row and column
@@ -482,7 +541,7 @@ function RMS_WorkshopInterventionsFrame:updateTable(order)
     local rows = order.getRows(vehicle, self.workshopType, self.optionTwo)
     local header = HEADER + (order.getFrequency ~= nil and FREQUENCY or 0)
     local height = header + #rows * ROW + BOTTOM
-    self.optionTable:setSize(nil, height * uy)
+    self.optionTable:setSize(self.tableWidth * ux, height * uy)
 
     local corner = order.getCorner(vehicle, self.workshopType)
     self.cornerLabel:setText(g_i18n:getText(corner.label))
@@ -507,23 +566,27 @@ function RMS_WorkshopInterventionsFrame:updateTable(order)
                 icon:setSize(26 * ux, 26 * uy)
             end
             name:setPosition(x * ux, -(detail ~= "" and 5 or 12) * uy)
-            name:setSize((LABEL_WIDTH - x - 4) * ux, nil)
+            name:setSize((LABEL_WIDTH - x) * ux, nil)
             name:setText(row.text or g_i18n:getText(row.name))
             detailElement:setVisible(detail ~= "")
             detailElement:setPosition(x * ux, -24 * uy)
-            detailElement:setSize((LABEL_WIDTH - x - 4) * ux, nil)
+            detailElement:setSize((LABEL_WIDTH - x) * ux, nil)
             detailElement:setText(detail)
         end
     end
 
-    local width = (TABLE_WIDTH - LABEL_WIDTH - COLUMN_GAP * #choices) / #choices
+    local width = (self.tableWidth - LABEL_WIDTH - COLUMN_GAP * #choices) / #choices
+    local imposedChoice = self:getImposed()
     for column, button in ipairs(self.tableColumns) do
         local choice = choices[column]
         button:setVisible(choice ~= nil)
         if choice ~= nil then
+            local isLocked = imposedChoice ~= nil and choice ~= imposedChoice
+                or order.isChoiceLocked ~= nil and order.isChoiceLocked(vehicle, choice, self.workshopType)
+            button:setDisabled(isLocked)
             local optionTwo = self:getOptionTwo(choice)
-            local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, self.serviceType, self.workshopType, choice, optionTwo, self.followUp)
-            local duration = vehicle:getServiceDuration(self.serviceType, choice, optionTwo, self.followUp, self.workshopType)
+            local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, self.serviceType, self.workshopType, choice, optionTwo)
+            local duration = vehicle:getServiceDuration(self.serviceType, choice, optionTwo, self.workshopType)
             local badgeKey = order.getBadge ~= nil and order.getBadge(vehicle, choice, optionTwo, self.workshopType) or nil
             button:setPosition((LABEL_WIDTH + COLUMN_GAP + (column - 1) * (width + COLUMN_GAP)) * ux, 0)
             button:setSize(width * ux, height * uy)
@@ -542,8 +605,8 @@ function RMS_WorkshopInterventionsFrame:updateTable(order)
             local texts = {
                 name = order.getColumnName ~= nil and order.getColumnName(vehicle, choice) or g_i18n:getText(choice),
                 frequency = order.getFrequency ~= nil and order.getFrequency(vehicle, choice, choices) or "",
-                price = price ~= nil and g_i18n:formatMoney(price, 0, true, false) or "-",
-                duration = formatServiceDuration(self.serviceType, duration, RMS_Utils.formatShortDuration)
+                price = price ~= nil and not isLocked and g_i18n:formatMoney(price, 0, true, false) or "-",
+                duration = not isLocked and formatServiceDuration(self.serviceType, duration, RMS_Utils.formatShortDuration) or ""
             }
             for name, text in pairs(texts) do
                 local element = button:getDescendantByName(name)
@@ -573,7 +636,7 @@ end
 function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     local vehicle = self.vehicle
     local isPartial = self.serviceType == STATUS.OVERHAUL and self.choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
-    local hasQualities = order.qualityPromptKey ~= nil
+    local hasQualities = order.qualityPromptKey ~= nil and not getIsQuickFix(self, self.choice)
     local promptKey = hasQualities and order.qualityPromptKey or isPartial and order.systemPromptKey or nil
     self.secondPrompt:setVisible(promptKey ~= nil)
     self.secondPrompt:setText(promptKey ~= nil and g_i18n:getText(promptKey) or "")
@@ -597,49 +660,98 @@ function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     end
 end
 
+-- info={origin, warranty, isCovered, wear, factory, isFactoryKept}
 local function getQualityPartInfo(frame, quality)
-    local R, vehicle = RealisticMechanicalSystems, frame.vehicle
-    local minimum, maximum, count, guaranteed = R.getUsedPartOfferSummary(vehicle, frame.choice)
+    local R, vehicle, workshopType = RealisticMechanicalSystems, frame.vehicle, frame.workshopType
+    local OEM = R.PART_TYPES.OEM
+    local newPart = g_i18n:getText("rms_ws_quality_new_part")
+    -- the warranty repairs every fault: original parts that keep its cover
+    if vehicle:isWarrantyRepairCovered(workshopType) then
+        local monthsLeft = RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
+        return { origin = newPart, isCovered = true, wear = 0,
+            warranty = monthsLeft < math.huge and string.format(g_i18n:getText("rms_ws_quality_part_warranty"), monthsLeft)
+                or g_i18n:getText("rms_ws_quality_factory_warranty") }
+    end
+    local minimum, maximum, count, guaranteed = R.getUsedPartOfferSummary(vehicle, frame.choice, workshopType)
     if count == 0 then
         return nil
     end
-    local warranty, isCovered = "rms_ws_quality_no_warranty", false
-    local origin = g_i18n:getText("rms_ws_quality_new_part")
+    -- a lease or a remap honours none
+    local isHonoured = vehicle.propertyState ~= VehiclePropertyState.LEASED and not vehicle.spec_RealisticMechanicalSystems.warrantyVoided
+    local isFactoryRunning = isHonoured and R.getIsWithinWarrantyLimits(vehicle)
+    local info = { origin = newPart, warranty = "rms_ws_quality_no_warranty", isCovered = false, wear = 0 }
     if quality == R.PART_TYPES.USED then
-        origin = count == 1 and string.format(g_i18n:getText("rms_ws_quality_donor"), minimum)
+        info.origin = minimum == maximum and string.format(g_i18n:getText("rms_ws_quality_donor"), minimum)
             or string.format(g_i18n:getText("rms_ws_quality_donors"), minimum, maximum)
+        -- the most worn part the order fits
+        info.wear = maximum * RMS_Config.CORE.BASE_SYSTEMS_WEAR
         if guaranteed == count then
-            warranty, isCovered = "rms_ws_quality_used_warranty", true
+            info.warranty, info.isCovered = "rms_ws_quality_used_warranty", true
         elseif guaranteed > 0 then
-            warranty = "rms_ws_quality_partial_warranty"
+            info.warranty = "rms_ws_quality_partial_warranty"
         end
-    elseif quality == R.PART_TYPES.OEM and frame.workshopType == R.WORKSHOP.DEALER and frame.choice == R.REPAIR_TYPES.MEDIUM then
-        for _, line in ipairs(vehicle:getRepairPriceLines(frame.choice, quality, frame.workshopType)) do
-            if RMS_Consumables.getFilterOfBreakdown(line.breakdownId) == nil then
-                if not line.warranty or line.warrantyReason == "part" then
-                    warranty, isCovered = "rms_ws_quality_oem_warranty", true
-                    break
-                end
-                -- replaced free, it keeps the machine's cover
-                warranty, isCovered = "rms_ws_quality_factory_warranty", true
-            end
+    elseif quality == OEM then
+        local hasPart = false
+        for _, line in ipairs(vehicle:getRepairPriceLines(frame.choice, quality, workshopType)) do
+            hasPart = hasPart or not line.warranty and RMS_Consumables.getFilterOfBreakdown(line.breakdownId) == nil
+        end
+        if hasPart and isHonoured and workshopType == R.WORKSHOP.DEALER then
+            info.warranty, info.isCovered = "rms_ws_quality_oem_warranty", true
+        elseif hasPart and isFactoryRunning then
+            info.warranty, info.isCovered = "rms_ws_quality_factory_warranty", true
         end
     end
-    return origin, g_i18n:getText(warranty), isCovered
+    -- a part not original leaves the factory warranty while it runs
+    if isFactoryRunning and (quality ~= OEM or info.warranty ~= "rms_ws_quality_factory_warranty") then
+        info.isFactoryKept = quality == OEM
+        info.factory = g_i18n:getText(quality == OEM and "rms_ws_quality_factory_kept" or "rms_ws_quality_factory_lost")
+    end
+    info.warranty = g_i18n:getText(info.warranty)
+    return info
+end
+
+local FILTER_DEFECT_KEYS = {
+    [RealisticMechanicalSystems.PART_TYPES.USED] = "rms_ws_quality_filter_often",
+    [RealisticMechanicalSystems.PART_TYPES.AFTERMARKET] = "rms_ws_quality_filter_sometimes",
+    [RealisticMechanicalSystems.PART_TYPES.OEM] = "rms_ws_quality_filters_sound"
+}
+
+-- info={origin}: how often a filter of the quality is defective
+local function getQualityFilterInfo(frame, quality)
+    if #RMS_Consumables.getDefectiveFilterCandidates(frame.vehicle, frame.choice) == 0 then
+        return nil
+    end
+    return { origin = g_i18n:getText(FILTER_DEFECT_KEYS[quality]) }
 end
 
 ---Writes the part quality cards of a maintenance or a repair
 function RMS_WorkshopInterventionsFrame:updateQualities()
     local vehicle, serviceType = self.vehicle, self.serviceType
     local OEM = RealisticMechanicalSystems.PART_TYPES.OEM
-    local isQuickFix = self.choice == RealisticMechanicalSystems.REPAIR_TYPES.LOW
+    local _, imposedQuality = self:getImposed()
     local prices = {}
     for _, quality in ipairs(RealisticMechanicalSystems.PART_TYPES_ORDER) do
-        prices[quality] = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, self.workshopType, self.choice, quality, self.followUp)
+        prices[quality] = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, self.workshopType, self.choice, quality)
     end
+    local isRepair = serviceType == STATUS.REPAIR
+    local infos, layouts, height = {}, {}, 0
+    for index, quality in ipairs(RealisticMechanicalSystems.PART_TYPES_ORDER) do
+        local isLocked = imposedQuality ~= nil and quality ~= imposedQuality
+        -- a card the order cannot take keeps its layout, greyed
+        if isRepair then
+            infos[index] = not isLocked and getQualityPartInfo(self, quality) or nil
+            layouts[index] = QUALITY_LAYOUTS.part
+        else
+            infos[index] = not isLocked and getQualityFilterInfo(self, quality) or nil
+            layouts[index] = infos[index] ~= nil and QUALITY_LAYOUTS.filter or QUALITY_LAYOUTS.bare
+        end
+        height = math.max(height, QUALITY_HEIGHTS[layouts[index]])
+    end
+    self.qualityRow:setSize(nil, height * self.unitY)
     for index, card in ipairs(self.qualityCards) do
         local quality = RealisticMechanicalSystems.PART_TYPES_ORDER[index]
-        local price = prices[quality]
+        local isLocked = imposedQuality ~= nil and quality ~= imposedQuality
+        local price = not isLocked and prices[quality] or nil
         local delta = ""
         if quality == OEM then
             delta = g_i18n:getText("rms_ws_quality_reference")
@@ -647,50 +759,48 @@ function RMS_WorkshopInterventionsFrame:updateQualities()
             local gap = price - prices[OEM]
             delta = string.format(g_i18n:getText("rms_ws_quality_delta"), (gap < 0 and "-" or "+") .. g_i18n:formatMoney(math.abs(gap), 0, true, false))
         end
-        local chance = RMS_Config.MAINTENANCE.PARTS_BREAKDOWN_CHANCES[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, quality)]
-        local r, g, b, a = RMS_Utils.getValueColorInverted(chance, 0, 0, QUALITY_RISK_LOW, QUALITY_RISK_HIGH)
-        local origin, warranty, isCovered
-        if serviceType == STATUS.REPAIR and not isQuickFix then
-            origin, warranty, isCovered = getQualityPartInfo(self, quality)
-        end
+        local info, layout = infos[index], layouts[index]
+        card:setSize(nil, height * self.unitY)
+        card:getDescendantByName("frame"):setSize(nil, height * self.unitY)
+        RMS_Utils.insetCardBackground(card)
         card:setSelected(quality == self.optionTwo)
-        card:setDisabled(isQuickFix)
-        card:getDescendantByName("name"):setText(g_i18n:getText(serviceType == STATUS.MAINTENANCE and QUALITY_KEYS[quality]
+        card:setDisabled(isLocked)
+        card:getDescendantByName("name"):setText(g_i18n:getText(serviceType == STATUS.MAINTENANCE and RMS_FluidWorkshop.getConsumableQualityKey(quality)
             or RMS_Utils.getSystemLabel(vehicle, quality)))
         card:getDescendantByName("price"):setText(price ~= nil and g_i18n:formatMoney(price, 0, true, false) or "-")
+        for name, top in pairs(layout) do
+            card:getDescendantByName(name):setPosition(nil, -top * self.unitY)
+        end
+        for _, name in ipairs({ "wearLabel", "wear", "gaugeTrack", "gauge", "warranty", "rule" }) do
+            card:getDescendantByName(name):setVisible(layout == QUALITY_LAYOUTS.part)
+        end
         card:getDescendantByName("delta"):setText(delta)
-        local originElement, warrantyElement = card:getDescendantByName("origin"), card:getDescendantByName("warranty")
-        originElement:setVisible(origin ~= nil)
-        warrantyElement:setVisible(origin ~= nil)
-        originElement:setText(origin or "")
-        warrantyElement:applyProfile(isCovered and "rms_workshopQualityWarrantyCovered" or "rms_workshopQualityWarranty", true)
-        warrantyElement:setText(warranty or "")
-        local risk, gauge = card:getDescendantByName("risk"), card:getDescendantByName("gauge")
-        risk:setText(string.format("%d%%", math.floor(chance * 100 + 0.5)))
-        risk:setTextColor(r, g, b, a)
-        gauge.color = { r, g, b, a }
-        gauge:setVisible(chance > 0)
-        gauge.gaugeWidth = gauge.gaugeWidth or gauge.size[1]
-        gauge:setSize(math.max(chance, QUALITY_GAUGE_MIN) * gauge.gaugeWidth, nil)
-    end
-end
 
----Writes the follow-up choice of the open order
-function RMS_WorkshopInterventionsFrame:updateFollowUp(order)
-    local followUp = order.followUp
-    self.followUpCard:setVisible(followUp ~= nil)
-    if followUp == nil then
-        self.followUp = false
-        return
-    end
-    local note = g_i18n:getText(followUp.disclaimerKey):gsub("^%s*%*%s*", "")
-    if self.followUp then
-        note = note .. " " .. g_i18n:getText("rms_option_menu_follow_up_separate_transaction")
-    end
-    self.followUpTitle:setText(g_i18n:getText(followUp.textKey))
-    self.followUpNote:setText(note)
-    for index, button in ipairs(self.followUpButtons) do
-        button:setSelected(self.followUp == (index == 2))
+        local originElement, warrantyElement, factoryElement = card:getDescendantByName("origin"), card:getDescendantByName("warranty"),
+            card:getDescendantByName("factory")
+        originElement:setVisible(info ~= nil)
+        originElement:setText(info ~= nil and info.origin or "")
+        factoryElement:setVisible(info ~= nil and info.factory ~= nil)
+        factoryElement:applyProfile(info ~= nil and info.isFactoryKept and "rms_workshopQualityWarrantyCovered" or "rms_workshopQualityWarranty", true)
+        factoryElement:setText(info ~= nil and info.factory or "")
+        if layout == QUALITY_LAYOUTS.part then
+            local wearElement, gauge = card:getDescendantByName("wear"), card:getDescendantByName("gauge")
+            warrantyElement:setVisible(info ~= nil)
+            gauge:setVisible(info ~= nil and info.wear > 0)
+            if info == nil then
+                wearElement:setText("-")
+            else
+                warrantyElement:applyProfile(info.isCovered and "rms_workshopQualityWarrantyCovered" or "rms_workshopQualityWarranty", true)
+                warrantyElement:setText(info.warranty)
+                local condition = 1 - info.wear
+                local ideal, high, mid, low = unpack(RMS_Utils.CONDITION_LEVELS)
+                wearElement:setText(string.format("%d%%", math.floor(info.wear * 100 + 0.5)))
+                wearElement:setTextColor(RMS_Utils.getValueColor(condition, ideal, high, mid, low, false))
+                gauge.color = { RMS_Utils.getGaugeColor(condition, ideal, high, mid, low, false) }
+                gauge.gaugeWidth = gauge.gaugeWidth or gauge.size[1]
+                gauge:setSize(math.clamp(info.wear, QUALITY_GAUGE_MIN, 1) * gauge.gaugeWidth, nil)
+            end
+        end
     end
 end
 
@@ -801,73 +911,69 @@ function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
     end
     local options = {}
     if self.choice ~= nil then
-        table.insert(options, RMS_Utils.formatServiceOption(vehicle, serviceType, self.choice))
+        table.insert(options, RMS_Utils.formatServiceOption(vehicle, serviceType, self.choice, self.workshopType))
     end
-    if serviceType == STATUS.MAINTENANCE and QUALITY_KEYS[optionTwo] ~= nil then
-        table.insert(options, g_i18n:getText(QUALITY_KEYS[optionTwo]))
+    if serviceType == STATUS.MAINTENANCE and RMS_FluidWorkshop.getConsumableQualityKey(optionTwo) ~= nil then
+        table.insert(options, g_i18n:getText(RMS_FluidWorkshop.getConsumableQualityKey(optionTwo)))
     elseif (serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL) and optionTwo ~= nil and optionTwo ~= "NONE" then
         table.insert(options, g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, optionTwo)))
     end
     return #options > 0 and table.concat(options, " · ") or "-"
 end
 
+---Quote of a service from its bill; a flat rate describes its work
+-- @return table groups label, price and lines of each group
+function RMS_WorkshopInterventionsFrame:getServiceQuote(serviceType, choice, optionTwo, invoice, workshopType)
+    local vehicle = self.vehicle
+    local groups = RMS_FluidWorkshop.getQuoteGroups(vehicle, serviceType, choice, optionTwo, invoice, workshopType)
+    if #groups > 0 or invoice == nil or invoice[1] == nil or invoice[1].kind ~= "service" then
+        return groups
+    end
+    -- a flat rate: its labour, then what its order table says it covers
+    local option = RMS_Utils.formatServiceOption(vehicle, serviceType, choice, workshopType)
+    local label = FLAT_RATE_NAMED[serviceType] and option or string.format("%s · %s", RMS_Utils.formatServiceState(serviceType), option)
+    local group = { label = label, price = tonumber(invoice[1].price) or 0, lines = {} }
+    local hours = RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, choice, optionTwo, workshopType)
+    if hours > 0 then
+        table.insert(group.lines, { kind = "sub", label = RMS_FluidWorkshop.formatLabour(hours) })
+    end
+    local order = RMS_WorkshopOrders.ORDERS[serviceType]
+    for _, row in ipairs(order ~= nil and order.getRows ~= nil and order.getRows(vehicle, workshopType, optionTwo) or {}) do
+        local text, level = row.getCell(choice)
+        if level ~= nil and level > 0 then
+            table.insert(group.lines, { kind = "bullet", label = string.format("%s · %s", row.name ~= nil and g_i18n:getText(row.name)
+                or row.text, text) })
+        end
+    end
+    return { group }
+end
+
 ---Lines of the quote of the open order, gathered by group
 function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
     local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
-    local WORKSHOP = RealisticMechanicalSystems.WORKSHOP
-    local invoice = RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, self.choice, optionTwo, self.followUp)
+    local invoice = RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, self.choice, optionTwo)
     local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, self.choice, optionTwo)
-    local shortages = RMS_FluidWorkshop.getStockShortages(vehicle, g_workshopScreen.sellingPoint, serviceType, workshopType, requirements,
-        self.choice, optionTwo)
+    local shortages = RMS_FluidWorkshop.getStockShortages(vehicle, g_workshopScreen.sellingPoint, workshopType,
+        { { serviceType = serviceType, requirements = requirements, optionOne = self.choice, optionTwo = optionTwo } })
     self.hasStockShortage = next(shortages) ~= nil
-    local groups, gathered = {}, {}
-    for _, row in ipairs(invoice ~= nil and RMS_FluidWorkshop.getInvoiceRows(vehicle, serviceType, self.choice, invoice) or {}) do
-        if QUOTE_GROUP_KEYS[row.kind] ~= nil then
-            local group = gathered[row.kind]
-            if group == nil then
-                group = { label = g_i18n:getText(QUOTE_GROUP_KEYS[row.kind]), lines = {} }
-                gathered[row.kind] = group
-                table.insert(groups, group)
-            end
-            table.insert(group.lines, { label = row.label, price = row.price })
-            if row.warrantyReason ~= nil and row.warrantyReason ~= "overdue" and row.warrantyReason ~= "impact" then
-                local note = g_i18n:getText("rms_warranty_" .. row.warrantyReason)
-                if row.warrantyReason == "part" then
-                    note = string.format(note, vehicle.spec_RealisticMechanicalSystems.partWarranty[row.breakdownId])
-                end
-                table.insert(group.lines, { note = note })
-            end
-            if row.price ~= nil then
-                group.price = (group.price or 0) + row.price
-            end
-            if shortages[row.circuit] ~= nil then
-                table.insert(group.lines, { isAlert = true, note = string.format(g_i18n:getText("rms_fluid_stock_missing"),
-                    RMS_FluidWorkshop.formatLiters(shortages[row.circuit]) .. " " .. g_i18n:getText("unit_literShort")) })
-            end
-        else
-            local group = { label = row.label, price = row.price, lines = {} }
-            table.insert(groups, group)
-            if row.kind == "filters" then
-                local fitted = RMS_WorkshopOrders.getFittedFilters(vehicle, self.choice)
-                for index = 1, #fitted, 2 do
-                    table.insert(group.lines, { note = fitted[index], second = fitted[index + 1], isBullet = true })
+    local groups = self:getServiceQuote(serviceType, self.choice, optionTwo, invoice, workshopType)
+    for _, group in ipairs(groups) do
+        for index = #group.lines, 1, -1 do
+            local circuit = group.lines[index].circuit
+            if circuit ~= nil then
+                group.isFluids = true
+                if shortages[circuit] ~= nil then
+                    local missingKey = circuit == "engineOil" and RMS_Fluids.getNeedsLowAshOil(vehicle)
+                        and "rms_fluid_stock_missing_low_ash" or "rms_fluid_stock_missing"
+                    table.insert(group.lines, index + 1, { isAlert = true, label = string.format(g_i18n:getText(missingKey),
+                        RMS_FluidWorkshop.formatLiters(shortages[circuit]) .. " " .. g_i18n:getText("unit_literShort")) })
                 end
             end
         end
-    end
-    if gathered.repair ~= nil and workshopType == WORKSHOP.MOBILE then
-        local isCovered, reason = vehicle:isWarrantyRepairCovered(self.choice, optionTwo, workshopType)
-        if isCovered or reason == "partial" then
-            table.insert(gathered.repair.lines, { note = g_i18n:getText("rms_warranty_mobile") })
+        if group.isFluids and not self.hasStockShortage and (coverKey ~= nil or workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER) then
+            table.insert(group.lines, { kind = "note", label = g_i18n:getText(coverKey ~= nil and COVER_TEXTS[coverKey].fluids
+                or "rms_fluid_stock_required") })
         end
-    end
-    if gathered.fluid ~= nil and not self.hasStockShortage and (coverKey ~= nil or workshopType ~= WORKSHOP.DEALER) then
-        table.insert(gathered.fluid.lines, { note = g_i18n:getText(coverKey ~= nil and COVER_TEXTS[coverKey].fluids or "rms_fluid_stock_required") })
-    end
-    local followUp = RMS_WorkshopOrders.ORDERS[serviceType].followUp
-    if followUp ~= nil then
-        table.insert(groups, { label = g_i18n:getText(followUp.textKey), lines = {},
-            value = g_i18n:getText(self.followUp and BinaryOptionElement.STRING_YES or BinaryOptionElement.STRING_NO) })
     end
     return groups
 end
@@ -880,27 +986,30 @@ function RMS_WorkshopInterventionsFrame:writeRecap(recap)
     self.recapPriceLabel:setText(recap.priceLabel or g_i18n:getText("rms_option_menu_price_text"))
     self.recapPrice:setText(recap.price or "-")
     for index, entry in ipairs(RECAP_FIGURES) do
-        self.recapFigures[index]:getDescendantByName("figure"):setText(recap[entry.field] or "-")
+        -- the label takes its width, the value the rest, right aligned
+        local figure = self.recapFigures[index]
+        local label, value = figure:getDescendantByName("label"), figure:getDescendantByName("figure")
+        label:setSize(figure.size[1], nil)
+        label:setText(g_i18n:getText(entry.label))
+        local unit = figure.size[1] / SHEET_WIDTH
+        -- a pixel to spare: a box the width of its text shrinks it
+        local labelWidth, gap = label:getTextWidth() + unit, SHEET_GAP * unit
+        label:setSize(labelWidth, nil)
+        value:setPosition(labelWidth + gap, nil)
+        value:setSize(figure.size[1] - labelWidth - gap, nil)
+        value:setText(recap[entry.field] or "-")
     end
 
-    local rows, height = {}, 0
-    for index, group in ipairs(recap.quote or {}) do
-        table.insert(rows, { isHead = true, isFirst = index == 1, label = group.label, price = group.price, value = group.value,
-            isLoss = group.isLoss })
-        height = height + QUOTE_HEAD + (index == 1 and 0 or QUOTE_HEAD_GAP)
-        for _, line in ipairs(group.lines) do
-            table.insert(rows, line)
-            height = height + (line.note ~= nil and QUOTE_NOTE or QUOTE_LINE)
-        end
-    end
-    local isScrolling = height > QUOTE_LIST
-    local blockHeight = (QUOTE_TOP + math.min(height, QUOTE_LIST) + QUOTE_BOTTOM) * self.quoteUnitY
+    local rows, height = RMS_FluidWorkshop.getQuoteRows(recap.quote or {})
     self.quoteLines = rows
-    self.quoteRowWidth = isScrolling and QUOTE_ROW_WIDTH - QUOTE_SLIDER_ROOM or QUOTE_ROW_WIDTH
-    self.quoteBlock:setVisible(#rows > 0)
-    self.quoteBlock:setSize(nil, blockHeight)
-    self.quoteSurface:setSize(nil, blockHeight)
-    self.quoteSliderBox:setVisible(isScrolling)
+    -- the block keeps its place, empty or not
+    local isEmpty = #rows == 0
+    self.quoteList:setVisible(not isEmpty)
+    self.quoteEmptyTitle:setVisible(isEmpty)
+    self.quoteEmptyText:setVisible(isEmpty)
+    self.quoteEmptyTitle:setText(g_i18n:getText(recap.isRefused and "rms_ws_quote_empty_title_refused" or "rms_ws_quote_empty_title"))
+    self.quoteEmptyText:setText(g_i18n:getText(recap.isRefused and "rms_ws_quote_empty_text_refused" or "rms_ws_quote_empty_text"))
+    self.quoteSliderBox:setVisible(height > QUOTE_LIST)
     RMS_Utils.reloadListTemplates(self.quoteList)
 end
 
@@ -911,55 +1020,12 @@ end
 
 ---Template of a row of the quote
 function RMS_WorkshopInterventionsFrame:getCellTypeForItemInSection(_list, _section, index)
-    local row = self.quoteLines[index]
-    if row == nil then
-        return "quoteLine"
-    elseif row.isHead then
-        return row.isFirst and "quoteHead" or "quoteHeadGap"
-    elseif row.isAlert then
-        return "quoteAlert"
-    end
-    return row.note ~= nil and "quoteNote" or "quoteLine"
+    return RMS_FluidWorkshop.getQuoteCellType(self.quoteLines[index])
 end
 
 ---Writes a row of the quote
 function RMS_WorkshopInterventionsFrame:populateCellForItemInSection(_list, _section, index, cell)
-    local row, ux, width = self.quoteLines[index], self.quoteUnitX, self.quoteRowWidth
-    if row.isAlert then
-        local alert = cell:getAttribute("quoteAlertText")
-        alert:setSize((width - QUOTE_INDENT) * ux, nil)
-        alert:setText(row.note)
-        return
-    elseif row.note ~= nil then
-        local note, second = cell:getAttribute("quoteNoteText"), cell:getAttribute("quoteNoteText2")
-        local half = (width - QUOTE_INDENT) / 2
-        local textX = QUOTE_INDENT + (row.isBullet and QUOTE_BULLET_TEXT or 0)
-        cell:getAttribute("quoteNoteBullet"):setVisible(row.isBullet == true)
-        note:setPosition(textX * ux, nil)
-        note:setSize((row.isBullet and half - QUOTE_BULLET_TEXT or width - QUOTE_INDENT) * ux, nil)
-        note:setText(row.note)
-        local secondBullet = cell:getAttribute("quoteNoteBullet2")
-        secondBullet:setVisible(row.second ~= nil)
-        secondBullet:setPosition((QUOTE_INDENT + half + QUOTE_BULLET_X) * ux, nil)
-        second:setVisible(row.second ~= nil)
-        second:setPosition((textX + half) * ux, nil)
-        second:setSize((half - QUOTE_BULLET_TEXT) * ux, nil)
-        second:setText(row.second or "")
-        return
-    end
-    local name, amount = cell:getAttribute("quoteName"), cell:getAttribute("quoteAmount")
-    local nameX = row.isHead and 0 or QUOTE_INDENT
-    if row.isHead and not row.isFirst then
-        cell:getAttribute("quoteRule"):setSize(width * ux, nil)
-    end
-    -- a list reuses its cells: the colour of a head is set each time
-    if row.isHead then
-        amount:setTextColor(unpack(row.isLoss and RMS_Utils.COLOR.ALERT or RMS_Utils.COLOR.TEXT))
-    end
-    name:setSize((width - nameX - QUOTE_AMOUNT - QUOTE_GAP) * ux, nil)
-    name:setText(row.label)
-    amount:setPosition((width - QUOTE_AMOUNT) * ux, nil)
-    amount:setText(row.value or row.price ~= nil and g_i18n:formatMoney(row.price, 0, true, false) or "")
+    RMS_FluidWorkshop.populateQuoteCell(cell, self.quoteLines[index], self.quoteUnitX, QUOTE_ROW_WIDTH)
 end
 
 ---Writes the remap offer: figures, bench curves, notes and recap
@@ -970,7 +1036,7 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
     local green, light = RMS_Utils.COLOR.HIGHLIGHT, RMS_Utils.COLOR.TEXT
     self.choice = offer.option
     self.remapOffer = offer
-    self.remapCurve = RMS_EngineRemap.getCurve(vehicle)
+    self.remapCurve = RMS_EngineRemap.getCurve(vehicle, not isRestore and workshopType or nil)
 
     local shownHp, otherHp, shownTorque, otherTorque = offer.remapHp, offer.stockHp, offer.remapTorque, offer.stockTorque
     if isRestore then
@@ -981,7 +1047,9 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
         { "rms_remap_max_power", formatPower(shownHp), string.format(referenceFormat, formatPower(otherHp)), isRestore and light or green },
         { "rms_remap_max_torque", formatTorque(shownTorque), string.format(referenceFormat, formatTorque(otherTorque)), isRestore and light or green }
     }
-    if isRestore then
+    if isRestore and offer.isDealer then
+        table.insert(tiles, { "rms_ws_warranty_title", g_i18n:getText("rms_remap_warranty_lost"), "", RMS_Utils.COLOR.ALERT })
+    elseif isRestore then
         local monthsLeft = math.max(offer.freeRestoreUntil - 1 - vehicle.age, 0)
         local period = (g_currentMission.environment.currentPeriod - 1 + monthsLeft) % 12 + 1
         table.insert(tiles, { "rms_remap_free_restore", string.format(g_i18n:getText("rms_remap_until_format"), g_i18n:formatPeriod(period, false)),
@@ -1001,17 +1069,19 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
         tile:getDescendantByName("note"):setText(data[3])
     end
 
-    self.remapChartTitle:setText(g_i18n:getText(isRestore and "rms_remap_curves_measured" or "rms_remap_curves_announced"))
+    local chartTitles = { [false] = { [false] = "rms_remap_curves_announced", [true] = "rms_remap_curves_measured" },
+        [true] = { [false] = "rms_remap_curves_maker", [true] = "rms_remap_curves_dealer_measured" } }
+    self.remapChartTitle:setText(g_i18n:getText(chartTitles[offer.isDealer][isRestore]))
     local notes = isRestore and { { "gui.storeAttribute_info", "rms_remap_note_restored" }, { "gui.storeAttribute_fuel", "rms_remap_note_same_fuel" } }
         or { { "gui.storeAttribute_fuel", "rms_remap_note_fuel" }, offer.isBeyondBlock and { "gui.storeAttribute_condition", "rms_remap_note_overload" }
-            or { "gui.storeAttribute_info", "rms_remap_note_stock_kept" } }
+            or { "gui.storeAttribute_info", offer.isDealer and "rms_remap_note_stock_kept_dealer" or "rms_remap_note_stock_kept" } }
     for index, note in ipairs(self.remapNoteElements) do
         note:getDescendantByName("icon"):setImageSlice(nil, notes[index][1])
         note:getDescendantByName("text"):setText(g_i18n:getText(notes[index][2]))
     end
 
-    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, remap, workshopType, offer.option, nil, false)
-    local duration = vehicle:getServiceDuration(remap, offer.option, nil, false, workshopType)
+    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, remap, workshopType, offer.option, nil)
+    local duration = vehicle:getServiceDuration(remap, offer.option, nil, workshopType)
     local quote = self:getQuote(nil, nil)
     -- the warranty a remap takes, or the factory term a restore leaves lost
     if isRestore and offer.warrantyVoided and offer.factoryTerm or not isRestore and offer.warrantyActive then
@@ -1019,10 +1089,10 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
     end
     self:writeRecap({
         type = isRestore and g_i18n:getText("rms_remap_restore") or RMS_Utils.formatServiceState(remap),
-        options = RMS_Utils.formatServiceOption(vehicle, remap, offer.option),
+        options = RMS_Utils.formatServiceOption(vehicle, remap, offer.option, workshopType),
         price = price == 0 and g_i18n:getText("rms_remap_free") or g_i18n:formatMoney(price, 0, true, false),
-        duration = formatServiceDuration(remap, duration, RMS_Utils.formatDuration),
-        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(remap, offer.option, nil, false, workshopType)),
+        duration = formatServiceDuration(remap, duration, RMS_Utils.formatShortDuration),
+        finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(remap, offer.option, nil, workshopType)),
         quote = quote
     })
     self.startButton:setDisabled(not self.state.isOpen or offer.refusal ~= nil or price == nil)
@@ -1182,12 +1252,6 @@ function RMS_WorkshopInterventionsFrame:onClickQuality(button)
     self.dialog:refresh()
 end
 
----Picks the follow-up, no then yes
-function RMS_WorkshopInterventionsFrame:onClickFollowUp(button)
-    self.followUp = button.templateIndex == 2
-    self.dialog:refresh()
-end
-
 ---Opens the color picker of a zone
 function RMS_WorkshopInterventionsFrame:onClickColor(button)
     local zone, vehicle = button.colorZone, self.vehicle
@@ -1265,7 +1329,7 @@ function RMS_WorkshopInterventionsFrame:onClickStart()
     if self.serviceType == STATUS.REMAP and self.choice == RMS_EngineRemap.REMAP then
         local sentences = {}
         if not RealisticMechanicalSystems.getIsServiceInstant(STATUS.REMAP) then
-            local duration = vehicle:getServiceDuration(STATUS.REMAP, self.choice, nil, false, self.workshopType)
+            local duration = vehicle:getServiceDuration(STATUS.REMAP, self.choice, nil, self.workshopType)
             table.insert(sentences, string.format(g_i18n:getText("rms_remap_confirm_format"), vehicle:getFullName(), RMS_Utils.formatDuration(duration)))
         end
         if self.remapOffer.warrantyActive then
@@ -1289,7 +1353,7 @@ end
 
 ---Sends the open order and leaves it
 function RMS_WorkshopInterventionsFrame:startOrder()
-    if RMS_WorkshopOrders.start(self.vehicle, self.workshopType, self.serviceType, self.choice, self:getOptionTwo(self.choice), self.followUp) then
+    if RMS_WorkshopOrders.start(self.vehicle, self.workshopType, self.serviceType, self.choice, self:getOptionTwo(self.choice)) then
         self.serviceType = nil
         self.dialog:refresh()
     end
@@ -1315,7 +1379,7 @@ function RMS_WorkshopInterventionsFrame:getFocusColumns()
     for index, card in ipairs(self.systemCards) do
         table.insert(systemRows[math.ceil(index / SYSTEMS_PER_ROW)], card)
     end
-    local order = { self.tableColumns, systemRows[1], systemRows[2], self.qualityCards, self.followUpButtons }
+    local order = { self.tableColumns, systemRows[1], systemRows[2], self.qualityCards }
     for _, row in pairs(self.colorRows) do
         table.insert(order, { row:getDescendantByName("button") })
     end

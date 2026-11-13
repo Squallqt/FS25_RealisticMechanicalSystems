@@ -134,6 +134,14 @@ RMS_Fluids.PRODUCTS = {
         assetDirectory = "objects/fluids/products/motorexFarmerPro",
         densityKgPerLiter = 0.868,
         storePrices = { [5] = 47, [25] = 154, [200] = 1076 },
+        isStoreItem = true, isLowAsh = true,
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+    },
+    MOTOREX_FARMER_UNI_15W40 = {
+        brand = "MOTOREX", name = "Farmer UNI SAE 15W/40",
+        assetDirectory = "objects/fluids/products/motorexFarmerUni",
+        densityKgPerLiter = 0.880,
+        storePrices = { [5] = 37, [25] = 120, [200] = 836 },
         isStoreItem = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
@@ -153,12 +161,20 @@ RMS_Fluids.PRODUCTS = {
         isStoreItem = true,
         compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
     },
-    MOTUL_AGRI_TEKNO_10W40 = {
-        brand = "MOTUL", name = "AGRI TEKNO 10W-40",
+    MOTUL_AGRI_TEKNO_15W40 = {
+        brand = "MOTUL", name = "AGRI TEKNO 15W-40",
         assetDirectory = "objects/fluids/products/motulAgriTekno",
-        densityKgPerLiter = 0.871,
-        storePrices = { [5] = 31, [25] = 121, [200] = 992 },
+        densityKgPerLiter = 0.869,
+        storePrices = { [5] = 29, [25] = 114, [200] = 795 },
         isStoreItem = true,
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+    },
+    MOTUL_AGRI_TEKNO_LA_10W40 = {
+        brand = "MOTUL", name = "AGRI TEKNO LA 10W-40",
+        assetDirectory = "objects/fluids/products/motulAgriTeknoLa",
+        densityKgPerLiter = 0.862,
+        storePrices = { [5] = 43, [25] = 168, [200] = 1170 },
+        isStoreItem = true, isLowAsh = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
     MOTUL_TRH_97 = {
@@ -182,6 +198,14 @@ RMS_Fluids.PRODUCTS = {
         assetDirectory = "objects/fluids/products/fuchsMotXla",
         densityKgPerLiter = 0.859,
         storePrices = { [5] = 35, [25] = 136, [200] = 949 },
+        isStoreItem = true, isLowAsh = true,
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+    },
+    FUCHS_AGRIFARM_MOT_15W40 = {
+        brand = "FUCHS", name = "Agrifarm MOT 15W-40",
+        assetDirectory = "objects/fluids/products/fuchsMot15w40",
+        densityKgPerLiter = 0.886,
+        storePrices = { [5] = 25, [25] = 119, [200] = 814 },
         isStoreItem = true,
         compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
     },
@@ -449,6 +473,7 @@ function RMS_Fluids.initializeVehicle(vehicle, forceResolve)
         spec.fluidCompatibility[circuit] = clamp(spec.fluidCompatibility[circuit] or 1, 0, 1)
     end
 
+    spec.engineOilSuitedShare = clamp(spec.engineOilSuitedShare or 1, 0, 1)
     spec.fluidCapacityVersion = RMS_Fluids.CAPACITY_VERSION
     spec.fluidCapacitySource = source
     RMS_Fluids.updateEffects(vehicle)
@@ -482,10 +507,83 @@ RMS_Fluids.GAUGE_MAX_POSITION = 0.8
 
 ---Reads a level on the level gauge
 function RMS_Fluids.getGaugeFill(level, green)
-    local minMark = RMS_Config.FLUIDS.LEVEL_MIN_MARK
-    local stretch = (1 - minMark) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
+    local C = RMS_Config.FLUIDS
+    local stretch = (1 - C.LEVEL_MIN_MARK) / (RMS_Fluids.GAUGE_MAX_POSITION - RMS_Fluids.GAUGE_MIN_POSITION)
     local fill = RMS_Fluids.GAUGE_MAX_POSITION - (1 - level) / stretch
-    return math.max(fill, 0), level < minMark and RMS_Breakdowns.COLORS.WARNING or green
+    local color = level <= C.LEVEL_VERY_LOW and RMS_Breakdowns.COLORS.CRITICAL
+        or level < C.LEVEL_MIN_MARK and RMS_Breakdowns.COLORS.WARNING or green
+    return math.max(fill, 0), color
+end
+
+-- circuit = part an air-drawing pump of that sump fails
+RMS_Fluids.PICKUP_PARTS = { engineOil = "MAIN_BEARINGS", transmissionOil = "TRANSMISSION_PUMP_MALFUNCTION",
+    hydraulicFluid = "HYDRAULIC_PUMP_MALFUNCTION" }
+-- order of the pumps sent to the clients
+RMS_Fluids.PICKUP_CIRCUITS = { "engineOil", "transmissionOil", "hydraulicFluid" }
+
+---Returns the tangent of the lean a sump keeps its pump covered to
+function RMS_Fluids.getPickupMargin(level)
+    local C = RMS_Config.FLUIDS
+    return math.tan(math.rad(C.PICKUP_MIN_MARK_ANGLE)) * (level - C.LEVEL_CRITICALLY_LOW)
+        / (C.LEVEL_MIN_MARK - C.LEVEL_CRITICALLY_LOW)
+end
+
+RMS_Fluids.PICKUP_MAX_LEAN = 10
+
+---Returns the tangent of the lean of the oil in a sump
+function RMS_Fluids.getSumpLean(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    return math.sqrt((spec.sumpLeanX or 0) ^ 2 + (spec.sumpLeanZ or 0) ^ 2)
+end
+
+---Tells whether the pump of a sump draws air
+-- @param boolean wasUncovered drawing air until now, then until the oil is back under the hysteresis
+function RMS_Fluids.getIsPickupUncovered(vehicle, circuit, lean, wasUncovered)
+    local partId = RMS_Fluids.PICKUP_PARTS[circuit]
+    if partId == nil or not RMS_Fluids.hasCircuit(vehicle, circuit) or not RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
+        return false
+    end
+    local level = RMS_Fluids.getLevel(vehicle, circuit)
+    -- at the MIN mark or over, the makers' angle is never reached
+    if level >= RMS_Config.FLUIDS.LEVEL_MIN_MARK then
+        return false
+    end
+    local margin = RMS_Fluids.getPickupMargin(level)
+    if wasUncovered then
+        return math.atan(lean) > math.atan(margin) - math.rad(RMS_Config.FLUIDS.PICKUP_HYSTERESIS_ANGLE)
+    end
+    return lean >= margin
+end
+
+---Follows the oil of the sumps on the server and sums the air drawn
+-- @param float dt ms of the RMS tick, counted as air while a pump draws it
+function RMS_Fluids.updatePickups(vehicle, dt)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    -- the slope alone, from the attitude the game holds exactly
+    local _, sideY = localDirectionToWorld(vehicle.rootNode, 1, 0, 0)
+    local _, upY = localDirectionToWorld(vehicle.rootNode, 0, 1, 0)
+    local _, frontY = localDirectionToWorld(vehicle.rootNode, 0, 0, 1)
+    local maxLean = RMS_Fluids.PICKUP_MAX_LEAN
+    local leanX, leanZ = maxLean, maxLean
+    if upY * maxLean > math.max(math.abs(sideY), math.abs(frontY)) then
+        leanX, leanZ = -sideY / upY, -frontY / upY
+    end
+    -- the oil settles over the smoothing time, a bump rocks nothing
+    local blend = spec.sumpLeanX == nil and 1 or math.min(dt / 1000 / RMS_Config.FLUIDS.PICKUP_SMOOTHING_SECONDS, 1)
+    spec.sumpLeanX = (spec.sumpLeanX or 0) + (leanX - (spec.sumpLeanX or 0)) * blend
+    spec.sumpLeanZ = (spec.sumpLeanZ or 0) + (leanZ - (spec.sumpLeanZ or 0)) * blend
+
+    local lean = RMS_Fluids.getSumpLean(vehicle)
+    -- a pump turns with the engine; stopped, it draws nothing
+    local isTurning = vehicle:getIsMotorStarted()
+    local isCounted = not RealisticMechanicalSystems.isMissionVehicle(vehicle)
+    for circuit, partId in pairs(RMS_Fluids.PICKUP_PARTS) do
+        local isUncovered = isTurning and RMS_Fluids.getIsPickupUncovered(vehicle, circuit, lean, spec.pickupUncovered[circuit])
+        spec.pickupUncovered[circuit] = isUncovered
+        if isUncovered and isCounted then
+            spec.pickupAirTime[partId] = (spec.pickupAirTime[partId] or 0) + dt / 1000
+        end
+    end
 end
 
 ---Returns the current circuit quantity in liters
@@ -515,6 +613,23 @@ end
 function RMS_Fluids.getIsProductCompatible(productKey, circuit)
     local product = RMS_Fluids.PRODUCTS[productKey]
     return product ~= nil and product.compatibleCircuits[circuit] == true
+end
+
+---Tells whether AdBlue or a particulate filter asks for low ash oil
+function RMS_Fluids.getNeedsLowAshOil(vehicle)
+    local consumers = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.consumersByFillTypeName or nil
+    return vehicle.spec_RealisticMechanicalSystems.hasParticulateFilter == true or consumers ~= nil and consumers.DEF ~= nil
+end
+
+---Tells whether a product is the oil the manual of the machine asks for
+function RMS_Fluids.getIsProductSuited(vehicle, productKey, circuit)
+    return circuit ~= "engineOil" or RMS_Fluids.PRODUCTS[productKey].isLowAsh == true or not RMS_Fluids.getNeedsLowAshOil(vehicle)
+end
+
+---Returns the share of its oil interval the oil in an engine keeps
+function RMS_Fluids.getEngineOilIntervalShare(vehicle)
+    local suited = vehicle.spec_RealisticMechanicalSystems.engineOilSuitedShare or 1
+    return suited + (1 - suited) * RMS_Config.FLUIDS.UNSUITED_ENGINE_OIL_INTERVAL
 end
 
 ---Reduces outstanding leak debts after an external top-up
@@ -571,6 +686,11 @@ function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtRedu
     spec.fluidCompatibility[circuit] = newLiters > 0
         and clamp((oldLiters * oldCompatibility + accepted * incomingCompatibility) / newLiters, 0, 1)
         or 1
+    if circuit == "engineOil" then
+        local isSuited = productKey == nil or RMS_Fluids.getIsProductSuited(vehicle, productKey, circuit)
+        spec.engineOilSuitedShare = clamp((oldLiters * (spec.engineOilSuitedShare or 1) + accepted * (isSuited and 1 or 0))
+            / newLiters, 0, 1)
+    end
 
     if skipDebtReduction ~= true then
         RMS_Fluids.reduceLeakDebt(spec, circuit, accepted)
@@ -610,6 +730,9 @@ function RMS_Fluids.replaceCircuit(vehicle, circuit)
 
     spec[definition.levelKey] = RMS_Fluids.getCapacity(vehicle, circuit) > 0 and 1 or 0
     spec.fluidCompatibility[circuit] = 1
+    if circuit == "engineOil" then
+        spec.engineOilSuitedShare = 1
+    end
     for breakdownId in pairs(spec.fluidLeakLossDebt or {}) do
         if getSpecSumpCircuit(spec, RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS[breakdownId]) == circuit then
             spec.fluidLeakLossDebt[breakdownId] = nil
@@ -751,10 +874,13 @@ function RMS_Fluids.getSystemWearMultiplier(vehicle, systemKey)
     return wearMultiplier
 end
 
----Adds fluid contamination to the existing breakdown hydraulic modifier
+---Adds a contaminated or air-drawing fluid to the breakdown modifier
 function RMS_Fluids.getHydraulicSpeedModifier(vehicle, breakdownModifier)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     local fluidModifier = tonumber(spec ~= nil and spec.fluidHydraulicSpeedModifier or 0) or 0
+    if spec ~= nil and spec.pickupUncovered ~= nil and spec.pickupUncovered.hydraulicFluid then
+        fluidModifier = fluidModifier - (1 - RMS_Config.FLUIDS.PICKUP_HYDRAULIC_SPEED)
+    end
     local currentModifier = tonumber(breakdownModifier or 0) or 0
     return math.max(currentModifier + fluidModifier, -1)
 end

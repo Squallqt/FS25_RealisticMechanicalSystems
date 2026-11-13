@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <placeable type="rmsTrolleyPlaceable">
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
     <storeData>
         <name>$l10n_rms_charger_name</name>
         <functions>

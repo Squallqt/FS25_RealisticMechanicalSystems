@@ -448,12 +448,26 @@ end
 PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(PlayerInputComponent.registerGlobalPlayerActionEvents,
     onRegisterGlobalPlayerActionEvents)
 
-function RMS_DebugWindow.draw(vehicle)
-    if not RMS_DebugWindow.getIsOpen() or not g_currentMission.isMasterUser or vehicle == nil then
+---Hides the help box of the game under the window, then gives it back
+local function setHelpHidden(isHidden)
+    local hud = g_currentMission.hud
+    if hud.inputHelp == nil or isHidden == (RMS_DebugWindow.helpWasVisible ~= nil) then
         return
     end
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or spec.isExcludedVehicle then
+    if isHidden then
+        RMS_DebugWindow.helpWasVisible = hud.inputHelp:getVisible()
+        hud:setInputHelpVisible(false)
+    else
+        hud:setInputHelpVisible(RMS_DebugWindow.helpWasVisible)
+        RMS_DebugWindow.helpWasVisible = nil
+    end
+end
+
+function RMS_DebugWindow.draw(vehicle)
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    local isShown = RMS_DebugWindow.getIsOpen() and g_currentMission.isMasterUser and spec ~= nil and not spec.isExcludedVehicle
+    setHelpHidden(isShown)
+    if not isShown then
         return
     end
 

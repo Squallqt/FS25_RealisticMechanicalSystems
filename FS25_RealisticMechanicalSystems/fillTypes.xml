@@ -6,6 +6,10 @@
             <physics massPerLiter="0.868" />
             <image hud="brands/hud_brand_motorex.png" />
         </fillType>
+        <fillType name="RMS_MOTOREX_FARMER_UNI_15W40" title="MOTOREX Farmer UNI SAE 15W/40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.880" />
+            <image hud="brands/hud_brand_motorex.png" />
+        </fillType>
         <fillType name="RMS_MOTOREX_FARMER_POLY_604" title="MOTOREX Farmer Poly 604" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.868" />
             <image hud="brands/hud_brand_motorex.png" />
@@ -14,8 +18,12 @@
             <physics massPerLiter="1.070" />
             <image hud="brands/hud_brand_motorex.png" />
         </fillType>
-        <fillType name="RMS_MOTUL_AGRI_TEKNO_10W40" title="MOTUL AGRI TEKNO 10W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
-            <physics massPerLiter="0.871" />
+        <fillType name="RMS_MOTUL_AGRI_TEKNO_15W40" title="MOTUL AGRI TEKNO 15W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.869" />
+            <image hud="brands/hud_brand_motul.png" />
+        </fillType>
+        <fillType name="RMS_MOTUL_AGRI_TEKNO_LA_10W40" title="MOTUL AGRI TEKNO LA 10W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.862" />
             <image hud="brands/hud_brand_motul.png" />
         </fillType>
         <fillType name="RMS_MOTUL_TRH_97" title="MOTUL TRH 97" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
@@ -28,6 +36,10 @@
         </fillType>
         <fillType name="RMS_FUCHS_AGRIFARM_MOT_XLA_10W40" title="FUCHS Agrifarm MOT X-LA 10W40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.859" />
+            <image hud="brands/hud_brand_fuchs.png" />
+        </fillType>
+        <fillType name="RMS_FUCHS_AGRIFARM_MOT_15W40" title="FUCHS Agrifarm MOT 15W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.886" />
             <image hud="brands/hud_brand_fuchs.png" />
         </fillType>
         <fillType name="RMS_FUCHS_AGRIFARM_UTTO_MP" title="FUCHS Agrifarm UTTO MP" showOnPriceTable="false" unitShort="$l10n_unit_literShort">

@@ -137,7 +137,7 @@ end
 ---Adds a breakdown at a stage, rolling its detection and reapplying the effects
 function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     local spec = self.spec_RealisticMechanicalSystems
-    if not spec then return end
+    if not spec or RealisticMechanicalSystems.isMissionVehicle(self) then return end
 
     local options
     if type(stageOrOptions) == "table" then
@@ -182,7 +182,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     end
     if isActive then
         spec.activeBreakdowns[breakdownId].warrantyServiceOverdue = self:getIsWarrantyServiceOverdue(breakdownId)
-        spec.activeBreakdowns[breakdownId].warrantyImpact = (spec.partImpactWear[breakdownId] or 0) > 0
+        spec.activeBreakdowns[breakdownId].warrantyAbuse = spec.partAbuse[breakdownId]
     end
     if registryEntry.branches ~= nil then
         local branch = math.floor(tonumber(options.branch) or 0)
@@ -393,7 +393,7 @@ function RealisticMechanicalSystems:processBreakdowns(dt)
                     breakdown.isActive = true
                     if breakdown.warrantyServiceOverdue == nil then
                         breakdown.warrantyServiceOverdue = self:getIsWarrantyServiceOverdue(id)
-                        breakdown.warrantyImpact = (spec.partImpactWear[id] or 0) > 0
+                        breakdown.warrantyAbuse = spec.partAbuse[id]
                     end
                     effectsNeedRecalculation = true
                 end

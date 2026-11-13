@@ -143,7 +143,6 @@ local LOG_ENTRY_XML = {
     { name = "location", isDetail = true, default = "UNKNOWN" },
     { name = "optionOne", isDetail = true, default = "NONE" },
     { name = "optionTwo", isDetail = true, default = "NONE" },
-    { name = "optionThree", isDetail = true, default = false },
     { name = "isVisible", isDetail = true, default = true,
         write = function(entry) return tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)) end,
         read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
@@ -266,6 +265,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#warrantyVoided", spec.warrantyVoided)
         xmlFile:setValue(key .. "#remapMotor", spec.remapMotor)
         xmlFile:setValue(key .. "#remapAge", spec.remapAge)
+        xmlFile:setValue(key .. "#remapByDealer", spec.remapByDealer)
         xmlFile:setValue(key .. "#condition", spec.conditionLevel or 1.0)
         xmlFile:setValue(key .. "#realOperatingTime", workingTime)
         if xmlFile.handle ~= nil then
@@ -273,7 +273,6 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         end
         xmlFile:setValue(key .. "#breakdowns", RMS_Utils.serializeBreakdowns(spec.activeBreakdowns))
         xmlFile:setValue(key .. "#state", spec.currentState or RealisticMechanicalSystems.STATUS.READY)
-        xmlFile:setValue(key .. "#plannedState", spec.plannedState or RealisticMechanicalSystems.STATUS.READY)
         xmlFile:setValue(key .. "#maintenanceTimer", RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
         xmlFile:setValue(key .. "#engineTemperature", RMS_Thermal.getEngineTemperature(self))
         xmlFile:setValue(key .. "#transmissionTemperature", RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature or spec.transmissionTemperature, 20))
@@ -310,9 +309,13 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#coolantCompatibility", spec.fluidCompatibility.coolant)
         xmlFile:setValue(key .. "#transmissionOilCompatibility", spec.fluidCompatibility.transmissionOil)
         xmlFile:setValue(key .. "#hydraulicFluidCompatibility", spec.fluidCompatibility.hydraulicFluid)
+        xmlFile:setValue(key .. "#engineOilSuitedShare", spec.engineOilSuitedShare or 1)
         xmlFile:setValue(key .. "#fluidLeakLossDebt", RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
         xmlFile:setValue(key .. "#wetStackingLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.wetStackingLevel, 0, 0, 1))
-        xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0, RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+        xmlFile:setValue(key .. "#particulateFilterLevel", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterLevel, 0, 0,
+            RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL))
+        xmlFile:setValue(key .. "#particulateFilterAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterAsh, 0, 0, 1))
+        xmlFile:setValue(key .. "#particulateFilterOilAsh", RealisticMechanicalSystems.sanitizeNumber(spec.fuelState.particulateFilterOilAsh, 0, 0, 1))
         xmlFile:setValue(key .. "#scrInducementHours", RealisticMechanicalSystems.sanitizeNumber(spec.scrInducementHours, 0, 0))
         xmlFile:setValue(key .. "#particulateFilterOverloaded", spec.fuelState.isParticulateFilterOverloaded == true)
         xmlFile:setValue(key .. "#greasing", RMS_Greasing.serialize(self))
@@ -320,13 +323,13 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#transmissionThermostatState", RealisticMechanicalSystems.sanitizeNumber(spec.transmissionThermostatState, 0.0, 0.0, 1.0))
         xmlFile:setValue(key .. "#serviceOptionOne", spec.serviceOptionOne or "")
         xmlFile:setValue(key .. "#serviceOptionTwo", spec.serviceOptionTwo or "")
-        xmlFile:setValue(key .. "#serviceOptionThree", spec.serviceOptionThree or false)
         xmlFile:setValue(key .. "#workshopType", spec.workshopType or "")
         xmlFile:setValue(key .. "#pendingSelectedBreakdowns", table.concat(spec.pendingSelectedBreakdowns or {}, ","))
         xmlFile:setValue(key .. "#pendingServicePrice", RMS_Utils.encodeOptionalFloat(spec.pendingServicePrice))
         xmlFile:setValue(key .. "#pendingServiceInvoice", RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
         xmlFile:setValue(key .. "#pendingInspectionQueue", table.concat(spec.pendingInspectionQueue or {}, ","))
         xmlFile:setValue(key .. "#pendingRepairQueue", table.concat(spec.pendingRepairQueue or {}, ","))
+        xmlFile:setValue(key .. "#pendingPreventiveParts", RMS_Utils.serializeNumericMap(spec.pendingPreventiveParts or {}))
         xmlFile:setValue(key .. "#pendingFluidRequirements", RMS_Fluids.serializeServiceRequirements(spec.pendingFluidRequirements))
         xmlFile:setValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex or 0)
         xmlFile:setValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime or 0)
@@ -335,7 +338,8 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pendingServiceClockTarget", RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget))
         xmlFile:setValue(key .. "#systemsState", RMS_Utils.serializeSystemsState(spec.systems))
         xmlFile:setValue(key .. "#partWear", RMS_Utils.serializeNumericMap(spec.partWear))
-        xmlFile:setValue(key .. "#partImpactWear", RMS_Utils.serializeNumericMap(spec.partImpactWear))
+        xmlFile:setValue(key .. "#partAbuse", RMS_Utils.serializeNumericMap(spec.partAbuse))
+        xmlFile:setValue(key .. "#pickupAirTime", RMS_Utils.serializeNumericMap(spec.pickupAirTime))
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
         xmlFile:setValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount or 0)
         xmlFile:setValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence or 0)
@@ -376,10 +380,15 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.warrantyPlan = 1
     self.spec_RealisticMechanicalSystems.partWarranty = {}
     self.spec_RealisticMechanicalSystems.usedPartWarranty = {}
-    self.spec_RealisticMechanicalSystems.partImpactWear = {}
+    self.spec_RealisticMechanicalSystems.preventiveParts = {}
+    self.spec_RealisticMechanicalSystems.partAbuse = {}
+    self.spec_RealisticMechanicalSystems.pickupAirTime = {}
+    self.spec_RealisticMechanicalSystems.pickupUncovered = {}
+    self.spec_RealisticMechanicalSystems.aerationWhining = {}
     self.spec_RealisticMechanicalSystems.warrantyVoided = false
     self.spec_RealisticMechanicalSystems.remapMotor = 0
     self.spec_RealisticMechanicalSystems.remapAge = 0
+    self.spec_RealisticMechanicalSystems.remapByDealer = false
     self.spec_RealisticMechanicalSystems.conditionLevel = self.spec_RealisticMechanicalSystems.baseConditionLevel
 
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -413,6 +422,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
         transmissionOil = 1.0,
         hydraulicFluid = 1.0
     }
+    self.spec_RealisticMechanicalSystems.engineOilSuitedShare = 1
     self.spec_RealisticMechanicalSystems.fluidLeakLossDebt = {}
     self.spec_RealisticMechanicalSystems.fluidCapacityVersion = nil
     self.spec_RealisticMechanicalSystems.fluidCapacitySource = nil
@@ -421,8 +431,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.transmissionOilLeakRate = 0
     self.spec_RealisticMechanicalSystems.hydraulicFluidLeakRate = 0
 
-    self.spec_RealisticMechanicalSystems.extraConditionWear = 0
-    self.spec_RealisticMechanicalSystems.extraServiceWear = 0
     self.spec_RealisticMechanicalSystems.extraEngineHeat = 0
     self.spec_RealisticMechanicalSystems.extraTransmissionHeat = 0
     self.spec_RealisticMechanicalSystems.extraHydraulicHeat = 0
@@ -517,6 +525,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.overloadLevel = 0
     self.spec_RealisticMechanicalSystems.aiWorkerOverload = 0
     self.spec_RealisticMechanicalSystems.aiWorkerSpeedLimit = nil
+    self.spec_RealisticMechanicalSystems.aiWorkerBlockedMs = 0
+    self.spec_RealisticMechanicalSystems.aiWorkerBlockedAt = nil
 
     self.spec_RealisticMechanicalSystems.systemWearNow = {}
     self.spec_RealisticMechanicalSystems.systemWearRateNow = {}
@@ -564,8 +574,12 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.ptoEngagementCount = 0
     self.spec_RealisticMechanicalSystems.ptoEngagementSequence = 0
     self.spec_RealisticMechanicalSystems.ptoEngagementDamage = 0
+    self.spec_RealisticMechanicalSystems.isPtoEngagementShock = false
     self.spec_RealisticMechanicalSystems.ptoLastRpmShare = 0
     self.spec_RealisticMechanicalSystems.isPtoImplementRaised = false
+    self.spec_RealisticMechanicalSystems.ptoShaftAngle = 0
+    self.spec_RealisticMechanicalSystems.ptoShaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit
+    self.spec_RealisticMechanicalSystems.ptoShaftWear = 0
     self.spec_RealisticMechanicalSystems.ptoShockSequence = 0
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedShockSequence = 0
     self.spec_RealisticMechanicalSystems.ptoRaisedTutorialTimer = 0
@@ -610,6 +624,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
         idleTimer = 0,
         wetStackingLevel = 0,
         particulateFilterLevel = 0,
+        particulateFilterAsh = 0,
+        particulateFilterOilAsh = 0,
         particulateFilterRegenerationMs = 0,
         isParticulateFilterRegenerating = false,
         isParticulateFilterOverloaded = false,
@@ -627,16 +643,15 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.metaUpdateTimer = math.random() * RMS_Config.META_UPDATE_DELAY
     self.spec_RealisticMechanicalSystems.maintenanceTimer = 0
     self.spec_RealisticMechanicalSystems.currentState = RealisticMechanicalSystems.STATUS.READY
-    self.spec_RealisticMechanicalSystems.plannedState = RealisticMechanicalSystems.STATUS.READY
     self.spec_RealisticMechanicalSystems.workshopType = RealisticMechanicalSystems.WORKSHOP.DEALER
     self.spec_RealisticMechanicalSystems.serviceOptionOne = nil
     self.spec_RealisticMechanicalSystems.serviceOptionTwo = nil
-    self.spec_RealisticMechanicalSystems.serviceOptionThree = false
     self.spec_RealisticMechanicalSystems.pendingSelectedBreakdowns = {}
     self.spec_RealisticMechanicalSystems.pendingServicePrice = nil
     self.spec_RealisticMechanicalSystems.pendingServiceInvoice = nil
     self.spec_RealisticMechanicalSystems.pendingInspectionQueue = {}
     self.spec_RealisticMechanicalSystems.pendingRepairQueue = {}
+    self.spec_RealisticMechanicalSystems.pendingPreventiveParts = {}
     self.spec_RealisticMechanicalSystems.pendingProgressStepIndex = 0
     self.spec_RealisticMechanicalSystems.pendingProgressTotalTime = 0
     self.spec_RealisticMechanicalSystems.pendingProgressElapsedTime = 0
@@ -677,6 +692,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.warrantyVoided = xmlFile:getValue(key .. "#warrantyVoided", false)
     spec.remapMotor = xmlFile:getValue(key .. "#remapMotor", 0)
     spec.remapAge = xmlFile:getValue(key .. "#remapAge", 0)
+    spec.remapByDealer = xmlFile:getValue(key .. "#remapByDealer", false)
     RMS_EngineRemap.validateLoadedEngine(self)
     local savedAge = xmlFile:getValue(vehicleKey .. "#age", 0)
     for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
@@ -686,7 +702,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     end
     spec.conditionLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#condition", spec.conditionLevel), spec.conditionLevel or 1.0, 0.001, 1.0)
     spec.currentState = xmlFile:getValue(key .. "#state", spec.currentState)
-    spec.plannedState = xmlFile:getValue(key .. "#plannedState", spec.plannedState)
     spec.maintenanceTimer = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#maintenanceTimer", spec.maintenanceTimer), spec.maintenanceTimer or 0, 0)
     spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
     
@@ -749,11 +764,14 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         transmissionOil = math.clamp(xmlFile:getValue(key .. "#transmissionOilCompatibility", 1) or 1, 0, 1),
         hydraulicFluid = math.clamp(xmlFile:getValue(key .. "#hydraulicFluidCompatibility", 1) or 1, 0, 1)
     }
+    spec.engineOilSuitedShare = math.clamp(xmlFile:getValue(key .. "#engineOilSuitedShare", 1) or 1, 0, 1)
     spec.fluidLeakLossDebt = RMS_Fluids.deserializeLeakDebt(xmlFile:getValue(key .. "#fluidLeakLossDebt", ""))
     spec.pendingFluidRequirements = RMS_Fluids.deserializeServiceRequirements(xmlFile:getValue(key .. "#pendingFluidRequirements", ""))
     spec.fuelState.wetStackingLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#wetStackingLevel", spec.fuelState.wetStackingLevel), 0, 0, 1)
     spec.fuelState.particulateFilterLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterLevel", 0), 0, 0,
         RMS_Config.EXHAUST.PARTICULATE_FILTER.SERVICE_LEVEL)
+    spec.fuelState.particulateFilterAsh = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterAsh", 0), 0, 0, 1)
+    spec.fuelState.particulateFilterOilAsh = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#particulateFilterOilAsh", 0), 0, 0, 1)
     spec.scrInducementHours = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#scrInducementHours", 0), 0, 0)
     spec.fuelState.isParticulateFilterOverloaded = xmlFile:getValue(key .. "#particulateFilterOverloaded", false)
     RMS_Greasing.deserialize(self, xmlFile:getValue(key .. "#greasing"))
@@ -774,7 +792,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
             spec[field] = nil
         end
     end
-    spec.serviceOptionThree = xmlFile:getValue(key .. "#serviceOptionThree", spec.serviceOptionThree)
     RMS_Drivetrain.loadFromSavegame(self, xmlFile, key)
     spec.tripStartKilometers = xmlFile:getValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
     local loadedWorkshopType = xmlFile:getValue(key .. "#workshopType", "")
@@ -786,6 +803,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingSelectedBreakdowns = splitSavedIds(xmlFile:getValue(key .. "#pendingSelectedBreakdowns", ""))
     spec.pendingInspectionQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingInspectionQueue", ""))
     spec.pendingRepairQueue = splitSavedIds(xmlFile:getValue(key .. "#pendingRepairQueue", ""))
+    spec.pendingPreventiveParts = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingPreventiveParts", ""))
 
     spec.pendingProgressStepIndex = xmlFile:getValue(key .. "#pendingProgressStepIndex", spec.pendingProgressStepIndex)
     spec.pendingProgressTotalTime = xmlFile:getValue(key .. "#pendingProgressTotalTime", spec.pendingProgressTotalTime)
@@ -795,7 +813,8 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingOverhaulPartStart = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartStart", ""))
     spec.pendingOverhaulPartTarget = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartTarget", ""))
     spec.partWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWear", ""))
-    spec.partImpactWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partImpactWear", ""))
+    spec.partAbuse = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partAbuse", ""))
+    spec.pickupAirTime = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pickupAirTime", ""))
     local loadedFactorStatsFlat = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#factorStats", ""))
 
     local loadedSystemsStateRaw = RMS_Utils.deserializeSystemsState(xmlFile:getValue(key .. "#systemsState", ""))
@@ -854,8 +873,8 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     -- A save without these values starts the vehicle at rest
     local defaults = {
         serviceLevel = spec.baseServiceLevel, conditionLevel = spec.baseConditionLevel, maintenanceTimer = 0,
-        currentState = RealisticMechanicalSystems.STATUS.READY, plannedState = RealisticMechanicalSystems.STATUS.READY,
-        serviceOptionThree = false, pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {},
+        currentState = RealisticMechanicalSystems.STATUS.READY,
+        pendingSelectedBreakdowns = {}, pendingInspectionQueue = {}, pendingRepairQueue = {}, pendingPreventiveParts = {},
         pendingProgressStepIndex = 0, pendingProgressTotalTime = 0, pendingProgressElapsedTime = 0,
         pendingOverhaulPartStart = {}, pendingOverhaulPartTarget = {}
     }
@@ -924,7 +943,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         log_dbg("ERROR: RealisticMechanicalSystems - Could not load rms_sounds.xml")
     end
 
-    RMS_Thermal.registerDashboardLiveCompatibility(self)
     RMS_Thermal.initializeEngineTemperature(self)
     spec.rawTransmissionTemperature = spec.transmissionTemperature
 

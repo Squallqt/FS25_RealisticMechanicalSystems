@@ -14,9 +14,9 @@ for severity, statuses in ipairs({
         "rms_inspection_status_grease_due", "rms_inspection_status_change_overdue" },
     { "rms_inspection_status_low", "rms_inspection_status_seepage", "rms_inspection_status_dirty", "rms_inspection_status_grease_late",
         "rms_inspection_status_change_long_overdue" },
-    { "rms_inspection_status_very_low", "rms_inspection_status_active_leak", "rms_inspection_status_heavily_clogged",
-        "rms_inspection_status_replacement_due" },
-    { "rms_inspection_status_critically_low", "rms_inspection_status_severe_leak", "rms_inspection_status_critically_clogged" }
+    { "rms_inspection_status_active_leak", "rms_inspection_status_heavily_clogged", "rms_inspection_status_replacement_due" },
+    { "rms_inspection_status_very_low", "rms_inspection_status_critically_low", "rms_inspection_status_severe_leak",
+        "rms_inspection_status_critically_clogged" }
 }) do
     for _, status in ipairs(statuses) do
         SEVERITY[status] = severity
@@ -117,7 +117,7 @@ end
 ---Reads the level of every fluid against the marks of its gauge
 function Report:readFluidLevels(fluidRows)
     local C = RMS_Config.FLUIDS
-    local lowCount = 0
+    local isLow = false
     for _, row in ipairs(fluidRows) do
         local level = row.level
         local status
@@ -132,13 +132,12 @@ function Report:readFluidLevels(fluidRows)
         end
         if status ~= nil then
             self:mark(row.target, status)
-            lowCount = lowCount + 1
+            self:note(level <= C.LEVEL_VERY_LOW and "rms_inspection_hint_fluid_very_low" or "rms_inspection_hint_fluid_low", row.title)
+            isLow = true
         end
     end
-    if lowCount > 1 then
-        self:note("rms_inspection_hint_fluid_levels_low")
-    elseif lowCount == 1 then
-        self:note("rms_inspection_hint_fluid_level_low")
+    if isLow then
+        self:note("rms_inspection_hint_fluid_top_up")
     end
 end
 
@@ -208,8 +207,14 @@ function Report:readClogging()
         self:note("rms_inspection_hint_air_filter_clogging_stage" .. filterStage)
         self:mark("airFilter", AIR_FILTER_STATUS[filterStage])
     end
-    if clogging >= 0.35 or filterStage >= 2 then
+    -- a reversible fan cleans the radiator, not the filter
+    local isRadiatorDirty, isFilterDirty = clogging >= 0.35, filterStage >= 2
+    if isRadiatorDirty and isFilterDirty then
         self:note("rms_air_blower_action")
+    elseif isRadiatorDirty then
+        self:note("rms_air_blower_action_radiator")
+    elseif isFilterDirty then
+        self:note("rms_air_blower_action_air_filter")
     end
     if RMS_Consumables.getIsAirFilterWornOut(self.spec) then
         self.isAirFilterReplacementDue = true

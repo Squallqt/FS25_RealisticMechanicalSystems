@@ -10,7 +10,7 @@
         <rotation>0</rotation>
         <brand>MACNAUGHT</brand>
         <species>HANDTOOL</species>
-        <category>handtoolsMisc</category>
+        <category>rmsMaintenance</category>
         <showInStore>false</showInStore>
         <canBeSold>false</canBeSold>
     </storeData>

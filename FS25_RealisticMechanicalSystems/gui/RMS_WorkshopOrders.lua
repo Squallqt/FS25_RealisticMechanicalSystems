@@ -197,8 +197,18 @@ local function getLevelRows(vehicle, workshopType)
     return rows
 end
 
-local function getRepairRows(vehicle)
+---Counts the parts a thorough repair adds to the standard one
+function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
+    local R, count = RealisticMechanicalSystems, 0
+    for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.HIGH, R.PART_TYPES.OEM, workshopType)) do
+        count = count + #line.kitParts + #line.wornParts
+    end
+    return count
+end
+
+local function getRepairRows(vehicle, workshopType)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
+    local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
     local picked, running = 0, 0
     for _, breakdown in pairs(vehicle:getActiveBreakdowns()) do
         if breakdown.isSelectedForRepair and breakdown.isVisible then
@@ -232,14 +242,18 @@ local function getRepairRows(vehicle)
             return g_i18n:getText("rms_ws_repair_fault_removed"), 2
         end })
     table.insert(rows, { name = "rms_ws_repair_row_part", detail = "rms_ws_repair_row_part_detail", getCell = replaces("rms_ws_repair_part_replaced") })
-    table.insert(rows, { name = "rms_ws_repair_row_worn_parts", detail = "rms_ws_repair_row_worn_parts_detail",
+    local added = RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
+    table.insert(rows, { name = "rms_ws_repair_row_around", detail = "rms_ws_repair_row_around_detail",
         getCell = function(method)
-            if method == REPAIR.HIGH then
-                return g_i18n:getText("rms_ws_repair_worn_parts_replaced"), 2
+            if method ~= REPAIR.HIGH then
+                return "-", 0
+            elseif added == 0 then
+                return g_i18n:getText("rms_ws_repair_around_none"), 1
             end
-            return "-", 0
+            return string.format(g_i18n:getText("rms_ws_repair_around_count"), added), 2
         end })
-    table.insert(rows, { name = "rms_ws_repair_row_quality", detail = "rms_ws_repair_row_quality_detail", getCell = replaces("rms_ws_repair_quality_choice") })
+    table.insert(rows, { name = "rms_ws_repair_row_quality", detail = "rms_ws_repair_row_quality_detail",
+        getCell = replaces(isCovered and RealisticMechanicalSystems.PART_TYPES.OEM or "rms_ws_repair_quality_choice") })
     return rows
 end
 
@@ -335,27 +349,40 @@ local function getBodyworkRows(vehicle)
     }
 end
 
+---Returns the months the first fitted-part cover of a repair runs
+function RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
+    local R, left = RealisticMechanicalSystems, math.huge
+    for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, workshopType)) do
+        if line.warrantyReason == "part" then
+            left = math.min(left, vehicle.spec_RealisticMechanicalSystems.partWarranty[line.breakdownId] - vehicle.age)
+        end
+    end
+    return left
+end
+
 local function getWarrantyCorner(vehicle, workshopType)
     local R = RealisticMechanicalSystems
-    local isCovered, status = vehicle:isWarrantyRepairCovered(R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, workshopType)
+    local isCovered, status = vehicle:isWarrantyRepairCovered(workshopType)
     local months, hours = vehicle:getWarrantyLimits()
     local reason = string.format(g_i18n:getText("rms_ws_warranty_terms"), months, g_i18n:formatNumber(hours, 0))
     if status == "part" then
-        local expiry = math.huge
-        for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, workshopType)) do
-            expiry = math.min(expiry, vehicle.spec_RealisticMechanicalSystems.partWarranty[line.breakdownId])
-        end
-        reason = string.format(g_i18n:getText("rms_warranty_part"), expiry)
-    elseif status == "lease" or status == "remapped" then
+        reason = string.format(g_i18n:getText("rms_warranty_part"), RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType))
+    elseif status == "partial" then
+        reason = g_i18n:getText("rms_warranty_partial_imposed")
+    elseif status == "lease" or status == "remapped" or status == "own" then
         reason = g_i18n:getText("rms_warranty_" .. status)
-    elseif workshopType == R.WORKSHOP.OWN then
-        reason = g_i18n:getText("rms_warranty_own")
+    elseif R.getIsWarrantyRefusal(status) then
+        reason = string.format(g_i18n:getText("rms_ws_warranty_refused"), g_i18n:getText("rms_warranty_" .. status))
+    end
+    if isCovered then
+        reason = reason .. "\n" .. g_i18n:getText("rms_warranty_imposed")
     end
     return {
         label = "rms_ws_warranty_title",
         name = g_i18n:getText(isCovered and "rms_ws_warranty_covered" or status == "partial" and "rms_warranty_partial" or "rms_ws_warranty_not_covered"),
         isHighlight = isCovered,
-        reason = reason
+        reason = reason,
+        isReasonWarning = R.getIsWarrantyRefusal(status)
     }
 end
 
@@ -375,8 +402,7 @@ RMS_WorkshopOrders.ORDERS = {
             return { label = "rms_ws_label_last_check", name = RMS_Utils.formatReportAge(hours), isWarning = isOutdated,
                 reason = isOutdated and g_i18n:getText("rms_ws_reading_outdated") or "", isReasonWarning = true }
         end,
-        noteKey = "rms_ws_inspection_maintenance_note",
-        followUp = { textKey = "rms_option_menu_perform_repair", disclaimerKey = "rms_option_menu_option_three_disclaimer_repair_after_detection" }
+        noteKey = "rms_ws_inspection_maintenance_note"
     },
     [STATUS.MAINTENANCE] = {
         getChoices = function(vehicle) return vehicle:getMaintenanceTypes() end,
@@ -391,8 +417,7 @@ RMS_WorkshopOrders.ORDERS = {
         getFrequency = function(vehicle, choice, choices) return getFrequencyText(vehicle, choice, choices[1]) end,
         getBadge = function(vehicle, choice) return choice == vehicle:getDueMaintenanceType() and "rms_spec_state_recommended" or nil end,
         footerKeys = { "rms_ws_levels_every_level", "rms_service_program_estimated" },
-        qualityPromptKey = "rms_option_menu_option_two_title_maintenance",
-        followUp = { textKey = "rms_option_menu_perform_repair", disclaimerKey = "rms_option_menu_option_three_disclaimer_repair_after_detection" }
+        qualityPromptKey = "rms_option_menu_option_two_title_maintenance"
     },
     [STATUS.REPAIR] = {
         getChoices = function(vehicle)
@@ -407,22 +432,32 @@ RMS_WorkshopOrders.ORDERS = {
             if hasRunning then
                 table.insert(choices, REPAIR.LOW)
             end
-            if hasPicked then
+            -- a worn part picked for a preventive replacement opens the repair alone
+            if hasPicked or #RealisticMechanicalSystems.getPreventiveParts(vehicle) > 0 then
                 table.insert(choices, REPAIR.MEDIUM)
                 table.insert(choices, REPAIR.HIGH)
             end
             return choices
         end,
         getDefaultChoice = function() return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM end,
+        -- a thorough repair that fits nothing more is greyed
+        isChoiceLocked = function(vehicle, choice, workshopType)
+            return choice == RealisticMechanicalSystems.REPAIR_TYPES.HIGH and RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType) == 0
+        end,
         promptKey = "rms_option_menu_option_one_title_repair",
         getRows = getRepairRows,
         getCorner = getWarrantyCorner,
-        getBadge = function(vehicle, choice, optionTwo, workshopType)
-            local covered, reason = vehicle:isWarrantyRepairCovered(choice, optionTwo, workshopType)
-            return (covered or reason == "partial") and "rms_ws_badge_warranty" or nil
+        getBadge = function(vehicle, choice, _, workshopType)
+            local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
+            return isCovered and choice == RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM and "rms_ws_badge_warranty" or nil
         end,
-        qualityPromptKey = "rms_option_menu_option_two_title_repair",
-        followUp = { textKey = "rms_option_menu_perform_maintenance", disclaimerKey = "rms_option_menu_option_three_disclaimer_maintenance_after_repair" }
+        -- the warranty repairs its faults in Standard with original parts
+        getImposed = function(vehicle, workshopType)
+            if vehicle:isWarrantyRepairCovered(workshopType) then
+                return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM, RealisticMechanicalSystems.PART_TYPES.OEM
+            end
+        end,
+        qualityPromptKey = "rms_option_menu_option_two_title_repair"
     },
     [STATUS.OVERHAUL] = {
         getChoices = function()
@@ -472,7 +507,7 @@ RMS_WorkshopOrders.ORDERS = {
 ---Tells who pays a job for the farm, the warranty or the lease
 -- @return string? coverKey "warranty" or "lease", nil when the farm pays
 function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionTwo, workshopType)
-    if serviceType == STATUS.REPAIR and vehicle:isWarrantyRepairCovered(optionOne, optionTwo, workshopType) then
+    if serviceType == STATUS.REPAIR and vehicle:isWarrantyRepairCovered(workshopType) then
         return "warranty"
     elseif serviceType == STATUS.MAINTENANCE and vehicle:isLeaseMaintenanceCovered(workshopType) then
         return "lease"
@@ -481,8 +516,8 @@ function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionT
 end
 
 ---Starts an order on the server, or asks the server from a client
-function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo, optionThree)
-    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo)
+    local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if price == nil then
         RMS_FluidWorkshop.showResult(RMS_FluidWorkshop.RESULT.PRICE_UNAVAILABLE)
         return false
@@ -491,11 +526,11 @@ function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne,
         return false
     end
     if g_server == nil then
-        RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+        RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo)
         return true
     end
     local isStarted, result = RMS_FluidWorkshop.tryStartService(vehicle, g_workshopScreen.sellingPoint, serviceType, workshopType, optionOne,
-        optionTwo, optionThree, g_currentMission:getFarmId())
+        optionTwo, g_currentMission:getFarmId())
     if not isStarted then
         RMS_FluidWorkshop.showResult(result)
         return false

@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kegagalan kritis filter partikulat. Tersumbat sepenuhnya, filter tidak lagi meloloskan gas buang: hanya penggantian yang mengembalikan daya mesin."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Filter partikulat jenuh. Regenerasi tidak selesai: putaran mesin dibatasi sampai salah satunya berhasil."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kejenuhan kritis filter partikulat. Terlalu penuh untuk beregenerasi sendiri, filter memerlukan regenerasi servis di bengkel; putaran tetap dibatasi."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filter partikulat penuh abu. Regenerasi membakar jelaga, bukan abu dari oli mesin: filter harus dilepas dan dibersihkan di bengkel; putaran mesin dibatasi."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Kegagalan ringan kopling kipas. Respons kipas menjadi kurang efektif dan pendinginan sedikit memburuk."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Kegagalan sedang kopling kipas. Pengaktifan kipas tidak teratur dan efisiensi pendinginan jelas menurun."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Kegagalan berat kopling kipas. Kipas tidak lagi menghasilkan aliran udara yang cukup dan mesin lebih mudah mengalami panas berlebih."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Panen tidak mungkin: satu bagian panen rusak"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Penyumbatan: panen terhenti"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Pencacah rusak: jerami jatuh membentuk barisan"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Pencacah rusak: tanaman ini tidak bisa dipanen lagi"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Pencacah rusak: jerami jatuh tanpa dicacah"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Awal keausan sabuk penggerak. Sabuk sedikit selip saat terbebani."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Keausan sedang pada sabuk penggerak. Satu bagian melambat saat terbebani dan alarm putaran sesekali menghentikan panen."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Keausan berat pada sabuk penggerak. Kapasitas turun dan penghentian terjadi berulang kali."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Awal keausan pencacah jerami. Jerami dicacah kurang pendek dan pencacah butuh sedikit lebih banyak daya."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Keausan sedang pada pencacah jerami. Pencacah bergetar dan butuh lebih banyak daya."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Keausan berat pada pencacah jerami. Rotor tidak seimbang dan butuh banyak daya."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kegagalan kritis pada pencacah jerami. Sebuah pisau patah: pencacah berhenti dan jerami jatuh membentuk barisan."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kegagalan kritis pada pencacah jerami. Sebuah pisau patah: pencacah berhenti dan jerami jatuh tanpa dicacah, membentuk barisan bila tanamannya membentuknya."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Awal keausan rol pengumpan. Rol mencengkeram tanaman kurang baik: pengumpanan menjadi tidak rata."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Keausan sedang pada rol pengumpan. Panjang potongan menjadi tidak rata dan muncul penyumbatan."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Keausan berat pada rol pengumpan. Kapasitas turun dan penyumbatan terus terjadi."/>

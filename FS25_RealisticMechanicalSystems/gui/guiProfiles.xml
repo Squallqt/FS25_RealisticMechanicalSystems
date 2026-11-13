@@ -488,14 +488,13 @@
         <size value="341px 44px"/>
     </Profile>
     <Profile name="rms_workshopRowIcon" extends="rms_workshopIcon">
-        <position value="12px -4px"/>
+        <position value="14.5px -6.5px"/>
+        <size value="31px 31px"/>
     </Profile>
     <Profile name="rms_workshopRowConditionIcon" extends="rms_workshopRowIcon">
         <imageSliceId value="gui.storeAttribute_condition"/>
     </Profile>
     <Profile name="rms_workshopRowMaintenanceIcon" extends="rms_workshopRowIcon">
-        <position value="15px -7px"/>
-        <size value="30px 30px"/>
         <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
     <Profile name="rms_workshopRowBadge" extends="rms_workshopPillValue">
@@ -536,21 +535,21 @@
     </Profile>
     <!-- Row of the service card -->
     <Profile name="rms_workshopServiceRow" extends="rms_workshopBlock">
-        <size value="241px 48px"/>
+        <size value="241px 40px"/>
     </Profile>
     <Profile name="rms_workshopServiceRowSurface" extends="rms_workshopSurfaceSoft">
-        <size value="241px 48px"/>
+        <size value="241px 40px"/>
     </Profile>
     <Profile name="rms_workshopServiceRowLabel" extends="rms_workshopDetail">
         <position value="14px 0px"/>
-        <size value="77px 48px"/>
+        <size value="77px 40px"/>
     </Profile>
     <Profile name="rms_workshopServiceRowPill" extends="rms_workshopValuePill">
-        <position value="101px -10px"/>
+        <position value="101px -6px"/>
         <size value="130px 28px"/>
     </Profile>
     <Profile name="rms_workshopServiceRowValue" extends="rms_workshopPillValue">
-        <position value="113px -10px"/>
+        <position value="113px -6px"/>
         <size value="106px 28px"/>
     </Profile>
     <Profile name="rms_workshopSubsectionAccent" extends="rms_workshopSectionAccent">
@@ -561,22 +560,12 @@
         <textMinSize value="13px"/>
     </Profile>
     <Profile name="rms_workshopTotalValue" extends="rms_workshopValueAccent">
-        <textSize value="32px"/>
+        <textSize value="26px"/>
     </Profile>
     <Profile name="rms_workshopListLabel" extends="rms_workshopLabel">
         <textSize value="13px"/>
         <textMinSize value="11px"/>
         <textColor value="$preset_fs25_colorMainHighlight"/>
-    </Profile>
-    <Profile name="rms_workshopQuotePartRow" extends="rms_inspectionRow">
-        <height value="18px"/>
-    </Profile>
-    <Profile name="rms_workshopQuotePart" extends="rms_workshopDetail">
-        <textSize value="16px"/>
-        <textMinSize value="13px"/>
-        <textBold value="true"/>
-        <textMaxNumLines value="1"/>
-        <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_workshopListBullet" extends="rms_workshopDetail">
         <textSize value="18px"/>
@@ -940,6 +929,7 @@
         <textHighlightedColor value="$preset_fs25_colorMainHighlight"/>
         <textFocusedSelectedColor value="$preset_fs25_colorMainLight"/>
         <textHighlightedSelectedColor value="$preset_fs25_colorMainHighlight"/>
+        <textDisabledColor value="0.1094 0.1094 0.1094 1"/>
     </Profile>
     <Profile name="rms_workshopLevelPrice" extends="baseReference" with="anchorTopLeft">
         <textSize value="20px"/>
@@ -950,6 +940,7 @@
         <textMaxNumLines value="1"/>
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
+        <textDisabledColor value="0.1094 0.1094 0.1094 1"/>
     </Profile>
     <Profile name="rms_workshopLevelDuration" extends="rms_workshopLevelPrice">
         <textSize value="13px"/>
@@ -1025,12 +1016,8 @@
     <Profile name="rms_workshopQualityName" extends="rms_workshopLevelName">
         <textSize value="14px"/>
         <textMaxNumLines value="1"/>
-        <textDisabledColor value="0.1094 0.1094 0.1094 1"/>
     </Profile>
-    <Profile name="rms_workshopQualityPrice" extends="rms_workshopLevelPrice">
-        <textDisabledColor value="0.1094 0.1094 0.1094 1"/>
-    </Profile>
-    <Profile name="rms_workshopQualityDelta" extends="rms_workshopQualityPrice">
+    <Profile name="rms_workshopQualityDelta" extends="rms_workshopLevelPrice">
         <textSize value="12px"/>
         <textMinSize value="9px"/>
         <textBold value="false"/>
@@ -1088,7 +1075,7 @@
     </Profile>
     <Profile name="rms_workshopRecapQuoteHead" extends="rms_workshopRecapQuoteName">
         <textSize value="13px"/>
-        <textMinSize value="10px"/>
+        <textMinSize value="9px"/>
         <textBold value="true"/>
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
@@ -1118,9 +1105,6 @@
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <Profile name="rms_workshopConfigChoiceCard" extends="rms_workshopBlock">
-        <size value="619px 152px"/>
-    </Profile>
     <Profile name="rms_workshopConfigChoiceTitle" extends="rms_workshopDetail">
         <textSize value="16px"/>
         <textMinSize value="13px"/>
@@ -1129,21 +1113,10 @@
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <Profile name="rms_workshopConfigChoiceDescription" extends="rms_workshopConfigDescription">
-        <textMaxNumLines value="4"/>
-    </Profile>
     <Profile name="rms_workshopConfigAutoText" extends="rms_workshopConfigDescription">
         <textMaxNumLines value="12"/>
         <textLayoutMode value="overflow"/>
         <textAutoHeight value="true"/>
-    </Profile>
-    <!-- Follow-up options -->
-    <Profile name="rms_workshopBinaryCard" extends="emptyPanel" with="anchorTopLeft">
-        <size value="112px 50px"/>
-    </Profile>
-    <Profile name="rms_workshopBinaryCardText" extends="rms_workshopQualityName">
-        <textSize value="15px"/>
-        <textMinSize value="11px"/>
     </Profile>
     <!-- Partial overhaul systems -->
     <Profile name="rms_workshopSystemCard" extends="emptyPanel" with="anchorTopLeft">
@@ -1174,6 +1147,19 @@
         <textMaxNumLines value="1"/>
         <textVerticalAlignment value="middle"/>
     </Profile>
+    <Profile name="rms_workshopRecapEmptyTitle" extends="rms_workshopRecapFigure">
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+    </Profile>
+    <Profile name="rms_workshopRecapSheetLabel" extends="rms_workshopRecapLabel">
+        <textAlignment value="left"/>
+        <textUpperCase value="true"/>
+    </Profile>
+    <Profile name="rms_workshopRecapSheetValue" extends="rms_workshopValue">
+        <textSize value="14px"/>
+        <textMinSize value="11px"/>
+        <textAlignment value="right"/>
+    </Profile>
     <Profile name="rms_workshopRecapFigure" extends="rms_workshopValue">
         <textSize value="15px"/>
         <textMinSize value="11px"/>
@@ -1185,7 +1171,7 @@
         <textMaxNumLines value="1"/>
     </Profile>
     <Profile name="rms_workshopRecapAmount" extends="rms_workshopValueAccent">
-        <textSize value="28px"/>
+        <textSize value="26px"/>
         <textMinSize value="20px"/>
         <textAlignment value="center"/>
     </Profile>
@@ -1207,21 +1193,10 @@
         <imageSelectedColor value="$preset_fs25_colorMainDark"/>
     </Profile>
     <Profile name="rms_workshopOilActionIcon" extends="rms_workshopActionIcon">
-        <position value="14px 0px"/>
-        <size value="38px 38px"/>
         <imageSliceId value="rms_WorkshopFluids.engineOil"/>
     </Profile>
     <Profile name="rms_workshopMaintenanceActionIcon" extends="rms_workshopActionIcon">
-        <position value="18px 0px"/>
-        <size value="30px 30px"/>
         <imageSliceId value="rms_Hud.maintenance"/>
-    </Profile>
-    <Profile name="rms_workshopActionIconLarge" extends="rms_workshopActionIcon">
-        <position value="11px 0px"/>
-        <size value="44px 44px"/>
-    </Profile>
-    <Profile name="rms_workshopActionIconWideLarge" extends="rms_workshopActionIconLarge">
-        <size value="44px 33px"/>
     </Profile>
     <Profile name="rms_workshopTableList" extends="emptyPanel" with="anchorTopLeft pivotTopLeft">
         <listItemSpacing value="8px"/>
@@ -1234,6 +1209,19 @@
         <textSelectedColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_workshopBreakdownText" extends="rms_workshopTableText" with="anchorTopLeft"/>
+    <Profile name="rms_workshopBreakdownCover" extends="rms_workshopBreakdownText">
+        <textColor value="$preset_fs25_colorMainHighlight"/>
+        <textSelectedColor value="$preset_fs25_colorMainHighlight"/>
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+    </Profile>
+    <Profile name="rms_workshopWornTitleRow" extends="rms_inspectionRow">
+        <height value="52px"/>
+    </Profile>
+    <Profile name="rms_workshopWornDetail" extends="rms_workshopBreakdownText">
+        <textMaxNumLines value="1"/>
+        <textLayoutMode value="resize"/>
+    </Profile>
     <Profile name="rms_workshopBreakdownLine" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="horizontal"/>
         <alignmentX value="left"/>
@@ -1265,10 +1253,10 @@
         <size value="40px 40px"/>
     </Profile>
     <Profile name="rms_workshopSelectionToggleBg" extends="baseReference" with="anchorStretchingYStretchingX">
-        <color value="$preset_fs25_colorGreyDark_50"/>
+        <color value="$preset_fs25_colorGrey"/>
         <colorSelected value="$preset_fs25_colorMainHighlight"/>
-        <colorFocused value="$preset_fs25_colorGrey"/>
-        <colorHighlighted value="$preset_fs25_colorGrey"/>
+        <colorFocused value="$preset_colorBlack50"/>
+        <colorHighlighted value="$preset_colorBlack50"/>
         <cornerSize value="0.5"/>
     </Profile>
     <Profile name="rms_workshopSelectionIcon" extends="baseReference" with="anchorMiddleCenter">
@@ -1339,15 +1327,15 @@
         <size value="32px 32px"/>
     </Profile>
     <Profile name="rms_logHeroMetricLabel" extends="rms_workshopLabel">
-        <position value="58px -6px"/>
-        <size value="185px 22px"/>
+        <position value="52px -6px"/>
+        <size value="197px 22px"/>
         <textSize value="13px"/>
         <textMinSize value="11px"/>
         <textAlignment value="center"/>
     </Profile>
     <Profile name="rms_logHeroMetricValue" extends="rms_workshopValue">
-        <position value="58px -32px"/>
-        <size value="185px 30px"/>
+        <position value="52px -32px"/>
+        <size value="197px 30px"/>
         <textSize value="22px"/>
         <textMinSize value="16px"/>
         <textAlignment value="center"/>
@@ -1365,13 +1353,7 @@
         <position value="84px -7px"/>
         <size value="32px 32px"/>
     </Profile>
-    <Profile name="rms_logKpiIconWide" extends="rms_logKpiIcon">
-        <position value="82px -10px"/>
-        <size value="36px 27px"/>
-    </Profile>
     <Profile name="rms_logKpiMaintenanceIcon" extends="rms_logKpiIcon">
-        <position value="86px -9px"/>
-        <size value="28px 28px"/>
         <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
     <Profile name="rms_logKpiLabel" extends="rms_workshopLabel">
@@ -1413,23 +1395,11 @@
         <colorHighlighted value="$preset_fs25_colorGrey"/>
     </Profile>
     <Profile name="rms_logTypeIcon" extends="rms_workshopIcon">
-        <position value="16px -16px"/>
-        <size value="36px 36px"/>
+        <position value="17.5px -17.5px"/>
+        <size value="33px 33px"/>
         <imageSelectedColor value="$preset_fs25_colorMainHighlight"/>
         <imageFocusedColor value="$preset_fs25_colorMainHighlight"/>
         <imageHighlightedColor value="$preset_fs25_colorMainHighlight"/>
-    </Profile>
-    <Profile name="rms_logTypeIconWide" extends="rms_logTypeIcon">
-        <position value="10px -16px"/>
-        <size value="48px 36px"/>
-    </Profile>
-    <Profile name="rms_logTypeIconMaintenance" extends="rms_logTypeIcon">
-        <position value="18.5px -18.5px"/>
-        <size value="31px 31px"/>
-    </Profile>
-    <Profile name="rms_logTypeIconRefill" extends="rms_logTypeIcon">
-        <position value="14.5px -14.5px"/>
-        <size value="39px 39px"/>
     </Profile>
     <Profile name="rms_logRowPrimary" extends="rms_inspectionRowTitle">
         <textSize value="15px"/>
@@ -1468,16 +1438,7 @@
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_logDetailIcon" extends="rms_workshopIconLarge">
-        <size value="36px 36px"/>
-    </Profile>
-    <Profile name="rms_logDetailIconWide" extends="rms_logDetailIcon">
-        <size value="48px 36px"/>
-    </Profile>
-    <Profile name="rms_logDetailIconMaintenance" extends="rms_logDetailIcon">
-        <size value="31px 31px"/>
-    </Profile>
-    <Profile name="rms_logDetailIconRefill" extends="rms_logDetailIcon">
-        <size value="39px 39px"/>
+        <size value="33px 33px"/>
     </Profile>
     <Profile name="rms_logDetailIdentityLabel" extends="rms_workshopLabel">
         <textAlignment value="center"/>
@@ -1519,9 +1480,6 @@
         <textMaxNumLines value="1"/>
         <textLayoutMode value="resize"/>
         <textColor value="$preset_fs25_colorMainLight"/>
-    </Profile>
-    <Profile name="rms_logInvoiceAmount" extends="rms_logDetailPart">
-        <textAlignment value="right"/>
     </Profile>
     <Profile name="rms_logDetailPrice" extends="rms_workshopPillValue">
         <textSize value="20px"/>
@@ -1785,6 +1743,10 @@
         <textMaxNumLines value="1"/>
         <textAlignment value="center"/>
     </Profile>
+    <Profile name="rms_fleetNeededPower" extends="rms_workshopCenteredDetail">
+        <textMaxNumLines value="1"/>
+        <textColor value="$preset_fs25_colorMainLight"/>
+    </Profile>
     <Profile name="rms_tileValue" extends="rms_workshopValue">
         <textSize value="17px"/>
         <textMinSize value="12px"/>
@@ -1804,7 +1766,7 @@
         <textMaxNumLines value="1"/>
     </Profile>
     <Profile name="rms_ringValue" extends="rms_workshopRingValue">
-        <textSize value="30px"/>
+        <textSize value="28px"/>
         <textMinSize value="14px"/>
         <textMaxNumLines value="1"/>
         <textAlignment value="center"/>

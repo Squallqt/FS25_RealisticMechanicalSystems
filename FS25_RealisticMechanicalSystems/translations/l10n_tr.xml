@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="İşlemi Seç"/>
         <text name="rms_ws_section_work_order" text="İş Emri"/>
         <text name="rms_ws_section_recap" text="Genel Bakış"/>
-        <text name="rms_ws_section_parts" text="İlgili Parçalar"/>
         <text name="rms_ws_section_history" text="Geçmiş"/>
         <text name="rms_ws_label_last_check" text="Son Kontrol"/>
         <text name="rms_ws_reading_outdated" text="Tekrar Kontrol"/>
-        <text name="rms_ws_label_more_parts" text="+ %s daha"/>
         <text name="rms_ws_label_committed_cost" text="Taahhüt Edilen Maliyet"/>
         <text name="rms_ws_label_finish_time" text="Bitiş Saati"/>
         <text name="rms_ws_label_total_estimate" text="Tahmini Toplam"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Düşük bakım kolaylığı"/>
         <text name="rms_shop_launch_year" text="Modelin Piyasaya Çıkışı: %d"/>
         <text name="rms_shop_launch_year_unknown" text="Piyasaya Çıkış Yılı Bilinmiyor"/>
+        <text name="rms_shop_category_maintenance" text="Bakım"/>
         <text name="rms_owner_care_careful" text="Özenli bakım"/>
         <text name="rms_owner_care_regular" text="Düzenli bakım"/>
         <text name="rms_owner_care_neglected" text="İhmal edilmiş bakım"/>
+        <text name="rms_ws_label_maintenance_count" text="Yapılan Bakımlar"/>
         <text name="rms_ws_label_overhaul_count" text="Yapılan Revizyonlar"/>
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_maintenance" text="Son Bakım"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Çalışma Saati Başına Maliyet"/>
         <text name="rms_log_invoice_title" text="Fatura Ayrıntıları"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Atölye Sabit Ücreti"/>
-        <text name="rms_log_invoice_labour" text="İşçilik"/>
         <text name="rms_log_invoice_filters" text="Filtreler"/>
         <text name="rms_log_cancelled_desc" text="İşlem iptal edildi"/>
         <text name="rms_log_ownership_months_title" text="Mülkiyet Süresi"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Araç yeniden boyandı"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Ortalama Arıza Aralığı"/>
         <text name="rms_log_average_maintenance_interval_title" text="Ortalama Bakım Aralığı"/>
         <text name="rms_log_performed" text="Yapılan işlem: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Isıl koruma: güç sınırlaması kaldırıldı"/>
         <text name="rms_breakdown_at_progress_message" text="devam ediyor"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk, yükü azalt."/>
+        <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk: ısınana kadar aşınır."/>
         <text name="rms_spec_overheat_engine_message" text="Uyarı! Motor aşırı ısınmış."/>
         <text name="rms_spec_overheat_transmission_message" text="Uyarı! Şanzıman aşırı ısınıyor."/>
         <text name="rms_spec_overhaul_partial" text="Kısmi"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="Bu ay"/>
         <text name="rms_spec_tomorrow_at" text="yarın saat "/>
         <text name="rms_spec_never" text="Yapılmadı"/>
-        <text name="rms_spec_next_planned_service_notification" text="Planlı işlem başlatıldı: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Planlanan işlem yetersiz bakiye nedeniyle iptal edildi: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="Planlanan işlem (%s) başlatılmadı: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="öbür gün saat "/>
         <text name="rms_spec_day_s" text="gün"/>
         <text name="rms_spec_day_one" text="gün"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Sarf Malzemesi Kalitesi"/>
         <text name="rms_option_menu_option_two_title_repair" text="Yedek Parça Kalitesi"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="Revizyon Yapılacak Sistem"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="İşlem arıza ortaya çıkarırsa otomatik olarak orijinal parçalarla standart onarım başlatılır."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="Onarımın ardından otomatik olarak orijinal sarf malzemeleriyle önerilen bakım başlatılır."/>
         <text name="rms_option_menu_price_text" text="Fiyat"/>
-        <text name="rms_option_menu_perform_repair" text="Otomatik Onarım"/>
-        <text name="rms_option_menu_perform_maintenance" text="Otomatik Bakım"/>
         <text name="rms_option_menu_warranty_repair_text" text="Garanti Kapsamında Onarım"/>
         <text name="rms_option_menu_lease_service_text" text="Kiralamaya dahil"/>
         <text name="rms_option_menu_duration_text" text="Süre"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Dahil"/>
         <text name="rms_ws_levels_mechanical" text="Mekanik"/>
         <text name="rms_ws_levels_every_level" text="Her seviyede: radyatör temizliği ve gresleme."/>
-        <text name="rms_ws_quality_risk" text="Kusur riski"/>
+        <text name="rms_ws_quality_part_wear" text="Parça aşınması"/>
+        <text name="rms_ws_quality_factory_kept" text="Fabrika Garantisi Korunur"/>
+        <text name="rms_ws_quality_factory_lost" text="Fabrika Garantisi Kalkar"/>
+        <text name="rms_ws_quality_filters_sound" text="Kusursuz Filtreler"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filtre Bazen Kusurlu"/>
+        <text name="rms_ws_quality_filter_often" text="Filtre Daha Sık Kusurlu"/>
         <text name="rms_ws_quality_reference" text="Referans fiyat"/>
-        <text name="rms_ws_quality_donor" text="Kaynak Makine: %d h"/>
-        <text name="rms_ws_quality_donors" text="Kaynak Makineler: %d ile %d h"/>
+        <text name="rms_ws_quality_donor" text="%d h Makineden Sökülmüş"/>
+        <text name="rms_ws_quality_donors" text="%d–%d h Makinelerden Sökülmüş"/>
         <text name="rms_ws_quality_new_part" text="Yeni Parça"/>
         <text name="rms_ws_quality_used_warranty" text="3 Ay Garanti"/>
         <text name="rms_ws_quality_partial_warranty" text="Kısmi Garanti"/>
         <text name="rms_ws_quality_no_warranty" text="Garanti Yok"/>
         <text name="rms_ws_quality_oem_warranty" text="12 Ay Garanti"/>
         <text name="rms_ws_quality_factory_warranty" text="Fabrika Garantisi"/>
-        <text name="rms_warranty_used" text="Hurdacı Garantisi: Yalnızca Parça"/>
+        <text name="rms_ws_quality_part_warranty" text="Garanti %d ay daha"/>
         <text name="rms_ws_quality_delta" text="Orijinale göre %s"/>
         <text name="rms_ws_repair_row_faults" text="Ele Alınan Arızalar"/>
         <text name="rms_ws_repair_row_faults_detail" text="İşaretlenenler arasından"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Arızalı Parça"/>
         <text name="rms_ws_repair_row_part_detail" text="Arızanın kaynağı"/>
         <text name="rms_ws_repair_part_replaced" text="Değiştirildi"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Aşınmış Parçalar"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="Aynı sistemde"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Değiştirildi"/>
         <text name="rms_ws_repair_row_quality" text="Parça Kalitesi"/>
         <text name="rms_ws_repair_row_quality_detail" text="Aşağıdaki kartlardan seçilir"/>
         <text name="rms_ws_repair_quality_choice" text="Seçime Bağlı"/>
         <text name="rms_ws_warranty_title" text="Garanti"/>
+        <text name="rms_ws_quote_warranty_label" text="Garanti:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Fabrika garantisi:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Parça garantisi:"/>
+        <text name="rms_ws_quote_warranty_covered" text="kapsamda"/>
+        <text name="rms_ws_quote_warranty_used" text="yalnızca parça kapsamda"/>
+        <text name="rms_ws_quote_warranty_expired" text="sona erdi"/>
+        <text name="rms_ws_quote_warranty_own" text="kendi atölyende kapsam dışı"/>
+        <text name="rms_ws_quote_warranty_lease" text="kiralamada kapsam dışı"/>
+        <text name="rms_ws_quote_warranty_remapped" text="kaybedildi, motor yazılımı değiştirildi"/>
+        <text name="rms_ws_quote_warranty_refused" text="ret, %s"/>
         <text name="rms_ws_warranty_covered" text="Geçerli"/>
         <text name="rms_ws_warranty_not_covered" text="Geçerli Değil"/>
         <text name="rms_ws_warranty_terms" text="Fabrika: %d ay veya %s h"/>
+        <text name="rms_ws_warranty_refused" text="Ret: %s"/>
         <text name="rms_ws_badge_warranty" text="Garanti"/>
         <text name="rms_warranty_base" text="%d Ay veya %s h (Dahil)"/>
         <text name="rms_warranty_extension" text="%d Ay veya %s h"/>
         <text name="rms_warranty_partial" text="Kısmen Kapsamda"/>
         <text name="rms_warranty_own" text="Kendi atölyende kapsam dışı"/>
-        <text name="rms_warranty_factory" text="Orijinal parçalar ve işçilik kapsamda"/>
-        <text name="rms_warranty_part" text="Parça, makine %d aylık olana kadar kapsamda"/>
+        <text name="rms_warranty_part" text="Parça garantisi: %d ay daha"/>
         <text name="rms_warranty_lease" text="Kiralamada onarım kapsam dışı"/>
-        <text name="rms_warranty_expired" text="Garanti sona erdi"/>
-        <text name="rms_warranty_overdue" text="Ret: bakım gecikmiş"/>
-        <text name="rms_warranty_impact" text="Ret: darbe hasarı"/>
-        <text name="rms_warranty_options" text="Orijinal parçalarla değişim gerekli"/>
+        <text name="rms_warranty_overdue" text="bakım gecikmiş"/>
+        <text name="rms_warranty_impact" text="darbe hasarı"/>
         <text name="rms_warranty_mobile" text="Mobil atölyenin ek işçilik bedelini ödersin"/>
         <text name="rms_warranty_remapped" text="Garanti Kaybı: Motor Yazılımı Değiştirildi"/>
+        <text name="rms_warranty_heat" text="aşırı ısınma"/>
+        <text name="rms_warranty_low_level" text="yağ seviyesi çok düşük"/>
+        <text name="rms_warranty_fuel_dry" text="depo tamamen boşaltılmış"/>
+        <text name="rms_warranty_park_brake" text="el freni çekili"/>
+        <text name="rms_warranty_pto_engagement" text="kuyruk mili devreye alma darbesi"/>
+        <text name="rms_warranty_stones" text="taş alınmış"/>
+        <text name="rms_warranty_starter" text="marş motoru zorlanmış"/>
+        <text name="rms_warranty_pto_angle" text="kardan açısı çok büyük"/>
+        <text name="rms_warranty_windup" text="kilit veya 4WD sert zeminde"/>
+        <text name="rms_warranty_filter" text="tıkalı filtre"/>
+        <text name="rms_warranty_oil" text="uygun olmayan motor yağı"/>
+        <text name="rms_warranty_trailer" text="römork çok ağır"/>
+        <text name="rms_warranty_aftermarket_part" text="yan sanayi parça"/>
+        <text name="rms_warranty_used_part" text="kullanılmış parça"/>
+        <text name="rms_warranty_imposed" text="Orijinal parçalarla Standart onarım"/>
+        <text name="rms_warranty_partial_imposed" text="Kapsamdaki arıza orijinal parçalarla Standart onarılır"/>
         <text name="rms_ws_overhaul_row_systems" text="Ele Alınan Sistemler"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Yenilenir"/>
         <text name="rms_ws_overhaul_systems_one" text="Seçilen Biri"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Belirlendi"/>
         <text name="rms_ws_inspection_maintenance_note" text="Bakım da standart muayene gibi bu arıza aramasını yapar."/>
         <text name="rms_ws_quote_title" text="Teklif Ayrıntıları"/>
+        <text name="rms_ws_quote_empty_title" text="Teklifiniz burada görünecek"/>
+        <text name="rms_ws_quote_empty_text" text="Listeden bir işlem seçin"/>
+        <text name="rms_ws_quote_empty_title_refused" text="Şimdilik teklif yok"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Listeden başka bir işlem seçin"/>
+        <text name="rms_ws_repair_row_around" text="Çevre parçalar"/>
+        <text name="rms_ws_repair_row_around_detail" text="Revizyon ve aşınmış parçalar"/>
+        <text name="rms_ws_repair_around_count" text="%d değiştirildi"/>
+        <text name="rms_ws_repair_around_none" text="Yok"/>
+        <text name="rms_ws_quote_labour" text="İşçilik · %s sa"/>
+        <text name="rms_ws_quote_parts_fault" text="Arıza parçaları · %s"/>
+        <text name="rms_ws_quote_preventive" text="Önleyici değişim · %s"/>
+        <text name="rms_ws_quote_supplies" text="Sarf malzemesi"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Motor revizyonu · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Silindir kapağı revizyonu · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Aşınmış parçalar · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Fabrika garantisi"/>
+        <text name="rms_ws_quote_cover_part" text="Parça garantisi"/>
+        <text name="rms_ws_quote_cover_used" text="İkinci el parça garantisi"/>
+        <text name="rms_ws_quote_cover_full" text="İşçilik ve parçalar karşılanır"/>
+        <text name="rms_ws_quote_cover_part_only" text="Yalnızca parça, işçilik ödenir"/>
+        <text name="rms_ws_quote_filters" text="Filtreler · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Aşınmış parçalar · son tam muayene"/>
         <text name="rms_ws_quote_oil_filter" text="Yağ Filtresi"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="Sonraki işlem ayrı ücretlendirilir. Gerekli sıvılar işlem başladığında sağlanır veya stoktan alınır."/>
         <text name="rms_bodywork_touchup" text="Boya Rötuşları"/>
         <text name="rms_bodywork_full" text="Tam Yeniden Boyama"/>
         <text name="rms_bodywork_colors_title" text="Araç Renkleri"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="Fabrika yazılımı garantiyi geri getirmez"/>
         <text name="rms_remap_free" text="Ücretsiz"/>
         <text name="rms_remap_unavailable" text="Motor Yazılımı Kullanılamıyor"/>
-        <text name="rms_remap_refusal_dealer" text="Bayi motor yazılımını değiştirmez."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="Bir yazılım uzmanı çiftliğe gelir: çiftlik atölyesini veya mobil atölyeyi kullan."/>
+        <text name="rms_ws_overhaul_unavailable" text="Revizyon Kullanılamıyor"/>
+        <text name="rms_remap_refusal_top" text="Zaten serinin en güçlü motoru: ötesine yalnızca uzman geçer, çiftlik veya mobil atölyede."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Uzman yazılımı: fabrika yazılımına yalnızca uzman döndürür, çiftlik veya mobil atölyede."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Bayi yazılımı: fabrika yazılımına yalnızca bayi döndürür."/>
+        <text name="rms_remap_curves_maker" text="Üreticinin Bildirdiği Eğriler"/>
+        <text name="rms_remap_curves_dealer_measured" text="Bayinin Dinamometresinde, Önce ve Sonra"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Bayi fabrika yazılımını saklar"/>
         <text name="rms_remap_refusal_leased" text="Kiralık makinenin motor yazılımı değiştirilemez."/>
         <text name="rms_remap_refusal_not_eligible" text="Bu motorda yeniden programlanabilir kontrol ünitesi yok."/>
         <text name="rms_remap_confirm_title" text="Motor yazılımı değiştirilsin mi?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="Arıza veya aşınmış parça yok"/>
         <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Ayar: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Değişim: gelişmiş onarım veya revizyon"/>
+        <text name="rms_report_worn_part_replace" text="%s · Atölyede önleyici değişim"/>
         <text name="rms_report_overall_assessment_title" text="Genel Durum Değerlendirmesi"/>
         <text name="rms_report_overall_assessment_condition" text="Durum Seviyesi"/>
         <text name="rms_report_recommendations_title" text="Sonuç ve Öneriler"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Hava Üfleyici"/>
         <text name="rms_air_blower_no_vehicle" text="Temizlik alanında hiçbir araç yok"/>
         <text name="rms_air_blower_function" text="Radyatörleri ve hava filtrelerini temizlemek için kullanılır"/>
-        <text name="rms_air_blower_action" text="Radyatörü ve hava filtresini temizle"/>
+        <text name="rms_air_blower_action" text="Radyatörü ve hava filtresini temizle."/>
+        <text name="rms_air_blower_action_radiator" text="Radyatörü temizle."/>
+        <text name="rms_air_blower_action_air_filter" text="Hava filtresini temizle."/>
         <text name="rms_air_blower_action_short" text="Havayla temizle"/>
         <text name="rms_air_blower_already_clean" text="%s: radyatör ve hava filtresi zaten temiz"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: radyatör temiz. Hava filtresi üfleyerek temizleme sınırına ulaştı. Atölye onu %s bakımından itibaren değiştirir"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Takviye kabloları %s aracından çıkarıldı"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Sıvı bidonu"/>
-        <text name="rms_fluid_function_engine_oil" text="Elle takviye için motor yağı"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Motor yağı, AdBlue ve partikül filtreli olanlar dahil tüm makineler için"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Motor yağı, AdBlue ve partikül filtresi olmayan makineler için"/>
         <text name="rms_fluid_function_utto" text="Manuel takviye için şanzıman ve hidrolik yağı"/>
         <text name="rms_fluid_function_coolant" text="Manuel soğutma sıvısı takviyesi için"/>
         <text name="rms_fluid_pour_action" text="Ekle: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman aşınmasını 3 katına kadar çıkarabilir ve şanzımanın ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, hidrolik aşınmasını 3 katına kadar çıkarabilir, hidroliğin ısınmasını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman ve hidrolik aşınmasını 3 katına kadar çıkarabilir, ısınmalarını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Uygun Olmayan Motor Yağı"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: kullanım kılavuzu bunlar için yapılmış bir yağ istiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_circuit" text="Bu araç için sıvı takviyesi gerekmiyor"/>
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
         <text name="rms_fluid_error_vehicle_moving" text="Araç hareketsiz olmalı"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Sıvılar kiralamaya dahil"/>
         <text name="rms_fluid_stock_required" text="Atölye bölgesindeki kaplardan alınır"/>
         <text name="rms_fluid_stock_missing" text="Atölye bölgesinde %s eksik"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="Atölye bölgesinde bu motora uygun %s yağ eksik"/>
         <text name="rms_fluid_refill_work_order" text="Sıvı seviyelerini tamamlama"/>
         <text name="rms_fluid_refill_dealer_supply" text="Sıvı tedariki teklife dahildir"/>
         <text name="rms_fluid_mode_top_up" text="tamamlama"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="Bir kabin amortisöründe büyük kaçak vardır ve amortisör boşalmıştır."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Turboşarjın çevresinde yağ izleri ve kararmış bağlantı noktaları görülüyor."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Turboşarj çevresinde yoğun yağ izleri, kararmış bağlantı noktaları ve kurum lekeleri görülmektedir."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="Bir sıvı seviyesi işaretinin altına düştü."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Birden fazla sıvı seviyesi işaretinin altına düştü."/>
+        <text name="rms_inspection_hint_fluid_low" text="MIN işaretinin altında: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Seviye çok düşük: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Bidonla veya bayide tamamla."/>
         <text name="rms_inspection_hint_service_engine" text="Motor yağı değişimi gecikti: yıpranmış yağ motorun ve enjeksiyonun aşınmasını hızlandırır. Her bakım yağı filtreleriyle birlikte değiştirir."/>
         <text name="rms_inspection_hint_service_transmission" text="Şanzıman yağı değişimi gecikti: yıpranmış yağ yağladığı her şeyin aşınmasını hızlandırır. Atölyede önerilen bakım yağı filtresiyle birlikte değiştirir."/>
         <text name="rms_inspection_hint_service_hydraulic" text="Hidrolik yağı değişimi gecikti: yıpranmış yağ hidrolik sistemin aşınmasını hızlandırır. Atölyede önerilen bakım yağı filtresiyle birlikte değiştirir."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Depozito iadesi"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Sıvı Seviyesi Düşük"/>
-        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Hasar ancak seviye çok düştüğünde başlar: soğutma sıvısı veya şanzıman yağı eksik makine ısınır; motor yağı veya hidrolik yağı eksik makine çok daha hızlı aşınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
+        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems’e Hoş Geldin"/>
         <text name="rms_tutorial_welcome_disable_button" text="İpuçlarını Devre Dışı Bırak"/>
         <text name="rms_tutorial_welcome_enable_button" text="İpuçlarını Etkinleştir"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Yaşlanmaya Bağlı Bozulma"/>
         <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Bu aşınma mod ayarlarından devre dışı bırakılabilir."/>
         <text name="rms_tutorial_poor_consumables_title" text="Kalitesiz Sarf Malzemeleri"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda düşük kaliteli sarf malzemeleri kullanıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bakım aralığı kısalır ve bileşen aşınması biraz artar. Yeni bir bakım sorunu giderir. Görsel veya standart muayene kısalan aralığı bildirir; yalnızca kapsamlı muayene ilgili sarf malzemelerini belirler."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda kusurlu bir filtre takıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bu filtre kiri geçirir: koruduğu devre, filtre değiştirilene kadar daha hızlı aşınır. Yeni bir bakım filtreyi değiştirir. Yalnızca kapsamlı muayene bu filtreyi belirler."/>
         <text name="rms_tutorial_poor_parts_title" text="Kalitesiz Parçalar"/>
         <text name="rms_tutorial_poor_parts_message" text="%s için onarımda düşük kaliteli bir parça takıldı. Arıza büyük olasılıkla yakında yeniden ortaya çıkacak.&#10;&#10;Tekrar etmesini bekle veya kusurlu parçayı güvenilir biçimde belirleyen kapsamlı bir muayene başlat."/>
         <text name="rms_tutorial_park_brake_title" text="El Freni"/>

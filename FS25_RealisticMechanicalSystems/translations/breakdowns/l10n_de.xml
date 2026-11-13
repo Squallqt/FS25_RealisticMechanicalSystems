@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritischer Ausfall des Partikelfilters. Vollständig verstopft, lässt er keine Abgase mehr durch: Nur ein Austausch gibt dem Motor seine Leistung zurück."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfilter gesättigt. Die Regenerationen wurden nicht abgeschlossen: Die Motordrehzahl bleibt begrenzt, bis eine Regeneration gelingt."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritische Sättigung des Partikelfilters. Für eine selbstständige Regeneration ist er zu stark beladen und benötigt eine Serviceregeneration in der Werkstatt; die Drehzahl bleibt begrenzt."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Partikelfilter voller Asche. Regenerationen verbrennen den Ruß, nicht die Asche aus dem Motoröl: Der Filter muss in der Werkstatt ausgebaut und gereinigt werden; die Motordrehzahl ist begrenzt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Leichte Fehlfunktion der Lüfterkupplung. Der Lüfter reagiert träger und die Kühlung ist leicht eingeschränkt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Mäßige Fehlfunktion der Lüfterkupplung. Die Lüfterzuschaltung erfolgt unregelmäßig und die Kühlleistung sinkt deutlich."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Schwere Fehlfunktion der Lüfterkupplung. Der Lüfter liefert nicht mehr ausreichend Luftdurchsatz und der Motor überhitzt leichter."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Ernte unmöglich: ein Ernteorgan ist defekt"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Verstopfung: die Ernte ist stehen geblieben"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Häcksler defekt: das Stroh fällt in den Schwad"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Häcksler defekt: diese Kultur kann nicht mehr geerntet werden"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Häcksler defekt: das Stroh fällt ungehäckselt"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Beginnender Verschleiß der Antriebsriemen. Sie rutschen unter Last etwas durch."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Mäßiger Verschleiß der Antriebsriemen. Ein Organ wird unter Last langsamer und der Drehzahlalarm stoppt die Ernte gelegentlich."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Schwerer Verschleiß der Antriebsriemen. Der Durchsatz sinkt und die Stillstände häufen sich."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Beginnender Verschleiß des Strohhäckslers. Das Stroh wird weniger kurz gehäckselt und der Häcksler braucht etwas mehr Leistung."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Mäßiger Verschleiß des Strohhäckslers. Der Häcksler vibriert und braucht mehr Leistung."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Schwerer Verschleiß des Strohhäckslers. Der Rotor ist unwuchtig und braucht viel Leistung."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritischer Ausfall des Strohhäckslers. Ein Messer ist gebrochen: der Häcksler steht und das Stroh fällt in den Schwad."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritischer Ausfall des Strohhäckslers. Ein Messer ist gebrochen: der Häcksler steht und das Stroh fällt ungehäckselt, in den Schwad, wenn die Kultur einen bildet."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Beginnender Verschleiß der Einzugswalzen. Sie greifen das Erntegut schlechter: der Einzug wird ungleichmäßig."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Mäßiger Verschleiß der Einzugswalzen. Die Schnittlänge wird ungleichmäßig und Verstopfungen treten auf."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Schwerer Verschleiß der Einzugswalzen. Der Durchsatz sinkt und die Verstopfungen häufen sich."/>

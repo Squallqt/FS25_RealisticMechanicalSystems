@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="매연저감 필터에 임계 고장이 발생했습니다. 완전히 막혀 배기가 통과하지 못합니다. 필터를 교체해야 엔진 출력이 회복됩니다."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="매연저감 필터가 포화되었습니다. 재생이 완료되지 않아 한 번이라도 재생에 성공할 때까지 엔진 회전수가 제한됩니다."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="매연저감 필터가 임계 수준으로 포화되었습니다. 스스로 재생할 수 없을 만큼 쌓여 정비소에서 서비스 재생이 필요하며 회전수는 계속 제한됩니다."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="매연저감 필터에 재가 가득 찼습니다. 재생은 그을음을 태우지만 엔진 오일이 남긴 재는 태우지 못합니다. 정비소에서 필터를 분리해 청소해야 하며, 엔진 회전수가 제한됩니다."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="팬 클러치가 약간 오작동합니다. 팬의 반응 효율이 떨어지고 열 제거 성능이 조금 저하됩니다."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="팬 클러치가 중간 정도로 오작동합니다. 팬 결합이 불규칙해지고 열 제거 효율이 확연히 떨어집니다."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="팬 클러치가 심하게 오작동합니다. 팬이 충분한 공기 흐름을 만들지 못해 엔진이 더 쉽게 과열됩니다."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="수확 불가: 수확 부품이 고장 났습니다"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="막힘: 수확이 멈췄습니다"/>
         <text name="rms_breakdowns_chopper_failure_message" text="초퍼 고장: 짚이 줄지어 떨어집니다"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="초퍼 고장: 이 작물은 더 이상 수확할 수 없습니다"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="초퍼 고장: 짚이 잘리지 않고 떨어집니다"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="구동 벨트의 초기 마모입니다. 부하가 걸리면 조금 미끄러집니다."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="구동 벨트가 중간 정도로 마모되었습니다. 부하가 걸리면 한 부품의 회전이 떨어지고 회전수 경보로 때때로 수확이 중단됩니다."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="구동 벨트가 심하게 마모되었습니다. 처리량이 떨어지고 정지가 계속 반복됩니다."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="짚 초퍼의 초기 마모입니다. 짚이 덜 짧게 잘리고 초퍼가 동력을 조금 더 소모합니다."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="짚 초퍼가 중간 정도로 마모되었습니다. 초퍼가 진동하고 동력을 더 소모합니다."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="짚 초퍼가 심하게 마모되었습니다. 로터의 균형이 깨져 동력을 많이 소모합니다."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="짚 초퍼에 임계 고장이 발생했습니다. 칼날이 부러졌습니다: 초퍼가 멈추고 짚이 줄지어 떨어집니다."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="짚 초퍼에 임계 고장이 발생했습니다. 칼날이 부러졌습니다: 초퍼가 멈추고 짚이 잘리지 않고 떨어지며, 줄을 이루는 작물에서는 줄지어 떨어집니다."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="공급 롤의 초기 마모입니다. 작물을 잡는 힘이 약해져 공급이 고르지 않게 됩니다."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="공급 롤이 중간 정도로 마모되었습니다. 절단 길이가 고르지 않고 막힘이 생깁니다."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="공급 롤이 심하게 마모되었습니다. 처리량이 떨어지고 막힘이 계속됩니다."/>

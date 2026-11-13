@@ -69,26 +69,9 @@ function RMS_ImplementGreasing:onWriteUpdateStream(streamId, connection, dirtyMa
     end
 end
 
----Returns true while the implement itself works, carried idle not
-local function getIsWorking(self)
-    if self:doCheckSpeedLimit() or self.spec_rmsImplementGreasing.isFeeding
-        or self.getIsTurnedOn ~= nil and self:getIsTurnedOn()
-        or self.getDoConsumePtoPower ~= nil and self:getDoConsumePtoPower()
-        or self.spec_leveler ~= nil and self.spec_leveler.lastFillLevelMoved > 0 then
-        return true
-    end
-    for _, tool in ipairs(self.spec_cylindered ~= nil and self.spec_cylindered.movingTools or {}) do
-        -- lastAnimSpeed only on animated tools
-        if tool.lastRotSpeed ~= 0 or tool.lastTransSpeed ~= 0 or (tool.lastAnimSpeed or 0) ~= 0 then
-            return true
-        end
-    end
-    return false
-end
-
 ---Marks the day worked when the implement works, carried idle not
 function RMS_ImplementGreasing:setOperatingTime(superFunc, operatingTime, isLoading)
-    if self.isServer and not isLoading and self.propertyState ~= VehiclePropertyState.MISSION and getIsWorking(self) then
+    if self.isServer and not isLoading and self.propertyState ~= VehiclePropertyState.MISSION and RMS_Greasing.getIsWorking(self) then
         RMS_Greasing.update(self, operatingTime - self.operatingTime)
     end
     self.spec_rmsImplementGreasing.isFeeding = false

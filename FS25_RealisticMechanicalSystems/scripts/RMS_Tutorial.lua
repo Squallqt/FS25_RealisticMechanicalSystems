@@ -60,7 +60,7 @@ local function hasHeavyTrailer(machine)
     local brakes = spec.chassisBrakeState
     local isTruck = spec.isTruck == true
     local ratio = isTruck and brakes.hpGrossMassRatio or brakes.hpTrailerMassRatio
-    local limit = RMS_Utils.getHeavyTrailerRatioLevels(isTruck) * RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.HEAVY_TRAILER_TUTORIAL_MARGIN
+    local limit = RMS_Utils.getHeavyTrailerRatioLevels(machine.vehicle) * RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.HEAVY_TRAILER_TUTORIAL_MARGIN
     return math.max(brakes.trailerMass, 0) > 0.1 and ratio <= limit
 end
 
@@ -108,8 +108,8 @@ local function hasLowFluid(machine)
         or (machine.enabled.hydraulics and RMS_Fluids.getLevel(machine.vehicle, "hydraulicFluid") < minimum)
 end
 
----Tells whether cold oil works under load
-local function hasColdOilUnderLoad(machine)
+---Tells whether the oil is still cold enough to wear the transmission
+local function hasColdOil(machine)
     local spec = machine.spec
     local data = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
     local isHydraulicWorking = machine.enabled.hydraulics and spec.isHydraulicActive
@@ -117,8 +117,6 @@ local function hasColdOilUnderLoad(machine)
     return (machine.enabled.transmission or isHydraulicWorking)
         and machine.isStarted
         and temperature < data.COLD_TRANSMISSION_THRESHOLD
-        and ((machine.enabled.transmission and RMS_Drivetrain.getDrivelineLoad(machine.vehicle) > data.COLD_TRANSMISSION_LOAD_THRESHOLD)
-            or isHydraulicWorking)
 end
 
 ---Tips in check order; text is the key before _title and _message
@@ -211,7 +209,7 @@ RMS_Tutorial.TIPS = {
         return m.enabled.pto and m.hasNewPtoShock end },
     { key = "PTO_RAISED", text = "rms_tutorial_pto_raised", isDue = function(m)
         return m.enabled.pto and m.spec.ptoRaisedTooLong == true end },
-    { key = "COLD_OIL", text = "rms_tutorial_cold_oil", isDue = hasColdOilUnderLoad },
+    { key = "COLD_OIL", text = "rms_tutorial_cold_oil", isDue = hasColdOil },
     { key = "SERVICE_DUE_SOON", text = "rms_tutorial_service_due_soon", getArguments = getName, isDue = function(m)
         local used = getServiceIntervalUsed(m)
         return used >= 0.9 and used < 1.0 end },

@@ -7,7 +7,7 @@
         <functions><function>$l10n_rms_fluid_function_coolant</function></functions>
         <image>objects/fluids/products/motulAutoCoolExpert/store_motulAutoCoolExpert.png</image>
         <price>16</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>MOTUL</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

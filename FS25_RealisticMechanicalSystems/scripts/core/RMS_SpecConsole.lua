@@ -617,7 +617,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setSystemCondition(rawArgs, 
 
     for _, partId in ipairs(spec.systemParts[systemKey]) do
         spec.partWear[partId] = 1 - value
-        spec.partImpactWear[partId] = nil
+        spec.partAbuse[partId] = nil
         spec.partDrawnWear[partId] = nil
     end
     RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -645,7 +645,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
         if systemData.enabled ~= false then
             for _, partId in ipairs(spec.systemParts[systemKey]) do
                 spec.partWear[partId] = 1 - targetCondition
-                spec.partImpactWear[partId] = nil
+                spec.partAbuse[partId] = nil
                 spec.partDrawnWear[partId] = nil
             end
             RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
@@ -699,7 +699,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setPartWear(rawArgs, rawArgT
     end
 
     spec.partWear[partId] = value
-    spec.partImpactWear[partId] = nil
+    spec.partAbuse[partId] = nil
     spec.partDrawnWear[partId] = nil
     RealisticMechanicalSystems.refreshSystemCondition(spec, systemKey)
     vehicle:updateConditionLevel()
@@ -813,12 +813,12 @@ function RealisticMechanicalSystems.ConsoleCommands:getServiceState()
     local lines = {
         "--- RMS Service State ---",
         "Vehicle: " .. vehicle:getFullName(),
-        string.format("State: current=%s planned=%s workshop=%s",
-            tostring(spec.currentState), tostring(spec.plannedState), tostring(spec.workshopType)),
+        string.format("State: current=%s workshop=%s",
+            tostring(spec.currentState), tostring(spec.workshopType)),
         string.format("Timer: maintenanceTimer=%.0fms elapsed=%.0fms total=%.0fms progress=%d%% stepIndex=%d",
             spec.maintenanceTimer or 0, elapsed, total, progress, spec.pendingProgressStepIndex or 0),
-        string.format("Options: optionOne=%s optionTwo=%s optionThree=%s price=%s", tostring(spec.serviceOptionOne),
-            tostring(spec.serviceOptionTwo), tostring(spec.serviceOptionThree), tostring(spec.pendingServicePrice)),
+        string.format("Options: optionOne=%s optionTwo=%s price=%s", tostring(spec.serviceOptionOne),
+            tostring(spec.serviceOptionTwo), tostring(spec.pendingServicePrice)),
         string.format("Targets: serviceStart=%s serviceTarget=%s overhaulParts=%d", serialize(spec.pendingServiceClockStart),
             serialize(spec.pendingServiceClockTarget), countEntries(spec.pendingOverhaulPartTarget)),
         string.format("Levels: service engine=%.4f transmission=%.4f hydraulics=%.4f coolant=%.4f condition=%.4f",
@@ -844,8 +844,8 @@ local function printServiceLogEntry(index, entry, isVerbose)
     local dateText = date == nil and "n/a" or string.format("%02d/%02d/%04d", date.day or 0, date.month or 0, date.year or 0)
     print(string.format("[%d] id=%s type=%s date=%s price=%s visible=%s completed=%s", index, tostring(entry.id),
         tostring(entry.type), dateText, tostring(entry.price), tostring(entry.isVisible), tostring(entry.isCompleted ~= false)))
-    print(string.format("    options: one=%s two=%s three=%s location=%s", tostring(entry.optionOne),
-        tostring(entry.optionTwo), tostring(entry.optionThree), tostring(entry.location)))
+    print(string.format("    options: one=%s two=%s location=%s", tostring(entry.optionOne),
+        tostring(entry.optionTwo), tostring(entry.location)))
     if not isVerbose then
         return
     end

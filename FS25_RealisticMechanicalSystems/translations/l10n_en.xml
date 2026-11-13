@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="Choose the Procedure"/>
         <text name="rms_ws_section_work_order" text="Repair Order"/>
         <text name="rms_ws_section_recap" text="Recap"/>
-        <text name="rms_ws_section_parts" text="Parts Involved"/>
         <text name="rms_ws_section_history" text="History"/>
         <text name="rms_ws_label_last_check" text="Last Check"/>
         <text name="rms_ws_reading_outdated" text="Recheck"/>
-        <text name="rms_ws_label_more_parts" text="+ %s more"/>
         <text name="rms_ws_label_committed_cost" text="Committed Cost"/>
         <text name="rms_ws_label_finish_time" text="Finish Time"/>
         <text name="rms_ws_label_total_estimate" text="Estimated Total"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="Low ease of maintenance"/>
         <text name="rms_shop_launch_year" text="Model launched in %d"/>
         <text name="rms_shop_launch_year_unknown" text="Launch year unknown"/>
+        <text name="rms_shop_category_maintenance" text="Maintenance"/>
         <text name="rms_owner_care_careful" text="Careful maintenance"/>
         <text name="rms_owner_care_regular" text="Regular maintenance"/>
         <text name="rms_owner_care_neglected" text="Neglected maintenance"/>
+        <text name="rms_ws_label_maintenance_count" text="Services Done"/>
         <text name="rms_ws_label_overhaul_count" text="Overhauls Done"/>
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_maintenance" text="Last Maintenance"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="Cost per Operating Hour"/>
         <text name="rms_log_invoice_title" text="Invoice Details"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="Workshop Flat Rate"/>
-        <text name="rms_log_invoice_labour" text="Labor"/>
         <text name="rms_log_invoice_filters" text="Filters"/>
         <text name="rms_log_cancelled_desc" text="Procedure canceled"/>
         <text name="rms_log_ownership_months_title" text="Ownership Duration"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="Vehicle repainted"/>
         <text name="rms_log_average_breakdowns_interval_title" text="Average Breakdown Interval"/>
         <text name="rms_log_average_maintenance_interval_title" text="Average Maintenance Interval"/>
         <text name="rms_log_performed" text="Procedure performed: %s (%s)"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="Thermal protection: power limit cleared"/>
         <text name="rms_breakdown_at_progress_message" text="in progress"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="Warning! Engine cold, reduce the load."/>
+        <text name="rms_spec_cold_engine_message" text="Warning! Engine cold: it wears until it has warmed up."/>
         <text name="rms_spec_overheat_engine_message" text="Warning! Engine overheating."/>
         <text name="rms_spec_overheat_transmission_message" text="Warning! Transmission overheating."/>
         <text name="rms_spec_overhaul_partial" text="Partial"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="This month"/>
         <text name="rms_spec_tomorrow_at" text="tomorrow at "/>
         <text name="rms_spec_never" text="Never"/>
-        <text name="rms_spec_next_planned_service_notification" text="Scheduled procedure started: %s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="Scheduled procedure canceled due to insufficient funds: %s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="The scheduled procedure (%s) did not start: %s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="day after tomorrow at "/>
         <text name="rms_spec_day_s" text="days"/>
         <text name="rms_spec_day_one" text="day"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="Consumables Quality"/>
         <text name="rms_option_menu_option_two_title_repair" text="Spare Parts Quality"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="System to Overhaul"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="If the procedure reveals any breakdowns, automatically follows it with a standard repair using original parts."/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="After the repair, automatically follows it with the recommended service using original consumables."/>
         <text name="rms_option_menu_price_text" text="Price"/>
-        <text name="rms_option_menu_perform_repair" text="Automatic repair"/>
-        <text name="rms_option_menu_perform_maintenance" text="Automatic maintenance"/>
         <text name="rms_option_menu_warranty_repair_text" text="Warranty repair"/>
         <text name="rms_option_menu_lease_service_text" text="Included in the lease"/>
         <text name="rms_option_menu_duration_text" text="Duration"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="Included"/>
         <text name="rms_ws_levels_mechanical" text="Mechanical"/>
         <text name="rms_ws_levels_every_level" text="At every level: radiator cleaned and machine greased."/>
-        <text name="rms_ws_quality_risk" text="Defect risk"/>
+        <text name="rms_ws_quality_part_wear" text="Part wear"/>
+        <text name="rms_ws_quality_factory_kept" text="Factory Warranty Kept"/>
+        <text name="rms_ws_quality_factory_lost" text="Factory Warranty Lost"/>
+        <text name="rms_ws_quality_filters_sound" text="Defect-Free Filters"/>
+        <text name="rms_ws_quality_filter_sometimes" text="Filter Sometimes Defective"/>
+        <text name="rms_ws_quality_filter_often" text="Filter More Often Defective"/>
         <text name="rms_ws_quality_reference" text="Reference price"/>
-        <text name="rms_ws_quality_donor" text="Donor Machine: %d h"/>
-        <text name="rms_ws_quality_donors" text="Donor Machines: %d to %d h"/>
+        <text name="rms_ws_quality_donor" text="Taken from a machine with %d h"/>
+        <text name="rms_ws_quality_donors" text="Taken from machines with %d to %d h"/>
         <text name="rms_ws_quality_new_part" text="New Part"/>
         <text name="rms_ws_quality_used_warranty" text="3-Month Warranty"/>
         <text name="rms_ws_quality_partial_warranty" text="Partial Warranty"/>
         <text name="rms_ws_quality_no_warranty" text="No Warranty"/>
         <text name="rms_ws_quality_oem_warranty" text="12-Month Warranty"/>
         <text name="rms_ws_quality_factory_warranty" text="Factory Warranty"/>
-        <text name="rms_warranty_used" text="Salvage Warranty: Part Only"/>
+        <text name="rms_ws_quality_part_warranty" text="Warranty, %d Months Left"/>
         <text name="rms_ws_quality_delta" text="%s vs original"/>
         <text name="rms_ws_repair_row_faults" text="Breakdowns Treated"/>
         <text name="rms_ws_repair_row_faults_detail" text="Among those ticked"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="Failed Part"/>
         <text name="rms_ws_repair_row_part_detail" text="Cause of the breakdown"/>
         <text name="rms_ws_repair_part_replaced" text="Replaced"/>
-        <text name="rms_ws_repair_row_worn_parts" text="Worn Parts"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="In the same system"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="Replaced"/>
         <text name="rms_ws_repair_row_quality" text="Part Quality"/>
         <text name="rms_ws_repair_row_quality_detail" text="Picked on the cards below"/>
         <text name="rms_ws_repair_quality_choice" text="Your choice"/>
         <text name="rms_ws_warranty_title" text="Warranty"/>
+        <text name="rms_ws_quote_warranty_label" text="Warranty:"/>
+        <text name="rms_ws_quote_warranty_label_factory" text="Factory warranty:"/>
+        <text name="rms_ws_quote_warranty_label_part" text="Part warranty:"/>
+        <text name="rms_ws_quote_warranty_covered" text="covered"/>
+        <text name="rms_ws_quote_warranty_used" text="part only covered"/>
+        <text name="rms_ws_quote_warranty_expired" text="expired"/>
+        <text name="rms_ws_quote_warranty_own" text="not covered at the farm workshop"/>
+        <text name="rms_ws_quote_warranty_lease" text="not covered on a lease"/>
+        <text name="rms_ws_quote_warranty_remapped" text="lost, engine remapped"/>
+        <text name="rms_ws_quote_warranty_refused" text="declined, %s"/>
         <text name="rms_ws_warranty_covered" text="Covered"/>
         <text name="rms_ws_warranty_not_covered" text="Not Covered"/>
         <text name="rms_ws_warranty_terms" text="Factory: %d months or %s h"/>
+        <text name="rms_ws_warranty_refused" text="Declined: %s"/>
         <text name="rms_ws_badge_warranty" text="Warranty"/>
         <text name="rms_warranty_base" text="%d Months or %s h (Included)"/>
         <text name="rms_warranty_extension" text="%d Months or %s h"/>
         <text name="rms_warranty_partial" text="Partially Covered"/>
         <text name="rms_warranty_own" text="Not covered at the farm workshop"/>
-        <text name="rms_warranty_factory" text="Original parts and labor covered"/>
-        <text name="rms_warranty_part" text="Part covered until age %d months"/>
+        <text name="rms_warranty_part" text="Part warranty: %d months left"/>
         <text name="rms_warranty_lease" text="Repair not covered on a lease"/>
-        <text name="rms_warranty_expired" text="Warranty expired"/>
-        <text name="rms_warranty_overdue" text="Declined: overdue service"/>
-        <text name="rms_warranty_impact" text="Declined: impact damage"/>
-        <text name="rms_warranty_options" text="Replacement with original parts required"/>
+        <text name="rms_warranty_overdue" text="overdue service"/>
+        <text name="rms_warranty_impact" text="impact damage"/>
         <text name="rms_warranty_mobile" text="You pay the extra mobile labor cost"/>
         <text name="rms_warranty_remapped" text="Warranty lost: engine remapped"/>
+        <text name="rms_warranty_heat" text="overheating"/>
+        <text name="rms_warranty_low_level" text="oil level too low"/>
+        <text name="rms_warranty_fuel_dry" text="tank run dry"/>
+        <text name="rms_warranty_park_brake" text="parking brake on"/>
+        <text name="rms_warranty_pto_engagement" text="PTO engagement shock"/>
+        <text name="rms_warranty_stones" text="stones taken in"/>
+        <text name="rms_warranty_starter" text="starter overcranked"/>
+        <text name="rms_warranty_pto_angle" text="PTO shaft angle too steep"/>
+        <text name="rms_warranty_windup" text="diff lock or 4WD on hard ground"/>
+        <text name="rms_warranty_filter" text="clogged filter"/>
+        <text name="rms_warranty_oil" text="unsuited engine oil"/>
+        <text name="rms_warranty_trailer" text="trailer too heavy"/>
+        <text name="rms_warranty_aftermarket_part" text="aftermarket part"/>
+        <text name="rms_warranty_used_part" text="used part"/>
+        <text name="rms_warranty_imposed" text="Standard repair with original parts"/>
+        <text name="rms_warranty_partial_imposed" text="Covered fault repaired as Standard with original parts"/>
         <text name="rms_ws_overhaul_row_systems" text="Systems Treated"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="Restored"/>
         <text name="rms_ws_overhaul_systems_one" text="One you pick"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="Assessed"/>
         <text name="rms_ws_inspection_maintenance_note" text="A service runs this fault search too, as the standard inspection does."/>
         <text name="rms_ws_quote_title" text="Quote Details"/>
+        <text name="rms_ws_quote_empty_title" text="Your quote will appear here"/>
+        <text name="rms_ws_quote_empty_text" text="Choose a procedure from the list"/>
+        <text name="rms_ws_quote_empty_title_refused" text="No quote for now"/>
+        <text name="rms_ws_quote_empty_text_refused" text="Choose another procedure from the list"/>
+        <text name="rms_ws_repair_row_around" text="Surrounding parts"/>
+        <text name="rms_ws_repair_row_around_detail" text="Rebuild and worn parts"/>
+        <text name="rms_ws_repair_around_count" text="%d replaced"/>
+        <text name="rms_ws_repair_around_none" text="None"/>
+        <text name="rms_ws_quote_labour" text="Labor · %s h"/>
+        <text name="rms_ws_quote_parts_fault" text="Fault parts · %s"/>
+        <text name="rms_ws_quote_preventive" text="Preventive replacement · %s"/>
+        <text name="rms_ws_quote_supplies" text="Supplies"/>
+        <text name="rms_ws_quote_rebuild_engine" text="Engine rebuild · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="Cylinder head rebuild · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="Worn parts · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="Factory warranty"/>
+        <text name="rms_ws_quote_cover_part" text="Part warranty"/>
+        <text name="rms_ws_quote_cover_used" text="Used part warranty"/>
+        <text name="rms_ws_quote_cover_full" text="Labor and parts covered"/>
+        <text name="rms_ws_quote_cover_part_only" text="Part only, labor still due"/>
+        <text name="rms_ws_quote_filters" text="Filters · %s"/>
+        <text name="rms_ws_diag_worn_title" text="Worn parts · last full inspection"/>
         <text name="rms_ws_quote_oil_filter" text="Oil Filter"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="The following procedure is charged separately. Required fluids are supplied or taken from stock when it starts."/>
         <text name="rms_bodywork_touchup" text="Touch-Ups"/>
         <text name="rms_bodywork_full" text="Full Repaint"/>
         <text name="rms_bodywork_colors_title" text="Vehicle Colors"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="It does not come back with the stock software"/>
         <text name="rms_remap_free" text="Free"/>
         <text name="rms_remap_unavailable" text="Remapping Unavailable"/>
-        <text name="rms_remap_refusal_dealer" text="The dealer does not remap engines."/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="A tuner comes to the farm: use the farm workshop or the mobile workshop."/>
+        <text name="rms_ws_overhaul_unavailable" text="Overhaul Unavailable"/>
+        <text name="rms_remap_refusal_top" text="Already the range's largest engine: only a tuner goes beyond, at the farm or mobile workshop."/>
+        <text name="rms_remap_refusal_restore_tuner" text="Remapped by a tuner: only the tuner restores it, at the farm or mobile workshop."/>
+        <text name="rms_remap_refusal_restore_dealer" text="Remapped by the dealer: only the dealer restores it."/>
+        <text name="rms_remap_curves_maker" text="Curves Announced by the Manufacturer"/>
+        <text name="rms_remap_curves_dealer_measured" text="Dealer's Dyno Run, Before and After"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="Stock software kept by the dealer"/>
         <text name="rms_remap_refusal_leased" text="A leased machine cannot be remapped."/>
         <text name="rms_remap_refusal_not_eligible" text="This engine has no control unit to remap."/>
         <text name="rms_remap_confirm_title" text="Remap the Engine?"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="No breakdowns or worn parts"/>
         <text name="rms_report_worn_part_risk" text="Risk ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · Adjustment: %s"/>
-        <text name="rms_report_worn_part_replace" text="%s · Replacement: advanced repair or overhaul"/>
+        <text name="rms_report_worn_part_replace" text="%s · Preventive replacement at the workshop"/>
         <text name="rms_report_overall_assessment_title" text="Overall Condition Assessment"/>
         <text name="rms_report_overall_assessment_condition" text="Condition Level"/>
         <text name="rms_report_recommendations_title" text="Conclusion and Recommendations"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="Air Blower"/>
         <text name="rms_air_blower_no_vehicle" text="No vehicle in cleaning range"/>
         <text name="rms_air_blower_function" text="Used to clean radiators and air filters"/>
-        <text name="rms_air_blower_action" text="Clean radiator and air filter"/>
+        <text name="rms_air_blower_action" text="Clean radiator and air filter."/>
+        <text name="rms_air_blower_action_radiator" text="Clean radiator."/>
+        <text name="rms_air_blower_action_air_filter" text="Clean air filter."/>
         <text name="rms_air_blower_action_short" text="Blow clean"/>
         <text name="rms_air_blower_already_clean" text="%s: the radiator and air filter are already clean"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s: the radiator is clean. Blowing out the air filter cannot clean it any further. The workshop replaces it from the %s service up"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="Jumper cables disconnected from %s"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="Fluid Container"/>
-        <text name="rms_fluid_function_engine_oil" text="Engine oil for manual top-up"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="Engine oil, for every machine, AdBlue and particulate filter included"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="Engine oil, for machines without AdBlue or particulate filter"/>
         <text name="rms_fluid_function_utto" text="Transmission and hydraulic oil for manual top-up"/>
         <text name="rms_fluid_function_coolant" text="Coolant for manual top-up"/>
         <text name="rms_fluid_pour_action" text="Pour: %s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="This product is not intended for this circuit. It will contaminate it and may wear the transmission up to three times faster and make it run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="This product is not intended for this circuit. It will contaminate it and may wear the hydraulics up to three times faster, make them run hotter and slow them down. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="This product is not intended for this circuit. It will contaminate it and may wear the transmission and hydraulics up to three times faster, make them run hotter and slow the hydraulics down. Only a complete fluid replacement will remove the contamination. Continue?"/>
+        <text name="rms_fluid_unsuited_oil_title" text="Unsuited Engine Oil"/>
+        <text name="rms_fluid_unsuited_oil_message" text="This engine runs on AdBlue or has a particulate filter: its manual asks for an oil made for them. With this oil, its oil change will come up to twice as early. A particulate filter also fills with ash 1.5 times as fast. Continue?"/>
         <text name="rms_fluid_error_no_circuit" text="This vehicle does not require a fluid top-up"/>
         <text name="rms_fluid_error_motor_running" text="Stop the engine before transferring fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="The vehicle must be stationary"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="Fluids included in the lease"/>
         <text name="rms_fluid_stock_required" text="Drawn from the containers in the workshop zone"/>
         <text name="rms_fluid_stock_missing" text="%s missing in the workshop zone"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="%s of oil suited to this engine missing in the workshop zone"/>
         <text name="rms_fluid_refill_work_order" text="Fluid level top-up"/>
         <text name="rms_fluid_refill_dealer_supply" text="Fluid supply included in the estimate"/>
         <text name="rms_fluid_mode_top_up" text="top-up"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="A cab damper has a major leak and has emptied."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="Oily traces and darkened connections are visible around the turbocharger."/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="Heavy oily traces, darkened connections, and soot marks are visible around the turbocharger."/>
-        <text name="rms_inspection_hint_fluid_level_low" text="A fluid level has dropped below its mark."/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="Several fluid levels have dropped below their marks."/>
+        <text name="rms_inspection_hint_fluid_low" text="Below the MIN mark: %s."/>
+        <text name="rms_inspection_hint_fluid_very_low" text="Very low level: %s."/>
+        <text name="rms_inspection_hint_fluid_top_up" text="Top up from a container, or at the dealer."/>
         <text name="rms_inspection_hint_service_engine" text="The engine oil change is overdue: worn oil speeds up engine and injection wear. Every service changes it along with its filters."/>
         <text name="rms_inspection_hint_service_transmission" text="The transmission oil change is overdue: worn oil speeds up the wear of everything it lubricates. The service recommended at the workshop changes it along with its filter."/>
         <text name="rms_inspection_hint_service_hydraulic" text="The hydraulic oil change is overdue: worn oil speeds up hydraulic system wear. The service recommended at the workshop changes it along with its filter."/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Deposit Refund"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Low Fluid Level"/>
-        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. It is when a level falls really low that the damage starts: a machine short of coolant or of transmission oil runs hot, and a machine short of engine oil or of hydraulic oil wears far faster.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
+        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welcome to Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Disable tips"/>
         <text name="rms_tutorial_welcome_enable_button" text="Enable tips"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="Age Degradation"/>
         <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;This degradation can be disabled in the mod settings."/>
         <text name="rms_tutorial_poor_consumables_title" text="Poor-Quality Consumables"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Your %s received poor-quality consumables at its last maintenance. This happens with the cheaper grades.&#10;&#10;The maintenance interval is shortened and component wear slightly increased. New maintenance fixes the problem. A visual or standard inspection reports the shortened interval; only a complete inspection identifies the consumables involved."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Your %s received a defective filter at its last maintenance. This happens with the cheaper grades.&#10;&#10;The filter lets dirt through: the circuit it protects wears faster until the filter is changed. New maintenance changes it. Only a complete inspection identifies it."/>
         <text name="rms_tutorial_poor_parts_title" text="Poor-Quality Parts"/>
         <text name="rms_tutorial_poor_parts_message" text="Your %s received a poor-quality part during a repair. The breakdown will most likely return soon.&#10;&#10;You can wait for it to come back, or run a complete inspection, which identifies the faulty part reliably."/>
         <text name="rms_tutorial_park_brake_title" text="Parking Brake"/>

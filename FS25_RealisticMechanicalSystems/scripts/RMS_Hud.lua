@@ -701,9 +701,9 @@ function RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
     return RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
 end
 
----Tells whether the level of the engine oil lights the oil lamp
+---Tells whether the engine oil pump draws air, lighting the oil lamp
 function RMS_Hud.getIsOilPressureLow(spec)
-    return (tonumber(spec.engineOilLevel) or 1) <= RMS_Config.FLUIDS.LEVEL_CRITICALLY_LOW
+    return spec.pickupUncovered ~= nil and spec.pickupUncovered.engineOil == true
 end
 
 ---Returns the coolant lamp colour key for the drive temperature
@@ -809,8 +809,7 @@ end
 
 ---Builds the figures drawn beside the telltales
 function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
-    local overloadThreshold = spec.isElectricVehicle and RMS_Config.ELECTRIC_DRIVE.MOTOR_OVERLOADED_THRESHOLD
-        or RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
+    local overloadThreshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
     local overloadLoad = motorLoad
     if not spec.isElectricVehicle and motorLoad > 0 then
         overloadLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
@@ -821,7 +820,7 @@ function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
         battery = { text = formatValue(spec.batteryIsolated and 0 or spec.systemVoltageV, "%.1f") .. "V" }
     }
     if showTransmissionTemperature then
-        values.transmission = { text = g_i18n:formatTemperature(spec.transmissionTemperature, 0) }
+        values.transmission = { text = g_i18n:formatTemperature(math.min(spec.transmissionTemperature, RMS_Config.THERMAL.OIL_GAUGE_MAX), 0) }
     end
     return values
 end
@@ -1498,7 +1497,7 @@ function RMS_Hud:drawLoadMass(cardRightX)
         local ratioBasis = isTruck and totalMass or towedMass
         local powerToWeight = horsepower / math.max(ratioBasis, 0.01)
 
-        local threshold, fullEffect = RMS_Utils.getHeavyTrailerRatioLevels(isTruck)
+        local threshold, fullEffect = RMS_Utils.getHeavyTrailerRatioLevels(vehicle)
 
         local trailerSeverity = RMS_Utils.calculateQuadraticMultiplier(powerToWeight, threshold, true, fullEffect)
 

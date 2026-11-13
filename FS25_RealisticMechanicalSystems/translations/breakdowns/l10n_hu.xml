@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritikus hiba a részecskeszűrőben. Teljesen elzáródva már nem engedi át a gázokat: csak a csere állítja helyre a motor teljesítményét."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="A részecskeszűrő telítődése. A regenerálások nem fejeződtek be: a motor fordulatszáma korlátozott, amíg valamelyik sikerrel nem jár."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="A részecskeszűrő kritikus telítődése. Túl telített az önálló regeneráláshoz, ezért műhelyben végzett szervizregenerálást igényel; a fordulatszám korlátozott marad."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Részecskeszűrő tele hamuval. A regenerálás a kormot égeti el, nem a motorolaj hagyta hamut: a szűrőt a műhelyben ki kell szerelni és meg kell tisztítani; a motor fordulatszáma korlátozott."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Enyhe meghibásodás a ventilátorkuplungban. A ventilátor kevésbé hatékonyan reagál, és a hűtés enyhén romlik."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Közepes meghibásodás a ventilátorkuplungban. A ventilátor bekapcsolása szabálytalan, és a hűtés hatékonysága érezhetően csökken."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Súlyos meghibásodás a ventilátorkuplungban. A ventilátor már nem biztosít elegendő légáramlást, és a motor könnyebben túlmelegszik."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Betakarítás lehetetlen: egy betakarító egység eltört"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Dugulás: a betakarítás leállt"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Szecskázó elromlott: a szalma rendre hullik"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Szecskázó elromlott: ez a termény már nem takarítható be"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Szecskázó elromlott: a szalma szecskázatlanul hullik"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="A hajtószíjak kezdődő kopása. Terhelés alatt kissé csúsznak."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="A hajtószíjak közepes kopása. Egy egység terhelés alatt lelassul, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="A hajtószíjak súlyos kopása. A teljesítmény csökken, és a leállások újra meg újra visszatérnek."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="A szalmaszecskázó kezdődő kopása. A szalma kevésbé rövidre aprózódik, és a szecskázó kicsit több teljesítményt vesz fel."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="A szalmaszecskázó közepes kopása. A szecskázó rezeg, és több teljesítményt vesz fel."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="A szalmaszecskázó súlyos kopása. A rotor kiegyensúlyozatlan, és sok teljesítményt vesz fel."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritikus hiba a szalmaszecskázóban. Egy kés eltört: a szecskázó áll, és a szalma rendre hullik."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritikus hiba a szalmaszecskázóban. Egy kés eltört: a szecskázó áll, és a szalma szecskázatlanul hullik, rendre, ha a termény rendet képez."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="A behúzóhengerek kezdődő kopása. Rosszabbul fogják a terményt: az adagolás egyenetlenné válik."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="A behúzóhengerek közepes kopása. A szecskahossz egyenetlenné válik, és dugulások jelennek meg."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="A behúzóhengerek súlyos kopása. A teljesítmény csökken, és a dugulások visszatérnek."/>

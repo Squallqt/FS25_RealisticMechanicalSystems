@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Kritiskt haveri i partikelfiltret. Helt blockerat släpper det inte längre igenom avgaserna: bara ett byte ger motorn effekten tillbaka."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Partikelfiltret är mättat. Regenereringarna har inte slutförts: motorvarvtalet begränsas tills en regenerering lyckas."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Kritisk mättning av partikelfiltret. Det är för fullt för att regenerera självt och behöver en serviceregenerering på verkstaden; varvtalet förblir begränsat."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Partikelfilter fullt av aska. Regenereringar bränner soten, inte askan som motoroljan lämnar: filtret måste demonteras och rengöras på verkstaden; motorvarvtalet är begränsat."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Lätt haveri i fläktkopplingen. Fläkten svarar mindre effektivt, och kylförmågan är något försämrad."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Måttligt haveri i fläktkopplingen. Fläkten kopplar in ojämnt, och kylförmågan faller tydligt."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Allvarligt haveri i fläktkopplingen. Fläkten ger inte längre tillräckligt med luft, och motorn överhettas lättare."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Skörd omöjlig: en skördedel är trasig"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Stopp: skörden har stannat"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Halmhacken trasig: halmen faller i sträng"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Halmhacken trasig: denna gröda kan inte längre skördas"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Halmhacken trasig: halmen faller ohackad"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Begynnande slitage på drivremmarna. De slirar lite under belastning."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Måttligt slitage på drivremmarna. En del tappar varvtal under belastning och varvtalslarmet stoppar ibland skörden."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Allvarligt slitage på drivremmarna. Kapaciteten sjunker och stoppen kommer om och om igen."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Begynnande slitage på halmhacken. Halmen hackas mindre kort och hacken kräver lite mer effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Måttligt slitage på halmhacken. Hacken vibrerar och kräver mer effekt."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Allvarligt slitage på halmhacken. Rotorn är i obalans och kräver mycket effekt."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritiskt haveri i halmhacken. En kniv har gått av: hacken står still och halmen faller i sträng."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Kritiskt haveri i halmhacken. En kniv har gått av: hacken står still och halmen faller ohackad, i sträng när grödan bildar en."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Begynnande slitage på inmatningsvalsarna. De greppar grödan sämre: inmatningen blir ojämn."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Måttligt slitage på inmatningsvalsarna. Hacklängden blir ojämn och stopp uppstår."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Allvarligt slitage på inmatningsvalsarna. Kapaciteten sjunker och stoppen fortsätter."/>

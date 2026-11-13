@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="Falha crítica do filtro de partículas. Totalmente obstruído, não deixa mais passar os gases: só a troca devolve a potência ao motor."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="Saturação do filtro de partículas. As regenerações não foram concluídas: a rotação do motor fica limitada até que uma delas tenha sucesso."/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="Saturação crítica do filtro de partículas. Carregado demais para se regenerar sozinho, exige uma regeneração de serviço na oficina; a rotação continua limitada."/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="Filtro de partículas cheio de cinzas. As regenerações queimam a fuligem, não as cinzas que o óleo do motor deixa: o filtro precisa ser removido e limpo na oficina; a rotação do motor está limitada."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="Falha leve da embreagem do ventilador. O ventilador reage menos eficientemente e o arrefecimento é levemente degradado."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="Falha moderada da embreagem do ventilador. O acionamento do ventilador é irregular e a eficiência do arrefecimento diminui notavelmente."/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="Falha severa da embreagem do ventilador. O ventilador não fornece mais fluxo de ar suficiente e o motor superaquece mais facilmente."/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="Colheita impossível: um órgão de colheita está quebrado"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="Embuchamento: a colheita parou"/>
         <text name="rms_breakdowns_chopper_failure_message" text="Picador quebrado: a palha cai em leira"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="Picador quebrado: esta cultura não pode mais ser colhida"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="Picador quebrado: a palha cai sem ser picada"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="Desgaste inicial das correias dos órgãos. Patinam um pouco sob carga."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="Desgaste moderado das correias dos órgãos. Um órgão perde rotação sob carga e o alarme de rotação às vezes para a colheita."/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="Desgaste severo das correias dos órgãos. O rendimento cai e as paradas se repetem."/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="Desgaste inicial do picador. A palha é cortada menos curta e o picador exige um pouco mais de potência."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="Desgaste moderado do picador. O picador vibra e exige mais potência."/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="Desgaste severo do picador. O rotor está desbalanceado e consome muita potência."/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Falha crítica do picador. Uma faca quebrou: o picador está parado e a palha cai em leira."/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="Falha crítica do picador. Uma faca quebrou: o picador está parado e a palha cai sem ser picada, em leira quando a cultura forma uma."/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="Desgaste inicial dos rolos alimentadores. Eles prendem pior a cultura: a alimentação fica irregular."/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="Desgaste moderado dos rolos alimentadores. O comprimento de corte fica irregular e surgem embuchamentos."/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="Desgaste severo dos rolos alimentadores. O rendimento cai e os embuchamentos se repetem."/>

@@ -603,6 +603,7 @@
         <text name="rms_breakdowns_particulate_filter_failure_branch2_stage4_description" text="颗粒捕集器发生极重度失效。完全堵塞，排气无法通过：只有更换才能恢复发动机功率。"/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage1_description" text="颗粒捕集器积碳过多。再生未能完成：发动机转速受到限制，直到一次再生成功。"/>
         <text name="rms_breakdowns_particulate_filter_soot_overload_stage2_description" text="颗粒捕集器发生极重度积碳。积碳过多，无法自行再生，需要在车间进行维修再生；转速仍受到限制。"/>
+        <text name="rms_breakdowns_particulate_filter_ash_stage1_description" text="颗粒捕集器积满灰分。再生只能烧掉碳粒，烧不掉机油留下的灰分：必须在维修站拆下捕集器清洗；发动机转速受限。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage1_description" text="风扇离合器发生轻微故障。风扇响应效率降低，冷却性能略有下降。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage2_description" text="风扇离合器发生中度故障。风扇接合不稳定，冷却效率明显下降。"/>
         <text name="rms_breakdowns_fan_clutch_failure_stage3_description" text="风扇离合器发生严重故障。风扇无法提供足够气流，发动机更容易过热。"/>
@@ -827,7 +828,7 @@
         <text name="rms_breakdowns_harvest_failure_message" text="无法收获：一个收获部件已损坏"/>
         <text name="rms_breakdowns_harvest_blockage_message" text="堵塞：收获已停止"/>
         <text name="rms_breakdowns_chopper_failure_message" text="切碎器损坏：秸秆落成草条"/>
-        <text name="rms_breakdowns_chopper_failure_spread_message" text="切碎器损坏：无法再收获这种作物"/>
+        <text name="rms_breakdowns_chopper_failure_unchopped_message" text="切碎器损坏：秸秆未经切碎直接落下"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage1_description" text="部件传动带开始磨损。负载时略有打滑。"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage2_description" text="部件传动带中度磨损。某个部件负载时转速下降，转速报警有时会停止收获。"/>
         <text name="rms_breakdowns_harvest_drive_belt_wear_stage3_description" text="部件传动带严重磨损。通过量下降，停机反复发生。"/>
@@ -867,7 +868,7 @@
         <text name="rms_breakdowns_straw_chopper_wear_stage1_description" text="秸秆切碎器开始磨损。秸秆切得不够短，切碎器多消耗一些功率。"/>
         <text name="rms_breakdowns_straw_chopper_wear_stage2_description" text="秸秆切碎器中度磨损。切碎器震动，消耗更多功率。"/>
         <text name="rms_breakdowns_straw_chopper_wear_stage3_description" text="秸秆切碎器严重磨损。转子失衡，消耗大量功率。"/>
-        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="秸秆切碎器发生极重度失效。一把刀片断裂：切碎器停转，秸秆落成草条。"/>
+        <text name="rms_breakdowns_straw_chopper_wear_stage4_description" text="秸秆切碎器发生极重度失效。一把刀片断裂：切碎器停转，秸秆未经切碎直接落下，作物能成草条时落成草条。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage1_description" text="喂入辊开始磨损。夹持作物变差：喂入变得不均匀。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage2_description" text="喂入辊中度磨损。切段长度不均匀，出现堵塞。"/>
         <text name="rms_breakdowns_feed_roll_wear_stage3_description" text="喂入辊严重磨损。通过量下降，堵塞反复发生。"/>

@@ -98,11 +98,9 @@
         <text name="rms_ws_section_choose_intervention" text="选择作业"/>
         <text name="rms_ws_section_work_order" text="维修工单"/>
         <text name="rms_ws_section_recap" text="确认"/>
-        <text name="rms_ws_section_parts" text="相关部件"/>
         <text name="rms_ws_section_history" text="历史记录"/>
         <text name="rms_ws_label_last_check" text="上次检查"/>
         <text name="rms_ws_reading_outdated" text="需重新检查"/>
-        <text name="rms_ws_label_more_parts" text="另有%s个"/>
         <text name="rms_ws_label_committed_cost" text="已确定费用"/>
         <text name="rms_ws_label_finish_time" text="完成时间"/>
         <text name="rms_ws_label_total_estimate" text="报价总额"/>
@@ -136,9 +134,11 @@
         <text name="rms_shop_service_access_demanding" text="保养便利性低"/>
         <text name="rms_shop_launch_year" text="%d年上市"/>
         <text name="rms_shop_launch_year_unknown" text="上市年份未知"/>
+        <text name="rms_shop_category_maintenance" text="保养"/>
         <text name="rms_owner_care_careful" text="精心保养"/>
         <text name="rms_owner_care_regular" text="定期保养"/>
         <text name="rms_owner_care_neglected" text="疏于保养"/>
+        <text name="rms_ws_label_maintenance_count" text="保养次数"/>
         <text name="rms_ws_label_overhaul_count" text="大修次数"/>
         <text name="rms_ws_label_maintenance_log" text="保养记录"/>
         <text name="rms_ws_label_last_maintenance" text="上次保养"/>
@@ -192,11 +192,9 @@
         <text name="rms_log_cost_per_hour_title" text="每工作小时费用"/>
         <text name="rms_log_invoice_title" text="账单明细"/>
         <text name="rms_log_invoice_workshop_flat_rate" text="维修车间固定费用"/>
-        <text name="rms_log_invoice_labour" text="工时费"/>
         <text name="rms_log_invoice_filters" text="滤清器"/>
         <text name="rms_log_cancelled_desc" text="作业已取消"/>
         <text name="rms_log_ownership_months_title" text="持有时间"/>
-        <text name="rms_log_overhaul_desc_with_painting" text="载具已重新喷漆"/>
         <text name="rms_log_average_breakdowns_interval_title" text="平均故障间隔"/>
         <text name="rms_log_average_maintenance_interval_title" text="平均保养间隔"/>
         <text name="rms_log_performed" text="已执行作业：%s（%s）"/>
@@ -212,7 +210,7 @@
         <text name="rms_thermal_power_restored_message" text="过热保护：功率限制已解除"/>
         <text name="rms_breakdown_at_progress_message" text="进行中"/>
         <!-- Vehicle Specifications -->
-        <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，请降低负载。"/>
+        <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，升温前会持续磨损。"/>
         <text name="rms_spec_overheat_engine_message" text="警告！发动机过热。"/>
         <text name="rms_spec_overheat_transmission_message" text="警告！变速箱过热。"/>
         <text name="rms_spec_overhaul_partial" text="部分"/>
@@ -222,9 +220,6 @@
         <text name="rms_spec_this_month" text="本月"/>
         <text name="rms_spec_tomorrow_at" text="明天 "/>
         <text name="rms_spec_never" text="从未"/>
-        <text name="rms_spec_next_planned_service_notification" text="计划作业已开始：%s"/>
-        <text name="rms_spec_next_planned_service_not_enough_money_notification" text="因资金不足取消计划作业：%s"/>
-        <text name="rms_spec_next_planned_service_failed_notification" text="计划作业（%s）未能开始：%s"/>
         <text name="rms_spec_day_after_tomorrow_at" text="后天 "/>
         <text name="rms_spec_day_s" text="天"/>
         <text name="rms_spec_day_one" text="天"/>
@@ -304,11 +299,7 @@
         <text name="rms_option_menu_option_two_title_maintenance" text="消耗品质量"/>
         <text name="rms_option_menu_option_two_title_repair" text="备件质量"/>
         <text name="rms_option_menu_option_two_title_overhaul" text="待大修系统"/>
-        <text name="rms_option_menu_option_three_disclaimer_repair_after_detection" text="如果此作业发现故障，将自动接着使用原厂部件进行标准修理。"/>
-        <text name="rms_option_menu_option_three_disclaimer_maintenance_after_repair" text="修理完成后，将自动接着使用原厂消耗品进行建议的保养。"/>
         <text name="rms_option_menu_price_text" text="价格"/>
-        <text name="rms_option_menu_perform_repair" text="自动修理"/>
-        <text name="rms_option_menu_perform_maintenance" text="自动保养"/>
         <text name="rms_option_menu_warranty_repair_text" text="保修修理"/>
         <text name="rms_option_menu_lease_service_text" text="已包含在租赁中"/>
         <text name="rms_option_menu_duration_text" text="时长"/>
@@ -347,17 +338,22 @@
         <text name="rms_ws_levels_included" text="包含"/>
         <text name="rms_ws_levels_mechanical" text="机械类"/>
         <text name="rms_ws_levels_every_level" text="每个级别：清洁散热器并润滑。"/>
-        <text name="rms_ws_quality_risk" text="质量问题风险"/>
+        <text name="rms_ws_quality_part_wear" text="零件磨损"/>
+        <text name="rms_ws_quality_factory_kept" text="保留原厂保修"/>
+        <text name="rms_ws_quality_factory_lost" text="失去原厂保修"/>
+        <text name="rms_ws_quality_filters_sound" text="滤清器无质量问题"/>
+        <text name="rms_ws_quality_filter_sometimes" text="滤清器偶有质量问题"/>
+        <text name="rms_ws_quality_filter_often" text="滤清器较常有质量问题"/>
         <text name="rms_ws_quality_reference" text="参考价格"/>
-        <text name="rms_ws_quality_donor" text="原车工时：%d h"/>
-        <text name="rms_ws_quality_donors" text="原车工时：%d至%d h"/>
+        <text name="rms_ws_quality_donor" text="拆自%d h的车辆"/>
+        <text name="rms_ws_quality_donors" text="拆自%d至%d h的车辆"/>
         <text name="rms_ws_quality_new_part" text="全新零件"/>
         <text name="rms_ws_quality_used_warranty" text="保修3个月"/>
         <text name="rms_ws_quality_partial_warranty" text="部分保修"/>
         <text name="rms_ws_quality_no_warranty" text="无保修"/>
         <text name="rms_ws_quality_oem_warranty" text="保修12个月"/>
         <text name="rms_ws_quality_factory_warranty" text="原厂保修"/>
-        <text name="rms_warranty_used" text="拆解商保修：仅限零件"/>
+        <text name="rms_ws_quality_part_warranty" text="保修剩余%d个月"/>
         <text name="rms_ws_quality_delta" text="较原厂%s"/>
         <text name="rms_ws_repair_row_faults" text="处理的故障"/>
         <text name="rms_ws_repair_row_faults_detail" text="在已勾选的故障中"/>
@@ -370,30 +366,51 @@
         <text name="rms_ws_repair_row_part" text="失效部件"/>
         <text name="rms_ws_repair_row_part_detail" text="故障原因"/>
         <text name="rms_ws_repair_part_replaced" text="更换"/>
-        <text name="rms_ws_repair_row_worn_parts" text="磨损部件"/>
-        <text name="rms_ws_repair_row_worn_parts_detail" text="同一系统内"/>
-        <text name="rms_ws_repair_worn_parts_replaced" text="更换"/>
         <text name="rms_ws_repair_row_quality" text="配件质量"/>
         <text name="rms_ws_repair_row_quality_detail" text="在下方卡片中选择"/>
         <text name="rms_ws_repair_quality_choice" text="可选"/>
         <text name="rms_ws_warranty_title" text="保修"/>
+        <text name="rms_ws_quote_warranty_label" text="保修："/>
+        <text name="rms_ws_quote_warranty_label_factory" text="原厂保修："/>
+        <text name="rms_ws_quote_warranty_label_part" text="配件保修："/>
+        <text name="rms_ws_quote_warranty_covered" text="有效"/>
+        <text name="rms_ws_quote_warranty_used" text="仅限零件"/>
+        <text name="rms_ws_quote_warranty_expired" text="已到期"/>
+        <text name="rms_ws_quote_warranty_own" text="自有维修车间不予保修"/>
+        <text name="rms_ws_quote_warranty_lease" text="租赁车辆不予保修"/>
+        <text name="rms_ws_quote_warranty_remapped" text="失效（发动机已刷写）"/>
+        <text name="rms_ws_quote_warranty_refused" text="拒保（%s）"/>
         <text name="rms_ws_warranty_covered" text="有效"/>
         <text name="rms_ws_warranty_not_covered" text="无效"/>
         <text name="rms_ws_warranty_terms" text="原厂：%d个月或%s h"/>
+        <text name="rms_ws_warranty_refused" text="拒保：%s"/>
         <text name="rms_ws_badge_warranty" text="保修"/>
         <text name="rms_warranty_base" text="%d个月或%s h（已包含）"/>
         <text name="rms_warranty_extension" text="%d个月或%s h"/>
         <text name="rms_warranty_partial" text="部分保修"/>
         <text name="rms_warranty_own" text="自有维修车间不予保修"/>
-        <text name="rms_warranty_factory" text="原厂配件和工时费均在保修范围内"/>
-        <text name="rms_warranty_part" text="配件保修至车龄%d个月"/>
+        <text name="rms_warranty_part" text="配件保修：剩余%d个月"/>
         <text name="rms_warranty_lease" text="租赁车辆的维修不予保修"/>
-        <text name="rms_warranty_expired" text="保修已到期"/>
-        <text name="rms_warranty_overdue" text="拒保：保养逾期"/>
-        <text name="rms_warranty_impact" text="拒保：撞击损坏"/>
-        <text name="rms_warranty_options" text="须更换原厂配件"/>
+        <text name="rms_warranty_overdue" text="保养逾期"/>
+        <text name="rms_warranty_impact" text="撞击损坏"/>
         <text name="rms_warranty_mobile" text="需支付移动维修车间的额外工时费"/>
         <text name="rms_warranty_remapped" text="保修失效：发动机已刷写"/>
+        <text name="rms_warranty_heat" text="过热"/>
+        <text name="rms_warranty_low_level" text="机油油位过低"/>
+        <text name="rms_warranty_fuel_dry" text="燃油耗尽"/>
+        <text name="rms_warranty_park_brake" text="停车制动未松开"/>
+        <text name="rms_warranty_pto_engagement" text="动力输出轴接合冲击"/>
+        <text name="rms_warranty_stones" text="吸入石块"/>
+        <text name="rms_warranty_starter" text="起动机过度使用"/>
+        <text name="rms_warranty_pto_angle" text="传动轴角度过大"/>
+        <text name="rms_warranty_windup" text="硬地面使用差速锁或四驱"/>
+        <text name="rms_warranty_filter" text="滤清器堵塞"/>
+        <text name="rms_warranty_oil" text="不合适的机油"/>
+        <text name="rms_warranty_trailer" text="挂车过重"/>
+        <text name="rms_warranty_aftermarket_part" text="副厂配件"/>
+        <text name="rms_warranty_used_part" text="二手配件"/>
+        <text name="rms_warranty_imposed" text="以原厂配件进行标准维修"/>
+        <text name="rms_warranty_partial_imposed" text="保修故障以原厂配件进行标准维修"/>
         <text name="rms_ws_overhaul_row_systems" text="处理的系统"/>
         <text name="rms_ws_overhaul_row_systems_detail" text="恢复"/>
         <text name="rms_ws_overhaul_systems_one" text="任选一个"/>
@@ -436,8 +453,29 @@
         <text name="rms_ws_inspection_assessed" text="已评定"/>
         <text name="rms_ws_inspection_maintenance_note" text="保养也会像标准检查一样进行这项故障排查。"/>
         <text name="rms_ws_quote_title" text="报价明细"/>
+        <text name="rms_ws_quote_empty_title" text="报价将显示在这里"/>
+        <text name="rms_ws_quote_empty_text" text="请从列表中选择一项作业"/>
+        <text name="rms_ws_quote_empty_title_refused" text="暂无报价"/>
+        <text name="rms_ws_quote_empty_text_refused" text="请从列表中选择其他作业"/>
+        <text name="rms_ws_repair_row_around" text="周边部件"/>
+        <text name="rms_ws_repair_row_around_detail" text="大修及磨损部件"/>
+        <text name="rms_ws_repair_around_count" text="更换 %d 个"/>
+        <text name="rms_ws_repair_around_none" text="无"/>
+        <text name="rms_ws_quote_labour" text="工时费 · %s 小时"/>
+        <text name="rms_ws_quote_parts_fault" text="故障配件 · %s"/>
+        <text name="rms_ws_quote_preventive" text="预防性更换 · %s"/>
+        <text name="rms_ws_quote_supplies" text="耗材"/>
+        <text name="rms_ws_quote_rebuild_engine" text="发动机大修 · %s"/>
+        <text name="rms_ws_quote_rebuild_head" text="气缸盖大修 · %s"/>
+        <text name="rms_ws_quote_worn_parts" text="磨损部件 · %s"/>
+        <text name="rms_ws_quote_cover_factory" text="原厂保修"/>
+        <text name="rms_ws_quote_cover_part" text="配件保修"/>
+        <text name="rms_ws_quote_cover_used" text="二手配件保修"/>
+        <text name="rms_ws_quote_cover_full" text="工时和配件均保修"/>
+        <text name="rms_ws_quote_cover_part_only" text="仅限配件，工时费需支付"/>
+        <text name="rms_ws_quote_filters" text="滤清器 · %s"/>
+        <text name="rms_ws_diag_worn_title" text="磨损部件 · 最近一次完整检查"/>
         <text name="rms_ws_quote_oil_filter" text="机油滤清器"/>
-        <text name="rms_option_menu_follow_up_separate_transaction" text="后续作业将单独收费。所需油液会在作业开始时供应或从库存中取用。"/>
         <text name="rms_bodywork_touchup" text="补漆"/>
         <text name="rms_bodywork_full" text="完整喷漆"/>
         <text name="rms_bodywork_colors_title" text="载具颜色"/>
@@ -476,8 +514,13 @@
         <text name="rms_remap_warranty_not_back" text="恢复原厂软件不会恢复保修"/>
         <text name="rms_remap_free" text="免费"/>
         <text name="rms_remap_unavailable" text="无法刷写发动机"/>
-        <text name="rms_remap_refusal_dealer" text="经销商不提供发动机刷写。"/>
-        <text name="rms_remap_refusal_farm_mobile_hint" text="调校师可到农场服务，请使用农场维修车间或移动维修车间。"/>
+        <text name="rms_ws_overhaul_unavailable" text="无法大修"/>
+        <text name="rms_remap_refusal_top" text="已是同系列最强发动机：只有调校师可超出，请到农场或移动维修车间。"/>
+        <text name="rms_remap_refusal_restore_tuner" text="由调校师刷写：只能由调校师在农场或移动维修车间恢复。"/>
+        <text name="rms_remap_refusal_restore_dealer" text="由经销商刷写：只能在经销商处恢复。"/>
+        <text name="rms_remap_curves_maker" text="制造商公布的曲线"/>
+        <text name="rms_remap_curves_dealer_measured" text="经销商台架测试，前后对比"/>
+        <text name="rms_remap_note_stock_kept_dealer" text="经销商保留原厂软件"/>
         <text name="rms_remap_refusal_leased" text="租赁机器不能刷写。"/>
         <text name="rms_remap_refusal_not_eligible" text="此发动机没有可刷写的控制单元。"/>
         <text name="rms_remap_confirm_title" text="刷写发动机？"/>
@@ -499,7 +542,7 @@
         <text name="rms_report_no_breakdowns_worn" text="未检测到故障或磨损部件"/>
         <text name="rms_report_worn_part_risk" text="风险 ×%s"/>
         <text name="rms_report_worn_part_adjust" text="%s · 调整：%s"/>
-        <text name="rms_report_worn_part_replace" text="%s · 更换：彻底修理或大修"/>
+        <text name="rms_report_worn_part_replace" text="%s · 在维修车间预防性更换"/>
         <text name="rms_report_overall_assessment_title" text="总体状况评定"/>
         <text name="rms_report_overall_assessment_condition" text="状况水平"/>
         <text name="rms_report_recommendations_title" text="结论与建议"/>
@@ -592,7 +635,9 @@
         <text name="rms_air_blower_name" text="压缩空气吹尘器"/>
         <text name="rms_air_blower_no_vehicle" text="清洁范围内没有载具"/>
         <text name="rms_air_blower_function" text="用于清洁散热器和空气滤清器"/>
-        <text name="rms_air_blower_action" text="清洁散热器和空气滤清器"/>
+        <text name="rms_air_blower_action" text="清洁散热器和空气滤清器。"/>
+        <text name="rms_air_blower_action_radiator" text="清洁散热器。"/>
+        <text name="rms_air_blower_action_air_filter" text="清洁空气滤清器。"/>
         <text name="rms_air_blower_action_short" text="吹扫"/>
         <text name="rms_air_blower_already_clean" text="%s：散热器和空气滤清器已清洁"/>
         <text name="rms_air_blower_filter_requires_maintenance" text="%s：散热器已清洁。空气滤清器已达到吹扫清洁的极限。维修车间从%s保养起更换滤清器"/>
@@ -612,7 +657,8 @@
         <text name="rms_jumper_cables_disconnected" text="已从%s断开跨接电缆"/>
         <!-- Fluid containers -->
         <text name="rms_fluid_container_typedesc" text="油液容器"/>
-        <text name="rms_fluid_function_engine_oil" text="手动补充用发动机机油"/>
+        <text name="rms_fluid_function_engine_oil_low_ash" text="发动机机油，适用于所有机械，包括带 AdBlue 和颗粒捕集器的机械"/>
+        <text name="rms_fluid_function_engine_oil_standard" text="发动机机油，适用于没有 AdBlue 和颗粒捕集器的机械"/>
         <text name="rms_fluid_function_utto" text="手动补充用变速箱与液压油"/>
         <text name="rms_fluid_function_coolant" text="手动补充用冷却液"/>
         <text name="rms_fluid_pour_action" text="加注：%s"/>
@@ -647,6 +693,8 @@
         <text name="rms_fluid_incompatible_message_transmissionOil" text="此产品不适用于该回路。它会污染回路，并可能使变速箱磨损增加至3倍、变速箱温度升高。只有完全更换油液才能清除污染。是否继续？"/>
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="此产品不适用于该回路。它会污染回路，并可能使液压系统磨损增加至3倍、温度升高并使液压功能变慢。只有完全更换油液才能清除污染。是否继续？"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="此产品不适用于该回路。它会污染回路，并可能使变速箱和液压系统磨损增加至3倍、温度升高并使液压功能变慢。只有完全更换油液才能清除污染。是否继续？"/>
+        <text name="rms_fluid_unsuited_oil_title" text="不适用的发动机机油"/>
+        <text name="rms_fluid_unsuited_oil_message" text="这台发动机使用 AdBlue 或装有颗粒捕集器：其说明书要求使用为它们设计的机油。使用这种机油，换油间隔最多缩短一半。颗粒捕集器积满灰分的速度也会快 1.5 倍。是否继续？"/>
         <text name="rms_fluid_error_no_circuit" text="此载具不需要补充任何油液"/>
         <text name="rms_fluid_error_motor_running" text="输送油液前请停止发动机"/>
         <text name="rms_fluid_error_vehicle_moving" text="载具必须保持静止"/>
@@ -655,6 +703,7 @@
         <text name="rms_fluid_lease_covered" text="油液已包含在租赁中"/>
         <text name="rms_fluid_stock_required" text="取自维修车间区域内的油液容器"/>
         <text name="rms_fluid_stock_missing" text="维修车间区域内还缺 %s"/>
+        <text name="rms_fluid_stock_missing_low_ash" text="维修车间区域内还缺 %s 适合这台发动机的机油"/>
         <text name="rms_fluid_refill_work_order" text="补足油液"/>
         <text name="rms_fluid_refill_dealer_supply" text="报价中包含油液供应"/>
         <text name="rms_fluid_mode_top_up" text="补充"/>
@@ -821,8 +870,9 @@
         <text name="rms_inspection_hint_cab_suspension_damper_leak_stage4" text="一个驾驶室减震器有油严重外流，内部已无油。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage3" text="涡轮增压器周围可见油迹，连接处已经变暗。"/>
         <text name="rms_inspection_hint_turbocharger_malfunction_stage4" text="涡轮增压器周围可见大量油迹、变暗的连接处和炭灰痕迹。"/>
-        <text name="rms_inspection_hint_fluid_level_low" text="一种油液的液位已降到标记以下。"/>
-        <text name="rms_inspection_hint_fluid_levels_low" text="多种油液的液位已降到标记以下。"/>
+        <text name="rms_inspection_hint_fluid_low" text="低于MIN标记：%s。"/>
+        <text name="rms_inspection_hint_fluid_very_low" text="液位很低：%s。"/>
+        <text name="rms_inspection_hint_fluid_top_up" text="用容器补充，或在经销商处补充。"/>
         <text name="rms_inspection_hint_service_engine" text="发动机机油更换已逾期：老化的机油会加快发动机和喷射系统的磨损。每次保养都会连同滤清器一起更换。"/>
         <text name="rms_inspection_hint_service_transmission" text="变速箱油更换已逾期：老化的油会加快其润滑的所有部件的磨损。维修车间建议的保养会连同滤清器一起更换。"/>
         <text name="rms_inspection_hint_service_hydraulic" text="液压油更换已逾期：老化的油会加快液压系统的磨损。维修车间建议的保养会连同滤清器一起更换。"/>
@@ -908,7 +958,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="押金退还"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油液液位过低"/>
-        <text name="rms_tutorial_fluid_level_message" text="此机器的一种油液已经降到液位标记以下。&#10;&#10;发动机机油会随工作小时增加而消耗，磨损的发动机会消耗更多机油。冷却液、变速箱油和液压油只会因外流而减少。&#10;&#10;液位刚低于标记时，机器只需补充油液，仍可正常工作。液位真正过低时才会开始造成损坏：冷却液或变速箱油不足会使机器过热，发动机机油或液压油不足会大幅加快磨损。&#10;&#10;请在商店购买一桶兼容产品，带到机器旁并补足液位。适用于同一回路的产品作用相同；错误油液只会污染对应回路。在经销商处，所需油液会直接供应并收费。"/>
+        <text name="rms_tutorial_fluid_level_message" text="此机器的一种油液已经降到液位标记以下。&#10;&#10;发动机机油会随工作小时增加而消耗，磨损的发动机会消耗更多机油。冷却液、变速箱油和液压油只会因外流而减少。&#10;&#10;液位刚低于标记时，机器只需补充油液，仍可正常工作。液位越低，泵在坡道上越容易吸入空气：机油压力警告灯会闪烁；在变速箱或液压一侧，泵会发出异响，液压动作变慢。每这样运转一分钟，都会损伤曲轴轴瓦或泵：请停车并补足液位。冷却液、变速箱油或液压油不足的机器也会过热。&#10;&#10;请在商店购买一桶兼容产品，带到机器旁并补足液位。适用于同一回路的产品作用相同；错误油液只会污染对应回路。在经销商处，所需油液会直接供应并收费。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="欢迎使用Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="禁用提示"/>
         <text name="rms_tutorial_welcome_enable_button" text="启用提示"/>
@@ -936,7 +986,7 @@
         <text name="rms_tutorial_age_degradation_title" text="老化导致的退化"/>
         <text name="rms_tutorial_age_degradation_message" text="在RMS中，载具会随使用年限增加而逐步失去一部分原有性能。&#10;&#10;达到约三分之一使用期限后，老化磨损会略微降低功率和制动等重要特性。此影响随后会不断加剧，并在使用期限末期变得十分明显。&#10;&#10;可以在模组设置中禁用这种退化。"/>
         <text name="rms_tutorial_poor_consumables_title" text="低质量消耗品"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s在上次保养中使用了低质量消耗品。选择便宜等级时会出现这种情况。&#10;&#10;保养间隔已经缩短，部件磨损也略有增加。再次进行保养即可解决问题。目视检查或标准检查会报告缩短的间隔；只有全面检查才能确定相关消耗品。"/>
+        <text name="rms_tutorial_poor_consumables_message" text="%s在上次保养中装上了质量有问题的滤清器。选择便宜等级时会出现这种情况。&#10;&#10;这个滤清器会让杂质通过，在更换滤清器之前，它所保护的系统磨损更快。再次进行保养即可更换。只有全面检查才能确定这个滤清器。"/>
         <text name="rms_tutorial_poor_parts_title" text="低质量部件"/>
         <text name="rms_tutorial_poor_parts_message" text="%s在修理时使用了低质量部件。故障很可能会在不久后再次出现。&#10;&#10;可以等待故障复发，也可以进行全面检查，以可靠确定有质量问题的部件。"/>
         <text name="rms_tutorial_park_brake_title" text="停车制动"/>

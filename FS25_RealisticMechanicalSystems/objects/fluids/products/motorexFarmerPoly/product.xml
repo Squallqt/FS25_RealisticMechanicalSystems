@@ -7,7 +7,7 @@
         <functions><function>$l10n_rms_fluid_function_utto</function></functions>
         <image>objects/fluids/products/motorexFarmerPoly/store_motorexFarmerPoly.png</image>
         <price>50</price>
-        <category>pallets</category>
+        <category>rmsMaintenance</category>
         <brand>MOTOREX</brand>
         <showInStore>true</showInStore>
         <canBeSold>false</canBeSold>

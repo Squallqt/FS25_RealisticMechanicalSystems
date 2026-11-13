@@ -142,52 +142,20 @@ function RMS_Thermal.initializeEngineTemperature(vehicle)
         getTemperature(spec.engineTemperature, getTemperature(spec.rawEngineTemperature, RMS_Utils.getAmbientTemperature())))
 end
 
----Reads the shared native engine temperature
+---Reads the engine temperature RMS keeps, put back over another mod's
 function RMS_Thermal.getEngineTemperature(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil then return RMS_Utils.getAmbientTemperature() end
     local native = getManagedMotorTemperature(vehicle)
-    local fallback = getTemperature(spec.rawEngineTemperature, getTemperature(spec.engineTemperature, RMS_Utils.getAmbientTemperature()))
-    local temperature = native ~= nil and getTemperature(native.value, fallback) or fallback
-    if vehicle.isServer and native ~= nil and getTemperature(spec.rawEngineTemperature, nil) ~= nil
-        and temperature ~= spec.rawEngineTemperature then
-        spec._thermalEngineWorldTime = RMS_Thermal.getWorldTimeMS()
-        spec._thermalEngineAmbient = RMS_Utils.getAmbientTemperature()
-    end
+    local nativeValue = native ~= nil and getTemperature(native.value, nil) or nil
+    local temperature = getTemperature(spec.rawEngineTemperature, getTemperature(spec.engineTemperature,
+        nativeValue or RMS_Utils.getAmbientTemperature()))
     if native ~= nil and native.value ~= temperature then
         native.value = temperature
     end
     spec.rawEngineTemperature = temperature
     spec.engineTemperature = temperature
     return temperature
-end
-
----Keeps Dashboard Live's other events while RMS owns the engine temperature
-function RMS_Thermal.registerDashboardLiveCompatibility(vehicleType)
-    local listeners = vehicleType.eventListeners or {}
-    for _, eventName in ipairs({ "onLoadFinished", "onEnterVehicle", "onUpdateTick" }) do
-        for index, listener in ipairs(listeners[eventName] or {}) do
-            if listener.MOD_NAME == "FS25_DashboardLive" and not listener.rmsThermalAdapter then
-                local original = listener[eventName]
-                listeners[eventName][index] = setmetatable({ rmsThermalAdapter = true,
-                    [eventName] = function(vehicle, ...)
-                        if getManagedMotorTemperature(vehicle) == nil then
-                            return original(vehicle, ...)
-                        end
-                        local temperature = RMS_Thermal.getEngineTemperature(vehicle)
-                        if vehicle.spec_DashboardLive ~= nil then
-                            vehicle.spec_DashboardLive.motorTemperature = temperature
-                        end
-                        original(vehicle, ...)
-                        RMS_Thermal.setEngineTemperature(vehicle, temperature)
-                        if vehicle.spec_DashboardLive ~= nil then
-                            vehicle.spec_DashboardLive.motorTemperature = temperature
-                        end
-                    end
-                }, { __index = listener })
-            end
-        end
-    end
 end
 
 local function getRoleInterval(spec, trackerKey, ambientKey, dtOperating, isMotorStarted, ambient, worldTime)
@@ -315,7 +283,8 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     local speed = profile.speedCooling * inputs.speed * responseRate
     local forced = profile.forcedCooling * opening * exchange * fan * responseRate
     local coolingRate = passive + speed + forced
-    local nextTemperature = RMS_Thermal.integrateTemperatureExact(temperature, heat, coolingRate, elapsed, ambient0, ambient1)
+    local nextTemperature = math.min(RMS_Thermal.integrateTemperatureExact(temperature, heat, coolingRate, elapsed, ambient0, ambient1),
+        profile.boilingPoint or math.huge)
     return nextTemperature, {
         totalHeat = heat, totalCooling = coolingRate * (temperature - ambient0),
         radiatorCooling = forced * (temperature - ambient0), coolerCooling = forced * (temperature - ambient0),

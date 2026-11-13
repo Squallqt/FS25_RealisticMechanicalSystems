@@ -111,7 +111,7 @@ function RMS_WorkshopDialog:refresh()
     local statusText = g_i18n:getText(isOpen and "rms_ws_status_open" or "rms_ws_status_closed")
     if isUnderService then
         statusText = string.format(g_i18n:getText("rms_ws_status_in_progress_format"), RMS_Utils.formatServiceState(spec.currentState),
-            RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(nil, nil, nil, nil)))
+            RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(nil, nil, nil)))
     end
     if not isRecord then
         statusText = statusText .. " · " .. g_i18n:getText(self.workshopType)
@@ -154,9 +154,9 @@ end
 function RMS_WorkshopDialog:updateButtons()
     local actionText, isActionDisabled = self.pages[self.currentTab]:getAction()
     local isRecord = self.workshopType == nil
-    -- one activate key: the dealer tops up, the tuner never comes there
+    -- one activate key: the dealer tops up, the tuner remaps elsewhere
     local offers = { REFILL = not isRecord and RMS_FluidWorkshop.getIsTopUpOffered(self.workshopType),
-        REMAP = not isRecord and RMS_EngineRemap.getIsTunerAt(self.workshopType) }
+        REMAP = not isRecord and not RMS_FluidWorkshop.getIsTopUpOffered(self.workshopType) }
     self.cancelServiceButton:setVisible(self.state.isUnderService)
     for index, button in ipairs(self.shortcuts) do
         button:setVisible(actionText == nil and not isRecord and not self.state.isUnderService

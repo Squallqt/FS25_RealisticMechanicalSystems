@@ -13,14 +13,13 @@ end
 
 
 ---Create new instance of event
-function RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+function RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo)
     local self = RMS_ServiceRequestEvent.emptyNew()
     self.vehicle = vehicle
     self.serviceType = serviceType
     self.workshopType = workshopType
     self.optionOne = optionOne
     self.optionTwo = optionTwo
-    self.optionThree = optionThree
     return self
 end
 
@@ -32,7 +31,6 @@ function RMS_ServiceRequestEvent:writeStream(streamId, connection)
     streamWriteString(streamId, self.workshopType or "")
     streamWriteString(streamId, self.optionOne or "")
     streamWriteString(streamId, self.optionTwo or "")
-    streamWriteBool(streamId, self.optionThree or false)
 end
 
 
@@ -43,7 +41,6 @@ function RMS_ServiceRequestEvent:readStream(streamId, connection)
     self.workshopType = streamReadString(streamId)
     self.optionOne = streamReadString(streamId)
     self.optionTwo = streamReadString(streamId)
-    self.optionThree = streamReadBool(streamId)
 
     -- Empty strings represent absent options.
     if self.optionOne == "" then self.optionOne = nil end
@@ -93,7 +90,6 @@ function RMS_ServiceRequestEvent:run(connection)
                 self.workshopType,
                 self.optionOne,
                 self.optionTwo,
-                self.optionThree,
                 farm.farmId
             )
             if started then
@@ -107,8 +103,8 @@ end
 
 
 ---Send the service request from a client to the server
-function RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree)
+function RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if g_client ~= nil then
-        g_client:getServerConnection():sendEvent(RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo, optionThree))
+        g_client:getServerConnection():sendEvent(RMS_ServiceRequestEvent.new(vehicle, serviceType, workshopType, optionOne, optionTwo))
     end
 end
