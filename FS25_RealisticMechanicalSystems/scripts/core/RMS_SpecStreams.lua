@@ -55,13 +55,11 @@ end
 local function writePtoWearState(spec, streamId)
     streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoEngagementSequence, 0, 0)))
     streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec.ptoShockSequence, 0, 0)))
-    streamWriteBool(streamId, spec.ptoRaisedTooLong == true)
 end
 
 local function readPtoWearState(spec, streamId, initializeTutorial)
     spec.ptoEngagementSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
     spec.ptoShockSequence = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
-    spec.ptoRaisedTooLong = streamReadBool(streamId)
     if initializeTutorial then
         spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
         spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence

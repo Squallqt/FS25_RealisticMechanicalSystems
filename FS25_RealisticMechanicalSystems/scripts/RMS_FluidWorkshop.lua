@@ -281,16 +281,22 @@ function RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
             local object = g_currentMission.nodeToObject[shapeId]
             object = getRootVehicle(object)
             if object ~= nil and not seen[object] and object[RMS_FluidContainer.SPEC_TABLE_NAME] ~= nil
-                and object:getOwnerFarmId() == farmId and object:getRMSFluidLiters() > RMS_Fluids.EPSILON then
+                and object:getOwnerFarmId() == farmId then
                 seen[object] = true
-                table.insert(containers, {
-                    object = object,
-                    productKey = object:getRMSFluidProductKey(),
-                    available = object:getRMSFluidLiters(),
-                    percentage = object:getRMSFluidPercentage(),
-                    distance = getDistance(object, vehicle),
-                    networkId = NetworkUtil.getObjectId(object) or 0
-                })
+                -- each drum of a pallet is a source of its own
+                for index = 1, object:getRMSFluidSlotCount() do
+                    if object:getRMSFluidLiters(index) > RMS_Fluids.EPSILON then
+                        table.insert(containers, {
+                            object = object,
+                            index = index,
+                            productKey = object:getRMSFluidProductKey(),
+                            available = object:getRMSFluidLiters(index),
+                            percentage = object:getRMSFluidPercentage(index),
+                            distance = getDistance(object, vehicle),
+                            networkId = NetworkUtil.getObjectId(object) or 0
+                        })
+                    end
+                end
             end
         end
     end
@@ -321,7 +327,10 @@ function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirem
             if math.abs(a.distance - b.distance) > RMS_Fluids.EPSILON then
                 return a.distance < b.distance
             end
-            return a.networkId < b.networkId
+            if a.networkId ~= b.networkId then
+                return a.networkId < b.networkId
+            end
+            return a.index < b.index
         end)
 
         local remaining = math.max(tonumber(requirement.liters) or 0, 0)
@@ -332,6 +341,7 @@ function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirem
             local amount = math.min(container.available, remaining)
             table.insert(allocations, {
                 container = container.object,
+                index = container.index,
                 liters = amount
             })
             container.available = container.available - amount
@@ -819,9 +829,10 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
     local consumed = {}
     local consumptionSucceeded = true
     for _, allocation in ipairs(allocations) do
-        local removed = allocation.container:removeRMSFluidLiters(allocation.liters)
+        local removed = allocation.container:removeRMSFluidLiters(allocation.liters, allocation.index)
         table.insert(consumed, {
             container = allocation.container,
+            index = allocation.index,
             liters = removed
         })
         if math.abs(removed - allocation.liters) > RMS_Fluids.EPSILON then
@@ -832,7 +843,7 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
 
     if not consumptionSucceeded then
         for _, entry in ipairs(consumed) do
-            entry.container:restoreRMSFluidLiters(entry.liters)
+            entry.container:restoreRMSFluidLiters(entry.liters, entry.index)
         end
         for container in pairs(touched) do
             container:endRMSFluidTransaction(false)

@@ -10,7 +10,8 @@ function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
-function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result)
+-- @param integer? index place poured from (the drum of a pallet), the first by default
+function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result, index)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
     self.container = container
     self.target = target
@@ -18,6 +19,7 @@ function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompati
     self.incompatibleConfirmed = incompatibleConfirmed == true
     self.cancel = cancel == true
     self.result = result or ""
+    self.index = index or 1
     return self
 end
 
@@ -28,6 +30,7 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteBool(streamId, self.incompatibleConfirmed)
     streamWriteBool(streamId, self.cancel)
     streamWriteString(streamId, self.result)
+    streamWriteUInt8(streamId, self.index)
 end
 
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
@@ -37,6 +40,7 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.incompatibleConfirmed = streamReadBool(streamId)
     self.cancel = streamReadBool(streamId)
     self.result = streamReadString(streamId)
+    self.index = streamReadUInt8(streamId)
     self:run(connection)
 end
 
@@ -48,7 +52,9 @@ function RMS_FluidTransferRequestEvent:run(connection)
         end
         return
     end
-    if self.container == nil then
+    local containerSpec = self.container ~= nil and self.container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
+    local slot = containerSpec ~= nil and containerSpec.slots ~= nil and containerSpec.slots[self.index] or nil
+    if slot == nil then
         return
     end
 
@@ -58,10 +64,9 @@ function RMS_FluidTransferRequestEvent:run(connection)
     end
 
     if self.cancel then
-        local containerSpec = self.container[RMS_FluidContainer.SPEC_TABLE_NAME]
-        local transfer = containerSpec ~= nil and containerSpec.activeTransfer or nil
+        local transfer = slot.activeTransfer
         if transfer ~= nil and transfer.requesterUserId == requester.userId then
-            RMS_FluidTransfer.cancel(self.container)
+            RMS_FluidTransfer.cancel(self.container, self.index)
         end
         return
     end
@@ -74,21 +79,24 @@ function RMS_FluidTransferRequestEvent:run(connection)
         self.target,
         self.circuit,
         requester,
-        self.incompatibleConfirmed
+        self.incompatibleConfirmed,
+        self.index
     )
     if result ~= RMS_FluidTransfer.RESULT.OK then
-        connection:sendEvent(RMS_FluidTransferRequestEvent.new(self.container, nil, self.circuit, false, false, result))
+        connection:sendEvent(RMS_FluidTransferRequestEvent.new(self.container, nil, self.circuit, false, false, result, self.index))
     end
 end
 
-function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel)
+function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel, index)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(
             container,
             target,
             circuit,
             incompatibleConfirmed,
-            cancel
+            cancel,
+            nil,
+            index
         ))
     end
 end

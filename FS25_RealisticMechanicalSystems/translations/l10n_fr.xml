@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Batterie en surchauffe"/>
         <text name="rms_report_wear_lubrication" text="Graissage en retard"/>
         <text name="rms_report_wear_pto_overload" text="PDF en surcharge"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Angle du cardan"/>
         <text name="rms_report_wear_harvest_overload" text="Récolte en surcharge"/>
         <text name="rms_report_wear_harvest_flow" text="Fort débit de grain"/>
         <text name="rms_report_wear_harvest_straw" text="Broyeur surchargé"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Prendre pour verser"/>
         <text name="rms_fluid_hand_carry" text="Porter le bidon"/>
         <text name="rms_drum_pump_name" text="Pompe de fût à batterie"/>
-        <text name="rms_drum_pump_function" text="Se pose sur un fût de 200 L pour remplir les machines au pistolet"/>
+        <text name="rms_drum_pump_function" text="Se pose sur un fût pour remplir les machines au pistolet"/>
         <text name="rms_drum_pump_mount" text="Poser sur le fût"/>
         <text name="rms_drum_pump_take" text="Reprendre la pompe"/>
         <text name="rms_drum_pump_nozzle_take" text="Prendre le pistolet"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Sur un moteur diesel froid, une impulsion sur la commande de démarrage met le contact et lance automatiquement le cycle de préchauffage. Les voyants du tableau de bord s'allument brièvement, puis le voyant de préchauffage reste allumé jusqu'à ce que le moteur soit prêt. Ne répétez pas la commande : le démarreur s'engage automatiquement lorsque le voyant s'éteint."/>
         <text name="rms_tutorial_pto_engagement_title" text="Embrayage de la PDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Embrayez la PDF au ralenti, puis montez le régime : l'embrayer à haut régime donne un à-coup à toute la transmission, d'autant plus avec un outil lourd. Chaque embrayage use aussi son embrayage."/>
-        <text name="rms_tutorial_pto_raised_title" text="PDF et outil relevé"/>
-        <text name="rms_tutorial_pto_raised_message" text="Faire tourner la PDF outil relevé fait travailler les cardans sous un angle prononcé et les use vite. Coupez la PDF avant de relever l'outil pour le transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti et immobilisation"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usure est bien plus faible lorsque la machine tourne sans travailler. Moteur coupé, elle devient minime. Sous abri, elle disparaît complètement."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongé"/>

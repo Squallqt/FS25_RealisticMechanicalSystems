@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="canister20LVisual" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+    <Asset>
+        <Export program="GIANTS Editor 64bit" version="10.0.2"/>
+    </Asset>
+
+    <Files>
+        <File fileId="2" filename="canister20L_normal.dds"/>
+        <File fileId="3" filename="canister20L_specular.dds"/>
+        <File fileId="4" filename="jerrican_body_motorex.dds"/>
+        <File fileId="6" filename="jerricanLabel.i3d"/>
+    </Files>
+
+    <Materials>
+        <Material name="body60" materialId="1">
+            <Texture fileId="4"/>
+            <Normalmap fileId="2"/>
+            <Glossmap fileId="3"/>
+        </Material>
+    </Materials>
+
+    <Shapes externalShapesFile="canister20LVisual.i3d.shapes"/>
+
+    <Scene>
+        <TransformGroup name="canister20LVisual" nodeId="1">
+            <Shape name="body60" shapeId="3" clipDistance="50" nodeId="2" castsShadows="true" receiveShadows="true" materialIds="1"/>
+            <ReferenceNode name="label" referenceId="6" nodeId="3"/>
+        </TransformGroup>
+    </Scene>
+</i3D>

@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Supraîncălzirea bateriei"/>
         <text name="rms_report_wear_lubrication" text="Lubrifiere întârziată"/>
         <text name="rms_report_wear_pto_overload" text="Suprasolicitarea prizei de putere"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Unghiul cardanului"/>
         <text name="rms_report_wear_harvest_overload" text="Suprasarcină la recoltare"/>
         <text name="rms_report_wear_harvest_flow" text="Flux mare de boabe"/>
         <text name="rms_report_wear_harvest_straw" text="Tocător suprasolicitat"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Ia pentru a turna"/>
         <text name="rms_fluid_hand_carry" text="Cară canistra"/>
         <text name="rms_drum_pump_name" text="Pompă de butoi cu acumulator"/>
-        <text name="rms_drum_pump_function" text="Se montează pe un butoi de 200 L pentru a umple mașinile cu pistolul"/>
+        <text name="rms_drum_pump_function" text="Se montează pe un butoi pentru a umple mașinile cu pistolul"/>
         <text name="rms_drum_pump_mount" text="Montează pe butoi"/>
         <text name="rms_drum_pump_take" text="Ia pompa înapoi"/>
         <text name="rms_drum_pump_nozzle_take" text="Ia pistolul"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="La un motor diesel rece, o apăsare a comenzii de pornire cuplează contactul și pornește automat ciclul de preîncălzire. Martorii de bord se aprind pentru scurt timp, apoi martorul de preîncălzire rămâne aprins până când motorul este pregătit. Nu repeta comanda: demarorul se cuplează automat când martorul se stinge."/>
         <text name="rms_tutorial_pto_engagement_title" text="Cuplarea prizei de putere"/>
         <text name="rms_tutorial_pto_engagement_message" text="Cuplează priza de putere la ralanti, apoi crește turația: cuplarea la turație mare dă un șoc întregii transmisii, cu atât mai mult cu o mașină grea. Fiecare cuplare îi uzează și ambreiajul."/>
-        <text name="rms_tutorial_pto_raised_title" text="Priza de putere și utilajul ridicat"/>
-        <text name="rms_tutorial_pto_raised_message" text="Rotirea prizei de putere cu utilajul ridicat face cardanele să lucreze sub un unghi mare și le uzează repede. Decuplează priza de putere înainte să ridici utilajul pentru transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralanti și imobilizare"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Uzura este mult mai redusă când utilajul funcționează fără să lucreze. Cu motorul oprit, aceasta devine minimă. Sub adăpost, dispare complet."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralanti prelungit"/>

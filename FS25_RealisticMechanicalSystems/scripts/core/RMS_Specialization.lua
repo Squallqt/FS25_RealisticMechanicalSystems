@@ -674,7 +674,7 @@ local function getSyncGroups()
             watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
             watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
             watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("remapByDealer"), watch("conditionLevel", 0.001),
-            watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("ptoRaisedTooLong"),
+            watch("ptoEngagementSequence"), watch("ptoShockSequence"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
             watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end) } },
@@ -1015,6 +1015,7 @@ function RealisticMechanicalSystems.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateConsumers", RMS_Breakdowns.updateConsumersOverwrite)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getSellPrice", RealisticMechanicalSystems.getSellPrice)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateMotorTemperature", RealisticMechanicalSystems.updateMotorTemperature)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "onPlayerEnterVehicle", RealisticMechanicalSystems.onPlayerEnterVehicle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "addToPhysics", RMS_Drivetrain.addToPhysics)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "brake", RMS_Drivetrain.brake)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "addCutterArea", RealisticMechanicalSystems.addCutterArea)
@@ -1860,7 +1861,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     self:updateFieldInspectionSound()
     if spec.isExcludedVehicle then return end
 
-    RMS_Thermal.getEngineTemperature(self)
+    RMS_Thermal.shareEngineTemperature(self)
     RMS_Bodywork.syncPreview(self)
 
     self:updateVehicleStateSnapshot(dt)
@@ -2109,6 +2110,18 @@ function RealisticMechanicalSystems.updateMotorTemperature(self, superFunc, dt)
     end
     RMS_Thermal.getEngineTemperature(self)
     RMS_Thermal.syncEngineProtection(self)
+end
+
+---Keeps the engine temperature through the entry of a player
+function RealisticMechanicalSystems.onPlayerEnterVehicle(self, superFunc, ...)
+    local spec = self.spec_RealisticMechanicalSystems
+    if spec == nil or spec.isExcludedVehicle or hasCVTAddon(self) then
+        return superFunc(self, ...)
+    end
+
+    local temperature = RMS_Thermal.getEngineTemperature(self)
+    superFunc(self, ...)
+    RMS_Thermal.setEngineTemperature(self, temperature)
 end
 
 ---Returns the level of the lowest service clock

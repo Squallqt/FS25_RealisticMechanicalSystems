@@ -28,12 +28,13 @@
         <input allowed="false"/>
     </base>
     <rmsFluidContainer productKey="MOTOREX_FARMER_POLY_604"
-        mediumBodyDiffuse="objects/fluids/products/motorexCoolantM30/medium_cap_diffuse.png"
-        mediumCapDiffuse="objects/fluids/products/motorexFarmerPoly/medium_cap_diffuse.png"
+        mediumBodyDiffuse="objects/fluids/shared/can_body_00b4a2.png"
+        mediumCapDiffuse="objects/fluids/shared/can_cap_ecece6.png"
         mediumLabelDiffuse="objects/fluids/products/motorexFarmerPoly/medium_label_diffuse.png"
-        largeBodyDiffuse="objects/fluids/products/motorexFarmerPoly/large_body_diffuse.png"
+        largeBodyDiffuse="objects/fluids/shared/jerrican_body_motorex.png"
         largeLabelDiffuse="objects/fluids/products/motorexFarmerPoly/large_label_diffuse.png"
-        drumBodyDiffuse="objects/fluids/products/motorexCoolantM30/drum_body_diffuse.png"
+        drumBodyDiffuse="objects/fluids/shared/drum_body_motorex.png"
+        drumPrints="objects/fluids/shared/drumPrintsMotorex.i3d"
         drumLabelDiffuse="objects/fluids/products/motorexFarmerPoly/drum_label_diffuse.png"/>
     <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
             <fillUnitConfiguration name="5 L" price="0" isDefault="true">
@@ -46,9 +47,9 @@
                 <objectChange node="mediumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="0.25" centerOfMassActive="0 0.1166 0"/>
             </fillUnitConfiguration>
-            <fillUnitConfiguration name="25 L" price="116">
+            <fillUnitConfiguration name="20 L" price="83">
                 <fillUnits>
-                    <fillUnit fillTypes="RMS_MOTOREX_FARMER_POLY_604" capacity="25" startFillType="RMS_MOTOREX_FARMER_POLY_604" startFillLevel="25"
+                    <fillUnit fillTypes="RMS_MOTOREX_FARMER_POLY_604" capacity="20" startFillType="RMS_MOTOREX_FARMER_POLY_604" startFillLevel="20"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
                 </fillUnits>
@@ -70,6 +71,26 @@
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="fluidContainer_component1" massActive="43"/>
             </fillUnitConfiguration>
+            <fillUnitConfiguration name="2 × 200 L" price="1754">
+                <fillUnits>
+                    <fillUnit fillTypes="RMS_MOTOREX_FARMER_POLY_604" capacity="200" startFillType="RMS_MOTOREX_FARMER_POLY_604" startFillLevel="200"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                    <fillUnit fillTypes="RMS_MOTOREX_FARMER_POLY_604" capacity="200" startFillType="RMS_MOTOREX_FARMER_POLY_604" startFillLevel="200"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
+                <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollisionA" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollisionB" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumVisualLinkA" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumVisualLinkB" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <!-- euro pallet 25 kg, two drums 18 kg -->
+                <objectChange node="fluidContainer_component1" massActive="61"/>
+            </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>
     <pallet/>
     <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="1.054" jointTransY="0.106" jointLimitToRotY="true"/>
@@ -84,5 +105,7 @@
         <i3dMapping id="mediumVisualLink" node="0>7"/><i3dMapping id="largeVisualLink" node="0>8"/>
         <i3dMapping id="drumVisualLink" node="0>9"/><i3dMapping id="drumPalletVisualLink" node="0>10"/>
         <i3dMapping id="pickupNode" node="0>12"/>
+        <i3dMapping id="drumCollisionA" node="0>13"/><i3dMapping id="drumCollisionB" node="0>14"/>
+        <i3dMapping id="drumVisualLinkA" node="0>15"/><i3dMapping id="drumVisualLinkB" node="0>16"/>
     </i3dMappings>
 </vehicle>

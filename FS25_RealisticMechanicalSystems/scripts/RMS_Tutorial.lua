@@ -207,8 +207,6 @@ RMS_Tutorial.TIPS = {
         return m.enabled.fuel and m.isStarted and not m.isElectric and m.spec.fuelState.idleTimer >= 120 end },
     { key = "PTO_ENGAGEMENT", text = "rms_tutorial_pto_engagement", isDue = function(m)
         return m.enabled.pto and m.hasNewPtoShock end },
-    { key = "PTO_RAISED", text = "rms_tutorial_pto_raised", isDue = function(m)
-        return m.enabled.pto and m.spec.ptoRaisedTooLong == true end },
     { key = "COLD_OIL", text = "rms_tutorial_cold_oil", isDue = hasColdOil },
     { key = "SERVICE_DUE_SOON", text = "rms_tutorial_service_due_soon", getArguments = getName, isDue = function(m)
         local used = getServiceIntervalUsed(m)

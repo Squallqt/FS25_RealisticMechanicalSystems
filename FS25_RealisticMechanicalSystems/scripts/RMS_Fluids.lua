@@ -133,97 +133,97 @@ RMS_Fluids.PRODUCTS = {
         brand = "MOTOREX", name = "Farmer Pro SAE 10W/40",
         assetDirectory = "objects/fluids/products/motorexFarmerPro",
         densityKgPerLiter = 0.868,
-        storePrices = { [5] = 47, [25] = 154, [200] = 1076 },
+        storePrices = { [5] = 47, [20] = 123, [200] = 1076 },
         isStoreItem = true, isLowAsh = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 200 }
     },
     MOTOREX_FARMER_UNI_15W40 = {
         brand = "MOTOREX", name = "Farmer UNI SAE 15W/40",
         assetDirectory = "objects/fluids/products/motorexFarmerUni",
         densityKgPerLiter = 0.880,
-        storePrices = { [5] = 37, [25] = 120, [200] = 836 },
+        storePrices = { [5] = 37, [20] = 96, [200] = 836 },
         isStoreItem = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 200 }
     },
     MOTOREX_FARMER_POLY_604 = {
         brand = "MOTOREX", name = "Farmer Poly 604",
         assetDirectory = "objects/fluids/products/motorexFarmerPoly",
         densityKgPerLiter = 0.868,
-        storePrices = { [5] = 50, [25] = 166, [200] = 902 },
+        storePrices = { [5] = 50, [20] = 133, [200] = 902 },
         isStoreItem = true,
-        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 20, 200 }
     },
     MOTOREX_COOLANT_M30_RTU = {
         brand = "MOTOREX", name = "Coolant M3.0 Ready To Use",
         assetDirectory = "objects/fluids/products/motorexCoolantM30",
         densityKgPerLiter = 1.070,
-        storePrices = { [5] = 29, [25] = 114, [200] = 794 },
+        storePrices = { [5] = 29, [20] = 91, [200] = 794 },
         isStoreItem = true,
-        compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { coolant = true }, capacities = { 5, 20, 200 }
     },
     MOTUL_AGRI_TEKNO_15W40 = {
         brand = "MOTUL", name = "AGRI TEKNO 15W-40",
         assetDirectory = "objects/fluids/products/motulAgriTekno",
         densityKgPerLiter = 0.869,
-        storePrices = { [5] = 29, [25] = 114, [200] = 795 },
+        storePrices = { [5] = 29, [20] = 91, [208] = 827 },
         isStoreItem = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 208 }
     },
     MOTUL_AGRI_TEKNO_LA_10W40 = {
         brand = "MOTUL", name = "AGRI TEKNO LA 10W-40",
         assetDirectory = "objects/fluids/products/motulAgriTeknoLa",
         densityKgPerLiter = 0.862,
-        storePrices = { [5] = 43, [25] = 168, [200] = 1170 },
+        storePrices = { [5] = 43, [20] = 134, [208] = 1217 },
         isStoreItem = true, isLowAsh = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 208 }
     },
     MOTUL_TRH_97 = {
         brand = "MOTUL", name = "TRH 97",
         assetDirectory = "objects/fluids/products/motulTrh97",
         densityKgPerLiter = 0.886,
-        storePrices = { [5] = 31, [25] = 142, [200] = 854 },
+        storePrices = { [5] = 31, [20] = 114, [208] = 888 },
         isStoreItem = true,
-        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 20, 208 }
     },
     MOTUL_AUTO_COOL_EXPERT_37C = {
         brand = "MOTUL", name = "AUTO COOL EXPERT -37°C",
         assetDirectory = "objects/fluids/products/motulAutoCoolExpert",
         densityKgPerLiter = 1.076,
-        storePrices = { [5] = 16, [25] = 93, [200] = 758 },
+        storePrices = { [5] = 16, [20] = 74, [208] = 788 },
         isStoreItem = true,
-        compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { coolant = true }, capacities = { 5, 20, 208 }
     },
     FUCHS_AGRIFARM_MOT_XLA_10W40 = {
         brand = "FUCHS", name = "Agrifarm MOT X-LA 10W40",
         assetDirectory = "objects/fluids/products/fuchsMotXla",
         densityKgPerLiter = 0.859,
-        storePrices = { [5] = 35, [25] = 136, [200] = 949 },
+        storePrices = { [5] = 35, [20] = 109, [205] = 973 },
         isStoreItem = true, isLowAsh = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 205 }
     },
     FUCHS_AGRIFARM_MOT_15W40 = {
         brand = "FUCHS", name = "Agrifarm MOT 15W-40",
         assetDirectory = "objects/fluids/products/fuchsMot15w40",
         densityKgPerLiter = 0.886,
-        storePrices = { [5] = 25, [25] = 119, [200] = 814 },
+        storePrices = { [5] = 25, [20] = 95, [205] = 834 },
         isStoreItem = true,
-        compatibleCircuits = { engineOil = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { engineOil = true }, capacities = { 5, 20, 205 }
     },
     FUCHS_AGRIFARM_UTTO_MP = {
         brand = "FUCHS", name = "Agrifarm UTTO MP",
         assetDirectory = "objects/fluids/products/fuchsUttoMp",
         densityKgPerLiter = 0.880,
-        storePrices = { [5] = 30, [25] = 119, [200] = 861 },
+        storePrices = { [5] = 30, [20] = 95, [205] = 883 },
         isStoreItem = true,
-        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { transmissionOil = true, hydraulicFluid = true }, capacities = { 5, 20, 205 }
     },
     FUCHS_FRICOFIN_LD50 = {
         brand = "FUCHS", name = "Fricofin LD50",
         assetDirectory = "objects/fluids/products/fuchsFricofinLd50",
         densityKgPerLiter = 1.070,
-        storePrices = { [5] = 22, [25] = 86, [200] = 586 },
+        storePrices = { [5] = 22, [20] = 69, [205] = 601 },
         isStoreItem = true,
-        compatibleCircuits = { coolant = true }, capacities = { 5, 25, 200 }
+        compatibleCircuits = { coolant = true }, capacities = { 5, 20, 205 }
     }
 }
 

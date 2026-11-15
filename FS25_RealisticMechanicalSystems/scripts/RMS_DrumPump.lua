@@ -29,16 +29,24 @@ local function getIsInReach(player, container)
     return MathUtil.vector3Length(x - cx, y - cy, z - cz) <= RMS_FluidTransfer.MAX_DISTANCE
 end
 
----Sets the pump a player carries on the bung of a drum, on the server
-function RMS_DrumPump.mount(player, handTool, container)
+---The drum place of a container, nil when it has none at that index
+local function getDrum(container, index)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump or handTool[specName] == nil
+    local slot = containerSpec ~= nil and containerSpec.slots ~= nil and containerSpec.slots[index or 1] or nil
+    return slot ~= nil and slot.pump ~= nil and slot or nil
+end
+
+---Sets the pump a player carries on the bung of a drum, on the server
+-- @param integer? index drum of the pallet, the first by default
+function RMS_DrumPump.mount(player, handTool, container, index)
+    local drum = getDrum(container, index)
+    if drum == nil or drum.hasPump or handTool[specName] == nil
         or handTool:getCarryingPlayer() ~= player or not g_currentMission.accessHandler:canPlayerAccess(container, player)
         or not getIsInReach(player, container) then
         return
     end
 
-    container:setRMSFluidPump(true)
+    container:setRMSFluidPump(true, index)
     if next(RMS_DrumPump.mounted) == nil then
         g_currentMission:addUpdateable(RMS_DrumPump)
     end
@@ -59,27 +67,30 @@ function RMS_DrumPump.update()
 end
 
 ---Takes the pump off a drum into the hand of a player, on the server
-function RMS_DrumPump.unmount(player, container)
-    local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if containerSpec == nil or not containerSpec.hasPump or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
+function RMS_DrumPump.unmount(player, container, index)
+    local drum = getDrum(container, index)
+    if drum == nil or not drum.hasPump or drum.carrierTool ~= nil or drum.isBeingTaken
         or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool()
         or not getIsInReach(player, container) then
         return
     end
 
     -- Guard against repeated requests during asynchronous loading.
-    containerSpec.isBeingTaken = true
+    drum.isBeingTaken = true
     local loadingData = HandToolLoadingData.new()
     loadingData:setFilename(modDirectory .. RMS_DrumPump.FILENAME)
     loadingData:setOwnerFarmId(player.farmId)
     loadingData:setIsRegistered(false)
-    loadingData:load(RMS_DrumPump.onUnmounted, RMS_DrumPump, { player = player, container = container })
+    loadingData:load(RMS_DrumPump.onUnmounted, RMS_DrumPump, { player = player, container = container, index = index })
 end
 
 ---Puts the loaded pump in the hand of the player and takes it off the drum
 function RMS_DrumPump.onUnmounted(_, handTool, loadingState, arguments)
-    local player, container = arguments.player, arguments.container
-    container[RMS_FluidContainer.SPEC_TABLE_NAME].isBeingTaken = nil
+    local player, container, index = arguments.player, arguments.container, arguments.index
+    local drum = getDrum(container, index)
+    if drum ~= nil then
+        drum.isBeingTaken = nil
+    end
     if loadingState ~= HandToolLoadingState.OK then
         return
     end
@@ -92,7 +103,7 @@ function RMS_DrumPump.onUnmounted(_, handTool, loadingState, arguments)
     handTool:setHolder(player, true)
     player:setCurrentHandTool(handTool, true)
     handTool:register()
-    container:setRMSFluidPump(false)
+    container:setRMSFluidPump(false, index)
 end
 
 function RMS_DrumPump:onLoad(xmlFile, baseDirectory)
@@ -112,13 +123,16 @@ local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local node = player.targeter:getClosestTargetedNodeFromType(RMS_DrumPump)
     local container = node ~= nil and g_currentMission:getNodeObject(node) or nil
-    local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    if containerSpec == nil or containerSpec.pump == nil or containerSpec.hasPump
-        or not g_currentMission.accessHandler:canPlayerAccess(container) then
+    -- on a pallet of two, the drum nearest the point aimed at
+    local hit = player.targeter.closestTargetsByKey[RMS_DrumPump]
+    local index = container ~= nil and hit ~= nil and container:getRMSFluidSlotAt(hit.x, hit.y, hit.z) or 1
+    local drum = container ~= nil and getDrum(container, index) or nil
+    if drum == nil or drum.hasPump or not g_currentMission.accessHandler:canPlayerAccess(container) then
         container = nil
     end
 
     spec.target = container
+    spec.targetIndex = index
     g_inputBinding:setActionEventActive(spec.mountEventId, container ~= nil)
 end
 
@@ -159,7 +173,7 @@ end
 function RMS_DrumPump:onMountAction()
     local container = self[specName].target
     if container ~= nil and not container.isDeleted then
-        RMS_DrumPumpEvent.send(container, self)
+        RMS_DrumPumpEvent.send(container, self, self[specName].targetIndex)
     end
 end
 

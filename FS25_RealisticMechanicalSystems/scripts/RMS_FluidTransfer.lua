@@ -5,7 +5,7 @@ RMS_FluidTransfer = {}
 
 RMS_FluidTransfer.MAX_DISTANCE = 4
 RMS_FluidTransfer.STOPPED_SPEED = 0.5
-RMS_FluidTransfer.LITERS_PER_SECOND = { [5] = 0.2, [25] = 0.3, [200] = 1 }
+RMS_FluidTransfer.LITERS_PER_SECOND = { medium = 0.2, large = 0.3, drum = 1 }
 RMS_FluidTransfer.HOSE_LENGTH = 4
 
 RMS_FluidTransfer.RESULT = {
@@ -59,7 +59,7 @@ local function getIsOwnedByRequester(container, target, requester)
         and g_currentMission.accessHandler:canFarmAccess(requester.farmId, target)
 end
 
-local function getRuntimeValidation(container, target, circuit, requester)
+local function getRuntimeValidation(container, target, circuit, requester, index)
     if g_server == nil or container == nil or target == nil or requester == nil
         or container.isDeleted == true or target.isDeleted == true
         or container[RMS_FluidContainer.SPEC_TABLE_NAME] == nil
@@ -72,7 +72,7 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.NO_ACCESS
     end
 
-    if container:getRMSFluidCarrier() ~= requester.player then
+    if container:getRMSFluidCarrier(index) ~= requester.player then
         return RMS_FluidTransfer.RESULT.INVALID
     end
 
@@ -99,11 +99,28 @@ local function getRuntimeValidation(container, target, circuit, requester)
         return RMS_FluidTransfer.RESULT.CIRCUIT_FULL
     end
 
-    if container:getRMSFluidLiters() <= RMS_Fluids.EPSILON then
+    if container:getRMSFluidLiters(index) <= RMS_Fluids.EPSILON then
         return RMS_FluidTransfer.RESULT.CONTAINER_EMPTY
     end
 
     return RMS_FluidTransfer.RESULT.OK
+end
+
+---Returns the place a transfer pours from: the can or one drum
+local function getSlot(container, index)
+    local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
+    return containerSpec ~= nil and containerSpec.slots ~= nil and containerSpec.slots[index or 1] or nil
+end
+
+---Tells whether any place of the container is pouring, on the server
+function RMS_FluidTransfer.getHasActive(container)
+    local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
+    for _, slot in ipairs(containerSpec ~= nil and containerSpec.slots or {}) do
+        if slot.activeTransfer ~= nil then
+            return true
+        end
+    end
+    return false
 end
 
 local REFUSAL_TEXT_KEYS = {
@@ -126,14 +143,16 @@ function RMS_FluidTransfer.getRefusalTextKey(container, result)
 end
 
 ---Starts one locked manual transfer after all authoritative checks
-function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incompatibleConfirmed)
-    local result = getRuntimeValidation(container, target, circuit, requester)
+-- @param integer? index place poured from, the first by default
+function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incompatibleConfirmed, index)
+    local result = getRuntimeValidation(container, target, circuit, requester, index)
     if result ~= RMS_FluidTransfer.RESULT.OK then
         return false, result
     end
 
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if containerSpec.activeTransfer ~= nil then
+    local slot = getSlot(container, index)
+    if slot == nil or slot.activeTransfer ~= nil then
         return false, RMS_FluidTransfer.RESULT.BUSY
     end
 
@@ -153,11 +172,12 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
     end
 
     targetSpec.fluidTransferLocks[circuit] = container
-    containerSpec.activeTransfer = {
+    slot.activeTransfer = {
         target = target,
         circuit = circuit,
         productKey = productKey,
-        requesterUserId = requester.userId
+        requesterUserId = requester.userId,
+        index = index or 1
     }
     container:raiseDirtyFlags(containerSpec.dirtyFlag)
     -- Idle containers need an update to transfer fluid.
@@ -166,20 +186,30 @@ function RMS_FluidTransfer.tryStart(container, target, circuit, requester, incom
 end
 
 ---Releases the container and target-circuit locks without changing fluid levels
-function RMS_FluidTransfer.cancel(container)
+-- @param integer? index place to stop, every place of the container when nil
+function RMS_FluidTransfer.cancel(container, index)
     local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    local transfer = containerSpec ~= nil and containerSpec.activeTransfer or nil
-    if transfer == nil then
+    if containerSpec == nil or containerSpec.slots == nil then
         return
     end
-
-    local targetSpec = transfer.target ~= nil and transfer.target.spec_RealisticMechanicalSystems or nil
-    if targetSpec ~= nil and targetSpec.fluidTransferLocks ~= nil
-        and targetSpec.fluidTransferLocks[transfer.circuit] == container then
-        targetSpec.fluidTransferLocks[transfer.circuit] = nil
+    for slotIndex, slot in ipairs(containerSpec.slots) do
+        local transfer = slot.activeTransfer
+        if transfer ~= nil and (index == nil or index == slotIndex) then
+            slot.activeTransfer = nil
+            -- the circuit stays locked while the other drum pours into it
+            local isStillPouring = false
+            for _, other in ipairs(containerSpec.slots) do
+                isStillPouring = isStillPouring or other.activeTransfer ~= nil and other.activeTransfer.target == transfer.target
+                    and other.activeTransfer.circuit == transfer.circuit
+            end
+            local targetSpec = transfer.target ~= nil and transfer.target.spec_RealisticMechanicalSystems or nil
+            if not isStillPouring and targetSpec ~= nil and targetSpec.fluidTransferLocks ~= nil
+                and targetSpec.fluidTransferLocks[transfer.circuit] == container then
+                targetSpec.fluidTransferLocks[transfer.circuit] = nil
+            end
+            container:raiseDirtyFlags(containerSpec.dirtyFlag)
+        end
     end
-    containerSpec.activeTransfer = nil
-    container:raiseDirtyFlags(containerSpec.dirtyFlag)
 end
 
 local function getActiveRequester(transfer)
@@ -195,42 +225,48 @@ local function getActiveRequester(transfer)
     }
 end
 
-function RMS_FluidTransfer.update(container, dt)
-    local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    local transfer = containerSpec ~= nil and containerSpec.activeTransfer or nil
-    if transfer == nil then
-        return
-    end
-
+local function updateSlot(container, transfer, dt)
+    local index = transfer.index
     local requester = getActiveRequester(transfer)
-    local result = getRuntimeValidation(container, transfer.target, transfer.circuit, requester)
+    local result = getRuntimeValidation(container, transfer.target, transfer.circuit, requester, index)
     if result ~= RMS_FluidTransfer.RESULT.OK then
-        RMS_FluidTransfer.cancel(container)
+        RMS_FluidTransfer.cancel(container, index)
         return
     end
 
-    local amount = RMS_FluidTransfer.LITERS_PER_SECOND[container:getRMSFluidCapacity()] * math.max(tonumber(dt) or 0, 0) / 1000
+    local amount = RMS_FluidTransfer.LITERS_PER_SECOND[RMS_FluidContainer.getFormat(container:getRMSFluidCapacity(index))]
+        * math.max(tonumber(dt) or 0, 0) / 1000
     if amount <= RMS_Fluids.EPSILON then
         return
     end
-    amount = math.min(amount, container:getRMSFluidLiters(), RMS_Fluids.getMissingLiters(transfer.target, transfer.circuit))
+    amount = math.min(amount, container:getRMSFluidLiters(index), RMS_Fluids.getMissingLiters(transfer.target, transfer.circuit))
     if amount <= RMS_Fluids.EPSILON then
-        RMS_FluidTransfer.cancel(container)
+        RMS_FluidTransfer.cancel(container, index)
         return
     end
 
     container:beginRMSFluidTransaction()
-    local removed = container:removeRMSFluidLiters(amount)
+    local removed = container:removeRMSFluidLiters(amount, index)
     local accepted = RMS_Fluids.addLiters(transfer.target, transfer.circuit, removed, transfer.productKey)
     if removed - accepted > RMS_Fluids.EPSILON then
-        container:restoreRMSFluidLiters(removed - accepted)
+        container:restoreRMSFluidLiters(removed - accepted, index)
     end
 
     local finished = accepted <= RMS_Fluids.EPSILON
-        or container:getRMSFluidLiters() <= RMS_Fluids.EPSILON
+        or container:getRMSFluidLiters(index) <= RMS_Fluids.EPSILON
         or RMS_Fluids.getMissingLiters(transfer.target, transfer.circuit) <= RMS_Fluids.EPSILON
     if finished then
-        RMS_FluidTransfer.cancel(container)
+        RMS_FluidTransfer.cancel(container, index)
     end
     container:endRMSFluidTransaction(accepted > RMS_Fluids.EPSILON)
+end
+
+---Pours the running transfers of a container, each place on its own
+function RMS_FluidTransfer.update(container, dt)
+    local containerSpec = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
+    for _, slot in ipairs(containerSpec ~= nil and containerSpec.slots or {}) do
+        if slot.activeTransfer ~= nil and not container.isDeleted then
+            updateSlot(container, slot.activeTransfer, dt)
+        end
+    end
 end

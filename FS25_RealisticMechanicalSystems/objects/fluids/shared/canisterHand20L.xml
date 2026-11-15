@@ -1,6 +1,6 @@
 <handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
     <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
-    <!-- Carried 25 L can -->
+    <!-- Carried 20 L can -->
     <storeData>
         <name>$l10n_rms_fluid_container_typedesc</name>
         <image>objects/fluids/products/motorexFarmerPro/store_motorexFarmerPro.png</image>
@@ -16,7 +16,7 @@
     </storeData>
 
     <base canBeDropped="false" canBeSaved="false" walkMultiplier="0.8" runMultiplier="0.7" jumpMultiplier="0.6">
-        <filename>objects/fluids/shared/canisterHand25L.i3d</filename>
+        <filename>objects/fluids/shared/canisterHand20L.i3d</filename>
         <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
         <graphics node="graphics" lockFirstPerson="true"/>
         <handNode node="handNode"/>

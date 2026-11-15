@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Superaquecimento da bateria"/>
         <text name="rms_report_wear_lubrication" text="Lubrificação atrasada"/>
         <text name="rms_report_wear_pto_overload" text="Sobrecarga da TDP"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Ângulo do cardã"/>
         <text name="rms_report_wear_harvest_overload" text="Sobrecarga da colheita"/>
         <text name="rms_report_wear_harvest_flow" text="Fluxo de grãos elevado"/>
         <text name="rms_report_wear_harvest_straw" text="Picador sobrecarregado"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Pegar para adicionar"/>
         <text name="rms_fluid_hand_carry" text="Levar o galão"/>
         <text name="rms_drum_pump_name" text="Bomba de tambor a bateria"/>
-        <text name="rms_drum_pump_function" text="É montada em um tambor de 200 L para abastecer as máquinas com a pistola"/>
+        <text name="rms_drum_pump_function" text="É montada em um tambor para abastecer as máquinas com a pistola"/>
         <text name="rms_drum_pump_mount" text="Montar no tambor"/>
         <text name="rms_drum_pump_take" text="Retirar a bomba"/>
         <text name="rms_drum_pump_nozzle_take" text="Pegar a pistola"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, um toque no comando de partida liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repita o comando: o motor de partida é acionado automaticamente quando a luz se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Engate da TDP"/>
         <text name="rms_tutorial_pto_engagement_message" text="Engate a TDP em marcha lenta e depois aumente a rotação: engatá-la em alta rotação dá um tranco em toda a transmissão, ainda mais com um implemento pesado. Cada engate também desgasta a embreagem dela."/>
-        <text name="rms_tutorial_pto_raised_title" text="TDP e implemento levantado"/>
-        <text name="rms_tutorial_pto_raised_message" text="Girar a TDP com o implemento levantado faz os cardãs trabalharem em um ângulo acentuado e os desgasta rapidamente. Desligue a TDP antes de levantar o implemento para o transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Marcha lenta e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é bem menor quando a máquina está ligada sem trabalhar. Com o motor desligado, ele se torna mínimo, e desaparece completamente se a máquina estiver guardada sob cobertura."/>
         <text name="rms_tutorial_idle_deposit_title" text="Marcha lenta prolongada"/>

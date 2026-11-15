@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Accu oververhit"/>
         <text name="rms_report_wear_lubrication" text="Smering achterstallig"/>
         <text name="rms_report_wear_pto_overload" text="Aftakas overbelast"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Hoek van de aftakas"/>
         <text name="rms_report_wear_harvest_overload" text="Oogst overbelast"/>
         <text name="rms_report_wear_harvest_flow" text="Hoge graanstroom"/>
         <text name="rms_report_wear_harvest_straw" text="Hakselaar overbelast"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Pakken om bij te vullen"/>
         <text name="rms_fluid_hand_carry" text="Kan dragen"/>
         <text name="rms_drum_pump_name" text="Accu-vatpomp"/>
-        <text name="rms_drum_pump_function" text="Wordt op een vat van 200 L gezet om machines met het vulpistool te vullen"/>
+        <text name="rms_drum_pump_function" text="Wordt op een vat gezet om machines met het vulpistool te vullen"/>
         <text name="rms_drum_pump_mount" text="Op vat zetten"/>
         <text name="rms_drum_pump_take" text="Pomp terugnemen"/>
         <text name="rms_drum_pump_nozzle_take" text="Vulpistool pakken"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Bij een koude dieselmotor schakelt één druk op de startknop het contact in en begint automatisch de voorgloeicyclus. De dashboardlampjes lichten kort op; daarna blijft het voorgloeilampje branden totdat de motor gereed is. Druk niet opnieuw: de startmotor schakelt automatisch in wanneer het lampje uitgaat."/>
         <text name="rms_tutorial_pto_engagement_title" text="Aftakas inschakelen"/>
         <text name="rms_tutorial_pto_engagement_message" text="Schakel de aftakas stationair in en verhoog daarna het toerental: inschakelen bij hoge toeren geeft de hele aandrijflijn een klap, des te meer met een zwaar werktuig. Elke inschakeling slijt bovendien de koppeling."/>
-        <text name="rms_tutorial_pto_raised_title" text="Aftakas en geheven werktuig"/>
-        <text name="rms_tutorial_pto_raised_message" text="De aftakas laten draaien met het werktuig geheven laat de cardanassen onder een scherpe hoek werken en slijt ze snel. Schakel de aftakas uit voordat je het werktuig heft voor transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Stationair draaien en stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="De slijtage is veel lager wanneer de machine draait zonder te werken. Met uitgeschakelde motor is de slijtage minimaal. Onder een afdak verdwijnt de slijtage volledig."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lang stationair draaien"/>

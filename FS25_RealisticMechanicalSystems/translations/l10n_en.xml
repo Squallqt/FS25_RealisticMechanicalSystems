@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Battery Overheating"/>
         <text name="rms_report_wear_lubrication" text="Overdue Lubrication"/>
         <text name="rms_report_wear_pto_overload" text="PTO Overload"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="PTO Shaft Angle"/>
         <text name="rms_report_wear_harvest_overload" text="Harvesting Overload"/>
         <text name="rms_report_wear_harvest_flow" text="Heavy Grain Flow"/>
         <text name="rms_report_wear_harvest_straw" text="Chopper Overload"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Take to Pour"/>
         <text name="rms_fluid_hand_carry" text="Carry Container"/>
         <text name="rms_drum_pump_name" text="Battery Drum Pump"/>
-        <text name="rms_drum_pump_function" text="Fits a 200 L drum to fill machines through its nozzle"/>
+        <text name="rms_drum_pump_function" text="Fits a drum to fill machines through its nozzle"/>
         <text name="rms_drum_pump_mount" text="Fit on Drum"/>
         <text name="rms_drum_pump_take" text="Take Pump Back"/>
         <text name="rms_drum_pump_nozzle_take" text="Take Nozzle"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="On a cold diesel engine, one press of the start control switches on the ignition and begins the automatic glow-plug cycle. The dashboard lamps light up briefly, then the preheat lamp remains on until the engine is ready. Do not repeat the command: the starter engages automatically when the lamp goes out."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement"/>
         <text name="rms_tutorial_pto_engagement_message" text="Engage the PTO at idle, then raise the engine speed: engaging it at high revs shocks the driveline, all the more with a heavy implement. Every engagement also wears its clutch."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO and Raised Implement"/>
-        <text name="rms_tutorial_pto_raised_message" text="Running the PTO with the implement raised bends the cardan joints at a steep angle and wears them quickly. Switch the PTO off before lifting the implement for transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Idling and Downtime"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Wear is much lower when the machine is running without working. With the engine off it becomes minimal. Under cover, it disappears entirely."/>
         <text name="rms_tutorial_idle_deposit_title" text="Extended Idling"/>

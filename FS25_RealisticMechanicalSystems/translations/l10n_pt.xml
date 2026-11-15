@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Sobreaquecimento da bateria"/>
         <text name="rms_report_wear_lubrication" text="Lubrificação em atraso"/>
         <text name="rms_report_wear_pto_overload" text="Sobrecarga da TDF"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Ângulo do cardã"/>
         <text name="rms_report_wear_harvest_overload" text="Sobrecarga da colheita"/>
         <text name="rms_report_wear_harvest_flow" text="Fluxo de grão elevado"/>
         <text name="rms_report_wear_harvest_straw" text="Picador sobrecarregado"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Pegar para adicionar"/>
         <text name="rms_fluid_hand_carry" text="Levar o bidão"/>
         <text name="rms_drum_pump_name" text="Bomba de tambor a bateria"/>
-        <text name="rms_drum_pump_function" text="Monta-se num tambor de 200 L para encher as máquinas com a pistola"/>
+        <text name="rms_drum_pump_function" text="Monta-se num tambor para encher as máquinas com a pistola"/>
         <text name="rms_drum_pump_mount" text="Montar no tambor"/>
         <text name="rms_drum_pump_take" text="Retirar a bomba"/>
         <text name="rms_drum_pump_nozzle_take" text="Pegar na pistola"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, uma pressão no comando de arranque liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repitas o comando: o motor de arranque é acionado automaticamente quando a luz se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Engate da TDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Engate a TDF ao ralenti e depois suba as rotações: engatá-la a rotações altas dá um choque a toda a transmissão, ainda mais com uma alfaia pesada. Cada engate desgasta também a sua embraiagem."/>
-        <text name="rms_tutorial_pto_raised_title" text="TDF e alfaia levantada"/>
-        <text name="rms_tutorial_pto_raised_message" text="Pôr a TDF a rodar com a alfaia levantada obriga os cardãs a trabalhar com um ângulo acentuado e desgasta-os depressa. Desligue a TDF antes de levantar a alfaia para o transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é muito menor quando a máquina está ligada sem trabalhar. Com o motor desligado, torna-se mínimo. Sob cobertura, desaparece completamente."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongado"/>

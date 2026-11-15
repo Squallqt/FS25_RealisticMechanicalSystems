@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Перегрів акумулятора"/>
         <text name="rms_report_wear_lubrication" text="Прострочене змащування"/>
         <text name="rms_report_wear_pto_overload" text="Перевантаження ВВП"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Кут карданного вала"/>
         <text name="rms_report_wear_harvest_overload" text="Перевантаження збирання"/>
         <text name="rms_report_wear_harvest_flow" text="Великий потік зерна"/>
         <text name="rms_report_wear_harvest_straw" text="Перевантаження подрібнювача"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Взяти для доливу"/>
         <text name="rms_fluid_hand_carry" text="Нести каністру"/>
         <text name="rms_drum_pump_name" text="Акумуляторний бочковий насос"/>
-        <text name="rms_drum_pump_function" text="Ставиться на бочку 200 л і заправляє машини через пістолет"/>
+        <text name="rms_drum_pump_function" text="Ставиться на бочку і заправляє машини через пістолет"/>
         <text name="rms_drum_pump_mount" text="Поставити на бочку"/>
         <text name="rms_drum_pump_take" text="Зняти насос"/>
         <text name="rms_drum_pump_nozzle_take" text="Взяти пістолет"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="На холодному дизельному двигуні одне натискання команди запуску вмикає запалювання й автоматично запускає цикл попереднього підігріву. Індикатори панелі приладів ненадовго засвічуються, а потім індикатор підігріву горить до готовності двигуна. Не повторюйте команду: стартер увімкнеться автоматично, коли індикатор згасне."/>
         <text name="rms_tutorial_pto_engagement_title" text="Увімкнення ВВП"/>
         <text name="rms_tutorial_pto_engagement_message" text="Вмикайте ВВП на холостих обертах, а потім підвищуйте оберти: увімкнення на високих обертах дає удар по всій трансмісії, тим сильніший, чим важче знаряддя. Кожне увімкнення також зношує його муфту."/>
-        <text name="rms_tutorial_pto_raised_title" text="ВВП і підняте знаряддя"/>
-        <text name="rms_tutorial_pto_raised_message" text="Робота ВВП із піднятим знаряддям змушує кардани працювати під великим кутом і швидко їх зношує. Вимикайте ВВП, перш ніж піднімати знаряддя для транспортування."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Холостий хід і простій"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Знос значно менший, коли двигун працює, але техніка не виконує роботу. З вимкненим двигуном знос стає мінімальним, а під навісом повністю зникає."/>
         <text name="rms_tutorial_idle_deposit_title" text="Тривалий холостий хід"/>

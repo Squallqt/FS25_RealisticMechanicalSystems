@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Przegrzewanie akumulatora"/>
         <text name="rms_report_wear_lubrication" text="Zaległe smarowanie"/>
         <text name="rms_report_wear_pto_overload" text="Przeciążenie WOM"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kąt wału WOM"/>
         <text name="rms_report_wear_harvest_overload" text="Przeciążenie zbioru"/>
         <text name="rms_report_wear_harvest_flow" text="Duży przepływ ziarna"/>
         <text name="rms_report_wear_harvest_straw" text="Przeciążony rozdrabniacz"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Weź, aby wlać"/>
         <text name="rms_fluid_hand_carry" text="Nieś kanister"/>
         <text name="rms_drum_pump_name" text="Akumulatorowa pompa do beczek"/>
-        <text name="rms_drum_pump_function" text="Montowana na beczce 200 L, napełnia maszyny przez pistolet"/>
+        <text name="rms_drum_pump_function" text="Montowana na beczce, napełnia maszyny przez pistolet"/>
         <text name="rms_drum_pump_mount" text="Załóż na beczkę"/>
         <text name="rms_drum_pump_take" text="Zdejmij pompę"/>
         <text name="rms_drum_pump_nozzle_take" text="Weź pistolet"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Przy zimnym silniku Diesla jedno naciśnięcie przycisku rozruchu włącza zapłon i automatycznie rozpoczyna cykl podgrzewania. Kontrolki na desce rozdzielczej zapalają się na chwilę, a kontrolka podgrzewania pozostaje włączona do chwili gotowości silnika. Nie naciskaj przycisku ponownie: rozrusznik włączy się automatycznie po zgaśnięciu kontrolki."/>
         <text name="rms_tutorial_pto_engagement_title" text="Włączanie WOM"/>
         <text name="rms_tutorial_pto_engagement_message" text="Włączaj WOM na wolnych obrotach, a dopiero potem zwiększ obroty: włączenie na wysokich obrotach to uderzenie dla całego układu napędowego, tym mocniejsze przy ciężkiej maszynie. Każde włączenie zużywa też jego sprzęgło."/>
-        <text name="rms_tutorial_pto_raised_title" text="WOM i podniesiona maszyna"/>
-        <text name="rms_tutorial_pto_raised_message" text="Praca WOM przy podniesionej maszynie zmusza wały przegubowe do pracy pod dużym kątem i szybko je zużywa. Wyłącz WOM, zanim podniesiesz maszynę do transportu."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Praca jałowa i postój"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Zużycie jest znacznie mniejsze, gdy maszyna pracuje bez wykonywania pracy. Gdy silnik jest wyłączony, zużycie staje się minimalne, a jeśli maszyna stoi pod dachem, znika całkowicie."/>
         <text name="rms_tutorial_idle_deposit_title" text="Długa praca na biegu jałowym"/>

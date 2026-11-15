@@ -591,11 +591,6 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         addCause(wear, "expiredServiceFactor", getExpiredServiceFactor(self, "pto", C))
     end
 
-    local isRaisedByPlayer = self:getIsMotorStarted() and spec.isPtoActive and spec.isPtoImplementRaised and not self:getIsAIActive()
-    spec.ptoRaisedTutorialTimer = math.clamp((tonumber(spec.ptoRaisedTutorialTimer) or 0) + (isRaisedByPlayer and dt or -dt),
-        0, C.RAISED_TUTORIAL_MS)
-    spec.ptoRaisedTooLong = spec.ptoRaisedTutorialTimer >= C.RAISED_TUTORIAL_MS
-
     if engagementDamage > 0 then
         self:applyInstantDamageToSystem(system.name, engagementDamage, "ptoEngagementFactor", isShock and "pto_engagement" or nil)
     end
@@ -1088,6 +1083,8 @@ local DIRECT_FAILURES = {
         read = function(spec) return spec.crankingSeconds end },
     { partId = "PTO_OUTPUT_SHAFT_FAILURE", abuse = "pto_angle", read = function(spec) return spec.ptoShaftAngle end,
         getLevels = function(_, spec) return spec.ptoShaftLimit, RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.release end },
+    { partId = "FRONT_PTO_CLUTCH_FAILURE", abuse = "pto_angle", read = function(spec) return spec.frontPtoShaftAngle end,
+        getLevels = function(_, spec) return spec.frontPtoShaftLimit, RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.release end },
 }
 
 ---Fails a part one stage for each span of air its pump has drawn

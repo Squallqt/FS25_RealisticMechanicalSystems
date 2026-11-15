@@ -123,7 +123,10 @@ local CAUSES = {
     plf = {"PTO load", "PTO load", function(_, spec) return pct(spec.ptoUtilization) .. " of its power" end},
     pef = {"PTO engagements", "engagements", function(_, spec) return string.format("%d engagements", spec.ptoEngagementCount) end},
     prf = {"PTO shaft angle", "shaft angle", function(_, spec)
-        return string.format("%.0f of %.0f deg at the joint", spec.ptoShaftAngle, spec.ptoShaftLimit) end},
+        if spec.frontPtoShaftAngle / spec.frontPtoShaftLimit > spec.ptoShaftAngle / spec.ptoShaftLimit then
+            return string.format("front joint %.0f of %.0f deg", spec.frontPtoShaftAngle, spec.frontPtoShaftLimit)
+        end
+        return string.format("rear joint %.0f of %.0f deg", spec.ptoShaftAngle, spec.ptoShaftLimit) end},
     hef = {"Harvest overload", "overload", function(f) return "effort " .. pct(f.harvestEffort) end},
     hgf = {"Grain flow", "grain flow", function(f) return "flow " .. pct(f.harvestGrain) end},
     hsf = {"Chopper load", "chopper", function(f) return "load " .. pct(f.harvestChopper) end},
@@ -625,8 +628,15 @@ local function readExhaustRows(spec)
     local smoke = spec.exhaustSmoke
     local smokeText = not smoke.isActive and "no smoke" or string.format("black %s  ·  blue %s  ·  white %s  ·  opacity %s  ·  vapour %s",
         pct(smoke.soot), pct(smoke.oil), pct(smoke.unburnt), pct(smoke.opacity), pct(smoke.vapourOpacity or 0))
-    local gas = not smoke.isActive and "no plume" or string.format("%.0f °C at %.1f m/s  ·  wind %.1f m/s  ·  sheltered %s%s",
-        smoke.gasTemperature, smoke.exitSpeed, smoke.windSpeed, pct(smoke.pipeShelter), smoke.isOverridden and "  ·  override" or "")
+    -- shimmer: light deflection at the outlet
+    local gas = "no plume"
+    if smoke.isActive then
+        gas = string.format("%.0f °C at %.1f m/s  ·  shimmer %.2f mrad  ·  wind %.1f m/s  ·  sheltered %s%s",
+            smoke.gasTemperature, smoke.exitSpeed, smoke.heatDeflection * 1000, smoke.windSpeed, pct(smoke.pipeShelter),
+            smoke.isOverridden and "  ·  override" or "")
+    elseif smoke.gasTemperature ~= nil then
+        gas = string.format("engine stopped  ·  line at %.0f °C  ·  shimmer %.2f mrad", smoke.gasTemperature, smoke.heatDeflection * 1000)
+    end
     return {"Smoke", smokeText}, {"Exhaust gas", gas}
 end
 

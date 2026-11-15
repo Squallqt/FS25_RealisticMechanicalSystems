@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="116">
     <author>Squallqt</author>
-    <version>1.0.0.0-beta.2</version>
+    <version>1.0.0.0-beta.3</version>
     <title>
         <en>Realistic Mechanical Systems</en>
         <de>Realistische Mechaniksysteme</de>
@@ -50,7 +50,7 @@ SIMULATION
 - Engine and oil temperatures driven by work, weather and radiator fouling; traction batteries warm during work and charging
 - Battery, alternator and starter sized for each machine by its power and age, in 12 or 24 V: charge kept out of reach by the cold, a starter that slows as the voltage drops, a battery disconnect switch for long storage, and jumper cables between vehicles
 - Diesel preheating that takes longer as it gets colder, and its own glow-plug breakdown
-- Exhaust smoke driven by vehicle age, engine wear, load and active faults: black soot, blue oil or white unburnt fuel
+- Exhaust smoke driven by vehicle age, engine wear, load and active faults: black soot, blue oil or white unburnt fuel; a hot engine makes the air shimmer above its pipe, even with no smoke
 - Drivetrain management on tractors: 2WD / 4WD / AUTO modes and differential locks
 - Parking brake on every machine: recent CVT and powershift machines apply and release it on their own, the others use a hand brake; left released, the machine can roll down a slope
 - Original reliability shown as Average, Fair, Good or Very good; ease of maintenance as Easy, Average or Demanding. Mechanical condition and service deadlines remain separate
@@ -70,6 +70,13 @@ COMPATIBILITY
 Mod for Farming Simulator
 
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.3:
+- Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
+- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels
+- Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
+- Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
+- Fixed the engine temperature set with Easy Development Controls being discarded at once
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -337,7 +344,7 @@ SIMULATION
 - Motor- und Öltemperaturen nach Arbeit, Wetter und Kühlerverschmutzung; Traktionsbatterien erwärmen sich beim Arbeiten und Laden
 - Batterie, Lichtmaschine und Anlasser jeder Maschine nach Leistung und Baujahr ausgelegt, in 12 oder 24 V: Kälte hält einen Teil der Ladung zurück, der Anlasser dreht bei sinkender Spannung langsamer, ein Batterietrennschalter für lange Standzeiten und Starthilfekabel zwischen Fahrzeugen
 - Diesel-Vorglühen, das bei Kälte länger dauert, mit eigener Glühkerzenstörung
-- Abgasrauch nach Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff
+- Abgasrauch nach Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff; ein warmer Motor lässt die Luft über dem Auspuff flimmern, auch ohne Rauch
 - Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO und Differentialsperren
 - Feststellbremse an jeder Maschine: Neuere Maschinen mit CVT- oder Powershift-Getriebe ziehen und lösen sie von selbst, die anderen haben eine Handbremse; ist sie gelöst, kann die Maschine am Hang wegrollen
 - Ursprüngliche Zuverlässigkeit als Durchschnittlich, Ordentlich, Gut oder Sehr gut; Wartungsfreundlichkeit als Einfach, Durchschnittlich oder Anspruchsvoll. Mechanischer Zustand und Wartungsfristen bleiben getrennt
@@ -357,6 +364,13 @@ KOMPATIBILITÄT
 Mod for Farming Simulator
 
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.3:
+- Abgashitze hinzugefügt: Über dem Auspuff eines warmen Motors flimmert die Luft, stärker unter Last und während einer Regeneration des Partikelfilters
+- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten
+- Gebindegrößen überarbeitet: 20-L-Kanister statt 25 L und Fässer mit 200 L (Motorex), 205 L (FUCHS) oder 208 L (Motul), einzeln oder zu zweit auf einer Palette
+- Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
+- Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -624,7 +638,7 @@ SIMULATION
 - Températures du moteur et des huiles selon le travail, la météo et l'encrassement du radiateur ; les batteries de traction chauffent au travail et en recharge
 - Batterie, alternateur et démarreur de chaque machine selon sa puissance et son époque, en 12 ou 24 V : une part de la charge retenue par le froid, un démarreur qui ralentit quand la tension baisse, un coupe-batterie pour les longs arrêts et des câbles de démarrage entre véhicules
 - Préchauffage diesel d'autant plus long qu'il fait froid, et sa propre panne de bougies
-- Fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives : suie noire, huile bleue ou carburant imbrûlé blanc
+- Fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives : suie noire, huile bleue ou carburant imbrûlé blanc ; un moteur chaud fait trembler l'air au-dessus de son pot, même sans fumée
 - Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO et blocages de différentiel
 - Frein de parking sur toutes les machines : les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules, les autres ont un frein à main ; desserré, la machine peut partir dans la pente
 - Fiabilité d’origine affichée comme Moyenne, Correcte, Bonne ou Très bonne ; facilité d’entretien comme Facile, Moyenne ou Exigeante. L’état mécanique et les échéances d’entretien restent distincts
@@ -644,6 +658,13 @@ COMPATIBILITÉ
 Mod for Farming Simulator
 
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
+
+Changelog 1.0.0.0-beta.3 :
+- Ajout de la chaleur de l'échappement : l'air tremble au-dessus du pot d'un moteur chaud, davantage en charge et pendant une régénération du filtre à particules
+- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes
+- Refonte des formats : jerricans de 20 L au lieu de 25 L, et fûts de 200 L (Motorex), 205 L (FUCHS) ou 208 L (Motul), seuls ou par deux sur une palette
+- Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
+- Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
@@ -916,7 +937,7 @@ Changelog 0.10.0.0 :
         <storeItem xmlFilename="objects/airBlower/airBlower.xml"/>
         <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>
         <storeItem xmlFilename="objects/fluids/shared/canisterHand5L.xml"/>
-        <storeItem xmlFilename="objects/fluids/shared/canisterHand25L.xml"/>
+        <storeItem xmlFilename="objects/fluids/shared/canisterHand20L.xml"/>
         <storeItem xmlFilename="objects/drumPump/drumPump.xml"/>
         <storeItem xmlFilename="objects/drumPump/drumPumpNozzle.xml"/>
         <storeItem xmlFilename="objects/fluids/products/motorexFarmerPro/product.xml"/>

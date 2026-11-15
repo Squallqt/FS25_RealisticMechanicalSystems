@@ -11,15 +11,18 @@ function RMS_FluidCanisterEvent.emptyNew()
 end
 
 -- @param table? pose world position and heading the can is set down at, nil to take
-function RMS_FluidCanisterEvent.new(object, pose)
+-- @param integer? index drum of a pallet whose nozzle is taken, the first by default
+function RMS_FluidCanisterEvent.new(object, pose, index)
     local self = RMS_FluidCanisterEvent.emptyNew()
     self.object = object
     self.pose = pose
+    self.index = index or 1
     return self
 end
 
 function RMS_FluidCanisterEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.object)
+    streamWriteUInt8(streamId, self.index)
     if streamWriteBool(streamId, self.pose ~= nil) then
         for index = 1, 4 do
             streamWriteFloat32(streamId, self.pose[index])
@@ -29,6 +32,7 @@ end
 
 function RMS_FluidCanisterEvent:readStream(streamId, connection)
     self.object = NetworkUtil.readNodeObject(streamId)
+    self.index = streamReadUInt8(streamId)
     if streamReadBool(streamId) then
         self.pose = {}
         for index = 1, 4 do
@@ -49,13 +53,13 @@ function RMS_FluidCanisterEvent:run(connection)
     end
 
     if self.pose == nil then
-        RMS_FluidHandTool.take(requester.player, self.object)
+        RMS_FluidHandTool.take(requester.player, self.object, self.index)
     elseif self.object:getCarryingPlayer() == requester.player then
         RMS_FluidHandTool.queueSetDown(self.object, self.pose)
     end
 end
 
 ---Asks the server to take a can in hand or set it down
-function RMS_FluidCanisterEvent.send(object, pose)
-    g_client:getServerConnection():sendEvent(RMS_FluidCanisterEvent.new(object, pose))
+function RMS_FluidCanisterEvent.send(object, pose, index)
+    g_client:getServerConnection():sendEvent(RMS_FluidCanisterEvent.new(object, pose, index))
 end

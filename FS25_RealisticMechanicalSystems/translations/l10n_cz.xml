@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Přehřívání baterie"/>
         <text name="rms_report_wear_lubrication" text="Opožděné mazání"/>
         <text name="rms_report_wear_pto_overload" text="Přetížení vývodového hřídele"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Úhel kloubového hřídele"/>
         <text name="rms_report_wear_harvest_overload" text="Přetížení sklizně"/>
         <text name="rms_report_wear_harvest_flow" text="Velký průtok zrna"/>
         <text name="rms_report_wear_harvest_straw" text="Přetížený drtič"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Vzít k doplnění"/>
         <text name="rms_fluid_hand_carry" text="Nést kanystr"/>
         <text name="rms_drum_pump_name" text="Akumulátorové sudové čerpadlo"/>
-        <text name="rms_drum_pump_function" text="Nasazuje se na 200l sud a plní stroje výdejní pistolí"/>
+        <text name="rms_drum_pump_function" text="Nasazuje se na sud a plní stroje výdejní pistolí"/>
         <text name="rms_drum_pump_mount" text="Nasadit na sud"/>
         <text name="rms_drum_pump_take" text="Sejmout čerpadlo"/>
         <text name="rms_drum_pump_nozzle_take" text="Vzít pistoli"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="U studeného vznětového motoru jedno stisknutí ovladače spuštění zapne zapalování a automaticky zahájí cyklus předehřevu. Kontrolky na palubní desce se krátce rozsvítí a potom zůstane kontrolka předehřevu svítit, dokud není motor připraven. Povel neopakuj: startér se zapne automaticky, jakmile kontrolka zhasne."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapínání vývodového hřídele"/>
         <text name="rms_tutorial_pto_engagement_message" text="Vývodový hřídel zapínej při volnoběhu a teprve potom zvyš otáčky: zapnutí ve vysokých otáčkách je ráz pro celé hnací ústrojí, tím silnější s těžkým nářadím. Každé zapnutí navíc opotřebovává jeho spojku."/>
-        <text name="rms_tutorial_pto_raised_title" text="Vývodový hřídel a zvednuté nářadí"/>
-        <text name="rms_tutorial_pto_raised_message" text="Chod vývodového hřídele se zvednutým nářadím nutí kloubové hřídele pracovat pod velkým úhlem a rychle je opotřebovává. Vypni vývodový hřídel dřív, než nářadí zvedneš k přepravě."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Volnoběh a odstavení"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Opotřebení je mnohem nižší, když stroj běží, ale aktivně nepracuje. Pokud je motor vypnutý, opotřebení je minimální, a pokud je stroj zaparkován pod střechou, mizí úplně."/>
         <text name="rms_tutorial_idle_deposit_title" text="Dlouhý volnoběh"/>

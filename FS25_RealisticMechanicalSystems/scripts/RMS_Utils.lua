@@ -563,33 +563,9 @@ function RMS_Utils.getPtoShaftLine(output)
     return x / length, y / length, z / length
 end
 
----Line of the shaft in the frame of one of its ends
-local function getLocalLine(node, x, y, z)
-    local lx, ly, lz = worldDirectionToLocal(node, x, y, z)
-    local length = math.max(math.sqrt(lx * lx + ly * ly + lz * lz), 0.001)
-    return lx / length, ly / length, lz / length
-end
-
 ---Angle in deg between two lines of a shaft, which never folds back
 local function getBend(ax, ay, az, bx, by, bz)
     return math.deg(math.acos(math.clamp(math.abs(ax * bx + ay * by + az * bz), 0, 1)))
-end
-
----Bends of a mounted shaft against the line it had last lowered
-local function getMountedBends(output, x, y, z, isLowered)
-    local tx, ty, tz = getLocalLine(output.outputNode, x, y, z)
-    local ix, iy, iz = getLocalLine(output.connectedInput.inputNode, x, y, z)
-    local work = output.rmsShaft
-    if isLowered then
-        work = work or {}
-        work[1], work[2], work[3], work[4], work[5], work[6] = tx, ty, tz, ix, iy, iz
-        output.rmsShaft = work
-    end
-    -- never lowered since coupled: no working position yet
-    if work == nil then
-        return 0, 0
-    end
-    return getBend(work[1], work[2], work[3], tx, ty, tz), getBend(work[4], work[5], work[6], ix, iy, iz)
 end
 
 ---Bends of a towed shaft against itself swung in line about the hitch
@@ -632,18 +608,19 @@ local function getCrossLife(angle)
     return points[#points][2]
 end
 
----Keeps the joint nearest its limit and the wear of the worst cross
+---Keeps each side's joint nearest its limit and the worst cross wear
+-- @param table shaft angle and limit kept for this PTO side
 -- @param float bend deg of the joint, aligned at work
 -- @param boolean isWide wide-angle joint: two crosses share its angle
 -- @param boolean isUnderPower implement at work: a plain joint holds less
 -- @param float torqueShare torque against the one the driveline is built for
-local function addJointStrain(data, bend, isWide, isUnderPower, torqueShare)
+local function addJointStrain(shaft, data, bend, isWide, isUnderPower, torqueShare)
     local C = RMS_Config.CORE.PTO_FACTOR_DATA
     local levels = RMS_Config.CORE.DIRECT_FAILURES
     local limit = (isWide and levels.PTO_SHAFT_ANGLE_WIDE or isUnderPower and levels.PTO_SHAFT_ANGLE
         or levels.PTO_SHAFT_ANGLE_TURNING).limit
-    if bend / limit > data.shaftAngle / data.shaftLimit then
-        data.shaftAngle, data.shaftLimit = bend, limit
+    if bend / limit > shaft.angle / shaft.limit then
+        shaft.angle, shaft.limit = bend, limit
     end
     -- a cross lasts its rated life up to its rating angle
     local cross = math.max(bend / (isWide and 2 or 1), C.SHAFT_ANGLE_REFERENCE)
@@ -651,36 +628,31 @@ local function addJointStrain(data, bend, isWide, isUnderPower, torqueShare)
     data.shaftWear = math.max(data.shaftWear, lifeLoss * torqueShare ^ C.SHAFT_TORQUE_EXPONENT)
 end
 
----Bends both joints of a shaft; an engaged one strains the data
-local function addShaftStrain(vehicleObj, output, consumer, isEngaged, torqueShare, data)
-    local x, y, z = RMS_Utils.getPtoShaftLine(output)
-    if x == nil then
+---Bends both joints of a towed shaft and strains its PTO side
+local function addShaftStrain(vehicleObj, output, consumer, torqueShare, shaft, data)
+    -- mounted: works aligned, turns unloaded once raised
+    if RMS_Utils.getPtoShaftLine(output) == nil or consumer:getAllowsLowering() then
         return
     end
-    -- at work: a towed implement in line, a mounted one lowered
     local hitch = consumer:getActiveInputAttacherJoint()
-    local isTowed = hitch ~= nil and not consumer:getAllowsLowering()
-    local isLowered = consumer.getIsLowered == nil or consumer:getIsLowered(true)
-    local tractorBend, implementBend, isTractorNearer
-    if isTowed then
-        tractorBend, implementBend, isTractorNearer = getTowedBends(vehicleObj, output, consumer, hitch)
-    else
-        tractorBend, implementBend = getMountedBends(output, x, y, z, isLowered)
-    end
-    if not isEngaged then
+    if hitch == nil then
         return
     end
+    local isLowered = consumer.getIsLowered == nil or consumer:getIsLowered(true)
+    local tractorBend, implementBend, isTractorNearer = getTowedBends(vehicleObj, output, consumer, hitch)
 
     -- two crosses where the game draws a wide-angle joint
     local input = output.connectedInput
     local isDouble = input.endJoint2 ~= nil
     local isWideBothEnds = RMS_Config.CORE.PTO_FACTOR_DATA.SHAFT_WIDE_BOTH_ENDS[input.rmsShaftModel] == true
     -- a towed implement turns on a wide-angle joint nearest its hitch
-    addJointStrain(data, tractorBend, isDouble or isTowed and isTractorNearer, isLowered, torqueShare)
-    addJointStrain(data, implementBend, isDouble and isWideBothEnds or isTowed and not isTractorNearer, isLowered, torqueShare)
+    addJointStrain(shaft, data, tractorBend, isDouble or isTractorNearer, isLowered, torqueShare)
+    addJointStrain(shaft, data, implementBend, isDouble and isWideBothEnds or not isTractorNearer, isLowered, torqueShare)
 end
 
-local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounted)
+-- @param table? frontOutput front PTO of the gathering vehicle
+-- @param table? sideShaft strain of the side driving the vehicle
+local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounted, frontOutput, sideShaft)
     if vehicleObj == nil or visited[vehicleObj] then
         return
     end
@@ -694,6 +666,7 @@ local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounte
     for _, output in pairs(outputs or {}) do
         local consumer = output.connectedVehicle
         if output.connectedInput ~= nil and consumer ~= nil and (isOutputCounted == nil or isOutputCounted(output)) then
+            local shaft = sideShaft or (output == frontOutput and data.frontShaft or data.rearShaft)
             if data.connectedVehicles[consumer] ~= true then
                 data.connectedVehicles[consumer] = true
 
@@ -723,26 +696,19 @@ local function collectConnectedPtoData(vehicleObj, data, visited, isOutputCounte
                     and (tonumber(consumer.spec_powerConsumer.neededMaxPtoPower) or 0) or 0
                 local ratedTorque = configuredRpm > 0 and neededMaxPower / (configuredRpm * math.pi / 30) or 0
                 local torqueShare = ratedTorque > 0 and math.clamp(torque / ratedTorque, 0, 1) or 0
-                -- a harvester drives its header through a fixed drive
-                if vehicleObj.spec_combine == nil then
-                    addShaftStrain(vehicleObj, output, consumer, isEngaged, torqueShare, data)
-                end
                 if isEngaged then
                     data.activeLinks[consumer] = true
-
+                    -- a harvester drives its header through a fixed drive
+                    if vehicleObj.spec_combine == nil then
+                        addShaftStrain(vehicleObj, output, consumer, torqueShare, shaft, data)
+                    end
                     if consumer.spec_sprayer == nil then
                         data.engagementTorques[consumer] = ratedTorque
-
-                        if vehicleObj.spec_combine == nil
-                            and consumer.getAllowsLowering ~= nil and consumer:getAllowsLowering()
-                            and consumer.getIsLowered ~= nil and not consumer:getIsLowered(true) then
-                            data.isRaised = true
-                        end
                     end
                 end
             end
 
-            collectConnectedPtoData(consumer, data, visited)
+            collectConnectedPtoData(consumer, data, visited, nil, nil, shaft)
         end
     end
 end
@@ -758,22 +724,21 @@ function RMS_Utils.getConnectedPtoData(vehicle, side)
         connectedVehicles = {},
         activeLinks = {},
         engagementTorques = {},
-        isRaised = false,
-        shaftAngle = 0,
-        shaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit,
+        rearShaft = { angle = 0, limit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit },
+        frontShaft = { angle = 0, limit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit },
         shaftWear = 0
     }
     local visited = {}
 
+    local frontOutput = RMS_Utils.getFrontPtoOutput(vehicle)
     local isOutputCounted = nil
     if side ~= nil then
-        local frontOutput = RMS_Utils.getFrontPtoOutput(vehicle)
         isOutputCounted = function(output)
             return (output == frontOutput) == (side == "front")
         end
     end
 
-    collectConnectedPtoData(vehicle, data, visited, isOutputCounted)
+    collectConnectedPtoData(vehicle, data, visited, isOutputCounted, frontOutput)
     return data
 end
 

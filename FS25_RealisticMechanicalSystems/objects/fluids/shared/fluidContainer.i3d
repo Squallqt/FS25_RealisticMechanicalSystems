@@ -7,7 +7,7 @@
 
   <Files>
     <File fileId="1" filename="canister5LVisual.i3d"/>
-    <File fileId="2" filename="canister25LVisual.i3d"/>
+    <File fileId="2" filename="canister20LVisual.i3d"/>
     <File fileId="4" filename="$data/objects/pallets/shared/euroPallet/euroPallet.i3d"/>
   </Files>
 
@@ -48,6 +48,10 @@
       </TransformGroup>
       <TransformGroup name="fillRootNode" translation="0 0.45 0" nodeId="19"/>
       <TransformGroup name="pickupNode" translation="0 0.3 0" nodeId="20"/>
+      <Shape name="drumCollisionA" translation="-0.32 0 0" shapeId="7" compoundChild="true" staticFriction="1" dynamicFriction="1" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ffb83" nodeId="32" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <Shape name="drumCollisionB" translation="0.32 0 0" shapeId="7" compoundChild="true" staticFriction="1" dynamicFriction="1" collisionFilterGroup="0x10004" collisionFilterMask="0xfe3ffb83" nodeId="33" castsShadows="true" receiveShadows="true" nonRenderable="true" materialIds="1"/>
+      <TransformGroup name="drumVisualLinkA" translation="-0.32 0.144 0" nodeId="34" visibility="false"/>
+      <TransformGroup name="drumVisualLinkB" translation="0.32 0.144 0" nodeId="35" visibility="false"/>
     </Shape>
   </Scene>
 

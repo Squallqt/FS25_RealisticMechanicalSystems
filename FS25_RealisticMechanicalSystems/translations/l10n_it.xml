@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Surriscaldamento della batteria"/>
         <text name="rms_report_wear_lubrication" text="Ingrassaggio in ritardo"/>
         <text name="rms_report_wear_pto_overload" text="Sovraccarico della PTO"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Angolo del cardano"/>
         <text name="rms_report_wear_harvest_overload" text="Sovraccarico della raccolta"/>
         <text name="rms_report_wear_harvest_flow" text="Flusso di granella elevato"/>
         <text name="rms_report_wear_harvest_straw" text="Trinciapaglia sovraccarico"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Prendi per versare"/>
         <text name="rms_fluid_hand_carry" text="Porta la tanica"/>
         <text name="rms_drum_pump_name" text="Pompa per fusti a batteria"/>
-        <text name="rms_drum_pump_function" text="Si monta su un fusto da 200 L per riempire le macchine con la pistola"/>
+        <text name="rms_drum_pump_function" text="Si monta su un fusto per riempire le macchine con la pistola"/>
         <text name="rms_drum_pump_mount" text="Monta sul fusto"/>
         <text name="rms_drum_pump_take" text="Riprendi la pompa"/>
         <text name="rms_drum_pump_nozzle_take" text="Prendi la pistola"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Con un motore diesel freddo, una pressione del comando di avviamento accende il quadro e avvia automaticamente il ciclo di preriscaldamento. Le spie del cruscotto si accendono brevemente, poi la spia di preriscaldamento resta accesa finché il motore non è pronto. Non ripetere il comando: il motorino di avviamento si inserisce automaticamente quando la spia si spegne."/>
         <text name="rms_tutorial_pto_engagement_title" text="Innesto della PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Innesta la PTO al minimo, poi aumenta i giri: innestarla ad alti giri dà un colpo a tutta la trasmissione, tanto più con un attrezzo pesante. Ogni innesto consuma anche la sua frizione."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO e attrezzo sollevato"/>
-        <text name="rms_tutorial_pto_raised_message" text="Far girare la PTO con l'attrezzo sollevato fa lavorare i cardani con un angolo accentuato e li consuma in fretta. Disinserisci la PTO prima di sollevare l'attrezzo per il trasporto."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Minimo e fermo macchina"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usura è molto più bassa quando la macchina è accesa ma non lavora. A motore spento diventa minima, e scompare del tutto se la macchina è ricoverata al coperto."/>
         <text name="rms_tutorial_idle_deposit_title" text="Minimo prolungato"/>

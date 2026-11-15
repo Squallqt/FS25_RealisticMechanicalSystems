@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Akünün Aşırı Isınması"/>
         <text name="rms_report_wear_lubrication" text="Geciken Gresleme"/>
         <text name="rms_report_wear_pto_overload" text="Kuyruk Milinin Aşırı Yüklenmesi"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardan Açısı"/>
         <text name="rms_report_wear_harvest_overload" text="Hasat aşırı yükü"/>
         <text name="rms_report_wear_harvest_flow" text="Yüksek tane akışı"/>
         <text name="rms_report_wear_harvest_straw" text="Saman parçalayıcı aşırı yükü"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Eklemek İçin Al"/>
         <text name="rms_fluid_hand_carry" text="Bidonu Taşı"/>
         <text name="rms_drum_pump_name" text="Akülü Varil Pompası"/>
-        <text name="rms_drum_pump_function" text="200 L varile takılır ve makineleri tabancasıyla doldurur"/>
+        <text name="rms_drum_pump_function" text="Varile takılır ve makineleri tabancasıyla doldurur"/>
         <text name="rms_drum_pump_mount" text="Varile Tak"/>
         <text name="rms_drum_pump_take" text="Pompayı Geri Al"/>
         <text name="rms_drum_pump_nozzle_take" text="Tabancayı Al"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Soğuk dizel motorda çalıştırma kumandasına bir kez basmak kontağı açar ve kızdırma çevrimini otomatik başlatır. Gösterge paneli ışıkları kısa süre yanar, ardından motor hazır olana kadar kızdırma göstergesi açık kalır. Komutu tekrarlama: gösterge söndüğünde marş motoru otomatik devreye girer."/>
         <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini rölantide devreye alın, ardından devri yükseltin: yüksek devirde devreye almak tüm aktarma organlarına darbe verir, ağır bir ekipmanla daha da fazla. Her devreye alma kavramasını da aşındırır."/>
-        <text name="rms_tutorial_pto_raised_title" text="Kuyruk Mili ve Kaldırılmış Ekipman"/>
-        <text name="rms_tutorial_pto_raised_message" text="Ekipman kaldırılmışken kuyruk milini çalıştırmak kardan mafsallarını dik bir açıyla çalıştırır ve hızla aşındırır. Ekipmanı nakliye için kaldırmadan önce kuyruk milini kapatın."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Rölanti ve Hareketsizlik"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Makine çalışır durumda olsa da aktif olarak iş yapmadığında aşınma çok daha azdır. Motor kapalıyken aşınma çok az olur ve makine kapalı bir yerde saklanırsa aşınma tamamen ortadan kalkar."/>
         <text name="rms_tutorial_idle_deposit_title" text="Uzun Süreli Rölanti"/>

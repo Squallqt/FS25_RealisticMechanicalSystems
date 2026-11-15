@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet overopphetes"/>
         <text name="rms_report_wear_lubrication" text="Forsinket smøring"/>
         <text name="rms_report_wear_pto_overload" text="Kraftuttak overbelastet"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardangakselens vinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Høsting overbelastet"/>
         <text name="rms_report_wear_harvest_flow" text="Stor kornstrøm"/>
         <text name="rms_report_wear_harvest_straw" text="Halmkutter overbelastet"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Ta for å fylle på"/>
         <text name="rms_fluid_hand_carry" text="Bær kannen"/>
         <text name="rms_drum_pump_name" text="Batteridrevet fatpumpe"/>
-        <text name="rms_drum_pump_function" text="Settes på et 200 L fat for å fylle maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Settes på et fat for å fylle maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sett på fatet"/>
         <text name="rms_drum_pump_take" text="Ta av pumpen"/>
         <text name="rms_drum_pump_nozzle_take" text="Ta pistolen"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="På en kald dieselmotor slår ett trykk på startknappen på tenningen og starter forvarmingen automatisk. Lampene i instrumentpanelet lyser kort opp, og deretter fortsetter forvarmingslampen å lyse til motoren er klar. Ikke gjenta kommandoen: startmotoren kobler inn av seg selv når lampen slukker."/>
         <text name="rms_tutorial_pto_engagement_title" text="Innkobling av kraftuttak"/>
         <text name="rms_tutorial_pto_engagement_message" text="Koble inn kraftuttaket på tomgang, og øk deretter turtallet: innkobling på høyt turtall gir hele drivverket et støt, særlig med et tungt redskap. Hver innkobling sliter også på clutchen."/>
-        <text name="rms_tutorial_pto_raised_title" text="Kraftuttak og løftet redskap"/>
-        <text name="rms_tutorial_pto_raised_message" text="Å kjøre kraftuttaket med løftet redskap får kardangene til å arbeide i skarp vinkel og sliter dem raskt. Slå av kraftuttaket før du løfter redskapet for transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stillstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitasjen er langt lavere når maskinen går uten å arbeide. Med motoren av blir den minimal. Under tak forsvinner den helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lengre tomgang"/>

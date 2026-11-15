@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Sobrecalentamiento de la batería"/>
         <text name="rms_report_wear_lubrication" text="Lubricación atrasada"/>
         <text name="rms_report_wear_pto_overload" text="Sobrecarga de la TDF"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Ángulo del cardán"/>
         <text name="rms_report_wear_harvest_overload" text="Sobrecarga de la cosecha"/>
         <text name="rms_report_wear_harvest_flow" text="Flujo de grano elevado"/>
         <text name="rms_report_wear_harvest_straw" text="Picador sobrecargado"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Tomar para verter"/>
         <text name="rms_fluid_hand_carry" text="Llevar el bidón"/>
         <text name="rms_drum_pump_name" text="Bomba de barril a batería"/>
-        <text name="rms_drum_pump_function" text="Se monta en un barril de 200 L para llenar las máquinas con la pistola"/>
+        <text name="rms_drum_pump_function" text="Se monta en un barril para llenar las máquinas con la pistola"/>
         <text name="rms_drum_pump_mount" text="Montar en el barril"/>
         <text name="rms_drum_pump_take" text="Recuperar la bomba"/>
         <text name="rms_drum_pump_nozzle_take" text="Tomar la pistola"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Con el motor diésel frío, una pulsación del mando de arranque enciende el contacto e inicia automáticamente el ciclo de precalentamiento. Los testigos del cuadro se encienden brevemente y, después, el testigo de precalentamiento permanece encendido hasta que el motor está listo. No repitas la orden: el motor de arranque se acciona automáticamente cuando el testigo se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Embrague de la TDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Embraga la TDF al ralentí y luego sube las revoluciones: embragarla a altas revoluciones da un golpe a toda la transmisión, más aún con un apero pesado. Cada embrague desgasta además su embrague."/>
-        <text name="rms_tutorial_pto_raised_title" text="TDF y apero levantado"/>
-        <text name="rms_tutorial_pto_raised_message" text="Hacer girar la TDF con el apero levantado obliga a los cardanes a trabajar con mucho ángulo y los desgasta rápido. Desconecta la TDF antes de levantar el apero para el transporte."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralentí y tiempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="El desgaste es mucho menor cuando la máquina está en marcha sin trabajar. Con el motor apagado se vuelve mínimo. Bajo techo, desaparece por completo."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralentí prolongado"/>

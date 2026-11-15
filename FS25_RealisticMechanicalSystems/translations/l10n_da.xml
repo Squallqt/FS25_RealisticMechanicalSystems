@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet overopheder"/>
         <text name="rms_report_wear_lubrication" text="Forsinket smøring"/>
         <text name="rms_report_wear_pto_overload" text="PTO overbelastet"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardanakslens vinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Høst overbelastet"/>
         <text name="rms_report_wear_harvest_flow" text="Stor kornstrøm"/>
         <text name="rms_report_wear_harvest_straw" text="Snitter overbelastet"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Tag for at påfylde"/>
         <text name="rms_fluid_hand_carry" text="Bær dunken"/>
         <text name="rms_drum_pump_name" text="Batteridrevet tøndepumpe"/>
-        <text name="rms_drum_pump_function" text="Sættes på en 200 L tønde for at fylde maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Sættes på en tønde for at fylde maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sæt på tønden"/>
         <text name="rms_drum_pump_take" text="Tag pumpen af"/>
         <text name="rms_drum_pump_nozzle_take" text="Tag pistolen"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="På en kold dieselmotor slår ét tryk på startknappen tændingen til og starter forglødningen automatisk. Lamperne i instrumentbrættet lyser kort op, hvorefter forglødningslampen bliver ved med at lyse, indtil motoren er klar. Gentag ikke kommandoen: startmotoren kobler ind af sig selv, når lampen slukker."/>
         <text name="rms_tutorial_pto_engagement_title" text="Indkobling af PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kobl PTO'en ind i tomgang, og hæv derefter omdrejningerne: indkobling ved høje omdrejninger giver hele drivlinjen et stød, særligt med et tungt redskab. Hver indkobling slider også dens kobling."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO og løftet redskab"/>
-        <text name="rms_tutorial_pto_raised_message" text="Kører PTO'en med redskabet løftet, arbejder kardanakslerne i en skarp vinkel og slides hurtigt. Slå PTO'en fra, før du løfter redskabet til transport."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Sliddet er langt lavere, når maskinen kører uden at arbejde. Med motoren slukket bliver det minimalt. Under tag forsvinder det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Længere tomgang"/>

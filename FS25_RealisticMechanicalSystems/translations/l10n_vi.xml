@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Ắc quy quá nhiệt"/>
         <text name="rms_report_wear_lubrication" text="Bôi trơn chậm trễ"/>
         <text name="rms_report_wear_pto_overload" text="PTO quá tải"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Góc trục các-đăng"/>
         <text name="rms_report_wear_harvest_overload" text="Quá tải thu hoạch"/>
         <text name="rms_report_wear_harvest_flow" text="Lưu lượng hạt lớn"/>
         <text name="rms_report_wear_harvest_straw" text="Máy băm rơm quá tải"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Cầm lên để đổ"/>
         <text name="rms_fluid_hand_carry" text="Mang bình"/>
         <text name="rms_drum_pump_name" text="Bơm thùng phuy dùng pin"/>
-        <text name="rms_drum_pump_function" text="Lắp lên thùng phuy 200 L để bơm cho máy qua súng bơm"/>
+        <text name="rms_drum_pump_function" text="Lắp lên thùng phuy để bơm cho máy qua súng bơm"/>
         <text name="rms_drum_pump_mount" text="Lắp lên thùng phuy"/>
         <text name="rms_drum_pump_take" text="Lấy lại bơm"/>
         <text name="rms_drum_pump_nozzle_take" text="Cầm súng bơm"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Trên động cơ diesel nguội, nhấn lệnh khởi động một lần sẽ bật khóa điện và tự động bắt đầu chu trình sấy nóng. Các đèn trên bảng điều khiển sáng trong chốc lát, sau đó đèn sấy tiếp tục sáng cho đến khi động cơ sẵn sàng. Không lặp lại lệnh: bộ đề tự động hoạt động khi đèn tắt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Gài PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Hãy gài PTO ở chế độ không tải rồi mới tăng vòng tua: gài ở vòng tua cao gây va đập cho toàn bộ hệ truyền động, càng mạnh khi nông cụ càng nặng. Mỗi lần gài cũng làm mòn ly hợp của nó."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO và nông cụ đang nâng"/>
-        <text name="rms_tutorial_pto_raised_message" text="Chạy PTO khi nông cụ đang nâng khiến các khớp các-đăng làm việc ở góc lớn và mòn nhanh. Hãy tắt PTO trước khi nâng nông cụ để vận chuyển."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Chạy không tải và ngừng hoạt động"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Hao mòn thấp hơn nhiều khi máy chạy mà không làm việc. Khi tắt động cơ, hao mòn trở nên tối thiểu. Khi được cất dưới mái che, hao mòn biến mất hoàn toàn."/>
         <text name="rms_tutorial_idle_deposit_title" text="Chạy không tải kéo dài"/>

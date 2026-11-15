@@ -6,9 +6,9 @@ local specName = "spec_" .. g_currentModName .. ".rmsFluidHandTool"
 local modDirectory = g_currentModDirectory
 
 RMS_FluidHandTool.FILENAMES = {
-    [5] = "objects/fluids/shared/canisterHand5L.xml",
-    [25] = "objects/fluids/shared/canisterHand25L.xml",
-    [200] = "objects/drumPump/drumPumpNozzle.xml"
+    medium = "objects/fluids/shared/canisterHand5L.xml",
+    large = "objects/fluids/shared/canisterHand20L.xml",
+    drum = "objects/drumPump/drumPumpNozzle.xml"
 }
 RMS_FluidHandTool.TARGET_REFRESH_INTERVAL = 200
 RMS_FluidHandTool.FOLLOW_INTERVAL = 500
@@ -105,6 +105,7 @@ local function getHandsCan(hands)
     return nil
 end
 
+---Returns the drum with a pump the hands aim at, and its place
 local function getHandsDrum(hands)
     local target = hands:getCarryingPlayer().targeter.closestTargetsByKey[HandToolHands]
     if target == nil or hands:getHeldItem() ~= nil then
@@ -113,23 +114,36 @@ local function getHandsDrum(hands)
 
     local object = g_currentMission:getNodeObject(target.node)
     local spec = object ~= nil and object[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    if spec ~= nil and spec.hasPump and not spec.isNozzleOut and g_currentMission.accessHandler:canPlayerAccess(object) then
-        return object
+    if spec == nil or spec.slots == nil then
+        return nil
+    end
+    local index = object:getRMSFluidSlotAt(target.x, target.y, target.z)
+    local slot = spec.slots[index]
+    if slot ~= nil and slot.hasPump and not slot.isNozzleOut and g_currentMission.accessHandler:canPlayerAccess(object) then
+        return object, index
     end
     return nil
 end
 
 local function onTakeAction(hands)
-    local container = getHandsCan(hands) or getHandsDrum(hands)
+    local container = getHandsCan(hands)
     if container ~= nil then
         RMS_FluidCanisterEvent.send(container)
+        return
+    end
+    local drum, index = getHandsDrum(hands)
+    if drum ~= nil then
+        RMS_FluidCanisterEvent.send(drum, nil, index)
     end
 end
 
 local function onPickUpAction(hands, superFunc, ...)
-    local drum = hands:getCarryingPlayer().isOwner and getHandsDrum(hands) or nil
+    local drum, index = nil, nil
+    if hands:getCarryingPlayer().isOwner then
+        drum, index = getHandsDrum(hands)
+    end
     if drum ~= nil then
-        RMS_DrumPumpEvent.send(drum)
+        RMS_DrumPumpEvent.send(drum, nil, index)
         return
     end
     superFunc(hands, ...)
@@ -209,14 +223,16 @@ function RMS_FluidHandTool.getPourRefusal(vehicle, circuit, container)
 end
 
 ---Takes a can or the nozzle of a drum into the hand of a player, on the server
-function RMS_FluidHandTool.take(player, container)
+-- @param integer? index drum of a pallet whose nozzle is taken, the first by default
+function RMS_FluidHandTool.take(player, container, index)
     local containerSpec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
-    if containerSpec == nil or containerSpec.carrierTool ~= nil or containerSpec.isBeingTaken
+    local slot = containerSpec ~= nil and containerSpec.slots ~= nil and containerSpec.slots[index or 1] or nil
+    if slot == nil or slot.carrierTool ~= nil or slot.isBeingTaken
         or not g_currentMission.accessHandler:canPlayerAccess(container, player) or player:getIsHoldingHandTool() then
         return
     end
     if container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY then
-        if not containerSpec.hasPump or container:getRMSFluidHoseSpan(player) > RMS_FluidTransfer.HOSE_LENGTH then
+        if not slot.hasPump or container:getRMSFluidHoseSpan(player, index) > RMS_FluidTransfer.HOSE_LENGTH then
             return
         end
     else
@@ -229,19 +245,19 @@ function RMS_FluidHandTool.take(player, container)
     end
 
     -- Guard against repeated requests during asynchronous loading.
-    containerSpec.isBeingTaken = true
+    slot.isBeingTaken = true
     local loadingData = HandToolLoadingData.new()
-    loadingData:setFilename(modDirectory .. RMS_FluidHandTool.FILENAMES[container:getRMSFluidCapacity()])
+    loadingData:setFilename(modDirectory .. RMS_FluidHandTool.FILENAMES[RMS_FluidContainer.getFormat(container:getRMSFluidCapacity())])
     loadingData:setOwnerFarmId(player.farmId)
     loadingData:setIsSaved(false)
     loadingData:setIsRegistered(false)
-    loadingData:load(RMS_FluidHandTool.onTaken, RMS_FluidHandTool, { player = player, container = container })
+    loadingData:load(RMS_FluidHandTool.onTaken, RMS_FluidHandTool, { player = player, container = container, index = index })
 end
 
 ---Puts the loaded hand tool in the hand of the player
 function RMS_FluidHandTool.onTaken(_, handTool, loadingState, arguments)
-    local player, container = arguments.player, arguments.container
-    container[RMS_FluidContainer.SPEC_TABLE_NAME].isBeingTaken = nil
+    local player, container, index = arguments.player, arguments.container, arguments.index
+    container[RMS_FluidContainer.SPEC_TABLE_NAME].slots[index or 1].isBeingTaken = nil
     if loadingState ~= HandToolLoadingState.OK then
         return
     end
@@ -258,12 +274,12 @@ function RMS_FluidHandTool.onTaken(_, handTool, loadingState, arguments)
 
     local spec = handTool[specName]
     spec.followX, spec.followY, spec.followZ = getWorldTranslation(player.rootNode)
-    handTool:setRMSFluidContainer(container)
+    handTool:setRMSFluidContainer(container, index)
     -- Set the holder before the creation stream is sent.
     handTool:setHolder(player, true)
     player:setCurrentHandTool(handTool, true)
     if spec.isNozzle then
-        container:setRMSFluidNozzle(handTool)
+        container:setRMSFluidNozzle(handTool, index)
     else
         container:setRMSFluidCarried(handTool)
     end
@@ -321,10 +337,11 @@ function RMS_FluidHandTool:onLoad(xmlFile, baseDirectory)
     end
 end
 
----Links the tool to the container it stands for
-function RMS_FluidHandTool:setRMSFluidContainer(container)
+---Links the tool to its container, and to the drum of its nozzle
+function RMS_FluidHandTool:setRMSFluidContainer(container, index)
     local spec = self[specName]
     spec.container = container
+    spec.index = index or 1
     spec.isNozzle = container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
     spec.pourText = string.format(g_i18n:getText("rms_fluid_pour_action"), container:getRMSFluidKindText())
     spec.carryText = g_i18n:getText(spec.isNozzle and "rms_drum_pump_nozzle_return" or "rms_fluid_hand_carry")
@@ -348,11 +365,13 @@ end
 
 function RMS_FluidHandTool:onWriteStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self[specName].container)
+    streamWriteUInt8(streamId, self[specName].index or 1)
 end
 
 function RMS_FluidHandTool:onReadStream(streamId, connection)
     -- The container may arrive after its hand tool on join.
     self[specName].containerId = NetworkUtil.readNodeObjectId(streamId)
+    self[specName].containerIndex = streamReadUInt8(streamId)
     self:raiseActive()
 end
 
@@ -360,7 +379,7 @@ local function stopPour(handTool)
     local spec = handTool[specName]
     if spec.pourVehicle ~= nil then
         spec.pourVehicle = nil
-        RMS_FluidTransferRequestEvent.send(spec.container, nil, nil, false, true)
+        RMS_FluidTransferRequestEvent.send(spec.container, nil, nil, false, true, spec.index)
     end
 end
 
@@ -407,7 +426,7 @@ function RMS_FluidHandTool:onUpdate(dt)
             return
         end
         spec.containerId = nil
-        self:setRMSFluidContainer(container)
+        self:setRMSFluidContainer(container, spec.containerIndex)
     end
 
     local container = spec.container
@@ -430,13 +449,13 @@ function RMS_FluidHandTool:onUpdate(dt)
         return
     end
 
-    local isPouring = container:getIsRMSFluidTransferActive()
+    local isPouring = container:getIsRMSFluidTransferActive(spec.index)
     if isPouring ~= spec.isPouring then
         spec.isPouring = isPouring
         RMS_SoundManager.setSamplePlaying(spec.samples.pour, isPouring)
         if getIsLocallyCarried(self) then
             if isPouring then
-                RMS_FluidHandTool.showPour(container, spec.pourVehicle, spec.pourCircuit, spec.pourIsCompatible)
+                RMS_FluidHandTool.showPour(container, spec.pourVehicle, spec.pourCircuit, spec.pourIsCompatible, spec.index)
             else
                 RMS_FluidHandTool.endPour()
             end
@@ -444,7 +463,7 @@ function RMS_FluidHandTool:onUpdate(dt)
     end
 
     if spec.isNozzle and player ~= nil and player.isOwner and not spec.isSetDown then
-        local length, span = RMS_FluidTransfer.HOSE_LENGTH, container:getRMSFluidHoseSpan(player)
+        local length, span = RMS_FluidTransfer.HOSE_LENGTH, container:getRMSFluidHoseSpan(player, spec.index)
         if span > length then
             RMS_FluidHandTool.onCarryAction(self)
         elseif span > length * RMS_FluidHandTool.HOSE_WARNING_SHARE and not g_gui:getIsGuiVisible() then
@@ -542,7 +561,7 @@ local function startPour(handTool)
     spec.pourVehicle = target
     spec.pourCircuit = circuit
     spec.pourIsCompatible = spec.targetIsCompatible
-    RMS_FluidTransferRequestEvent.send(spec.container, target, circuit, not spec.targetIsCompatible, false)
+    RMS_FluidTransferRequestEvent.send(spec.container, target, circuit, not spec.targetIsCompatible, false, spec.index)
 end
 
 ---Pours into the machine aimed at for as long as the key is held
@@ -625,10 +644,11 @@ function RMS_FluidHandTool:onDelete()
     end
 
     local container = spec.container
-    if self.isServer and container ~= nil and not container.isDeleted
-        and container[RMS_FluidContainer.SPEC_TABLE_NAME].carrierTool == self then
+    local slots = container ~= nil and container[RMS_FluidContainer.SPEC_TABLE_NAME].slots or nil
+    if self.isServer and container ~= nil and not container.isDeleted and slots ~= nil
+        and slots[spec.index or 1] ~= nil and slots[spec.index or 1].carrierTool == self then
         if spec.isNozzle then
-            container:setRMSFluidNozzle(nil)
+            container:setRMSFluidNozzle(nil, spec.index)
         else
             local pose = spec.setDownPose or { spec.followX, spec.followY + 0.3, spec.followZ, 0 }
             container:setRMSFluidCarried(nil, pose[1], pose[2], pose[3], pose[4])
@@ -637,7 +657,8 @@ function RMS_FluidHandTool:onDelete()
 end
 
 ---Shows the local player the pour that started
-function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
+-- @param integer? index drum of a pallet poured from, the first by default
+function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible, index)
     if RMS_FluidHandTool.display == nil then
         g_currentMission:addDrawable(RMS_FluidHandTool)
     end
@@ -645,6 +666,7 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
     local product = RMS_Fluids.PRODUCTS[container:getRMSFluidProductKey()]
     RMS_FluidHandTool.display = {
         container = container,
+        index = index or 1,
         vehicle = vehicle,
         circuit = circuit,
         isCompatible = isCompatible,
@@ -653,8 +675,8 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible)
         circuitText = g_i18n:getText(RMS_Fluids.getCircuitTextKey(vehicle, circuit)),
         machineText = vehicle:getFullName(),
         productText = g_brandManager:getBrandByName(product.brand).title .. " " .. product.name,
-        containerLiters = container:getRMSFluidLiters(),
-        containerCapacity = container:getRMSFluidCapacity()
+        containerLiters = container:getRMSFluidLiters(index),
+        containerCapacity = container:getRMSFluidCapacity(index)
     }
     g_currentMission.hud.contextActionDisplay:resetContext()
 end
@@ -685,7 +707,7 @@ function RMS_FluidHandTool.draw()
         return
     end
 
-    display.containerLiters = display.container.isDeleted and 0 or display.container:getRMSFluidLiters()
+    display.containerLiters = display.container.isDeleted and 0 or display.container:getRMSFluidLiters(display.index)
     if not g_currentMission.hud.isVisible then
         return
     end

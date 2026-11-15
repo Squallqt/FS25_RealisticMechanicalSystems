@@ -129,7 +129,6 @@ RMS_Config = {
             SHAFT_TORQUE_EXPONENT = 3,
             -- shafts of the game drawn wide-angle at both ends
             SHAFT_WIDE_BOTH_ENDS = { walterscheidWWZ = true, walterscheidW_SC25 = true },
-            RAISED_TUTORIAL_MS = 20000,
             ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
             ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
             ENGAGEMENT_SHOCK_DAMAGE = 0.005,
@@ -1169,6 +1168,7 @@ RMS_Config = {
         PLUME_SPRITES = "soft",
         PLUME_DIRECTORY = "particles/exhaust/",
         PLUME_FILE = "plume.i3d",
+        PLUME_HEAT_FILE = "heat.i3d",
 
         PUFF = {
             OVERLAP_TARGET = 5,
@@ -1234,8 +1234,33 @@ RMS_Config = {
         EGT = {
             RISE_IDLE_K = 120,
             RISE_FULL_K = 430,
-            COLD_FACTOR = 0.45,
+            -- K per share of the stock torque above full load
+            OVERLOAD_K = 130,
+            -- deg C, gas leaving the particulate filter while it regenerates
+            REGENERATION_C = 600,
+            -- ms, at full gas flow
+            LINE_TAU = 75000,
+            -- ms, engine stopped
+            LINE_COOLING_TAU = 390000,
             DILUTION_EXPONENT = 1.30
+        },
+
+        HEAT = {
+            -- refractivity of air at 15 deg C
+            AIR_REFRACTIVITY = 2.77e-4,
+            -- deflection of a ray through the jet, in refractivity steps
+            PATH_FACTOR = 4,
+            GAIN = 2.5,
+            -- smallest deflection drawn (rad)
+            MIN_DEFLECTION = 1.25e-4,
+            -- share of the line heat the air rising from a stopped engine takes
+            CONVECTION_SHARE = 0.5,
+            -- m, past every transparent object a puff must be drawn before
+            SORT_DISTANCE = 20000,
+            -- travel after which the eddy pattern of the shader repeats (m)
+            SCROLL_PERIOD = 96,
+            CLIP_DISTANCE = 80,
+            POOL_MAX = 200
         },
 
         TURBULENCE = {
@@ -1679,7 +1704,7 @@ RMS_Config.TUTORIAL_MESSAGE_IDS = {
     "CVT_OVERHEAT", "DRIVETRAIN_MODES", "DRIVETRAIN_WINDUP", "ENGINE_OVERHEAT", "ENGINE_OVERLOAD", "EXHAUST_SMOKE",
     "FLUID_LEVEL", "HARD_START", "HEAVY_TRAILER", "HOT_WEATHER", "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL",
     "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE", "NEEDS_REPAIR", "OVERLOAD_INDICATOR",
-    "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT", "PTO_ENGAGEMENT", "PTO_RAISED",
+    "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT", "PTO_ENGAGEMENT",
     "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
     "TRANSMISSION_OVERHEAT", "WET_WEATHER", "WHEEL_SLIP"
 }

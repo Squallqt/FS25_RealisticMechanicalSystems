@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Akkumulátor túlmelegedése"/>
         <text name="rms_report_wear_lubrication" text="Elmaradt kenés"/>
         <text name="rms_report_wear_pto_overload" text="TLT túlterhelése"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardántengely szöge"/>
         <text name="rms_report_wear_harvest_overload" text="Betakarítási túlterhelés"/>
         <text name="rms_report_wear_harvest_flow" text="Nagy szemáram"/>
         <text name="rms_report_wear_harvest_straw" text="Szecskázó túlterhelve"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Kézbe vétel betöltéshez"/>
         <text name="rms_fluid_hand_carry" text="Kanna vitele"/>
         <text name="rms_drum_pump_name" text="Akkus hordószivattyú"/>
-        <text name="rms_drum_pump_function" text="200 literes hordóra szerelve a gépek pisztollyal tölthetők fel"/>
+        <text name="rms_drum_pump_function" text="Hordóra szerelve a gépek pisztollyal tölthetők fel"/>
         <text name="rms_drum_pump_mount" text="Felszerelés a hordóra"/>
         <text name="rms_drum_pump_take" text="Szivattyú levétele"/>
         <text name="rms_drum_pump_nozzle_take" text="Pisztoly kézbe vétele"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Hideg dízelmotornál az indításvezérlő egyszeri megnyomása bekapcsolja a gyújtást, és automatikusan elindítja az izzítási ciklust. A műszerfal visszajelzői rövid időre felgyulladnak, majd az előizzítás jelzőfénye addig világít, amíg a motor készen nem áll. Ne ismételd meg a parancsot: az önindító a jelzőfény kialvásakor automatikusan bekapcsol."/>
         <text name="rms_tutorial_pto_engagement_title" text="A TLT bekapcsolása"/>
         <text name="rms_tutorial_pto_engagement_message" text="A TLT-t alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton bekapcsolva lökést kap az egész hajtáslánc, nehéz munkagéppel még inkább. Minden bekapcsolás a tengelykapcsolóját is koptatja."/>
-        <text name="rms_tutorial_pto_raised_title" text="TLT és kiemelt munkagép"/>
-        <text name="rms_tutorial_pto_raised_message" text="Ha a TLT kiemelt munkagéppel forog, a kardántengelyek nagy szögben dolgoznak és gyorsan kopnak. Kapcsold ki a TLT-t, mielőtt szállításhoz kiemeled a munkagépet."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Alapjárat és állásidő"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="A kopás sokkal alacsonyabb, amikor a gép jár, de nem végez aktív munkát. Amikor a motor le van állítva, a kopás minimálisra csökken, és ha a gép fedett helyen áll, teljesen megszűnik."/>
         <text name="rms_tutorial_idle_deposit_title" text="Hosszan tartó alapjárat"/>

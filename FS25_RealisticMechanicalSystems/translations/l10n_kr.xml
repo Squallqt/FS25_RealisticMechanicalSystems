@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="배터리 과열"/>
         <text name="rms_report_wear_lubrication" text="그리스 주입 지연"/>
         <text name="rms_report_wear_pto_overload" text="PTO 과부하"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="PTO 축 각도"/>
         <text name="rms_report_wear_harvest_overload" text="수확 과부하"/>
         <text name="rms_report_wear_harvest_flow" text="곡물 유량 과다"/>
         <text name="rms_report_wear_harvest_straw" text="초퍼 과부하"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="들고 보충"/>
         <text name="rms_fluid_hand_carry" text="용기 운반"/>
         <text name="rms_drum_pump_name" text="충전식 드럼 펌프"/>
-        <text name="rms_drum_pump_function" text="200 L 드럼통에 장착해 노즐로 기계에 보충합니다"/>
+        <text name="rms_drum_pump_function" text="드럼통에 장착해 노즐로 기계에 보충합니다"/>
         <text name="rms_drum_pump_mount" text="드럼통에 장착"/>
         <text name="rms_drum_pump_take" text="펌프 회수"/>
         <text name="rms_drum_pump_nozzle_take" text="노즐 들기"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="차가운 디젤 엔진에서는 시동 조작을 한 번 누르면 점화가 켜지고 예열 플러그 사이클이 자동으로 시작됩니다. 계기판 경고등이 자체 점검을 수행한 뒤 엔진이 준비될 때까지 예열등이 켜져 있습니다. 조작을 반복하지 마십시오. 예열등이 꺼지면 스타터가 자동으로 작동합니다."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO 연결"/>
         <text name="rms_tutorial_pto_engagement_message" text="PTO는 공회전 상태에서 연결한 뒤 회전수를 올리세요. 높은 회전수에서 연결하면 구동계 전체에 충격이 가해지며, 작업기가 무거울수록 더 커집니다. 연결할 때마다 클러치도 마모됩니다."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO와 들어 올린 작업기"/>
-        <text name="rms_tutorial_pto_raised_message" text="작업기를 들어 올린 채 PTO를 돌리면 유니버설 조인트가 급한 각도로 돌아가 빠르게 마모됩니다. 운송을 위해 작업기를 들어 올리기 전에 PTO를 끄세요."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="공회전 및 비가동"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="기계가 작업하지 않고 가동 중일 때는 마모가 훨씬 적습니다. 엔진을 끄면 마모가 최소화되고 지붕 아래에 보관하면 완전히 사라집니다."/>
         <text name="rms_tutorial_idle_deposit_title" text="장시간 공회전"/>

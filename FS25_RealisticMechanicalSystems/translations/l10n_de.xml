@@ -591,6 +591,7 @@
         <text name="rms_report_wear_battery_heat" text="Batterie überhitzt"/>
         <text name="rms_report_wear_lubrication" text="Schmierung überfällig"/>
         <text name="rms_report_wear_pto_overload" text="Zapfwelle überlastet"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Gelenkwellenwinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Ernte überlastet"/>
         <text name="rms_report_wear_harvest_flow" text="Hoher Kornfluss"/>
         <text name="rms_report_wear_harvest_straw" text="Häcksler überlastet"/>
@@ -670,7 +671,7 @@
         <text name="rms_fluid_hand_take" text="Zum Einfüllen nehmen"/>
         <text name="rms_fluid_hand_carry" text="Kanister tragen"/>
         <text name="rms_drum_pump_name" text="Akku-Fasspumpe"/>
-        <text name="rms_drum_pump_function" text="Wird auf ein 200-L-Fass gesetzt, um Maschinen mit der Zapfpistole zu befüllen"/>
+        <text name="rms_drum_pump_function" text="Wird auf ein Fass gesetzt, um Maschinen mit der Zapfpistole zu befüllen"/>
         <text name="rms_drum_pump_mount" text="Auf Fass setzen"/>
         <text name="rms_drum_pump_take" text="Pumpe abnehmen"/>
         <text name="rms_drum_pump_nozzle_take" text="Zapfpistole nehmen"/>
@@ -996,8 +997,6 @@
         <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten leuchten kurz auf; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapfwelle einkuppeln"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kupple die Zapfwelle im Leerlauf ein und erhöhe dann die Drehzahl: Einkuppeln bei hoher Drehzahl belastet den ganzen Antriebsstrang mit einem Stoß, umso mehr bei einem schweren Gerät. Jedes Einkuppeln verschleißt außerdem die Kupplung."/>
-        <text name="rms_tutorial_pto_raised_title" text="Zapfwelle und ausgehobenes Gerät"/>
-        <text name="rms_tutorial_pto_raised_message" text="Läuft die Zapfwelle bei ausgehobenem Gerät, arbeiten die Gelenkwellen unter starkem Winkel und verschleißen schnell. Schalte die Zapfwelle ab, bevor du das Gerät für den Transport aushebst."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Leerlauf und Standzeit"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Der Verschleiß ist deutlich geringer, wenn die Maschine läuft, ohne zu arbeiten. Bei abgestelltem Motor wird er minimal, und er verschwindet ganz, wenn die Maschine unter einem Dach steht."/>
         <text name="rms_tutorial_idle_deposit_title" text="Zu langer Leerlauf"/>

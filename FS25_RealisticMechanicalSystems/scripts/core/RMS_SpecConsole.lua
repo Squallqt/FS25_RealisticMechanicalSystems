@@ -1085,7 +1085,7 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
     print(string.format("RMS: Factor stats reset for '%s'.", vehicle:getFullName()))
 end
 
----Forces the exhaust smoke this computer draws on every vehicle
+---Forces the exhaust this computer draws on every vehicle
 function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...)
     local args = parseArguments(rawArgs, ...)
     local first = args[1] ~= nil and string.lower(tostring(args[1])) or nil
@@ -1096,13 +1096,13 @@ function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...
     end
 
     local override = {}
-    local names = {"opacity", "flow", "vapour"}
+    local names = {"opacity", "flow", "vapour", "temperature"}
     for index, name in ipairs(names) do
         local token = args[index]
         if token ~= nil and token ~= "-" then
             local value = tonumber(token)
-            if value == nil or value < 0 or (name ~= "vapour" and value > 1) then
-                print("RMS Error: Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off")
+            if value == nil or value < 0 or ((name == "opacity" or name == "flow") and value > 1) then
+                print("RMS Error: Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] [gas deg C >=0|-] | off")
                 return
             end
             override[name] = value
@@ -1110,8 +1110,9 @@ function RealisticMechanicalSystems.ConsoleCommands:exhaustOverride(rawArgs, ...
     end
 
     RMS_Exhaust.override = override
-    print(string.format("RMS: exhaust override opacity %s flow %s vapour %s",
-        tostring(override.opacity or "engine"), tostring(override.flow or "engine"), tostring(override.vapour or "engine")))
+    print(string.format("RMS: exhaust override opacity %s flow %s vapour %s gas temperature %s",
+        tostring(override.opacity or "engine"), tostring(override.flow or "engine"), tostring(override.vapour or "engine"),
+        tostring(override.temperature or "engine")))
 end
 
 RealisticMechanicalSystems.ConsoleCommands.parseArguments = parseArguments
@@ -1143,5 +1144,5 @@ addConsoleCommand("rms_resetFactorStats", "Resets accumulated factor stats for c
 addConsoleCommand("rms_setSpecVar", "Sets physical RMS vehicle state, including raw oil temperatures. Usage: rms_setSpecVar <path> <value>", "setSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_printSpecVar", "Prints RMS specialization variable on current vehicle. Usage: rms_printSpecVar <path>", "printSpecVar", RealisticMechanicalSystems.ConsoleCommands)
 addConsoleCommand("rms_exhaustOverride",
-    "Forces the exhaust smoke this computer draws on every vehicle. Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] | off",
+    "Forces the exhaust smoke and gas temperature this computer draws on every vehicle. Usage: rms_exhaustOverride <opacity 0-1|-> [flow 0-1|-] [vapour >=0|-] [gas deg C >=0|-] | off",
     "exhaustOverride", RealisticMechanicalSystems.ConsoleCommands)

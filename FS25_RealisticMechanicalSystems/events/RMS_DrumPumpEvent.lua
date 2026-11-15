@@ -11,16 +11,19 @@ function RMS_DrumPumpEvent.emptyNew()
 end
 
 -- @param table? handTool pump in hand to set on it, nil to take its pump back
-function RMS_DrumPumpEvent.new(container, handTool)
+-- @param integer? index drum of the pallet, the first by default
+function RMS_DrumPumpEvent.new(container, handTool, index)
     local self = RMS_DrumPumpEvent.emptyNew()
     self.container = container
     self.handTool = handTool
     self.isMount = handTool ~= nil
+    self.index = index or 1
     return self
 end
 
 function RMS_DrumPumpEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
+    streamWriteUInt8(streamId, self.index)
     if streamWriteBool(streamId, self.handTool ~= nil) then
         NetworkUtil.writeNodeObject(streamId, self.handTool)
     end
@@ -28,6 +31,7 @@ end
 
 function RMS_DrumPumpEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
+    self.index = streamReadUInt8(streamId)
     self.isMount = streamReadBool(streamId)
     if self.isMount then
         self.handTool = NetworkUtil.readNodeObject(streamId)
@@ -46,13 +50,13 @@ function RMS_DrumPumpEvent:run(connection)
     end
 
     if not self.isMount then
-        RMS_DrumPump.unmount(requester.player, self.container)
+        RMS_DrumPump.unmount(requester.player, self.container, self.index)
     elseif self.handTool ~= nil then
-        RMS_DrumPump.mount(requester.player, self.handTool, self.container)
+        RMS_DrumPump.mount(requester.player, self.handTool, self.container, self.index)
     end
 end
 
 ---Asks the server to set a pump on a drum or take it back
-function RMS_DrumPumpEvent.send(container, handTool)
-    g_client:getServerConnection():sendEvent(RMS_DrumPumpEvent.new(container, handTool))
+function RMS_DrumPumpEvent.send(container, handTool, index)
+    g_client:getServerConnection():sendEvent(RMS_DrumPumpEvent.new(container, handTool, index))
 end
