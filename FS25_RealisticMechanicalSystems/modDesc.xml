@@ -10,16 +10,17 @@
     <description>
         <en><![CDATA[Your machines finally wear out like real ones.
 
-Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts taking the place of the PTO on a harvester. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts and the header drive taking the place of the PTO on a harvester. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
 
 WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
 - Each part wears faster under what wears it on a real machine: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
 - Each part fails as real parts of its kind do, by published failure data: about fourteen breakdowns over the life of a machine in normal use, few when new and more as it ages, more on the parts you strain
 - Overdue service accelerates wear in the systems covered by the overdue fluid
+- On a combine or a forage harvester, the header drive wears too: its belt and its driveline U-joints while the header turns, its slip clutch at each start, heard slipping until the header is up to speed, about five times more when the header is engaged at high revs than at idle. Past twice full work the slip clutch is heard slipping and burns out within a few seconds; a header left standing two weeks (half a game month) seizes its slip clutch until it is greased, and a blockage meanwhile breaks its driveline with a bang
 
 BREAKDOWNS
-- 164 breakdowns spread across the systems, most in four stages from Minor to Critical
+- 165 breakdowns spread across the systems, most in four stages from Minor to Critical
 - The part that fails is the one your use has worn: frequent braking with a heavy trailer wears out the brakes first
 - Early faults show through RPM fluctuations, coloured exhaust smoke, knocking and whistling; dashboard warnings usually appear from stage 2, though some faults can warn from stage 1
 - Old machines also degrade permanently, losing engine power, transmission bite, battery performance, and cooling efficiency
@@ -28,7 +29,7 @@ WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
 - Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. The colours of a machine you own change only through a full repaint, and buying one in another colour than the one already selected costs a full repaint
 - Part quality from Used to Original: each repair card shows the wear of the part, the machine a used part was taken from, its warranty and whether the factory warranty is kept. Cheaper parts are more often defective and bring the same fault back, a used part keeps the wear of its machine, and a defective filter fitted at maintenance wears its circuit until it is changed. The quote lists every part a repair replaces
-- A fault under warranty is repaired by the dealer as a Standard repair with original parts, free with its fluids, for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), or a part fitted aftermarket or used, excludes only the affected fault.
+- A fault under warranty is repaired by the dealer as a Standard repair with original parts, free with its fluids, for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, a header engaged above idle or a slip clutch burnt by slipping, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), or a part fitted aftermarket or used, excludes only the affected fault.
 - Engine remapping by the dealer, with the manufacturer's software up to the strongest engine of the range, or by a tuner at the farm or mobile workshop: 10 to 20% more power depending on the engine's place in its range, its curves before and after on a bench sheet, more fuel and heat for the extra power, wear at full load past the strongest engine of the range, and the warranty lost for good. Each puts its stock software back, the tuner free for 12 months
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
@@ -74,15 +75,20 @@ Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 Changelog 1.0.0.0-beta.3:
 - Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
 - Added TotalEnergies AdBlue in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank, poured into the AdBlue tank of the machines that have one; the drum pump also fits the AdBlue drum and tank
+- Added the header drive of combines and forage harvesters: its belt, slip clutch and driveline wear and break, the slip clutch heard each time it slips; engaged at high revs, the header wears its slip clutch about five times more than at idle, a slip clutch slipping more than a few seconds burns out, and that of a header left standing two weeks seizes until the header is greased
 - Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left
 - Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
 - Reworked the debug window: three views (Overview, Parts, Machine) browsed with the mouse and kept on screen while you drive, and the detailed log in a setting of its own
+- Reworked the sounds
 - Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
 - Fixed the Condition card showing parts replaced since the last inspection as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
 - Fixed the tools put away on the trolley returning to Hand Tools after a dedicated server restart
+- Fixed grain headers asking for the daily greasing of a tractor PTO shaft: their driveline takes 3 points every 50 hours, and windrower headers, driven by hydraulics, none
+- Fixed the mobile and personal workshops refusing the Complete inspection and electrical repairs of machines without a controller, which the diagnostic tool cannot connect to
+- Fixed a machine at the workshop hiding its work in progress with its battery disconnected or a broken-down engine, and able to crank in the last case
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -310,16 +316,17 @@ Changelog 0.10.0.0:
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
-Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane anstelle der Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane und der Vorsatzantrieb anstelle der Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
 VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
 - Jedes Teil verschleißt schneller unter dem, was es an einer echten Maschine verschleißt: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
 - Jedes Teil fällt aus wie echte Teile seiner Art, nach veröffentlichten Ausfalldaten: etwa vierzehn Defekte im Leben einer normal genutzten Maschine, wenige im Neuzustand und mehr mit dem Alter, mehr an den Teilen, die Sie überlasten
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme
+- An Mähdrescher und Feldhäcksler verschleißt auch der Vorsatzantrieb: Riemen und Kreuzgelenke der Gelenkwelle, solange der Vorsatz läuft, die Rutschkupplung bei jedem Einschalten, hörbar rutschend, bis der Vorsatz auf Drehzahl ist, etwa fünfmal stärker, wenn der Vorsatz bei hoher Drehzahl statt im Leerlauf eingekuppelt wird. Über dem Doppelten der vollen Arbeit rutscht die Rutschkupplung hörbar und brennt binnen weniger Sekunden durch; an einem zwei Wochen (einen halben Spielmonat) abgestellten Vorsatz rostet die Rutschkupplung fest, bis er abgeschmiert wird, und eine Verstopfung bricht in dieser Zeit seine Gelenkwelle mit einem Knall
 
 DEFEKTE
-- 164 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
+- 165 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
 - Es fällt das Teil aus, das Ihre Nutzung verschlissen hat: Häufiges Bremsen mit schwerem Anhänger verschleißt zuerst die Bremsen
 - Frühe Defekte zeigen sich durch schwankende Drehzahl, farbigen Abgasrauch, Klopfen und Pfeifen; Warnanzeigen leuchten meist ab Stufe 2, bei manchen Defekten schon ab Stufe 1
 - Alte Maschinen bauen zudem dauerhaft ab und verlieren Motorleistung, Kraftübertragung, Batterieleistung und Kühlwirkung
@@ -328,7 +335,7 @@ WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
 - Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Die Farben einer eigenen Maschine ändern sich nur durch eine komplette Neulackierung, und wer eine Maschine in einer anderen als der bereits gewählten Farbe kauft, zahlt eine komplette Neulackierung
 - Teilequalität von Gebraucht bis Original: Jede Karte einer Reparatur zeigt den Verschleiß des Teils, die Maschine, aus der ein Gebrauchtteil ausgebaut wurde, seine Garantie und ob die Werksgarantie bleibt. Billigere Teile sind häufiger defekt und holen denselben Fehler zurück, ein Gebrauchtteil behält den Verschleiß seiner Maschine, und ein bei der Wartung eingebauter defekter Filter verschleißt seinen Kreislauf bis zum Wechsel. Der Kostenvoranschlag listet jedes Teil, das eine Reparatur ersetzt
-- Ein Schaden unter Garantie wird vom Händler als Standard-Reparatur mit Originalteilen behoben, mit den benötigten Flüssigkeiten kostenlos, für 24 Monate oder bis zur Stundengrenze. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) oder ein eingebautes Nachbau- oder Gebrauchtteil schließt nur den betroffenen Schaden aus.
+- Ein Schaden unter Garantie wird vom Händler als Standard-Reparatur mit Originalteilen behoben, mit den benötigten Flüssigkeiten kostenlos, für 24 Monate oder bis zur Stundengrenze. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Vorsatz über Leerlauf eingekuppelt oder Rutschkupplung durch Rutschen verbrannt, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) oder ein eingebautes Nachbau- oder Gebrauchtteil schließt nur den betroffenen Schaden aus.
 - Motoroptimierung beim Händler, mit der Herstellersoftware bis zum stärksten Motor der Baureihe, oder durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt: 10 bis 20 % mehr Leistung je nach Stellung des Motors in seiner Baureihe, seine Kurven vorher und nachher auf einem Prüfstandsblatt, mehr Kraftstoff und Wärme für die zusätzliche Leistung, Verschleiß unter Volllast über dem stärksten Motor der Baureihe, und die Garantie erlischt endgültig. Jeder spielt seine Serien-Software zurück, der Tuner 12 Monate kostenlos
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Inspektion, Wartung und Reparatur, Neulackierung, Überholung oder Motoroptimierung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
@@ -374,15 +381,20 @@ Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 Changelog 1.0.0.0-beta.3:
 - Abgashitze hinzugefügt: Über dem Auspuff eines warmen Motors flimmert die Luft, stärker unter Last und während einer Regeneration des Partikelfilters
 - TotalEnergies AdBlue hinzugefügt: 10-L-Kanister, 208-L-Fass (einzeln oder zu zweit auf einer Palette) und 1.000-L-Tank, eingefüllt in den AdBlue-Tank der Maschinen, die einen haben; die Fasspumpe passt auch auf AdBlue-Fass und -Tank
+- Vorsatzantrieb von Mähdreschern und Feldhäckslern hinzugefügt: Riemen, Rutschkupplung und Gelenkwelle verschleißen und brechen, die Rutschkupplung hörbar, sobald sie rutscht; bei hoher Drehzahl eingekuppelt verschleißt der Vorsatz seine Rutschkupplung etwa fünfmal stärker als im Leerlauf, eine Rutschkupplung, die länger als wenige Sekunden rutscht, brennt durch, und die eines zwei Wochen abgestellten Vorsatzes rostet fest, bis er abgeschmiert wird
 - Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten; im Fahrzeug zeigt die Füllstandsanzeige den Produktnamen vollständig neben einem Symbol seiner Flüssigkeit, und zu Fuß trägt die Infobox Marke und Produkt als Titel über der verbleibenden Literzahl
 - Gebindegrößen überarbeitet: 20-L-Kanister statt 25 L und Fässer mit 200 L (Motorex), 205 L (FUCHS) oder 208 L (Motul), einzeln oder zu zweit auf einer Palette
 - Debug-Fenster überarbeitet: drei Ansichten (Overview, Parts, Machine), mit der Maus durchblättert und beim Fahren eingeblendet, und das detaillierte Protokoll mit eigener Einstellung
+- Sounds überarbeitet
 - Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
 - Zustandskarte behoben, die seit der letzten Inspektion ersetzte Teile als ausgefallen oder verschlissen zeigte
 - Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
 - Auf dem Wagen abgelegte Werkzeuge behoben, die nach einem Neustart des dedizierten Servers ins Menü Werkzeuge zurückkehrten
+- Getreideschneidwerke behoben, die das tägliche Abschmieren einer Traktor-Gelenkwelle verlangten: Ihre Gelenkwelle hat 3 Schmierstellen alle 50 Stunden, hydraulisch angetriebene Schwadmäher-Vorsätze keine
+- Mobile und eigene Werkstatt behoben, die an Maschinen ohne Steuergerät, an die sich das Diagnosegerät nicht anschließen lässt, die vollständige Inspektion und elektrische Reparaturen verweigerten
+- Maschine in der Werkstatt behoben, die bei getrennter Batterie oder Motorschaden die laufende Arbeit nicht anzeigte und im letzten Fall den Anlasser drehen lassen konnte
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -610,16 +622,17 @@ Changelog 0.10.0.0:
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
-Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte prenant la place de la prise de force sur une machine de récolte. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte et l'entraînement de la coupe prenant la place de la prise de force sur une machine de récolte. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
 USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
 - Chaque pièce s'use plus vite sous ce qui l'use sur une vraie machine : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
 - Chaque pièce lâche comme les vraies pièces de son type, d'après des données de pannes publiées : environ quatorze pannes sur la vie d'une machine menée normalement, peu quand elle est neuve et davantage en vieillissant, davantage sur les pièces que vous malmenez
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer
+- Sur une moissonneuse ou une ensileuse, l'entraînement de la coupe s'use aussi : sa courroie et les croisillons de son arbre quand la coupe tourne, son limiteur de couple à chaque démarrage, qu'on entend glisser jusqu'à ce que la coupe ait pris son régime, environ cinq fois plus quand la coupe est embrayée à haut régime qu'au ralenti. Au-delà de deux fois le plein travail, on entend le limiteur glisser et il brûle en quelques secondes ; une coupe remisée deux semaines (un demi-mois du jeu) grippe son limiteur jusqu'à ce qu'on la graisse, et un bourrage entre-temps casse son arbre dans un claquement
 
 PANNES
-- 164 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
+- 165 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
 - La pièce qui lâche est celle que votre usage a usée : freiner souvent avec une lourde remorque use d'abord les freins
 - Les premiers stades se manifestent par un régime instable, une fumée colorée, des cognements ou des sifflements ; les témoins apparaissent généralement au stade 2, mais certaines pannes peuvent en afficher dès le stade 1
 - Les machines âgées se dégradent aussi durablement et perdent puissance moteur, transmission, performance de batterie et efficacité de refroidissement
@@ -628,7 +641,7 @@ ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
 - L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Les couleurs d'une machine possédée ne changent que par une peinture complète, et acheter une machine dans une autre couleur que celle déjà sélectionnée coûte une peinture complète
 - Qualité des pièces de l'occasion à l'origine : chaque carte d'une réparation montre l'usure de la pièce, la machine d'où une pièce d'occasion est démontée, sa garantie et si la garantie usine est gardée. Les pièces moins chères sont plus souvent défectueuses et ramènent la même panne, une pièce d'occasion garde l'usure de sa machine, et un filtre défectueux posé à l'entretien use son circuit jusqu'à son changement. Le devis liste chaque pièce que la réparation remplace
-- Une panne sous garantie est réparée par le concessionnaire en Standard, pièces d'origine, gratuitement avec ses fluides, pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), ou une pièce posée adaptable ou d'occasion, exclut seulement la panne concernée.
+- Une panne sous garantie est réparée par le concessionnaire en Standard, pièces d'origine, gratuitement avec ses fluides, pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, coupe embrayée au-dessus du ralenti ou limiteur brûlé à force de glisser, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), ou une pièce posée adaptable ou d'occasion, exclut seulement la panne concernée.
 - Reprogrammation moteur chez le concessionnaire, avec le logiciel du constructeur jusqu'au plus gros moteur de la gamme, ou par un préparateur à l'atelier de la ferme ou à l'atelier mobile : 10 à 20 % de puissance en plus selon la place du moteur dans sa gamme, ses courbes avant et après sur une fiche de banc, plus de gazole et de chaleur pour la puissance en plus, de l'usure à pleine charge au-delà du plus gros moteur de la gamme, et la garantie perdue pour toujours. Chacun remet son logiciel d'origine, le préparateur gratuitement pendant 12 mois
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément les inspections, l'entretien et les réparations, la peinture, les révisions ou la reprogrammation moteur
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
@@ -674,15 +687,20 @@ Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSyste
 Changelog 1.0.0.0-beta.3 :
 - Ajout de la chaleur de l'échappement : l'air tremble au-dessus du pot d'un moteur chaud, davantage en charge et pendant une régénération du filtre à particules
 - Ajout de l'AdBlue TotalEnergies en bidon de 10 L, fût de 208 L (seul ou par deux sur une palette) et cuve de 1 000 L, versé dans le réservoir d'AdBlue des machines qui en ont un ; la pompe de fût se pose aussi sur le fût et la cuve d'AdBlue
+- Ajout de l'entraînement de la coupe des moissonneuses et des ensileuses : sa courroie, son limiteur de couple et son arbre s'usent et cassent, le limiteur s'entendant chaque fois qu'il glisse ; embrayée à haut régime, la coupe use son limiteur environ cinq fois plus qu'au ralenti, un limiteur qui glisse plus de quelques secondes brûle, et celui d'une coupe remisée deux semaines grippe jusqu'à ce qu'on la graisse
 - Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes ; en véhicule, l'affichage du remplissage donne le nom du produit en entier, à côté d'un pictogramme de son liquide, et à pied l'infobulle prend pour titre la marque et le produit, au-dessus des litres restants
 - Refonte des formats : jerricans de 20 L au lieu de 25 L, et fûts de 200 L (Motorex), 205 L (FUCHS) ou 208 L (Motul), seuls ou par deux sur une palette
 - Refonte de la fenêtre de débogage : trois vues (Overview, Parts, Machine) parcourues à la souris et gardées à l'écran pendant la conduite, et le journal détaillé dans un réglage à part
+- Refonte des sons
 - Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs
 - Correction de la carte État qui montrait en panne ou usées les pièces remplacées depuis la dernière inspection
 - Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
 - Correction des outils rangés sur le chariot qui revenaient dans les Outils manuels après un redémarrage du serveur dédié
+- Correction des coupes à grain qui demandaient le graissage quotidien d'un cardan de tracteur : leur arbre prend 3 points toutes les 50 heures, et les coupes d'andaineuse, entraînées en hydraulique, aucun
+- Correction des ateliers mobile et personnel qui refusaient l'inspection complète et les réparations électriques d'une machine sans calculateur, sur laquelle la valise de diagnostic ne se branche pas
+- Correction d'une machine à l'atelier qui cachait le travail en cours batterie coupée ou moteur en panne, et dont le démarreur pouvait tourner dans ce dernier cas
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel

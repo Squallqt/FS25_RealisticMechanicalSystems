@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Ausfall der Differenzialsperrenbetätigung. Die Sperre bleibt eingerückt. Die Maschine widersetzt sich dem Lenken in Kurven."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Antriebsriemen und Variatoren"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Antriebslager und Getriebe"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Vorsatz-Antriebsriemen"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Vorsatz-Rutschkupplung"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Vorsatz-Gelenkwelle und Kreuzgelenke"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Schrägförderkette"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Beschleunigertrommel"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Schlagleisten"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Mäßiger Verschleiß der Antriebslager. Das Rumpeln wird deutlich hörbar und sie werden heiß."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Schwerer Verschleiß der Antriebslager. Das Rumpeln wird lauter, die Wellen bekommen Spiel."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritischer Ausfall der Antriebslager. Ein Lager hat sich festgefressen: die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Beginnender Verschleiß des Vorsatz-Antriebsriemens. Er quietscht und rutscht etwas, solange der Vorsatz läuft."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Mäßiger Verschleiß des Vorsatz-Antriebsriemens. Er quietscht lauter und der Drehzahlalarm stoppt die Ernte gelegentlich."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Schwerer Verschleiß des Vorsatz-Antriebsriemens. Er quietscht laut, der Durchsatz sinkt und die Stopps häufen sich."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritischer Ausfall des Vorsatz-Antriebsriemens. Er ist gerissen: der Vorsatz wird nicht mehr angetrieben, die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Beginnender Verschleiß der Vorsatz-Rutschkupplung. Sie rutscht unter Last etwas durch."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Mäßiger Verschleiß der Vorsatz-Rutschkupplung. Sie rutscht schon unter normaler Last und der Drehzahlalarm stoppt die Ernte gelegentlich."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Schwerer Verschleiß der Vorsatz-Rutschkupplung. Sie rutscht und wird heiß, der Durchsatz sinkt und die Stopps häufen sich."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritischer Ausfall der Vorsatz-Rutschkupplung. Sie überträgt nichts mehr: der Vorsatz steht, die Ernte ist unmöglich."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Beginnender Verschleiß der Kreuzgelenke der Vorsatz-Gelenkwelle. Ein leichtes Rumpeln tritt auf, solange der Vorsatz läuft."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Mäßiger Verschleiß der Kreuzgelenke der Vorsatz-Gelenkwelle. Das Rumpeln ist deutlich zu hören."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Schwerer Verschleiß der Kreuzgelenke der Vorsatz-Gelenkwelle. Das Rumpeln wird lauter, die Gelenke bekommen Spiel."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritischer Ausfall der Vorsatz-Gelenkwelle. Ein Kreuzgelenk ist gebrochen: der Vorsatz wird nicht mehr angetrieben, die Ernte ist unmöglich."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Beginnender Verschleiß der Schrägförderkette. Sie längt sich und der Einzug wird ungleichmäßig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Mäßiger Verschleiß der Schrägförderkette. Am Einlauf des Schrägförderers bilden sich Verstopfungen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Schwerer Verschleiß der Schrägförderkette. Sie springt über die Kettenräder und die Verstopfungen häufen sich."/>

@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="blokada lub 4WD na twardym podłożu"/>
         <text name="rms_warranty_filter" text="zapchany filtr"/>
         <text name="rms_warranty_oil" text="nieodpowiedni olej silnikowy"/>
+        <text name="rms_warranty_header_engagement" text="heder włączony powyżej wolnych obrotów"/>
         <text name="rms_warranty_trailer" text="za ciężka przyczepa"/>
         <text name="rms_warranty_aftermarket_part" text="zamiennik"/>
         <text name="rms_warranty_used_part" text="część używana"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Oględziny i próba działania"/>
         <text name="rms_ws_inspection_electronic" text="Awarie elektroniczne"/>
         <text name="rms_ws_inspection_electronic_detail" text="Kody błędów odczytane testerem"/>
+        <text name="rms_ws_inspection_electrical" text="Awarie elektryczne"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Obwody sprawdzone multimetrem"/>
         <text name="rms_ws_inspection_dormant" text="Ukryte wady"/>
         <text name="rms_ws_inspection_dormant_detail" text="Wadliwa część, naprawa tymczasowa"/>
         <text name="rms_ws_inspection_report" text="Raport"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Kamienie"/>
         <text name="rms_report_wear_harvest_rice" text="Zbiór ryżu"/>
         <text name="rms_report_wear_harvest_wet" text="Wilgotny plon"/>
+        <text name="rms_report_wear_header_starts" text="Uruchomienia hedera"/>
         <text name="rms_report_component_title" text="Podzespół"/>
         <text name="rms_report_system_condition_transmission" text="Skrzynia biegów"/>
         <text name="rms_report_system_condition_power" text="Aktualna moc"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Przy zimnym silniku Diesla jedno naciśnięcie przycisku rozruchu włącza zapłon i automatycznie rozpoczyna cykl podgrzewania. Kontrolki na desce rozdzielczej zapalają się na chwilę, a kontrolka podgrzewania pozostaje włączona do chwili gotowości silnika. Nie naciskaj przycisku ponownie: rozrusznik włączy się automatycznie po zgaśnięciu kontrolki."/>
         <text name="rms_tutorial_pto_engagement_title" text="Włączanie WOM"/>
         <text name="rms_tutorial_pto_engagement_message" text="Włączaj WOM na wolnych obrotach, a dopiero potem zwiększ obroty: włączenie na wysokich obrotach to uderzenie dla całego układu napędowego, tym mocniejsze przy ciężkiej maszynie. Każde włączenie zużywa też jego sprzęgło."/>
+        <text name="rms_tutorial_header_engagement_title" text="Włączanie hedera"/>
+        <text name="rms_tutorial_header_engagement_message" text="Włączaj heder na wolnych obrotach, a dopiero potem zwiększ obroty: uruchomiony na wysokich obrotach ślizga swoim sprzęgłem przeciążeniowym, które zużywa się wtedy dużo szybciej."/>
+        <text name="rms_tutorial_header_stored_title" text="Odstawiony heder"/>
+        <text name="rms_tutorial_header_stored_message" text="Ten heder nie pracował od ponad dwóch tygodni: jego sprzęgło przeciążeniowe zapiekło się i już go nie chroni. Nasmaruj heder przed zbiorem, inaczej zator może złamać jego wał przegubowy."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Praca jałowa i postój"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Zużycie jest znacznie mniejsze, gdy maszyna pracuje bez wykonywania pracy. Gdy silnik jest wyłączony, zużycie staje się minimalne, a jeśli maszyna stoi pod dachem, znika całkowicie."/>
         <text name="rms_tutorial_idle_deposit_title" text="Długa praca na biegu jałowym"/>

@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Haveri i differentialspärrens manöver. Spärren förblir inkopplad. Maskinen motverkar styrningen i svängar."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drivremmar och variatorer"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drivlager och växellådor"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Skärbordets drivrem"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Skärbordets slirkoppling"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Skärbordets kardanaxel och knutar"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Inmatningskanalens kedja"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Inmatningsaccelerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Slagskenor"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Måttligt slitage på drivlagren. Mullrandet hörs tydligt och de blir varma."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Allvarligt slitage på drivlagren. Mullrandet ökar och axlarna får glapp."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritiskt haveri i drivlagren. Ett lager har skurit: skörd är omöjlig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Begynnande slitage på skärbordets drivrem. Den gnisslar och slirar lite medan skärbordet går."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Måttligt slitage på skärbordets drivrem. Den gnisslar högre och varvtalslarmet stoppar ibland skörden."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Allvarligt slitage på skärbordets drivrem. Den gnisslar högt, genomflödet sjunker och stoppen upprepas."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritiskt haveri i skärbordets drivrem. Den har gått av: skärbordet drivs inte längre, skörd är omöjlig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Begynnande slitage på skärbordets slirkoppling. Den slirar lite under belastning."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Måttligt slitage på skärbordets slirkoppling. Den slirar vid normal belastning och varvtalslarmet stoppar ibland skörden."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Allvarligt slitage på skärbordets slirkoppling. Den slirar och blir varm, genomflödet sjunker och stoppen upprepas."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritiskt haveri i skärbordets slirkoppling. Den överför inte längre något: skärbordet står still, skörd är omöjlig."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Begynnande slitage på knutarna i skärbordets kardanaxel. Ett svagt mullrande hörs medan skärbordet går."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Måttligt slitage på knutarna i skärbordets kardanaxel. Mullrandet hörs tydligt."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Allvarligt slitage på knutarna i skärbordets kardanaxel. Mullrandet ökar och knutarna får glapp."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritiskt haveri i skärbordets kardanaxel. En knut har gått sönder: skärbordet drivs inte längre, skörd är omöjlig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Begynnande slitage på inmatningskanalens kedja. Den töjs och inmatningen blir ojämn."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Måttligt slitage på inmatningskanalens kedja. Stopp bildas vid inmatningskanalens ingång."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Allvarligt slitage på inmatningskanalens kedja. Den hoppar på drevet och stoppen fortsätter."/>

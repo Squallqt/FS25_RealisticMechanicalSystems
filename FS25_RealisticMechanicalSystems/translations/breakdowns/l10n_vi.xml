@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Bộ điều khiển khóa vi sai hư hỏng. Khóa vẫn gài. Máy cản trở đánh lái khi vào cua."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Dây đai truyền động và bộ biến tốc"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Ổ bi và hộp số truyền động"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Dây đai truyền động bàn cắt"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Ly hợp trượt bàn cắt"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Trục các-đăng và chữ thập bàn cắt"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Xích buồng tiếp liệu"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Bộ tăng tốc tiếp liệu"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Thanh đập"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Ổ bi truyền động bị mòn ở mức trung bình. Tiếng ù nghe rõ và ổ bi nóng lên."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Ổ bi truyền động bị mòn nặng. Tiếng ù to dần và các trục bị rơ."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Ổ bi truyền động hư hỏng nghiêm trọng. Một ổ bi bị kẹt cứng: không thể thu hoạch."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Dây đai truyền động bàn cắt bắt đầu mòn. Dây đai rít và hơi trượt khi bàn cắt quay."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Dây đai truyền động bàn cắt bị mòn ở mức trung bình. Tiếng rít to hơn và cảnh báo vòng quay đôi khi dừng việc thu hoạch."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Dây đai truyền động bàn cắt bị mòn nặng. Tiếng rít to, lưu lượng giảm và các lần dừng lặp lại."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Dây đai truyền động bàn cắt hư hỏng nghiêm trọng. Dây đai đã đứt: bàn cắt không còn được dẫn động, không thể thu hoạch."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Ly hợp trượt bàn cắt bắt đầu mòn. Ly hợp hơi trượt khi chịu tải."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Ly hợp trượt bàn cắt bị mòn ở mức trung bình. Ly hợp trượt ngay ở tải bình thường và cảnh báo vòng quay đôi khi dừng việc thu hoạch."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Ly hợp trượt bàn cắt bị mòn nặng. Ly hợp trượt và nóng lên, lưu lượng giảm và các lần dừng lặp lại."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Ly hợp trượt bàn cắt hư hỏng nghiêm trọng. Ly hợp không còn truyền lực: bàn cắt đứng yên, không thể thu hoạch."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Chữ thập của trục các-đăng bàn cắt bắt đầu mòn. Xuất hiện tiếng ù nhẹ khi bàn cắt quay."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Chữ thập của trục các-đăng bàn cắt bị mòn ở mức trung bình. Tiếng ù nghe rõ."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Chữ thập của trục các-đăng bàn cắt bị mòn nặng. Tiếng ù to dần và các chữ thập bị rơ."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Trục các-đăng bàn cắt hư hỏng nghiêm trọng. Một chữ thập đã gãy: bàn cắt không còn được dẫn động, không thể thu hoạch."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Xích buồng tiếp liệu bắt đầu mòn. Xích giãn ra và việc cấp liệu trở nên không đều."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Xích buồng tiếp liệu bị mòn ở mức trung bình. Tắc nghẽn hình thành ở cửa buồng tiếp liệu."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Xích buồng tiếp liệu bị mòn nặng. Xích nhảy răng trên đĩa xích và tắc nghẽn liên tục."/>

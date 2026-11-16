@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="bloqueio ou 4WD em piso duro"/>
         <text name="rms_warranty_filter" text="filtro entupido"/>
         <text name="rms_warranty_oil" text="óleo de motor inadequado"/>
+        <text name="rms_warranty_header_engagement" text="plataforma engatada acima do ralenti"/>
         <text name="rms_warranty_trailer" text="reboque demasiado pesado"/>
         <text name="rms_warranty_aftermarket_part" text="peça adaptável"/>
         <text name="rms_warranty_used_part" text="peça usada"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Exame visual e teste das funções"/>
         <text name="rms_ws_inspection_electronic" text="Avarias eletrónicas"/>
         <text name="rms_ws_inspection_electronic_detail" text="Códigos de erro lidos com o scanner"/>
+        <text name="rms_ws_inspection_electrical" text="Avarias elétricas"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuitos verificados com o multímetro"/>
         <text name="rms_ws_inspection_dormant" text="Defeitos latentes"/>
         <text name="rms_ws_inspection_dormant_detail" text="Peça defeituosa, reparação provisória"/>
         <text name="rms_ws_inspection_report" text="Relatório"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Pedras"/>
         <text name="rms_report_wear_harvest_rice" text="Colheita de arroz"/>
         <text name="rms_report_wear_harvest_wet" text="Colheita húmida"/>
+        <text name="rms_report_wear_header_starts" text="Arranques da plataforma"/>
         <text name="rms_report_component_title" text="Componente"/>
         <text name="rms_report_system_condition_transmission" text="Transmissão"/>
         <text name="rms_report_system_condition_power" text="Potência atual"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, uma pressão no comando de arranque liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repitas o comando: o motor de arranque é acionado automaticamente quando a luz se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Engate da TDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Engate a TDF ao ralenti e depois suba as rotações: engatá-la a rotações altas dá um choque a toda a transmissão, ainda mais com uma alfaia pesada. Cada engate desgasta também a sua embraiagem."/>
+        <text name="rms_tutorial_header_engagement_title" text="Engate da plataforma"/>
+        <text name="rms_tutorial_header_engagement_message" text="Engate a plataforma ao ralenti e depois suba as rotações: arrancá-la a rotações altas faz patinar o seu limitador de binário, que se desgasta muito mais depressa."/>
+        <text name="rms_tutorial_header_stored_title" text="Plataforma parada"/>
+        <text name="rms_tutorial_header_stored_message" text="Esta plataforma não roda há mais de duas semanas: o seu limitador de binário gripou e já não a protege. Lubrifique a plataforma antes de colher, ou um entupimento pode partir o seu veio cardã."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é muito menor quando a máquina está ligada sem trabalhar. Com o motor desligado, torna-se mínimo. Sob cobertura, desaparece completamente."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongado"/>

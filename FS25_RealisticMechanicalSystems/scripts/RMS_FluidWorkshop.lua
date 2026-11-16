@@ -114,7 +114,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
         return true
     end
     local isMobile = workshopType == workshops.MOBILE
-    local hasDiagnosticTool = RMS_DiagnosticTool.getConnectedTool(vehicle) ~= nil
+    local lacksDiagnosticTool = RMS_DiagnosticTool.getHasControllers(vehicle) and RMS_DiagnosticTool.getConnectedTool(vehicle) == nil
     local states = RealisticMechanicalSystems.STATUS
     if serviceType == states.MAINTENANCE then return true end
     if serviceType == states.OVERHAUL then
@@ -122,22 +122,16 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
         return true
     end
     if serviceType == states.INSPECTION then
-        if hasDiagnosticTool then return true end
-        if optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.COMPLETE then
+        local types = RealisticMechanicalSystems.INSPECTION_TYPES
+        if lacksDiagnosticTool and (optionOne == types.STANDARD or optionOne == types.COMPLETE) then
             return false, "MOBILE_DIAGNOSTIC", optionOne
-        end
-        if optionOne == RealisticMechanicalSystems.INSPECTION_TYPES.STANDARD then
-            local spec = vehicle.spec_RealisticMechanicalSystems
-            if spec.isElectricVehicle or RMS_Utils.getUsesEngineECUProfile(vehicle) then
-                return false, "MOBILE_DIAGNOSTIC", optionOne
-            end
         end
         return true
     end
     if serviceType == states.REPAIR then
         for _, id in ipairs(collectCoveredRepairBreakdowns(vehicle, optionOne)) do
             local requirement = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[id].mobileRequirement
-            if requirement == "MOBILE_DIAGNOSTIC" and not hasDiagnosticTool
+            if requirement == "MOBILE_DIAGNOSTIC" and lacksDiagnosticTool
                 or requirement ~= nil and requirement ~= "MOBILE_DIAGNOSTIC" and isMobile then
                 return false, requirement, RMS_Utils.getBreakdownPartKey(vehicle, RMS_Breakdowns.BreakdownRegistry[id])
             end

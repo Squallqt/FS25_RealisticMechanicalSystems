@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="khóa vi sai hoặc 4WD trên nền cứng"/>
         <text name="rms_warranty_filter" text="bộ lọc bị tắc"/>
         <text name="rms_warranty_oil" text="dầu động cơ không phù hợp"/>
+        <text name="rms_warranty_header_engagement" text="gài bàn cắt trên vòng tua không tải"/>
         <text name="rms_warranty_trailer" text="rơ-moóc quá nặng"/>
         <text name="rms_warranty_aftermarket_part" text="phụ tùng ngoài hãng"/>
         <text name="rms_warranty_used_part" text="phụ tùng đã qua sử dụng"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Kiểm tra bằng mắt và thử chức năng"/>
         <text name="rms_ws_inspection_electronic" text="Hỏng hóc điện tử"/>
         <text name="rms_ws_inspection_electronic_detail" text="Mã lỗi đọc bằng thiết bị chẩn đoán"/>
+        <text name="rms_ws_inspection_electrical" text="Hỏng hóc điện"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Mạch điện kiểm tra bằng đồng hồ vạn năng"/>
         <text name="rms_ws_inspection_dormant" text="Lỗi tiềm ẩn"/>
         <text name="rms_ws_inspection_dormant_detail" text="Phụ tùng lỗi, sửa chữa tạm thời"/>
         <text name="rms_ws_inspection_report" text="Báo cáo"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Đá"/>
         <text name="rms_report_wear_harvest_rice" text="Thu hoạch lúa"/>
         <text name="rms_report_wear_harvest_wet" text="Cây trồng ẩm"/>
+        <text name="rms_report_wear_header_starts" text="Số lần khởi động bàn cắt"/>
         <text name="rms_report_component_title" text="Bộ phận"/>
         <text name="rms_report_system_condition_transmission" text="Hộp số"/>
         <text name="rms_report_system_condition_power" text="Công suất hiện tại"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Trên động cơ diesel nguội, nhấn lệnh khởi động một lần sẽ bật khóa điện và tự động bắt đầu chu trình sấy nóng. Các đèn trên bảng điều khiển sáng trong chốc lát, sau đó đèn sấy tiếp tục sáng cho đến khi động cơ sẵn sàng. Không lặp lại lệnh: bộ đề tự động hoạt động khi đèn tắt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Gài PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Hãy gài PTO ở chế độ không tải rồi mới tăng vòng tua: gài ở vòng tua cao gây va đập cho toàn bộ hệ truyền động, càng mạnh khi nông cụ càng nặng. Mỗi lần gài cũng làm mòn ly hợp của nó."/>
+        <text name="rms_tutorial_header_engagement_title" text="Gài bàn cắt"/>
+        <text name="rms_tutorial_header_engagement_message" text="Hãy gài bàn cắt ở chế độ không tải rồi mới tăng vòng tua: khởi động ở vòng tua cao làm ly hợp trượt của nó bị trượt và mòn nhanh hơn nhiều."/>
+        <text name="rms_tutorial_header_stored_title" text="Bàn cắt để lâu"/>
+        <text name="rms_tutorial_header_stored_message" text="Bàn cắt này đã không quay hơn hai tuần: ly hợp trượt của nó đã bị kẹt gỉ và không còn bảo vệ nó. Hãy bơm mỡ bàn cắt trước khi thu hoạch, nếu không một lần tắc có thể làm gãy trục các-đăng của nó."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Chạy không tải và ngừng hoạt động"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Hao mòn thấp hơn nhiều khi máy chạy mà không làm việc. Khi tắt động cơ, hao mòn trở nên tối thiểu. Khi được cất dưới mái che, hao mòn biến mất hoàn toàn."/>
         <text name="rms_tutorial_idle_deposit_title" text="Chạy không tải kéo dài"/>

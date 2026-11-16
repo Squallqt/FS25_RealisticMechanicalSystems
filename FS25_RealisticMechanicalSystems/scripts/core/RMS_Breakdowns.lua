@@ -1585,6 +1585,7 @@ for _, noise in ipairs({
     { "TRACK_ROLLER_NOISE_EFFECT", "trackRoller", "speed" },
     { "PTO_SPLINES_NOISE_EFFECT", "ptoSplines", "pto" },
     { "HARVEST_BEARING_NOISE_EFFECT", "ptoBearingNoise", "harvest" },
+    { "HEADER_BELT_SQUEAL_NOISE_EFFECT", "headerBelt", "harvest" },
     { "ELECTRIC_MOTOR_BEARING_NOISE_EFFECT", "electricMotorBearing", "speed" }
 }) do
     RMS_Breakdowns.EffectApplicators[noise[1]] = createEngineNoiseEffectApplicator(noise[1], noise[2], noise[3])
@@ -1618,6 +1619,24 @@ function RMS_Breakdowns.updateAerationWhines(vehicle)
     end
 end
 
+---Makes the slip clutch of a header heard while it slips
+function RMS_Breakdowns.updateHeaderSlip(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local sample = spec.samples ~= nil and spec.samples.headerSlipClutch or nil
+    if sample == nil then
+        return
+    end
+    local isSlipping = spec.isHeaderSlipping == true and vehicle:getIsMotorStarted()
+    if isSlipping then
+        sample.rmsOriginalLoops = sample.rmsOriginalLoops or sample.loops
+        sample.loops = 0
+        RMS_SoundManager.setSamplePlaying(sample, true)
+    elseif spec.isHeaderSlipHeard then
+        silenceNoise(sample)
+    end
+    spec.isHeaderSlipHeard = isSlipping
+end
+
 RMS_Breakdowns.EffectApplicators.STEERING_LINKAGE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_LINKAGE_NOISE_EFFECT",
     "steeringLinkage", getIsSteeringMoving)
 RMS_Breakdowns.EffectApplicators.STEERING_KNUCKLE_NOISE_EFFECT = createClunkEffectApplicator("STEERING_KNUCKLE_NOISE_EFFECT",
@@ -1647,6 +1666,8 @@ end
 
 RMS_Breakdowns.EffectApplicators.HOSE_BURST_NOISE_EFFECT = createBurstSoundApplicator("HOSE_BURST_NOISE_EFFECT", "hoseBurst",
     function(vehicle) return vehicle:getIsMotorStarted() end)
+RMS_Breakdowns.EffectApplicators.HEADER_SHAFT_BREAK_NOISE_EFFECT = createBurstSoundApplicator("HEADER_SHAFT_BREAK_NOISE_EFFECT",
+    "headerShaftBreak", function(vehicle) return vehicle:getIsMotorStarted() end)
 RMS_Breakdowns.EffectApplicators.PTO_SHAFT_BREAK_NOISE_EFFECT = createBurstSoundApplicator("PTO_SHAFT_BREAK_NOISE_EFFECT", "ptoShaftBreak",
     function(vehicle)
         local ptoData = RMS_Utils.getConnectedPtoData(vehicle)
@@ -1788,6 +1809,7 @@ local function updateHarvestBlockage(vehicle, dt)
     if vehicle.isServer and vehicle:getIsTurnedOn() and state ~= nil and (state.tonPerHour or 0) > 0
         and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, spec.activeEffects.HARVEST_BLOCKAGE_CHANCE.value) then
         vehicle:setIsTurnedOn(false)
+        RealisticMechanicalSystems.onHeaderBlocked(vehicle)
         RMS_Breakdowns.soundShaftAlarm(vehicle)
         showWarning(vehicle, RMS_Breakdowns.WORK_STOP_MESSAGES.HARVEST_BLOCKAGE_CHANCE, 4000)
         RMS_EffectSyncEvent.send(vehicle, "HARVEST_BLOCKAGE_CHANCE", "BLOCKED")
@@ -2168,7 +2190,12 @@ end
 
 ---Preserves native warnings and explains what refuses the start
 function RMS_Breakdowns.getMotorNotAllowedWarning(self, superFunc)
-    local reason = RMS_Breakdowns.getStartBlockReason(self)
+    local spec = self.spec_RealisticMechanicalSystems
+    local reason = nil
+    -- warnings stack; the run check shows the service one
+    if spec == nil or spec.isExcludedVehicle or not self:isUnderService() then
+        reason = RMS_Breakdowns.getStartBlockReason(self)
+    end
     return reason ~= nil and g_i18n:getText(reason) or superFunc(self)
 end
 
@@ -2178,19 +2205,18 @@ function RMS_Breakdowns.getCanMotorRun(self, superFunc)
     if spec == nil or spec.isExcludedVehicle then
         return superFunc(self)
     end
+    if self:isUnderService() then
+        if self:getIsActiveForInput(true) then
+            g_currentMission:showBlinkingWarning(g_i18n:getText(self:getCurrentStatus()) .. " " .. g_i18n:getText("rms_breakdown_at_progress_message", 100))
+        end
+        return false
+    end
     if RMS_Breakdowns.getStartBlockReason(self) ~= nil then
         return false
     end
 
     local failure = spec.activeEffects.ENGINE_FAILURE
-    if failure ~= nil then
-        if not failure.extraData.starter then
-            return false
-        end
-    elseif self:isUnderService() then
-        if self:getIsActiveForInput(true) then
-            g_currentMission:showBlinkingWarning(g_i18n:getText(self:getCurrentStatus()) .. " " .. g_i18n:getText("rms_breakdown_at_progress_message", 100))
-        end
+    if failure ~= nil and not failure.extraData.starter then
         return false
     end
 

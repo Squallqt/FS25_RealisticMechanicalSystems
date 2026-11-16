@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="blocco o 4RM su fondo duro"/>
         <text name="rms_warranty_filter" text="filtro intasato"/>
         <text name="rms_warranty_oil" text="olio motore non adatto"/>
+        <text name="rms_warranty_header_engagement" text="testata innestata sopra il minimo"/>
         <text name="rms_warranty_trailer" text="rimorchio troppo pesante"/>
         <text name="rms_warranty_aftermarket_part" text="ricambio compatibile"/>
         <text name="rms_warranty_used_part" text="ricambio usato"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Esame visivo e prova delle funzioni"/>
         <text name="rms_ws_inspection_electronic" text="Guasti elettronici"/>
         <text name="rms_ws_inspection_electronic_detail" text="Codici di errore letti con lo strumento di diagnosi"/>
+        <text name="rms_ws_inspection_electrical" text="Guasti elettrici"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuiti controllati con il multimetro"/>
         <text name="rms_ws_inspection_dormant" text="Difetti latenti"/>
         <text name="rms_ws_inspection_dormant_detail" text="Pezzo difettoso, riparazione provvisoria"/>
         <text name="rms_ws_inspection_report" text="Rapporto"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Sassi"/>
         <text name="rms_report_wear_harvest_rice" text="Raccolta del riso"/>
         <text name="rms_report_wear_harvest_wet" text="Raccolto umido"/>
+        <text name="rms_report_wear_header_starts" text="Avviamenti della testata"/>
         <text name="rms_report_component_title" text="Componente"/>
         <text name="rms_report_system_condition_transmission" text="Trasmissione"/>
         <text name="rms_report_system_condition_power" text="Potenza attuale"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Con un motore diesel freddo, una pressione del comando di avviamento accende il quadro e avvia automaticamente il ciclo di preriscaldamento. Le spie del cruscotto si accendono brevemente, poi la spia di preriscaldamento resta accesa finché il motore non è pronto. Non ripetere il comando: il motorino di avviamento si inserisce automaticamente quando la spia si spegne."/>
         <text name="rms_tutorial_pto_engagement_title" text="Innesto della PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Innesta la PTO al minimo, poi aumenta i giri: innestarla ad alti giri dà un colpo a tutta la trasmissione, tanto più con un attrezzo pesante. Ogni innesto consuma anche la sua frizione."/>
+        <text name="rms_tutorial_header_engagement_title" text="Innesto della testata"/>
+        <text name="rms_tutorial_header_engagement_message" text="Innesta la testata al minimo, poi aumenta i giri: avviarla ad alti giri fa slittare il suo limitatore di coppia, che si consuma molto più in fretta."/>
+        <text name="rms_tutorial_header_stored_title" text="Testata ferma a lungo"/>
+        <text name="rms_tutorial_header_stored_message" text="Questa testata non gira da più di due settimane: il suo limitatore di coppia si è grippato e non la protegge più. Ingrassa la testata prima di raccogliere, o un intasamento può rompere il suo albero cardanico."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Minimo e fermo macchina"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usura è molto più bassa quando la macchina è accesa ma non lavora. A motore spento diventa minima, e scompare del tutto se la macchina è ricoverata al coperto."/>
         <text name="rms_tutorial_idle_deposit_title" text="Minimo prolungato"/>

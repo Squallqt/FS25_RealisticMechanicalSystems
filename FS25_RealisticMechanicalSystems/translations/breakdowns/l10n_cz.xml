@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Porucha ovládání uzávěrky diferenciálu. Uzávěrka zůstává zapnutá. Stroj v zatáčkách klade odpor řízení."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Hnací řemeny a variátory"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Ložiska a převodovky pohonu"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Řemen pohonu adaptéru"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Prokluzová spojka adaptéru"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Kloubový hřídel a kříže adaptéru"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Řetěz šikmého dopravníku"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Urychlovač podávání"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Mlatné lišty"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Střední opotřebení ložisek pohonu. Hučení je zřetelně slyšet a ložiska se zahřívají."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Silné opotřebení ložisek pohonu. Hučení sílí a hřídele získávají vůli."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritické selhání ložisek pohonu. Ložisko se zadřelo: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Počínající opotřebení řemene pohonu adaptéru. Piští a mírně prokluzuje, dokud adaptér běží."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Střední opotřebení řemene pohonu adaptéru. Piští hlasitěji a alarm otáček občas zastaví sklizeň."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Silné opotřebení řemene pohonu adaptéru. Hlasitě piští, průchodnost klesá a zastavení se opakují."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritické selhání řemene pohonu adaptéru. Řemen praskl: adaptér už není poháněn, sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Počínající opotřebení prokluzové spojky adaptéru. Pod zatížením mírně prokluzuje."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Střední opotřebení prokluzové spojky adaptéru. Prokluzuje už při běžném zatížení a alarm otáček občas zastaví sklizeň."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Silné opotřebení prokluzové spojky adaptéru. Prokluzuje a hřeje se, průchodnost klesá a zastavení se opakují."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritické selhání prokluzové spojky adaptéru. Už nic nepřenáší: adaptér stojí, sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Počínající opotřebení křížů kloubového hřídele adaptéru. Když adaptér běží, objevuje se mírné hučení."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Střední opotřebení křížů kloubového hřídele adaptéru. Hučení je zřetelně slyšet."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Silné opotřebení křížů kloubového hřídele adaptéru. Hučení sílí a kříže získávají vůli."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritické selhání kloubového hřídele adaptéru. Kříž praskl: adaptér už není poháněn, sklizeň je nemožná."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Počínající opotřebení řetězu šikmého dopravníku. Natahuje se a podávání je nerovnoměrné."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Střední opotřebení řetězu šikmého dopravníku. Na vstupu šikmého dopravníku vznikají ucpávky."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Silné opotřebení řetězu šikmého dopravníku. Přeskakuje na ozubených kolech a ucpávky se stále vracejí."/>

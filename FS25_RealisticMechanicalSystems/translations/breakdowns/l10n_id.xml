@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tetap aktif. Mesin sulit diarahkan saat berbelok."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Sabuk Penggerak dan Variator"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Bantalan dan Girboks Penggerak"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Sabuk Penggerak Pemotong"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Kopling Selip Pemotong"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Poros Kardan dan Silang Pemotong"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Rantai Saluran Pengumpan"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Akselerator Pengumpan"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Batang Perontok"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Keausan sedang pada bantalan penggerak. Dengung terdengar jelas dan bantalan memanas."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Keausan berat pada bantalan penggerak. Dengung makin keras dan poros mulai longgar."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kegagalan kritis pada bantalan penggerak. Sebuah bantalan macet: panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Awal keausan sabuk penggerak pemotong. Sabuk berdecit dan sedikit selip selama pemotong berputar."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Keausan sedang pada sabuk penggerak pemotong. Decitnya makin keras dan alarm putaran sesekali menghentikan panen."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Keausan berat pada sabuk penggerak pemotong. Decitnya keras, aliran panen turun dan penghentian terus berulang."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kegagalan kritis pada sabuk penggerak pemotong. Sabuk putus: pemotong tidak lagi digerakkan, panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Awal keausan kopling selip pemotong. Kopling sedikit selip saat terbebani."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Keausan sedang pada kopling selip pemotong. Kopling selip pada beban normal dan alarm putaran sesekali menghentikan panen."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Keausan berat pada kopling selip pemotong. Kopling selip dan memanas, aliran panen turun dan penghentian terus berulang."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kegagalan kritis pada kopling selip pemotong. Kopling tidak lagi meneruskan tenaga: pemotong berhenti, panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Awal keausan silang poros kardan pemotong. Muncul dengung ringan selama pemotong berputar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Keausan sedang pada silang poros kardan pemotong. Dengungnya terdengar jelas."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Keausan berat pada silang poros kardan pemotong. Dengung makin keras dan silangnya mulai longgar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kegagalan kritis pada poros kardan pemotong. Sebuah silang patah: pemotong tidak lagi digerakkan, panen tidak mungkin."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Awal keausan rantai saluran pengumpan. Rantai memanjang dan pengumpanan menjadi tidak rata."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Keausan sedang pada rantai saluran pengumpan. Penyumbatan terbentuk di pintu masuk saluran pengumpan."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Keausan berat pada rantai saluran pengumpan. Rantai melompat di gigi sproket dan penyumbatan terus terjadi."/>

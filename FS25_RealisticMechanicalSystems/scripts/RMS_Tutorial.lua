@@ -207,6 +207,10 @@ RMS_Tutorial.TIPS = {
         return m.enabled.fuel and m.isStarted and not m.isElectric and m.spec.fuelState.idleTimer >= 120 end },
     { key = "PTO_ENGAGEMENT", text = "rms_tutorial_pto_engagement", isDue = function(m)
         return m.enabled.pto and m.hasNewPtoShock end },
+    { key = "HEADER_STORED", text = "rms_tutorial_header_stored", isDue = function(m)
+        return m.enabled.harvest and m.hasNewHeaderSeized end },
+    { key = "HEADER_ENGAGEMENT", text = "rms_tutorial_header_engagement", isDue = function(m)
+        return m.enabled.harvest and m.hasNewHeaderShock end },
     { key = "COLD_OIL", text = "rms_tutorial_cold_oil", isDue = hasColdOil },
     { key = "SERVICE_DUE_SOON", text = "rms_tutorial_service_due_soon", getArguments = getName, isDue = function(m)
         local used = getServiceIntervalUsed(m)
@@ -252,6 +256,14 @@ local function readMachine(vehicle)
     machine.hasNewPtoShock = ptoShockSequence > (tonumber(spec.ptoTutorialObservedShockSequence) or 0)
     if machine.hasNewPtoShock then
         spec.ptoTutorialObservedShockSequence = ptoShockSequence
+    end
+    for _, event in ipairs({ { "hasNewHeaderShock", "headerShockSequence", "headerTutorialObservedShockSequence" },
+        { "hasNewHeaderSeized", "headerSeizedSequence", "headerTutorialObservedSeizedSequence" } }) do
+        local sequence = tonumber(spec[event[2]]) or 0
+        machine[event[1]] = sequence > (tonumber(spec[event[3]]) or 0)
+        if machine[event[1]] then
+            spec[event[3]] = sequence
+        end
     end
     return machine
 end

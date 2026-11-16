@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="차동 잠금 제어 장치에 고장이 발생했습니다. 잠금이 결합된 채로 남아 회전할 때 조향이 어려워집니다."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="구동 벨트와 무단 변속기"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="구동 베어링과 기어박스"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="헤더 구동 벨트"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="헤더 슬립 클러치"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="헤더 구동축과 유니버설 조인트"/>
         <text name="rms_breakdowns_part_feeder_chain" text="피더 하우스 체인"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="공급 가속기"/>
         <text name="rms_breakdowns_part_threshing_bars" text="래스프 바"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="구동 베어링이 중간 정도로 마모되었습니다. 웅웅거림이 확연히 들리고 베어링이 뜨거워집니다."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="구동 베어링이 심하게 마모되었습니다. 웅웅거림이 커지고 축에 유격이 생깁니다."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="구동 베어링에 임계 고장이 발생했습니다. 베어링이 고착되었습니다: 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="헤더 구동 벨트의 초기 마모입니다. 헤더가 도는 동안 소리가 나고 조금 미끄러집니다."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="헤더 구동 벨트가 중간 정도로 마모되었습니다. 소리가 더 커지고 회전수 경보로 때때로 수확이 중단됩니다."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="헤더 구동 벨트가 심하게 마모되었습니다. 소리가 크게 나고 처리량이 줄며 중단이 반복됩니다."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="헤더 구동 벨트에 임계 고장이 발생했습니다. 벨트가 끊어졌습니다: 헤더가 더 이상 구동되지 않아 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="헤더 슬립 클러치의 초기 마모입니다. 부하가 걸리면 조금 미끄러집니다."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="헤더 슬립 클러치가 중간 정도로 마모되었습니다. 평소 부하에서도 미끄러지고 회전수 경보로 때때로 수확이 중단됩니다."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="헤더 슬립 클러치가 심하게 마모되었습니다. 미끄러지며 뜨거워지고, 처리량이 줄며 중단이 반복됩니다."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="헤더 슬립 클러치에 임계 고장이 발생했습니다. 더 이상 동력을 전달하지 않습니다: 헤더가 멈춰 수확할 수 없습니다."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="헤더 구동축 유니버설 조인트의 초기 마모입니다. 헤더가 도는 동안 약한 웅웅거림이 생깁니다."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="헤더 구동축 유니버설 조인트가 중간 정도로 마모되었습니다. 웅웅거림이 확연히 들립니다."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="헤더 구동축 유니버설 조인트가 심하게 마모되었습니다. 웅웅거림이 커지고 조인트에 유격이 생깁니다."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="헤더 구동축에 임계 고장이 발생했습니다. 유니버설 조인트가 부러졌습니다: 헤더가 더 이상 구동되지 않아 수확할 수 없습니다."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="피더 하우스 체인의 초기 마모입니다. 체인이 늘어나 공급이 고르지 않게 됩니다."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="피더 하우스 체인이 중간 정도로 마모되었습니다. 피더 하우스 입구에 막힘이 생깁니다."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="피더 하우스 체인이 심하게 마모되었습니다. 스프로킷에서 튀고 막힘이 계속됩니다."/>

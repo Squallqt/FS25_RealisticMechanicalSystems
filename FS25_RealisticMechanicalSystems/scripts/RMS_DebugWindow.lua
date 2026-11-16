@@ -292,8 +292,10 @@ local function chips(x, y, w, entries)
     return cy - y + CHIP_ROW
 end
 
-local function riskColor(risk)
-    return risk >= 2 and COLOR.red or risk >= 1.5 and COLOR.yellow or COLOR.ok
+local RISK_TIERS = {{"low", COLOR.ok}, {"moderate", COLOR.yellow}, {"high", COLOR.red}}
+
+local function getRiskTier(risk)
+    return RISK_TIERS[RMS_Utils.getBreakdownRiskTier(risk)]
 end
 
 local function partColor(part)
@@ -456,7 +458,7 @@ local function drawTiles(reading, x, y, w)
         local ty = y + math.floor((index - 1) / perRow) * (TILE_H + 14)
         local ix, iw = tx + 16, tw - 32
         card(tx, ty, tw, TILE_H)
-        local risk = {text = string.format("×%.1f", system.risk), bold = true, color = riskColor(system.risk)}
+        local risk = {text = string.format("×%.1f", system.risk), bold = true, color = getRiskTier(system.risk)[2]}
         local rw = chipWidth(risk, 15)
         chip(ix + iw - rw, ty + 26, risk, 15)
         label(ix, ty + 26, system.name, 18, COLOR.text, {bold = true, box = iw - rw - 8})
@@ -745,7 +747,8 @@ local function drawPartCard(system, x, y, w, h, pitch, headH)
     card(x, y, w, h)
     label(ix, y + 24, system.name, 20, COLOR.text, {bold = true})
     label(ix + iw, y + 24, pct(system.condition), 20, COLOR.text, {bold = true, align = RenderText.ALIGN_RIGHT})
-    local risk = {text = string.format("risk ×%.1f", system.risk), bold = true, color = riskColor(system.risk)}
+    local tier = getRiskTier(system.risk)
+    local risk = {text = string.format("risk %s ×%.1f", tier[1], system.risk), bold = true, color = tier[2]}
     local rw = chip(ix, y + 52, risk, 14)
     if system.wearing > 0 then
         label(ix + rw + 12, y + 52, "wearing " .. perHour(system.wearing), 15,
@@ -839,6 +842,7 @@ local function drawPartsLegend(reading, area, y)
     lx = lx + 34
     lx = lx + legendText(lx, ly, "what wore the part", COLOR.label) + 28
     lx = lx + legendText(lx, ly, string.format("chance: of failing in the next %.0f h, yellow from 10 %%", reading.legend.horizon), COLOR.label) + 28
+    lx = lx + legendText(lx, ly, "risk: against the system new, as the inspection report", COLOR.label) + 28
     rect(lx, ly - 3, 6, 6, COLOR.text, 3)
     lx = lx + 12 + legendText(lx + 12, ly, "worn beyond its normal rate right now", COLOR.label) + 28
     lx = lx + legendText(lx, ly, "worn", COLOR.orange, true) + 20

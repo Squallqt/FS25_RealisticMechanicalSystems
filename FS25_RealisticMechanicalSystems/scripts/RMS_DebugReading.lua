@@ -155,7 +155,10 @@ local CAUSES = {
     hsf = {"Chopper load", "chopper", function(f) return "load " .. pct(f.harvestChopper) end},
     hstf = {"Stones", "stones", function(f) return string.format("stone wear x%.2f", 1 + f.harvestStone) end},
     hrf = {"Rice", "rice", function() return "abrasive rice straw" end},
-    hwf = {"Wet crop", "wet crop", function(f) return f.harvestSource == "rh" and "crop too damp" or "rain on the crop" end}
+    hwf = {"Wet crop", "wet crop", function(f) return f.harvestSource == "rh" and "crop too damp" or "rain on the crop" end},
+    hdef = {"Header starts", "header starts", function(_, spec)
+        return string.format("%d starts", spec.headerDrive ~= nil and spec.headerDrive.starts or 0) end},
+    hdlf = {"Header greasing late", "header greasing", function(f) return pct(f.headerGreasingLate or 0) .. " of an interval late" end}
 }
 
 local SOURCES = {"wear", "poor parts", "quick fix"}
@@ -475,7 +478,7 @@ local ABUSE_READINGS = {
     fuel_dry = "tank run dry", park_brake = "parking brake on", pto_engagement = "PTO engaged high",
     stones = "stones", starter = "starter held", pto_angle = "PTO shaft angle", windup = "lock or 4WD on hard ground",
     filter = "clogged filter", trailer = "trailer too heavy", aftermarket_part = "aftermarket part fitted", used_part = "used part fitted",
-    oil = "unsuited engine oil",
+    oil = "unsuited engine oil", header_engagement = "header started above idle",
 }
 
 local function readFaults(vehicle, spec, reading)
@@ -984,6 +987,28 @@ local function readWorkRows(vehicle, spec, groups)
         table.insert(items, item("harvested", string.format("%.0f t", state.tons or 0)))
         table.insert(items, item("grain lost to wear", string.format("%.1f %%", loss * 100)))
         table.insert(rows, itemsRow("Harvest", items))
+    end
+    local drive = spec.headerDrive
+    if drive ~= nil then
+        local header = drive.header
+        local C = RMS_Config.CORE.HEADER_DRIVE
+        local items = {item("header", header ~= nil and header:getFullName() or "none")}
+        if header ~= nil then
+            table.insert(items, item("driven", drive.isTurning and string.format("%.0f kW", drive.powerW / 1000) or "stopped"))
+        end
+        table.insert(items, item("starts", tostring(drive.starts)))
+        if drive.starts > 0 then
+            table.insert(items, item("last start", string.format("%s speed, %.0f kJ", pct(drive.lastStartShare), drive.lastStartJ / 1000)))
+        end
+        local clutch = "holds"
+        if header ~= nil and RMS_Greasing.getIsLimiterSeized(header) then
+            clutch = "seized, grease the header"
+        elseif drive.slipMs > 0 then
+            clutch = string.format("slipping %.1f of %.1f s", drive.slipMs / 1000, drive.slipLimitMs / 1000)
+        end
+        table.insert(items, item("slip clutch", clutch))
+        table.insert(items, item("slips past", string.format("work %s", pct(C.SLIP_EFFORT))))
+        table.insert(rows, itemsRow("Header drive", items))
     end
     if spec.systems.pto.enabled ~= false then
         table.insert(rows, itemsRow("PTO", {item("state", spec.isPtoActive and "on" or "off"), item("speed", string.format("%.0f rpm", spec.ptoRpm)),

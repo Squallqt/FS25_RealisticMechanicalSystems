@@ -62,7 +62,9 @@ local WEAR_CAUSE_TEXTS = {
     hsf = "rms_report_wear_harvest_straw",
     hstf = "rms_report_wear_harvest_stones",
     hrf = "rms_report_wear_harvest_rice",
-    hwf = "rms_report_wear_harvest_wet"
+    hwf = "rms_report_wear_harvest_wet",
+    hdef = "rms_report_wear_header_starts",
+    hdlf = "rms_report_wear_lubrication"
 }
 RMS_ReportFrame.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
 RMS_ReportFrame.SERVICE_NOTICE_HOURS = 100

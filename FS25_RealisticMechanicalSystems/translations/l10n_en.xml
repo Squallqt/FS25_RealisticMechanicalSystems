@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="diff lock or 4WD on hard ground"/>
         <text name="rms_warranty_filter" text="clogged filter"/>
         <text name="rms_warranty_oil" text="unsuited engine oil"/>
+        <text name="rms_warranty_header_engagement" text="header engaged above idle"/>
         <text name="rms_warranty_trailer" text="trailer too heavy"/>
         <text name="rms_warranty_aftermarket_part" text="aftermarket part"/>
         <text name="rms_warranty_used_part" text="used part"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visual check and function test"/>
         <text name="rms_ws_inspection_electronic" text="Electronic Faults"/>
         <text name="rms_ws_inspection_electronic_detail" text="Fault codes read with a diagnostic tool"/>
+        <text name="rms_ws_inspection_electrical" text="Electrical Faults"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuits checked with a multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Latent Defects"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defective part, temporary repair"/>
         <text name="rms_ws_inspection_report" text="Report"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Stones"/>
         <text name="rms_report_wear_harvest_rice" text="Rice Harvesting"/>
         <text name="rms_report_wear_harvest_wet" text="Damp Crop"/>
+        <text name="rms_report_wear_header_starts" text="Header Starts"/>
         <text name="rms_report_component_title" text="Component"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Current Power"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="On a cold diesel engine, one press of the start control switches on the ignition and begins the automatic glow-plug cycle. The dashboard lamps light up briefly, then the preheat lamp remains on until the engine is ready. Do not repeat the command: the starter engages automatically when the lamp goes out."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement"/>
         <text name="rms_tutorial_pto_engagement_message" text="Engage the PTO at idle, then raise the engine speed: engaging it at high revs shocks the driveline, all the more with a heavy implement. Every engagement also wears its clutch."/>
+        <text name="rms_tutorial_header_engagement_title" text="Header Engagement"/>
+        <text name="rms_tutorial_header_engagement_message" text="Engage the header at idle, then raise the engine speed: starting it at high revs makes its slip clutch slip, and the clutch wears much faster."/>
+        <text name="rms_tutorial_header_stored_title" text="Stored Header"/>
+        <text name="rms_tutorial_header_stored_message" text="This header has not turned for more than two weeks: its slip clutch has seized and no longer protects it. Grease the header before harvesting, or a blockage can break its driveline."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Idling and Downtime"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Wear is much lower when the machine is running without working. With the engine off it becomes minimal. Under cover, it disappears entirely."/>
         <text name="rms_tutorial_idle_deposit_title" text="Extended Idling"/>

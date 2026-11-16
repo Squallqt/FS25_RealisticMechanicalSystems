@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Differential lock control failure. The lock remains engaged. The machine resists steering when turning."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drive Belts and Variators"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drive Bearings and Gearboxes"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Header Drive Belt"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Header Slip Clutch"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Header Driveline and U-Joints"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Feeder House Chain"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Feed Accelerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Rasp Bars"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderate wear of the drive bearings. The rumble becomes clearly audible and they run hot."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Severe wear of the drive bearings. The rumble grows louder and the shafts gain play."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Critical drive bearing failure. A bearing has seized: harvesting is impossible."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Early wear of the header drive belt. It squeals and slips a little while the header turns."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Moderate wear of the header drive belt. It squeals louder and the speed alarm sometimes stops harvesting."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Severe wear of the header drive belt. It squeals loudly, throughput drops and the stops repeat."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Critical header drive belt failure. It has snapped: the header is no longer driven, harvesting is impossible."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Early wear of the header slip clutch. It slips a little under load."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Moderate wear of the header slip clutch. It slips under normal load and the speed alarm sometimes stops harvesting."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Severe wear of the header slip clutch. It slips and heats up, throughput drops and the stops repeat."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Critical header slip clutch failure. It no longer transmits anything: the header has stopped, harvesting is impossible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Early wear of the header driveline U-joints. A slight rumble appears while the header turns."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Moderate wear of the header driveline U-joints. The rumble becomes clearly audible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Severe wear of the header driveline U-joints. The rumble grows louder and the joints gain play."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Critical header driveline failure. A U-joint has broken: the header is no longer driven, harvesting is impossible."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Early wear of the feeder house chain. It stretches and the feed becomes uneven."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderate wear of the feeder house chain. Blockages form at the feeder house intake."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Severe wear of the feeder house chain. It jumps on its sprockets and the blockages keep coming."/>

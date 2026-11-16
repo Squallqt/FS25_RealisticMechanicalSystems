@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="slot of 4WD op harde grond"/>
         <text name="rms_warranty_filter" text="verstopt filter"/>
         <text name="rms_warranty_oil" text="ongeschikte motorolie"/>
+        <text name="rms_warranty_header_engagement" text="maaibord boven stationair ingeschakeld"/>
         <text name="rms_warranty_trailer" text="aanhanger te zwaar"/>
         <text name="rms_warranty_aftermarket_part" text="aftermarket onderdeel"/>
         <text name="rms_warranty_used_part" text="gebruikt onderdeel"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visuele controle en functietest"/>
         <text name="rms_ws_inspection_electronic" text="Elektronische storingen"/>
         <text name="rms_ws_inspection_electronic_detail" text="Foutcodes uitgelezen met het diagnoseapparaat"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrische storingen"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuits gecontroleerd met de multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Verborgen gebreken"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defect onderdeel, noodreparatie"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Stenen"/>
         <text name="rms_report_wear_harvest_rice" text="Rijst oogsten"/>
         <text name="rms_report_wear_harvest_wet" text="Vochtig gewas"/>
+        <text name="rms_report_wear_header_starts" text="Starts van het maaibord"/>
         <text name="rms_report_component_title" text="Component"/>
         <text name="rms_report_system_condition_transmission" text="Transmissie"/>
         <text name="rms_report_system_condition_power" text="Huidig vermogen"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Bij een koude dieselmotor schakelt één druk op de startknop het contact in en begint automatisch de voorgloeicyclus. De dashboardlampjes lichten kort op; daarna blijft het voorgloeilampje branden totdat de motor gereed is. Druk niet opnieuw: de startmotor schakelt automatisch in wanneer het lampje uitgaat."/>
         <text name="rms_tutorial_pto_engagement_title" text="Aftakas inschakelen"/>
         <text name="rms_tutorial_pto_engagement_message" text="Schakel de aftakas stationair in en verhoog daarna het toerental: inschakelen bij hoge toeren geeft de hele aandrijflijn een klap, des te meer met een zwaar werktuig. Elke inschakeling slijt bovendien de koppeling."/>
+        <text name="rms_tutorial_header_engagement_title" text="Maaibord inschakelen"/>
+        <text name="rms_tutorial_header_engagement_message" text="Schakel het maaibord stationair in en verhoog daarna het toerental: starten bij hoge toeren laat de slipkoppeling slippen, en die slijt dan veel sneller."/>
+        <text name="rms_tutorial_header_stored_title" text="Stilgezet maaibord"/>
+        <text name="rms_tutorial_header_stored_message" text="Dit maaibord heeft al meer dan twee weken niet gedraaid: de slipkoppeling is vastgeroest en beschermt het niet meer. Smeer het maaibord vóór het oogsten, anders kan een verstopping de cardanas breken."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Stationair draaien en stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="De slijtage is veel lager wanneer de machine draait zonder te werken. Met uitgeschakelde motor is de slijtage minimaal. Onder een afdak verdwijnt de slijtage volledig."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lang stationair draaien"/>

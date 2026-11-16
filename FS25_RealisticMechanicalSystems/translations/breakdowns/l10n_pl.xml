@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Uszkodzenie sterowania blokadą mechanizmu różnicowego. Blokada pozostaje załączona. Maszyna opiera się skręcaniu na zakrętach."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Pasy napędowe i wariatory"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Łożyska i przekładnie napędu"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Pas napędu hedera"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Sprzęgło przeciążeniowe hedera"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Wał przegubowy i krzyżaki hedera"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Łańcuch przenośnika pochyłego"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Przyspieszacz podawania"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Listwy cepowe"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Umiarkowane zużycie łożysk napędu. Szum staje się wyraźnie słyszalny, a łożyska się grzeją."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Poważne zużycie łożysk napędu. Szum narasta, a wały nabierają luzu."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Krytyczna awaria łożysk napędu. Łożysko się zatarło: zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Początkowe zużycie pasa napędu hedera. Piszczy i lekko się ślizga, gdy heder pracuje."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Umiarkowane zużycie pasa napędu hedera. Piszczy głośniej, a alarm obrotów czasem zatrzymuje zbiór."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Poważne zużycie pasa napędu hedera. Głośno piszczy, przepustowość spada, a postoje się powtarzają."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Krytyczna awaria pasa napędu hedera. Pas pękł: heder nie jest już napędzany, zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Początkowe zużycie sprzęgła przeciążeniowego hedera. Lekko ślizga się pod obciążeniem."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Umiarkowane zużycie sprzęgła przeciążeniowego hedera. Ślizga się już przy normalnym obciążeniu, a alarm obrotów czasem zatrzymuje zbiór."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Poważne zużycie sprzęgła przeciążeniowego hedera. Ślizga się i grzeje, przepustowość spada, a postoje się powtarzają."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Krytyczna awaria sprzęgła przeciążeniowego hedera. Niczego już nie przenosi: heder stoi, zbiór jest niemożliwy."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Początkowe zużycie krzyżaków wału przegubowego hedera. Gdy heder pracuje, pojawia się lekki szum."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Umiarkowane zużycie krzyżaków wału przegubowego hedera. Szum jest wyraźnie słyszalny."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Poważne zużycie krzyżaków wału przegubowego hedera. Szum narasta, a krzyżaki nabierają luzu."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Krytyczna awaria wału przegubowego hedera. Krzyżak pękł: heder nie jest już napędzany, zbiór jest niemożliwy."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Początkowe zużycie łańcucha przenośnika pochyłego. Wydłuża się, a podawanie staje się nierówne."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Umiarkowane zużycie łańcucha przenośnika pochyłego. Na wejściu przenośnika tworzą się zapchania."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Poważne zużycie łańcucha przenośnika pochyłego. Przeskakuje na zębatkach, a zapchania wciąż wracają."/>

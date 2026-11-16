@@ -11,6 +11,10 @@ end
 function RMS_ImplementGreasing.initSpecialization()
     Vehicle.xmlSchemaSavegame:register(XMLValueType.STRING, "vehicles.vehicle(?).rmsImplementGreasing#greasing",
         "Grease points due, hours run and delay per interval")
+    Vehicle.xmlSchemaSavegame:register(XMLValueType.FLOAT, "vehicles.vehicle(?).rmsImplementGreasing#headerTurnedHour",
+        "Hour of play a header last turned")
+    Vehicle.xmlSchemaSavegame:register(XMLValueType.BOOL, "vehicles.vehicle(?).rmsImplementGreasing#limiterSeized",
+        "Slip clutch of a header seized by standing")
 end
 
 function RMS_ImplementGreasing.registerOverwrittenFunctions(vehicleType)
@@ -38,13 +42,23 @@ end
 function RMS_ImplementGreasing:onPostLoad(savegame)
     RMS_Greasing.initialize(self)
     if savegame ~= nil then
-        RMS_Greasing.deserialize(self, savegame.xmlFile:getValue(savegame.key .. ".rmsImplementGreasing#greasing"))
+        local spec, key = self.spec_rmsImplementGreasing, savegame.key .. ".rmsImplementGreasing"
+        RMS_Greasing.deserialize(self, savegame.xmlFile:getValue(key .. "#greasing"))
+        spec.headerTurnedHour = savegame.xmlFile:getValue(key .. "#headerTurnedHour")
+        spec.isLimiterSeized = savegame.xmlFile:getValue(key .. "#limiterSeized", false)
     end
 end
 
 function RMS_ImplementGreasing:saveToXMLFile(xmlFile, key, usedModNames)
     if RMS_Greasing.getTiers(self) ~= nil then
+        local spec = self.spec_rmsImplementGreasing
         xmlFile:setValue(key .. "#greasing", RMS_Greasing.serialize(self))
+        if spec.headerTurnedHour ~= nil then
+            xmlFile:setValue(key .. "#headerTurnedHour", spec.headerTurnedHour)
+        end
+        if spec.isLimiterSeized then
+            xmlFile:setValue(key .. "#limiterSeized", true)
+        end
     end
 end
 

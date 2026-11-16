@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Meghibásodás a differenciálzár vezérlésében. A zár bekapcsolva marad. A gép kanyarban ellenáll a kormányzásnak."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Hajtószíjak és variátorok"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Hajtáscsapágyak és hajtóművek"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Vágóasztal hajtószíja"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Vágóasztal nyomatékhatárolója"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Vágóasztal kardántengelye és keresztcsuklói"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Ferdefelhordó-lánc"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Adagológyorsító"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Verőlécek"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="A hajtáscsapágyak közepes kopása. A zúgás jól hallható, és a csapágyak melegszenek."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="A hajtáscsapágyak súlyos kopása. A zúgás erősödik, és a tengelyek holtjátékot kapnak."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritikus hiba a hajtáscsapágyakban. Egy csapágy beragadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="A vágóasztal hajtószíjának kezdődő kopása. Sivít és kissé csúszik, amíg a vágóasztal forog."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="A vágóasztal hajtószíjának közepes kopása. Hangosabban sivít, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="A vágóasztal hajtószíjának súlyos kopása. Hangosan sivít, az áteresztés csökken, és a leállások ismétlődnek."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritikus hiba a vágóasztal hajtószíjában. Elszakadt: a vágóasztal nem kap hajtást, a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="A vágóasztal nyomatékhatárolójának kezdődő kopása. Terhelés alatt kissé csúszik."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="A vágóasztal nyomatékhatárolójának közepes kopása. Már normál terhelésnél csúszik, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="A vágóasztal nyomatékhatárolójának súlyos kopása. Csúszik és melegszik, az áteresztés csökken, és a leállások ismétlődnek."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritikus hiba a vágóasztal nyomatékhatárolójában. Már semmit sem visz át: a vágóasztal áll, a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="A vágóasztal kardántengely-keresztcsuklóinak kezdődő kopása. Enyhe zúgás jelenik meg, amíg a vágóasztal forog."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="A vágóasztal kardántengely-keresztcsuklóinak közepes kopása. A zúgás jól hallható."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="A vágóasztal kardántengely-keresztcsuklóinak súlyos kopása. A zúgás erősödik, és a csuklók holtjátékot kapnak."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritikus hiba a vágóasztal kardántengelyében. Egy keresztcsukló eltört: a vágóasztal nem kap hajtást, a betakarítás lehetetlen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="A ferdefelhordó-lánc kezdődő kopása. Megnyúlik, és az adagolás egyenetlenné válik."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="A ferdefelhordó-lánc közepes kopása. A ferdefelhordó bejáratánál dugulások keletkeznek."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="A ferdefelhordó-lánc súlyos kopása. Átugrik a lánckerekeken, és a dugulások visszatérnek."/>

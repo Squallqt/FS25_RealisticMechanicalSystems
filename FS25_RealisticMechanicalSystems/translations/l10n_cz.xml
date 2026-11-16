@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="uzávěrka nebo 4x4 na tvrdém povrchu"/>
         <text name="rms_warranty_filter" text="zanesený filtr"/>
         <text name="rms_warranty_oil" text="nevhodný motorový olej"/>
+        <text name="rms_warranty_header_engagement" text="adaptér zapnutý nad volnoběhem"/>
         <text name="rms_warranty_trailer" text="příliš těžký přívěs"/>
         <text name="rms_warranty_aftermarket_part" text="díl z druhovýroby"/>
         <text name="rms_warranty_used_part" text="použitý díl"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Vizuální kontrola a zkouška funkcí"/>
         <text name="rms_ws_inspection_electronic" text="Elektronické poruchy"/>
         <text name="rms_ws_inspection_electronic_detail" text="Chybové kódy načtené diagnostikou"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrické poruchy"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Obvody ověřené multimetrem"/>
         <text name="rms_ws_inspection_dormant" text="Skryté vady"/>
         <text name="rms_ws_inspection_dormant_detail" text="Vadný díl, provizorní oprava"/>
         <text name="rms_ws_inspection_report" text="Zpráva"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Kameny"/>
         <text name="rms_report_wear_harvest_rice" text="Sklizeň rýže"/>
         <text name="rms_report_wear_harvest_wet" text="Vlhká plodina"/>
+        <text name="rms_report_wear_header_starts" text="Spuštění adaptéru"/>
         <text name="rms_report_component_title" text="Součást"/>
         <text name="rms_report_system_condition_transmission" text="Převodovka"/>
         <text name="rms_report_system_condition_power" text="Aktuální výkon"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="U studeného vznětového motoru jedno stisknutí ovladače spuštění zapne zapalování a automaticky zahájí cyklus předehřevu. Kontrolky na palubní desce se krátce rozsvítí a potom zůstane kontrolka předehřevu svítit, dokud není motor připraven. Povel neopakuj: startér se zapne automaticky, jakmile kontrolka zhasne."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapínání vývodového hřídele"/>
         <text name="rms_tutorial_pto_engagement_message" text="Vývodový hřídel zapínej při volnoběhu a teprve potom zvyš otáčky: zapnutí ve vysokých otáčkách je ráz pro celé hnací ústrojí, tím silnější s těžkým nářadím. Každé zapnutí navíc opotřebovává jeho spojku."/>
+        <text name="rms_tutorial_header_engagement_title" text="Zapínání adaptéru"/>
+        <text name="rms_tutorial_header_engagement_message" text="Adaptér zapínej při volnoběhu a teprve potom zvyš otáčky: rozjetý ve vysokých otáčkách prokluzuje svou prokluzovou spojkou, která se pak opotřebovává mnohem rychleji."/>
+        <text name="rms_tutorial_header_stored_title" text="Odstavený adaptér"/>
+        <text name="rms_tutorial_header_stored_message" text="Tento adaptér neběžel déle než dva týdny: jeho prokluzová spojka zarezla a už ho nechrání. Před sklizní adaptér namaž, jinak může ucpání zlomit jeho kloubový hřídel."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Volnoběh a odstavení"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Opotřebení je mnohem nižší, když stroj běží, ale aktivně nepracuje. Pokud je motor vypnutý, opotřebení je minimální, a pokud je stroj zaparkován pod střechou, mizí úplně."/>
         <text name="rms_tutorial_idle_deposit_title" text="Dlouhý volnoběh"/>

@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Svikt i betjeningen av differensialsperren. Sperren forblir innkoblet. Maskinen motsetter seg styring i svinger."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drivreimer og variatorer"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drivlagre og girkasser"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Skjærebordets drivreim"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Skjærebordets friksjonskobling"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Skjærebordets kardangaksel og kryssledd"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Kjede i innmatingskanalen"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Innmatingsakselerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Slagskinner"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderat slitasje på drivlagrene. Durlyden høres tydelig, og de blir varme."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Alvorlig slitasje på drivlagrene. Durlyden øker, og akslingene får slark."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritisk svikt i drivlagrene. Et lager har skåret seg: høsting er umulig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Begynnende slitasje på skjærebordets drivreim. Den hviner og slurer litt mens skjærebordet går."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Moderat slitasje på skjærebordets drivreim. Den hviner høyere, og turtallsalarmen stopper av og til høstingen."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Alvorlig slitasje på skjærebordets drivreim. Den hviner høyt, gjennomstrømningen faller, og stoppene gjentar seg."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritisk svikt i skjærebordets drivreim. Den har røket: skjærebordet drives ikke lenger, høsting er umulig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Begynnende slitasje på skjærebordets friksjonskobling. Den slurer litt under belastning."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Moderat slitasje på skjærebordets friksjonskobling. Den slurer under normal belastning, og turtallsalarmen stopper av og til høstingen."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Alvorlig slitasje på skjærebordets friksjonskobling. Den slurer og blir varm, gjennomstrømningen faller, og stoppene gjentar seg."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritisk svikt i skjærebordets friksjonskobling. Den overfører ikke lenger noe: skjærebordet står stille, høsting er umulig."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Begynnende slitasje på kryssleddene i skjærebordets kardangaksel. Det oppstår en svak durlyd mens skjærebordet går."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Moderat slitasje på kryssleddene i skjærebordets kardangaksel. Durlyden er tydelig hørbar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Alvorlig slitasje på kryssleddene i skjærebordets kardangaksel. Durlyden øker, og leddene får slark."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritisk svikt i skjærebordets kardangaksel. Et kryssledd har røket: skjærebordet drives ikke lenger, høsting er umulig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Begynnende slitasje på kjedet i innmatingskanalen. Det strekker seg, og innmatingen blir ujevn."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderat slitasje på kjedet i innmatingskanalen. Det oppstår tettinger ved inngangen til innmatingskanalen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Alvorlig slitasje på kjedet i innmatingskanalen. Det hopper på tannhjulene, og tettingene fortsetter."/>

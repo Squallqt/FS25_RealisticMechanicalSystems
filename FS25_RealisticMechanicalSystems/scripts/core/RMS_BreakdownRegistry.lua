@@ -310,6 +310,9 @@ RMS_Breakdowns.PARTS = {
     FRONT_PTO_CLUTCH = "rms_breakdowns_part_front_pto_clutch",
     HARVEST_DRIVE_BELTS = "rms_breakdowns_part_harvest_drive_belts",
     HARVEST_DRIVE_BEARINGS = "rms_breakdowns_part_harvest_drive_bearings",
+    HEADER_DRIVE_BELT = "rms_breakdowns_part_header_drive_belt",
+    HEADER_SLIP_CLUTCH = "rms_breakdowns_part_header_slip_clutch",
+    HEADER_DRIVE_SHAFT = "rms_breakdowns_part_header_drive_shaft",
     FEEDER_CHAIN = "rms_breakdowns_part_feeder_chain",
     FEED_ACCELERATOR = "rms_breakdowns_part_feed_accelerator",
     THRESHING_BARS = "rms_breakdowns_part_threshing_bars",
@@ -480,6 +483,9 @@ local stagePartPrices = {
     HV_CONTACTOR_FAILURE = { 0.3363, 0.3363, 0.3363, 0.3363 },
     HARVEST_DRIVE_BELT_WEAR = { 0.0185, 0.0185, 0.02774, 0.03699 },
     HARVEST_DRIVE_BEARING_WEAR = { 0.04624, 0.04624, 0.06936, 0.09248 },
+    HEADER_DRIVE_BELT_WEAR = { 0.04625, 0.04625, 0.06938, 0.0925 },
+    HEADER_SLIP_CLUTCH_WEAR = { 0.111, 0.111, 0.1665, 0.222 },
+    HEADER_DRIVE_SHAFT_WEAR = { 0.02775, 0.02775, 0.04163, 0.0555 },
     FEEDER_CHAIN_WEAR = { 0.185, 0.185, 0.2774, 0.3699 },
     FEED_ACCELERATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
     THRESHING_BAR_WEAR = { 0.7399, 0.7399, 1.11, 1.48 },
@@ -745,8 +751,8 @@ for aggregation, effectIds in pairs({
         "ENGINE_KNOCKING_NOISE_EFFECT", "EXHAUST_OIL", "EXHAUST_SOOT", "EXHAUST_UNBURNT", "FAN_BLADE_NOISE_EFFECT",
         "FAN_CLUTCH_NOISE_EFFECT", "FRONT_AXLE_SHAFT_NOISE_EFFECT", "GAS_LEAK_NOISE_EFFECT", "GEARBOX_BEARING_NOISE_EFFECT",
         "GEAR_SHIFT_FAILURE_CHANCE", "GEAR_WHINE_NOISE_EFFECT", "GLOW_PLUG_COLD_IDLE_EFFECT", "GLOW_PLUG_FAILURE",
-        "GLOW_PLUG_HARD_START_MODIFIER", "HARVEST_BEARING_NOISE_EFFECT", "HARVEST_THROUGHPUT_LIMIT",
-        "HIGH_PRESSURE_PUMP_NOISE_EFFECT", "HOSE_BURST_NOISE_EFFECT", "HYDRAULIC_FLUID_LEAK_RATE",
+        "GLOW_PLUG_HARD_START_MODIFIER", "HARVEST_BEARING_NOISE_EFFECT", "HARVEST_THROUGHPUT_LIMIT", "HEADER_BELT_SQUEAL_NOISE_EFFECT",
+        "HEADER_SHAFT_BREAK_NOISE_EFFECT", "HIGH_PRESSURE_PUMP_NOISE_EFFECT", "HOSE_BURST_NOISE_EFFECT", "HYDRAULIC_FLUID_LEAK_RATE",
         "HYDRAULIC_HOLD_DRIFT_EFFECT", "HYDRAULIC_PUMP_NOISE_EFFECT", "HYDROSTATIC_WHINE_NOISE_EFFECT", "IDLE_HUNTING_EFFECT",
         "INJECTOR_KNOCK_NOISE_EFFECT", "LOADER_PINS_NOISE_EFFECT", "MAX_SPEED_MODIFIER", "PARK_BRAKE_DRAG_EFFECT",
         "PARK_BRAKE_DRAG_NOISE_EFFECT", "PISTON_SLAP_NOISE_EFFECT", "POWERSHIFT_ENGAGEMENT_LAG_AND_HARSH_EFFECT",
@@ -885,6 +891,7 @@ local function addBreakdown(id, def, stages)
         getNameVariant = def.getNameVariant,
         variantParts = def.variantParts,
         wearsWhile = def.wearsWhile,
+        wearsWhileDriven = def.wearsWhileDriven,
         wearsByCausesOnly = def.wearsByCausesOnly,
         stages = {}
     }
@@ -2683,8 +2690,29 @@ local function isStrawChopperOrgan(vehicle)
     return isGrainHarvester(vehicle) and vehicle.spec_combine.chopper.isAvailable == true
 end
 
+local isHeaderHarvester = forHarvestKinds("grain", "forage")
+
+-- a header hitched to the feeder house and driven from the machine
+local function isHeaderDriveOrgan(vehicle)
+    if not isHeaderHarvester(vehicle) or vehicle.spec_attacherJoints == nil then
+        return false
+    end
+    for _, joint in pairs(vehicle.spec_attacherJoints.attacherJoints) do
+        if joint.jointType == AttacherJoints.JOINTTYPE_CUTTER or joint.jointType == AttacherJoints.JOINTTYPE_CUTTERHARVESTER then
+            return true
+        end
+    end
+    return false
+end
+
+local function getIsHeaderTurning(vehicle)
+    local drive = vehicle.spec_RealisticMechanicalSystems.headerDrive
+    return drive ~= nil and drive.isTurning == true
+end
+
 local function getHarvestSymptoms(profile)
     local function throughput(value) return { "HARVEST_THROUGHPUT_LIMIT", value } end
+    local function squeal(value) return { "HEADER_BELT_SQUEAL_NOISE_EFFECT", value } end
     -- value is the mean time between two blockages, in minutes
     local function blockage(minutes) return { "HARVEST_BLOCKAGE_CHANCE", minutes } end
     local function grainLoss(value) return { "HARVEST_GRAIN_LOSS", value } end
@@ -2706,8 +2734,15 @@ local function getHarvestSymptoms(profile)
         return { { throughput(0.05) }, { blockage(30) }, { blockage(10), grainLoss(0.01) }, { stop() } }
     elseif profile == "drive" then
         return { { throughput(0.05) }, { blockage(30) }, { throughput(0.15), blockage(10) }, { stop() } }
+    elseif profile == "belt" then
+        -- squeals as loud as a worn accessory belt
+        return { { throughput(0.05), squeal(0.3) }, { blockage(30), squeal(0.5) }, { throughput(0.15), blockage(10), squeal(0.8) }, { stop() } }
     elseif profile == "bearing" then
         return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop() } }
+    elseif profile == "driveline" then
+        -- a U-joint breaks with the bang of a tractor's shaft
+        local bang = { "HEADER_SHAFT_BREAK_NOISE_EFFECT", 1.0 }
+        return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop(), bang } }
     elseif profile == "detector" then
         return { { blockage(30) }, { blockage(10) }, { { "METAL_DETECTOR_OFF", 1.0 } } }
     elseif profile == "shares" then
@@ -2716,14 +2751,15 @@ local function getHarvestSymptoms(profile)
     error("unknown harvest symptoms " .. tostring(profile))
 end
 
--- def={part, isApplicable, component, causes, symptoms, texts, progress}
+-- def={part, isApplicable, component, causes, symptoms, texts, ...}
 local function addHarvestOrgan(id, def)
     local stages = getHarvestSymptoms(def.symptoms)
     for index = 2, #stages do
         stages[index].lamps = { { db.WARNING, index == 2 and color.WARNING or color.CRITICAL } }
     end
-    addBreakdown(id, { system = systems.HARVEST, part = def.part, isApplicable = def.isApplicable, isCanProgress = isHarvestRunning,
-        causes = def.causes, component = def.component, texts = def.texts, progress = def.progress }, stages)
+    addBreakdown(id, { system = systems.HARVEST, part = def.part, isApplicable = def.isApplicable,
+        isCanProgress = def.isCanProgress or isHarvestRunning, causes = def.causes, component = def.component, texts = def.texts,
+        progress = def.progress, wearsWhileDriven = def.wearsWhileDriven, wearsByCausesOnly = def.wearsByCausesOnly }, stages)
 end
 
 local function causes(primary, secondary)
@@ -2735,6 +2771,18 @@ addHarvestOrgan("HARVEST_DRIVE_BELT_WEAR", { part = parts.HARVEST_DRIVE_BELTS, i
     causes = causes({ "hwf" }), symptoms = "drive", texts = "harvest_drive_belt_wear" })
 addHarvestOrgan("HARVEST_DRIVE_BEARING_WEAR", { part = parts.HARVEST_DRIVE_BEARINGS, isApplicable = isAnyHarvester, component = "ROLLER_BEARING",
     causes = causes({ "lubf" }), symptoms = "bearing", texts = "harvest_drive_bearing_wear", progress = 1.2 })
+
+-- the header drive wears while a header turns, not on the threshing
+addHarvestOrgan("HEADER_DRIVE_BELT_WEAR", { part = parts.HEADER_DRIVE_BELT, isApplicable = isHeaderDriveOrgan, component = "DRIVE_BELT",
+    causes = { primary = {}, secondary = {} }, symptoms = "belt", texts = "header_drive_belt_wear",
+    isCanProgress = getIsHeaderTurning, wearsWhileDriven = getIsHeaderTurning })
+-- its linings wear only as it slips
+addHarvestOrgan("HEADER_SLIP_CLUTCH_WEAR", { part = parts.HEADER_SLIP_CLUTCH, isApplicable = isHeaderDriveOrgan, component = "FRICTION_CLUTCH",
+    causes = { primary = { "hdef", "hdlf" }, secondary = {} }, symptoms = "drive", texts = "header_slip_clutch_wear",
+    isCanProgress = getIsHeaderTurning, wearsByCausesOnly = true })
+addHarvestOrgan("HEADER_DRIVE_SHAFT_WEAR", { part = parts.HEADER_DRIVE_SHAFT, isApplicable = isHeaderDriveOrgan,
+    component = "PTO_OUTPUT_SHARED_BUDGET", causes = { primary = { "hdlf" }, secondary = {} }, symptoms = "driveline",
+    texts = "header_drive_shaft_wear", progress = 1.2, isCanProgress = getIsHeaderTurning, wearsWhileDriven = getIsHeaderTurning })
 
 addHarvestOrgan("FEEDER_CHAIN_WEAR", { part = parts.FEEDER_CHAIN, isApplicable = isGrainHarvester, component = "FEEDER_CHAIN",
     causes = causes({ "hstf", "lubf" }), symptoms = "feed", texts = "feeder_chain_wear" })

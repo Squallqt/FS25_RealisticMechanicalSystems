@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="lukko tai 4WD kovalla alustalla"/>
         <text name="rms_warranty_filter" text="tukkeutunut suodatin"/>
         <text name="rms_warranty_oil" text="sopimaton moottoriöljy"/>
+        <text name="rms_warranty_header_engagement" text="leikkuupöytä kytketty yli joutokäynnin"/>
         <text name="rms_warranty_trailer" text="liian raskas perävaunu"/>
         <text name="rms_warranty_aftermarket_part" text="tarvikeosa"/>
         <text name="rms_warranty_used_part" text="käytetty osa"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Silmämääräinen tarkastus ja toimintakoe"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniset viat"/>
         <text name="rms_ws_inspection_electronic_detail" text="Vikakoodit luettu diagnoosilaitteella"/>
+        <text name="rms_ws_inspection_electrical" text="Sähköviat"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Virtapiirit tarkistettu yleismittarilla"/>
         <text name="rms_ws_inspection_dormant" text="Piilevät viat"/>
         <text name="rms_ws_inspection_dormant_detail" text="Viallinen osa, tilapäinen korjaus"/>
         <text name="rms_ws_inspection_report" text="Raportti"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Kivet"/>
         <text name="rms_report_wear_harvest_rice" text="Riisin korjuu"/>
         <text name="rms_report_wear_harvest_wet" text="Kostea kasvusto"/>
+        <text name="rms_report_wear_header_starts" text="Leikkuupöydän käynnistykset"/>
         <text name="rms_report_component_title" text="Komponentti"/>
         <text name="rms_report_system_condition_transmission" text="Vaihteisto"/>
         <text name="rms_report_system_condition_power" text="Nykyinen teho"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Kun dieselmoottori on kylmä, käynnistysohjaimen yksi painallus kytkee virran ja aloittaa hehkutuksen automaattisesti. Kojelaudan merkkivalot suorittavat itsetestin, minkä jälkeen hehkutuksen merkkivalo palaa, kunnes moottori on valmis. Älä paina uudelleen: käynnistin kytkeytyy automaattisesti merkkivalon sammuttua."/>
         <text name="rms_tutorial_pto_engagement_title" text="Voimanottoakselin kytkentä"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kytke voimanottoakseli joutokäynnillä ja nosta vasta sitten kierroksia: kytkentä korkeilla kierroksilla iskee koko voimansiirtoon, sitä enemmän mitä raskaampi työkone. Jokainen kytkentä kuluttaa myös sen kytkintä."/>
+        <text name="rms_tutorial_header_engagement_title" text="Leikkuupöydän kytkentä"/>
+        <text name="rms_tutorial_header_engagement_message" text="Kytke leikkuupöytä joutokäynnillä ja nosta vasta sitten kierroksia: korkeilla kierroksilla käynnistettäessä sen kitkakytkin luistaa ja kuluu paljon nopeammin."/>
+        <text name="rms_tutorial_header_stored_title" text="Seisonut leikkuupöytä"/>
+        <text name="rms_tutorial_header_stored_message" text="Tämä leikkuupöytä ei ole pyörinyt yli kahteen viikkoon: sen kitkakytkin on ruostunut kiinni eikä enää suojaa sitä. Voitele leikkuupöytä ennen korjuuta, muuten tukos voi katkaista sen nivelakselin."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Käyttämättömyysaika ja varastointi"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Kuluminen on paljon vähäisempää, kun kone käy mutta ei tee aktiivista työtä. Kun moottori on sammutettu, kuluminen on hyvin vähäistä, ja jos kone on varastoitu katoksen alla, se katoaa kokonaan."/>
         <text name="rms_tutorial_idle_deposit_title" text="Pitkä joutokäynti"/>

@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Guasto del comando del bloccaggio differenziale. Il bloccaggio resta inserito. La macchina resiste alla sterzata in curva."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Cinghie e variatori"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Cuscinetti e scatole di trasmissione"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Cinghia di innesto della testata"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitatore di coppia della testata"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Albero cardanico e crociere della testata"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Catena del canale elevatore"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Acceleratore di alimentazione"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Spranghe del battitore"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Usura moderata dei cuscinetti di trasmissione degli organi. Il rombo si sente chiaramente e scaldano."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Usura grave dei cuscinetti di trasmissione degli organi. Il rombo aumenta e gli alberi prendono gioco."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Guasto critico dei cuscinetti di trasmissione degli organi. Un cuscinetto si è grippato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Usura iniziale della cinghia di innesto della testata. Fischia e slitta un po' mentre la testata gira."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Usura moderata della cinghia di innesto della testata. Fischia più forte e l'allarme di regime a volte ferma la raccolta."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Usura grave della cinghia di innesto della testata. Fischia forte, la portata cala e le fermate si ripetono."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Guasto critico della cinghia di innesto della testata. Si è rotta: la testata non è più azionata, la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Usura iniziale del limitatore di coppia della testata. Slitta un po' sotto carico."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Usura moderata del limitatore di coppia della testata. Slitta sotto il carico normale e l'allarme di regime a volte ferma la raccolta."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Usura grave del limitatore di coppia della testata. Slitta e si scalda, la portata cala e le fermate si ripetono."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Guasto critico del limitatore di coppia della testata. Non trasmette più nulla: la testata è ferma, la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Usura iniziale delle crociere dell'albero cardanico della testata. Compare un leggero rombo mentre la testata gira."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Usura moderata delle crociere dell'albero cardanico della testata. Il rombo si sente chiaramente."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Usura grave delle crociere dell'albero cardanico della testata. Il rombo aumenta e le crociere prendono gioco."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Guasto critico dell'albero cardanico della testata. Una crociera si è rotta: la testata non è più azionata, la raccolta è impossibile."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Usura iniziale della catena del canale elevatore. Si allunga e l'alimentazione diventa irregolare."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Usura moderata della catena del canale elevatore. Si formano intasamenti all'ingresso del canale elevatore."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Usura grave della catena del canale elevatore. Salta sui pignoni e gli intasamenti si ripetono."/>

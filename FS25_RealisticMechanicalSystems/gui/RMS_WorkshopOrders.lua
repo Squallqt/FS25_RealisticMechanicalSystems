@@ -106,17 +106,20 @@ function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
     return names
 end
 
-local function getInspectionRows()
+local function getInspectionRows(vehicle)
     local R = RealisticMechanicalSystems
     local function report(inspectionType)
         local entry = { type = R.STATUS.INSPECTION, optionOne = inspectionType }
         local hasReport = R.getIsLogEntryHasReport(entry)
         return hasReport, hasReport and R.getIsCompleteReport(entry)
     end
+    -- no controller, no code to read: these faults are on the wiring
+    local hasControllers = RMS_DiagnosticTool.getHasControllers(vehicle)
     return {
         { name = "rms_ws_inspection_mechanical", detail = "rms_ws_inspection_mechanical_detail",
             getCell = function(choice) return shareCell(R.getInspectionDetectionShare(choice, false)) end },
-        { name = "rms_ws_inspection_electronic", detail = "rms_ws_inspection_electronic_detail",
+        { name = hasControllers and "rms_ws_inspection_electronic" or "rms_ws_inspection_electrical",
+            detail = hasControllers and "rms_ws_inspection_electronic_detail" or "rms_ws_inspection_electrical_detail",
             getCell = function(choice) return shareCell(R.getInspectionDetectionShare(choice, true)) end },
         { name = "rms_ws_inspection_dormant", detail = "rms_ws_inspection_dormant_detail",
             getCell = function(choice)

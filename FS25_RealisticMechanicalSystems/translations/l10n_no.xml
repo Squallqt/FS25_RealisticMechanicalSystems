@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="sperre eller 4WD på fast underlag"/>
         <text name="rms_warranty_filter" text="tett filter"/>
         <text name="rms_warranty_oil" text="uegnet motorolje"/>
+        <text name="rms_warranty_header_engagement" text="skjærebord koblet inn over tomgang"/>
         <text name="rms_warranty_trailer" text="for tung henger"/>
         <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
         <text name="rms_warranty_used_part" text="brukt del"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visuell kontroll og funksjonstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniske feil"/>
         <text name="rms_ws_inspection_electronic_detail" text="Feilkoder lest av med diagnoseutstyret"/>
+        <text name="rms_ws_inspection_electrical" text="Elektriske feil"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Kretser kontrollert med multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Skjulte defekter"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defekt del, nødreparasjon"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Stein"/>
         <text name="rms_report_wear_harvest_rice" text="Rishøsting"/>
         <text name="rms_report_wear_harvest_wet" text="Fuktig avling"/>
+        <text name="rms_report_wear_header_starts" text="Oppstarter av skjærebordet"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmisjon"/>
         <text name="rms_report_system_condition_power" text="Aktuell effekt"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="På en kald dieselmotor slår ett trykk på startknappen på tenningen og starter forvarmingen automatisk. Lampene i instrumentpanelet lyser kort opp, og deretter fortsetter forvarmingslampen å lyse til motoren er klar. Ikke gjenta kommandoen: startmotoren kobler inn av seg selv når lampen slukker."/>
         <text name="rms_tutorial_pto_engagement_title" text="Innkobling av kraftuttak"/>
         <text name="rms_tutorial_pto_engagement_message" text="Koble inn kraftuttaket på tomgang, og øk deretter turtallet: innkobling på høyt turtall gir hele drivverket et støt, særlig med et tungt redskap. Hver innkobling sliter også på clutchen."/>
+        <text name="rms_tutorial_header_engagement_title" text="Innkobling av skjærebordet"/>
+        <text name="rms_tutorial_header_engagement_message" text="Koble inn skjærebordet på tomgang, og øk deretter turtallet: starter det på høyt turtall, slurer friksjonskoblingen og slites mye raskere."/>
+        <text name="rms_tutorial_header_stored_title" text="Hensatt skjærebord"/>
+        <text name="rms_tutorial_header_stored_message" text="Dette skjærebordet har ikke gått på over to uker: friksjonskoblingen har rustet fast og beskytter det ikke lenger. Smør skjærebordet før høstingen, ellers kan en tetting knekke kardangakselen."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stillstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitasjen er langt lavere når maskinen går uten å arbeide. Med motoren av blir den minimal. Under tak forsvinner den helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lengre tomgang"/>

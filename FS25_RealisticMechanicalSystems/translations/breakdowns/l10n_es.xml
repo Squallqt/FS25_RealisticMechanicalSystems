@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Fallo del mando del bloqueo del diferencial. El bloqueo permanece acoplado. La máquina se resiste a girar en las curvas."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Correas y variadores"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rodamientos y cajas de transmisión"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Correa de embrague del cabezal"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitador de par del cabezal"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Cardán y crucetas del cabezal"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Cadena del alimentador"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Acelerador de alimentación"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Barras desgranadoras"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Desgaste moderado de los rodamientos de transmisión de los órganos. El rumor se oye claramente y se calientan."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Desgaste severo de los rodamientos de transmisión de los órganos. El rumor aumenta y los ejes cogen holgura."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Fallo crítico de los rodamientos de transmisión de los órganos. Un rodamiento se ha gripado: la cosecha es imposible."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Desgaste inicial de la correa de embrague del cabezal. Chirría y patina un poco mientras el cabezal gira."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Desgaste moderado de la correa de embrague del cabezal. Chirría más fuerte y la alarma de régimen a veces detiene la cosecha."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Desgaste severo de la correa de embrague del cabezal. Chirría fuerte, el caudal baja y las paradas se repiten."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Fallo crítico de la correa de embrague del cabezal. Se ha roto: el cabezal ya no recibe accionamiento, la cosecha es imposible."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Desgaste inicial del limitador de par del cabezal. Patina un poco con carga."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Desgaste moderado del limitador de par del cabezal. Patina con la carga normal y la alarma de régimen a veces detiene la cosecha."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Desgaste severo del limitador de par del cabezal. Patina y se calienta, el caudal baja y las paradas se repiten."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Fallo crítico del limitador de par del cabezal. Ya no transmite nada: el cabezal está parado, la cosecha es imposible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Desgaste inicial de las crucetas del cardán del cabezal. Aparece un leve rumor mientras el cabezal gira."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Desgaste moderado de las crucetas del cardán del cabezal. El rumor se oye con claridad."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Desgaste severo de las crucetas del cardán del cabezal. El rumor aumenta y las crucetas cogen holgura."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Fallo crítico del cardán del cabezal. Una cruceta se ha roto: el cabezal ya no recibe accionamiento, la cosecha es imposible."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Desgaste inicial de la cadena del alimentador. Se alarga y la alimentación se vuelve irregular."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Desgaste moderado de la cadena del alimentador. Se forman atascos a la entrada del alimentador."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Desgaste severo de la cadena del alimentador. Salta en los piñones y los atascos se repiten."/>

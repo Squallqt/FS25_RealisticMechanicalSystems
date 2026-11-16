@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="blocage ou 4RM sur sol dur"/>
         <text name="rms_warranty_filter" text="filtre colmaté"/>
         <text name="rms_warranty_oil" text="huile moteur non adaptée"/>
+        <text name="rms_warranty_header_engagement" text="coupe embrayée au-dessus du ralenti"/>
         <text name="rms_warranty_trailer" text="remorque trop lourde"/>
         <text name="rms_warranty_aftermarket_part" text="pièce adaptable"/>
         <text name="rms_warranty_used_part" text="pièce d'occasion"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Examen visuel et essai des fonctions"/>
         <text name="rms_ws_inspection_electronic" text="Pannes électroniques"/>
         <text name="rms_ws_inspection_electronic_detail" text="Codes défaut lus à la valise"/>
+        <text name="rms_ws_inspection_electrical" text="Pannes électriques"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuits contrôlés au multimètre"/>
         <text name="rms_ws_inspection_dormant" text="Défauts latents"/>
         <text name="rms_ws_inspection_dormant_detail" text="Pièce défectueuse, réparation de fortune"/>
         <text name="rms_ws_inspection_report" text="Compte rendu"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Pierres"/>
         <text name="rms_report_wear_harvest_rice" text="Récolte du riz"/>
         <text name="rms_report_wear_harvest_wet" text="Récolte humide"/>
+        <text name="rms_report_wear_header_starts" text="Démarrages de la coupe"/>
         <text name="rms_report_component_title" text="Composant"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Puissance actuelle"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Sur un moteur diesel froid, une impulsion sur la commande de démarrage met le contact et lance automatiquement le cycle de préchauffage. Les voyants du tableau de bord s'allument brièvement, puis le voyant de préchauffage reste allumé jusqu'à ce que le moteur soit prêt. Ne répétez pas la commande : le démarreur s'engage automatiquement lorsque le voyant s'éteint."/>
         <text name="rms_tutorial_pto_engagement_title" text="Embrayage de la PDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Embrayez la PDF au ralenti, puis montez le régime : l'embrayer à haut régime donne un à-coup à toute la transmission, d'autant plus avec un outil lourd. Chaque embrayage use aussi son embrayage."/>
+        <text name="rms_tutorial_header_engagement_title" text="Embrayage de la coupe"/>
+        <text name="rms_tutorial_header_engagement_message" text="Embrayez la coupe au ralenti, puis montez le régime : la lancer moteur haut dans les tours fait glisser son limiteur de couple, qui s'use bien plus vite."/>
+        <text name="rms_tutorial_header_stored_title" text="Coupe remisée"/>
+        <text name="rms_tutorial_header_stored_message" text="Cette coupe n'a pas tourné depuis plus de deux semaines : son limiteur de couple a grippé et ne la protège plus. Graissez la coupe avant de récolter, sinon un bourrage peut casser son arbre."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti et immobilisation"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usure est bien plus faible lorsque la machine tourne sans travailler. Moteur coupé, elle devient minime. Sous abri, elle disparaît complètement."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongé"/>

@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="Sperre oder 4WD auf festem Boden"/>
         <text name="rms_warranty_filter" text="Filter verstopft"/>
         <text name="rms_warranty_oil" text="ungeeignetes Motoröl"/>
+        <text name="rms_warranty_header_engagement" text="Vorsatz über Leerlauf eingekuppelt"/>
         <text name="rms_warranty_trailer" text="Anhänger zu schwer"/>
         <text name="rms_warranty_aftermarket_part" text="Nachbauteil"/>
         <text name="rms_warranty_used_part" text="Gebrauchtteil"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Sichtprüfung und Funktionstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektronische Schäden"/>
         <text name="rms_ws_inspection_electronic_detail" text="Fehlercodes mit dem Diagnosegerät ausgelesen"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrische Schäden"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Stromkreise mit dem Multimeter geprüft"/>
         <text name="rms_ws_inspection_dormant" text="Verdeckte Mängel"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defektes Teil, Behelfsreparatur"/>
         <text name="rms_ws_inspection_report" text="Bericht"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Steine"/>
         <text name="rms_report_wear_harvest_rice" text="Reisernte"/>
         <text name="rms_report_wear_harvest_wet" text="Feuchtes Erntegut"/>
+        <text name="rms_report_wear_header_starts" text="Vorsatzstarts"/>
         <text name="rms_report_component_title" text="Komponente"/>
         <text name="rms_report_system_condition_transmission" text="Getriebe"/>
         <text name="rms_report_system_condition_power" text="Aktuelle Leistung"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten leuchten kurz auf; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapfwelle einkuppeln"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kupple die Zapfwelle im Leerlauf ein und erhöhe dann die Drehzahl: Einkuppeln bei hoher Drehzahl belastet den ganzen Antriebsstrang mit einem Stoß, umso mehr bei einem schweren Gerät. Jedes Einkuppeln verschleißt außerdem die Kupplung."/>
+        <text name="rms_tutorial_header_engagement_title" text="Vorsatz einkuppeln"/>
+        <text name="rms_tutorial_header_engagement_message" text="Kupple den Vorsatz im Leerlauf ein und erhöhe dann die Drehzahl: wird er bei hoher Drehzahl angefahren, rutscht seine Rutschkupplung durch und verschleißt viel schneller."/>
+        <text name="rms_tutorial_header_stored_title" text="Abgestellter Vorsatz"/>
+        <text name="rms_tutorial_header_stored_message" text="Dieser Vorsatz lief seit über zwei Wochen nicht mehr: seine Rutschkupplung ist festgerostet und schützt ihn nicht mehr. Schmiere den Vorsatz vor der Ernte, sonst kann eine Verstopfung seine Gelenkwelle brechen."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Leerlauf und Standzeit"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Der Verschleiß ist deutlich geringer, wenn die Maschine läuft, ohne zu arbeiten. Bei abgestelltem Motor wird er minimal, und er verschwindet ganz, wenn die Maschine unter einem Dach steht."/>
         <text name="rms_tutorial_idle_deposit_title" text="Zu langer Leerlauf"/>

@@ -1483,6 +1483,12 @@ function RealisticMechanicalSystems:getIsWarrantyServiceOverdue(breakdownId)
         and RMS_Greasing.getStatus(self) == "late" then
         return true
     end
+    local drive = self.spec_RealisticMechanicalSystems.headerDrive
+    local header = drive ~= nil and drive.header or nil
+    if header ~= nil and causes ~= nil and (table.hasElement(causes.primary, "hdlf") or table.hasElement(causes.secondary, "hdlf"))
+        and RMS_Greasing.getSpec(header) ~= nil and (RMS_Greasing.getStatus(header) == "late" or RMS_Greasing.getIsLimiterSeized(header)) then
+        return true
+    end
     local system = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, entry.system)
     for _, clock in ipairs(self:getServiceClocks()) do
         if table.hasElement(clock.systems, system) then

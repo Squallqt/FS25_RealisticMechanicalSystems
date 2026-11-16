@@ -1081,6 +1081,9 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
     spec.terrainImpacts.count = 0
     spec.terrainImpacts.lastSpeedLoss = 0
     spec.ptoEngagementCount = 0
+    if spec.headerDrive ~= nil then
+        spec.headerDrive.starts = 0
+    end
 
     print(string.format("RMS: Factor stats reset for '%s'.", vehicle:getFullName()))
 end

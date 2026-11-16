@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="差速鎖控制裝置失效。差速鎖無法解除，機具轉彎時轉向受阻。"/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="傳動帶和無級變速器"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="傳動軸承和齒輪箱"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="割台驅動皮帶"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="割台安全離合器"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="割台傳動軸和十字軸"/>
         <text name="rms_breakdowns_part_feeder_chain" text="過橋輸送鏈"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="餵入加速器"/>
         <text name="rms_breakdowns_part_threshing_bars" text="紋桿"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="部件傳動軸承中度磨損。噪音清晰可聞，軸承發熱。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="部件傳動軸承嚴重磨損。噪音加劇，軸出現間隙。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="部件傳動軸承發生極重度失效。一個軸承卡死：無法收穫。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="割台驅動皮帶開始磨損。割台運轉時皮帶發出尖叫並略有打滑。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="割台驅動皮帶中度磨損。尖叫聲更大，轉速報警有時會停止收穫。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="割台驅動皮帶嚴重磨損。尖叫聲很大，餵入量下降，停機反覆出現。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="割台驅動皮帶發生極重度失效。皮帶已斷裂：割台不再被驅動，無法收穫。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="割台安全離合器開始磨損。負載時略有打滑。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="割台安全離合器中度磨損。正常負載下也會打滑，轉速報警有時會停止收穫。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="割台安全離合器嚴重磨損。打滑並發熱，餵入量下降，停機反覆出現。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="割台安全離合器發生極重度失效。它已無法傳送任何動力：割台停轉，無法收穫。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="割台傳動軸十字軸開始磨損。割台運轉時出現輕微噪音。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="割台傳動軸十字軸中度磨損。噪音清晰可聞。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="割台傳動軸十字軸嚴重磨損。噪音加劇，十字軸出現間隙。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="割台傳動軸發生極重度失效。一個十字軸已斷裂：割台不再被驅動，無法收穫。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="過橋輸送鏈開始磨損。鏈條伸長，餵入變得不均勻。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="過橋輸送鏈中度磨損。過橋入口處出現堵塞。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="過橋輸送鏈嚴重磨損。鏈條在鏈輪上跳齒，堵塞反覆發生。"/>

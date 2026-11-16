@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Svigt i betjeningen af differentialespærren. Spærren bliver indkoblet. Maskinen modarbejder styringen i sving."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drivremme og variatorer"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drivlejer og gearkasser"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Skærebordets drivrem"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Skærebordets friktionskobling"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Skærebordets kardanaksel og krydsled"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Indføringskanalens kæde"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Indføringsaccelerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Slaglister"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderat slid på drivlejerne. Brummen høres tydeligt, og de bliver varme."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Alvorligt slid på drivlejerne. Brummen tager til, og akslerne får slør."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritisk svigt i drivlejerne. Et leje er skåret fast: høst er umulig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Begyndende slid på skærebordets drivrem. Den hviner og glider lidt, mens skærebordet kører."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Moderat slid på skærebordets drivrem. Den hviner højere, og omdrejningsalarmen stopper af og til høsten."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Alvorligt slid på skærebordets drivrem. Den hviner højt, gennemløbet falder, og stoppene gentager sig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritisk svigt i skærebordets drivrem. Den er knækket: skærebordet drives ikke længere, høst er umulig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Begyndende slid på skærebordets friktionskobling. Den glider lidt under belastning."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Moderat slid på skærebordets friktionskobling. Den glider under normal belastning, og omdrejningsalarmen stopper af og til høsten."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Alvorligt slid på skærebordets friktionskobling. Den glider og bliver varm, gennemløbet falder, og stoppene gentager sig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritisk svigt i skærebordets friktionskobling. Den overfører ikke længere noget: skærebordet står stille, høst er umulig."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Begyndende slid på krydsleddene i skærebordets kardanaksel. Der opstår en svag brummen, mens skærebordet kører."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Moderat slid på krydsleddene i skærebordets kardanaksel. Brummen er tydeligt hørbar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Alvorligt slid på krydsleddene i skærebordets kardanaksel. Brummen tager til, og leddene får slør."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritisk svigt i skærebordets kardanaksel. Et krydsled er knækket: skærebordet drives ikke længere, høst er umulig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Begyndende slid på indføringskanalens kæde. Den strækker sig, og indføringen bliver ujævn."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderat slid på indføringskanalens kæde. Der opstår tilstopninger ved indgangen til indføringskanalen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Alvorligt slid på indføringskanalens kæde. Den springer på tandhjulene, og tilstopningerne bliver ved."/>

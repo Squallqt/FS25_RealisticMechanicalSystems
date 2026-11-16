@@ -129,7 +129,7 @@ RealisticMechanicalSystems.SAMPLE_NAMES = {
     "parkBrakeLeverApply", "parkBrakeLeverRelease", "parkBrakeAutoApply", "parkBrakeAutoRelease", "parkBrakeSwitchOn",
     "parkBrakeSwitchOff", "fanReversalSwitch", "parkBrakeTruckApply", "parkBrakeTruckRelease",
     "engineKnocking", "pistonSlap", "valveTrainNoise", "injectorKnock", "highPressurePump", "turboWhistle", "fanNoice", "fanBladeImbalance",
-    "accessoryBelt", "waterPumpBearing", "gearWhineNoise", "gearboxBearingNoise", "transmissionPump", "hydrostaticWhine",
+    "accessoryBelt", "headerBelt", "headerSlipClutch", "headerShaftBreak", "waterPumpBearing", "gearWhineNoise", "gearboxBearingNoise", "transmissionPump", "hydrostaticWhine",
     "hydraulicPump", "coolantSteam", "gasLeak", "parkBrakeDrag", "steeringLinkage", "steeringKnuckle", "steeringOrbitrol",
     "wheelHubBearingNoise", "wheelSeizureGrind", "trackRoller", "trackClatter", "loaderPins", "frontAxleShaft", "cabDamper", "ptoBearingNoise", "ptoSplines",
     "electricMotorBearing", "hoseBurst", "ptoShaftBreak", "inspection", "batteryIsolator"
@@ -357,6 +357,9 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
         xmlFile:setValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount or 0)
         xmlFile:setValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence or 0)
+        if spec.headerDrive ~= nil then
+            xmlFile:setValue(key .. "#headerStartCount", spec.headerDrive.starts)
+        end
         xmlFile:setValue(key .. "#pendingOverhaulPartStart", RMS_Utils.serializeNumericMap(spec.pendingOverhaulPartStart))
         xmlFile:setValue(key .. "#pendingOverhaulPartTarget", RMS_Utils.serializeNumericMap(spec.pendingOverhaulPartTarget))
 
@@ -597,6 +600,11 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.ptoShaftWear = 0
     self.spec_RealisticMechanicalSystems.ptoShockSequence = 0
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedShockSequence = 0
+    self.spec_RealisticMechanicalSystems.headerShockSequence = 0
+    self.spec_RealisticMechanicalSystems.headerSeizedSequence = 0
+    self.spec_RealisticMechanicalSystems.isHeaderSlipping = false
+    self.spec_RealisticMechanicalSystems.headerTutorialObservedShockSequence = 0
+    self.spec_RealisticMechanicalSystems.headerTutorialObservedSeizedSequence = 0
     self.spec_RealisticMechanicalSystems.ptoPreviousActiveLinks = {}
     self.spec_RealisticMechanicalSystems.ptoTutorialObservedSequence = 0
     self.spec_RealisticMechanicalSystems.chassisVibState = {
@@ -797,6 +805,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     )
     spec.ptoEngagementCount = math.floor(math.max(xmlFile:getValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount) or 0, 0))
     spec.ptoEngagementSequence = math.floor(math.max(xmlFile:getValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence) or 0, 0))
+    spec.loadedHeaderStarts = math.floor(math.max(xmlFile:getValue(key .. "#headerStartCount", 0) or 0, 0))
     spec.serviceOptionOne = xmlFile:getValue(key .. "#serviceOptionOne", spec.serviceOptionOne)
     spec.serviceOptionTwo = xmlFile:getValue(key .. "#serviceOptionTwo", spec.serviceOptionTwo)
     -- An empty choice is saved as an empty text
@@ -990,13 +999,16 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         end
     end
 
-    -- the systems the machine carries: a harvester drives its organs, no PTO
+    -- the systems the machine carries: a harvester drives its header, no PTO
     local capacities = RMS_Fluids.resolveCapacities(self)
     local isHarvester = RMS_Drivetrain.getHarvestKind(self) ~= nil
     spec.systems.hydraulics.enabled = RMS_Utils.hasHydraulicCapability(self) and capacities.hydraulicFluid > 0
     spec.systems.pto.enabled = not isHarvester and RMS_Utils.hasPtoOutputCapability(self)
     spec.systems.harvest.enabled = isHarvester
     RealisticMechanicalSystems.buildSystemParts(self)
+    if spec.partWear.HEADER_DRIVE_BELT_WEAR ~= nil then
+        spec.headerDrive = RealisticMechanicalSystems.newHeaderDrive(spec.loadedHeaderStarts)
+    end
     RMS_Fluids.initializeVehicle(self, false)
     RealisticMechanicalSystems.getServiceClocks(self)
     if RMS_Thermal.getHasSeparateHydraulicCircuit(spec) then
@@ -1021,6 +1033,8 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     RealisticMechanicalSystems.storeSyncBaseline(self)
     spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
     spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
+    spec.headerTutorialObservedShockSequence = spec.headerShockSequence
+    spec.headerTutorialObservedSeizedSequence = spec.headerSeizedSequence
 
     RMS_Electrical.initializeVehicle(self)
 

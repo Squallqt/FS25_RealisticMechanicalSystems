@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="блокування або 4WD на твердому ґрунті"/>
         <text name="rms_warranty_filter" text="забитий фільтр"/>
         <text name="rms_warranty_oil" text="невідповідна моторна олива"/>
+        <text name="rms_warranty_header_engagement" text="жатку увімкнено вище холостих обертів"/>
         <text name="rms_warranty_trailer" text="надто важкий причіп"/>
         <text name="rms_warranty_aftermarket_part" text="неоригінальна деталь"/>
         <text name="rms_warranty_used_part" text="вживана деталь"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Зовнішній огляд і перевірка функцій"/>
         <text name="rms_ws_inspection_electronic" text="Електронні несправності"/>
         <text name="rms_ws_inspection_electronic_detail" text="Коди помилок, зчитані сканером"/>
+        <text name="rms_ws_inspection_electrical" text="Електричні несправності"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Кола, перевірені мультиметром"/>
         <text name="rms_ws_inspection_dormant" text="Приховані дефекти"/>
         <text name="rms_ws_inspection_dormant_detail" text="Дефектна деталь, тимчасовий ремонт"/>
         <text name="rms_ws_inspection_report" text="Звіт"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Каміння"/>
         <text name="rms_report_wear_harvest_rice" text="Збирання рису"/>
         <text name="rms_report_wear_harvest_wet" text="Волога маса"/>
+        <text name="rms_report_wear_header_starts" text="Пуски жатки"/>
         <text name="rms_report_component_title" text="Вузол"/>
         <text name="rms_report_system_condition_transmission" text="Трансмісія"/>
         <text name="rms_report_system_condition_power" text="Поточна потужність"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="На холодному дизельному двигуні одне натискання команди запуску вмикає запалювання й автоматично запускає цикл попереднього підігріву. Індикатори панелі приладів ненадовго засвічуються, а потім індикатор підігріву горить до готовності двигуна. Не повторюйте команду: стартер увімкнеться автоматично, коли індикатор згасне."/>
         <text name="rms_tutorial_pto_engagement_title" text="Увімкнення ВВП"/>
         <text name="rms_tutorial_pto_engagement_message" text="Вмикайте ВВП на холостих обертах, а потім підвищуйте оберти: увімкнення на високих обертах дає удар по всій трансмісії, тим сильніший, чим важче знаряддя. Кожне увімкнення також зношує його муфту."/>
+        <text name="rms_tutorial_header_engagement_title" text="Увімкнення жатки"/>
+        <text name="rms_tutorial_header_engagement_message" text="Вмикайте жатку на холостих обертах, а потім підвищуйте оберти: під час пуску на високих обертах її запобіжна муфта прослизає і зношується набагато швидше."/>
+        <text name="rms_tutorial_header_stored_title" text="Жатка після простою"/>
+        <text name="rms_tutorial_header_stored_message" text="Ця жатка не працювала понад два тижні: її запобіжна муфта прикипіла й більше її не захищає. Змастіть жатку перед збиранням, інакше забивання може зламати її карданний вал."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Холостий хід і простій"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Знос значно менший, коли двигун працює, але техніка не виконує роботу. З вимкненим двигуном знос стає мінімальним, а під навісом повністю зникає."/>
         <text name="rms_tutorial_idle_deposit_title" text="Тривалий холостий хід"/>

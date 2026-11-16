@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="단단한 노면의 차동 잠금·4WD"/>
         <text name="rms_warranty_filter" text="필터 막힘"/>
         <text name="rms_warranty_oil" text="맞지 않는 엔진 오일"/>
+        <text name="rms_warranty_header_engagement" text="공회전보다 높은 회전수에서 헤더 연결"/>
         <text name="rms_warranty_trailer" text="트레일러 과중량"/>
         <text name="rms_warranty_aftermarket_part" text="애프터마켓 부품"/>
         <text name="rms_warranty_used_part" text="중고 부품"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="육안 점검 및 기능 시험"/>
         <text name="rms_ws_inspection_electronic" text="전자 장치 고장"/>
         <text name="rms_ws_inspection_electronic_detail" text="진단기로 읽은 고장 코드"/>
+        <text name="rms_ws_inspection_electrical" text="전기 장치 고장"/>
+        <text name="rms_ws_inspection_electrical_detail" text="멀티미터로 점검한 회로"/>
         <text name="rms_ws_inspection_dormant" text="잠재 결함"/>
         <text name="rms_ws_inspection_dormant_detail" text="불량 부품, 임시 수리"/>
         <text name="rms_ws_inspection_report" text="보고서"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="돌"/>
         <text name="rms_report_wear_harvest_rice" text="벼 수확"/>
         <text name="rms_report_wear_harvest_wet" text="습한 작물"/>
+        <text name="rms_report_wear_header_starts" text="헤더 시동 횟수"/>
         <text name="rms_report_component_title" text="부품"/>
         <text name="rms_report_system_condition_transmission" text="변속기"/>
         <text name="rms_report_system_condition_power" text="현재 출력"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="차가운 디젤 엔진에서는 시동 조작을 한 번 누르면 점화가 켜지고 예열 플러그 사이클이 자동으로 시작됩니다. 계기판 경고등이 자체 점검을 수행한 뒤 엔진이 준비될 때까지 예열등이 켜져 있습니다. 조작을 반복하지 마십시오. 예열등이 꺼지면 스타터가 자동으로 작동합니다."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO 연결"/>
         <text name="rms_tutorial_pto_engagement_message" text="PTO는 공회전 상태에서 연결한 뒤 회전수를 올리세요. 높은 회전수에서 연결하면 구동계 전체에 충격이 가해지며, 작업기가 무거울수록 더 커집니다. 연결할 때마다 클러치도 마모됩니다."/>
+        <text name="rms_tutorial_header_engagement_title" text="헤더 연결"/>
+        <text name="rms_tutorial_header_engagement_message" text="헤더는 공회전 상태에서 연결한 뒤 회전수를 올리세요. 높은 회전수에서 시동하면 슬립 클러치가 미끄러져 훨씬 빨리 마모됩니다."/>
+        <text name="rms_tutorial_header_stored_title" text="장기 보관된 헤더"/>
+        <text name="rms_tutorial_header_stored_message" text="이 헤더는 2주 넘게 돌지 않았습니다. 슬립 클러치가 녹으로 고착되어 더 이상 헤더를 보호하지 못합니다. 수확 전에 헤더에 그리스를 주입하세요. 그렇지 않으면 막힘으로 구동축이 부러질 수 있습니다."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="공회전 및 비가동"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="기계가 작업하지 않고 가동 중일 때는 마모가 훨씬 적습니다. 엔진을 끄면 마모가 최소화되고 지붕 아래에 보관하면 완전히 사라집니다."/>
         <text name="rms_tutorial_idle_deposit_title" text="장시간 공회전"/>

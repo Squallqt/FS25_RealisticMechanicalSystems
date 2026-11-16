@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Diferansiyel kilit kumandasında arıza. Kilit devrede kalıyor. Makine dönüşlerde direksiyona direniyor."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Tahrik Kayışları ve Varyatörler"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Tahrik Rulmanları ve Dişli Kutuları"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Tabla Tahrik Kayışı"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Tabla Tork Sınırlayıcısı"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Tabla Kardan Mili ve İstavrozları"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Besleme Kanalı Zinciri"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Besleme Hızlandırıcısı"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Dövücü Çubukları"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Tahrik rulmanlarında orta derecede aşınma. Uğultu açıkça duyulur ve rulmanlar ısınır."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Tahrik rulmanlarında ciddi aşınma. Uğultu artar ve miller boşluk yapar."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Tahrik rulmanlarında kritik arıza. Bir rulman sarmış: hasat imkânsız."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Tabla tahrik kayışında başlangıç aşınması. Tabla dönerken öter ve biraz kayar."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Tabla tahrik kayışında orta derecede aşınma. Daha yüksek sesle öter ve devir alarmı zaman zaman hasadı durdurur."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Tabla tahrik kayışında ciddi aşınma. Yüksek sesle öter, debi düşer ve duruşlar tekrarlanır."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Tabla tahrik kayışında kritik arıza. Kayış koptu: tabla artık tahrik edilmiyor, hasat imkânsız."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Tabla tork sınırlayıcısında başlangıç aşınması. Yük altında biraz kayar."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Tabla tork sınırlayıcısında orta derecede aşınma. Normal yükte kayar ve devir alarmı zaman zaman hasadı durdurur."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Tabla tork sınırlayıcısında ciddi aşınma. Kayar ve ısınır, debi düşer ve duruşlar tekrarlanır."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Tabla tork sınırlayıcısında kritik arıza. Artık hiçbir şey aktarmıyor: tabla durdu, hasat imkânsız."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Tabla kardan mili istavrozlarında başlangıç aşınması. Tabla dönerken hafif bir uğultu duyulur."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Tabla kardan mili istavrozlarında orta derecede aşınma. Uğultu açıkça duyulur."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Tabla kardan mili istavrozlarında ciddi aşınma. Uğultu artar ve istavrozlar boşluk yapar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Tabla kardan milinde kritik arıza. Bir istavroz kırıldı: tabla artık tahrik edilmiyor, hasat imkânsız."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Besleme kanalı zincirinde başlangıç aşınması. Zincir uzar ve besleme düzensizleşir."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Besleme kanalı zincirinde orta derecede aşınma. Besleme kanalının girişinde tıkanmalar oluşur."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Besleme kanalı zincirinde ciddi aşınma. Dişliler üzerinde atlar ve tıkanmalar sürer."/>

@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Falha do comando do bloqueio do diferencial. O bloqueio permanece engatado. A máquina resiste à direção nas curvas."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Correias e variadores"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rolamentos e caixas de transmissão"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Correia de embreagem da plataforma"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitador de torque da plataforma"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Eixo cardã e cruzetas da plataforma"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Corrente do canal alimentador"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Acelerador de alimentação"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Barras do cilindro trilhador"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Desgaste moderado dos rolamentos de transmissão dos órgãos. O ronco fica bem audível e eles esquentam."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Desgaste severo dos rolamentos de transmissão dos órgãos. O ronco aumenta e os eixos ganham folga."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Falha crítica dos rolamentos de transmissão dos órgãos. Um rolamento travou: a colheita é impossível."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Desgaste inicial da correia de embreagem da plataforma. Chia e patina um pouco enquanto a plataforma gira."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Desgaste moderado da correia de embreagem da plataforma. Chia mais alto e o alarme de rotação às vezes para a colheita."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Desgaste severo da correia de embreagem da plataforma. Chia alto, o fluxo cai e as paradas se repetem."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Falha crítica da correia de embreagem da plataforma. Ela arrebentou: a plataforma não é mais acionada, a colheita é impossível."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Desgaste inicial do limitador de torque da plataforma. Patina um pouco sob carga."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Desgaste moderado do limitador de torque da plataforma. Patina sob a carga normal e o alarme de rotação às vezes para a colheita."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Desgaste severo do limitador de torque da plataforma. Patina e esquenta, o fluxo cai e as paradas se repetem."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Falha crítica do limitador de torque da plataforma. Não transmite mais nada: a plataforma está parada, a colheita é impossível."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Desgaste inicial das cruzetas do eixo cardã da plataforma. Surge um leve ronco enquanto a plataforma gira."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Desgaste moderado das cruzetas do eixo cardã da plataforma. O ronco é claramente audível."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Desgaste severo das cruzetas do eixo cardã da plataforma. O ronco aumenta e as cruzetas ganham folga."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Falha crítica do eixo cardã da plataforma. Uma cruzeta quebrou: a plataforma não é mais acionada, a colheita é impossível."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Desgaste inicial da corrente do canal alimentador. Ela estica e a alimentação fica irregular."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Desgaste moderado da corrente do canal alimentador. Formam-se embuchamentos na entrada do canal."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Desgaste severo da corrente do canal alimentador. Ela pula nas engrenagens e os embuchamentos se repetem."/>

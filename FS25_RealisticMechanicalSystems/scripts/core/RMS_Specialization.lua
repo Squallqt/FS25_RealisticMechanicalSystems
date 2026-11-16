@@ -212,12 +212,12 @@ RealisticMechanicalSystems.FACTOR_STATS_ALIASES = {
     deepDischargeFactor = "ddf", batteryHeatFactor = "bhf",
     ptoLoadFactor = "plf", ptoEngagementFactor = "pef", ptoRaisedFactor = "prf",
     harvestEffortFactor = "hef", harvestGrainFactor = "hgf", harvestStrawFactor = "hsf", harvestStoneFactor = "hstf",
-    harvestRiceFactor = "hrf", harvestWetFactor = "hwf"
+    harvestRiceFactor = "hrf", harvestWetFactor = "hwf", headerEngagementFactor = "hdef", headerLubricationFactor = "hdlf"
 }
 
 -- refused parts: abused, or fitted not new original; index saved
 RealisticMechanicalSystems.WARRANTY_ABUSES = { "impact", "heat", "low_level", "fuel_dry", "park_brake", "pto_engagement",
-    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part", "oil" }
+    "stones", "starter", "pto_angle", "windup", "filter", "trailer", "aftermarket_part", "used_part", "oil", "header_engagement" }
 RealisticMechanicalSystems.WARRANTY_ABUSE = {}
 for code, reason in ipairs(RealisticMechanicalSystems.WARRANTY_ABUSES) do
     RealisticMechanicalSystems.WARRANTY_ABUSE[reason] = code
@@ -675,7 +675,8 @@ local function getSyncGroups()
             watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
             watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
             watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("remapByDealer"), watch("conditionLevel", 0.001),
-            watch("ptoEngagementSequence"), watch("ptoShockSequence"),
+            watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("headerShockSequence"), watch("headerSeizedSequence"),
+            watch("isHeaderSlipping"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
             watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end), mapText("preventiveParts") } },
@@ -894,7 +895,8 @@ local SAVEGAME_ATTRIBUTES = {
     { "diffLockRequested", "BOOL", "Differential lock requested" },
     { "tripStartKilometers", "FLOAT", "Odometer reading at the last trip meter reset (km)" },
     { "ptoEngagementCount", "INT", "PTO engagement count" },
-    { "ptoEngagementSequence", "INT", "PTO engagement cycle sequence" }
+    { "ptoEngagementSequence", "INT", "PTO engagement cycle sequence" },
+    { "headerStartCount", "INT", "Header starts" }
 }
 
 ---Savegame attributes of a maintenance log entry
@@ -1900,6 +1902,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     end
     if self.isClient then
         RMS_Breakdowns.updateAerationWhines(self)
+        RMS_Breakdowns.updateHeaderSlip(self)
     end
 
     syncFuelConsumption(self)

@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="spærre eller 4WD på fast underlag"/>
         <text name="rms_warranty_filter" text="tilstoppet filter"/>
         <text name="rms_warranty_oil" text="uegnet motorolie"/>
+        <text name="rms_warranty_header_engagement" text="skærebord indkoblet over tomgang"/>
         <text name="rms_warranty_trailer" text="for tung vogn"/>
         <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
         <text name="rms_warranty_used_part" text="brugt del"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visuel kontrol og funktionstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniske fejl"/>
         <text name="rms_ws_inspection_electronic_detail" text="Fejlkoder aflæst med diagnoseudstyret"/>
+        <text name="rms_ws_inspection_electrical" text="Elektriske fejl"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Kredsløb kontrolleret med multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Skjulte defekter"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defekt del, nødreparation"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Sten"/>
         <text name="rms_report_wear_harvest_rice" text="Rishøst"/>
         <text name="rms_report_wear_harvest_wet" text="Fugtig afgrøde"/>
+        <text name="rms_report_wear_header_starts" text="Opstarter af skærebordet"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Aktuel effekt"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="På en kold dieselmotor slår ét tryk på startknappen tændingen til og starter forglødningen automatisk. Lamperne i instrumentbrættet lyser kort op, hvorefter forglødningslampen bliver ved med at lyse, indtil motoren er klar. Gentag ikke kommandoen: startmotoren kobler ind af sig selv, når lampen slukker."/>
         <text name="rms_tutorial_pto_engagement_title" text="Indkobling af PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Kobl PTO'en ind i tomgang, og hæv derefter omdrejningerne: indkobling ved høje omdrejninger giver hele drivlinjen et stød, særligt med et tungt redskab. Hver indkobling slider også dens kobling."/>
+        <text name="rms_tutorial_header_engagement_title" text="Indkobling af skærebordet"/>
+        <text name="rms_tutorial_header_engagement_message" text="Kobl skærebordet ind i tomgang, og hæv derefter omdrejningerne: starter det ved høje omdrejninger, glider friktionskoblingen og slides meget hurtigere."/>
+        <text name="rms_tutorial_header_stored_title" text="Henstillet skærebord"/>
+        <text name="rms_tutorial_header_stored_message" text="Dette skærebord har ikke kørt i over to uger: friktionskoblingen er rustet fast og beskytter det ikke længere. Smør skærebordet før høsten, ellers kan en tilstopning knække kardanakslen."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Sliddet er langt lavere, når maskinen kører uden at arbejde. Med motoren slukket bliver det minimalt. Under tag forsvinder det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Længere tomgang"/>

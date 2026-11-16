@@ -167,6 +167,28 @@ RMS_Config = {
             }
         },
 
+        HEADER_DRIVE = {
+            -- effort the slip clutch slips at, set at twice full work
+            SLIP_EFFORT = 2,
+            -- inertia load of a start at rated speed over the steady load
+            START_INERTIA_RATIO = 9,
+            ENGAGEMENT_TIME_S = 0.2,
+            -- share of the speed range over idle a start counts high from
+            IDLE_START_SHARE = 0.1,
+            -- mm3 of lining worn per kWh slipped
+            LINING_WEAR_PER_KWH = 110,
+            -- mm3: four 91 x 150 mm discs worn by half their 3 mm
+            LINING_WEAR_ALLOWED = 67000,
+            LIMITER_MASS_KG = 10.3,
+            -- J per kg per K, steel
+            LIMITER_HEAT_CAPACITY = 460,
+            -- K, from 20 deg C to the limit of an organic lining
+            LIMITER_HEAT_RISE = 230,
+            -- a friction clutch seizes standing over two weeks
+            SEIZE_DAYS = 14,
+            DAYS_PER_MONTH = 30.4
+        },
+
         COOLING_FACTOR_DATA = {
             COOLING_IDLING_MULTIPLIER = 0.5,
             SERVICE_EXPIRED_MULTIPLIER = 1.0,
@@ -548,6 +570,9 @@ RMS_Config = {
             FRONT_PTO_CLUTCH_FAILURE = {hours = 9.5, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
             HARVEST_DRIVE_BELT_WEAR = {hours = 1, category = "mechanical"},
             HARVEST_DRIVE_BEARING_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HEADER_DRIVE_BELT_WEAR = {hours = 1, category = "mechanical"},
+            HEADER_SLIP_CLUTCH_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HEADER_DRIVE_SHAFT_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             FEEDER_CHAIN_WEAR = {hours = 6.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             FEED_ACCELERATOR_WEAR = {hours = 4.3, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             THRESHING_BAR_WEAR = {hours = 9.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
@@ -919,7 +944,9 @@ RMS_Config = {
             IMP_SEEDER = { { points = 48, noticeRows = 36, rowPoints = 1, rowWidth = 0.254 }, { points = 8, hours = 30 } },
             IMP_PLANTER = { { points = 70, noticeRows = 12, rowPoints = 5, rowWidth = 0.762 }, { points = 4, hours = 50 } },
             IMP_SEED_TANK = { { points = 4, hours = 100 } },
-            IMP_CUTTER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 } },
+            IMP_CUTTER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 },
+                { points = 3, hours = 50, isDriveline = true } },
+            IMP_WINDROWER_HEADER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 } },
             IMP_CORN_HEADER = { { points = 2 }, { points = 4, hours = 50 } },
             IMP_BEET_HARVESTER = { { points = 18 }, { points = 37, hours = 40 } },
             IMP_POTATO_HARVESTER = { { points = 1 }, { points = 27, hours = 40 }, { points = 23, hours = 100 }, { points = 22, months = 12 } },
@@ -938,8 +965,9 @@ RMS_Config = {
             IMP_AUGER = { { points = 9 } },
             IMP_DRIVEN = {},
         },
-        CARDAN = { { points = 2 }, { points = 2, hours = 40 } },
-        CARDAN_INCLUDED = { IMP_BEET_HARVESTER = true },
+        CARDAN = { { points = 2, isDriveline = true }, { points = 2, hours = 40, isDriveline = true } },
+        -- a windrower header is driven by hydraulics
+        CARDAN_INCLUDED = { IMP_BEET_HARVESTER = true, IMP_CUTTER = true, IMP_WINDROWER_HEADER = true },
         CATEGORY_FAMILIES = {
             TRACTORSS = "TRACTOR_SMALL",
             TRACTORSM = "TRACTOR_MEDIUM",
@@ -1018,7 +1046,7 @@ RMS_Config = {
             SUGARCANEPLANTERS = "IMP_PLANTER",
             SEEDTANKS = "IMP_SEED_TANK",
             CUTTERS = "IMP_CUTTER",
-            COMBINEWINDROWER = "IMP_CUTTER",
+            COMBINEWINDROWER = "IMP_WINDROWER_HEADER",
             HARVESTERS = "IMP_CUTTER",
             CORNHEADERS = "IMP_CORN_HEADER",
             FORAGEHARVESTERCUTTERS = "IMP_CORN_HEADER",
@@ -1702,10 +1730,10 @@ RMS_Config = {
 RMS_Config.TUTORIAL_MESSAGE_IDS = {
     "AGE_DEGRADATION", "BATTERY_LOW", "CHASSIS_VIBRATION", "COLD_ENGINE", "COLD_OIL", "CRANKING", "CRITICAL_FAILURE",
     "CVT_OVERHEAT", "DRIVETRAIN_MODES", "DRIVETRAIN_WINDUP", "ENGINE_OVERHEAT", "ENGINE_OVERLOAD", "EXHAUST_SMOKE",
-    "FLUID_LEVEL", "HARD_START", "HEAVY_TRAILER", "HOT_WEATHER", "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL",
-    "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE", "NEEDS_REPAIR", "OVERLOAD_INDICATOR",
-    "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT", "PTO_ENGAGEMENT",
-    "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
+    "FLUID_LEVEL", "HARD_START", "HEADER_ENGAGEMENT", "HEADER_STORED", "HEAVY_TRAILER", "HOT_WEATHER",
+    "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL", "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE",
+    "NEEDS_REPAIR", "OVERLOAD_INDICATOR", "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT",
+    "PTO_ENGAGEMENT", "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
     "TRANSMISSION_OVERHEAT", "WET_WEATHER", "WHEEL_SLIP"
 }
 

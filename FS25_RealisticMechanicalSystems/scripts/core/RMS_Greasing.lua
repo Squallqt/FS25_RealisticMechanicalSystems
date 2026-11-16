@@ -101,7 +101,7 @@ local function getImplementTiers(vehicle)
             for index, tier in ipairs(tiers) do
                 if not merged and RMS_Greasing.getUnit(tier) == RMS_Greasing.getUnit(cardanTier)
                     and RMS_Greasing.getInterval(tier) == RMS_Greasing.getInterval(cardanTier) then
-                    tiers[index] = { points = tier.points + cardanTier.points, hours = tier.hours }
+                    tiers[index] = { points = tier.points + cardanTier.points, hours = tier.hours, isDriveline = true }
                     merged = true
                 end
             end
@@ -297,6 +297,67 @@ function RMS_Greasing.onBaleWrapped(vehicle)
     advance(vehicle, "bales", 1)
 end
 
+-- @return integer? index the interval greasing the driveline of a header
+local function getDrivelineTier(vehicle)
+    for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
+        if tier.isDriveline then
+            return index
+        end
+    end
+    return nil
+end
+
+-- @return number hour of play since the first day
+local function getGameHour()
+    local environment = g_currentMission.environment
+    return environment.currentMonotonicDay * 24 + environment.dayTime / 3600000
+end
+
+---Notes the hour a header turned, its slip clutch kept free
+function RMS_Greasing.onHeaderTurned(header)
+    local spec = RMS_Greasing.getSpec(header)
+    if spec ~= nil then
+        spec.headerTurnedHour = getGameHour()
+    end
+end
+
+---Tells whether a header stood long enough to seize its slip clutch
+function RMS_Greasing.getIsLimiterSeized(header)
+    local spec = RMS_Greasing.getSpec(header)
+    return spec ~= nil and spec.isLimiterSeized == true
+end
+
+---Returns how many times faster a header wears for its greasing
+function RMS_Greasing.getHeaderWearFactor(header)
+    local spec = RMS_Greasing.getSpec(header)
+    return spec ~= nil and spec.greasingWearFactor or 1
+end
+
+---Seizes the slip clutch of a header left standing, its driveline due
+function RMS_Greasing.onHourChanged(vehicle)
+    local spec, index = RMS_Greasing.getSpec(vehicle), getDrivelineTier(vehicle)
+    if index == nil or spec.isLimiterSeized or spec.headerTurnedHour == nil then
+        return
+    end
+    -- two weeks of the calendar, a month lasting the days set per period
+    local C = RMS_Config.CORE.HEADER_DRIVE
+    if getGameHour() - spec.headerTurnedHour > C.SEIZE_DAYS / C.DAYS_PER_MONTH * g_currentMission.environment.daysPerPeriod * 24 then
+        spec.isLimiterSeized = true
+        local state = getState(vehicle)
+        state.due[index], state.late[index] = RMS_Greasing.getTiers(vehicle)[index].points, 0
+        refresh(vehicle, true)
+    end
+end
+
+-- greasing the driveline frees the slip clutch, as before a season
+local function releaseLimiter(vehicle)
+    local spec, index = RMS_Greasing.getSpec(vehicle), getDrivelineTier(vehicle)
+    if spec.isLimiterSeized and index ~= nil and getState(vehicle).due[index] == 0 then
+        spec.isLimiterSeized = false
+        RMS_Greasing.onHeaderTurned(vehicle)
+    end
+end
+
 ---Counts a worked day against the intervals in days, idle days not
 function RMS_Greasing.onDayChanged(vehicle)
     local state = getState(vehicle)
@@ -324,6 +385,7 @@ function RMS_Greasing.greasePoint(vehicle)
     if state.due[latest] == 0 then
         state.elapsed[latest], state.late[latest] = 0, 0
     end
+    releaseLimiter(vehicle)
     refresh(vehicle)
     return true
 end
@@ -334,6 +396,7 @@ function RMS_Greasing.greaseAll(vehicle)
     for index in ipairs(state.due) do
         state.due[index], state.elapsed[index], state.late[index] = 0, 0, 0
     end
+    releaseLimiter(vehicle)
     refresh(vehicle, true)
 end
 

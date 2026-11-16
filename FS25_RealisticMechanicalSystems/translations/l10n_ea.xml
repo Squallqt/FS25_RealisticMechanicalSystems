@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="bloqueo o 4x4 en suelo duro"/>
         <text name="rms_warranty_filter" text="filtro obstruido"/>
         <text name="rms_warranty_oil" text="aceite de motor inadecuado"/>
+        <text name="rms_warranty_header_engagement" text="cabezal embragado por encima del ralentí"/>
         <text name="rms_warranty_trailer" text="remolque demasiado pesado"/>
         <text name="rms_warranty_aftermarket_part" text="pieza de posventa"/>
         <text name="rms_warranty_used_part" text="pieza usada"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Examen visual y prueba de funciones"/>
         <text name="rms_ws_inspection_electronic" text="Averías electrónicas"/>
         <text name="rms_ws_inspection_electronic_detail" text="Códigos de falla leídos con el escáner"/>
+        <text name="rms_ws_inspection_electrical" text="Averías eléctricas"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuitos revisados con el multímetro"/>
         <text name="rms_ws_inspection_dormant" text="Defectos latentes"/>
         <text name="rms_ws_inspection_dormant_detail" text="Pieza defectuosa, reparación provisional"/>
         <text name="rms_ws_inspection_report" text="Informe"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Piedras"/>
         <text name="rms_report_wear_harvest_rice" text="Cosecha de arroz"/>
         <text name="rms_report_wear_harvest_wet" text="Cosecha húmeda"/>
+        <text name="rms_report_wear_header_starts" text="Arranques del cabezal"/>
         <text name="rms_report_component_title" text="Componente"/>
         <text name="rms_report_system_condition_transmission" text="Transmisión"/>
         <text name="rms_report_system_condition_power" text="Potencia actual"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Con el motor diésel frío, una pulsación del mando de arranque enciende el contacto e inicia automáticamente el ciclo de precalentamiento. Los testigos del cuadro se encienden brevemente y, después, el testigo de precalentamiento permanece encendido hasta que el motor está listo. No repitas la orden: el motor de arranque se acciona automáticamente cuando el testigo se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Embrague de la TDF"/>
         <text name="rms_tutorial_pto_engagement_message" text="Embraga la TDF en ralentí y luego sube las revoluciones: embragarla a altas revoluciones le da un golpe a toda la transmisión, más aún con un implemento pesado. Cada embrague desgasta además su embrague."/>
+        <text name="rms_tutorial_header_engagement_title" text="Embrague del cabezal"/>
+        <text name="rms_tutorial_header_engagement_message" text="Embraga el cabezal en ralentí y luego sube las revoluciones: arrancarlo a altas revoluciones hace patinar su limitador de par, que se desgasta mucho más rápido."/>
+        <text name="rms_tutorial_header_stored_title" text="Cabezal guardado"/>
+        <text name="rms_tutorial_header_stored_message" text="Este cabezal lleva más de dos semanas sin girar: su limitador de par se ha agarrotado y ya no lo protege. Engrasa el cabezal antes de cosechar, o un atasco puede romper su cardán."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralentí y tiempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="El desgaste es mucho menor cuando la máquina está en marcha sin trabajar. Con el motor apagado se vuelve mínimo. Bajo techo, desaparece por completo."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralentí prolongado"/>

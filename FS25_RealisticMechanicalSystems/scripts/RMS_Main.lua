@@ -878,6 +878,15 @@ function RMS_Main:onDayChanged()
     end
 end
 
+---Seizes the slip clutch of the headers left standing
+function RMS_Main:onHourChanged()
+    for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
+        if vehicle.spec_rmsImplementGreasing ~= nil then
+            RMS_Greasing.onHourChanged(vehicle)
+        end
+    end
+end
+
 ---Reads the current weather
 function RMS_Main.updateWeather()
     RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
@@ -973,6 +982,7 @@ function RMS_Main:loadMap()
     if g_currentMission:getIsServer() then
         g_messageCenter:subscribe(MessageType.PERIOD_CHANGED, self.onPeriodChanged, self)
         g_messageCenter:subscribe(MessageType.DAY_CHANGED, self.onDayChanged, self)
+        g_messageCenter:subscribe(MessageType.HOUR_CHANGED, self.onHourChanged, self)
     end
     local harvestApi = RMS_Utils.getHarvestModApi()
     if harvestApi ~= nil and harvestApi.registerWearProvider ~= nil then
@@ -990,6 +1000,7 @@ end
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     g_messageCenter:unsubscribe(MessageType.DAY_CHANGED, self)
+    g_messageCenter:unsubscribe(MessageType.HOUR_CHANGED, self)
     RMS_Gui.unloadResources()
     RMS_Config._loaded = nil
     RMS_Config.resetTutorialStateSession()

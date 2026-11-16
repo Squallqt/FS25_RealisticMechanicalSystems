@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="硬い路面でのデフロック・4駆"/>
         <text name="rms_warranty_filter" text="フィルターの目詰まり"/>
         <text name="rms_warranty_oil" text="適合しないエンジンオイル"/>
+        <text name="rms_warranty_header_engagement" text="アイドリング超でのヘッダー接続"/>
         <text name="rms_warranty_trailer" text="トレーラーの過積載"/>
         <text name="rms_warranty_aftermarket_part" text="社外品部品"/>
         <text name="rms_warranty_used_part" text="中古部品"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="目視点検と機能試験"/>
         <text name="rms_ws_inspection_electronic" text="電子系の故障"/>
         <text name="rms_ws_inspection_electronic_detail" text="スキャンツールで読み取る故障コード"/>
+        <text name="rms_ws_inspection_electrical" text="電気系の故障"/>
+        <text name="rms_ws_inspection_electrical_detail" text="マルチメーターで回路を点検"/>
         <text name="rms_ws_inspection_dormant" text="潜在的な不具合"/>
         <text name="rms_ws_inspection_dormant_detail" text="不良部品、応急修理"/>
         <text name="rms_ws_inspection_report" text="報告書"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="石"/>
         <text name="rms_report_wear_harvest_rice" text="稲の収穫"/>
         <text name="rms_report_wear_harvest_wet" text="湿った作物"/>
+        <text name="rms_report_wear_header_starts" text="ヘッダーの始動"/>
         <text name="rms_report_component_title" text="部品"/>
         <text name="rms_report_system_condition_transmission" text="ミッション"/>
         <text name="rms_report_system_condition_power" text="現在の出力"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="冷えたディーゼルエンジンでは、始動操作を一度行うとイグニッションがONになり、グロープラグの予熱サイクルが自動的に始まります。ダッシュボードの警告灯が短時間点灯した後、エンジンの準備が整うまで予熱灯が点灯します。操作を繰り返さないでください。予熱灯が消えるとスターターが自動的に作動します。"/>
         <text name="rms_tutorial_pto_engagement_title" text="PTOの接続"/>
         <text name="rms_tutorial_pto_engagement_message" text="PTOはアイドリング中に接続し、その後で回転数を上げてください。高回転で接続すると駆動系全体にショックが加わり、重い作業機ほど大きくなります。接続のたびにクラッチも摩耗します。"/>
+        <text name="rms_tutorial_header_engagement_title" text="ヘッダーの接続"/>
+        <text name="rms_tutorial_header_engagement_message" text="ヘッダーはアイドリング中に接続し、その後で回転数を上げてください。高回転で始動するとスリップクラッチが滑り、はるかに早く摩耗します。"/>
+        <text name="rms_tutorial_header_stored_title" text="長期保管したヘッダー"/>
+        <text name="rms_tutorial_header_stored_message" text="このヘッダーは2週間以上回っていません。スリップクラッチが固着し、もうヘッダーを守りません。収穫の前にヘッダーにグリースを補給してください。補給しないと詰まりでドライブシャフトが折れることがあります。"/>
         <text name="rms_tutorial_idle_and_downtime_title" text="アイドリングと保管"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="エンジンがかかっていても実作業をしていない間は、摩耗が大幅に少なくなります。エンジンを停止すると摩耗はごくわずかになり、屋内に保管すると完全に止まります。"/>
         <text name="rms_tutorial_idle_deposit_title" text="長時間のアイドリング"/>

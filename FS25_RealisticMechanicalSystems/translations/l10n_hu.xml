@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="zár vagy 4WD kemény talajon"/>
         <text name="rms_warranty_filter" text="eltömődött szűrő"/>
         <text name="rms_warranty_oil" text="nem megfelelő motorolaj"/>
+        <text name="rms_warranty_header_engagement" text="alapjárat felett bekapcsolt vágóasztal"/>
         <text name="rms_warranty_trailer" text="túl nehéz pótkocsi"/>
         <text name="rms_warranty_aftermarket_part" text="utángyártott alkatrész"/>
         <text name="rms_warranty_used_part" text="használt alkatrész"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Szemrevételezés és funkciópróba"/>
         <text name="rms_ws_inspection_electronic" text="Elektronikai meghibásodások"/>
         <text name="rms_ws_inspection_electronic_detail" text="Diagnosztikai műszerrel kiolvasott hibakódok"/>
+        <text name="rms_ws_inspection_electrical" text="Elektromos meghibásodások"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Áramkörök multiméterrel ellenőrizve"/>
         <text name="rms_ws_inspection_dormant" text="Rejtett hibák"/>
         <text name="rms_ws_inspection_dormant_detail" text="Hibás alkatrész, ideiglenes javítás"/>
         <text name="rms_ws_inspection_report" text="Jelentés"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Kövek"/>
         <text name="rms_report_wear_harvest_rice" text="Rizsbetakarítás"/>
         <text name="rms_report_wear_harvest_wet" text="Nedves termény"/>
+        <text name="rms_report_wear_header_starts" text="A vágóasztal indításai"/>
         <text name="rms_report_component_title" text="Alkatrész"/>
         <text name="rms_report_system_condition_transmission" text="Váltó"/>
         <text name="rms_report_system_condition_power" text="Aktuális teljesítmény"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Hideg dízelmotornál az indításvezérlő egyszeri megnyomása bekapcsolja a gyújtást, és automatikusan elindítja az izzítási ciklust. A műszerfal visszajelzői rövid időre felgyulladnak, majd az előizzítás jelzőfénye addig világít, amíg a motor készen nem áll. Ne ismételd meg a parancsot: az önindító a jelzőfény kialvásakor automatikusan bekapcsol."/>
         <text name="rms_tutorial_pto_engagement_title" text="A TLT bekapcsolása"/>
         <text name="rms_tutorial_pto_engagement_message" text="A TLT-t alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton bekapcsolva lökést kap az egész hajtáslánc, nehéz munkagéppel még inkább. Minden bekapcsolás a tengelykapcsolóját is koptatja."/>
+        <text name="rms_tutorial_header_engagement_title" text="A vágóasztal bekapcsolása"/>
+        <text name="rms_tutorial_header_engagement_message" text="A vágóasztalt alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton indítva csúszik a nyomatékhatárolója, amely így sokkal gyorsabban kopik."/>
+        <text name="rms_tutorial_header_stored_title" text="Leállított vágóasztal"/>
+        <text name="rms_tutorial_header_stored_message" text="Ez a vágóasztal több mint két hete nem forgott: a nyomatékhatárolója beragadt, és már nem védi. Betakarítás előtt zsírozd meg a vágóasztalt, különben egy dugulás eltörheti a kardántengelyét."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Alapjárat és állásidő"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="A kopás sokkal alacsonyabb, amikor a gép jár, de nem végez aktív munkát. Amikor a motor le van állítva, a kopás minimálisra csökken, és ha a gép fedett helyen áll, teljesen megszűnik."/>
         <text name="rms_tutorial_idle_deposit_title" text="Hosszan tartó alapjárat"/>

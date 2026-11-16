@@ -297,6 +297,8 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
         elseif entry.wearsWhile ~= nil then
             baseShare = entry.wearsWhile(self) and 1 or 0
             partBaseRate = baseShare
+        elseif entry.wearsWhileDriven ~= nil then
+            partBaseRate = entry.wearsWhileDriven(self) and 1 or 0
         end
         local record = nil
         if scale > 0 then
@@ -812,6 +814,153 @@ local function measureHarvestWork(vehicle, state, input, elapsedMs)
     state.tons = (state.tons or 0) + grainTph * hours
 end
 
+local function gamma(x)
+    local shift = 1
+    while x < 7 do
+        shift, x = shift * x, x + 1
+    end
+    return math.sqrt(2 * math.pi / x) * (x / math.exp(1)) ^ x * (1 + 1 / (12 * x) + 1 / (288 * x * x)) / shift
+end
+
+-- @return float wear the mean life of a component, in part wear
+local function getMeanLifeWear(component)
+    local C = RMS_Config.CORE
+    local life = C.COMPONENT_LIVES[component]
+    return life.scale * gamma(1 + 1 / life.shape) / C.MACHINE_LIFE_HOURS
+end
+
+---Returns the header drive of a machine as it loads
+function RealisticMechanicalSystems.newHeaderDrive(starts)
+    return { isTurning = false, powerW = 0, starts = starts or 0, lastRpm = 0, lastStartShare = 0, lastStartJ = 0, startSlipMs = 0,
+        slipMs = 0, slipLimitMs = 0, isSlipSpent = false }
+end
+
+-- the headers the machine drives and their steady power in W
+local function readDrivenHeaders(vehicle, drive)
+    drive.isTurning, drive.powerW, drive.header = false, 0, nil
+    for cutter in pairs(vehicle.spec_combine.attachedCutters) do
+        if cutter.getIsTurnedOn ~= nil and cutter:getIsTurnedOn() then
+            drive.isTurning, drive.header = true, drive.header or cutter
+            local consumer = cutter.spec_powerConsumer
+            drive.powerW = drive.powerW + (consumer ~= nil and consumer.neededMaxPtoPower or 0) * 1000
+        end
+    end
+    -- a standing header keeps its greasing and its slip clutch
+    drive.header = drive.header or next(vehicle.spec_combine.attachedCutters)
+end
+
+local function failAtWorst(vehicle, partId, abuse)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local stages = #RMS_Breakdowns.BreakdownRegistry[partId].stages
+    local breakdown = spec.activeBreakdowns[partId]
+    if breakdown ~= nil and breakdown.stage >= stages then
+        return
+    end
+    if abuse ~= nil then
+        spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[abuse]
+    end
+    if breakdown ~= nil then
+        vehicle:changeBreakdownStage(partId, stages)
+    else
+        vehicle:addBreakdown(partId, stages)
+    end
+end
+
+---Breaks the header shaft a seized slip clutch no longer spares
+function RealisticMechanicalSystems.onHeaderBlocked(vehicle)
+    local drive = vehicle.spec_RealisticMechanicalSystems.headerDrive
+    if drive ~= nil and drive.header ~= nil and RMS_Greasing.getIsLimiterSeized(drive.header) then
+        failAtWorst(vehicle, "HEADER_DRIVE_SHAFT_WEAR")
+    end
+end
+
+-- @return float share of the cause on the part, nil when it has none
+local function getPartCauseShare(spec, systemKey, partId, alias)
+    for index, id in ipairs(spec.systemParts[systemKey]) do
+        if id == partId then
+            local shares = spec.partCauseShares[systemKey][alias]
+            return shares ~= nil and shares[index] or nil
+        end
+    end
+    return nil
+end
+
+-- a start slips the clutch: twice the kinetic energy of the header
+local function startHeader(vehicle, spec, drive, systemKey)
+    local C = RMS_Config.CORE.HEADER_DRIVE
+    local motor = vehicle:getMotor()
+    local isAI = vehicle:getIsAIActive()
+    local rpm = isAI and motor.minRpm or drive.lastRpm
+    local speedShare = math.clamp(rpm / motor.maxRpm, 0, 1)
+    drive.starts, drive.lastStartShare, drive.lastStartJ, drive.startSlipMs = drive.starts + 1, speedShare, 0, 0
+    local aboveIdle = (rpm - motor.minRpm) / math.max(motor.maxRpm - motor.minRpm, 1)
+    local isHigh = not isAI and aboveIdle > C.IDLE_START_SHARE
+    if isHigh then
+        spec.headerShockSequence = spec.headerShockSequence + 1
+    end
+    if RMS_Greasing.getIsLimiterSeized(drive.header) then
+        spec.headerSeizedSequence = spec.headerSeizedSequence + 1
+        return
+    end
+    local share = getPartCauseShare(spec, systemKey, "HEADER_SLIP_CLUTCH_WEAR", "hdef")
+    if C.START_INERTIA_RATIO * speedShare <= C.SLIP_EFFORT or drive.powerW <= 0 or share == nil or share <= 0 then
+        return
+    end
+    -- J slipped, the kinetic energy growing with speed squared
+    local energy = C.START_INERTIA_RATIO * drive.powerW * C.ENGAGEMENT_TIME_S * speedShare ^ 2
+    drive.lastStartJ = energy
+    -- slipping at its setting torque, half the start speed on average
+    drive.startSlipMs = energy / (C.SLIP_EFFORT * drive.powerW * speedShare / 2) * 1000
+    local lining = energy / 3600000 * C.LINING_WEAR_PER_KWH / C.LINING_WEAR_ALLOWED
+    vehicle:applyInstantDamageToSystem(spec.systems[systemKey].name, lining * getMeanLifeWear("FRICTION_CLUTCH") / share,
+        "headerEngagementFactor", isHigh and "header_engagement" or nil)
+end
+
+-- past its setting the slip clutch slips until its heat ruins it
+local function slipHeaderClutch(vehicle, drive, effort, dt)
+    local C = RMS_Config.CORE.HEADER_DRIVE
+    if not drive.isTurning or effort <= C.SLIP_EFFORT then
+        drive.slipMs, drive.isSlipSpent = 0, false
+        return
+    end
+    if RMS_Greasing.getIsLimiterSeized(drive.header) then
+        RealisticMechanicalSystems.onHeaderBlocked(vehicle)
+        return
+    end
+    -- a header the game gives no power heats nothing
+    if drive.powerW <= 0 then
+        return
+    end
+    drive.slipMs = drive.slipMs + dt
+    -- ms to heat the clutch, slipping at twice the steady power
+    drive.slipLimitMs = C.LIMITER_MASS_KG * C.LIMITER_HEAT_CAPACITY * C.LIMITER_HEAT_RISE / (2 * drive.powerW) * 1000
+    if drive.slipMs >= drive.slipLimitMs and not drive.isSlipSpent then
+        drive.isSlipSpent = true
+        failAtWorst(vehicle, "HEADER_SLIP_CLUTCH_WEAR", "heat")
+    end
+end
+
+---Follows the header the machine drives: starts, slipping, greasing
+local function updateHeaderDrive(vehicle, spec, state, systemKey, dt)
+    local drive = spec.headerDrive
+    local wasTurning = drive.isTurning
+    readDrivenHeaders(vehicle, drive)
+    if drive.isTurning then
+        if not wasTurning then
+            startHeader(vehicle, spec, drive, systemKey)
+        else
+            drive.startSlipMs = math.max(drive.startSlipMs - dt, 0)
+        end
+        RMS_Greasing.onHeaderTurned(drive.header)
+    else
+        drive.startSlipMs = 0
+    end
+    slipHeaderClutch(vehicle, drive, state.effort or 0, dt)
+    -- every player hears it slip
+    spec.isHeaderSlipping = drive.startSlipMs > 0 or drive.slipMs > 0 and not drive.isSlipSpent
+    drive.lastRpm = vehicle:getMotor():getLastModulatedMotorRpm()
+end
+
 ---Wears the harvest organs on the work they do, only while harvesting
 function RealisticMechanicalSystems:updateHarvestSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
@@ -836,11 +985,16 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
         input.time = now
     end
 
+    local drive = spec.headerDrive
+    if drive ~= nil then
+        updateHeaderDrive(self, spec, state, systemKey, dt)
+    end
+
     -- a header driven on its own still feeds the machine
     spec.isHarvestRunning = state.effort ~= nil and self:getIsMotorStarted() and (self:getIsTurnedOn() or state.tonPerHour > 0)
     local wearRate = 0
     local factors = { harvestEffortFactor = 0, harvestGrainFactor = 0, harvestStrawFactor = 0, harvestStoneFactor = 0,
-        harvestRiceFactor = 0, harvestWetFactor = 0, lubricationFactor = 0 }
+        harvestRiceFactor = 0, harvestWetFactor = 0, lubricationFactor = 0, headerLubricationFactor = 0 }
     if spec.isHarvestRunning then
         local work = C.BASE_RATE * state.effort
         -- stones, rice straw and a damp crop only reach organs fed with crop
@@ -853,7 +1007,8 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
             harvestStoneFactor = cropWork * stone,
             harvestRiceFactor = state.isRice and cropWork * C.RICE_MULTIPLIER or 0,
             harvestWetFactor = state.isWet and cropWork * C.WET_MULTIPLIER or 0,
-            lubricationFactor = work * (RMS_Greasing.getWearFactor(self) - 1)
+            lubricationFactor = work * (RMS_Greasing.getWearFactor(self) - 1),
+            headerLubricationFactor = drive ~= nil and drive.isTurning and RMS_Greasing.getHeaderWearFactor(drive.header) - 1 or 0
         }
         wearRate = C.BASE_RATE * math.min(state.effort, 1)
         for key, rate in pairs(rates) do
@@ -867,6 +1022,10 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
             wearRate = wearRate + factors[key]
         end
         factors.harvestEffort, factors.harvestGrain, factors.harvestChopper = state.effort, state.grain, state.chopper
+        local greasing = drive ~= nil and drive.header ~= nil and RMS_Greasing.getSpec(drive.header) or nil
+        if greasing ~= nil then
+            factors.headerGreasingLate = 1 - (greasing.lubricationLevel or 1)
+        end
         factors.harvestStone = cropWork > 0 and stone or 0
         factors.harvestSource = state.source
     end

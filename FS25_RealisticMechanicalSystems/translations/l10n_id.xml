@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="pengunci atau 4WD di tanah keras"/>
         <text name="rms_warranty_filter" text="filter tersumbat"/>
         <text name="rms_warranty_oil" text="oli mesin tidak sesuai"/>
+        <text name="rms_warranty_header_engagement" text="pemotong diaktifkan di atas putaran langsam"/>
         <text name="rms_warranty_trailer" text="trailer terlalu berat"/>
         <text name="rms_warranty_aftermarket_part" text="suku cadang purnajual"/>
         <text name="rms_warranty_used_part" text="suku cadang bekas"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Pemeriksaan visual dan uji fungsi"/>
         <text name="rms_ws_inspection_electronic" text="Kerusakan Elektronik"/>
         <text name="rms_ws_inspection_electronic_detail" text="Kode kesalahan dibaca dengan alat diagnostik"/>
+        <text name="rms_ws_inspection_electrical" text="Kerusakan Kelistrikan"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Rangkaian diperiksa dengan multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Cacat Tersembunyi"/>
         <text name="rms_ws_inspection_dormant_detail" text="Komponen cacat, perbaikan sementara"/>
         <text name="rms_ws_inspection_report" text="Laporan"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Batu"/>
         <text name="rms_report_wear_harvest_rice" text="Panen padi"/>
         <text name="rms_report_wear_harvest_wet" text="Tanaman lembap"/>
+        <text name="rms_report_wear_header_starts" text="Penyalaan Pemotong"/>
         <text name="rms_report_component_title" text="Komponen"/>
         <text name="rms_report_system_condition_transmission" text="Transmisi"/>
         <text name="rms_report_system_condition_power" text="Daya Saat Ini"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="Pada mesin diesel yang dingin, satu kali menekan kontrol starter akan menyalakan kontak dan memulai siklus busi pijar secara otomatis. Lampu dasbor menyala sebentar, lalu lampu pemanasan awal tetap menyala hingga mesin siap. Jangan ulangi perintah: starter aktif secara otomatis ketika lampu padam."/>
         <text name="rms_tutorial_pto_engagement_title" text="Pengaktifan PTO"/>
         <text name="rms_tutorial_pto_engagement_message" text="Aktifkan PTO saat mesin langsam, lalu naikkan putaran mesin: mengaktifkannya pada putaran tinggi menghentak seluruh sistem penggerak, terlebih dengan alat yang berat. Setiap pengaktifan juga mengikis koplingnya."/>
+        <text name="rms_tutorial_header_engagement_title" text="Pengaktifan Pemotong"/>
+        <text name="rms_tutorial_header_engagement_message" text="Aktifkan pemotong saat mesin langsam, lalu naikkan putaran: jika dinyalakan pada putaran tinggi, kopling selipnya selip dan jauh lebih cepat aus."/>
+        <text name="rms_tutorial_header_stored_title" text="Pemotong yang Lama Disimpan"/>
+        <text name="rms_tutorial_header_stored_message" text="Pemotong ini tidak berputar selama lebih dari dua minggu: kopling selipnya macet karena karat dan tidak lagi melindunginya. Lumasi pemotong sebelum panen, atau penyumbatan dapat mematahkan poros kardannya."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Langsam dan Masa Tidak Digunakan"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Keausan jauh lebih rendah ketika mesin menyala tanpa bekerja. Saat mesin dimatikan, keausan menjadi minimal. Di bawah naungan, keausan hilang sepenuhnya."/>
         <text name="rms_tutorial_idle_deposit_title" text="Langsam Berkepanjangan"/>

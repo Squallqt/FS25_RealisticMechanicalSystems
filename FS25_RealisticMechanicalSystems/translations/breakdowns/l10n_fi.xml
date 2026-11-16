@@ -785,6 +785,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko jää kytketyksi. Kone vastustaa ohjausta käännöksissä."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Vetohihnat ja variaattorit"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Käyttölaakerit ja vaihteistot"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Leikkuupöydän käyttöhihna"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Leikkuupöydän kitkakytkin"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Leikkuupöydän nivelakseli ja ristinivelet"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Syöttökuilun ketju"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Syötön kiihdytin"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Puintikiskot"/>
@@ -837,6 +840,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Käyttölaakereiden kohtalainen kuluminen. Jyrinä kuuluu selvästi, ja laakerit kuumenevat."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Käyttölaakereiden vakava kuluminen. Jyrinä voimistuu, ja akseleihin tulee välystä."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Käyttölaakereissa on kriittinen vika. Laakeri on leikannut kiinni: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Leikkuupöydän käyttöhihnan alkava kuluminen. Se vinkuu ja luistaa hieman leikkuupöydän pyöriessä."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Leikkuupöydän käyttöhihnan kohtalainen kuluminen. Se vinkuu kovempaa, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Leikkuupöydän käyttöhihnan vakava kuluminen. Se vinkuu kovaa, läpäisy laskee ja pysähdykset toistuvat."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Leikkuupöydän käyttöhihnassa on kriittinen vika. Hihna on katkennut: leikkuupöytää ei enää käytetä, korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Leikkuupöydän kitkakytkimen alkava kuluminen. Se luistaa hieman kuormituksessa."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Leikkuupöydän kitkakytkimen kohtalainen kuluminen. Se luistaa jo normaalikuormalla, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Leikkuupöydän kitkakytkimen vakava kuluminen. Se luistaa ja kuumenee, läpäisy laskee ja pysähdykset toistuvat."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Leikkuupöydän kitkakytkimessä on kriittinen vika. Se ei enää välitä voimaa: leikkuupöytä on pysähtynyt, korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Leikkuupöydän nivelakselin ristinivelten alkava kuluminen. Leikkuupöydän pyöriessä kuuluu lievää jyrinää."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Leikkuupöydän nivelakselin ristinivelten kohtalainen kuluminen. Jyrinä kuuluu selvästi."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Leikkuupöydän nivelakselin ristinivelten vakava kuluminen. Jyrinä voimistuu, ja niveliin tulee välystä."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Leikkuupöydän nivelakselissa on kriittinen vika. Ristinivel on katkennut: leikkuupöytää ei enää käytetä, korjuu on mahdotonta."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Syöttökuilun ketjun alkava kuluminen. Se venyy, ja syöttö muuttuu epätasaiseksi."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Syöttökuilun ketjun kohtalainen kuluminen. Syöttökuilun suulle muodostuu tukoksia."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Syöttökuilun ketjun vakava kuluminen. Se hyppää rattailla, ja tukokset jatkuvat."/>

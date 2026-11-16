@@ -408,6 +408,7 @@
         <text name="rms_warranty_windup" text="spärr eller 4WD på fast mark"/>
         <text name="rms_warranty_filter" text="igensatt filter"/>
         <text name="rms_warranty_oil" text="olämplig motorolja"/>
+        <text name="rms_warranty_header_engagement" text="skärbord inkopplat över tomgång"/>
         <text name="rms_warranty_trailer" text="för tungt släp"/>
         <text name="rms_warranty_aftermarket_part" text="ooriginal del"/>
         <text name="rms_warranty_used_part" text="begagnad del"/>
@@ -445,6 +446,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Okulärbesiktning och funktionstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniska fel"/>
         <text name="rms_ws_inspection_electronic_detail" text="Felkoder lästa med diagnosverktyget"/>
+        <text name="rms_ws_inspection_electrical" text="Elektriska fel"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Kretsar kontrollerade med multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Dolda defekter"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defekt del, nödreparation"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -600,6 +603,7 @@
         <text name="rms_report_wear_harvest_stones" text="Stenar"/>
         <text name="rms_report_wear_harvest_rice" text="Risskörd"/>
         <text name="rms_report_wear_harvest_wet" text="Fuktig gröda"/>
+        <text name="rms_report_wear_header_starts" text="Starter av skärbordet"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Aktuell effekt"/>
@@ -1008,6 +1012,10 @@
         <text name="rms_tutorial_preheat_message" text="På en kall dieselmotor slår ett tryck på startreglaget på tändningen och startar förvärmningen automatiskt. Lamporna i instrumentpanelet tänds kort, och sedan fortsätter förvärmningslampan att lysa tills motorn är klar. Upprepa inte kommandot: startmotorn kopplar in av sig själv när lampan slocknar."/>
         <text name="rms_tutorial_pto_engagement_title" text="Inkoppling av kraftuttag"/>
         <text name="rms_tutorial_pto_engagement_message" text="Koppla in kraftuttaget på tomgång och höj sedan varvtalet: inkoppling på högt varvtal ger hela drivlinan en stöt, särskilt med ett tungt redskap. Varje inkoppling sliter också på kopplingen."/>
+        <text name="rms_tutorial_header_engagement_title" text="Inkoppling av skärbordet"/>
+        <text name="rms_tutorial_header_engagement_message" text="Koppla in skärbordet på tomgång och höj sedan varvtalet: startas det på högt varvtal slirar slirkopplingen och slits mycket snabbare."/>
+        <text name="rms_tutorial_header_stored_title" text="Avställt skärbord"/>
+        <text name="rms_tutorial_header_stored_message" text="Det här skärbordet har inte gått på över två veckor: slirkopplingen har rostat fast och skyddar det inte längre. Smörj skärbordet före skörden, annars kan ett stopp bryta kardanaxeln."/>
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgång och stillestånd"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitaget är långt lägre när maskinen går utan att arbeta. Med motorn avstängd blir det minimalt. Under tak försvinner det helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Långvarig tomgång"/>
