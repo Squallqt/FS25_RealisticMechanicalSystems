@@ -232,6 +232,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteString(streamId, spec.serviceOptionTwo or "")
     streamWriteString(streamId, spec.workshopType or "")
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
+    streamWriteString(streamId, RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
 
     -- [Group 3] Telemetry
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(getSyncOperatingTime(self), 0, 0))
@@ -255,6 +256,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
 
     -- [Group 8] Breakdowns
     streamWriteString(streamId, RMS_Utils.serializeBreakdowns(spec.activeBreakdowns or {}))
+    streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.preventiveParts))
 
     -- [Group 9] Service progress
     streamWriteInt32(streamId, spec.pendingProgressStepIndex or 0)
@@ -309,6 +311,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.serviceOptionTwo = streamReadString(streamId)
     spec.workshopType = streamReadString(streamId)
     spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(streamReadString(streamId))
     if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
     if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
     if spec.workshopType == "" then spec.workshopType = nil end
@@ -360,6 +363,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
 
     -- [Group 8] Breakdowns
     spec.activeBreakdowns = RMS_Utils.deserializeBreakdowns(streamReadString(streamId))
+    spec.preventiveParts = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
 
     -- [Group 9] Service progress
     spec.pendingProgressStepIndex = streamReadInt32(streamId)
@@ -427,6 +431,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteString(streamId, spec.serviceOptionTwo or "")
             streamWriteString(streamId, spec.workshopType or "")
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
+            streamWriteString(streamId, RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
         end
 
         -- [3] Telemetry
@@ -469,6 +474,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
         -- [8] Breakdowns
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS) ~= 0) then
             streamWriteString(streamId, RMS_Utils.serializeBreakdowns(spec.activeBreakdowns or {}))
+            streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.preventiveParts))
         end
 
         -- [9] Service progress
@@ -533,6 +539,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.serviceOptionTwo = streamReadString(streamId)
             spec.workshopType = streamReadString(streamId)
             spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+            spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(streamReadString(streamId))
             if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
             if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
             if spec.workshopType == "" then spec.workshopType = nil end
@@ -604,6 +611,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
         -- [8] Breakdowns
         if streamReadBool(streamId) then
             spec.activeBreakdowns = RMS_Utils.deserializeBreakdowns(streamReadString(streamId))
+            spec.preventiveParts = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
             self:recalculateAndApplyEffects()
             self:recalculateAndApplyIndicators()
         end

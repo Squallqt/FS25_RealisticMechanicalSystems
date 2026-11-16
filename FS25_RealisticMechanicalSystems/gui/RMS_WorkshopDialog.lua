@@ -88,10 +88,11 @@ function RMS_WorkshopDialog:onClose()
     RMS_WorkshopDialog:superClass().onClose(self)
 end
 
----Refreshes the pages when the vehicle changes status or value
+---Refreshes the pages when the vehicle changes status, value or invoice
 function RMS_WorkshopDialog:update(dt)
     RMS_WorkshopDialog:superClass().update(self, dt)
-    if self.vehicle:getCurrentStatus() ~= self.observedStatus or getResaleValue(self) ~= self.observedResaleValue then
+    if self.vehicle:getCurrentStatus() ~= self.observedStatus or getResaleValue(self) ~= self.observedResaleValue
+        or self.vehicle.spec_RealisticMechanicalSystems.pendingServiceInvoice ~= self.observedInvoice then
         self:refresh()
     end
 end
@@ -102,6 +103,8 @@ function RMS_WorkshopDialog:refresh()
     local spec = vehicle.spec_RealisticMechanicalSystems
     self.observedStatus = vehicle:getCurrentStatus()
     self.observedResaleValue = getResaleValue(self)
+    -- a client may get the invoice of a started service after its status
+    self.observedInvoice = spec.pendingServiceInvoice
 
     RMS_Utils.setBalance(self.moneyBox, self.moneyBoxBg, self.balanceElement)
 

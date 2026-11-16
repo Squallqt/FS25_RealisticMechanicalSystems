@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Mengatur apakah rekondisi mekanis di bengkel langsung selesai, termasuk yang sedang berlangsung."/>
         <text name="rms_instantRemap_label" text="Remap Mesin Seketika"/>
         <text name="rms_instantRemap_tooltip" text="Mengatur apakah remap mesin dan kembali ke bawaan langsung selesai, termasuk yang sedang berlangsung."/>
-        <text name="rms_debugMode_label" text="Mode Debug"/>
-        <text name="rms_debugMode_tooltip" text="Mengatur apakah jendela debug muncul di mesin yang kamu kemudikan dan konsol menerima log terperinci. Tombol %s membuka dan menutupnya; dalam multipemain, hanya administrator yang melihatnya."/>
+        <text name="rms_debugWindow_label" text="Jendela Debug"/>
+        <text name="rms_debugWindow_tooltip" text="Mengatur apakah jendela debug muncul di mesin yang kamu kemudikan. Tombol %s juga membukanya; dalam multipemain, hanya administrator yang melihatnya."/>
+        <text name="rms_debugLog_label" text="Log Terperinci"/>
+        <text name="rms_debugLog_tooltip" text="Mengatur apakah konsol menerima log terperinci RMS untuk dilampirkan pada laporan bug, tanpa membuka jendela debug."/>
         <text name="rms_warningMessages_label" text="Pesan Peringatan"/>
         <text name="rms_warningMessages_tooltip" text="Mengatur apakah peringatan seperti mesin dingin atau terlalu panas ditampilkan. Pesan pembatasan tenaga akibat suhu selalu ditampilkan."/>
         <text name="rms_serviceInterval_label" text="Jarak antarperawatan"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Oli mesin, untuk mesin tanpa AdBlue maupun filter partikulat"/>
         <text name="rms_fluid_function_utto" text="Oli transmisi dan hidraulis untuk penambahan manual"/>
         <text name="rms_fluid_function_coolant" text="Cairan pendingin untuk penambahan manual"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue untuk tangki AdBlue pada mesin yang memilikinya"/>
         <text name="rms_fluid_pour_action" text="Tuang: %s"/>
         <text name="rms_fluid_level_done" text="Level terisi penuh"/>
         <text name="rms_fluid_container_empty" text="Wadah kosong"/>
         <text name="rms_fluid_drum_empty" text="Drum kosong"/>
+        <text name="rms_fluid_tank_empty" text="Tangki kosong"/>
         <text name="rms_fluid_container_label" text="Wadah"/>
         <text name="rms_fluid_drum_label" text="Drum"/>
+        <text name="rms_fluid_tank_label" text="Tangki"/>
         <text name="rms_fluid_hand_take" text="Ambil untuk dituang"/>
         <text name="rms_fluid_hand_carry" text="Bawa wadah"/>
         <text name="rms_drum_pump_name" text="Pompa drum baterai"/>
-        <text name="rms_drum_pump_function" text="Dipasang pada drum untuk mengisi mesin melalui nozelnya"/>
+        <text name="rms_drum_pump_function" text="Dipasang pada drum atau tangki untuk mengisi mesin melalui nozelnya"/>
         <text name="rms_drum_pump_mount" text="Pasang pada drum"/>
+        <text name="rms_drum_pump_mount_tank" text="Pasang pada tangki"/>
         <text name="rms_drum_pump_take" text="Ambil kembali pompa"/>
         <text name="rms_drum_pump_nozzle_take" text="Ambil nozel"/>
         <text name="rms_drum_pump_nozzle_return" text="Gantung nozel"/>
         <text name="rms_drum_pump_hose_range" text="Selang pompa menahan Anda untuk pergi lebih jauh.&#10;Nozel akan digantung dalam %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Dekatkan drum: panjang selang 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Dekatkan tangki: panjang selang 4 m"/>
         <text name="rms_drum_pump_required" text="Perlu pompa drum"/>
         <text name="rms_fluid_level_under_gauge" text="Di bawah skala"/>
         <text name="rms_fluid_circuit_engineOil" text="Oli Mesin"/>
         <text name="rms_fluid_circuit_coolant" text="Cairan Pendingin"/>
+        <text name="rms_fluid_circuit_adBlue" text="Tangki AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Oli Transmisi"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Oli Hidraulis"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Oli Transmisi dan Hidraulis"/>
         <text name="rms_fluid_hud_engineOil" text="Oli Mesin"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Oli Trans./Hidraulis"/>
         <text name="rms_fluid_hud_coolant" text="Cairan Pendingin"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Fluida Tidak Kompatibel"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan mesin hingga tiga kali lipat serta meningkatkan suhu mesin. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan sistem pendingin hingga tiga kali lipat serta meningkatkan suhu mesin. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Oli Mesin Tidak Sesuai"/>
         <text name="rms_fluid_unsuited_oil_message" text="Mesin ini memakai AdBlue atau memiliki filter partikulat: buku petunjuknya meminta oli yang dibuat untuk itu. Dengan oli ini, penggantian oli akan tiba hingga dua kali lebih cepat. Filter partikulat juga terisi abu 1,5 kali lebih cepat. Lanjutkan?"/>
         <text name="rms_fluid_error_no_circuit" text="Kendaraan ini tidak memerlukan penambahan fluida"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Kendaraan ini tidak memiliki tangki AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Matikan mesin sebelum memindahkan fluida"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kendaraan harus berhenti"/>
         <text name="rms_fluid_error_busy" text="Wadah lain sedang mengisi sirkuit ini"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Keausan lanjut"/>
         <text name="rms_fleet_part_failed" text="Rusak"/>
         <text name="rms_fleet_part_unmeasured" text="Belum diukur"/>
+        <text name="rms_fleet_part_replaced" text="Komponen diganti"/>
         <text name="rms_fleet_parts_reading" text="Komponen diukur %s"/>
         <text name="rms_fleet_parts_need_complete" text="Komponen diukur pada inspeksi lengkap berikutnya"/>
         <text name="rms_fleet_greasing_done" text="Pelumasan selesai"/>

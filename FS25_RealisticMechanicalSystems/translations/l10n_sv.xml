@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Avgör huruvida mekaniska renoveringar på verkstaden slutförs omedelbart, även pågående renoveringar."/>
         <text name="rms_instantRemap_label" text="Omedelbar motoroptimering"/>
         <text name="rms_instantRemap_tooltip" text="Avgör huruvida motoroptimering och återställning till originalprogramvaran slutförs omedelbart, även pågående arbeten."/>
-        <text name="rms_debugMode_label" text="Felsökningsläge"/>
-        <text name="rms_debugMode_tooltip" text="Avgör huruvida felsökningsfönstret visas i maskinen du kör och konsolen får detaljerade loggar. Tangenten %s öppnar och stänger fönstret; i flerspelarläge ser bara administratörer det."/>
+        <text name="rms_debugWindow_label" text="Felsökningsfönster"/>
+        <text name="rms_debugWindow_tooltip" text="Avgör huruvida felsökningsfönstret visas i maskinen du kör. Tangenten %s öppnar det också; i flerspelarläge ser bara administratörer det."/>
+        <text name="rms_debugLog_label" text="Detaljerad logg"/>
+        <text name="rms_debugLog_tooltip" text="Avgör huruvida konsolen får de detaljerade loggarna från RMS att bifoga till en felrapport, utan att felsökningsfönstret öppnas."/>
         <text name="rms_warningMessages_label" text="Varningsmeddelanden"/>
         <text name="rms_warningMessages_tooltip" text="Avgör huruvida varningar som kall motor eller överhettning visas. Meddelanden om termisk effektbegränsning visas alltid."/>
         <text name="rms_serviceInterval_label" text="Avstånd mellan service"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorolja, för maskiner utan AdBlue och partikelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmissions- och hydraulolja för manuell påfyllning"/>
         <text name="rms_fluid_function_coolant" text="Kylvätska för manuell påfyllning"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue till AdBlue-tanken på maskiner som har en"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
         <text name="rms_fluid_level_done" text="Nivå påfylld"/>
         <text name="rms_fluid_container_empty" text="Tom dunk"/>
         <text name="rms_fluid_drum_empty" text="Tomt fat"/>
+        <text name="rms_fluid_tank_empty" text="Tom tank"/>
         <text name="rms_fluid_container_label" text="Dunk"/>
         <text name="rms_fluid_drum_label" text="Fat"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Ta för att fylla på"/>
         <text name="rms_fluid_hand_carry" text="Bär dunken"/>
         <text name="rms_drum_pump_name" text="Batteridriven fatpump"/>
-        <text name="rms_drum_pump_function" text="Sätts på ett fat för att fylla maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Sätts på ett fat eller en tank för att fylla maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sätt på fatet"/>
+        <text name="rms_drum_pump_mount_tank" text="Sätt på tanken"/>
         <text name="rms_drum_pump_take" text="Ta av pumpen"/>
         <text name="rms_drum_pump_nozzle_take" text="Ta pistolen"/>
         <text name="rms_drum_pump_nozzle_return" text="Häng tillbaka pistolen"/>
         <text name="rms_drum_pump_hose_range" text="Pumpens slang hindrar dig från att gå längre.&#10;Pistolen hängs tillbaka om %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Flytta fatet närmare: slangen är 4 m lång"/>
+        <text name="rms_drum_pump_tank_too_far" text="Flytta tanken närmare: slangen är 4 m lång"/>
         <text name="rms_drum_pump_required" text="Fatpump krävs"/>
         <text name="rms_fluid_level_under_gauge" text="Under skalan"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolja"/>
         <text name="rms_fluid_circuit_coolant" text="Kylvätska"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmissionsolja"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulolja"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmissions- och hydraulolja"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolja"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olja"/>
         <text name="rms_fluid_hud_coolant" text="Kylvätska"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Olämplig vätska"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på motorn och göra den varmare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på kylsystemet och göra motorn varmare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Olämplig motorolja"/>
         <text name="rms_fluid_unsuited_oil_message" text="Den här motorn använder AdBlue eller har partikelfilter: instruktionsboken kräver en olja som är gjord för dem. Med den här oljan kommer oljebytet upp till dubbelt så tidigt. Ett partikelfilter fylls dessutom med aska 1,5 gånger så snabbt. Fortsätta?"/>
         <text name="rms_fluid_error_no_circuit" text="Det här fordonet behöver ingen påfyllning av vätska"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Det här fordonet har ingen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Stäng av motorn innan du överför vätska"/>
         <text name="rms_fluid_error_vehicle_moving" text="Fordonet måste stå stilla"/>
         <text name="rms_fluid_error_busy" text="En annan behållare fyller redan denna krets"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Kraftigt slitage"/>
         <text name="rms_fleet_part_failed" text="Ur funktion"/>
         <text name="rms_fleet_part_unmeasured" text="Mätning saknas"/>
+        <text name="rms_fleet_part_replaced" text="Del bytt"/>
         <text name="rms_fleet_parts_reading" text="Delar uppmätta %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delar mäts vid nästa fullständiga inspektion"/>
         <text name="rms_fleet_greasing_done" text="Smörjning klar"/>

@@ -73,10 +73,15 @@ Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.3:
 - Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
-- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels
+- Added TotalEnergies AdBlue in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank, poured into the AdBlue tank of the machines that have one; the drum pump also fits the AdBlue drum and tank
+- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left
 - Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
+- Reworked the debug window: three views (Overview, Parts, Machine) browsed with the mouse and kept on screen while you drive, and the detailed log in a setting of its own
 - Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
+- Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
+- Fixed the Condition card showing parts replaced since the last inspection as failed or worn
+- Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -367,10 +372,15 @@ Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.3:
 - Abgashitze hinzugefügt: Über dem Auspuff eines warmen Motors flimmert die Luft, stärker unter Last und während einer Regeneration des Partikelfilters
-- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten
+- TotalEnergies AdBlue hinzugefügt: 10-L-Kanister, 208-L-Fass (einzeln oder zu zweit auf einer Palette) und 1.000-L-Tank, eingefüllt in den AdBlue-Tank der Maschinen, die einen haben; die Fasspumpe passt auch auf AdBlue-Fass und -Tank
+- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten; im Fahrzeug zeigt die Füllstandsanzeige den Produktnamen vollständig neben einem Symbol seiner Flüssigkeit, und zu Fuß trägt die Infobox Marke und Produkt als Titel über der verbleibenden Literzahl
 - Gebindegrößen überarbeitet: 20-L-Kanister statt 25 L und Fässer mit 200 L (Motorex), 205 L (FUCHS) oder 208 L (Motul), einzeln oder zu zweit auf einer Palette
+- Debug-Fenster überarbeitet: drei Ansichten (Overview, Parts, Machine), mit der Maus durchblättert und beim Fahren eingeblendet, und das detaillierte Protokoll mit eigener Einstellung
 - Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
+- In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
+- Zustandskarte behoben, die seit der letzten Inspektion ersetzte Teile als ausgefallen oder verschlissen zeigte
+- Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -661,10 +671,15 @@ Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSyste
 
 Changelog 1.0.0.0-beta.3 :
 - Ajout de la chaleur de l'échappement : l'air tremble au-dessus du pot d'un moteur chaud, davantage en charge et pendant une régénération du filtre à particules
-- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes
+- Ajout de l'AdBlue TotalEnergies en bidon de 10 L, fût de 208 L (seul ou par deux sur une palette) et cuve de 1 000 L, versé dans le réservoir d'AdBlue des machines qui en ont un ; la pompe de fût se pose aussi sur le fût et la cuve d'AdBlue
+- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes ; en véhicule, l'affichage du remplissage donne le nom du produit en entier, à côté d'un pictogramme de son liquide, et à pied l'infobulle prend pour titre la marque et le produit, au-dessus des litres restants
 - Refonte des formats : jerricans de 20 L au lieu de 25 L, et fûts de 200 L (Motorex), 205 L (FUCHS) ou 208 L (Motul), seuls ou par deux sur une palette
+- Refonte de la fenêtre de débogage : trois vues (Overview, Parts, Machine) parcourues à la souris et gardées à l'écran pendant la conduite, et le journal détaillé dans un réglage à part
 - Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
+- Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs
+- Correction de la carte État qui montrait en panne ou usées les pièces remplacées depuis la dernière inspection
+- Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
@@ -925,6 +940,7 @@ Changelog 0.10.0.0 :
         <brand name="TELWIN" title="Telwin" image="brands/brand_telwin.png"/>
         <brand name="MACNAUGHT" title="Macnaught" image="brands/brand_macnaught.png"/>
         <brand name="SKF" title="SKF" image="brands/brand_skf.png"/>
+        <brand name="TOTALENERGIES" title="TotalEnergies" image="brands/brand_totalenergies.png"/>
     </brands>
     <storeCategories>
         <storeCategory name="rmsMaintenance" title="$l10n_rms_shop_category_maintenance" image="objects/greaseGun/store_greaseGun.png" type="OBJECTS" insertAfter="pallets"/>
@@ -938,6 +954,7 @@ Changelog 0.10.0.0 :
         <storeItem xmlFilename="objects/jumperCables/jumperCables.xml"/>
         <storeItem xmlFilename="objects/fluids/shared/canisterHand5L.xml"/>
         <storeItem xmlFilename="objects/fluids/shared/canisterHand20L.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/totalEnergiesAdBlue/canisterHand10L.xml"/>
         <storeItem xmlFilename="objects/drumPump/drumPump.xml"/>
         <storeItem xmlFilename="objects/drumPump/drumPumpNozzle.xml"/>
         <storeItem xmlFilename="objects/fluids/products/motorexFarmerPro/product.xml"/>
@@ -952,6 +969,8 @@ Changelog 0.10.0.0 :
         <storeItem xmlFilename="objects/fluids/products/fuchsMot15w40/product.xml"/>
         <storeItem xmlFilename="objects/fluids/products/fuchsUttoMp/product.xml"/>
         <storeItem xmlFilename="objects/fluids/products/fuchsFricofinLd50/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/totalEnergiesAdBlue/product.xml"/>
+        <storeItem xmlFilename="objects/fluids/products/totalEnergiesAdBlue/tank.xml"/>
     </storeItems>
     <iconFilename>icon_rms.png</iconFilename>
     <multiplayer supported="true"/>

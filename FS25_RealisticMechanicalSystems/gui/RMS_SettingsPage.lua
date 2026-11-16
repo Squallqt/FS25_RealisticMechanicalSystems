@@ -22,7 +22,8 @@ end
 local SETTINGS = {
     { row = "rmsTutorialMode", key = "tutorialMode", field = "TUTORIAL_MODE", isPersonal = true },
     { row = "rmsWarningMessages", key = "enableWarningMessages", group = "CORE", field = "ENABLE_WARNING_MESSAGES" },
-    { row = "rmsDebugMode", key = "debugMode" },
+    { row = "rmsDebugWindow", key = "debugWindow", isPersonal = true, isAdminOnly = true },
+    { row = "rmsDebugLog", key = "debugLog", field = "DEBUG" },
     { row = "rmsServiceWear", key = "baseServiceWear", group = "CORE", field = "BASE_SERVICE_WEAR", intervalWear = 0.5,
         hours = listHours({ { 1, 20, 1 }, { 22, 50, 2 }, { 55, 100, 5 }, { 200, 1000, 100 } }) },
     { row = "rmsConditionWear", key = "baseSystemsWear", group = "CORE", field = "BASE_SYSTEMS_WEAR", intervalWear = 1,
@@ -49,7 +50,7 @@ local SETTINGS = {
 }
 
 local function readSettings()
-    local values = { debugMode = RMS_DebugWindow.getIsOpen() }
+    local values = { debugWindow = RMS_DebugWindow.getIsOpen() }
     for _, setting in ipairs(SETTINGS) do
         if setting.field ~= nil then
             values[setting.key] = RMS_Config.getSettingTable(setting)[setting.field]
@@ -95,7 +96,7 @@ local function updateRowLocks(page)
     local isAdmin = getIsAdmin()
     local pending = RMS_SettingsPage.pending
     for option, setting in pairs(page.rmsSettings) do
-        if not setting.isPersonal then
+        if not setting.isPersonal or setting.isAdminOnly then
             local reason
             if not isAdmin then
                 reason = "rms_settings_admin_required"
@@ -170,7 +171,7 @@ function RMS_SettingsPage.show(page)
     end
 
     updateServiceTooltip(page)
-    page.rmsDebugMode:getDescendantByName("ignore"):setText(string.format(g_i18n:getText("rms_debugMode_tooltip"),
+    page.rmsDebugWindow:getDescendantByName("ignore"):setText(string.format(g_i18n:getText("rms_debugWindow_tooltip"),
         RMS_Utils.getPrimaryKeyboardInputText("RMS_TOGGLE_DEBUG_WINDOW", "Alt Gr + F5")))
     updateRowLocks(page)
     InGameMenuSettingsFrame.updateAlternatingElements(nil, page.settingsLayout)
@@ -207,9 +208,8 @@ function RMS_SettingsPage.applyChanges()
     if changed.tutorialMode then
         RMS_Config.syncTutorialState()
     end
-    if changed.debugMode then
-        RMS_DebugWindow.isOpen = pending.debugMode
-        RMS_Config.DEBUG = pending.debugMode
+    if changed.debugWindow then
+        RMS_DebugWindow.setOpen(pending.debugWindow, true)
     end
     if changed.MAINTENANCE then
         RealisticMechanicalSystems.finishInstantServices()

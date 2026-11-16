@@ -5,13 +5,24 @@ RMS_FluidContainer = {}
 RMS_FluidContainer.SPEC_NAME = "FS25_RealisticMechanicalSystems.rmsFluidContainer"
 RMS_FluidContainer.SPEC_TABLE_NAME = "spec_" .. RMS_FluidContainer.SPEC_NAME
 RMS_FluidContainer.DRUM_I3D_FILENAME = "data/maps/textures/shared/props/motorex/motorexOilBarrel.i3d"
+RMS_FluidContainer.ADBLUE_CAN_I3D_FILENAME = "data/maps/mapAS/textures/props/canister.i3d"
+RMS_FluidContainer.ADBLUE_DRUM_I3D_FILENAME = "data/placeables/brandless/decoration/garbageContainers/barrel02.i3d"
 RMS_FluidContainer.CARRIED_CAPACITY = 20
 RMS_FluidContainer.PUMP_I3D_FILENAME = "objects/drumPump/drumPumpMounted.i3d"
 RMS_FluidContainer.PUMP_TRANSLATION = { 0, 0.898252845, 0.1980392635 }
+-- pump on the AdBlue drum bung (+x), turned to face out
+RMS_FluidContainer.ADBLUE_DRUM_PUMP = { translation = { 0.2171, 0.9421, 0 }, rotationY = 90 }
+-- left drum of a pallet: the -x bung, its hose clear of the other
+RMS_FluidContainer.ADBLUE_DRUM_PUMP_LEFT = { translation = { -0.2171, 0.9421, 0 }, rotationY = -90 }
+-- pump on the cap of the tank
+RMS_FluidContainer.TANK_PUMP = { translation = { 0, 1.558, 0 }, rotationY = 0 }
+-- parked hose lying on the tank roof, the drum's hangs over a rim
+RMS_FluidContainer.TANK_HOSE_I3D_FILENAME = "objects/drumPump/drumPumpTankHose.i3d"
 -- drum places by number of drums: one centred, or two side by side
 RMS_FluidContainer.DRUM_PLACES = {
     { { link = "drumVisualLink", collision = "drumCollision" } },
-    { { link = "drumVisualLinkA", collision = "drumCollisionA" }, { link = "drumVisualLinkB", collision = "drumCollisionB" } }
+    { { link = "drumVisualLinkA", collision = "drumCollisionA", isLeft = true },
+        { link = "drumVisualLinkB", collision = "drumCollisionB" } }
 }
 
 ---Checks if all prerequisite specializations are loaded
@@ -33,6 +44,12 @@ function RMS_FluidContainer.initSpecialization()
     schema:register(XMLValueType.STRING, baseKey .. "#drumBodyDiffuse", "Drum paint diffuse map, the brand's print")
     schema:register(XMLValueType.STRING, baseKey .. "#drumPrints", "I3D of the product label on the drum")
     schema:register(XMLValueType.STRING, baseKey .. "#drumLabelDiffuse", "Drum product label diffuse map")
+    schema:register(XMLValueType.STRING, baseKey .. "#canDiffuse", "Game can model diffuse map, the product's plastic")
+    schema:register(XMLValueType.STRING, baseKey .. "#canPrints", "I3D of the product label on the game can model")
+    schema:register(XMLValueType.STRING, baseKey .. "#drumDiffuse", "Game drum model diffuse map, the product's plastic")
+    schema:register(XMLValueType.STRING, baseKey .. "#drumSpecular", "Game drum model specular map")
+    schema:register(XMLValueType.STRING, baseKey .. "#tankDiffuse", "Game tank model diffuse map, the product's colours")
+    schema:register(XMLValueType.STRING, baseKey .. "#tankPrints", "I3D of the product plate on the game tank model")
     schema:setXMLSpecializationType()
 
     Vehicle.xmlSchemaSavegame:register(XMLValueType.BOOL,
@@ -46,6 +63,8 @@ function RMS_FluidContainer.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidProductKey", RMS_FluidContainer.getRMSFluidProductKey)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidLiters", RMS_FluidContainer.getRMSFluidLiters)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidCapacity", RMS_FluidContainer.getRMSFluidCapacity)
+    SpecializationUtil.registerFunction(vehicleType, "getRMSFluidFormat", RMS_FluidContainer.getRMSFluidFormat)
+    SpecializationUtil.registerFunction(vehicleType, "dressRMSFluidGameCan", RMS_FluidContainer.dressRMSFluidGameCan)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidPercentage", RMS_FluidContainer.getRMSFluidPercentage)
     SpecializationUtil.registerFunction(vehicleType, "beginRMSFluidTransaction", RMS_FluidContainer.beginRMSFluidTransaction)
     SpecializationUtil.registerFunction(vehicleType, "endRMSFluidTransaction", RMS_FluidContainer.endRMSFluidTransaction)
@@ -71,6 +90,7 @@ function RMS_FluidContainer.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "delete", RMS_FluidContainer.delete)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getCanBePickedUp", RMS_FluidContainer.getCanBePickedUp)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "getMeshNodes", RMS_FluidContainer.getMeshNodes)
+    SpecializationUtil.registerOverwrittenFunction(vehicleType, "getInfoBoxTitle", RMS_FluidContainer.getInfoBoxTitle)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "showInfo", RMS_FluidContainer.showInfo)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateMass", RMS_FluidContainer.updateMass)
 end
@@ -118,12 +138,17 @@ end
 
 ---Loads the native GIANTS drum without importing its static rigid body
 function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
-    local i3dRoot = g_i3DManager:loadI3DFile(RMS_FluidContainer.DRUM_I3D_FILENAME, false, false)
+    return RMS_FluidContainer.loadNativeVisual(RMS_FluidContainer.DRUM_I3D_FILENAME, parentNode)
+end
+
+---Loads a GIANTS prop as a visual, without its static rigid body
+function RMS_FluidContainer.loadNativeVisual(filename, parentNode)
+    local i3dRoot = g_i3DManager:loadI3DFile(filename, false, false)
     if i3dRoot == nil or i3dRoot == 0 or getNumOfChildren(i3dRoot) == 0 then
         if i3dRoot ~= nil and i3dRoot ~= 0 then
             delete(i3dRoot)
         end
-        Logging.error("RMS: unable to load native fluid drum '%s'", RMS_FluidContainer.DRUM_I3D_FILENAME)
+        Logging.error("RMS: unable to load native fluid container '%s'", filename)
         return false
     end
 
@@ -137,15 +162,32 @@ function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
     return true
 end
 
-local function loadPump(container, drumLink)
+-- @param table? place { translation, rotationY }, the oil drum's bung by default
+local function loadPump(container, drumLink, place)
     local i3dRoot = g_i3DManager:loadI3DFile(Utils.getFilename(RMS_FluidContainer.PUMP_I3D_FILENAME, container.baseDirectory), false, false)
     local node = getChildAt(i3dRoot, 0)
     link(drumLink, node)
     delete(i3dRoot)
-    setTranslation(node, unpack(RMS_FluidContainer.PUMP_TRANSLATION))
+    setTranslation(node, unpack(place ~= nil and place.translation or RMS_FluidContainer.PUMP_TRANSLATION))
+    setRotation(node, 0, math.rad(place ~= nil and place.rotationY or 0), 0)
 
     local graphics = getChildAt(node, 0)
     return { node = node, hoseOutlet = getChildAt(graphics, 2), restHose = getChildAt(graphics, 4), storedNozzle = getChildAt(graphics, 5) }
+end
+
+---Swaps the parked hose of a pump for the one lying on the tank roof
+local function loadTankHose(container, pump)
+    local filename = Utils.getFilename(RMS_FluidContainer.TANK_HOSE_I3D_FILENAME, container.baseDirectory)
+    local i3dRoot = g_i3DManager:loadI3DFile(filename, false, false)
+    if i3dRoot == nil or i3dRoot == 0 or getNumOfChildren(i3dRoot) == 0 then
+        Logging.error("RMS: unable to load the tank hose '%s'", filename)
+        return
+    end
+    local hose = getChildAt(i3dRoot, 0)
+    link(getParent(pump.restHose), hose)
+    delete(i3dRoot)
+    setVisibility(pump.restHose, false)
+    pump.restHose = hose
 end
 
 local function applyPump(slot)
@@ -177,6 +219,71 @@ local function dressDrum(container, link, baseKey)
     return true
 end
 
+---Links an I3D of product prints, its own maps, under a node
+function RMS_FluidContainer.loadPrints(container, parentNode, filename)
+    local i3dRoot = g_i3DManager:loadI3DFile(Utils.getFilename(filename, container.baseDirectory), false, false)
+    if i3dRoot == nil or i3dRoot == 0 or getNumOfChildren(i3dRoot) == 0 then
+        Logging.xmlError(container.xmlFile, "Unable to load prints '%s'", tostring(filename))
+        return
+    end
+    local prints = getChildAt(i3dRoot, 0)
+    link(parentNode, prints)
+    delete(i3dRoot)
+end
+
+---Applies one specular map to all materials below the nodes
+function RMS_FluidContainer.applySpecularToNodes(nodes, filename)
+    for _, node in ipairs(nodes) do
+        local materials = {}
+        RMS_FluidContainer.collectMaterials(node, materials)
+        for _, materialId in ipairs(materials) do
+            local replacement = setMaterialGlossMapFromFile(materialId, filename, true, true, false)
+            MaterialUtil.replaceMaterialRec(node, materialId, replacement)
+        end
+    end
+end
+
+local function getProductFilename(container, attribute)
+    local filename = container.xmlFile:getValue("vehicle.rmsFluidContainer#" .. attribute)
+    return Utils.getFilename(filename, container.baseDirectory)
+end
+
+---Dresses the game can in the product's plastic and label
+function RMS_FluidContainer:dressRMSFluidGameCan(parentNode)
+    if not RMS_FluidContainer.loadNativeVisual(RMS_FluidContainer.ADBLUE_CAN_I3D_FILENAME, parentNode) then
+        return
+    end
+    RMS_FluidContainer.applyDiffuseByName({ parentNode }, "visual_lod", getProductFilename(self, "canDiffuse"))
+    RMS_FluidContainer.loadPrints(self, parentNode, self.xmlFile:getValue("vehicle.rmsFluidContainer#canPrints"))
+end
+
+---Dresses a drum place in the game's plastic drum
+local function dressGameDrum(container, link)
+    if not RMS_FluidContainer.loadNativeVisual(RMS_FluidContainer.ADBLUE_DRUM_I3D_FILENAME, link) then
+        return false
+    end
+    RMS_FluidContainer.stripChildCollision(link)
+    local visuals = {}
+    RMS_FluidContainer.collectNodesByName(link, "visual_lod", visuals)
+    RMS_FluidContainer.applyDiffuseToNodes(visuals, getProductFilename(container, "drumDiffuse"))
+    RMS_FluidContainer.applySpecularToNodes(visuals, getProductFilename(container, "drumSpecular"))
+    RMS_FluidContainer.loadPrints(container, link, container.xmlFile:getValue("vehicle.rmsFluidContainer#drumPrints"))
+    return true
+end
+
+---Dresses the game tank in the product's colours and plate
+local function dressGameTank(container)
+    local visuals = {}
+    RMS_FluidContainer.collectNodesByName(container.rootNode, "fertilizerTank_vis", visuals)
+    if #visuals == 0 then
+        Logging.error("RMS: the game tank visual is missing")
+        return false
+    end
+    RMS_FluidContainer.applyDiffuseToNodes(visuals, getProductFilename(container, "tankDiffuse"))
+    RMS_FluidContainer.loadPrints(container, container.rootNode, container.xmlFile:getValue("vehicle.rmsFluidContainer#tankPrints"))
+    return true
+end
+
 ---Loads the catalogue product and the liters left, a new container full
 function RMS_FluidContainer:onLoad(savegame)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
@@ -196,6 +303,7 @@ function RMS_FluidContainer:onLoad(savegame)
     end
 
     spec.capacity = self:getFillUnitCapacity(1)
+    spec.format = product.formats ~= nil and product.formats[spec.capacity] or RMS_FluidContainer.getFormat(spec.capacity)
     spec.fillTypeIndex = g_fillTypeManager:getFillTypeIndexByName("RMS_" .. spec.productKey)
     local savedPumps = { false, false }
     if savegame ~= nil then
@@ -210,30 +318,61 @@ function RMS_FluidContainer:onLoad(savegame)
     self:setMassDirty()
 
     local baseKey = "vehicle.rmsFluidContainer"
-    local mediumRoots = { self.i3dMappings.mediumVisualLink.nodeId }
-    local largeRoots = { self.i3dMappings.largeVisualLink.nodeId }
-    RMS_FluidContainer.stripChildCollision(mediumRoots[1])
-    RMS_FluidContainer.stripChildCollision(largeRoots[1])
-    RMS_FluidContainer.stripChildCollision(self.i3dMappings.drumPalletVisualLink.nodeId)
+    -- oils share fluidContainer.i3d, products with formats the game's models
+    local isGameModel = product.formats ~= nil
+    if isGameModel then
+        if spec.format ~= "tank" then
+            RMS_FluidContainer.stripChildCollision(self.i3dMappings.drumPalletVisualLink.nodeId)
+        end
+        if spec.format == "adBlueCan" then
+            self:dressRMSFluidGameCan(self.i3dMappings.canVisualLink.nodeId)
+        end
+    else
+        local mediumRoots = { self.i3dMappings.mediumVisualLink.nodeId }
+        local largeRoots = { self.i3dMappings.largeVisualLink.nodeId }
+        RMS_FluidContainer.stripChildCollision(mediumRoots[1])
+        RMS_FluidContainer.stripChildCollision(largeRoots[1])
+        RMS_FluidContainer.stripChildCollision(self.i3dMappings.drumPalletVisualLink.nodeId)
 
-    spec.canDiffuseFilenames = {}
-    for _, name in ipairs({ "mediumBody", "mediumCap", "mediumLabel", "largeBody", "largeLabel" }) do
-        spec.canDiffuseFilenames[name] = Utils.getFilename(self.xmlFile:getValue(baseKey .. "#" .. name .. "Diffuse"), self.baseDirectory)
+        spec.canDiffuseFilenames = {}
+        for _, name in ipairs({ "mediumBody", "mediumCap", "mediumLabel", "largeBody", "largeLabel" }) do
+            spec.canDiffuseFilenames[name] = Utils.getFilename(self.xmlFile:getValue(baseKey .. "#" .. name .. "Diffuse"), self.baseDirectory)
+        end
+        self:applyRMSFluidVisuals(mediumRoots[1], 5)
+        self:applyRMSFluidVisuals(largeRoots[1], RMS_FluidContainer.CARRIED_CAPACITY)
     end
-    self:applyRMSFluidVisuals(mediumRoots[1], 5)
-    self:applyRMSFluidVisuals(largeRoots[1], RMS_FluidContainer.CARRIED_CAPACITY)
 
     -- one place for a can, one per drum with its fill unit and pump
     if spec.capacity <= RMS_FluidContainer.CARRIED_CAPACITY then
         return
     end
     spec.slots = {}
+    if spec.format == "tank" then
+        local slot = { fillUnitIndex = 1, link = self.rootNode, hasPump = savedPumps[1] == true, isNozzleOut = false }
+        if dressGameTank(self) then
+            slot.pump = loadPump(self, self.rootNode, RMS_FluidContainer.TANK_PUMP)
+            loadTankHose(self, slot.pump)
+            applyPump(slot)
+        end
+        spec.slots[1] = slot
+        return
+    end
     for index, place in ipairs(RMS_FluidContainer.DRUM_PLACES[#self.spec_fillUnit.fillUnits] or {}) do
         local link = self.i3dMappings[place.link].nodeId
         local slot = { fillUnitIndex = index, link = link, collision = self.i3dMappings[place.collision].nodeId,
             hasPump = savedPumps[index] == true, isNozzleOut = false }
-        if dressDrum(self, link, baseKey) then
-            slot.pump = loadPump(self, link)
+        local isDressed
+        if isGameModel then
+            isDressed = dressGameDrum(self, link)
+        else
+            isDressed = dressDrum(self, link, baseKey)
+        end
+        if isDressed then
+            local pumpPlace = nil
+            if isGameModel then
+                pumpPlace = place.isLeft and RMS_FluidContainer.ADBLUE_DRUM_PUMP_LEFT or RMS_FluidContainer.ADBLUE_DRUM_PUMP
+            end
+            slot.pump = loadPump(self, link, pumpPlace)
             applyPump(slot)
         end
         spec.slots[index] = slot
@@ -284,6 +423,10 @@ end
 
 ---Dresses a can in the colours and label of its product
 function RMS_FluidContainer:applyRMSFluidVisuals(root, capacity)
+    if self:getRMSFluidFormat() == "adBlueCan" then
+        self:dressRMSFluidGameCan(root)
+        return
+    end
     local filenames = self[RMS_FluidContainer.SPEC_TABLE_NAME].canDiffuseFilenames
     if capacity > 5 then
         RMS_FluidContainer.applyDiffuseByName({ root }, "body60", filenames.largeBody)
@@ -574,16 +717,25 @@ end
 local FLUID_KIND_TEXT_KEYS = {
     engineOil = "rms_fluid_hud_engineOil",
     transmissionHydraulic = "rms_fluid_hud_transmissionHydraulic",
-    coolant = "rms_fluid_hud_coolant"
+    coolant = "rms_fluid_hud_coolant",
+    adBlue = "rms_fluid_hud_adBlue"
 }
 
 local function getFluidKind(product)
     if product.compatibleCircuits.engineOil then
         return "engineOil"
+    elseif product.compatibleCircuits.adBlue then
+        return "adBlue"
     elseif product.compatibleCircuits.coolant then
         return "coolant"
     end
     return "transmissionHydraulic"
+end
+
+---Returns the kind of container: medium, large, adBlueCan, drum or tank
+function RMS_FluidContainer:getRMSFluidFormat()
+    local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    return spec.format or RMS_FluidContainer.getFormat(spec.capacity or self:getRMSFluidCapacity())
 end
 
 ---Returns the short name of the kind of fluid a container holds
@@ -592,25 +744,31 @@ function RMS_FluidContainer:getRMSFluidKindText()
     return g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)])
 end
 
----Shows the fluid, its liters, the brand and the product in the info box
+---Titles the info box with the brand and the product
+function RMS_FluidContainer:getInfoBoxTitle(superFunc)
+    local product = RMS_Fluids.PRODUCTS[self[RMS_FluidContainer.SPEC_TABLE_NAME].productKey]
+    return g_brandManager:getBrandByName(product.brand).title .. " " .. product.name
+end
+
+---Shows the fluid left in each container of the info box
 function RMS_FluidContainer:showInfo(superFunc, box)
     superFunc(self, box)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
-    local product = RMS_Fluids.PRODUCTS[spec.productKey]
-    local kind = g_i18n:getText(FLUID_KIND_TEXT_KEYS[getFluidKind(product)])
     local hasPump, hasDrum = false, false
     for index, slot in ipairs(spec.slots) do
         -- two drums: a line each, named as the level panel names a drum
-        local label = #spec.slots > 1 and string.format("%s %d", g_i18n:getText("rms_fluid_drum_label"), index) or kind
-        box:addLine(label, string.format("%s / %s %s", RMS_FluidWorkshop.formatLiters(self:getRMSFluidLiters(index)),
-            RMS_FluidWorkshop.formatLiters(self:getRMSFluidCapacity(index)), g_i18n:getText("unit_literShort")))
+        local label = #spec.slots > 1 and string.format("%s %d", g_i18n:getText("rms_fluid_drum_label"), index)
+            or self:getRMSFluidKindText()
+        local liters = self:getRMSFluidLiters(index)
+        -- whole liters without grouping, a can to the tenth
+        local value = string.format("%d", math.floor(liters + 0.5))
+        if self:getRMSFluidCapacity(index) <= RMS_FluidContainer.CARRIED_CAPACITY then
+            value = RMS_FluidWorkshop.formatLiters(liters)
+        end
+        box:addLine(label, value .. " " .. g_i18n:getText("unit_literShort"))
         hasPump = hasPump or slot.hasPump == true
         hasDrum = hasDrum or slot.pump ~= nil
     end
-    if #spec.slots > 1 then
-        box:addLine(kind, "")
-    end
-    box:addLine(g_brandManager:getBrandByName(product.brand).title, product.name)
     if hasDrum and not hasPump then
         box:addLine(g_i18n:getText("rms_drum_pump_required"), "", true)
     end
@@ -645,7 +803,12 @@ end
 ---Returns the active format collision meshes for native tension belts
 function RMS_FluidContainer:getMeshNodes(superFunc)
     local capacity = self:getRMSFluidCapacity()
-    if capacity <= 5 then
+    local format = self:getRMSFluidFormat()
+    if format == "tank" then
+        return superFunc(self)
+    elseif format == "adBlueCan" then
+        return { self.i3dMappings.canCollision.nodeId }
+    elseif capacity <= 5 then
         return { self.i3dMappings.mediumCanCollision.nodeId }
     elseif capacity <= 25 then
         return { self.i3dMappings.largeCanCollision.nodeId }

@@ -33,7 +33,8 @@ RMS_Gui.DIALOGS = {
     { RMS_WorkshopDialog, "gui/RMS_WorkshopDialog.xml" },
     { RMS_InspectionDialog, "gui/RMS_InspectionDialog.xml" },
     { RMS_SellItemDialog, "gui/RMS_SellItemDialog.xml" },
-    { RMS_DiagnosticScreen, "gui/RMS_DiagnosticScreen.xml" }
+    { RMS_DiagnosticScreen, "gui/RMS_DiagnosticScreen.xml" },
+    { RMS_DebugScreen, "gui/RMS_DebugScreen.xml" }
 }
 
 local function getName(path)

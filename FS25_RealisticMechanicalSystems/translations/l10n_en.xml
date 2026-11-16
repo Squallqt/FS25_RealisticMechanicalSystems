@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Sets whether workshop mechanical overhauls finish instantly, including those in progress."/>
         <text name="rms_instantRemap_label" text="Instant Engine Remapping"/>
         <text name="rms_instantRemap_tooltip" text="Sets whether engine remapping and going back to stock finish instantly, including any in progress."/>
-        <text name="rms_debugMode_label" text="Debug Mode"/>
-        <text name="rms_debugMode_tooltip" text="Sets whether the debug window is shown in the vehicle you drive and whether the console receives detailed logs. The %s key opens and closes it; in multiplayer, only administrators see it."/>
+        <text name="rms_debugWindow_label" text="Debug Window"/>
+        <text name="rms_debugWindow_tooltip" text="Sets whether the debug window is shown in the vehicle you drive. The %s key opens it too; in multiplayer, only administrators see it."/>
+        <text name="rms_debugLog_label" text="Detailed Log"/>
+        <text name="rms_debugLog_tooltip" text="Sets whether the console receives the detailed RMS logs, to attach to a bug report, without opening the debug window."/>
         <text name="rms_warningMessages_label" text="Warning Messages"/>
         <text name="rms_warningMessages_tooltip" text="Sets whether warnings such as a cold engine or overheating are shown. Thermal power-limit messages are always shown."/>
         <text name="rms_serviceInterval_label" text="Maintenance spacing"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Engine oil, for machines without AdBlue or particulate filter"/>
         <text name="rms_fluid_function_utto" text="Transmission and hydraulic oil for manual top-up"/>
         <text name="rms_fluid_function_coolant" text="Coolant for manual top-up"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue for the AdBlue tank of machines that have one"/>
         <text name="rms_fluid_pour_action" text="Pour: %s"/>
         <text name="rms_fluid_level_done" text="Level Topped Up"/>
         <text name="rms_fluid_container_empty" text="Container Empty"/>
         <text name="rms_fluid_drum_empty" text="Drum Empty"/>
+        <text name="rms_fluid_tank_empty" text="Tank Empty"/>
         <text name="rms_fluid_container_label" text="Container"/>
         <text name="rms_fluid_drum_label" text="Drum"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Take to Pour"/>
         <text name="rms_fluid_hand_carry" text="Carry Container"/>
         <text name="rms_drum_pump_name" text="Battery Drum Pump"/>
-        <text name="rms_drum_pump_function" text="Fits a drum to fill machines through its nozzle"/>
+        <text name="rms_drum_pump_function" text="Fits a drum or a tank to fill machines through its nozzle"/>
         <text name="rms_drum_pump_mount" text="Fit on Drum"/>
+        <text name="rms_drum_pump_mount_tank" text="Fit on Tank"/>
         <text name="rms_drum_pump_take" text="Take Pump Back"/>
         <text name="rms_drum_pump_nozzle_take" text="Take Nozzle"/>
         <text name="rms_drum_pump_nozzle_return" text="Hang Up Nozzle"/>
         <text name="rms_drum_pump_hose_range" text="The pump's hose restricts you from going any further.&#10;The nozzle will be hung up in %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Bring the drum closer: the hose is 4 m long"/>
+        <text name="rms_drum_pump_tank_too_far" text="Bring the tank closer: the hose is 4 m long"/>
         <text name="rms_drum_pump_required" text="Drum Pump Required"/>
         <text name="rms_fluid_level_under_gauge" text="Below Gauge"/>
         <text name="rms_fluid_circuit_engineOil" text="Engine Oil"/>
         <text name="rms_fluid_circuit_coolant" text="Coolant"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue Tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmission Oil"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulic Oil"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmission and Hydraulic Oil"/>
         <text name="rms_fluid_hud_engineOil" text="Engine Oil"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Trans-Hydraulic Oil"/>
         <text name="rms_fluid_hud_coolant" text="Coolant"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Incompatible Fluid"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="This product is not intended for this circuit. It will contaminate it and may wear the engine up to three times faster and make it run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="This product is not intended for this circuit. It will contaminate it and may wear the cooling system up to three times faster and make the engine run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Unsuited Engine Oil"/>
         <text name="rms_fluid_unsuited_oil_message" text="This engine runs on AdBlue or has a particulate filter: its manual asks for an oil made for them. With this oil, its oil change will come up to twice as early. A particulate filter also fills with ash 1.5 times as fast. Continue?"/>
         <text name="rms_fluid_error_no_circuit" text="This vehicle does not require a fluid top-up"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="This vehicle has no AdBlue tank"/>
         <text name="rms_fluid_error_motor_running" text="Stop the engine before transferring fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="The vehicle must be stationary"/>
         <text name="rms_fluid_error_busy" text="Another container is already filling this circuit"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Worn"/>
         <text name="rms_fleet_part_failed" text="Failed"/>
         <text name="rms_fleet_part_unmeasured" text="Not measured"/>
+        <text name="rms_fleet_part_replaced" text="Part replaced"/>
         <text name="rms_fleet_parts_reading" text="Parts measured %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parts measured at the next complete inspection"/>
         <text name="rms_fleet_greasing_done" text="Greasing up to date"/>

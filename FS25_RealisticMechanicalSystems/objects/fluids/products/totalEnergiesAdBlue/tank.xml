@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<vehicle type="rmsFluidContainer">
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
+    <storeData>
+        <name>AdBlue</name>
+        <specs><capacity>1000</capacity><weight/></specs>
+        <functions><function>$l10n_rms_fluid_function_adblue</function></functions>
+        <image>objects/fluids/products/totalEnergiesAdBlue/store_totalEnergiesAdBlueTank.png</image>
+        <price>563</price>
+        <category>rmsMaintenance</category>
+        <brand>TOTALENERGIES</brand>
+        <showInStore>true</showInStore>
+        <canBeSold>false</canBeSold>
+        <allowLeasing>false</allowLeasing>
+        <rotation>0</rotation>
+        <shopHeight>2</shopHeight>
+        <financeCategory>OTHER</financeCategory>
+        <storeIconRendering><settings cameraXRot="-15" cameraYRot="25"/></storeIconRendering>
+    </storeData>
+    <base>
+        <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
+        <!-- the game's tank and its collisions -->
+        <filename>$data/objects/pallets/liquidTank/liquidTank.i3d</filename>
+        <size width="1.35" length="1.35" height="1.55"/>
+        <input allowed="false"/>
+        <canBeReset>false</canBeReset>
+        <!-- empty tank 100 kg, AdBlue 1.09 kg/L -->
+        <components maxMass="1200">
+            <component centerOfMass="0 0.1 0" solverIterationCount="10" mass="100"/>
+        </components>
+        <showInVehicleMenu>false</showInVehicleMenu>
+        <mapHotspot available="false"/>
+        <objectChanges>
+            <objectChange node="helmConfiguration" visibilityActive="false"/>
+            <objectChange node="cortevaConfiguration" visibilityActive="false"/>
+        </objectChanges>
+    </base>
+    <rmsFluidContainer productKey="TOTALENERGIES_ADBLUE"
+        tankDiffuse="objects/fluids/products/totalEnergiesAdBlue/tank_diffuse.png"
+        tankPrints="objects/fluids/products/totalEnergiesAdBlue/tankLabel.i3d"/>
+    <fillUnit><fillUnitConfigurations>
+            <fillUnitConfiguration>
+                <fillUnits>
+                    <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="1000" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="1000"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
+            </fillUnitConfiguration>
+    </fillUnitConfigurations></fillUnit>
+    <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="5" additionalMountDistance="1.5" jointTransY="0.11" jointLimitToRotY="true"/>
+    <tensionBeltObject>
+        <meshNodes>
+            <meshNode node="fertilizerTank_vis"/>
+        </meshNodes>
+    </tensionBeltObject>
+    <foliageBending/>
+    <wearable wearDuration="480" workMultiplier="1" fieldMultiplier="1"/>
+    <washable dirtDuration="90" washDuration="1" workMultiplier="1" fieldMultiplier="1"/>
+    <i3dMappings>
+        <i3dMapping id="dynamicMountTrigger" node="0>0|0"/>
+        <i3dMapping id="fillTrigger" node="0>0|1"/>
+        <i3dMapping id="floorCollision01" node="0>1|0"/>
+        <i3dMapping id="floorCollision02" node="0>1|1"/>
+        <i3dMapping id="helmConfiguration" node="0>2|0"/>
+        <i3dMapping id="cortevaConfiguration" node="0>2|1"/>
+        <i3dMapping id="fertilizerTank_vis" node="0>3|0"/>
+    </i3dMappings>
+</vehicle>

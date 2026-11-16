@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Define se as revisões mecânicas na oficina terminam instantaneamente, inclusive as que estão em andamento."/>
         <text name="rms_instantRemap_label" text="Remapeamento do motor instantâneo"/>
         <text name="rms_instantRemap_tooltip" text="Define se o remapeamento do motor e a volta ao original terminam instantaneamente, inclusive os que estão em andamento."/>
-        <text name="rms_debugMode_label" text="Modo de depuração"/>
-        <text name="rms_debugMode_tooltip" text="Define se a janela de depuração aparece na máquina conduzida e se o console recebe registros detalhados. A tecla %s abre e fecha a janela; no multijogador, só administradores a veem."/>
+        <text name="rms_debugWindow_label" text="Janela de depuração"/>
+        <text name="rms_debugWindow_tooltip" text="Define se a janela de depuração aparece na máquina conduzida. A tecla %s também a abre; no multijogador, só administradores a veem."/>
+        <text name="rms_debugLog_label" text="Registro detalhado"/>
+        <text name="rms_debugLog_tooltip" text="Define se o console recebe os registros detalhados do RMS, para anexar a um relato de bug, sem abrir a janela de depuração."/>
         <text name="rms_warningMessages_label" text="Mensagens de aviso"/>
         <text name="rms_warningMessages_tooltip" text="Define se avisos como motor frio ou superaquecimento aparecem. As mensagens de limitação térmica de potência continuam sempre visíveis."/>
         <text name="rms_serviceInterval_label" text="Espaçamento das manutenções"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Óleo de motor, para máquinas sem AdBlue nem filtro de partículas"/>
         <text name="rms_fluid_function_utto" text="Óleo de transmissão e hidráulico para completar manualmente"/>
         <text name="rms_fluid_function_coolant" text="Líquido de arrefecimento para completar manualmente"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue para o tanque de AdBlue das máquinas que o possuem"/>
         <text name="rms_fluid_pour_action" text="Adicionar: %s"/>
         <text name="rms_fluid_level_done" text="Nível completo"/>
         <text name="rms_fluid_container_empty" text="Galão vazio"/>
         <text name="rms_fluid_drum_empty" text="Tambor vazio"/>
+        <text name="rms_fluid_tank_empty" text="Tanque vazio"/>
         <text name="rms_fluid_container_label" text="Galão"/>
         <text name="rms_fluid_drum_label" text="Tambor"/>
+        <text name="rms_fluid_tank_label" text="Tanque"/>
         <text name="rms_fluid_hand_take" text="Pegar para adicionar"/>
         <text name="rms_fluid_hand_carry" text="Levar o galão"/>
         <text name="rms_drum_pump_name" text="Bomba de tambor a bateria"/>
-        <text name="rms_drum_pump_function" text="É montada em um tambor para abastecer as máquinas com a pistola"/>
+        <text name="rms_drum_pump_function" text="É montada em um tambor ou tanque para abastecer as máquinas com a pistola"/>
         <text name="rms_drum_pump_mount" text="Montar no tambor"/>
+        <text name="rms_drum_pump_mount_tank" text="Montar no tanque"/>
         <text name="rms_drum_pump_take" text="Retirar a bomba"/>
         <text name="rms_drum_pump_nozzle_take" text="Pegar a pistola"/>
         <text name="rms_drum_pump_nozzle_return" text="Pendurar a pistola"/>
         <text name="rms_drum_pump_hose_range" text="A mangueira da bomba impede você de ir mais longe.&#10;A pistola será pendurada em %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Aproximar o tambor: a mangueira mede 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Aproximar o tanque: a mangueira mede 4 m"/>
         <text name="rms_drum_pump_required" text="Bomba de tambor necessária"/>
         <text name="rms_fluid_level_under_gauge" text="Abaixo da escala"/>
         <text name="rms_fluid_circuit_engineOil" text="Óleo do motor"/>
         <text name="rms_fluid_circuit_coolant" text="Líquido de arrefecimento"/>
+        <text name="rms_fluid_circuit_adBlue" text="Tanque de AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Óleo da transmissão"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Óleo hidráulico"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Óleo da transmissão e hidráulico"/>
         <text name="rms_fluid_hud_engineOil" text="Óleo do motor"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Óleo transm./hidr."/>
         <text name="rms_fluid_hud_coolant" text="Líq. arrefecimento"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Fluido incompatível"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Este produto não é indicado para este circuito. Ele o contaminará e poderá chegar a triplicar o desgaste do motor e aumentar seu aquecimento. Só uma troca completa remove a contaminação. Continuar?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Este produto não é indicado para este circuito. Ele o contaminará e poderá chegar a triplicar o desgaste do sistema de arrefecimento e aumentar o aquecimento do motor. Só uma troca completa remove a contaminação. Continuar?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Óleo de motor inadequado"/>
         <text name="rms_fluid_unsuited_oil_message" text="Este motor usa AdBlue ou tem filtro de partículas: seu manual exige um óleo feito para eles. Com este óleo, a troca de óleo chegará até duas vezes mais cedo. Um filtro de partículas também se enche de cinzas 1,5 vez mais rápido. Continuar?"/>
         <text name="rms_fluid_error_no_circuit" text="Este veículo não precisa de reposição de fluido"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Este veículo não tem tanque de AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Desligue o motor antes de transferir fluido"/>
         <text name="rms_fluid_error_vehicle_moving" text="O veículo deve estar parado"/>
         <text name="rms_fluid_error_busy" text="Outro recipiente já está enchendo este circuito"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Desgaste avançado"/>
         <text name="rms_fleet_part_failed" text="Com avaria"/>
         <text name="rms_fleet_part_unmeasured" text="Sem medição"/>
+        <text name="rms_fleet_part_replaced" text="Peça substituída"/>
         <text name="rms_fleet_parts_reading" text="Peças medidas %s"/>
         <text name="rms_fleet_parts_need_complete" text="Peças medidas na próxima inspeção completa"/>
         <text name="rms_fleet_greasing_done" text="Lubrificação em dia"/>

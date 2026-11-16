@@ -656,7 +656,8 @@ local function getSyncGroups()
     syncGroups = {
         { group = GROUP.STATE, watches = { watch("currentState"), watch("maintenanceTimer", 1.0) } },
         { group = GROUP.SERVICE_CONTEXT, watches = {
-            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("workshopType") } },
+            watch("serviceOptionOne"), watch("serviceOptionTwo"), watch("workshopType"),
+            watch(function(_, spec) return RMS_Utils.serializeInvoice(spec.pendingServiceInvoice) end) } },
         { group = GROUP.TELEMETRY, watches = {
             watch(getSyncOperatingTime, 60000.0), watchNumber("realOperatingTime", 0, 60000.0), watch("_fuelUsageRaw", 0.3),
             watchNumber("dynamicMotorLoad", 0, 0.01), watchNumber("wheelSlipIntensity", 0, 0.01), watch("liftedMass", 10.0) } },
@@ -677,7 +678,7 @@ local function getSyncGroups()
             watch("ptoEngagementSequence"), watch("ptoShockSequence"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
-            watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end) } },
+            watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end), mapText("preventiveParts") } },
         { group = GROUP.SERVICE_PROGRESS, watches = {
             watch("pendingProgressElapsedTime", 500.0), watch("pendingProgressStepIndex"), watch("pendingProgressTotalTime", 500.0) } },
         -- Sent to the driver alone, their connection first
@@ -883,6 +884,7 @@ local SAVEGAME_ATTRIBUTES = {
     { "pendingServiceClockTarget", "STRING", "Service clock levels the running service restores" },
     { "systemsState", "STRING", "Condition and switch of each system" },
     { "partWear", "STRING", "Wear of each part" },
+    { "partCauseWear", "STRING", "Wear each cause put on each part since it was fitted" },
     { "partAbuse", "STRING", "Abuse that last wore each part, refusing its warranty" },
     { "pickupAirTime", "STRING", "Seconds each pump has drawn air since its part was fitted" },
     { "factorStats", "STRING", "Wear gathered by each cause, system by system" },

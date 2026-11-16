@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="정비소의 기계 오버홀을 진행 중인 것까지 포함하여 즉시 완료할지 설정합니다."/>
         <text name="rms_instantRemap_label" text="즉시 엔진 맵핑"/>
         <text name="rms_instantRemap_tooltip" text="엔진 맵핑과 순정 복원을 진행 중인 것까지 포함하여 즉시 완료할지 설정합니다."/>
-        <text name="rms_debugMode_label" text="디버그 모드"/>
-        <text name="rms_debugMode_tooltip" text="운전 중인 기계에 디버그 창을 표시하고 콘솔에 상세 로그를 보낼지 설정합니다. %s 키로 창을 열고 닫습니다. 멀티플레이에서는 관리자만 볼 수 있습니다."/>
+        <text name="rms_debugWindow_label" text="디버그 창"/>
+        <text name="rms_debugWindow_tooltip" text="운전 중인 기계에 디버그 창을 표시할지 설정합니다. %s 키로도 열 수 있습니다. 멀티플레이에서는 관리자만 볼 수 있습니다."/>
+        <text name="rms_debugLog_label" text="상세 로그"/>
+        <text name="rms_debugLog_tooltip" text="디버그 창을 열지 않고 RMS의 상세 로그를 콘솔에 보낼지 설정합니다. 오류 보고에 첨부할 수 있습니다."/>
         <text name="rms_warningMessages_label" text="경고 메시지"/>
         <text name="rms_warningMessages_tooltip" text="엔진 저온이나 과열 등의 경고를 표시할지 설정합니다. 온도로 인한 출력 제한 메시지는 항상 표시됩니다."/>
         <text name="rms_serviceInterval_label" text="정비 간격"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="엔진 오일, AdBlue와 매연저감 필터가 없는 기계용"/>
         <text name="rms_fluid_function_utto" text="수동 보충용 변속기 및 유압 오일"/>
         <text name="rms_fluid_function_coolant" text="수동 보충용 열 교환액"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue 탱크가 있는 기계용 AdBlue"/>
         <text name="rms_fluid_pour_action" text="보충: %s"/>
         <text name="rms_fluid_level_done" text="보충 완료"/>
         <text name="rms_fluid_container_empty" text="용기 비어 있음"/>
         <text name="rms_fluid_drum_empty" text="드럼통 비어 있음"/>
+        <text name="rms_fluid_tank_empty" text="탱크 비어 있음"/>
         <text name="rms_fluid_container_label" text="용기"/>
         <text name="rms_fluid_drum_label" text="드럼통"/>
+        <text name="rms_fluid_tank_label" text="탱크"/>
         <text name="rms_fluid_hand_take" text="들고 보충"/>
         <text name="rms_fluid_hand_carry" text="용기 운반"/>
         <text name="rms_drum_pump_name" text="충전식 드럼 펌프"/>
-        <text name="rms_drum_pump_function" text="드럼통에 장착해 노즐로 기계에 보충합니다"/>
+        <text name="rms_drum_pump_function" text="드럼통이나 탱크에 장착해 노즐로 기계에 보충합니다"/>
         <text name="rms_drum_pump_mount" text="드럼통에 장착"/>
+        <text name="rms_drum_pump_mount_tank" text="탱크에 장착"/>
         <text name="rms_drum_pump_take" text="펌프 회수"/>
         <text name="rms_drum_pump_nozzle_take" text="노즐 들기"/>
         <text name="rms_drum_pump_nozzle_return" text="노즐 걸기"/>
         <text name="rms_drum_pump_hose_range" text="펌프 호스 때문에 더 이상 갈 수 없습니다.&#10;%.1f m 후 노즐이 걸립니다!"/>
         <text name="rms_drum_pump_machine_too_far" text="드럼통을 가까이 옮기세요: 호스 길이 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="탱크를 가까이 옮기세요: 호스 길이 4 m"/>
         <text name="rms_drum_pump_required" text="드럼 펌프 필요"/>
         <text name="rms_fluid_level_under_gauge" text="눈금 아래"/>
         <text name="rms_fluid_circuit_engineOil" text="엔진 오일"/>
         <text name="rms_fluid_circuit_coolant" text="열 교환액"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue 탱크"/>
         <text name="rms_fluid_circuit_transmissionOil" text="변속기 오일"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="유압유"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="변속기·유압 공용 오일"/>
         <text name="rms_fluid_hud_engineOil" text="엔진 오일"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="변속기·유압 오일"/>
         <text name="rms_fluid_hud_coolant" text="열 교환액"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="호환되지 않는 유체"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 엔진 마모를 최대 3배까지 증가시키고 엔진 발열을 높일 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 열 제거 시스템 마모를 최대 3배까지 증가시키고 엔진 발열을 높일 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="부적합한 엔진 오일"/>
         <text name="rms_fluid_unsuited_oil_message" text="이 엔진은 AdBlue를 사용하거나 매연저감 필터가 있습니다. 취급 설명서는 이에 맞는 오일을 요구합니다. 이 오일로는 오일 교환이 최대 두 배 빨리 돌아옵니다. 매연저감 필터에도 재가 1.5배 빨리 쌓입니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_error_no_circuit" text="이 차량은 유체 보충이 필요하지 않습니다"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="이 차량에는 AdBlue 탱크가 없습니다"/>
         <text name="rms_fluid_error_motor_running" text="유체를 이송하기 전에 엔진을 끄십시오"/>
         <text name="rms_fluid_error_vehicle_moving" text="차량이 정지해 있어야 합니다"/>
         <text name="rms_fluid_error_busy" text="다른 용기가 이미 이 계통을 채우고 있습니다"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="마모 심함"/>
         <text name="rms_fleet_part_failed" text="고장"/>
         <text name="rms_fleet_part_unmeasured" text="측정 기록 없음"/>
+        <text name="rms_fleet_part_replaced" text="부품 교체됨"/>
         <text name="rms_fleet_parts_reading" text="부품 측정: %s"/>
         <text name="rms_fleet_parts_need_complete" text="부품 측정: 다음 종합 점검 시"/>
         <text name="rms_fleet_greasing_done" text="그리스 주입 완료"/>

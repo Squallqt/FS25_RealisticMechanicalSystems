@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Angir hvorvidt mekaniske overhalinger på verkstedet fullføres øyeblikkelig, også de som pågår."/>
         <text name="rms_instantRemap_label" text="Øyeblikkelig motoroptimalisering"/>
         <text name="rms_instantRemap_tooltip" text="Angir hvorvidt motoroptimalisering og tilbakestilling til originalprogramvaren fullføres øyeblikkelig, også arbeid som pågår."/>
-        <text name="rms_debugMode_label" text="Feilsøkingsmodus"/>
-        <text name="rms_debugMode_tooltip" text="Angir hvorvidt feilsøkingsvinduet vises i maskinen du kjører, og konsollen får detaljerte logger. Tasten %s åpner og lukker vinduet; i flerspiller ser bare administratorer det."/>
+        <text name="rms_debugWindow_label" text="Feilsøkingsvindu"/>
+        <text name="rms_debugWindow_tooltip" text="Angir hvorvidt feilsøkingsvinduet vises i maskinen du kjører. Tasten %s åpner det også; i flerspiller ser bare administratorer det."/>
+        <text name="rms_debugLog_label" text="Detaljert logg"/>
+        <text name="rms_debugLog_tooltip" text="Angir hvorvidt konsollen får de detaljerte loggene fra RMS, til å legge ved en feilrapport, uten å åpne feilsøkingsvinduet."/>
         <text name="rms_warningMessages_label" text="Varselmeldinger"/>
         <text name="rms_warningMessages_tooltip" text="Angir hvorvidt advarsler som kald motor eller overoppheting vises. Meldinger om termisk effektbegrensning vises alltid."/>
         <text name="rms_serviceInterval_label" text="Avstand mellom service"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorolje, til maskiner uten AdBlue og partikkelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmisjons- og hydraulikkolje til manuell påfylling"/>
         <text name="rms_fluid_function_coolant" text="Kjølevæske til manuell påfylling"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue til AdBlue-tanken på maskiner som har en"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
         <text name="rms_fluid_level_done" text="Nivå fylt opp"/>
         <text name="rms_fluid_container_empty" text="Tom kanne"/>
         <text name="rms_fluid_drum_empty" text="Tomt fat"/>
+        <text name="rms_fluid_tank_empty" text="Tom tank"/>
         <text name="rms_fluid_container_label" text="Kanne"/>
         <text name="rms_fluid_drum_label" text="Fat"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Ta for å fylle på"/>
         <text name="rms_fluid_hand_carry" text="Bær kannen"/>
         <text name="rms_drum_pump_name" text="Batteridrevet fatpumpe"/>
-        <text name="rms_drum_pump_function" text="Settes på et fat for å fylle maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Settes på et fat eller en tank for å fylle maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sett på fatet"/>
+        <text name="rms_drum_pump_mount_tank" text="Sett på tanken"/>
         <text name="rms_drum_pump_take" text="Ta av pumpen"/>
         <text name="rms_drum_pump_nozzle_take" text="Ta pistolen"/>
         <text name="rms_drum_pump_nozzle_return" text="Heng opp pistolen"/>
         <text name="rms_drum_pump_hose_range" text="Pumpeslangen hindrer deg i å gå lenger.&#10;Pistolen henges opp om %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Flytt fatet nærmere: slangen er 4 m lang"/>
+        <text name="rms_drum_pump_tank_too_far" text="Flytt tanken nærmere: slangen er 4 m lang"/>
         <text name="rms_drum_pump_required" text="Fatpumpe kreves"/>
         <text name="rms_fluid_level_under_gauge" text="Under skalaen"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolje"/>
         <text name="rms_fluid_circuit_coolant" text="Kjølevæske"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmisjonsolje"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulikkolje"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmisjons- og hydraulikkolje"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolje"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olje"/>
         <text name="rms_fluid_hud_coolant" text="Kjølevæske"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Uegnet væske"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på motoren og gjøre den varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på kjølesystemet og gjøre motoren varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Uegnet motorolje"/>
         <text name="rms_fluid_unsuited_oil_message" text="Denne motoren bruker AdBlue eller har partikkelfilter: instruksjonsboken krever en olje laget for dem. Med denne oljen kommer oljeskiftet opptil dobbelt så tidlig. Et partikkelfilter fylles dessuten 1,5 ganger så fort med aske. Fortsette?"/>
         <text name="rms_fluid_error_no_circuit" text="Dette kjøretøyet trenger ikke påfylling av væske"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Dette kjøretøyet har ingen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Slå av motoren før du overfører væske"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kjøretøyet må stå stille"/>
         <text name="rms_fluid_error_busy" text="En annen beholder fyller allerede denne kretsen"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Stor slitasje"/>
         <text name="rms_fleet_part_failed" text="Ute av drift"/>
         <text name="rms_fleet_part_unmeasured" text="Ingen måling"/>
+        <text name="rms_fleet_part_replaced" text="Del skiftet"/>
         <text name="rms_fleet_parts_reading" text="Deler målt %s"/>
         <text name="rms_fleet_parts_need_complete" text="Deler måles ved neste fullstendige inspeksjon"/>
         <text name="rms_fleet_greasing_done" text="Smøring i orden"/>

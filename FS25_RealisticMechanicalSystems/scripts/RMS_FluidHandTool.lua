@@ -8,7 +8,9 @@ local modDirectory = g_currentModDirectory
 RMS_FluidHandTool.FILENAMES = {
     medium = "objects/fluids/shared/canisterHand5L.xml",
     large = "objects/fluids/shared/canisterHand20L.xml",
-    drum = "objects/drumPump/drumPumpNozzle.xml"
+    adBlueCan = "objects/fluids/products/totalEnergiesAdBlue/canisterHand10L.xml",
+    drum = "objects/drumPump/drumPumpNozzle.xml",
+    tank = "objects/drumPump/drumPumpNozzle.xml"
 }
 RMS_FluidHandTool.TARGET_REFRESH_INTERVAL = 200
 RMS_FluidHandTool.FOLLOW_INTERVAL = 500
@@ -27,7 +29,13 @@ RMS_FluidHandTool.LOGO_SHEETS = {
     MOTOREX = "brands/hud_brand_motorex.xml",
     MOTUL = "brands/hud_brand_motul.xml",
     FUCHS = "brands/hud_brand_fuchs.xml",
-    SKF = "brands/hud_brand_skf.xml"
+    SKF = "brands/hud_brand_skf.xml",
+    TOTALENERGIES = "brands/hud_brand_totalenergies.xml"
+}
+RMS_FluidHandTool.CONTAINER_TEXT_KEYS = {
+    can = { label = "rms_fluid_container_label", empty = "rms_fluid_container_empty" },
+    drum = { label = "rms_fluid_drum_label", empty = "rms_fluid_drum_empty" },
+    tank = { label = "rms_fluid_tank_label", empty = "rms_fluid_tank_empty" }
 }
 RMS_FluidHandTool.LOGO_COLOR = { 1, 1, 1, 1 }
 RMS_FluidHandTool.GAUGE_ZONE_ALPHA = 0.2
@@ -193,6 +201,15 @@ HandToolHands.onUpdate = Utils.appendedFunction(HandToolHands.onUpdate, onHandsU
 ---Returns the circuit of a machine a container tops up
 function RMS_FluidHandTool.getPourCircuit(container, vehicle)
     local productKey = container:getRMSFluidProductKey()
+    -- a tank product goes to its own tank only, never to a circuit
+    for tank in pairs(RMS_Fluids.TANKS) do
+        if RMS_Fluids.getIsProductCompatible(productKey, tank) then
+            if RMS_Fluids.getMissingLiters(vehicle, tank) > RMS_Fluids.EPSILON then
+                return tank, true
+            end
+            return nil, false
+        end
+    end
     local wrongCircuit = nil
     for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(vehicle)) do
         if RMS_Fluids.getMissingLiters(vehicle, circuit) > RMS_Fluids.EPSILON then
@@ -208,10 +225,14 @@ end
 ---Returns why the container cannot pour into the machine aimed at
 function RMS_FluidHandTool.getPourRefusal(vehicle, circuit, container)
     if circuit == nil then
+        local product = RMS_Fluids.PRODUCTS[container:getRMSFluidProductKey()]
+        if product.compatibleCircuits.adBlue and RMS_Fluids.getTankFillUnitIndex(vehicle, "adBlue") == nil then
+            return "rms_fluid_error_no_adblue_tank"
+        end
         return "rms_fluid_error_no_circuit"
     elseif container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
         and RMS_FluidTransfer.getDistanceToVehicle(vehicle, container.rootNode) > RMS_FluidTransfer.HOSE_LENGTH then
-        return "rms_drum_pump_machine_too_far"
+        return container:getRMSFluidFormat() == "tank" and "rms_drum_pump_tank_too_far" or "rms_drum_pump_machine_too_far"
     elseif vehicle:isUnderService() then
         return "rms_charger_error_service"
     elseif vehicle:getIsMotorStarted() then
@@ -247,7 +268,7 @@ function RMS_FluidHandTool.take(player, container, index)
     -- Guard against repeated requests during asynchronous loading.
     slot.isBeingTaken = true
     local loadingData = HandToolLoadingData.new()
-    loadingData:setFilename(modDirectory .. RMS_FluidHandTool.FILENAMES[RMS_FluidContainer.getFormat(container:getRMSFluidCapacity())])
+    loadingData:setFilename(modDirectory .. RMS_FluidHandTool.FILENAMES[container:getRMSFluidFormat()])
     loadingData:setOwnerFarmId(player.farmId)
     loadingData:setIsSaved(false)
     loadingData:setIsRegistered(false)
@@ -355,7 +376,9 @@ function RMS_FluidHandTool:setRMSFluidContainer(container, index)
         g_inputBinding:setActionEventText(spec.pourEventId, spec.pourText)
         g_inputBinding:setActionEventText(spec.carryEventId, spec.carryText)
 
-        local sampleName = spec.isNozzle and "drumPump" or (product.compatibleCircuits.coolant and "fluidPourCoolant" or "fluidPourOil")
+        -- AdBlue pours like water, as the coolant does
+        local isWatery = product.compatibleCircuits.coolant or product.compatibleCircuits.adBlue
+        local sampleName = spec.isNozzle and "drumPump" or (isWatery and "fluidPourCoolant" or "fluidPourOil")
         local soundsFile = loadXMLFile("rmsFluidHandToolSounds", modDirectory .. "sounds/rms_sounds.xml")
         spec.samples.pour = g_soundManager:loadSampleFromXML(soundsFile, "sounds", sampleName, modDirectory, self.components, 0,
             AudioGroup.VEHICLE, self.i3dMappings, self)
@@ -676,7 +699,8 @@ function RMS_FluidHandTool.showPour(container, vehicle, circuit, isCompatible, i
         machineText = vehicle:getFullName(),
         productText = g_brandManager:getBrandByName(product.brand).title .. " " .. product.name,
         containerLiters = container:getRMSFluidLiters(index),
-        containerCapacity = container:getRMSFluidCapacity(index)
+        containerCapacity = container:getRMSFluidCapacity(index),
+        containerFormat = container:getRMSFluidFormat()
     }
     g_currentMission.hud.contextActionDisplay:resetContext()
 end
@@ -688,6 +712,16 @@ function RMS_FluidHandTool.endPour()
         display.isPouring = false
         display.endTime = g_time + RMS_FluidHandTool.STATUS_DURATION
     end
+end
+
+---Returns the text naming the container, or saying it is empty
+-- @param string kind "label" or "empty"
+function RMS_FluidHandTool.getContainerTextKey(display, kind)
+    local keys = RMS_FluidHandTool.CONTAINER_TEXT_KEYS
+    if display.containerFormat == "tank" then
+        return keys.tank[kind]
+    end
+    return keys[display.containerCapacity > RMS_FluidContainer.CARRIED_CAPACITY and "drum" or "can"][kind]
 end
 
 ---Shrinks a text size until the text holds in a width
@@ -717,7 +751,12 @@ function RMS_FluidHandTool.draw()
     local capacity = RMS_Fluids.getCapacity(display.vehicle, display.circuit)
     local isLevelDone = not display.isPouring and capacity - liters <= RMS_FluidHandTool.LEVEL_TOLERANCE
     local isEmptied = not display.isPouring and not isLevelDone and display.containerLiters <= RMS_FluidHandTool.LEVEL_TOLERANCE
-    local fill, fillColor = RMS_Fluids.getGaugeFill(RMS_Fluids.getLevel(display.vehicle, display.circuit), HUD.COLOR.ACTIVE)
+    -- a tank reads from empty to full, a sump on its dipstick
+    local isTank = RMS_Fluids.TANKS[display.circuit] ~= nil
+    local fill, fillColor = RMS_Fluids.getLevel(display.vehicle, display.circuit), HUD.COLOR.ACTIVE
+    if not isTank then
+        fill, fillColor = RMS_Fluids.getGaugeFill(fill, HUD.COLOR.ACTIVE)
+    end
     local active, warning = HUD.COLOR.ACTIVE, RMS_Breakdowns.COLORS.WARNING
     local unit = g_i18n:getText("unit_literShort")
 
@@ -749,8 +788,8 @@ function RMS_FluidHandTool.draw()
     elseif isLevelDone then
         statusKey = "rms_fluid_level_done"
     elseif isEmptied then
-        statusKey, statusColor = display.containerCapacity > RMS_FluidContainer.CARRIED_CAPACITY and "rms_fluid_drum_empty" or "rms_fluid_container_empty", warning
-    elseif fill <= 0 then
+        statusKey, statusColor = RMS_FluidHandTool.getContainerTextKey(display, "empty"), warning
+    elseif fill <= 0 and not isTank then
         statusKey, statusColor = "rms_fluid_level_under_gauge", fillColor
     end
 
@@ -796,19 +835,23 @@ function RMS_FluidHandTool.draw()
     else
         drawFilledRect(trackX, barY, hud:scalePixelToScreenWidth(6), barHeight, fillColor[1], fillColor[2], fillColor[3], 1)
     end
-    local zone = RMS_FluidHandTool.gaugeZone
-    zone:setDimension(maxX - minX, barHeight)
-    zone:setPosition(minX, barY)
-    zone:render()
-    drawFilledRect(minX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
-    drawFilledRect(maxX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
+    if not isTank then
+        local zone = RMS_FluidHandTool.gaugeZone
+        zone:setDimension(maxX - minX, barHeight)
+        zone:setPosition(minX, barY)
+        zone:render()
+        drawFilledRect(minX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
+        drawFilledRect(maxX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
+    end
     drawFilledRect(trackX, rowY(30), trackWidth, size(1), 1, 1, 1, 0.16)
 
-    setTextBold(true)
-    setTextAlignment(RenderText.ALIGN_CENTER)
-    setTextColor(1, 1, 1, 0.6)
-    renderText(minX, rowY(46), size(11), "MIN")
-    renderText(maxX, rowY(46), size(11), "MAX")
+    if not isTank then
+        setTextBold(true)
+        setTextAlignment(RenderText.ALIGN_CENTER)
+        setTextColor(1, 1, 1, 0.6)
+        renderText(minX, rowY(46), size(11), "MIN")
+        renderText(maxX, rowY(46), size(11), "MAX")
+    end
 
     local canText = string.format(" / %s %s", RMS_FluidWorkshop.formatLiters(display.containerCapacity), unit)
     local canLitersText = RMS_FluidWorkshop.formatLiters(display.containerLiters)
@@ -820,7 +863,7 @@ function RMS_FluidHandTool.draw()
     setTextColor(1, 1, 1, 0.6)
     renderText(right, rowY(16), size(13), canText)
     renderText(right - canWidth - canLitersWidth - hud:scalePixelToScreenWidth(8), rowY(16), size(13),
-        g_i18n:getText(display.containerCapacity > RMS_FluidContainer.CARRIED_CAPACITY and "rms_fluid_drum_label" or "rms_fluid_container_label"))
+        g_i18n:getText(RMS_FluidHandTool.getContainerTextKey(display, "label")))
     setTextBold(true)
     setTextColor(1, 1, 1, 1)
     renderText(right - canWidth, rowY(16), size(13), canLitersText)

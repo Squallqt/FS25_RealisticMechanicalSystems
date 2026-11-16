@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Určuje, zda se generální opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantRemap_label" text="Okamžitý chiptuning motoru"/>
         <text name="rms_instantRemap_tooltip" text="Určuje, zda se chiptuning motoru a návrat do série dokončí okamžitě, včetně již probíhajících."/>
-        <text name="rms_debugMode_label" text="Režim ladění"/>
-        <text name="rms_debugMode_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno a konzole dostává podrobné záznamy. Klávesa %s okno otevírá a zavírá; ve hře více hráčů ho vidí jen správci."/>
+        <text name="rms_debugWindow_label" text="Okno ladění"/>
+        <text name="rms_debugWindow_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno. Otevírá ho i klávesa %s; ve hře více hráčů ho vidí jen správci."/>
+        <text name="rms_debugLog_label" text="Podrobné záznamy"/>
+        <text name="rms_debugLog_tooltip" text="Určuje, zda konzole dostává podrobné záznamy RMS k přiložení k hlášení chyby, aniž by se otevřelo ladicí okno."/>
         <text name="rms_warningMessages_label" text="Varovné zprávy"/>
         <text name="rms_warningMessages_tooltip" text="Určuje, zda se zobrazují varování jako studený motor nebo přehřátí. Zprávy o tepelném omezení výkonu se zobrazují vždy."/>
         <text name="rms_serviceInterval_label" text="Rozestupy údržby"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorový olej, pro stroje bez AdBlue a filtru pevných částic"/>
         <text name="rms_fluid_function_utto" text="Převodový a hydraulický olej pro ruční doplnění"/>
         <text name="rms_fluid_function_coolant" text="Chladicí kapalina pro ruční doplnění"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue do nádrže AdBlue strojů, které ji mají"/>
         <text name="rms_fluid_pour_action" text="Doplnit: %s"/>
         <text name="rms_fluid_level_done" text="Hladina doplněna"/>
         <text name="rms_fluid_container_empty" text="Prázdný kanystr"/>
         <text name="rms_fluid_drum_empty" text="Prázdný sud"/>
+        <text name="rms_fluid_tank_empty" text="Prázdná nádrž"/>
         <text name="rms_fluid_container_label" text="Kanystr"/>
         <text name="rms_fluid_drum_label" text="Sud"/>
+        <text name="rms_fluid_tank_label" text="Nádrž"/>
         <text name="rms_fluid_hand_take" text="Vzít k doplnění"/>
         <text name="rms_fluid_hand_carry" text="Nést kanystr"/>
         <text name="rms_drum_pump_name" text="Akumulátorové sudové čerpadlo"/>
-        <text name="rms_drum_pump_function" text="Nasazuje se na sud a plní stroje výdejní pistolí"/>
+        <text name="rms_drum_pump_function" text="Nasazuje se na sud nebo nádrž a plní stroje výdejní pistolí"/>
         <text name="rms_drum_pump_mount" text="Nasadit na sud"/>
+        <text name="rms_drum_pump_mount_tank" text="Nasadit na nádrž"/>
         <text name="rms_drum_pump_take" text="Sejmout čerpadlo"/>
         <text name="rms_drum_pump_nozzle_take" text="Vzít pistoli"/>
         <text name="rms_drum_pump_nozzle_return" text="Zavěsit pistoli"/>
         <text name="rms_drum_pump_hose_range" text="Hadice čerpadla vám nedovolí jít dál.&#10;Pistole se zavěsí za %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Přisuňte sud blíž: hadice měří 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Přisuňte nádrž blíž: hadice měří 4 m"/>
         <text name="rms_drum_pump_required" text="Je potřeba sudové čerpadlo"/>
         <text name="rms_fluid_level_under_gauge" text="Pod stupnicí"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorový olej"/>
         <text name="rms_fluid_circuit_coolant" text="Chladicí kapalina"/>
+        <text name="rms_fluid_circuit_adBlue" text="Nádrž AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Převodový olej"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulický olej"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Převodový a hydraulický olej"/>
         <text name="rms_fluid_hud_engineOil" text="Motorový olej"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Převod./hydr. olej"/>
         <text name="rms_fluid_hud_coolant" text="Chladicí kapalina"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Nekompatibilní kapalina"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení motoru a zvýšit jeho zahřívání. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení chladicího systému a zvýšit zahřívání motoru. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Nevhodný motorový olej"/>
         <text name="rms_fluid_unsuited_oil_message" text="Tento motor používá AdBlue nebo má filtr pevných částic: jeho návod předepisuje olej určený pro ně. S tímto olejem přijde výměna oleje až dvakrát dříve. Filtr pevných částic se navíc zaplní popelem 1,5krát rychleji. Pokračovat?"/>
         <text name="rms_fluid_error_no_circuit" text="Toto vozidlo nevyžaduje doplnění žádné kapaliny"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Toto vozidlo nemá nádrž AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Před přečerpáním kapaliny vypni motor"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vozidlo musí stát"/>
         <text name="rms_fluid_error_busy" text="Tento okruh už plní jiná nádoba"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Silné opotřebení"/>
         <text name="rms_fleet_part_failed" text="Porucha"/>
         <text name="rms_fleet_part_unmeasured" text="Bez měření"/>
+        <text name="rms_fleet_part_replaced" text="Součást vyměněna"/>
         <text name="rms_fleet_parts_reading" text="Měření součástí %s"/>
         <text name="rms_fleet_parts_need_complete" text="Měření součástí při příští úplné prohlídce"/>
         <text name="rms_fleet_greasing_done" text="Mazání provedeno"/>

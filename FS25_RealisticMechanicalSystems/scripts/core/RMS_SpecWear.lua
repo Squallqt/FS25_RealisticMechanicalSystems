@@ -29,6 +29,7 @@ function RealisticMechanicalSystems.buildSystemParts(vehicle)
     spec.partWear = {}
     spec.partStrain = {}
     spec.partDrawnWear = {}
+    spec.partCauseWear = spec.partCauseWear or {}
     spec.systemParts, spec.partCauseShares = {}, {}
 
     for systemKey, systemData in pairs(spec.systems) do
@@ -204,6 +205,66 @@ function RealisticMechanicalSystems.markCauseAbuse(vehicle, systemKey, alias, ab
     end
 end
 
+-- a part never recorded takes the system's causes, spread by its shares
+local function seedPartCauseWear(spec, systemKey, index, partId, wear)
+    if wear <= 0 then
+        return { base = 0 }
+    end
+    local stats = spec.factorStats[systemKey] or {}
+    local shares = spec.partCauseShares[systemKey] or {}
+    local baseShare = RMS_Breakdowns.BreakdownRegistry[partId].wearsByCausesOnly and 0 or 1
+    local record, causeTotal = {}, 0
+    for alias, value in pairs(stats) do
+        if RealisticMechanicalSystems.FACTOR_STATS_KEYS[alias] and type(value) == "number" and value > 0 then
+            causeTotal = causeTotal + value
+            local share = shares[alias] ~= nil and (shares[alias][index] or 0) or baseShare
+            if share > 0 then
+                record[alias] = value * share
+            end
+        end
+    end
+    record.base = math.max((tonumber(stats.total) or 0) - causeTotal, 0) * baseShare
+    local sum = 0
+    for _, value in pairs(record) do
+        sum = sum + value
+    end
+    if sum <= 0 then
+        return { base = wear }
+    end
+    for key, value in pairs(record) do
+        record[key] = value * wear / sum
+    end
+    return record
+end
+
+---Returns the wear each cause put on a part, the part left as it is
+-- @return table record wear by cause alias, base for no cause
+function RealisticMechanicalSystems.getPartCauseWear(spec, systemKey, index, partId)
+    local wear = spec.partWear[partId] or 0
+    local recorded = spec.partCauseWear[partId]
+    if recorded == nil then
+        return seedPartCauseWear(spec, systemKey, index, partId, wear)
+    end
+    local tracked = 0
+    for _, value in pairs(recorded) do
+        tracked = tracked + value
+    end
+    if math.abs(wear - tracked) <= 1e-6 then
+        return recorded
+    end
+    -- the wear was set since (repair, console): keep the proportions
+    local record = {}
+    if tracked > 0 then
+        for key, value in pairs(recorded) do
+            record[key] = value * wear / tracked
+        end
+    else
+        record.base = wear
+    end
+    return record
+end
+local getPartCauseWear = RealisticMechanicalSystems.getPartCauseWear
+
 function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, factors)
     local spec = self.spec_RealisticMechanicalSystems
     local reliability = math.max(spec.reliability, 0.001)
@@ -237,9 +298,21 @@ function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, fa
             baseShare = entry.wearsWhile(self) and 1 or 0
             partBaseRate = baseShare
         end
+        local record = nil
+        if scale > 0 then
+            record = getPartCauseWear(spec, systemKey, index, partId)
+            spec.partCauseWear[partId] = record
+        end
         local causeRate = 0
         for alias, value in pairs(causeRates) do
-            causeRate = causeRate + value * causeScale * (shares[alias] ~= nil and shares[alias][index] or baseShare)
+            local rate = value * causeScale * (shares[alias] ~= nil and shares[alias][index] or baseShare)
+            causeRate = causeRate + rate
+            if record ~= nil and rate > 0 then
+                record[alias] = (record[alias] or 0) + rate * scale
+            end
+        end
+        if record ~= nil then
+            record.base = (record.base or 0) + partBaseRate * scale
         end
         spec.partStrain[partId] = causeRate
         spec.partWear[partId] = spec.partWear[partId] + (partBaseRate + causeRate) * scale
@@ -271,6 +344,12 @@ function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmo
     for index, partId in ipairs(spec.systemParts[systemKey]) do
         local baseShare = RMS_Breakdowns.BreakdownRegistry[partId].wearsByCausesOnly and 0 or 1
         local partDamage = damageAmount * (shares ~= nil and shares[index] or baseShare)
+        if partDamage > 0 then
+            local record = getPartCauseWear(spec, systemKey, index, partId)
+            spec.partCauseWear[partId] = record
+            local key = alias or "base"
+            record[key] = (record[key] or 0) + partDamage
+        end
         spec.partWear[partId] = spec.partWear[partId] + partDamage
         if abuse ~= nil and partDamage > 0 then
             spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[abuse]

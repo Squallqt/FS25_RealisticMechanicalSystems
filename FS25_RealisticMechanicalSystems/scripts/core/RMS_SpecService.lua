@@ -70,11 +70,28 @@ function RealisticMechanicalSystems.getPreventiveParts(vehicle)
     return parts
 end
 
+---Picks a fault or a worn part for the repair, or puts it back
+-- @param float? donorHours donor hours of the used part of a picked worn part, 0 for none
+function RealisticMechanicalSystems.setRepairPick(vehicle, partId, isPreventive, isPicked, donorHours)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if isPreventive then
+        spec.preventiveParts[partId] = isPicked and donorHours or nil
+    elseif spec.activeBreakdowns[partId] ~= nil then
+        spec.activeBreakdowns[partId].isSelectedForRepair = isPicked
+    end
+    RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.BREAKDOWNS)
+end
+
 ---Picks a worn part for a preventive replacement, or puts it back
 function RealisticMechanicalSystems.togglePreventivePart(vehicle, partId)
-    local picked = vehicle.spec_RealisticMechanicalSystems.preventiveParts
+    local isPicked = vehicle.spec_RealisticMechanicalSystems.preventiveParts[partId] == nil
     -- a used part offered for it comes from a donor drawn once
-    picked[partId] = picked[partId] == nil and (RealisticMechanicalSystems.drawUsedPartDonorHours(partId) or 0) or nil
+    RMS_RepairPickEvent.send(vehicle, partId, true, isPicked, isPicked and (RealisticMechanicalSystems.drawUsedPartDonorHours(partId) or 0) or nil)
+end
+
+---Picks a known fault for the repair, or puts it back
+function RealisticMechanicalSystems.toggleRepairFault(vehicle, breakdownId)
+    RMS_RepairPickEvent.send(vehicle, breakdownId, false, not vehicle:getActiveBreakdowns()[breakdownId].isSelectedForRepair)
 end
 
 ---Lists the parts a repair of a fault fits, the fault's own first
@@ -1350,11 +1367,15 @@ function RealisticMechanicalSystems:getServiceSchedule()
         if choose then result = candidate end
     end
     if result == nil then return nil end
-    if not result.overdue then
-        for _, candidate in ipairs(candidates) do
-            if candidate.interval - candidate.used <= result.interval - result.used + 0.000001 then
-                requiredRank = math.max(requiredRank, candidate.rank)
-            end
+    -- an oil due nearer this service than the next one is changed with it
+    local lightest = math.huge
+    for _, candidate in ipairs(candidates) do
+        lightest = math.min(lightest, candidate.interval)
+    end
+    local threshold = math.max(result.interval - result.used, 0) + (lightest < math.huge and lightest / 2 or 0) + 0.000001
+    for _, candidate in ipairs(candidates) do
+        if candidate.interval - candidate.used <= threshold then
+            requiredRank = math.max(requiredRank, candidate.rank)
         end
     end
     result.maintenanceType = RealisticMechanicalSystems.MAINTENANCE_TYPES[

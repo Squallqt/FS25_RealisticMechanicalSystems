@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Stabilește dacă recondiționările mecanice din atelier se încheie instantaneu, inclusiv cele în curs."/>
         <text name="rms_instantRemap_label" text="Resoftare motor instantanee"/>
         <text name="rms_instantRemap_tooltip" text="Stabilește dacă resoftarea motorului și revenirea la original se încheie instantaneu, inclusiv cele în curs."/>
-        <text name="rms_debugMode_label" text="Mod de depanare"/>
-        <text name="rms_debugMode_tooltip" text="Stabilește dacă fereastra de depanare apare în utilajul condus și consola primește jurnale detaliate. Tasta %s o deschide și o închide; în multiplayer, doar administratorii o văd."/>
+        <text name="rms_debugWindow_label" text="Fereastră de depanare"/>
+        <text name="rms_debugWindow_tooltip" text="Stabilește dacă fereastra de depanare apare în utilajul condus. Și tasta %s o deschide; în multiplayer, doar administratorii o văd."/>
+        <text name="rms_debugLog_label" text="Jurnal detaliat"/>
+        <text name="rms_debugLog_tooltip" text="Stabilește dacă consola primește jurnalele detaliate RMS, de atașat la un raport de eroare, fără a deschide fereastra de depanare."/>
         <text name="rms_warningMessages_label" text="Mesaje de avertizare"/>
         <text name="rms_warningMessages_tooltip" text="Stabilește dacă sunt afișate avertizări precum motor rece sau supraîncălzire. Mesajele de limitare termică a puterii rămân mereu afișate."/>
         <text name="rms_serviceInterval_label" text="Distanța dintre întrețineri"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Ulei de motor, pentru utilaje fără AdBlue și fără filtru de particule"/>
         <text name="rms_fluid_function_utto" text="Ulei hidraulic și de transmisie pentru completare manuală"/>
         <text name="rms_fluid_function_coolant" text="Lichid de răcire pentru completare manuală"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue pentru rezervorul de AdBlue al mașinilor care au unul"/>
         <text name="rms_fluid_pour_action" text="Toarnă: %s"/>
         <text name="rms_fluid_level_done" text="Nivel completat"/>
         <text name="rms_fluid_container_empty" text="Canistră goală"/>
         <text name="rms_fluid_drum_empty" text="Butoi gol"/>
+        <text name="rms_fluid_tank_empty" text="Rezervor gol"/>
         <text name="rms_fluid_container_label" text="Canistră"/>
         <text name="rms_fluid_drum_label" text="Butoi"/>
+        <text name="rms_fluid_tank_label" text="Rezervor"/>
         <text name="rms_fluid_hand_take" text="Ia pentru a turna"/>
         <text name="rms_fluid_hand_carry" text="Cară canistra"/>
         <text name="rms_drum_pump_name" text="Pompă de butoi cu acumulator"/>
-        <text name="rms_drum_pump_function" text="Se montează pe un butoi pentru a umple mașinile cu pistolul"/>
+        <text name="rms_drum_pump_function" text="Se montează pe un butoi sau un rezervor pentru a umple mașinile cu pistolul"/>
         <text name="rms_drum_pump_mount" text="Montează pe butoi"/>
+        <text name="rms_drum_pump_mount_tank" text="Montează pe rezervor"/>
         <text name="rms_drum_pump_take" text="Ia pompa înapoi"/>
         <text name="rms_drum_pump_nozzle_take" text="Ia pistolul"/>
         <text name="rms_drum_pump_nozzle_return" text="Agață pistolul"/>
         <text name="rms_drum_pump_hose_range" text="Furtunul pompei vă împiedică să mergeți mai departe.&#10;Pistolul va fi agățat peste %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Apropie butoiul: furtunul are 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Apropie rezervorul: furtunul are 4 m"/>
         <text name="rms_drum_pump_required" text="Este necesară o pompă de butoi"/>
         <text name="rms_fluid_level_under_gauge" text="Sub scală"/>
         <text name="rms_fluid_circuit_engineOil" text="Ulei de motor"/>
         <text name="rms_fluid_circuit_coolant" text="Lichid de răcire"/>
+        <text name="rms_fluid_circuit_adBlue" text="Rezervor AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Ulei de transmisie"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Ulei hidraulic"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Ulei de transmisie și hidraulic"/>
         <text name="rms_fluid_hud_engineOil" text="Ulei de motor"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Ulei transm./hidr."/>
         <text name="rms_fluid_hud_coolant" text="Lichid de răcire"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Fluid incompatibil"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura motorului și îi poate crește temperatura. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura sistemului de răcire și poate crește temperatura motorului. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Ulei de motor nepotrivit"/>
         <text name="rms_fluid_unsuited_oil_message" text="Acest motor folosește AdBlue sau are filtru de particule: manualul său cere un ulei făcut pentru ele. Cu acest ulei, schimbul de ulei va veni de până la două ori mai devreme. Un filtru de particule se umple și de cenușă de 1,5 ori mai repede. Continui?"/>
         <text name="rms_fluid_error_no_circuit" text="Acest vehicul nu necesită nicio completare de fluid"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Acest vehicul nu are rezervor de AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Oprește motorul înainte de a transfera fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vehiculul trebuie să fie staționar"/>
         <text name="rms_fluid_error_busy" text="Alt recipient umple deja acest circuit"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Uzură avansată"/>
         <text name="rms_fleet_part_failed" text="În avarie"/>
         <text name="rms_fleet_part_unmeasured" text="Fără măsurare"/>
+        <text name="rms_fleet_part_replaced" text="Piesă înlocuită"/>
         <text name="rms_fleet_parts_reading" text="Piese măsurate %s"/>
         <text name="rms_fleet_parts_need_complete" text="Piese măsurate la următoarea inspecție completă"/>
         <text name="rms_fleet_greasing_done" text="Gresare la zi"/>

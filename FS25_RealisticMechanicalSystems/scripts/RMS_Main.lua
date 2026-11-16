@@ -154,6 +154,7 @@ source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_WorkshopChangeStatusEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceRequestEvent.lua")
+source(g_currentModDirectory .. "events/RMS_RepairPickEvent.lua")
 source(g_currentModDirectory .. "events/RMS_BodyworkColorEvent.lua")
 source(g_currentModDirectory .. "events/RMS_ServiceResultEvent.lua")
 source(g_currentModDirectory .. "events/RMS_FluidTransferRequestEvent.lua")
@@ -783,6 +784,7 @@ source(g_currentModDirectory .. "gui/RMS_InspectionDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_SellItemDialog.lua")
 source(g_currentModDirectory .. "gui/RMS_InGameMenuFrame.lua")
 source(g_currentModDirectory .. "gui/RMS_DiagnosticScreen.lua")
+source(g_currentModDirectory .. "gui/RMS_DebugScreen.lua")
 source(g_currentModDirectory .. "gui/RMS_SettingsPage.lua")
 source(g_currentModDirectory .. "gui/RMS_Gui.lua")
 
@@ -904,6 +906,7 @@ end
 function RMS_Main:update(dt)
     if g_currentMission:getIsClient() then
         self:tryRegisterShopMenuPage()
+        RMS_DebugWindow.update()
     end
 
     self.workshopCheckTimer = self.workshopCheckTimer + dt

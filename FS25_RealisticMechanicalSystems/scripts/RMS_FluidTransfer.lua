@@ -5,7 +5,7 @@ RMS_FluidTransfer = {}
 
 RMS_FluidTransfer.MAX_DISTANCE = 4
 RMS_FluidTransfer.STOPPED_SPEED = 0.5
-RMS_FluidTransfer.LITERS_PER_SECOND = { medium = 0.2, large = 0.3, drum = 1 }
+RMS_FluidTransfer.LITERS_PER_SECOND = { medium = 0.2, large = 0.3, adBlueCan = 0.3, drum = 1, tank = 1 }
 RMS_FluidTransfer.HOSE_LENGTH = 4
 
 RMS_FluidTransfer.RESULT = {
@@ -64,7 +64,7 @@ local function getRuntimeValidation(container, target, circuit, requester, index
         or container.isDeleted == true or target.isDeleted == true
         or container[RMS_FluidContainer.SPEC_TABLE_NAME] == nil
         or target.spec_RealisticMechanicalSystems == nil
-        or RMS_Fluids.CIRCUITS[circuit] == nil then
+        or not RMS_Fluids.getIsPourTarget(circuit) then
         return RMS_FluidTransfer.RESULT.INVALID
     end
 
@@ -134,10 +134,11 @@ local REFUSAL_TEXT_KEYS = {
 ---Returns the text telling a player why the server refused the pour
 function RMS_FluidTransfer.getRefusalTextKey(container, result)
     local isDrum = container:getRMSFluidCapacity() > RMS_FluidContainer.CARRIED_CAPACITY
+    local isTank = container:getRMSFluidFormat() == "tank"
     if result == RMS_FluidTransfer.RESULT.OUT_OF_RANGE then
-        return isDrum and "rms_drum_pump_machine_too_far" or nil
+        return isTank and "rms_drum_pump_tank_too_far" or isDrum and "rms_drum_pump_machine_too_far" or nil
     elseif result == RMS_FluidTransfer.RESULT.CONTAINER_EMPTY then
-        return isDrum and "rms_fluid_drum_empty" or "rms_fluid_container_empty"
+        return isTank and "rms_fluid_tank_empty" or isDrum and "rms_fluid_drum_empty" or "rms_fluid_container_empty"
     end
     return REFUSAL_TEXT_KEYS[result]
 end
@@ -234,7 +235,7 @@ local function updateSlot(container, transfer, dt)
         return
     end
 
-    local amount = RMS_FluidTransfer.LITERS_PER_SECOND[RMS_FluidContainer.getFormat(container:getRMSFluidCapacity(index))]
+    local amount = RMS_FluidTransfer.LITERS_PER_SECOND[container:getRMSFluidFormat()]
         * math.max(tonumber(dt) or 0, 0) / 1000
     if amount <= RMS_Fluids.EPSILON then
         return

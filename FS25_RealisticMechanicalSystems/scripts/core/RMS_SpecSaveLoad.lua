@@ -54,6 +54,19 @@ local function applyFlattenedFactorStats(spec, flattenedMap)
     end
 end
 
+---Puts a map flattened by flattenFactorStats back under its keys
+local function unflattenMap(flattenedMap)
+    local map = {}
+    for flatKey, value in pairs(flattenedMap) do
+        local outerKey, innerKey = string.match(tostring(flatKey), "([^%.]+)%.(.+)")
+        if outerKey ~= nil then
+            map[outerKey] = map[outerKey] or {}
+            map[outerKey][innerKey] = value
+        end
+    end
+    return map
+end
+
 local function getIsAuxiliaryMachine(xmlFile)
     return not xmlFile:getValue("vehicle.enterable#isTabbable", true)
 end
@@ -338,6 +351,7 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pendingServiceClockTarget", RMS_Utils.serializeNumericMap(spec.pendingServiceClockTarget))
         xmlFile:setValue(key .. "#systemsState", RMS_Utils.serializeSystemsState(spec.systems))
         xmlFile:setValue(key .. "#partWear", RMS_Utils.serializeNumericMap(spec.partWear))
+        xmlFile:setValue(key .. "#partCauseWear", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.partCauseWear)))
         xmlFile:setValue(key .. "#partAbuse", RMS_Utils.serializeNumericMap(spec.partAbuse))
         xmlFile:setValue(key .. "#pickupAirTime", RMS_Utils.serializeNumericMap(spec.pickupAirTime))
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
@@ -812,6 +826,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     spec.pendingOverhaulPartStart = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartStart", ""))
     spec.pendingOverhaulPartTarget = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pendingOverhaulPartTarget", ""))
     spec.partWear = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partWear", ""))
+    spec.partCauseWear = unflattenMap(RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partCauseWear", "")))
     spec.partAbuse = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#partAbuse", ""))
     spec.pickupAirTime = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#pickupAirTime", ""))
     local loadedFactorStatsFlat = RMS_Utils.deserializeNumericMap(xmlFile:getValue(key .. "#factorStats", ""))

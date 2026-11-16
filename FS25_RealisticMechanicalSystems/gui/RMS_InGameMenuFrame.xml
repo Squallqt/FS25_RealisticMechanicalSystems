@@ -329,13 +329,22 @@
                         <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_warningMessages_label"/>
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugWindow" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
                         </BinaryOption>
                         <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
                             <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
                         </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugMode_label"/>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugWindow_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugLog" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_debugLog_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugLog_label"/>
                     </Bitmap>
 
                     <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_service_wear"/>

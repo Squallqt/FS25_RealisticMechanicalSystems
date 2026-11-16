@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Battery drum pump carried in hand, set on the bung of a drum
+---Battery drum pump carried in hand, set on a drum or a tank
 RMS_DrumPump = {}
 
 local specName = "spec_" .. g_currentModName .. ".rmsDrumPump"
@@ -27,6 +27,11 @@ local function getIsInReach(player, container)
     local x, y, z = getWorldTranslation(player.rootNode)
     local cx, cy, cz = getWorldTranslation(container.rootNode)
     return MathUtil.vector3Length(x - cx, y - cy, z - cz) <= RMS_FluidTransfer.MAX_DISTANCE
+end
+
+---Returns the text offering to set the pump on a container
+function RMS_DrumPump.getMountTextKey(container)
+    return container ~= nil and container:getRMSFluidFormat() == "tank" and "rms_drum_pump_mount_tank" or "rms_drum_pump_mount"
 end
 
 ---The drum place of a container, nil when it has none at that index
@@ -134,6 +139,9 @@ local function updateTarget(handTool, player)
     spec.target = container
     spec.targetIndex = index
     g_inputBinding:setActionEventActive(spec.mountEventId, container ~= nil)
+    if container ~= nil then
+        g_inputBinding:setActionEventText(spec.mountEventId, g_i18n:getText(RMS_DrumPump.getMountTextKey(container)))
+    end
 end
 
 function RMS_DrumPump:onUpdate(dt)
@@ -154,7 +162,7 @@ function RMS_DrumPump:onDraw()
     if container ~= nil and not container.isDeleted then
         local product = RMS_Fluids.PRODUCTS[container:getRMSFluidProductKey()]
         g_currentMission.hud.contextActionDisplay:setContext(InputAction.ACTIVATE_HANDTOOL, RMS_FluidHandTool.LOGO_SLICE_PREFIX .. product.brand,
-            container:getRMSFluidKindText(), HUD.CONTEXT_PRIORITY.HIGH, g_i18n:getText("rms_drum_pump_mount"))
+            container:getRMSFluidKindText(), HUD.CONTEXT_PRIORITY.HIGH, g_i18n:getText(RMS_DrumPump.getMountTextKey(container)))
     end
 end
 

@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Xác định xem đại tu cơ khí tại xưởng có hoàn tất ngay lập tức hay không, kể cả những việc đang tiến hành."/>
         <text name="rms_instantRemap_label" text="Tinh chỉnh động cơ tức thì"/>
         <text name="rms_instantRemap_tooltip" text="Xác định xem tinh chỉnh động cơ và việc về nguyên bản có hoàn tất ngay lập tức hay không, kể cả những việc đang tiến hành."/>
-        <text name="rms_debugMode_label" text="Chế độ gỡ lỗi"/>
-        <text name="rms_debugMode_tooltip" text="Xác định xem có hiển thị cửa sổ gỡ lỗi trên máy đang lái và gửi nhật ký chi tiết đến bảng điều khiển hay không. Phím %s mở và đóng cửa sổ; trong nhiều người chơi, chỉ quản trị viên nhìn thấy."/>
+        <text name="rms_debugWindow_label" text="Cửa sổ gỡ lỗi"/>
+        <text name="rms_debugWindow_tooltip" text="Xác định xem có hiển thị cửa sổ gỡ lỗi trên máy đang lái hay không. Phím %s cũng mở cửa sổ; trong nhiều người chơi, chỉ quản trị viên nhìn thấy."/>
+        <text name="rms_debugLog_label" text="Nhật ký chi tiết"/>
+        <text name="rms_debugLog_tooltip" text="Xác định xem có gửi nhật ký chi tiết của RMS đến bảng điều khiển để đính kèm báo cáo lỗi mà không mở cửa sổ gỡ lỗi hay không."/>
         <text name="rms_warningMessages_label" text="Thông báo cảnh báo"/>
         <text name="rms_warningMessages_tooltip" text="Xác định xem có hiển thị các cảnh báo như động cơ lạnh hoặc quá nhiệt hay không. Thông báo giới hạn công suất do nhiệt luôn được hiển thị."/>
         <text name="rms_serviceInterval_label" text="Khoảng cách bảo dưỡng"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Dầu động cơ, cho máy không có AdBlue và bộ lọc hạt"/>
         <text name="rms_fluid_function_utto" text="Dầu hộp số và thủy lực để bổ sung thủ công"/>
         <text name="rms_fluid_function_coolant" text="Nước làm mát để bổ sung thủ công"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue cho bình AdBlue của các máy có trang bị"/>
         <text name="rms_fluid_pour_action" text="Đổ: %s"/>
         <text name="rms_fluid_level_done" text="Đã đủ mức"/>
         <text name="rms_fluid_container_empty" text="Bình đã hết"/>
         <text name="rms_fluid_drum_empty" text="Thùng phuy đã hết"/>
+        <text name="rms_fluid_tank_empty" text="Bồn chứa đã hết"/>
         <text name="rms_fluid_container_label" text="Bình"/>
         <text name="rms_fluid_drum_label" text="Thùng phuy"/>
+        <text name="rms_fluid_tank_label" text="Bồn chứa"/>
         <text name="rms_fluid_hand_take" text="Cầm lên để đổ"/>
         <text name="rms_fluid_hand_carry" text="Mang bình"/>
         <text name="rms_drum_pump_name" text="Bơm thùng phuy dùng pin"/>
-        <text name="rms_drum_pump_function" text="Lắp lên thùng phuy để bơm cho máy qua súng bơm"/>
+        <text name="rms_drum_pump_function" text="Lắp lên thùng phuy hoặc bồn chứa để bơm cho máy qua súng bơm"/>
         <text name="rms_drum_pump_mount" text="Lắp lên thùng phuy"/>
+        <text name="rms_drum_pump_mount_tank" text="Lắp lên bồn chứa"/>
         <text name="rms_drum_pump_take" text="Lấy lại bơm"/>
         <text name="rms_drum_pump_nozzle_take" text="Cầm súng bơm"/>
         <text name="rms_drum_pump_nozzle_return" text="Treo súng bơm"/>
         <text name="rms_drum_pump_hose_range" text="Ống của bơm không cho bạn đi xa hơn.&#10;Súng bơm sẽ được treo lại sau %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Đưa thùng phuy lại gần: ống dài 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Đưa bồn chứa lại gần: ống dài 4 m"/>
         <text name="rms_drum_pump_required" text="Cần có bơm thùng phuy"/>
         <text name="rms_fluid_level_under_gauge" text="Dưới thang đo"/>
         <text name="rms_fluid_circuit_engineOil" text="Dầu động cơ"/>
         <text name="rms_fluid_circuit_coolant" text="Nước làm mát"/>
+        <text name="rms_fluid_circuit_adBlue" text="Bình AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Dầu hộp số"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Dầu thủy lực"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Dầu hộp số và thủy lực"/>
         <text name="rms_fluid_hud_engineOil" text="Dầu động cơ"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Dầu hộp số/thủy lực"/>
         <text name="rms_fluid_hud_coolant" text="Nước làm mát"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Chất lỏng không tương thích"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm động cơ hao mòn nhanh gấp tới ba lần và nóng hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hệ thống làm mát hao mòn nhanh gấp tới ba lần và làm động cơ nóng hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Dầu động cơ không phù hợp"/>
         <text name="rms_fluid_unsuited_oil_message" text="Động cơ này dùng AdBlue hoặc có bộ lọc hạt: sách hướng dẫn yêu cầu loại dầu làm cho chúng. Với dầu này, lần thay dầu sẽ đến sớm hơn tới hai lần. Bộ lọc hạt cũng đầy tro nhanh gấp 1,5 lần. Tiếp tục?"/>
         <text name="rms_fluid_error_no_circuit" text="Xe này không cần bổ sung chất lỏng"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Xe này không có bình AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Hãy tắt động cơ trước khi chuyển chất lỏng"/>
         <text name="rms_fluid_error_vehicle_moving" text="Xe phải đứng yên"/>
         <text name="rms_fluid_error_busy" text="Một bình chứa khác đang nạp cho hệ thống này"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Hao mòn nhiều"/>
         <text name="rms_fleet_part_failed" text="Bị hỏng"/>
         <text name="rms_fleet_part_unmeasured" text="Chưa đo"/>
+        <text name="rms_fleet_part_replaced" text="Đã thay bộ phận"/>
         <text name="rms_fleet_parts_reading" text="Bộ phận được đo %s"/>
         <text name="rms_fleet_parts_need_complete" text="Bộ phận được đo ở lần kiểm tra toàn diện tiếp theo"/>
         <text name="rms_fleet_greasing_done" text="Bơm mỡ đã xong"/>

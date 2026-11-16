@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Bepaalt of mechanische revisies in de werkplaats direct worden voltooid, ook lopende revisies."/>
         <text name="rms_instantRemap_label" text="Directe motortuning"/>
         <text name="rms_instantRemap_tooltip" text="Bepaalt of motortuning en het terugzetten naar origineel direct worden voltooid, ook als ze al lopen."/>
-        <text name="rms_debugMode_label" text="Debugmodus"/>
-        <text name="rms_debugMode_tooltip" text="Bepaalt of het debugvenster in de bestuurde machine verschijnt en de console gedetailleerde logboeken ontvangt. De toets %s opent en sluit het; in multiplayer zien alleen beheerders het."/>
+        <text name="rms_debugWindow_label" text="Debugvenster"/>
+        <text name="rms_debugWindow_tooltip" text="Bepaalt of het debugvenster in de bestuurde machine verschijnt. De toets %s opent het ook; in multiplayer zien alleen beheerders het."/>
+        <text name="rms_debugLog_label" text="Gedetailleerd logboek"/>
+        <text name="rms_debugLog_tooltip" text="Bepaalt of de console de gedetailleerde logboeken van RMS ontvangt, om bij een foutmelding te voegen, zonder het debugvenster te openen."/>
         <text name="rms_warningMessages_label" text="Waarschuwingsberichten"/>
         <text name="rms_warningMessages_tooltip" text="Bepaalt of waarschuwingen zoals een koude motor of oververhitting worden getoond. Meldingen over thermische vermogensbegrenzing blijven altijd zichtbaar."/>
         <text name="rms_serviceInterval_label" text="Onderhoudsafstand"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorolie, voor machines zonder AdBlue of roetfilter"/>
         <text name="rms_fluid_function_utto" text="Transmissie- en hydrauliekolie voor handmatig bijvullen"/>
         <text name="rms_fluid_function_coolant" text="Koelvloeistof voor handmatig bijvullen"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue voor de AdBlue-tank van machines die er een hebben"/>
         <text name="rms_fluid_pour_action" text="Bijvullen: %s"/>
         <text name="rms_fluid_level_done" text="Niveau bijgevuld"/>
         <text name="rms_fluid_container_empty" text="Kan leeg"/>
         <text name="rms_fluid_drum_empty" text="Vat leeg"/>
+        <text name="rms_fluid_tank_empty" text="Tank leeg"/>
         <text name="rms_fluid_container_label" text="Kan"/>
         <text name="rms_fluid_drum_label" text="Vat"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Pakken om bij te vullen"/>
         <text name="rms_fluid_hand_carry" text="Kan dragen"/>
         <text name="rms_drum_pump_name" text="Accu-vatpomp"/>
-        <text name="rms_drum_pump_function" text="Wordt op een vat gezet om machines met het vulpistool te vullen"/>
+        <text name="rms_drum_pump_function" text="Wordt op een vat of tank gezet om machines met het vulpistool te vullen"/>
         <text name="rms_drum_pump_mount" text="Op vat zetten"/>
+        <text name="rms_drum_pump_mount_tank" text="Op tank zetten"/>
         <text name="rms_drum_pump_take" text="Pomp terugnemen"/>
         <text name="rms_drum_pump_nozzle_take" text="Vulpistool pakken"/>
         <text name="rms_drum_pump_nozzle_return" text="Vulpistool ophangen"/>
         <text name="rms_drum_pump_hose_range" text="De slang van de pomp houdt je tegen.&#10;Het vulpistool wordt over %.1f m opgehangen!"/>
         <text name="rms_drum_pump_machine_too_far" text="Zet het vat dichterbij: de slang is 4 m lang"/>
+        <text name="rms_drum_pump_tank_too_far" text="Zet de tank dichterbij: de slang is 4 m lang"/>
         <text name="rms_drum_pump_required" text="Vatpomp vereist"/>
         <text name="rms_fluid_level_under_gauge" text="Onder de schaal"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolie"/>
         <text name="rms_fluid_circuit_coolant" text="Koelvloeistof"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmissieolie"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydrauliekolie"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmissie- en hydrauliekolie"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolie"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olie"/>
         <text name="rms_fluid_hud_coolant" text="Koelvloeistof"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Ongeschikte vloeistof"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van de motor tot het drievoudige verhogen en de motor warmer laten lopen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van het koelsysteem tot het drievoudige verhogen en de motor warmer laten lopen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Ongeschikte motorolie"/>
         <text name="rms_fluid_unsuited_oil_message" text="Deze motor gebruikt AdBlue of heeft een roetfilter: de handleiding schrijft een olie voor die daarvoor gemaakt is. Met deze olie komt de olieverversing tot twee keer zo vroeg. Een roetfilter loopt bovendien 1,5 keer zo snel vol met as. Doorgaan?"/>
         <text name="rms_fluid_error_no_circuit" text="Voor dit voertuig hoeven geen vloeistoffen te worden bijgevuld"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Dit voertuig heeft geen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Zet de motor uit voordat je vloeistof overdraagt"/>
         <text name="rms_fluid_error_vehicle_moving" text="Het voertuig moet stilstaan"/>
         <text name="rms_fluid_error_busy" text="Een andere container vult dit circuit al"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Sterke slijtage"/>
         <text name="rms_fleet_part_failed" text="Buiten werking"/>
         <text name="rms_fleet_part_unmeasured" text="Geen meting"/>
+        <text name="rms_fleet_part_replaced" text="Vervangen"/>
         <text name="rms_fleet_parts_reading" text="Delen gemeten %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delen gemeten bij de volgende volledige inspectie"/>
         <text name="rms_fleet_greasing_done" text="Smeren in orde"/>

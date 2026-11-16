@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Määrittää, valmistuvatko korjaamon mekaaniset peruskorjaukset heti, myös jo käynnissä olevat."/>
         <text name="rms_instantRemap_label" text="Välitön moottoriohjelmointi"/>
         <text name="rms_instantRemap_tooltip" text="Määrittää, valmistuvatko moottoriohjelmointi ja palautus alkuperäiseen heti, myös jo käynnissä olevat."/>
-        <text name="rms_debugMode_label" text="Virheenkorjaustila"/>
-        <text name="rms_debugMode_tooltip" text="Määrittää, näkyykö virheenkorjausikkuna ajettavassa koneessa ja saako konsoli tarkat lokitiedot. Näppäin %s avaa ja sulkee ikkunan; moninpelissä sen näkevät vain ylläpitäjät."/>
+        <text name="rms_debugWindow_label" text="Virheenkorjausikkuna"/>
+        <text name="rms_debugWindow_tooltip" text="Määrittää, näkyykö virheenkorjausikkuna ajettavassa koneessa. Näppäin %s avaa sen myös; moninpelissä sen näkevät vain ylläpitäjät."/>
+        <text name="rms_debugLog_label" text="Tarkka loki"/>
+        <text name="rms_debugLog_tooltip" text="Määrittää, saako konsoli RMS:n tarkat lokitiedot virheraporttiin liitettäviksi avaamatta virheenkorjausikkunaa."/>
         <text name="rms_warningMessages_label" text="Varoitusviestit"/>
         <text name="rms_warningMessages_tooltip" text="Määrittää, näytetäänkö varoitukset kuten kylmä moottori tai ylikuumeneminen. Lämpötilasta johtuvan tehonrajoituksen viestit näytetään aina."/>
         <text name="rms_serviceInterval_label" text="Huoltojen väli"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Moottoriöljy, koneisiin ilman AdBluea tai hiukkassuodatinta"/>
         <text name="rms_fluid_function_utto" text="Vaihteisto- ja hydrauliöljy käsin tehtävään täydennykseen"/>
         <text name="rms_fluid_function_coolant" text="Jäähdytysneste käsin tehtävään täydennykseen"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue koneiden AdBlue-säiliöön"/>
         <text name="rms_fluid_pour_action" text="Lisää: %s"/>
         <text name="rms_fluid_level_done" text="Taso täytetty"/>
         <text name="rms_fluid_container_empty" text="Kanisteri tyhjä"/>
         <text name="rms_fluid_drum_empty" text="Tynnyri tyhjä"/>
+        <text name="rms_fluid_tank_empty" text="Säiliö tyhjä"/>
         <text name="rms_fluid_container_label" text="Kanisteri"/>
         <text name="rms_fluid_drum_label" text="Tynnyri"/>
+        <text name="rms_fluid_tank_label" text="Säiliö"/>
         <text name="rms_fluid_hand_take" text="Ota lisätäksesi"/>
         <text name="rms_fluid_hand_carry" text="Kanna kanisteria"/>
         <text name="rms_drum_pump_name" text="Akkukäyttöinen tynnyripumppu"/>
-        <text name="rms_drum_pump_function" text="Asetetaan tynnyriin koneiden täyttämiseksi pistoolilla"/>
+        <text name="rms_drum_pump_function" text="Asetetaan tynnyriin tai säiliöön koneiden täyttämiseksi pistoolilla"/>
         <text name="rms_drum_pump_mount" text="Aseta tynnyriin"/>
+        <text name="rms_drum_pump_mount_tank" text="Aseta säiliöön"/>
         <text name="rms_drum_pump_take" text="Ota pumppu pois"/>
         <text name="rms_drum_pump_nozzle_take" text="Ota pistooli"/>
         <text name="rms_drum_pump_nozzle_return" text="Ripusta pistooli"/>
         <text name="rms_drum_pump_hose_range" text="Pumpun letku estää sinua menemästä pidemmälle.&#10;Pistooli ripustetaan paikalleen %.1f m päästä!"/>
         <text name="rms_drum_pump_machine_too_far" text="Tuo tynnyri lähemmäs: letku on 4 m pitkä"/>
+        <text name="rms_drum_pump_tank_too_far" text="Tuo säiliö lähemmäs: letku on 4 m pitkä"/>
         <text name="rms_drum_pump_required" text="Tynnyripumppu tarvitaan"/>
         <text name="rms_fluid_level_under_gauge" text="Asteikon alapuolella"/>
         <text name="rms_fluid_circuit_engineOil" text="Moottoriöljy"/>
         <text name="rms_fluid_circuit_coolant" text="Jäähdytysneste"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-säiliö"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Vaihteistoöljy"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydrauliöljy"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Vaihteisto- ja hydrauliöljy"/>
         <text name="rms_fluid_hud_engineOil" text="Moottoriöljy"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Vaiht./hydrauliöljy"/>
         <text name="rms_fluid_hud_coolant" text="Jäähdytysneste"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Yhteensopimaton neste"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa moottorin kulumisen ja lisätä sen lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa jäähdytysjärjestelmän kulumisen ja lisätä moottorin lämpenemistä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Sopimaton moottoriöljy"/>
         <text name="rms_fluid_unsuited_oil_message" text="Tässä moottorissa on AdBlue tai hiukkassuodatin: sen ohjekirja vaatii niille tehdyn öljyn. Tällä öljyllä öljynvaihto tulee jopa kaksi kertaa aikaisemmin. Hiukkassuodatin täyttyy lisäksi tuhkasta 1,5 kertaa nopeammin. Jatketaanko?"/>
         <text name="rms_fluid_error_no_circuit" text="Tämä ajoneuvo ei tarvitse nesteen täydennystä"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Tässä ajoneuvossa ei ole AdBlue-säiliötä"/>
         <text name="rms_fluid_error_motor_running" text="Sammuta moottori ennen nesteen siirtoa"/>
         <text name="rms_fluid_error_vehicle_moving" text="Ajoneuvon on oltava paikallaan"/>
         <text name="rms_fluid_error_busy" text="Toinen astia täyttää jo tätä piiriä"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Runsas kuluminen"/>
         <text name="rms_fleet_part_failed" text="Rikki"/>
         <text name="rms_fleet_part_unmeasured" text="Ei mittausta"/>
+        <text name="rms_fleet_part_replaced" text="Osa vaihdettu"/>
         <text name="rms_fleet_parts_reading" text="Osat mitattu %s"/>
         <text name="rms_fleet_parts_need_complete" text="Osamittaus seuraavassa täydellisessä tarkastuksessa"/>
         <text name="rms_fleet_greasing_done" text="Rasvaus ajan tasalla"/>

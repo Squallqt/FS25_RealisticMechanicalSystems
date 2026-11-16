@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="設定維修廠的機械大修是否立即完成，包括正在進行的大修。"/>
         <text name="rms_instantRemap_label" text="即時發動機電腦調校"/>
         <text name="rms_instantRemap_tooltip" text="設定發動機電腦調校和恢復原廠是否立即完成，包括正在進行的作業。"/>
-        <text name="rms_debugMode_label" text="除錯模式"/>
-        <text name="rms_debugMode_tooltip" text="設定是否在駕駛的機器中顯示除錯視窗，以及是否向主控台輸出詳細記錄。%s鍵開啟或關閉視窗；多人遊戲中僅管理員可見。"/>
+        <text name="rms_debugWindow_label" text="除錯視窗"/>
+        <text name="rms_debugWindow_tooltip" text="設定是否在駕駛的機器中顯示除錯視窗。%s鍵也可開啟視窗；多人遊戲中僅管理員可見。"/>
+        <text name="rms_debugLog_label" text="詳細記錄"/>
+        <text name="rms_debugLog_tooltip" text="設定是否向主控台輸出RMS的詳細記錄，可附在錯誤回報中，無需開啟除錯視窗。"/>
         <text name="rms_warningMessages_label" text="警告訊息"/>
         <text name="rms_warningMessages_tooltip" text="設定是否顯示發動機低溫或過熱等警告。因溫度限制動力的訊息始終顯示。"/>
         <text name="rms_serviceInterval_label" text="保養間隔"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="發動機機油，適用於沒有 AdBlue 和微粒過濾器的機械"/>
         <text name="rms_fluid_function_utto" text="手動補充用變速箱與液壓油"/>
         <text name="rms_fluid_function_coolant" text="手動補充用冷卻液"/>
+        <text name="rms_fluid_function_adblue" text="供配備AdBlue罐的機具使用的AdBlue"/>
         <text name="rms_fluid_pour_action" text="加注：%s"/>
         <text name="rms_fluid_level_done" text="液位已加滿"/>
         <text name="rms_fluid_container_empty" text="容器已空"/>
         <text name="rms_fluid_drum_empty" text="桶已空"/>
+        <text name="rms_fluid_tank_empty" text="噸桶已空"/>
         <text name="rms_fluid_container_label" text="容器"/>
         <text name="rms_fluid_drum_label" text="桶"/>
+        <text name="rms_fluid_tank_label" text="噸桶"/>
         <text name="rms_fluid_hand_take" text="拿起加注"/>
         <text name="rms_fluid_hand_carry" text="搬運容器"/>
         <text name="rms_drum_pump_name" text="充電式桶泵"/>
-        <text name="rms_drum_pump_function" text="安裝在油桶上，用加注嘴為機器加注"/>
+        <text name="rms_drum_pump_function" text="安裝在油桶或噸桶上，用加注嘴為機器加注"/>
         <text name="rms_drum_pump_mount" text="裝到桶上"/>
+        <text name="rms_drum_pump_mount_tank" text="裝到噸桶上"/>
         <text name="rms_drum_pump_take" text="取回泵"/>
         <text name="rms_drum_pump_nozzle_take" text="拿起加注嘴"/>
         <text name="rms_drum_pump_nozzle_return" text="掛回加注嘴"/>
         <text name="rms_drum_pump_hose_range" text="泵的軟管阻止你走得更遠。&#10;加注嘴將在%.1f公尺後掛回！"/>
         <text name="rms_drum_pump_machine_too_far" text="把桶移近：軟管長4公尺"/>
+        <text name="rms_drum_pump_tank_too_far" text="把噸桶移近：軟管長4公尺"/>
         <text name="rms_drum_pump_required" text="需要桶泵"/>
         <text name="rms_fluid_level_under_gauge" text="低於刻度"/>
         <text name="rms_fluid_circuit_engineOil" text="發動機機油"/>
         <text name="rms_fluid_circuit_coolant" text="冷卻液"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue罐"/>
         <text name="rms_fluid_circuit_transmissionOil" text="變速箱油"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="液壓油"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="變速箱與液壓共用油"/>
         <text name="rms_fluid_hud_engineOil" text="發動機機油"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="變速箱與液壓油"/>
         <text name="rms_fluid_hud_coolant" text="冷卻液"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="油液不相容"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="此產品不適用於該回路。它會污染回路，並可能使發動機磨損增加至3倍、發動機溫度升高。只有完全更換油液才能清除污染。是否繼續？"/>
         <text name="rms_fluid_incompatible_message_coolant" text="此產品不適用於該回路。它會污染回路，並可能使冷卻系統磨損增加至3倍、發動機溫度升高。只有完全更換油液才能清除污染。是否繼續？"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="不適用的發動機機油"/>
         <text name="rms_fluid_unsuited_oil_message" text="這台發動機使用 AdBlue 或裝有微粒過濾器：其說明書要求使用為它們設計的機油。使用這種機油，換油間隔最多縮短一半。微粒過濾器積滿灰分的速度也會快 1.5 倍。是否繼續？"/>
         <text name="rms_fluid_error_no_circuit" text="此機具不需要補充任何油液"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="此機具沒有AdBlue罐"/>
         <text name="rms_fluid_error_motor_running" text="輸送油液前請關閉發動機"/>
         <text name="rms_fluid_error_vehicle_moving" text="機具必須保持靜止"/>
         <text name="rms_fluid_error_busy" text="另一個容器正在加注此回路"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="明顯磨損"/>
         <text name="rms_fleet_part_failed" text="故障"/>
         <text name="rms_fleet_part_unmeasured" text="無量測紀錄"/>
+        <text name="rms_fleet_part_replaced" text="已更換"/>
         <text name="rms_fleet_parts_reading" text="零件量測：%s"/>
         <text name="rms_fleet_parts_need_complete" text="零件量測：下次全面檢查時"/>
         <text name="rms_fleet_greasing_done" text="打黃油已完成"/>

@@ -1874,9 +1874,48 @@ function RMS_Utils.getConditionColor(condition, isCompleteInspection)
     return RMS_Utils.getValueColor(condition, ideal, high, mid, low, false)
 end
 
+---Lists the parts the workshop's repairs fitted after a report
+-- @return table true by part id
+local function getPartsFittedSince(vehicle, report)
+    local R, fitted, isAfter = RealisticMechanicalSystems, {}, false
+    for _, entry in ipairs(vehicle.spec_RealisticMechanicalSystems.maintenanceLog or {}) do
+        if isAfter and entry.type == R.STATUS.REPAIR then
+            local reached = entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}
+            for _, line in ipairs(entry.invoice or {}) do
+                -- a quick fix fits nothing, a cancelled repair the faults it reached
+                if (line.kind == "repair" or line.kind == "preventive") and (line.repairType or entry.optionOne) ~= R.REPAIR_TYPES.LOW
+                    and (entry.isCompleted ~= false or line.kind == "repair" and table.hasElement(reached, line.key)) then
+                    for _, parts in ipairs({ line.ownParts or { line.key }, line.kitParts or {}, line.wornParts or {} }) do
+                        for _, partId in ipairs(parts) do
+                            fitted[partId] = true
+                        end
+                    end
+                end
+            end
+        end
+        isAfter = isAfter or entry == report
+    end
+    return fitted
+end
+
+---Orders the part rows: failed, worn, replaced, measured, unmeasured
+local function getPartRowRank(row)
+    if row.isReplaced then
+        return 2
+    elseif row.condition == nil then
+        return 4
+    elseif row.isFailed then
+        return 0
+    elseif row.isWorn then
+        return 1
+    end
+    return 3
+end
+
 ---Builds the system and part rows from an inspection report.
 function RMS_Utils.getConditionRows(vehicle, report, systems, isMeasured, isOutdated, openSystem)
     local partsReport, partsHours = RealisticMechanicalSystems.getPartsReport(vehicle)
+    local fitted = partsReport ~= nil and getPartsFittedSince(vehicle, partsReport) or {}
     local systemParts = vehicle.spec_RealisticMechanicalSystems.systemParts
     local rows = {}
     for _, systemL10nKey in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
@@ -1893,13 +1932,17 @@ function RMS_Utils.getConditionRows(vehicle, report, systems, isMeasured, isOutd
                 local failed = partsReport.conditionData.activeBreakdowns or {}
                 for _, partId in ipairs(parts) do
                     local wear = partsReport.conditionData.partWear[partId]
-                    table.insert(partRows, {kind = "part", name = RMS_Utils.getBreakdownPartName(partId, vehicle),
-                        condition = wear ~= nil and 1 - math.min(wear, 1) or nil, isFailed = wear ~= nil and failed[partId] ~= nil,
-                        isWorn = wear ~= nil and RMS_Utils.getIsPartWorn(partId, wear)})
+                    if fitted[partId] then
+                        -- fitted since the report, read again at the next inspection
+                        table.insert(partRows, {kind = "part", name = RMS_Utils.getBreakdownPartName(partId, vehicle), isReplaced = true})
+                    else
+                        table.insert(partRows, {kind = "part", name = RMS_Utils.getBreakdownPartName(partId, vehicle),
+                            condition = wear ~= nil and 1 - math.min(wear, 1) or nil, isFailed = wear ~= nil and failed[partId] ~= nil,
+                            isWorn = wear ~= nil and RMS_Utils.getIsPartWorn(partId, wear)})
+                    end
                 end
                 table.sort(partRows, function(a, b)
-                    local rankA = a.condition == nil and 3 or a.isFailed and 0 or a.isWorn and 1 or 2
-                    local rankB = b.condition == nil and 3 or b.isFailed and 0 or b.isWorn and 1 or 2
+                    local rankA, rankB = getPartRowRank(a), getPartRowRank(b)
                     if rankA ~= rankB then
                         return rankA < rankB
                     end
@@ -1977,7 +2020,9 @@ local function populateConditionPartCell(cell, row)
     end
 
     local stateText, color = "", cell.rmsValueColor
-    if row.condition == nil then
+    if row.isReplaced then
+        stateText, color = g_i18n:getText("rms_fleet_part_replaced"), RMS_Utils.COLOR.HIGHLIGHT
+    elseif row.condition == nil then
         stateText, color = g_i18n:getText("rms_fleet_part_unmeasured"), RMS_Utils.COLOR.TEXT_DIM
     elseif row.isFailed then
         stateText, color = g_i18n:getText("rms_fleet_part_failed"), RMS_Utils.COLOR.ALERT

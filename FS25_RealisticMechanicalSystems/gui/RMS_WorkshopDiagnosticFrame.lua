@@ -191,8 +191,7 @@ function RMS_WorkshopDiagnosticFrame:onBreakdownClick(_list, _section, index)
         end
         return
     end
-    local breakdown = self.vehicle:getActiveBreakdowns()[self.breakdownIds[index]]
-    breakdown.isSelectedForRepair = not breakdown.isSelectedForRepair
+    RealisticMechanicalSystems.toggleRepairFault(self.vehicle, self.breakdownIds[index])
     self.dialog:refresh()
 end
 

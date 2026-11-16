@@ -224,7 +224,21 @@ RMS_Fluids.PRODUCTS = {
         storePrices = { [5] = 22, [20] = 69, [205] = 601 },
         isStoreItem = true,
         compatibleCircuits = { coolant = true }, capacities = { 5, 20, 205 }
+    },
+    TOTALENERGIES_ADBLUE = {
+        brand = "TOTALENERGIES", name = "AdBlue",
+        assetDirectory = "objects/fluids/products/totalEnergiesAdBlue",
+        densityKgPerLiter = 1.090,
+        storePrices = { [10] = 13, [208] = 144, [1000] = 563 },
+        isStoreItem = true,
+        compatibleCircuits = { adBlue = true }, capacities = { 10, 208, 1000 },
+        formats = { [10] = "adBlueCan", [208] = "drum", [1000] = "tank" }
     }
+}
+
+---Machine tanks of the game's own fill units, poured into like a circuit
+RMS_Fluids.TANKS = {
+    adBlue = { fillTypeName = "DEF" }
 }
 
 RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS = {
@@ -487,8 +501,26 @@ function RMS_Fluids.reinitializeVehicleCapacities(vehicle)
     end
 end
 
+---Returns the fill unit of a machine tank, nil without one
+function RMS_Fluids.getTankFillUnitIndex(vehicle, tank)
+    local definition = RMS_Fluids.TANKS[tank]
+    local motorized = vehicle ~= nil and vehicle.spec_motorized or nil
+    local consumer = definition ~= nil and motorized ~= nil and motorized.consumersByFillTypeName ~= nil
+        and motorized.consumersByFillTypeName[definition.fillTypeName] or nil
+    return consumer ~= nil and consumer.fillUnitIndex or nil
+end
+
+---Tells whether a circuit or a machine tank can be poured into
+function RMS_Fluids.getIsPourTarget(circuit)
+    return RMS_Fluids.CIRCUITS[circuit] ~= nil or RMS_Fluids.TANKS[circuit] ~= nil
+end
+
 ---Returns a circuit capacity in liters
 function RMS_Fluids.getCapacity(vehicle, circuit)
+    if RMS_Fluids.TANKS[circuit] ~= nil then
+        local index = RMS_Fluids.getTankFillUnitIndex(vehicle, circuit)
+        return index ~= nil and math.max(vehicle:getFillUnitCapacity(index), 0) or 0
+    end
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     if spec == nil or spec.fluidCapacities == nil then
         return 0
@@ -498,6 +530,10 @@ end
 
 ---Returns the fill level of a circuit from zero to one
 function RMS_Fluids.getLevel(vehicle, circuit)
+    if RMS_Fluids.TANKS[circuit] ~= nil then
+        local capacity = RMS_Fluids.getCapacity(vehicle, circuit)
+        return capacity > 0 and clamp(RMS_Fluids.getLiters(vehicle, circuit) / capacity, 0, 1) or 0
+    end
     local spec = vehicle.spec_RealisticMechanicalSystems
     return clamp(spec[RMS_Fluids.CIRCUITS[getSpecSumpCircuit(spec, circuit)].levelKey] or 1, 0, 1)
 end
@@ -588,6 +624,10 @@ end
 
 ---Returns the current circuit quantity in liters
 function RMS_Fluids.getLiters(vehicle, circuit)
+    if RMS_Fluids.TANKS[circuit] ~= nil then
+        local index = RMS_Fluids.getTankFillUnitIndex(vehicle, circuit)
+        return index ~= nil and math.max(vehicle:getFillUnitFillLevel(index), 0) or 0
+    end
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
@@ -665,6 +705,9 @@ end
 ---Adds fluid to a circuit and updates its weighted compatibility
 -- @param string? productKey nil for compatible workshop fluid
 function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtReduction)
+    if RMS_Fluids.TANKS[circuit] ~= nil then
+        return RMS_Fluids.addTankLiters(vehicle, circuit, liters)
+    end
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     circuit = getSpecSumpCircuit(spec, circuit)
     local definition = RMS_Fluids.CIRCUITS[circuit]
@@ -701,6 +744,19 @@ function RMS_Fluids.addLiters(vehicle, circuit, liters, productKey, skipDebtRedu
         RealisticMechanicalSystems.raiseRMSDirty(vehicle, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)
     end
     return accepted
+end
+
+---Fills a machine tank through the game's fill unit, on the server
+function RMS_Fluids.addTankLiters(vehicle, tank, liters)
+    local index = RMS_Fluids.getTankFillUnitIndex(vehicle, tank)
+    liters = math.max(tonumber(liters) or 0, 0)
+    if index == nil or liters <= RMS_Fluids.EPSILON then
+        return 0
+    end
+    -- the game's fill unit stops at its capacity
+    local fillType = g_fillTypeManager:getFillTypeIndexByName(RMS_Fluids.TANKS[tank].fillTypeName)
+    local added = vehicle:addFillUnitFillLevel(vehicle:getOwnerFarmId(), index, liters, fillType, ToolType.UNDEFINED, nil)
+    return math.max(tonumber(added) or 0, 0)
 end
 
 ---Removes fluid without changing mixture compatibility

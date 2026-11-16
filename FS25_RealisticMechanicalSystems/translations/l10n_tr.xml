@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Atölyedeki mekanik revizyonların, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_instantRemap_label" text="Anında Motor Yazılımı"/>
         <text name="rms_instantRemap_tooltip" text="Motor yazılımının ve fabrika yazılımına dönüşün, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
-        <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
-        <text name="rms_debugMode_tooltip" text="Sürülen makinede hata ayıklama penceresinin gösterilip gösterilmeyeceğini ve konsola ayrıntılı günlük gönderilip gönderilmeyeceğini belirler. %s tuşu pencereyi açıp kapatır; çok oyunculuda yalnızca yöneticiler görür."/>
+        <text name="rms_debugWindow_label" text="Hata Ayıklama Penceresi"/>
+        <text name="rms_debugWindow_tooltip" text="Sürülen makinede hata ayıklama penceresinin gösterilip gösterilmeyeceğini belirler. %s tuşu da pencereyi açar; çok oyunculuda yalnızca yöneticiler görür."/>
+        <text name="rms_debugLog_label" text="Ayrıntılı Günlük"/>
+        <text name="rms_debugLog_tooltip" text="Hata ayıklama penceresi açılmadan konsola RMS'nin ayrıntılı günlüklerinin gönderilip gönderilmeyeceğini belirler; bunlar bir hata raporuna eklenebilir."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
         <text name="rms_warningMessages_tooltip" text="Soğuk motor veya aşırı ısınma gibi uyarıların gösterilip gösterilmeyeceğini belirler. Sıcaklığa bağlı güç sınırlama mesajları her zaman gösterilir."/>
         <text name="rms_serviceInterval_label" text="Bakımlar arası süre"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motor yağı, AdBlue ve partikül filtresi olmayan makineler için"/>
         <text name="rms_fluid_function_utto" text="Manuel takviye için şanzıman ve hidrolik yağı"/>
         <text name="rms_fluid_function_coolant" text="Manuel soğutma sıvısı takviyesi için"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue deposu olan makineler için AdBlue"/>
         <text name="rms_fluid_pour_action" text="Ekle: %s"/>
         <text name="rms_fluid_level_done" text="Seviye Tamamlandı"/>
         <text name="rms_fluid_container_empty" text="Bidon Boş"/>
         <text name="rms_fluid_drum_empty" text="Varil Boş"/>
+        <text name="rms_fluid_tank_empty" text="Tank Boş"/>
         <text name="rms_fluid_container_label" text="Bidon"/>
         <text name="rms_fluid_drum_label" text="Varil"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Eklemek İçin Al"/>
         <text name="rms_fluid_hand_carry" text="Bidonu Taşı"/>
         <text name="rms_drum_pump_name" text="Akülü Varil Pompası"/>
-        <text name="rms_drum_pump_function" text="Varile takılır ve makineleri tabancasıyla doldurur"/>
+        <text name="rms_drum_pump_function" text="Varile veya tanka takılır ve makineleri tabancasıyla doldurur"/>
         <text name="rms_drum_pump_mount" text="Varile Tak"/>
+        <text name="rms_drum_pump_mount_tank" text="Tanka Tak"/>
         <text name="rms_drum_pump_take" text="Pompayı Geri Al"/>
         <text name="rms_drum_pump_nozzle_take" text="Tabancayı Al"/>
         <text name="rms_drum_pump_nozzle_return" text="Tabancayı As"/>
         <text name="rms_drum_pump_hose_range" text="Pompanın hortumu daha ileri gitmenizi engelliyor.&#10;Tabanca %.1f m sonra yerine asılacak!"/>
         <text name="rms_drum_pump_machine_too_far" text="Varili yaklaştırın: hortum 4 m uzunluğunda"/>
+        <text name="rms_drum_pump_tank_too_far" text="Tankı yaklaştırın: hortum 4 m uzunluğunda"/>
         <text name="rms_drum_pump_required" text="Varil Pompası Gerekli"/>
         <text name="rms_fluid_level_under_gauge" text="Ölçeğin Altında"/>
         <text name="rms_fluid_circuit_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_circuit_coolant" text="Soğutma Sıvısı"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue Deposu"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Şanzıman Yağı"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hidrolik Yağı"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Şanzıman ve Hidrolik Yağı"/>
         <text name="rms_fluid_hud_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Şanz./Hidrolik Yağı"/>
         <text name="rms_fluid_hud_coolant" text="Soğutma Sıvısı"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Uyumsuz Sıvı"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, motor aşınmasını 3 katına kadar çıkarabilir ve motorun ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, soğutma sistemi aşınmasını 3 katına kadar çıkarabilir ve motorun ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Uygun Olmayan Motor Yağı"/>
         <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: kullanım kılavuzu bunlar için yapılmış bir yağ istiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_circuit" text="Bu araç için sıvı takviyesi gerekmiyor"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Bu aracın AdBlue deposu yok"/>
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
         <text name="rms_fluid_error_vehicle_moving" text="Araç hareketsiz olmalı"/>
         <text name="rms_fluid_error_busy" text="Bu devreyi zaten başka bir kap dolduruyor"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="İleri aşınma"/>
         <text name="rms_fleet_part_failed" text="Arızalı"/>
         <text name="rms_fleet_part_unmeasured" text="Ölçüm yok"/>
+        <text name="rms_fleet_part_replaced" text="Parça değiştirildi"/>
         <text name="rms_fleet_parts_reading" text="Parçaların ölçümü: %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parçaların ölçümü: bir sonraki kapsamlı muayenede"/>
         <text name="rms_fleet_greasing_done" text="Gresleme güncel"/>

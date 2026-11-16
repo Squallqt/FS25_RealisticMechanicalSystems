@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Визначає, чи завершується механічний капітальний ремонт у майстерні миттєво, включно з уже розпочатим."/>
         <text name="rms_instantRemap_label" text="Миттєвий чип-тюнінг двигуна"/>
         <text name="rms_instantRemap_tooltip" text="Визначає, чи завершуються чип-тюнінг двигуна та повернення заводської прошивки миттєво, включно з уже розпочатими."/>
-        <text name="rms_debugMode_label" text="Режим налагодження"/>
-        <text name="rms_debugMode_tooltip" text="Визначає, чи показується вікно налагодження в керованій машині та чи отримує консоль докладні журнали. Клавіша %s відкриває і закриває вікно; у багатокористувацькій грі його бачать лише адміністратори."/>
+        <text name="rms_debugWindow_label" text="Вікно налагодження"/>
+        <text name="rms_debugWindow_tooltip" text="Визначає, чи показується вікно налагодження в керованій машині. Клавіша %s теж відкриває його; у багатокористувацькій грі його бачать лише адміністратори."/>
+        <text name="rms_debugLog_label" text="Докладний журнал"/>
+        <text name="rms_debugLog_tooltip" text="Визначає, чи отримує консоль докладні журнали RMS для звіту про помилку, без відкриття вікна налагодження."/>
         <text name="rms_warningMessages_label" text="Попереджувальні повідомлення"/>
         <text name="rms_warningMessages_tooltip" text="Визначає, чи показуються попередження, наприклад про холодний двигун або перегрів. Повідомлення про обмеження потужності через температуру показуються завжди."/>
         <text name="rms_serviceInterval_label" text="Періодичність обслуговування"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Моторна олива, для машин без AdBlue і сажового фільтра"/>
         <text name="rms_fluid_function_utto" text="Трансмісійна та гідравлічна олива для ручного доливання"/>
         <text name="rms_fluid_function_coolant" text="Охолоджувальна рідина для ручного доливання"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue для бака AdBlue машин, які його мають"/>
         <text name="rms_fluid_pour_action" text="Долити: %s"/>
         <text name="rms_fluid_level_done" text="Рівень відновлено"/>
         <text name="rms_fluid_container_empty" text="Каністра порожня"/>
         <text name="rms_fluid_drum_empty" text="Бочка порожня"/>
+        <text name="rms_fluid_tank_empty" text="Ємність порожня"/>
         <text name="rms_fluid_container_label" text="Каністра"/>
         <text name="rms_fluid_drum_label" text="Бочка"/>
+        <text name="rms_fluid_tank_label" text="Ємність"/>
         <text name="rms_fluid_hand_take" text="Взяти для доливу"/>
         <text name="rms_fluid_hand_carry" text="Нести каністру"/>
         <text name="rms_drum_pump_name" text="Акумуляторний бочковий насос"/>
-        <text name="rms_drum_pump_function" text="Ставиться на бочку і заправляє машини через пістолет"/>
+        <text name="rms_drum_pump_function" text="Ставиться на бочку або ємність і заправляє машини через пістолет"/>
         <text name="rms_drum_pump_mount" text="Поставити на бочку"/>
+        <text name="rms_drum_pump_mount_tank" text="Поставити на ємність"/>
         <text name="rms_drum_pump_take" text="Зняти насос"/>
         <text name="rms_drum_pump_nozzle_take" text="Взяти пістолет"/>
         <text name="rms_drum_pump_nozzle_return" text="Повісити пістолет"/>
         <text name="rms_drum_pump_hose_range" text="Шланг насоса не дає відійти далі.&#10;Пістолет буде повішено через %.1f м!"/>
         <text name="rms_drum_pump_machine_too_far" text="Підсуньте бочку ближче: довжина шланга 4 м"/>
+        <text name="rms_drum_pump_tank_too_far" text="Підсуньте ємність ближче: довжина шланга 4 м"/>
         <text name="rms_drum_pump_required" text="Потрібен бочковий насос"/>
         <text name="rms_fluid_level_under_gauge" text="Нижче шкали"/>
         <text name="rms_fluid_circuit_engineOil" text="Моторна олива"/>
         <text name="rms_fluid_circuit_coolant" text="Охолоджувальна рідина"/>
+        <text name="rms_fluid_circuit_adBlue" text="Бак AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Трансмісійна олива"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Гідравлічна олива"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Трансмісійно-гідравлічна олива"/>
         <text name="rms_fluid_hud_engineOil" text="Моторна олива"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Олива транс./гідр."/>
         <text name="rms_fluid_hud_coolant" text="Антифриз"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Несумісна рідина"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Цей продукт не призначений для цієї системи. Він забруднить її та може у 3 рази прискорити знос двигуна й посилити його нагрівання. Лише повна заміна рідини усуне забруднення. Продовжити?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Цей продукт не призначений для цієї системи. Він забруднить її та може у 3 рази прискорити знос системи охолодження й посилити нагрівання двигуна. Лише повна заміна рідини усуне забруднення. Продовжити?"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="Невідповідна моторна олива"/>
         <text name="rms_fluid_unsuited_oil_message" text="Цей двигун працює з AdBlue або має сажовий фільтр: його інструкція вимагає оливи, призначеної для них. З цією оливою заміна оливи знадобиться до двох разів раніше. Сажовий фільтр до того ж забивається золою в 1,5 раза швидше. Продовжити?"/>
         <text name="rms_fluid_error_no_circuit" text="Цій машині не потрібне доливання рідини"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Ця машина не має бака AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Заглушіть двигун перед переливанням рідини"/>
         <text name="rms_fluid_error_vehicle_moving" text="Машина має стояти нерухомо"/>
         <text name="rms_fluid_error_busy" text="Цей контур уже заправляється з іншої ємності"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="Значний знос"/>
         <text name="rms_fleet_part_failed" text="Несправність"/>
         <text name="rms_fleet_part_unmeasured" text="Немає виміру"/>
+        <text name="rms_fleet_part_replaced" text="Деталь замінена"/>
         <text name="rms_fleet_parts_reading" text="Вимір деталей %s"/>
         <text name="rms_fleet_parts_need_complete" text="Вимір деталей на наступному повному огляді"/>
         <text name="rms_fleet_greasing_done" text="Змащування виконано"/>

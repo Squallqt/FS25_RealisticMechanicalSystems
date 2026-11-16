@@ -61,8 +61,10 @@
         <text name="rms_instantOverhaul_tooltip" text="ワークショップの機械オーバーホールを、進行中のものも含めて即座に完了するか設定します。"/>
         <text name="rms_instantRemap_label" text="即時エンジン書き換え"/>
         <text name="rms_instantRemap_tooltip" text="エンジン書き換えと純正に戻す作業を、進行中のものも含めて即座に完了するか設定します。"/>
-        <text name="rms_debugMode_label" text="デバッグモード"/>
-        <text name="rms_debugMode_tooltip" text="運転中の車両にデバッグ画面を表示し、コンソールに詳細なログを出力するか設定します。%sキーで画面を開閉します。マルチプレイでは管理者だけに表示されます。"/>
+        <text name="rms_debugWindow_label" text="デバッグウィンドウ"/>
+        <text name="rms_debugWindow_tooltip" text="運転中の車両にデバッグ画面を表示するか設定します。%sキーでも開けます。マルチプレイでは管理者だけに表示されます。"/>
+        <text name="rms_debugLog_label" text="詳細ログ"/>
+        <text name="rms_debugLog_tooltip" text="デバッグ画面を開かずに、RMSの詳細なログをコンソールに出力するか設定します。不具合の報告に添付できます。"/>
         <text name="rms_warningMessages_label" text="警告メッセージ"/>
         <text name="rms_warningMessages_tooltip" text="エンジンの冷えや過熱などの警告を表示するか設定します。温度による出力制限のメッセージは常に表示されます。"/>
         <text name="rms_serviceInterval_label" text="整備の間隔"/>
@@ -662,32 +664,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="エンジンオイル、AdBlueと粒子状物質フィルターのない機械用"/>
         <text name="rms_fluid_function_utto" text="手動補給用ミッション・作動油"/>
         <text name="rms_fluid_function_coolant" text="手動補給用冷却液"/>
+        <text name="rms_fluid_function_adblue" text="AdBlueタンクを備えた機械用のAdBlue"/>
         <text name="rms_fluid_pour_action" text="補給：%s"/>
         <text name="rms_fluid_level_done" text="補給完了"/>
         <text name="rms_fluid_container_empty" text="容器が空です"/>
         <text name="rms_fluid_drum_empty" text="ドラム缶が空です"/>
+        <text name="rms_fluid_tank_empty" text="タンクが空です"/>
         <text name="rms_fluid_container_label" text="容器"/>
         <text name="rms_fluid_drum_label" text="ドラム缶"/>
+        <text name="rms_fluid_tank_label" text="タンク"/>
         <text name="rms_fluid_hand_take" text="手に持って補給"/>
         <text name="rms_fluid_hand_carry" text="容器を運ぶ"/>
         <text name="rms_drum_pump_name" text="充電式ドラムポンプ"/>
-        <text name="rms_drum_pump_function" text="ドラム缶に取り付け、ノズルで機械に補給します"/>
+        <text name="rms_drum_pump_function" text="ドラム缶やタンクに取り付け、ノズルで機械に補給します"/>
         <text name="rms_drum_pump_mount" text="ドラム缶に取り付ける"/>
+        <text name="rms_drum_pump_mount_tank" text="タンクに取り付ける"/>
         <text name="rms_drum_pump_take" text="ポンプを取り外す"/>
         <text name="rms_drum_pump_nozzle_take" text="ノズルを持つ"/>
         <text name="rms_drum_pump_nozzle_return" text="ノズルを戻す"/>
         <text name="rms_drum_pump_hose_range" text="ポンプのホースがこれ以上進むのを妨げています。&#10;あと%.1f mでノズルが戻されます！"/>
         <text name="rms_drum_pump_machine_too_far" text="ドラム缶を近づけてください：ホースは4 mです"/>
+        <text name="rms_drum_pump_tank_too_far" text="タンクを近づけてください：ホースは4 mです"/>
         <text name="rms_drum_pump_required" text="ドラムポンプが必要です"/>
         <text name="rms_fluid_level_under_gauge" text="目盛りより下"/>
         <text name="rms_fluid_circuit_engineOil" text="エンジンオイル"/>
         <text name="rms_fluid_circuit_coolant" text="冷却液"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlueタンク"/>
         <text name="rms_fluid_circuit_transmissionOil" text="ミッションオイル"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="作動油"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="ミッションオイル兼作動油"/>
         <text name="rms_fluid_hud_engineOil" text="エンジンオイル"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="ミッション兼作動油"/>
         <text name="rms_fluid_hud_coolant" text="冷却液"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="互換性のない油水類"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="この製品は選択した回路用ではありません。回路が汚染され、エンジンの摩耗が最大3倍になり、発熱が増えるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_incompatible_message_coolant" text="この製品は選択した回路用ではありません。回路が汚染され、冷却システムの摩耗が最大3倍になり、エンジンの発熱が増えるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
@@ -697,6 +706,7 @@
         <text name="rms_fluid_unsuited_oil_title" text="適合しないエンジンオイル"/>
         <text name="rms_fluid_unsuited_oil_message" text="このエンジンはAdBlueを使うか、粒子状物質フィルターを備えています。取扱説明書はそれらに対応したオイルを指定しています。このオイルでは、オイル交換が最大2倍早くなります。粒子状物質フィルターも1.5倍の速さで灰がたまります。続けますか？"/>
         <text name="rms_fluid_error_no_circuit" text="この車両は油水類を補給する必要がありません"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="この車両にはAdBlueタンクがありません"/>
         <text name="rms_fluid_error_motor_running" text="油水類を移送する前にエンジンを停止してください"/>
         <text name="rms_fluid_error_vehicle_moving" text="車両を停止させてください"/>
         <text name="rms_fluid_error_busy" text="別の容器がこの系統に補給中です"/>
@@ -920,6 +930,7 @@
         <text name="rms_fleet_part_worn" text="摩耗進行"/>
         <text name="rms_fleet_part_failed" text="故障"/>
         <text name="rms_fleet_part_unmeasured" text="測定記録なし"/>
+        <text name="rms_fleet_part_replaced" text="部品交換済み"/>
         <text name="rms_fleet_parts_reading" text="部品測定：%s"/>
         <text name="rms_fleet_parts_need_complete" text="部品測定：次回の完全点検で"/>
         <text name="rms_fleet_greasing_done" text="グリース完了"/>
