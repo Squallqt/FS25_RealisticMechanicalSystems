@@ -729,6 +729,15 @@ function RMS_Main.getCanPickupHandToolFromMenu(holder, superFunc, handTool)
     return holder.parent[RMS_BatteryCharger.SPEC_TABLE_NAME] == nil and superFunc(holder, handTool)
 end
 
+---Saves a trolley tool still waiting for its holder on that holder
+function RMS_Main.saveTrolleyToolHolder(handTool, xmlFile, key)
+    local holderId = handTool:getHolder() == nil and handTool.pendingHolderUniqueId or nil
+    local holder = holderId ~= nil and g_currentMission.handToolSystem:getHandToolHolderByUniqueId(holderId) or nil
+    if holder ~= nil and holder.parent[RMS_BatteryCharger.SPEC_TABLE_NAME] ~= nil then
+        xmlFile:setValue(key .. ".holder#uniqueId", holderId)
+    end
+end
+
 FSBaseMission.onStartMission = Utils.prependedFunction(FSBaseMission.onStartMission, RMS_Main.onStartMission)
 FSBaseMission.saveSavegame = Utils.appendedFunction(FSBaseMission.saveSavegame, RMS_Config.saveToXMLFile)
 Mission00.loadMission00Finished = Utils.appendedFunction(Mission00.loadMission00Finished, function()
@@ -752,6 +761,7 @@ WorkshopScreen.setVehicle = Utils.appendedFunction(WorkshopScreen.setVehicle, RM
 WearableRepaintEvent.run = Utils.overwrittenFunction(WearableRepaintEvent.run, RMS_Main.runNativeRepaintEvent)
 InGameMenuStatisticsFrame.populateCellForItemInSection = Utils.overwrittenFunction(InGameMenuStatisticsFrame.populateCellForItemInSection, RMS_Main.populateCellForItemInSection)
 HandToolHolder.getCanPickupHandToolFromMenu = Utils.overwrittenFunction(HandToolHolder.getCanPickupHandToolFromMenu, RMS_Main.getCanPickupHandToolFromMenu)
+HandTool.saveToXMLFile = Utils.appendedFunction(HandTool.saveToXMLFile, RMS_Main.saveTrolleyToolHolder)
 ShopConfigScreen.processAttributeData = Utils.appendedFunction(ShopConfigScreen.processAttributeData, RMS_Main.processAttributeData)
 ShopConfigScreen.processStoreItemConfigurations = Utils.appendedFunction(
     ShopConfigScreen.processStoreItemConfigurations, RMS_Main.removeShopConfigPaintColors)

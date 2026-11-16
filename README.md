@@ -2,7 +2,7 @@
 
 In-depth vehicle wear, failure, diagnostics, maintenance, and repair system for Farming Simulator 25.
 
-[![Version](https://img.shields.io/badge/version-1.0.0.0--beta.2-blue.svg)](#)
+[![Version](https://img.shields.io/badge/version-1.0.0.0--beta.3-blue.svg)](#)
 [![FS25](https://img.shields.io/badge/FS25-compatible-green.svg)](https://farming-simulator.com/)
 ![Multiplayer](https://img.shields.io/badge/multiplayer-supported-success.svg)
 ![Languages](https://img.shields.io/badge/languages-27-blue.svg)
@@ -445,6 +445,7 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
 - Fixed the Condition card showing parts replaced since the last inspection as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
+- Fixed the tools put away on the trolley returning to Hand Tools after a dedicated server restart
 
 ### v1.0.0.0-beta.2
 

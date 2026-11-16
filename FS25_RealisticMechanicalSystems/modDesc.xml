@@ -82,6 +82,7 @@ Changelog 1.0.0.0-beta.3:
 - Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
 - Fixed the Condition card showing parts replaced since the last inspection as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
+- Fixed the tools put away on the trolley returning to Hand Tools after a dedicated server restart
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -381,6 +382,7 @@ Changelog 1.0.0.0-beta.3:
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
 - Zustandskarte behoben, die seit der letzten Inspektion ersetzte Teile als ausgefallen oder verschlissen zeigte
 - Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
+- Auf dem Wagen abgelegte Werkzeuge behoben, die nach einem Neustart des dedizierten Servers ins Menü Werkzeuge zurückkehrten
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -680,6 +682,7 @@ Changelog 1.0.0.0-beta.3 :
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs
 - Correction de la carte État qui montrait en panne ou usées les pièces remplacées depuis la dernière inspection
 - Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
+- Correction des outils rangés sur le chariot qui revenaient dans les Outils manuels après un redémarrage du serveur dédié
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel
