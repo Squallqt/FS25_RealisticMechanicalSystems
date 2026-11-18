@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="車両"/>
         <text name="rms_hud_mass_towed" text="連結"/>
         <text name="rms_hud_mass_total" text="合計"/>
+        <text name="rms_hud_fuel_average" text="平均"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2駆"/>
         <text name="rms_hud_drive_4wd" text="4駆"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="履歴はまだありません"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="過熱保護：出力制限が解除されました"/>
+        <text name="rms_adblue_title" text="尿素水"/>
+        <text name="rms_adblue_low_message" text="尿素水の残量が少なくなっています：尿素水を補給してください。"/>
+        <text name="rms_adblue_very_low_message" text="尿素水の残量がわずかです：尿素水を補給してください。"/>
+        <text name="rms_adblue_very_low_derate_message" text="尿素水の残量がわずかです：エンジン出力が低下しています。尿素水を補給してください。"/>
+        <text name="rms_adblue_empty_message" text="尿素水タンクが空です：尿素水を補給してください。"/>
+        <text name="rms_adblue_empty_derate_message" text="尿素水タンクが空です：エンジン出力が大きく低下しています。尿素水を補給してください。"/>
+        <text name="rms_adblue_restored_message" text="尿素水を補給しました：エンジン出力が回復しました。"/>
         <text name="rms_breakdown_at_progress_message" text="進行中"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="警告！エンジンが冷えています。温まるまで摩耗が進みます。"/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="この製品は選択した回路用ではありません。回路が汚染され、油圧システムの摩耗が最大3倍になり、発熱が増えて動作が遅くなるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="この製品は選択した回路用ではありません。回路が汚染され、ミッションと油圧システムの摩耗が最大3倍になり、発熱が増えて油圧の動作が遅くなるおそれがあります。汚染を除去するには油水類を完全に交換する必要があります。続行しますか？"/>
         <text name="rms_fluid_unsuited_oil_title" text="適合しないエンジンオイル"/>
-        <text name="rms_fluid_unsuited_oil_message" text="このエンジンはAdBlueを使うか、粒子状物質フィルターを備えています。取扱説明書はそれらに対応したオイルを指定しています。このオイルでは、オイル交換が最大2倍早くなります。粒子状物質フィルターも1.5倍の速さで灰がたまります。続けますか？"/>
+        <text name="rms_fluid_unsuited_oil_message" text="このエンジンはAdBlueを使うか、粒子状物質フィルターを備えています。それらに対応したオイルが必要です。このオイルでは、オイル交換が最大2倍早くなります。粒子状物質フィルターも1.5倍の速さで灰がたまります。続けますか？"/>
         <text name="rms_fluid_error_no_circuit" text="この車両は油水類を補給する必要がありません"/>
         <text name="rms_fluid_error_no_adblue_tank" text="この車両にはAdBlueタンクがありません"/>
         <text name="rms_fluid_error_motor_running" text="油水類を移送する前にエンジンを停止してください"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷却装置とエアフィルター"/>
         <text name="rms_tutorial_cooling_air_check_message" text="ラジエーターまたはエアフィルターが詰まっています。車両を見ながら%sキーを長押しして、どちらかを確認してください。圧縮空気ブロワーで清掃できます。フィルターをこれ以上清掃できない場合は、ワークショップの%s整備以上で交換されます。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="グリース補給時期"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%sのグリースニップルにグリース補給が必要です。&#10;&#10;RMSでは各機械に取扱説明書に記載されたグリースニップルがあります。稼働日ごとに、取扱説明書で補給の間隔が長いものは数稼働日ごとに補給が必要になります。補給が遅れるとシャーシの摩耗が速まります。&#10;&#10;ショップでグリースガンとカートリッジを購入してください。ガンを持ち、カートリッジの前に立って装着してから機械をねらってください。クリックするたびにニップル1個に補給し、長押しすると次のニップルへの補給を続けます。&#10;&#10;残りのニップルを確認するには、車両を見ながら%sキーを長押ししてください。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%sのグリースニップルにグリース補給が必要です。&#10;&#10;RMSでは各機械に専用のグリースニップルがあります。稼働日ごとに、一部のものは数稼働日ごとに補給が必要になります。補給が遅れるとシャーシの摩耗が速まります。&#10;&#10;ショップでグリースガンとカートリッジを購入してください。ガンを持ち、カートリッジの前に立って装着してから機械をねらってください。クリックするたびにニップル1個に補給し、長押しすると次のニップルへの補給を続けます。&#10;&#10;残りのニップルを確認するには、車両を見ながら%sキーを長押ししてください。"/>
         <text name="rms_tutorial_needs_repair_title" text="故障検出"/>
         <text name="rms_tutorial_needs_repair_message" text="%sに問題が発生しています。部品の一つが故障した可能性があります。&#10;&#10;ワークショップに持ち込んでください。点検、または時期であればメンテナンスで故障を特定します。先延ばしにしないでください。故障がさらに悪化し、修理費用も増える可能性があります。&#10;&#10;故障が特定されたら、ワークショップで修理してください。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="オーバーホール時期"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="気温の高い天候"/>
         <text name="rms_tutorial_hot_weather_message" text="今日は非常に気温が高くなっています。このような天候ではラジエーターの汚れを確認し、エンジンの過負荷を避けてください。そうしなければ、やがて過熱します。&#10;&#10;ラジエーターの状態を確認するには、車両を見ながら%sキーを長押ししてください。清掃にはエアブロワーを使用します。"/>
         <text name="rms_tutorial_heavy_trailer_title" text="重すぎるトレーラー"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="けん引荷重がこの車両には重すぎる可能性があります。走行を続けることはできますが、ミッションと駆動系にかかる応力が増えます。&#10;&#10;RMSでは二つの基準を使用します。トラクターにはけん引重量の各トンにつき最低10馬力、トラックには連結車両総重量の各トンにつき最低6馬力が必要です。該当する基準を下回った状態でエンジンに高い負荷がかかると、ミッションの摩耗が増えます。"/>
+        <text name="rms_tutorial_heavy_trailer_message" text="けん引荷重がこの車両には重い状態です。走行を続けることはできますが、ブレーキをかけるたびにブレーキの摩耗が早まります。&#10;&#10;RMSでは二つの基準を使用します。トラクターは自重の4.5倍を超える荷重をけん引している場合、トラックは連結車両総重量1トンあたり6馬力未満の場合です。荷重が重いほど、ブレーキの摩耗は早くなります。"/>
         <text name="rms_tutorial_hard_start_title" text="始動不良"/>
         <text name="rms_tutorial_hard_start_message" text="%sのエンジンが始動しにくくなっています。バッテリーの電力不足、厳しい冷え込み、機械的な故障、スターターの摩耗などが原因です。&#10;&#10;始動時の大きな突入電流により、電気システムには大きな負荷がかかります。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃料残量低下"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="スキャンツール接続の移動式・個人ワークショップ、またはディーラー"/>
         <text name="rms_diagnostic_where_high_voltage" text="個人ワークショップまたはディーラー"/>
         <text name="rms_diagnostic_note_inspection" text="このコードは車両が測定した内容を示し、故障部品は示しません：点検で特定します。"/>
+        <text name="rms_diagnostic_note_adblue" text="このコードは尿素水タンクの残量低下を示します：尿素水を補給すると消えます。"/>
         <text name="rms_diagnostic_note_uncoded" text="車両の点検で対象部品を特定します。"/>
         <text name="rms_diagnostic_uncoded" text="警告灯が点灯、コード記録なし。対象部品の状態を確認するセンサーはありません。"/>
         <text name="rms_diagnostic_uncoded_title" text="コードなしの警告灯"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="スターターリレー"/>
         <text name="rms_diagnostic_spn_167" text="充電電圧"/>
         <text name="rms_diagnostic_spn_157" text="コモンレール圧"/>
+        <text name="rms_diagnostic_spn_1761" text="尿素水タンク残量"/>
         <text name="rms_diagnostic_spn_4375" text="尿素水ポンプ"/>
         <text name="rms_diagnostic_spn_3361" text="尿素水定量噴射インジェクター"/>
         <text name="rms_diagnostic_spn_3216" text="上流側NOxセンサー"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="装置または部品の不良"/>
         <text name="rms_diagnostic_fmi_14" text="特別な指示"/>
         <text name="rms_diagnostic_fmi_16" text="データが正常範囲を上回る（中程度に重大なレベル）"/>
+        <text name="rms_diagnostic_fmi_17" text="データが正常範囲を下回る（最も軽度なレベル）"/>
         <text name="rms_diagnostic_fmi_18" text="データが正常範囲を下回る（中程度に重大なレベル）"/>
         <text name="rms_diagnostic_fmi_31" text="条件が成立"/>
         <text name="rms_dashboard_code_message" text="%s、%s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="部品の不良"/>
         <text name="rms_dashboard_fmi_14" text="対処が必要"/>
         <text name="rms_dashboard_fmi_16" text="値が高い"/>
+        <text name="rms_dashboard_fmi_17" text="値がやや低い"/>
         <text name="rms_dashboard_fmi_18" text="値が低い"/>
         <text name="rms_dashboard_fmi_31" text="故障あり"/>
         <text name="rms_diagnostic_log_title" text="コード読み取り"/>

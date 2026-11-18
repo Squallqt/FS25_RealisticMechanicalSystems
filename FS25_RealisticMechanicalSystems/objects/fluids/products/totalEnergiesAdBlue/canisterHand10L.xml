@@ -1,6 +1,5 @@
 <handTool type="rmsFluidCanister" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/handTool.xsd">
     <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
-    <!-- Carried 10 L can -->
     <storeData>
         <name>$l10n_rms_fluid_container_typedesc</name>
         <image>objects/fluids/products/totalEnergiesAdBlue/store_totalEnergiesAdBlue.png</image>

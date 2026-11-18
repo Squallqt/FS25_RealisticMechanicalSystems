@@ -5,10 +5,12 @@
       <size width="1024" height="2048" />
    </meta>
    <slices>
+      <slice id="adBlue" uvs="422px 1656px 38px 38px" />
       <slice id="background" uvs="8px 8px 180px 232px" />
       <slice id="backgroundBubbles" uvs="572px 8px 180px 232px" />
       <slice id="backgroundHigh" uvs="196px 8px 180px 232px" />
       <slice id="backgroundLow" uvs="384px 8px 180px 232px" />
+      <slice id="backgroundStraight" uvs="16px 1712px 8px 232px" />
       <slice id="band" uvs="330px 1656px 38px 38px" />
       <slice id="bar" uvs="449px 1564px 50px 50px" />
       <slice id="battery" uvs="885px 1564px 38px 38px" />

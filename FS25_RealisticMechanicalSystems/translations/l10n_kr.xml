@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="차량"/>
         <text name="rms_hud_mass_towed" text="부착 장비"/>
         <text name="rms_hud_mass_total" text="합계"/>
+        <text name="rms_hud_fuel_average" text="평균"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="자동"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="기록이 없습니다"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="과열 보호: 출력 제한 해제"/>
+        <text name="rms_adblue_title" text="요소수"/>
+        <text name="rms_adblue_low_message" text="요소수 잔량 부족: 요소수를 보충하십시오."/>
+        <text name="rms_adblue_very_low_message" text="요소수 잔량 매우 부족: 요소수를 보충하십시오."/>
+        <text name="rms_adblue_very_low_derate_message" text="요소수 잔량 매우 부족: 엔진 출력이 제한됩니다. 요소수를 보충하십시오."/>
+        <text name="rms_adblue_empty_message" text="요소수 탱크가 비었습니다: 요소수를 보충하십시오."/>
+        <text name="rms_adblue_empty_derate_message" text="요소수 탱크가 비었습니다: 엔진 출력이 크게 제한됩니다. 요소수를 보충하십시오."/>
+        <text name="rms_adblue_restored_message" text="요소수 보충 완료: 엔진 출력이 복구되었습니다."/>
         <text name="rms_breakdown_at_progress_message" text="진행 중"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="경고! 엔진이 차갑습니다. 예열될 때까지 마모됩니다."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 유압 마모를 최대 3배까지 증가시키고 발열을 높이며 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="이 제품은 해당 회로용이 아닙니다. 혼합물을 오염시키며 변속기와 유압 마모를 최대 3배까지 증가시키고 발열을 높이며 유압 작동을 느리게 할 수 있습니다. 오염을 제거하려면 유체를 완전히 교환해야 합니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_unsuited_oil_title" text="부적합한 엔진 오일"/>
-        <text name="rms_fluid_unsuited_oil_message" text="이 엔진은 AdBlue를 사용하거나 매연저감 필터가 있습니다. 취급 설명서는 이에 맞는 오일을 요구합니다. 이 오일로는 오일 교환이 최대 두 배 빨리 돌아옵니다. 매연저감 필터에도 재가 1.5배 빨리 쌓입니다. 계속하시겠습니까?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="이 엔진은 AdBlue를 사용하거나 매연저감 필터가 있습니다. 이에 맞는 오일이 필요합니다. 이 오일로는 오일 교환이 최대 두 배 빨리 돌아옵니다. 매연저감 필터에도 재가 1.5배 빨리 쌓입니다. 계속하시겠습니까?"/>
         <text name="rms_fluid_error_no_circuit" text="이 차량은 유체 보충이 필요하지 않습니다"/>
         <text name="rms_fluid_error_no_adblue_tank" text="이 차량에는 AdBlue 탱크가 없습니다"/>
         <text name="rms_fluid_error_motor_running" text="유체를 이송하기 전에 엔진을 끄십시오"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="열 제거 및 에어 필터"/>
         <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하십시오. 압축 공기 블로어로 청소하십시오. 필터를 더 이상 불어내어 청소할 수 없다면 정비소가 %s 정비부터 교체합니다."/>
         <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량에 그리스 주입이 필요한 주입구가 있습니다.&#10;&#10;RMS에서 각 기계에는 사용 설명서에 나오는 그리스 주입구가 있습니다. 작업한 날마다 다시 주입해야 하며, 설명서의 주입 주기가 긴 곳은 작업한 날 며칠마다 주입해야 합니다. 주입이 늦어지면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건과 카트리지를 구입하십시오. 건을 손에 들고 카트리지 앞에 서서 장착한 다음 기계를 조준하십시오. 클릭할 때마다 주입구 하나에 그리스를 주입하며, 버튼을 누르고 있으면 다음 주입구로 이어집니다.&#10;&#10;남은 주입구를 보려면 차량을 바라보며 %s 키를 길게 누르십시오."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량에 그리스 주입이 필요한 주입구가 있습니다.&#10;&#10;RMS에서 각 기계에는 고유한 그리스 주입구가 있습니다. 작업한 날마다 다시 주입해야 하며, 일부는 작업한 날 며칠마다 주입해야 합니다. 주입이 늦어지면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건과 카트리지를 구입하십시오. 건을 손에 들고 카트리지 앞에 서서 장착한 다음 기계를 조준하십시오. 클릭할 때마다 주입구 하나에 그리스를 주입하며, 버튼을 누르고 있으면 다음 주입구로 이어집니다.&#10;&#10;남은 주입구를 보려면 차량을 바라보며 %s 키를 길게 누르십시오."/>
         <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>
         <text name="rms_tutorial_needs_repair_message" text="%s 차량에 문제가 있습니다. 부품 하나가 고장 났을 수 있습니다.&#10;&#10;정비소로 가십시오. 점검, 또는 시기가 된 정비로 고장을 확인합니다. 미루면 고장이 계속 악화되고 수리 비용도 증가할 수 있습니다.&#10;&#10;고장이 확인되면 정비소에서 수리하십시오."/>
         <text name="rms_tutorial_needs_overhaul_title" text="오버홀 필요"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="더운 날씨"/>
         <text name="rms_tutorial_hot_weather_message" text="오늘은 기온이 매우 높습니다. 이런 날씨에는 라디에이터 청결 상태를 확인하고 엔진 과부하를 피해야 합니다. 그렇지 않으면 과열은 시간문제입니다.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 점검으로 라디에이터 상태를 확인할 수 있고, 에어 블로워로 청소도 할 수 있습니다."/>
         <text name="rms_tutorial_heavy_trailer_title" text="너무 무거운 트레일러"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 너무 무거울 수 있습니다. 계속 주행할 수는 있지만 변속기와 구동계의 부담이 증가합니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 견인 중량 톤당 최소 10마력, 트럭은 총 조합 중량 톤당 최소 6마력이 필요합니다. 엔진 부하가 높은 상태에서 해당 기준보다 낮으면 변속기 마모가 증가합니다."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 무겁습니다. 계속 주행할 수는 있지만 제동할 때마다 브레이크가 더 빨리 마모됩니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 자체 중량의 4.5배를 넘게 견인할 때, 트럭은 총 조합 중량 톤당 6마력 미만일 때입니다. 하중이 무거울수록 브레이크가 더 빨리 마모됩니다."/>
         <text name="rms_tutorial_hard_start_title" text="시동 어려움"/>
         <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 약한 배터리, 서리, 기계적 고장 또는 스타터 마모가 원인일 수 있습니다.&#10;&#10;시동 시 높은 돌입 전류로 인해 전기 시스템에 큰 부하가 걸립니다."/>
         <text name="rms_tutorial_low_fuel_title" text="연료 부족"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="진단 장비를 연결한 이동식 또는 소유한 정비소, 또는 대리점"/>
         <text name="rms_diagnostic_where_high_voltage" text="소유한 정비소 또는 대리점"/>
         <text name="rms_diagnostic_note_inspection" text="이 코드는 기계가 측정한 내용을 알려 줄 뿐 고장 난 부품은 알려 주지 않습니다: 점검으로 찾습니다."/>
+        <text name="rms_diagnostic_note_adblue" text="이 코드는 요소수 탱크 수위가 낮음을 알립니다: 요소수를 보충하면 지워집니다."/>
         <text name="rms_diagnostic_note_uncoded" text="기계를 점검하면 해당 부품을 찾습니다."/>
         <text name="rms_diagnostic_uncoded" text="저장된 코드 없이 경고등이 켜져 있습니다. 해당 부품을 감시하는 센서가 없습니다."/>
         <text name="rms_diagnostic_uncoded_title" text="코드 없는 경고등"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="스타터 릴레이"/>
         <text name="rms_diagnostic_spn_167" text="충전 전압"/>
         <text name="rms_diagnostic_spn_157" text="커먼레일 압력"/>
+        <text name="rms_diagnostic_spn_1761" text="요소수 탱크 수위"/>
         <text name="rms_diagnostic_spn_4375" text="요소수 펌프"/>
         <text name="rms_diagnostic_spn_3361" text="요소수 정량 분사 인젝터"/>
         <text name="rms_diagnostic_spn_3216" text="상류 NOx 센서"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="장치 또는 부품 불량"/>
         <text name="rms_diagnostic_fmi_14" text="특별 지침"/>
         <text name="rms_diagnostic_fmi_16" text="데이터가 정상 범위보다 높음 (중간 정도로 심각한 수준)"/>
+        <text name="rms_diagnostic_fmi_17" text="데이터가 정상 범위보다 낮음 (가장 경미한 수준)"/>
         <text name="rms_diagnostic_fmi_18" text="데이터가 정상 범위보다 낮음 (중간 정도로 심각한 수준)"/>
         <text name="rms_diagnostic_fmi_31" text="조건 존재"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="부품 불량"/>
         <text name="rms_dashboard_fmi_14" text="조치 필요"/>
         <text name="rms_dashboard_fmi_16" text="값이 높음"/>
+        <text name="rms_dashboard_fmi_17" text="값이 약간 낮음"/>
         <text name="rms_dashboard_fmi_18" text="값이 낮음"/>
         <text name="rms_dashboard_fmi_31" text="고장 존재"/>
         <text name="rms_diagnostic_log_title" text="코드 판독"/>

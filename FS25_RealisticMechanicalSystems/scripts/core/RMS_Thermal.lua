@@ -6,10 +6,12 @@ RMS_Thermal = RMS_Thermal or {}
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 local DAY_MS = 24 * 60 * 60 * 1000
 
+---Tells whether a value is a finite number
 local function isFinite(value)
     return type(value) == "number" and value == value and value > -math.huge and value < math.huge
 end
 
+---Returns a temperature, the fallback when it is unset
 local function getTemperature(value, fallback)
     if isFinite(value) and value ~= -99 then
         return value
@@ -17,6 +19,7 @@ local function getTemperature(value, fallback)
     return fallback
 end
 
+---Tells whether a system of the machine is enabled
 local function getSystemEnabled(spec, key)
     local system = spec.systems ~= nil and spec.systems[key] or nil
     return system == nil or system.enabled ~= false
@@ -69,6 +72,7 @@ function RMS_Thermal.getNativeThermalInputs(vehicle, isMotorStarted)
     }
 end
 
+---Returns the native engine temperature of a managed machine, nil when RMS does not drive it
 local function getManagedMotorTemperature(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     local motorized = vehicle ~= nil and vehicle.spec_motorized or nil
@@ -79,7 +83,7 @@ local function getManagedMotorTemperature(vehicle)
     return motorized.motorTemperature
 end
 
----Selects the shared ECU profile of native diesel engines managed by RMS
+---Tells whether the engine protection applies, on native diesel engines with the shared ECU profile
 function RMS_Thermal.getUsesEngineProtection(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     local motorized = vehicle ~= nil and vehicle.spec_motorized or nil
@@ -136,6 +140,7 @@ function RMS_Thermal.setEngineTemperature(vehicle, temperature)
     return temperature
 end
 
+---Sets the engine temperature at load, ambient without a saved one
 function RMS_Thermal.initializeEngineTemperature(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return RMS_Thermal.setEngineTemperature(vehicle,
@@ -152,7 +157,6 @@ function RMS_Thermal.getEngineTemperature(vehicle)
     local temperature = held or nativeValue or RMS_Utils.getAmbientTemperature()
     if vehicle.isServer and spec.takesEngineTemperature and held ~= nil and nativeValue ~= nil and nativeValue ~= held then
         temperature = nativeValue
-        -- a stopped engine cools from the command on
         spec._thermalEngineWorldTime = RMS_Thermal.getWorldTimeMS()
         spec._thermalEngineAmbient = RMS_Utils.getAmbientTemperature()
     end
@@ -173,6 +177,7 @@ function RMS_Thermal.shareEngineTemperature(vehicle)
     return temperature
 end
 
+---Returns the time elapsed for a role, the world time while the engine is off, and the previous ambient
 local function getRoleInterval(spec, trackerKey, ambientKey, dtOperating, isMotorStarted, ambient, worldTime)
     local previousAmbient = getTemperature(spec[ambientKey], ambient)
     local elapsed = dtOperating
@@ -189,6 +194,7 @@ local function getRoleInterval(spec, trackerKey, ambientKey, dtOperating, isMoto
     return elapsed, previousAmbient
 end
 
+---Returns the time elapsed for the traction battery, charging included, and the previous ambient
 local function getBatteryInterval(spec, dtOperating, ambient, worldTime, isMotorStarted)
     local previousAmbient = getTemperature(spec._thermalBatteryAmbient, ambient)
     local previousTime = spec._thermalBatteryWorldTime
@@ -209,6 +215,7 @@ local function getBatteryInterval(spec, dtOperating, ambient, worldTime, isMotor
     return elapsed, previousAmbient
 end
 
+---Returns the thermostat opening, its stuck position when it sticks
 local function getOpening(profile, temperature, health, stuckPosition)
     if stuckPosition ~= nil then
         return sanitizeNumber(stuckPosition, 0, 0, 1)
@@ -219,12 +226,14 @@ local function getOpening(profile, temperature, health, stuckPosition)
         * sanitizeNumber(health, 1, 0, 1)
 end
 
+---Returns the share of its cooling the radiator gives, dirt, health and fluid level counted
 local function getExchangeFactor(spec, fluidKey, dirt)
     local radiator = getSystemEnabled(spec, "cooling") and sanitizeNumber(spec.radiatorHealth, 1, 0, 1) or 1
     local fluid = fluidKey ~= nil and sanitizeNumber(spec[fluidKey], 1, 0, 1) or 1
     return (1 - dirt * dirt) * radiator * fluid
 end
 
+---Returns the share of its airflow the fan gives, none while it reverses
 local function getFanAirflow(spec, inputs)
     if spec.isElectricVehicle then
         return 1
@@ -235,6 +244,7 @@ local function getFanAirflow(spec, inputs)
     return inputs.fanSpeed ^ RMS_Config.THERMAL.FAN_AIRFLOW_EXPONENT
 end
 
+---Returns the warmup heat and cooling of a diesel at an ambient and a power
 local function getDieselWarmupRates(warmup, ambient, power)
     local climates = warmup.climates
     local climateIndex = 1
@@ -311,7 +321,7 @@ function RMS_Thermal.advanceRole(vehicle, role, temperature, dtMS, ambient0, amb
     }
 end
 
----Runs each role on its own clock, the battery at the engine phase boundary
+---Called on update: advances the engine, battery and oil temperatures, each on its own clock
 function RMS_Thermal:updateThermalSystems(dt, updateEngine, updateTransmission)
     local spec = self.spec_RealisticMechanicalSystems
     local safeDt = sanitizeNumber(dt, 0, 0)
@@ -425,6 +435,7 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
     end
 end
 
+---Returns a value checked finite, nonnegative when asked
 local function requireExactThermalInput(name, value, nonnegative)
     if type(value) ~= "number" or value ~= value or value == math.huge or value == -math.huge then
         error(name .. " must be a finite number", 3)
@@ -435,6 +446,7 @@ local function requireExactThermalInput(name, value, nonnegative)
     return value
 end
 
+---Returns the compensated sum of four terms
 local function sumExactThermalTerms(a, b, c, d)
     local total, correction = 0, 0
     for _, value in ipairs({a, b, c, d}) do
@@ -505,6 +517,7 @@ end
 
 RMS_Thermal.REVERSIBLE_FAN = "rmsReversibleFan"
 
+---Tells whether a store item may take the reversible fan option
 function RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem)
     if not xmlFile:hasProperty("vehicle.enterable") then
         return false
@@ -534,6 +547,7 @@ function RMS_Thermal.getTakesReversibleFan(xmlFile, storeItem)
     return burnsFuel and RMS_ProductionYear.getRaisedYear(storeItem, usesDef) >= RMS_Config.THERMAL.REVERSIBLE_FAN.MIN_YEAR
 end
 
+---Registers the reversible fan option and adds it to the items taking it
 function RMS_Thermal.registerReversibleFan()
     g_vehicleConfigurationManager:addConfigurationType(RMS_Thermal.REVERSIBLE_FAN,
         g_i18n:getText("rms_configuration_reversibleFan"), nil, VehicleConfigurationItem)
@@ -565,6 +579,7 @@ function RMS_Thermal.registerReversibleFan()
         end)
 end
 
+---Starts a fan reversal on a running engine
 function RMS_Thermal.startFanReversal(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.hasReversibleFan and vehicle:getIsMotorStarted() then
@@ -573,6 +588,7 @@ function RMS_Thermal.startFanReversal(vehicle)
     end
 end
 
+---Called on update: runs the fan reversal, triggered on its interval on recent machines
 function RMS_Thermal:updateFanReversal(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec.hasReversibleFan or not self:getIsMotorStarted() then
@@ -583,7 +599,6 @@ function RMS_Thermal:updateFanReversal(dt)
         return
     end
     if spec.fanReversalTime <= 0 then
-        -- an older fan reverses only from the cab
         if spec.year >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_MIN_YEAR then
             spec.fanRunningSinceReversal = spec.fanRunningSinceReversal + dt
             if spec.fanRunningSinceReversal >= RMS_Config.THERMAL.REVERSIBLE_FAN.AUTO_INTERVAL_MS then

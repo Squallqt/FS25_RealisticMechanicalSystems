@@ -3,7 +3,6 @@
 ---Engine start in the game's motor states: preheat, starter, catch
 RMS_Start = {}
 
--- the engine waits in the game's IGNITION state until it catches
 RMS_Start.STATE = {
     IDLE = 0,
     PREHEATING = 1,
@@ -20,7 +19,7 @@ RMS_Start.STATE_NAME = {
     [RMS_Start.STATE.FAILED] = "failed"
 }
 
--- longest starter turn and rest before the next, from manuals, in ms
+-- longest starter turn and rest before the next, in ms
 local STARTER_ATTEMPTS = {
     Car = { crank = 10000, rest = 20000 },
     Tractor4 = { crank = 30000, rest = 120000 },
@@ -115,6 +114,7 @@ function RMS_Start.getNeedsSequence(vehicle)
     return RMS_Preheat.isDieselVehicle(vehicle) or RMS_Start.getCrankNeed(vehicle) ~= nil
 end
 
+---Sets the state of the start sequence, sent to the clients by the server
 local function setState(vehicle, state)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.startState = state
@@ -130,6 +130,7 @@ local function setState(vehicle, state)
     end
 end
 
+---Begins the start sequence: preheat for a diesel, else the starter
 local function begin(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if vehicle:getMotorState() == MotorState.OFF then
@@ -150,6 +151,7 @@ local function begin(vehicle)
     setState(vehicle, RMS_Start.STATE.PREHEATING)
 end
 
+---Lets the engine catch after a delay in ms
 local function catch(vehicle, delayMs)
     vehicle.spec_RealisticMechanicalSystems.startCatchDelayMs = delayMs
     setState(vehicle, RMS_Start.STATE.CATCHING)
@@ -168,11 +170,13 @@ function RMS_Start.reset(vehicle)
     end
 end
 
+---Ends the start sequence and switches the ignition off
 local function abort(vehicle)
     RMS_Start.reset(vehicle)
     vehicle:setMotorState(MotorState.OFF)
 end
 
+---Hands the start to the game, failed when the engine does not run
 local function release(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.isStartReleased = true
@@ -185,6 +189,7 @@ local function release(vehicle)
     end
 end
 
+---Runs the lamp test and the preheat, then the starter
 local function updatePreheating(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.preheatLampTestRemainingMs = math.max(spec.preheatLampTestRemainingMs - dt, 0)
@@ -204,6 +209,7 @@ local function updatePreheating(vehicle, dt)
     end
 end
 
+---Turns the starter until the engine fires, fails or the turn ends
 local function updateCranking(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local crankSpeed = RMS_Electrical.getCrankingSpeed(vehicle)
@@ -223,6 +229,7 @@ local function updateCranking(vehicle, dt)
     end
 end
 
+---Plays the relay and shows the start messages on a state change
 local function updateClientUx(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local state = spec.startState
@@ -271,7 +278,6 @@ function RMS_Start.update(vehicle, dt)
     if state == RMS_Start.STATE.IDLE then
         return
     end
-    -- the key, a stop or another start took the engine out of ignition
     if motorState ~= MotorState.IGNITION then
         RMS_Start.reset(vehicle)
         return
@@ -346,7 +352,6 @@ function RMS_Start.startMotor(self, superFunc, noEventSend)
     local state = spec.startState
     if not self.isServer then
         if noEventSend then
-            -- from the server: the game's own start, or the catch of a sequence
             if state == RMS_Start.STATE.IDLE or state == RMS_Start.STATE.CATCHING then
                 superFunc(self, noEventSend)
             end
@@ -366,7 +371,6 @@ function RMS_Start.startMotor(self, superFunc, noEventSend)
             superFunc(self, noEventSend)
         end
     elseif state == RMS_Start.STATE.FAILED then
-        -- the game's automatic start lets the starter rest as a driver would
         if g_currentMission.missionInfo.automaticMotorStartEnabled ~= true
             or spec.startTimerMs >= RMS_Start.getStarterAttempt(self).rest then
             begin(self)
@@ -391,7 +395,6 @@ function RMS_Start.takeKeyStart(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.isStartReleased
         or not g_ignitionLockManager:getIsAvailable()
         or g_ignitionLockManager:getState() ~= IgnitionLockState.START
-        -- the key turns only the machine the local player drives
         or not vehicle:getIsActiveForInput(true) then
         return false
     end
@@ -407,6 +410,7 @@ function RMS_Start.takeKeyStart(vehicle)
     return true
 end
 
+---Plays the click of a flat battery or a starter that cannot turn
 local function playDeadStartSound(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.isElectricVehicle or spec.batteryIsolated then
@@ -419,11 +423,13 @@ local function playDeadStartSound(vehicle)
     end
 end
 
+---Tells whether a start sequence runs and has not failed
 local function getIsStarting(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec ~= nil and spec.startState ~= RMS_Start.STATE.IDLE and spec.startState ~= RMS_Start.STATE.FAILED
 end
 
+---Tells whether the engine is off or on ignition, no start running
 local function getIsStartIdle(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local motorState = vehicle:getMotorState()

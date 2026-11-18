@@ -3,6 +3,7 @@
 ---Settings tab of the fleet menu
 RMS_SettingsPage = {}
 
+---Lists the hours of ranges given as {first, last, step}
 local function listHours(ranges)
     local hours = {}
     for _, range in ipairs(ranges) do
@@ -15,6 +16,7 @@ end
 
 local CLOCK_HOURS = listHours({ { 0, 23, 1 } })
 
+---Tells whether a workshop type still keeps opening hours
 local function hasWorkshopHours(values)
     return not (values.dealerAlwaysAvailable and values.mobileAlwaysAvailable and values.ownAlwaysAvailable)
 end
@@ -49,6 +51,7 @@ local SETTINGS = {
     { row = "rmsDrivetrainParkBrakeEnabled", key = "drivetrainParkBrakeEnabled", group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED" }
 }
 
+---Returns the current value of every setting by its key
 local function readSettings()
     local values = { debugWindow = RMS_DebugWindow.getIsOpen() }
     for _, setting in ipairs(SETTINGS) do
@@ -59,11 +62,13 @@ local function readSettings()
     return values
 end
 
+---Returns the setting value of a step of a row
 local function getStepValue(setting, state)
     local hours = setting.hours[state]
     return setting.intervalWear ~= nil and setting.intervalWear / hours or hours
 end
 
+---Returns the step of a row nearest to a setting value
 local function getClosestState(setting, value)
     local closest, distance = 1, math.huge
     for state in ipairs(setting.hours) do
@@ -75,11 +80,13 @@ local function getClosestState(setting, value)
     return closest
 end
 
+---Tells whether the local player may change the shared settings
 local function getIsAdmin()
     local mission = g_currentMission
     return not mission.missionDynamicInfo.isMultiplayer or mission:getIsServer() or mission.isMasterUser
 end
 
+---Locks a row behind its padlock, or unlocks it
 -- @param string? reason l10n key of the reason, nil to unlock
 local function setRowLock(option, reason)
     local row = option.parent
@@ -92,6 +99,7 @@ local function setRowLock(option, reason)
     end
 end
 
+---Locks the rows the player may not change, or that depend on another
 local function updateRowLocks(page)
     local isAdmin = getIsAdmin()
     local pending = RMS_SettingsPage.pending
@@ -108,6 +116,7 @@ local function updateRowLocks(page)
     end
 end
 
+---Writes the oil change hours of each era in the service wear tooltip
 local function updateServiceTooltip(page)
     local option = page.rmsServiceWear
     local hours = page.rmsSettings[option].intervalWear / RMS_SettingsPage.pending.baseServiceWear
@@ -120,6 +129,7 @@ local function updateServiceTooltip(page)
     option:getDescendantByName("ignore"):setText(string.format(g_i18n:getText("rms_serviceInterval_tooltip"), unpack(eraHours)))
 end
 
+---Keeps the opening hour before the closing one, moving the other
 local function keepWorkshopHoursOrdered(page, pickedKey)
     local pending = RMS_SettingsPage.pending
     if pending.openHour < pending.closeHour then
@@ -259,6 +269,7 @@ function RMS_InGameMenuFrame:onYesNoResetTutorialTips(yes)
     end
 end
 
+---Called on click on a padlock, which only shows the reason
 function RMS_InGameMenuFrame:onClickLockedIcon()
 end
 

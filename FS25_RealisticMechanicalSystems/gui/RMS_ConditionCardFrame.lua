@@ -5,7 +5,6 @@ RMS_ConditionCardFrame = {}
 
 local RMS_ConditionCardFrame_mt = Class(RMS_ConditionCardFrame, FrameElement)
 
--- the list above its foot line, then into the band it leaves free
 local LIST_HEIGHT = 180
 local LIST_FULL_HEIGHT = 200
 

@@ -18,11 +18,13 @@ RMS_ProductionYear.SERIES_NAMES = {
 
 local resolved = {}
 
+---Returns the key of a store item in the year table
 local function getStoreItemKey(storeItem)
     local prefix = storeItem.customEnvironment ~= nil and storeItem.customEnvironment .. "/" or ""
     return string.lower(prefix .. string.gsub(storeItem.rawXMLFilename, "\\", "/"))
 end
 
+---Returns the year and the English name the vehicle file declares
 local function getDeclaredData(xmlFilename)
     local xmlFile = XMLFile.load("RMS_ProductionYear", xmlFilename)
     local year = tonumber(xmlFile:getString("vehicle.storeData.year"))
@@ -41,6 +43,7 @@ local function getDeclaredData(xmlFilename)
     return year, name
 end
 
+---Returns the key of a DLC machine, by brand and English shop name
 local function getDlcNameKey(storeItem, name)
     local brand = g_brandManager:getBrandByIndex(storeItem.brandIndex)
     if brand == nil or name == nil or string.find(name, "^%$l10n_") ~= nil then
@@ -62,7 +65,6 @@ function RMS_ProductionYear.getYear(storeItem)
         local declaredYear, name = getDeclaredData(storeItem.xmlFilename)
         entry = { year = declaredYear, source = SOURCE.FILE }
         if entry.year == nil then
-            -- any dlc machine is matched by brand and English shop name
             local referenceKey = key
             if string.find(storeItem.baseDir, "pdlc") ~= nil then
                 referenceKey = getDlcNameKey(storeItem, name)

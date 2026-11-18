@@ -6,10 +6,12 @@ local RMS_JumperCablesEvent_mt = Class(RMS_JumperCablesEvent, Event)
 
 InitEventClass(RMS_JumperCablesEvent, "RMS_JumperCablesEvent")
 
+---Create instance of Event class
 function RMS_JumperCablesEvent.emptyNew()
     return Event.new(RMS_JumperCablesEvent_mt)
 end
 
+---Create new instance of event
 function RMS_JumperCablesEvent.new(cables, state, target, machineA, machineB)
     local self = RMS_JumperCablesEvent.emptyNew()
     self.cables = cables
@@ -20,6 +22,7 @@ function RMS_JumperCablesEvent.new(cables, state, target, machineA, machineB)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_JumperCablesEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.cables)
     streamWriteString(streamId, self.state)
@@ -28,6 +31,7 @@ function RMS_JumperCablesEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.machineB)
 end
 
+---Reads event data from a stream.
 function RMS_JumperCablesEvent:readStream(streamId, connection)
     self.cables = NetworkUtil.readNodeObject(streamId)
     self.state = streamReadString(streamId)
@@ -37,6 +41,7 @@ function RMS_JumperCablesEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Clamps for the carrier on the server, applies the state on a client
 function RMS_JumperCablesEvent:run(connection)
     local cables = self.cables
     if cables == nil or not cables:getIsSynchronized() or cables.setRMSJumperCablesState == nil then

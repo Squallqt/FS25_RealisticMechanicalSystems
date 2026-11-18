@@ -23,7 +23,6 @@ for severity, statuses in ipairs({
     end
 end
 
--- cleaning and greasing points; an air filter on fuel only
 local CARE_POINTS = {
     { target = "airFilter", titleKey = "rms_inspection_air_filter", icon = "rms_workshopFluidIconAirFilter", isFuelled = true },
     { target = "radiator", titleKey = "rms_inspection_radiator", icon = "rms_workshopFluidIconRadiator" },
@@ -35,10 +34,12 @@ local AIR_FILTER_STATUS = { "rms_inspection_status_slightly_dirty", "rms_inspect
 local GAUGE_PARTS = { "inspectionGaugeTrack", "inspectionGaugeZone", "inspectionGaugeMinMark", "inspectionGaugeMaxMark",
     "inspectionGaugeMinLabel", "inspectionGaugeMaxLabel" }
 
+---Returns the severity of a status, 0 when it is fine
 local function getSeverity(status)
     return SEVERITY[status] or 0
 end
 
+---Returns the colour of a severity
 local function getSeverityColor(severity)
     if severity >= 4 then
         return RMS_Breakdowns.COLORS.CRITICAL
@@ -48,6 +49,7 @@ local function getSeverityColor(severity)
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
+---Creates a row with its point in order
 local function newRow(titleKey, title, icon)
     return { titleKey = titleKey, title = title, icon = icon, statusKey = OK, value = g_i18n:getText(OK) }
 end
@@ -162,7 +164,7 @@ function Report:readBreakdowns()
         local definition = RMS_Breakdowns.BreakdownRegistry[id]
         local stage = definition ~= nil and definition.stages ~= nil and definition.stages[breakdown.stage] or nil
         local findings = stage ~= nil and stage.inspection ~= nil and RMS_Utils.getBranchItems(stage.inspection, breakdown) or {}
-        -- a fault the workshop has not named; a filter has its own row
+        -- a filter has its own row
         if #findings > 0 and not breakdown.isVisible and definition.isSelectable and RMS_Consumables.getFilterOfBreakdown(id) == nil then
             hasUnidentified = true
         end
@@ -207,7 +209,6 @@ function Report:readClogging()
         self:note("rms_inspection_hint_air_filter_clogging_stage" .. filterStage)
         self:mark("airFilter", AIR_FILTER_STATUS[filterStage])
     end
-    -- a reversible fan cleans the radiator, not the filter
     local isRadiatorDirty, isFilterDirty = clogging >= 0.35, filterStage >= 2
     if isRadiatorDirty and isFilterDirty then
         self:note("rms_air_blower_action")

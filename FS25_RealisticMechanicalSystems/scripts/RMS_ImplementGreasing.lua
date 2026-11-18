@@ -3,11 +3,13 @@
 ---Implement greasing, counted on the days the implement worked
 RMS_ImplementGreasing = {}
 
+---Checks if all prerequisite specializations are loaded
 function RMS_ImplementGreasing.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(Attachable, specializations)
         and SpecializationUtil.hasSpecialization(Wearable, specializations)
 end
 
+---Registers the saved greasing state
 function RMS_ImplementGreasing.initSpecialization()
     Vehicle.xmlSchemaSavegame:register(XMLValueType.STRING, "vehicles.vehicle(?).rmsImplementGreasing#greasing",
         "Grease points due, hours run and delay per interval")
@@ -17,6 +19,7 @@ function RMS_ImplementGreasing.initSpecialization()
         "Slip clutch of a header seized by standing")
 end
 
+---Registers the overwritten functions of the greasing
 function RMS_ImplementGreasing.registerOverwrittenFunctions(vehicleType)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "setOperatingTime", RMS_ImplementGreasing.setOperatingTime)
     SpecializationUtil.registerOverwrittenFunction(vehicleType, "updateDamageAmount", RMS_ImplementGreasing.updateDamageAmount)
@@ -29,16 +32,19 @@ function RMS_ImplementGreasing.registerOverwrittenFunctions(vehicleType)
     end
 end
 
+---Registers the event listeners of the greasing
 function RMS_ImplementGreasing.registerEventListeners(vehicleType)
     for _, name in ipairs({ "onLoad", "onPostLoad", "onReadStream", "onWriteStream", "onReadUpdateStream", "onWriteUpdateStream" }) do
         SpecializationUtil.registerEventListener(vehicleType, name, RMS_ImplementGreasing)
     end
 end
 
+---Called on loading
 function RMS_ImplementGreasing:onLoad(savegame)
     self.spec_rmsImplementGreasing.dirtyFlag = self:getNextDirtyFlag()
 end
 
+---Called after loading, reading the saved greasing
 function RMS_ImplementGreasing:onPostLoad(savegame)
     RMS_Greasing.initialize(self)
     if savegame ~= nil then
@@ -49,6 +55,7 @@ function RMS_ImplementGreasing:onPostLoad(savegame)
     end
 end
 
+---Saves the greasing of an implement that has grease points
 function RMS_ImplementGreasing:saveToXMLFile(xmlFile, key, usedModNames)
     if RMS_Greasing.getTiers(self) ~= nil then
         local spec = self.spec_rmsImplementGreasing
@@ -62,20 +69,24 @@ function RMS_ImplementGreasing:saveToXMLFile(xmlFile, key, usedModNames)
     end
 end
 
+---Called on client side on join
 function RMS_ImplementGreasing:onReadStream(streamId, connection)
     RMS_Greasing.deserialize(self, streamReadString(streamId))
 end
 
+---Called on server side on join
 function RMS_ImplementGreasing:onWriteStream(streamId, connection)
     streamWriteString(streamId, RMS_Greasing.serialize(self))
 end
 
+---Called on client side on update
 function RMS_ImplementGreasing:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
         RMS_ImplementGreasing.onReadStream(self, streamId, connection)
     end
 end
 
+---Called on server side on update
 function RMS_ImplementGreasing:onWriteUpdateStream(streamId, connection, dirtyMask)
     if not connection:getIsServer()
         and streamWriteBool(streamId, bit32.band(dirtyMask, self.spec_rmsImplementGreasing.dirtyFlag) ~= 0) then

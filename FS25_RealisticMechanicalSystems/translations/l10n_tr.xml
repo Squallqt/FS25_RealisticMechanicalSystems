@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="Araç"/>
         <text name="rms_hud_mass_towed" text="Bağlı"/>
         <text name="rms_hud_mass_total" text="Toplam"/>
+        <text name="rms_hud_fuel_average" text="Ort."/>
+        <text name="rms_hud_unit_perHour" text="/sa"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="OTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Henüz kayıt yok"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Isıl koruma: güç sınırlaması kaldırıldı"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue seviyesi düşük: AdBlue doldurun."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue seviyesi çok düşük: AdBlue doldurun."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue seviyesi çok düşük: motor gücü düşürüldü. AdBlue doldurun."/>
+        <text name="rms_adblue_empty_message" text="AdBlue tankı boş: AdBlue doldurun."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue tankı boş: motor gücü büyük ölçüde düşürüldü. AdBlue doldurun."/>
+        <text name="rms_adblue_restored_message" text="AdBlue dolduruldu: motor gücü geri geldi."/>
         <text name="rms_breakdown_at_progress_message" text="devam ediyor"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk: ısınana kadar aşınır."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, hidrolik aşınmasını 3 katına kadar çıkarabilir, hidroliğin ısınmasını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman ve hidrolik aşınmasını 3 katına kadar çıkarabilir, ısınmalarını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Uygun Olmayan Motor Yağı"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: kullanım kılavuzu bunlar için yapılmış bir yağ istiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: bunlar için yapılmış bir yağ gerekiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_circuit" text="Bu araç için sıvı takviyesi gerekmiyor"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Bu aracın AdBlue deposu yok"/>
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Soğutma ve Hava Filtresi"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radyatör veya hava filtresi tıkandı. Hangisi olduğunu görmek için araca bakarken %s tuşunu basılı tut. Basınçlı hava üfleyicisiyle temizle. Filtre artık üflenerek temizlenemiyorsa atölye onu %s bakımından itibaren değiştirir."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Gresleme Gerekiyor"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi kılavuzundaki gresörlükleri bulunur. Makinenin çalıştığı günlere göre yeniden greslenmeleri gerekir: her çalışılan gün ya da kılavuzun daha seyrek greslediklerinde birkaç çalışılan günde bir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşun önünde dur, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi gresörlükleri bulunur. Makinenin çalıştığı günlere göre yeniden greslenmeleri gerekir: her çalışılan gün ya da bazılarında birkaç çalışılan günde bir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşun önünde dur, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
         <text name="rms_tutorial_needs_repair_title" text="Arıza Tespit Edildi"/>
         <text name="rms_tutorial_needs_repair_message" text="Bu %s üzerinde bir sorun var. Parçalarından biri arızalanmış olabilir.&#10;&#10;Atölyeye git: muayene ya da zamanı geldiyse bakım arızayı tespit eder. Geciktirme: arıza kötüleşmeye devam edebilir ve onarım maliyeti artar.&#10;&#10;Arıza tespit edildiğinde atölyede onart."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Sıcak Hava"/>
         <text name="rms_tutorial_hot_weather_message" text="Bugün hava çok sıcak. Böyle havalarda radyatörün temizliğine dikkat et ve motoru aşırı yüklemekten kaçın; yoksa aşırı ısınma yalnızca zaman meselesidir.&#10;&#10;Makineye bakarken %s tuşunu basılı tutarak radyatörün durumunu kontrol edebilirsin. Temizlik hava üfleyicisiyle yapılır."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Römork Çok Ağır"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Çekilen yük bu araç için fazla ağır görünüyor. Sürmeye devam edebilirsin ancak şanzıman ve aktarma organları daha fazla zorlanmaya maruz kalır.&#10;&#10;RMS iki ölçüt kullanır: traktör için çekilen ton başına en az 10 bg, kamyon için toplam yüklü kütlenin tonu başına en az 6 bg gerekir. Ağır motor yükünde ilgili değerin altında kalmak şanzıman aşınmasını artırır."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Çekilen yük bu araç için ağır. Sürmeye devam edebilirsin ancak frenler her frenlemede daha hızlı aşınır.&#10;&#10;RMS iki ölçüt kullanır: kendi ağırlığının 4,5 katından fazlasını çeken traktör ve toplam yüklü kütlenin tonu başına 6 bg'den az gücü olan kamyon. Yük ağırlaştıkça frenler daha hızlı aşınır."/>
         <text name="rms_tutorial_hard_start_title" text="Zor Çalıştırma"/>
         <text name="rms_tutorial_hard_start_message" text="Bu %s üzerindeki motor zor çalışıyor. Nedeni zayıf akü, don, mekanik arıza veya marş motoru aşınması olabilir.&#10;&#10;Yüksek ilk akımlar nedeniyle elektrik sistemi çalıştırma sırasında ağır yük altında kalır."/>
         <text name="rms_tutorial_low_fuel_title" text="Yakıt Rezervi"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Cihaz bağlıyken mobil atölye veya kendi atölyen ya da bayi"/>
         <text name="rms_diagnostic_where_high_voltage" text="Kendi atölyen veya bayi"/>
         <text name="rms_diagnostic_note_inspection" text="Bu kod, makinenin neyi ölçtüğünü söyler, hangi parçanın arızalı olduğunu değil: bir muayene onu bulur."/>
+        <text name="rms_diagnostic_note_adblue" text="Bu kod, AdBlue tankının düşük olduğunu bildirir: AdBlue doldurmak onu siler."/>
         <text name="rms_diagnostic_note_uncoded" text="Makinenin muayenesi etkilenen parçayı bulur."/>
         <text name="rms_diagnostic_uncoded" text="Uyarı lambası kayıtlı kod olmadan yanıyor. Hiçbir sensör etkilenen parçayı izlemiyor."/>
         <text name="rms_diagnostic_uncoded_title" text="Kodsuz Lamba"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Marş Rölesi"/>
         <text name="rms_diagnostic_spn_167" text="Şarj Gerilimi"/>
         <text name="rms_diagnostic_spn_157" text="Enjeksiyon Rampası Basıncı"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue Tankı Seviyesi"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue Pompası"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue Dozaj Enjektörü"/>
         <text name="rms_diagnostic_spn_3216" text="Katalizör Öncesi NOx Sensörü"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Arızalı cihaz veya bileşen"/>
         <text name="rms_diagnostic_fmi_14" text="Özel talimatlar"/>
         <text name="rms_diagnostic_fmi_16" text="Veri normal aralığın üzerinde (orta derecede ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_17" text="Veri normal aralığın altında (en hafif seviye)"/>
         <text name="rms_diagnostic_fmi_18" text="Veri normal aralığın altında (orta derecede ciddi seviye)"/>
         <text name="rms_diagnostic_fmi_31" text="Durum mevcut"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="arızalı bileşen"/>
         <text name="rms_dashboard_fmi_14" text="müdahale gerekli"/>
         <text name="rms_dashboard_fmi_16" text="değer yüksek"/>
+        <text name="rms_dashboard_fmi_17" text="değer biraz düşük"/>
         <text name="rms_dashboard_fmi_18" text="değer düşük"/>
         <text name="rms_dashboard_fmi_31" text="arıza mevcut"/>
         <text name="rms_diagnostic_log_title" text="Kod Okuma"/>

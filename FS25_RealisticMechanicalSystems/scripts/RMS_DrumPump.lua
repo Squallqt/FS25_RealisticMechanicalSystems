@@ -13,16 +13,19 @@ RMS_DrumPump.mounted = {}
 
 source(modDirectory .. "events/RMS_DrumPumpEvent.lua")
 
+---Checks if all prerequisite specializations are loaded
 function RMS_DrumPump.prerequisitesPresent(specializations)
     return true
 end
 
+---Registers the event listeners of the pump
 function RMS_DrumPump.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onUpdate", "onDraw", "onHeldStart", "onHeldEnd", "onRegisterActionEvents" }) do
         SpecializationUtil.registerEventListener(handToolType, name, RMS_DrumPump)
     end
 end
 
+---Tells whether a container stands in reach of the player
 local function getIsInReach(player, container)
     local x, y, z = getWorldTranslation(player.rootNode)
     local cx, cy, cz = getWorldTranslation(container.rootNode)
@@ -111,6 +114,7 @@ function RMS_DrumPump.onUnmounted(_, handTool, loadingState, arguments)
     container:setRMSFluidPump(false, index)
 end
 
+---Called on loading
 function RMS_DrumPump:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     if spec == nil then
@@ -124,11 +128,11 @@ function RMS_DrumPump:onLoad(xmlFile, baseDirectory)
     end
 end
 
+---Finds the drum without a pump the player aims at and offers it
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local node = player.targeter:getClosestTargetedNodeFromType(RMS_DrumPump)
     local container = node ~= nil and g_currentMission:getNodeObject(node) or nil
-    -- on a pallet of two, the drum nearest the point aimed at
     local hit = player.targeter.closestTargetsByKey[RMS_DrumPump]
     local index = container ~= nil and hit ~= nil and container:getRMSFluidSlotAt(hit.x, hit.y, hit.z) or 1
     local drum = container ~= nil and getDrum(container, index) or nil
@@ -144,6 +148,7 @@ local function updateTarget(handTool, player)
     end
 end
 
+---Called on update, looking for a drum on its interval
 function RMS_DrumPump:onUpdate(dt)
     local spec = self[specName]
     local player = self:getCarryingPlayer()
@@ -166,6 +171,7 @@ function RMS_DrumPump:onDraw()
     end
 end
 
+---Registers the key setting the pump on a drum
 function RMS_DrumPump:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -193,6 +199,7 @@ function RMS_DrumPump:onHeldStart()
     end
 end
 
+---Stops aiming at drums once the pump leaves the hand
 function RMS_DrumPump:onHeldEnd()
     local player = self:getCarryingPlayer()
     if player ~= nil and player.isOwner then

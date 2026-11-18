@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="Vehicul"/>
         <text name="rms_hud_mass_towed" text="Remorcat"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_fuel_average" text="Medie"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="4x2"/>
         <text name="rms_hud_drive_4wd" text="4x4"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Jurnalul este încă gol"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Protecție termică: limitarea puterii dezactivată"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Nivel AdBlue scăzut: alimentați cu AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Nivel AdBlue foarte scăzut: alimentați cu AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Nivel AdBlue foarte scăzut: puterea motorului redusă. Alimentați cu AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Rezervorul de AdBlue este gol: alimentați cu AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Rezervorul de AdBlue este gol: puterea motorului mult redusă. Alimentați cu AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue alimentat: puterea motorului restabilită."/>
         <text name="rms_breakdown_at_progress_message" text="în curs"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Atenție! Motor rece: se uzează până se încălzește."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura sistemului hidraulic, îi poate crește temperatura și îl poate încetini. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Acest produs nu este destinat circuitului respectiv. Îl va contamina și poate tripla uzura transmisiei și a sistemului hidraulic, le poate crește temperatura și poate încetini sistemul hidraulic. Numai înlocuirea completă a fluidului va elimina contaminarea. Continui?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Ulei de motor nepotrivit"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Acest motor folosește AdBlue sau are filtru de particule: manualul său cere un ulei făcut pentru ele. Cu acest ulei, schimbul de ulei va veni de până la două ori mai devreme. Un filtru de particule se umple și de cenușă de 1,5 ori mai repede. Continui?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Acest motor folosește AdBlue sau are filtru de particule: are nevoie de un ulei făcut pentru ele. Cu acest ulei, schimbul de ulei va veni de până la două ori mai devreme. Un filtru de particule se umple și de cenușă de 1,5 ori mai repede. Continui?"/>
         <text name="rms_fluid_error_no_circuit" text="Acest vehicul nu necesită nicio completare de fluid"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Acest vehicul nu are rezervor de AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Oprește motorul înainte de a transfera fluid"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Răcire și filtru de aer"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiatorul sau filtrul de aer este colmatat. Ține apăsată tasta %s în timp ce privești vehiculul pentru a afla care dintre ele. Curăță-l cu suflanta cu aer comprimat. Dacă filtrul nu mai poate fi curățat, atelierul îl înlocuiește începând cu revizia %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrifiere necesară"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s are gresoare de uns.&#10;&#10;În RMS, fiecare utilaj are gresoarele din manualul său. Acestea trebuie unse din nou după zilele în care utilajul lucrează: în fiecare zi lucrată sau la câteva zile lucrate cele pe care manualul le unge mai rar. Ungerea întârziată accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat și cartușe din magazin. Cu pistolul în mână, așază-te în fața unui cartuș pentru a-l încărca, apoi țintește utilajul: fiecare clic unge un gresor, iar menținerea butonului apăsat continuă cu următoarele.&#10;&#10;Pentru a vedea gresoarele rămase, ține apăsată tasta %s în timp ce privești vehiculul."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s are gresoare de uns.&#10;&#10;În RMS, fiecare utilaj are propriile gresoare. Acestea trebuie unse din nou după zilele în care utilajul lucrează: în fiecare zi lucrată sau la câteva zile lucrate unele dintre ele. Ungerea întârziată accelerează uzura șasiului.&#10;&#10;Cumpără un pistol de gresat și cartușe din magazin. Cu pistolul în mână, așază-te în fața unui cartuș pentru a-l încărca, apoi țintește utilajul: fiecare clic unge un gresor, iar menținerea butonului apăsat continuă cu următoarele.&#10;&#10;Pentru a vedea gresoarele rămase, ține apăsată tasta %s în timp ce privești vehiculul."/>
         <text name="rms_tutorial_needs_repair_title" text="Avarie detectată"/>
         <text name="rms_tutorial_needs_repair_message" text="%s are o problemă. Este posibil ca una dintre piese să se fi defectat.&#10;&#10;Mergi la atelier: o inspecție, sau întreținerea dacă este scadentă, identifică avaria. Nu amâna: avaria poate continua să se agraveze, iar costul reparației crește odată cu aceasta.&#10;&#10;După ce avaria este identificată, repar-o la atelier."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Recondiționare necesară"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Vreme caniculară"/>
         <text name="rms_tutorial_hot_weather_message" text="Astăzi este foarte cald. Pe această vreme, urmărește curățenia radiatorului și evită suprasolicitarea motorului; altfel, supraîncălzirea este doar o chestiune de timp.&#10;&#10;Poți verifica starea radiatorului: ține apăsată tasta %s în timp ce privești utilajul. Curățarea se face cu suflanta cu aer comprimat."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Remorcă prea grea"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Sarcina remorcată pare prea grea pentru acest vehicul. Poți continua deplasarea, dar transmisia și lanțul cinematic vor fi mai solicitate.&#10;&#10;RMS folosește două valori de referință: un tractor necesită cel puțin 10 CP pe tonă de masă remorcată, iar un camion cel puțin 6 CP pe tonă de masă totală a ansamblului. Sub valoarea aplicabilă și la sarcină mare a motorului, uzura transmisiei crește."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Sarcina remorcată este grea pentru acest vehicul. Poți continua deplasarea, dar frânele se uzează mai repede la fiecare frânare.&#10;&#10;RMS folosește două valori de referință: un tractor care remorcă mai mult de 4,5 ori propria masă și un camion cu mai puțin de 6 CP pe tonă de masă totală a ansamblului. Cu cât sarcina este mai grea, cu atât frânele se uzează mai repede."/>
         <text name="rms_tutorial_hard_start_title" text="Pornire dificilă"/>
         <text name="rms_tutorial_hard_start_message" text="Motorul vehiculului %s pornește greu. Cauza poate fi o baterie slabă, gerul, o avarie mecanică sau uzura demarorului.&#10;&#10;În timpul pornirii, sistemul electric este puternic solicitat din cauza curenților mari de pornire."/>
         <text name="rms_tutorial_low_fuel_title" text="Rezervă de combustibil"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Atelier mobil sau propriu cu echipamentul conectat, ori reprezentanță"/>
         <text name="rms_diagnostic_where_high_voltage" text="Atelier propriu sau reprezentanță"/>
         <text name="rms_diagnostic_note_inspection" text="Acest cod arată ce măsoară utilajul, nu piesa în cauză: o inspecție o găsește."/>
+        <text name="rms_diagnostic_note_adblue" text="Acest cod semnalează un rezervor de AdBlue scăzut: alimentarea cu AdBlue îl șterge."/>
         <text name="rms_diagnostic_note_uncoded" text="O inspecție a utilajului găsește piesa în cauză."/>
         <text name="rms_diagnostic_uncoded" text="Martor aprins fără cod înregistrat. Niciun senzor nu supraveghează piesa în cauză."/>
         <text name="rms_diagnostic_uncoded_title" text="Martor fără cod"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Releul demarorului"/>
         <text name="rms_diagnostic_spn_167" text="Tensiunea circuitului de încărcare"/>
         <text name="rms_diagnostic_spn_157" text="Presiunea din rampa de injecție"/>
+        <text name="rms_diagnostic_spn_1761" text="Nivelul rezervorului de AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Pompă de AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Injector de dozare AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Senzor NOx în amonte"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Dispozitiv sau componentă defectă"/>
         <text name="rms_diagnostic_fmi_14" text="Instrucțiuni speciale"/>
         <text name="rms_diagnostic_fmi_16" text="Date peste domeniul normal (nivel moderat de gravitate)"/>
+        <text name="rms_diagnostic_fmi_17" text="Date sub domeniul normal (nivelul cel mai puțin grav)"/>
         <text name="rms_diagnostic_fmi_18" text="Date sub domeniul normal (nivel moderat de gravitate)"/>
         <text name="rms_diagnostic_fmi_31" text="Condiție prezentă"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="componentă defectă"/>
         <text name="rms_dashboard_fmi_14" text="intervenție necesară"/>
         <text name="rms_dashboard_fmi_16" text="valoare ridicată"/>
+        <text name="rms_dashboard_fmi_17" text="valoare ușor scăzută"/>
         <text name="rms_dashboard_fmi_18" text="valoare scăzută"/>
         <text name="rms_dashboard_fmi_31" text="defecțiune prezentă"/>
         <text name="rms_diagnostic_log_title" text="Citirea codurilor"/>

@@ -7,7 +7,7 @@ RMS_Tutorial.vehicle = nil
 RMS_Tutorial.timer = 0
 RMS_Tutorial.messageDowntime = 3000
 
----Pause after a tip before the next one, in ms
+-- pause after a tip before the next one, in ms
 RMS_Tutorial.TIP_DOWNTIME = 60000
 
 ---Welcomes the player in the question dialog of the game
@@ -54,13 +54,13 @@ local function getInspectionKey()
     return RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
 end
 
----Tells whether the trailer is heavy for the power that pulls it
+---Tells whether the load is heavy enough to wear the brakes
 local function hasHeavyTrailer(machine)
     local spec = machine.spec
     local brakes = spec.chassisBrakeState
     local isTruck = spec.isTruck == true
     local ratio = isTruck and brakes.hpGrossMassRatio or brakes.hpTrailerMassRatio
-    local limit = RMS_Utils.getHeavyTrailerRatioLevels(machine.vehicle) * RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.HEAVY_TRAILER_TUTORIAL_MARGIN
+    local limit = RMS_Utils.getHeavyTrailerRatioLevels(machine.vehicle) * RMS_Config.CORE.CHASSIS_FACTOR_DATA.HEAVY_TRAILER_TUTORIAL_MARGIN
     return math.max(brakes.trailerMass, 0) > 0.1 and ratio <= limit
 end
 
@@ -119,10 +119,10 @@ local function hasColdOil(machine)
         and temperature < data.COLD_TRANSMISSION_THRESHOLD
 end
 
----Tips in check order; text is the key before _title and _message
+-- tips in check order, text the key before _title and _message
 RMS_Tutorial.TIPS = {
     { key = "HEAVY_TRAILER", text = "rms_tutorial_heavy_trailer", isDue = function(m)
-        return m.enabled.transmission and m.isStarted and m.speed > 5 and hasHeavyTrailer(m) end },
+        return m.enabled.chassis and m.isStarted and m.speed > 5 and hasHeavyTrailer(m) end },
     { key = "AGE_DEGRADATION", text = "rms_tutorial_age_degradation", getArguments = getName, isDue = function(m)
         return m.vehicle:getConditionLevel() < 0.66 end },
     { key = "IDLE_AND_DOWNTIME", text = "rms_tutorial_idle_and_downtime", isDue = function(m)
@@ -324,7 +324,6 @@ function RMS_Tutorial:update(dt)
     if self.vehicle ~= nil then
         self:showNextTip(self.vehicle)
     end
-    -- A message just shown is saved as seen
     if self.messageDowntime > 0 then
         RMS_Config.syncTutorialState()
     end

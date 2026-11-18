@@ -12,6 +12,7 @@ local MIN_CAPACITY_AH = 0.01
 local PAIR_STEP_MS = 30000
 local PAIR_MAX_STEPS = 120
 
+---Returns the value of a curve at x, held at its ends
 local function interpolate(curve, x)
     if x <= curve[1][1] then
         return curve[1][2]
@@ -27,6 +28,7 @@ local function interpolate(curve, x)
     return curve[#curve][2]
 end
 
+---Returns the value of the first step reaching x
 local function pickStep(steps, x)
     for _, step in ipairs(steps) do
         if x <= step[1] then
@@ -35,6 +37,7 @@ local function pickStep(steps, x)
     end
 end
 
+---Returns a value rounded to a catalogue step
 local function toCatalogueStep(value, step)
     return math.floor(value / step + 0.5) * step
 end
@@ -54,6 +57,7 @@ function RMS_Electrical.getIsLampMounted(vehicle, node)
     return true
 end
 
+---Tells whether one of the lights is mounted
 local function getHoldsMountedLamp(vehicle, lights)
     for _, light in ipairs(lights) do
         if RMS_Electrical.getIsLampMounted(vehicle, light.node) then
@@ -155,6 +159,7 @@ function RMS_Electrical.resolveRating(vehicle)
     return rating
 end
 
+---Returns the resting voltage of the batteries at a charge
 local function getRestingVoltage(rating, soc)
     return interpolate(RMS_Config.ELECTRICAL.OCV_CURVE, soc) * rating.seriesBatteries
 end
@@ -176,6 +181,7 @@ function RMS_Electrical.getBatteryCapacityAh(vehicle)
     return math.max(spec.electricalRating.batteryCapacityAh * spec.batteryHealth, MIN_CAPACITY_AH)
 end
 
+---Returns the current of the alternator, or of the converter of an electric machine
 local function getGeneratorOutput(vehicle, spec, isRunning)
     local ratedA = spec.electricalRating.alternatorA * spec.alternatorHealth
 
@@ -190,6 +196,7 @@ local function getGeneratorOutput(vehicle, spec, isRunning)
     return ratedA * (idleFactor + (1 - idleFactor) * RMS_Utils.getMotorRpmShareAboveIdle(vehicle))
 end
 
+---Returns the currents the consumers draw
 local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     local C = RMS_Config.ELECTRICAL
     local rating = spec.electricalRating
@@ -227,7 +234,6 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     if isCranking then
         loads.starter = rating.starterKw * interpolate(C.STARTER_CURRENT_CURVE, ambientC) / series
     end
-    -- the glow plugs are off while the starter turns
     if RMS_Preheat.isHeating(vehicle) and not isCranking then
         loads.preheat = rating.glowPlugsA
     end
@@ -241,6 +247,7 @@ function RMS_Electrical.getIsStarting(vehicle)
     return RMS_Start.getIsCranking(vehicle)
 end
 
+---Returns the circuit of a machine at this instant
 local function buildNode(vehicle, isStarting)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.ELECTRICAL
@@ -284,6 +291,7 @@ local function buildNode(vehicle, isStarting)
     return node
 end
 
+---Returns the charge current the battery accepts
 local function getAcceptance(node)
     local C = RMS_Config.ELECTRICAL
     if node.soc >= 1 then
@@ -294,6 +302,7 @@ local function getAcceptance(node)
     return rate * node.capacityAh
 end
 
+---Solves the battery current and the voltage of a circuit
 local function solveNode(node)
     local restingV = getRestingVoltage(node.rating, node.soc)
     local shortfallA = node.loads.total - node.generatorA - node.chargerA
@@ -314,6 +323,7 @@ local function solveNode(node)
     end
 end
 
+---Advances the charge of a circuit over hours, through its charge stages
 local function advanceNode(node, hours)
     local C = RMS_Config.ELECTRICAL
 
@@ -341,6 +351,7 @@ local function advanceNode(node, hours)
     solveNode(node)
 end
 
+---Solves the currents and voltages of two circuits linked by cables
 local function solvePair(a, b)
     local C = RMS_Config.ELECTRICAL
     local nodes = { a, b }
@@ -370,7 +381,6 @@ local function solvePair(a, b)
 
     local conductance = { 1 / a.resistanceOhm, 1 / b.resistanceOhm }
     local cable = 1 / C.JUMPER_CABLE_RESISTANCE_OHM
-    -- A clamped battery becomes a fixed-current node.
     local fixedA = { 0, 0 }
     local voltageV = { 0, 0 }
 
@@ -408,6 +418,7 @@ local function solvePair(a, b)
     end
 end
 
+---Advances the charge of two linked circuits in substeps
 local function advancePair(a, b, elapsedMs)
     local steps = math.clamp(math.ceil(elapsedMs / PAIR_STEP_MS), 1, PAIR_MAX_STEPS)
     local stepHours = elapsedMs / HOUR_MS / steps
@@ -426,6 +437,7 @@ local function advancePair(a, b, elapsedMs)
     solvePair(a, b)
 end
 
+---Returns the time elapsed for the circuit and the world time elapsed
 local function getElapsed(spec, dt, isWorking)
     local worldTime = RMS_Thermal.getWorldTimeMS()
     local previousTime = spec._electricalWorldTime
@@ -439,6 +451,7 @@ local function getElapsed(spec, dt, isWorking)
     return isWorking and dt or worldElapsedMs, worldElapsedMs
 end
 
+---Returns the current drawn with the engine off
 local function getRestingDraw(spec)
     local C = RMS_Config.ELECTRICAL
     local rating = spec.electricalRating
@@ -446,6 +459,7 @@ local function getRestingDraw(spec)
 end
 RMS_Electrical.getRestingDraw = getRestingDraw
 
+---Takes the self discharge and the resting draw off the charge
 local function applyCalendarLosses(node, spec, worldElapsedMs)
     local C = RMS_Config.ELECTRICAL
     local months = worldElapsedMs / DAY_MS / g_currentMission.environment.daysPerPeriod
@@ -459,6 +473,7 @@ local function applyCalendarLosses(node, spec, worldElapsedMs)
     end
 end
 
+---Stores the charge and eases the voltmeter
 local function commitNode(node, spec, dt)
     spec.batterySoc = node.soc
     spec.rawSystemVoltageV = node.voltageV
@@ -468,6 +483,7 @@ local function commitNode(node, spec, dt)
     spec.electricalBalance = node
 end
 
+---Returns the machine linked by cables, unlinked once one of them moves
 local function getCablePartner(vehicle)
     local partner = vehicle.spec_RealisticMechanicalSystems.externalPowerConnection
     if partner == nil then
@@ -490,7 +506,6 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
         return
     end
 
-    -- Solve a linked battery pair only once per frame.
     local solveStamp = g_currentMission.time
     if spec._electricalSolveStamp == solveStamp then
         return
@@ -530,6 +545,7 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
     end
 end
 
+---Returns the voltage of the circuit solved at this instant
 local function getVoltageNow(vehicle, isStarting)
     local node = buildNode(vehicle, isStarting)
     local partner = vehicle.spec_RealisticMechanicalSystems.externalPowerConnection
@@ -655,6 +671,7 @@ function RMS_Electrical.playBatteryIsolatorSound(vehicle)
     end
 end
 
+---Adds or removes a breakdown
 local function setBreakdownActive(vehicle, breakdownId, isActive)
     if vehicle:hasBreakdown(breakdownId) ~= isActive then
         if isActive then
@@ -742,6 +759,7 @@ function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
     return not isElectricDonor, isElectricDonor and "ELECTRIC_DONOR" or nil
 end
 
+---Links or unlinks two machines on both ends
 local function setCableLink(vehicle, partner, isLinked)
     vehicle.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and partner or nil
     partner.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and vehicle or nil

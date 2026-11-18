@@ -80,6 +80,7 @@ function RMS_Preheat.getRequiredDurationMs(vehicle)
     return 0
 end
 
+---Tells whether a diesel is cold enough to need its glow plugs
 function RMS_Preheat.isColdStartAssistanceRequired(vehicle)
     return RMS_Preheat.isDieselVehicle(vehicle)
         and RMS_Preheat.getEngineTemperatureC(vehicle) < RMS_Config.PREHEAT.START_ASSIST_TEMPERATURE_C

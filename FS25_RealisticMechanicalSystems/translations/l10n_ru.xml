@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="Техника"/>
         <text name="rms_hud_mass_towed" text="Прицеп"/>
         <text name="rms_hud_mass_total" text="Всего"/>
+        <text name="rms_hud_fuel_average" text="Сред."/>
+        <text name="rms_hud_unit_perHour" text="/ч"/>
+        <text name="rms_hud_unit_kw" text="кВт"/>
+        <text name="rms_hud_unit_kwh" text="кВт·ч"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="АВТО"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="В журнале нет записей"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Тепловая защита: ограничение мощности снято"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Низкий уровень AdBlue: заправьте AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Очень низкий уровень AdBlue: заправьте AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Очень низкий уровень AdBlue: мощность двигателя снижена. Заправьте AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Бак AdBlue пуст: заправьте AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Бак AdBlue пуст: мощность двигателя сильно снижена. Заправьте AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue заправлен: мощность двигателя восстановлена."/>
         <text name="rms_breakdown_at_progress_message" text="в процессе"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Внимание! Двигатель холодный: он изнашивается, пока не прогреется."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ гидравлики, усилить её нагрев и замедлить её работу. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ трансмиссии и гидравлики, усилить их нагрев и замедлить работу гидравлики. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Неподходящее моторное масло"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Этот двигатель работает с AdBlue или имеет сажевый фильтр: его руководство требует масла, предназначенного для них. С этим маслом замена масла понадобится до двух раз раньше. Сажевый фильтр к тому же забивается золой в 1,5 раза быстрее. Продолжить?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Этот двигатель работает с AdBlue или имеет сажевый фильтр: ему нужно масло, предназначенное для них. С этим маслом замена масла понадобится до двух раз раньше. Сажевый фильтр к тому же забивается золой в 1,5 раза быстрее. Продолжить?"/>
         <text name="rms_fluid_error_no_circuit" text="Этой машине не требуется долив жидкости"/>
         <text name="rms_fluid_error_no_adblue_tank" text="У этой машины нет бака AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Заглушите двигатель перед переливом жидкости"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Система охлаждения и воздушный фильтр"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Радиатор или воздушный фильтр засорён. Смотрите на технику и удерживайте клавишу %s, чтобы узнать, какой именно. Очистите его воздуходувкой со сжатым воздухом. Если фильтр больше не продувается, мастерская заменяет его начиная с ТО %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Требуется смазка"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s имеет пресс-маслёнки, требующие смазки.&#10;&#10;В RMS у каждой машины есть пресс-маслёнки из её руководства. Их нужно смазывать вновь по дням работы машины: каждый рабочий день или раз в несколько рабочих дней те, что руководство смазывает реже. Запоздалая смазка ускоряет износ ходовой части.&#10;&#10;Купите смазочный шприц и картриджи в магазине. Держа шприц в руках, встаньте перед картриджем для заправки, затем наведите шприц на машину: каждый щелчок смазывает одну пресс-маслёнку, а удержание кнопки продолжает смазку следующих.&#10;&#10;Чтобы увидеть оставшиеся пресс-маслёнки, удерживайте клавишу %s, глядя на машину."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s имеет пресс-маслёнки, требующие смазки.&#10;&#10;В RMS у каждой машины есть свои пресс-маслёнки. Их нужно смазывать вновь по дням работы машины: каждый рабочий день или раз в несколько рабочих дней некоторые из них. Запоздалая смазка ускоряет износ ходовой части.&#10;&#10;Купите смазочный шприц и картриджи в магазине. Держа шприц в руках, встаньте перед картриджем для заправки, затем наведите шприц на машину: каждый щелчок смазывает одну пресс-маслёнку, а удержание кнопки продолжает смазку следующих.&#10;&#10;Чтобы увидеть оставшиеся пресс-маслёнки, удерживайте клавишу %s, глядя на машину."/>
         <text name="rms_tutorial_needs_repair_title" text="Обнаружена неисправность"/>
         <text name="rms_tutorial_needs_repair_message" text="У %s возникла проблема. Возможно, одна из деталей отказала.&#10;&#10;Посетите мастерскую: осмотр или техобслуживание, если оно подошло, выявит неисправность. Не откладывайте: неисправность может усугубиться, а стоимость ремонта вырастет.&#10;&#10;Когда неисправность выявлена, отремонтируйте её в мастерской."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Требуется капитальный ремонт"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Жаркая погода"/>
         <text name="rms_tutorial_hot_weather_message" text="Сегодня очень жарко. В такую погоду тщательно следите за чистотой радиатора и старайтесь не перегружать двигатель — иначе перегрев не заставит себя ждать.&#10;&#10;Вы можете проверить состояние радиатора, удерживая клавишу %s и глядя на технику, а также продуть его с помощью воздуходувки."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Тяжёлый прицеп"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Похоже, буксируемая нагрузка может быть слишком велика для этой техники. Вы можете продолжать движение, но трансмиссия и привод будут испытывать повышенную нагрузку.&#10;&#10;RMS использует два правила: трактору требуется не менее 10 л.с. на тонну буксируемой массы, а тягачу — не менее 6 л.с. на тонну полной массы автопоезда. Если при высокой нагрузке двигателя соответствующее значение ниже нормы, износ трансмиссии увеличивается."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Буксируемый груз тяжёл для этой техники. Вы можете продолжать движение, но тормоза изнашиваются быстрее при каждом торможении.&#10;&#10;RMS использует два ориентира: трактор с прицепом более чем в 4,5 раза тяжелее самого трактора и тягач, у которого меньше 6 л.с. на тонну полной массы автопоезда. Чем тяжелее груз, тем быстрее изнашиваются тормоза."/>
         <text name="rms_tutorial_hard_start_title" text="Запуск затруднён"/>
         <text name="rms_tutorial_hard_start_message" text="Запуск двигателя %s затруднён. Это может быть вызвано низким зарядом аккумулятора, морозом, техническими неисправностями или износом стартера.&#10;&#10;Электросистема подвергается высоким нагрузкам во время запуска из-за больших пусковых токов."/>
         <text name="rms_tutorial_low_fuel_title" text="Мало топлива"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Мобильная или собственная мастерская с подключённым оборудованием либо дилер"/>
         <text name="rms_diagnostic_where_high_voltage" text="Собственная мастерская или дилер"/>
         <text name="rms_diagnostic_note_inspection" text="Этот код говорит, что измеряет машина, а не какая деталь неисправна: её найдёт осмотр."/>
+        <text name="rms_diagnostic_note_adblue" text="Этот код сообщает о низком уровне в баке AdBlue: заправка AdBlue его стирает."/>
         <text name="rms_diagnostic_note_uncoded" text="Осмотр машины найдёт неисправную деталь."/>
         <text name="rms_diagnostic_uncoded" text="Индикатор горит без сохранённого кода. Ни один датчик не контролирует неисправную деталь."/>
         <text name="rms_diagnostic_uncoded_title" text="Индикатор без кода"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Реле стартера"/>
         <text name="rms_diagnostic_spn_167" text="Напряжение зарядки"/>
         <text name="rms_diagnostic_spn_157" text="Давление в топливной рампе"/>
+        <text name="rms_diagnostic_spn_1761" text="Уровень в баке AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Насос AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Дозирующая форсунка AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Датчик NOx перед катализатором"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Неисправное устройство или компонент"/>
         <text name="rms_diagnostic_fmi_14" text="Особые указания"/>
         <text name="rms_diagnostic_fmi_16" text="Данные выше нормального диапазона (умеренно серьёзный уровень)"/>
+        <text name="rms_diagnostic_fmi_17" text="Данные ниже нормального диапазона (наименее серьёзный уровень)"/>
         <text name="rms_diagnostic_fmi_18" text="Данные ниже нормального диапазона (умеренно серьёзный уровень)"/>
         <text name="rms_diagnostic_fmi_31" text="Условие присутствует"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="неисправный компонент"/>
         <text name="rms_dashboard_fmi_14" text="требуется вмешательство"/>
         <text name="rms_dashboard_fmi_16" text="высокое значение"/>
+        <text name="rms_dashboard_fmi_17" text="слегка низкое значение"/>
         <text name="rms_dashboard_fmi_18" text="низкое значение"/>
         <text name="rms_dashboard_fmi_31" text="неисправность присутствует"/>
         <text name="rms_diagnostic_log_title" text="Считывание кодов"/>

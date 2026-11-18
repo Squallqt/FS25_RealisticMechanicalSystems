@@ -5,10 +5,12 @@ RMS_TrolleyPlaceable = {}
 
 local CONFIGURATIONS_KEY = "placeable.rmsDiagnosticTool.rmsDiagnosticPcConfigurations"
 
+---Checks if all prerequisite specializations are loaded
 function RMS_TrolleyPlaceable.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(PlaceableVehicle, specializations)
 end
 
+---Registers the PC option and its XML paths
 function RMS_TrolleyPlaceable.initSpecialization()
     if g_iconGenerator == nil then
         g_placeableConfigurationManager:addConfigurationType(RMS_DiagnosticTool.CONFIGURATION,

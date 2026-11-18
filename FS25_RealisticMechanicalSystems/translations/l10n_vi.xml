@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="Xe"/>
         <text name="rms_hud_mass_towed" text="Tải kéo"/>
         <text name="rms_hud_mass_total" text="Tổng"/>
+        <text name="rms_hud_fuel_average" text="TB"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Nhật ký hiện vẫn trống"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Bảo vệ nhiệt: đã gỡ giới hạn công suất"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Mức AdBlue thấp: hãy châm thêm AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Mức AdBlue rất thấp: hãy châm thêm AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Mức AdBlue rất thấp: công suất động cơ bị giảm. Hãy châm thêm AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Bình AdBlue đã cạn: hãy châm thêm AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Bình AdBlue đã cạn: công suất động cơ bị giảm mạnh. Hãy châm thêm AdBlue."/>
+        <text name="rms_adblue_restored_message" text="Đã châm AdBlue: công suất động cơ được khôi phục."/>
         <text name="rms_breakdown_at_progress_message" text="đang thực hiện"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Cảnh báo! Động cơ nguội: sẽ hao mòn cho đến khi nóng lên."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hệ thống thủy lực hao mòn nhanh gấp tới ba lần, nóng hơn và chậm hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Sản phẩm này không dành cho mạch này. Sản phẩm sẽ làm nhiễm bẩn mạch và có thể làm hộp số và hệ thống thủy lực hao mòn nhanh gấp tới ba lần, nóng hơn, đồng thời làm hệ thống thủy lực chậm hơn. Chỉ xả và thay toàn bộ chất lỏng mới loại bỏ được sự nhiễm bẩn. Tiếp tục?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Dầu động cơ không phù hợp"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Động cơ này dùng AdBlue hoặc có bộ lọc hạt: sách hướng dẫn yêu cầu loại dầu làm cho chúng. Với dầu này, lần thay dầu sẽ đến sớm hơn tới hai lần. Bộ lọc hạt cũng đầy tro nhanh gấp 1,5 lần. Tiếp tục?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Động cơ này dùng AdBlue hoặc có bộ lọc hạt: nó cần loại dầu làm cho chúng. Với dầu này, lần thay dầu sẽ đến sớm hơn tới hai lần. Bộ lọc hạt cũng đầy tro nhanh gấp 1,5 lần. Tiếp tục?"/>
         <text name="rms_fluid_error_no_circuit" text="Xe này không cần bổ sung chất lỏng"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Xe này không có bình AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Hãy tắt động cơ trước khi chuyển chất lỏng"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hệ thống làm mát và bộ lọc không khí"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Két tản nhiệt hoặc bộ lọc không khí bị tắc. Giữ phím %s khi nhìn vào xe để biết bộ phận nào. Dùng máy thổi khí nén để làm sạch. Nếu không thể thổi sạch bộ lọc nữa, xưởng sẽ thay bộ lọc từ mức bảo dưỡng %s trở lên."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Cần bôi trơn"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn có các đầu bơm mỡ cần bơm.&#10;&#10;Trong RMS, mỗi máy có các đầu bơm mỡ theo hướng dẫn sử dụng. Chúng cần được bơm lại theo những ngày máy làm việc: mỗi ngày làm việc, hoặc vài ngày làm việc một lần với các đầu mà hướng dẫn bơm thưa hơn. Bơm mỡ muộn làm khung gầm mòn nhanh hơn.&#10;&#10;Mua súng bơm mỡ và hộp mỡ trong cửa hàng. Cầm súng, đứng trước hộp mỡ để nạp rồi ngắm vào máy: mỗi lần nhấp bơm mỡ cho một đầu, giữ nút nhấp sẽ tiếp tục với các đầu tiếp theo.&#10;&#10;Để xem các đầu bơm mỡ còn lại, giữ phím %s khi nhìn vào xe."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s của bạn có các đầu bơm mỡ cần bơm.&#10;&#10;Trong RMS, mỗi máy có các đầu bơm mỡ riêng. Chúng cần được bơm lại theo những ngày máy làm việc: mỗi ngày làm việc, hoặc vài ngày làm việc một lần với một số đầu. Bơm mỡ muộn làm khung gầm mòn nhanh hơn.&#10;&#10;Mua súng bơm mỡ và hộp mỡ trong cửa hàng. Cầm súng, đứng trước hộp mỡ để nạp rồi ngắm vào máy: mỗi lần nhấp bơm mỡ cho một đầu, giữ nút nhấp sẽ tiếp tục với các đầu tiếp theo.&#10;&#10;Để xem các đầu bơm mỡ còn lại, giữ phím %s khi nhìn vào xe."/>
         <text name="rms_tutorial_needs_repair_title" text="Đã phát hiện hỏng hóc"/>
         <text name="rms_tutorial_needs_repair_message" text="%s của bạn đang gặp vấn đề. Một trong các linh kiện có thể đã hỏng.&#10;&#10;Hãy đưa xe đến xưởng: kiểm tra, hoặc bảo dưỡng nếu đã đến hạn, sẽ xác định hỏng hóc. Đừng trì hoãn: hỏng hóc có thể tiếp tục trở nên nghiêm trọng hơn và chi phí sửa chữa sẽ tăng theo.&#10;&#10;Khi hỏng hóc đã được xác định, hãy sửa chữa tại xưởng."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Cần đại tu"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Thời tiết nóng"/>
         <text name="rms_tutorial_hot_weather_message" text="Hôm nay trời rất nóng. Trong thời tiết này, hãy theo dõi độ sạch của két tản nhiệt và tránh để động cơ quá tải, nếu không việc quá nhiệt chỉ còn là vấn đề thời gian.&#10;&#10;Bạn có thể kiểm tra tình trạng két tản nhiệt: giữ phím %s khi nhìn vào máy. Việc vệ sinh được thực hiện bằng Máy thổi khí nén."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Rơ-moóc quá nặng"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Tải kéo có vẻ quá nặng đối với xe này. Bạn vẫn có thể tiếp tục lái, nhưng hộp số và hệ truyền động sẽ chịu nhiều ứng suất hơn.&#10;&#10;RMS sử dụng hai mốc: máy kéo cần ít nhất 10 HP cho mỗi tấn tải kéo, còn xe tải cần ít nhất 6 HP cho mỗi tấn tổng khối lượng kết hợp. Khi thấp hơn giá trị áp dụng và động cơ chịu tải cao, độ hao mòn hộp số tăng."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Tải kéo nặng đối với xe này. Bạn vẫn có thể tiếp tục lái, nhưng phanh sẽ mòn nhanh hơn mỗi lần bạn phanh.&#10;&#10;RMS sử dụng hai mốc: máy kéo kéo tải nặng hơn 4,5 lần khối lượng của chính nó, và xe tải có dưới 6 HP cho mỗi tấn tổng khối lượng kết hợp. Tải càng nặng, phanh càng mòn nhanh."/>
         <text name="rms_tutorial_hard_start_title" text="Khó khởi động"/>
         <text name="rms_tutorial_hard_start_message" text="Động cơ của %s khó khởi động. Nguyên nhân có thể là ắc quy yếu, thời tiết giá rét, hỏng hóc cơ học hoặc bộ đề bị mòn.&#10;&#10;Hệ thống điện chịu tải nặng trong lúc khởi động do dòng khởi động rất cao."/>
         <text name="rms_tutorial_low_fuel_title" text="Nhiên liệu dự trữ"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Xưởng lưu động hoặc xưởng cá nhân có cắm thiết bị, hoặc đại lý"/>
         <text name="rms_diagnostic_where_high_voltage" text="Xưởng cá nhân hoặc đại lý"/>
         <text name="rms_diagnostic_note_inspection" text="Mã này cho biết máy đo được gì, không cho biết bộ phận nào hỏng: kiểm tra sẽ tìm ra bộ phận đó."/>
+        <text name="rms_diagnostic_note_adblue" text="Mã này báo bình AdBlue thấp: châm AdBlue sẽ xóa mã."/>
         <text name="rms_diagnostic_note_uncoded" text="Kiểm tra máy sẽ tìm ra bộ phận liên quan."/>
         <text name="rms_diagnostic_uncoded" text="Đèn cảnh báo sáng mà không có mã lưu. Không cảm biến nào giám sát bộ phận liên quan."/>
         <text name="rms_diagnostic_uncoded_title" text="Đèn không có mã"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Rơ le bộ đề"/>
         <text name="rms_diagnostic_spn_167" text="Điện áp sạc"/>
         <text name="rms_diagnostic_spn_157" text="Áp suất ống phân phối nhiên liệu"/>
+        <text name="rms_diagnostic_spn_1761" text="Mức bình AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Bơm AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Kim phun định lượng AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Cảm biến NOx trước bộ xúc tác"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Thiết bị hoặc linh kiện bị hỏng"/>
         <text name="rms_diagnostic_fmi_14" text="Hướng dẫn đặc biệt"/>
         <text name="rms_diagnostic_fmi_16" text="Dữ liệu trên phạm vi bình thường (mức nghiêm trọng vừa)"/>
+        <text name="rms_diagnostic_fmi_17" text="Dữ liệu dưới phạm vi bình thường (mức nhẹ nhất)"/>
         <text name="rms_diagnostic_fmi_18" text="Dữ liệu dưới phạm vi bình thường (mức nghiêm trọng vừa)"/>
         <text name="rms_diagnostic_fmi_31" text="Điều kiện hiện hữu"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="linh kiện bị hỏng"/>
         <text name="rms_dashboard_fmi_14" text="cần can thiệp"/>
         <text name="rms_dashboard_fmi_16" text="giá trị cao"/>
+        <text name="rms_dashboard_fmi_17" text="giá trị hơi thấp"/>
         <text name="rms_dashboard_fmi_18" text="giá trị thấp"/>
         <text name="rms_dashboard_fmi_31" text="có lỗi"/>
         <text name="rms_diagnostic_log_title" text="Đọc mã lỗi"/>

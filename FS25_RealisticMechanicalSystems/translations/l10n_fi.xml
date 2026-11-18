@@ -3,7 +3,11 @@
         <!-- HUD -->
         <text name="rms_hud_mass_tractor" text="Ajoneuvo"/>
         <text name="rms_hud_mass_towed" text="Kytketty"/>
-        <text name="rms_hud_mass_total" text="Yhteensä"/>
+        <text name="rms_hud_mass_total" text="Yht."/>
+        <text name="rms_hud_fuel_average" text="Ka."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Loki on tyhjä"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Lämpösuojaus: tehonrajoitus poistettu"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue-taso matala: tankkaa AdBlueta."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue-taso erittäin matala: tankkaa AdBlueta."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue-taso erittäin matala: moottorin tehoa on rajoitettu. Tankkaa AdBlueta."/>
+        <text name="rms_adblue_empty_message" text="AdBlue-säiliö on tyhjä: tankkaa AdBlueta."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue-säiliö on tyhjä: moottorin tehoa on rajoitettu voimakkaasti. Tankkaa AdBlueta."/>
+        <text name="rms_adblue_restored_message" text="AdBlue tankattu: moottorin teho palautettu."/>
         <text name="rms_breakdown_at_progress_message" text="käynnissä"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Varoitus! Moottori on kylmä: se kuluu, kunnes se lämpenee."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa hydrauliikan kulumisen, lisätä sen lämpenemistä ja hidastaa sitä. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tätä tuotetta ei ole tarkoitettu tähän piiriin. Se saastuttaa seoksen ja voi jopa kolminkertaistaa vaihteiston ja hydrauliikan kulumisen, lisätä niiden lämpenemistä ja hidastaa hydrauliikkaa. Vain täydellinen nesteenvaihto poistaa saastumisen. Jatketaanko?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Sopimaton moottoriöljy"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Tässä moottorissa on AdBlue tai hiukkassuodatin: sen ohjekirja vaatii niille tehdyn öljyn. Tällä öljyllä öljynvaihto tulee jopa kaksi kertaa aikaisemmin. Hiukkassuodatin täyttyy lisäksi tuhkasta 1,5 kertaa nopeammin. Jatketaanko?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Tässä moottorissa on AdBlue tai hiukkassuodatin: se tarvitsee niille tehdyn öljyn. Tällä öljyllä öljynvaihto tulee jopa kaksi kertaa aikaisemmin. Hiukkassuodatin täyttyy lisäksi tuhkasta 1,5 kertaa nopeammin. Jatketaanko?"/>
         <text name="rms_fluid_error_no_circuit" text="Tämä ajoneuvo ei tarvitse nesteen täydennystä"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Tässä ajoneuvossa ei ole AdBlue-säiliötä"/>
         <text name="rms_fluid_error_motor_running" text="Sammuta moottori ennen nesteen siirtoa"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Jäähdytys ja ilmansuodatin"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Jäähdytin tai ilmansuodatin on tukossa. Pidä %s-näppäintä painettuna, kun katsot ajoneuvoa, niin näet kumman. Puhdista se paineilmapuhaltimella. Jos suodatinta ei voi enää puhdistaa puhaltamalla, korjaamo vaihtaa sen %s huollosta alkaen."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Voitelu tarpeen"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Koneessa %s on rasvattavia rasvanippoja.&#10;&#10;RMS:ssä jokaisella koneella on käyttöohjeensa rasvanipat. Ne on rasvattava uudelleen koneen käyttöpäivien mukaan: jokaisena käyttöpäivänä tai muutaman käyttöpäivän välein ne, jotka käyttöohje rasvaa harvemmin. Myöhästynyt rasvaus nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja patruunoita. Asetu patruunan eteen rasvaruisku kädessä ladataksesi sen ja tähtää sitten koneeseen: jokainen napsautus rasvaa yhden rasvanipan, ja painikkeen pitäminen pohjassa jatkaa seuraaviin.&#10;&#10;Näet jäljellä olevat rasvanipat pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Koneessa %s on rasvattavia rasvanippoja.&#10;&#10;RMS:ssä jokaisella koneella on omat rasvanippansa. Ne on rasvattava uudelleen koneen käyttöpäivien mukaan: jokaisena käyttöpäivänä tai muutaman käyttöpäivän välein jotkin niistä. Myöhästynyt rasvaus nopeuttaa alustan kulumista.&#10;&#10;Osta kaupasta rasvaruisku ja patruunoita. Asetu patruunan eteen rasvaruisku kädessä ladataksesi sen ja tähtää sitten koneeseen: jokainen napsautus rasvaa yhden rasvanipan, ja painikkeen pitäminen pohjassa jatkaa seuraaviin.&#10;&#10;Näet jäljellä olevat rasvanipat pitämällä %s-näppäintä painettuna ajoneuvoa katsoessasi."/>
         <text name="rms_tutorial_needs_repair_title" text="Ajoneuvon vika"/>
         <text name="rms_tutorial_needs_repair_message" text="Kone %s: siinä on ongelma, ja yksi osa on saattanut vikaantua.&#10;&#10;Vie se korjaamolle: tarkastus, tai huolto jos se on erääntynyt, toteaa vian. Älä viivyttele: vika voi pahentua edelleen ja korjauskustannukset kasvavat sen mukana.&#10;&#10;Kun vika on todettu, anna korjaamon korjata se."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Peruskorjaus tarpeen"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Kuuma sää"/>
         <text name="rms_tutorial_hot_weather_message" text="Tänään on todella kuumaa. Tällaisella säällä seuraa jäähdyttimen puhtautta ja vältä moottorin ylikuormittamista, muuten ylikuumeneminen on vain ajan kysymys.&#10;&#10;Voit tarkistaa jäähdyttimen kunnon pitämällä %s-näppäintä pohjassa konetta katsoessasi, ja puhdistaa sen paineilmapuhaltimella."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Liian raskas perävaunu"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Hinattava kuorma saattaa olla liian raskas tälle ajoneuvolle. Voit jatkaa ajamista, mutta vaihteisto ja voimansiirto kuormittuvat tavallista enemmän.&#10;&#10;RMS käyttää kahta ohjearvoa: traktori tarvitsee vähintään 10 hv hinattavan massan tonnia kohti ja kuorma-auto vähintään 6 hv yhdistelmän kokonaismassan tonnia kohti. Kun arvo alittuu moottorin suurella kuormituksella, vaihteiston kuluminen lisääntyy."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Hinattava kuorma on raskas tälle ajoneuvolle. Voit jatkaa ajamista, mutta jarrut kuluvat nopeammin joka jarrutuksella.&#10;&#10;RMS käyttää kahta ohjearvoa: traktori, joka hinaa yli 4,5 kertaa oman massansa, ja kuorma-auto, jolla on alle 6 hv yhdistelmän kokonaismassan tonnia kohti. Mitä raskaampi kuorma, sitä nopeammin jarrut kuluvat."/>
         <text name="rms_tutorial_hard_start_title" text="Vaikea käynnistys"/>
         <text name="rms_tutorial_hard_start_message" text="Kone %s: moottori käynnistyy vaikeasti. Syynä voi olla heikko akku, pakkanen, mekaaninen vika tai käynnistimen kuluminen.&#10;&#10;Sähköjärjestelmä kuormittuu käynnistyksen aikana voimakkaasti suurten käynnistysvirtojen vuoksi."/>
         <text name="rms_tutorial_low_fuel_title" text="Vähän polttoainetta"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Liikkuva tai oma korjaamo vianmäärityslaite kytkettynä, tai jälleenmyyjä"/>
         <text name="rms_diagnostic_where_high_voltage" text="Oma korjaamo tai jälleenmyyjä"/>
         <text name="rms_diagnostic_note_inspection" text="Tämä koodi kertoo, mitä kone mittaa, ei sitä, mikä osa on viallinen: tarkastus löytää sen."/>
+        <text name="rms_diagnostic_note_adblue" text="Tämä koodi ilmoittaa AdBlue-säiliön matalasta pinnasta: AdBlue-tankkaus poistaa sen."/>
         <text name="rms_diagnostic_note_uncoded" text="Koneen tarkastus löytää vikaantuneen osan."/>
         <text name="rms_diagnostic_uncoded" text="Varoitusvalo palaa ilman tallennettua koodia. Mikään anturi ei valvo vikaantunutta osaa."/>
         <text name="rms_diagnostic_uncoded_title" text="Valo ilman koodia"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Käynnistysrele"/>
         <text name="rms_diagnostic_spn_167" text="Latausjännite"/>
         <text name="rms_diagnostic_spn_157" text="Ruiskutusputken paine"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-säiliön pinta"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-pumppu"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-annostelusuutin"/>
         <text name="rms_diagnostic_spn_3216" text="NOx-anturi ennen katalysaattoria"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Viallinen laite tai komponentti"/>
         <text name="rms_diagnostic_fmi_14" text="Erityisohjeet"/>
         <text name="rms_diagnostic_fmi_16" text="Tieto normaalin alueen yläpuolella (kohtalaisen vakava taso)"/>
+        <text name="rms_diagnostic_fmi_17" text="Tieto normaalin alueen alapuolella (lievin taso)"/>
         <text name="rms_diagnostic_fmi_18" text="Tieto normaalin alueen alapuolella (kohtalaisen vakava taso)"/>
         <text name="rms_diagnostic_fmi_31" text="Tila on voimassa"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="viallinen komponentti"/>
         <text name="rms_dashboard_fmi_14" text="toimenpide tarpeen"/>
         <text name="rms_dashboard_fmi_16" text="korkea arvo"/>
+        <text name="rms_dashboard_fmi_17" text="hieman matala arvo"/>
         <text name="rms_dashboard_fmi_18" text="matala arvo"/>
         <text name="rms_dashboard_fmi_31" text="vika aktiivinen"/>
         <text name="rms_diagnostic_log_title" text="Koodien luku"/>

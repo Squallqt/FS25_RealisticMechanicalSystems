@@ -88,7 +88,6 @@
                 <objectChange node="drumVisualLinkA" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumVisualLinkB" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <!-- euro pallet 25 kg, two drums 18 kg -->
                 <objectChange node="fluidContainer_component1" massActive="61"/>
             </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>

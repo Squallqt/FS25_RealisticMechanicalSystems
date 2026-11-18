@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="機具"/>
         <text name="rms_hud_mass_towed" text="牽引"/>
         <text name="rms_hud_mass_total" text="總計"/>
+        <text name="rms_hud_fuel_average" text="平均"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="兩驅"/>
         <text name="rms_hud_drive_4wd" text="四驅"/>
         <text name="rms_hud_drive_auto" text="自動"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="紀錄仍為空"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="過熱保護：功率限制已解除"/>
+        <text name="rms_adblue_title" text="車用尿素"/>
+        <text name="rms_adblue_low_message" text="車用尿素液位低：請加注車用尿素。"/>
+        <text name="rms_adblue_very_low_message" text="車用尿素液位過低：請加注車用尿素。"/>
+        <text name="rms_adblue_very_low_derate_message" text="車用尿素液位過低：發動機功率已降低。請加注車用尿素。"/>
+        <text name="rms_adblue_empty_message" text="車用尿素罐已空：請加注車用尿素。"/>
+        <text name="rms_adblue_empty_derate_message" text="車用尿素罐已空：發動機功率大幅降低。請加注車用尿素。"/>
+        <text name="rms_adblue_restored_message" text="車用尿素已加注：發動機功率已恢復。"/>
         <text name="rms_breakdown_at_progress_message" text="進行中"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="警告！發動機溫度低，升溫前會持續磨損。"/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="此產品不適用於該回路。它會污染回路，並可能使液壓系統磨損增加至3倍、溫度升高並使液壓功能變慢。只有完全更換油液才能清除污染。是否繼續？"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="此產品不適用於該回路。它會污染回路，並可能使變速箱和液壓系統磨損增加至3倍、溫度升高並使液壓功能變慢。只有完全更換油液才能清除污染。是否繼續？"/>
         <text name="rms_fluid_unsuited_oil_title" text="不適用的發動機機油"/>
-        <text name="rms_fluid_unsuited_oil_message" text="這台發動機使用 AdBlue 或裝有微粒過濾器：其說明書要求使用為它們設計的機油。使用這種機油，換油間隔最多縮短一半。微粒過濾器積滿灰分的速度也會快 1.5 倍。是否繼續？"/>
+        <text name="rms_fluid_unsuited_oil_message" text="這台發動機使用 AdBlue 或裝有微粒過濾器：它需要使用為它們設計的機油。使用這種機油，換油間隔最多縮短一半。微粒過濾器積滿灰分的速度也會快 1.5 倍。是否繼續？"/>
         <text name="rms_fluid_error_no_circuit" text="此機具不需要補充任何油液"/>
         <text name="rms_fluid_error_no_adblue_tank" text="此機具沒有AdBlue罐"/>
         <text name="rms_fluid_error_motor_running" text="輸送油液前請關閉發動機"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="冷卻系統與空氣濾清器"/>
         <text name="rms_tutorial_cooling_air_check_message" text="散熱器或空氣濾清器已堵塞。看向機具時按住%s鍵，確認是哪個部件。使用壓縮空氣吹風機清潔。如果濾清器無法繼續吹掃清潔，維修廠從%s保養起將其更換。"/>
         <text name="rms_tutorial_needs_lubrication_title" text="需要加注黃油"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s有黃油嘴需要加注黃油。&#10;&#10;在RMS中，每台機具都有其說明書中的黃油嘴。每個作業日需要再次加注，說明書中加注間隔較長的則每隔幾個作業日加注一次。加注延誤會加快底盤磨損。&#10;&#10;在商店購買黃油加注器和黃油筒。手持加注器，站在油筒前進行裝填，再對準機具：每次點擊為一個黃油嘴加注，按住滑鼠按鈕可繼續為後續黃油嘴加注。&#10;&#10;要查看剩餘待加注黃油嘴，看向機具時按住%s鍵。"/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s有黃油嘴需要加注黃油。&#10;&#10;在RMS中，每台機具都有各自的黃油嘴。每個作業日需要再次加注，其中一些則每隔幾個作業日加注一次。加注延誤會加快底盤磨損。&#10;&#10;在商店購買黃油加注器和黃油筒。手持加注器，站在油筒前進行裝填，再對準機具：每次點擊為一個黃油嘴加注，按住滑鼠按鈕可繼續為後續黃油嘴加注。&#10;&#10;要查看剩餘待加注黃油嘴，看向機具時按住%s鍵。"/>
         <text name="rms_tutorial_needs_repair_title" text="檢測到故障"/>
         <text name="rms_tutorial_needs_repair_message" text="%s出現了問題，其中一個零組件可能已經失效。&#10;&#10;請前往維修廠：檢查，或到期的保養，可以確認故障。不要拖延：故障可能繼續加重，修理費用也會隨之增加。&#10;&#10;故障確認後，請在維修廠進行修理。"/>
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="高溫天氣"/>
         <text name="rms_tutorial_hot_weather_message" text="今天氣溫很高。在這種天氣下，請留意散熱器是否清潔，並避免發動機過載，否則過熱只是時間問題。&#10;&#10;可以檢查散熱器狀況：看向機器時按住%s鍵。請使用壓縮空氣吹氣器清潔。"/>
         <text name="rms_tutorial_heavy_trailer_title" text="拖車過重"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="牽引負載對這輛機具而言似乎過重。可以繼續行駛，但變速箱和傳動系統會承受更大應力。&#10;&#10;RMS採用兩個參考值：拖拉機每噸牽引重量至少需要10馬力，卡車每噸車組總重量至少需要6馬力。低於適用數值並讓發動機承受高負載時，變速箱磨損會增加。"/>
+        <text name="rms_tutorial_heavy_trailer_message" text="牽引負載對這輛機具而言較重。可以繼續行駛，但每次煞車時煞車磨損都會加快。&#10;&#10;RMS採用兩個參考值：拖拉機牽引超過自重4.5倍的負載，卡車每噸車組總重量不足6馬力。負載越重，煞車磨損越快。"/>
         <text name="rms_tutorial_hard_start_title" text="啟動困難"/>
         <text name="rms_tutorial_hard_start_message" text="%s的發動機難以啟動。電池電量低、極低溫、機械故障或啟動機磨損都可能是原因。&#10;&#10;啟動時的高啟動電流會使電氣系統承受很大負載。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃油餘量低"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="已連接檢測設備的移動或自有維修廠，或經銷商"/>
         <text name="rms_diagnostic_where_high_voltage" text="自有維修廠或經銷商"/>
         <text name="rms_diagnostic_note_inspection" text="此故障碼說明機器測得的內容，而不是哪個部件故障：檢查才能找到它。"/>
+        <text name="rms_diagnostic_note_adblue" text="此故障碼表示車用尿素罐液位低：加注車用尿素後即清除。"/>
         <text name="rms_diagnostic_note_uncoded" text="檢查機器即可找到相關部件。"/>
         <text name="rms_diagnostic_uncoded" text="警告燈亮起但未記錄故障碼。沒有感測器檢測相關部件。"/>
         <text name="rms_diagnostic_uncoded_title" text="無故障碼的警告燈"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="啟動機繼電器"/>
         <text name="rms_diagnostic_spn_167" text="充電電壓"/>
         <text name="rms_diagnostic_spn_157" text="共軌壓力"/>
+        <text name="rms_diagnostic_spn_1761" text="車用尿素罐液位"/>
         <text name="rms_diagnostic_spn_4375" text="車用尿素泵"/>
         <text name="rms_diagnostic_spn_3361" text="車用尿素計量噴射器"/>
         <text name="rms_diagnostic_spn_3216" text="上游NOx感測器"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="設備或部件故障"/>
         <text name="rms_diagnostic_fmi_14" text="特殊指示"/>
         <text name="rms_diagnostic_fmi_16" text="資料高於正常範圍（中等嚴重等級）"/>
+        <text name="rms_diagnostic_fmi_17" text="資料低於正常範圍（最輕等級）"/>
         <text name="rms_diagnostic_fmi_18" text="資料低於正常範圍（中等嚴重等級）"/>
         <text name="rms_diagnostic_fmi_31" text="條件存在"/>
         <text name="rms_dashboard_code_message" text="%s，%s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="部件故障"/>
         <text name="rms_dashboard_fmi_14" text="需要介入"/>
         <text name="rms_dashboard_fmi_16" text="數值偏高"/>
+        <text name="rms_dashboard_fmi_17" text="數值略低"/>
         <text name="rms_dashboard_fmi_18" text="數值偏低"/>
         <text name="rms_dashboard_fmi_31" text="存在故障"/>
         <text name="rms_diagnostic_log_title" text="讀取故障碼"/>

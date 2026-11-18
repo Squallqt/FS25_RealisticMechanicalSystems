@@ -1,5 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
+---Server-to-client broadcast of the service state of a vehicle
 RMS_VehicleChangeStatusEvent = {}
 local RMS_VehicleChangeStatusEvent_mt = Class(RMS_VehicleChangeStatusEvent, Event)
 MessageType.RMS_VEHICLE_CHANGE_STATUS = nextMessageTypeId()

@@ -10,12 +10,14 @@ local LEVEL_FLUIDS = {
     { circuit = "coolant", nameKey = "rms_fluid_hud_coolant" }
 }
 
+---Returns a cell maker giving the same text to every choice
 local function every(key)
     return function()
         return g_i18n:getText(key), 2
     end
 end
 
+---Returns the cell of a share: its percentage and its level
 local function shareCell(value)
     if value <= 0 then
         return "-", 0
@@ -23,6 +25,7 @@ local function shareCell(value)
     return string.format("%d%%", math.floor(value * 100 + 0.5)), value >= 1 and 2 or 1
 end
 
+---Returns the text naming an oil circuit, the common sump by its own name
 local function getOilName(vehicle, circuit)
     if circuit == "transmissionOil" and RMS_Fluids.getSumpCircuit(vehicle, "hydraulicFluid") == "transmissionOil" then
         return g_i18n:getText("rms_fluid_hud_transmissionHydraulic")
@@ -34,6 +37,7 @@ local function getOilName(vehicle, circuit)
     end
 end
 
+---Returns the service interval of the clock changing a circuit
 local function getIntervalText(vehicle, circuit)
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         if RMS_Utils.getKeyByValue(clock.circuits, circuit) ~= nil then
@@ -45,6 +49,7 @@ local function getIntervalText(vehicle, circuit)
     return ""
 end
 
+---Returns how often a maintenance level comes against the lightest one
 local function getFrequencyText(vehicle, level, lightest)
     local interval = vehicle:getMaintenanceLevelInterval(level)
     local ratio = interval / vehicle:getMaintenanceLevelInterval(lightest)
@@ -57,6 +62,7 @@ local function getFrequencyText(vehicle, level, lightest)
     return string.format(g_i18n:getText("rms_ws_levels_one_service_in"), count)
 end
 
+---Returns the text keys of the filters a maintenance changes, nil without any
 local function getFiltersKeys(vehicle)
     local hasEngine = not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local hasHydraulic = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING"))
@@ -75,6 +81,7 @@ local function getFiltersKeys(vehicle)
     return detailKey, hasEngine and "rms_ws_levels_new_plural" or "rms_ws_levels_new"
 end
 
+---Returns the maintenance level changing the AdBlue filter, nil without one
 local function getAdBlueFilterLevel(vehicle)
     local filter = RMS_Consumables.getFilterOfBreakdown("ADBLUE_FILTER_CLOGGING")
     if RMS_Consumables.getHasFilter(vehicle, filter) then
@@ -106,6 +113,7 @@ function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
     return names
 end
 
+---Returns the table rows of the inspection order
 local function getInspectionRows(vehicle)
     local R = RealisticMechanicalSystems
     local function report(inspectionType)
@@ -113,7 +121,6 @@ local function getInspectionRows(vehicle)
         local hasReport = R.getIsLogEntryHasReport(entry)
         return hasReport, hasReport and R.getIsCompleteReport(entry)
     end
-    -- no controller, no code to read: these faults are on the wiring
     local hasControllers = RMS_DiagnosticTool.getHasControllers(vehicle)
     return {
         { name = "rms_ws_inspection_mechanical", detail = "rms_ws_inspection_mechanical_detail",
@@ -146,6 +153,7 @@ local function getInspectionRows(vehicle)
     }
 end
 
+---Returns the table rows of the maintenance order
 local function getLevelRows(vehicle, workshopType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local R = RealisticMechanicalSystems
@@ -209,6 +217,7 @@ function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
     return count
 end
 
+---Returns the table rows of the repair order
 local function getRepairRows(vehicle, workshopType)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
     local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
@@ -260,6 +269,7 @@ local function getRepairRows(vehicle, workshopType)
     return rows
 end
 
+---Returns the table rows of the overhaul order
 local function getOverhaulRows(vehicle, system)
     local OVERHAUL = RealisticMechanicalSystems.OVERHAUL_TYPES
     local targets = RMS_Config.MAINTENANCE.OVERHAUL_CONDITION_TARGETS
@@ -323,6 +333,7 @@ function RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
     return false
 end
 
+---Returns the table rows of the paint order
 local function getBodyworkRows(vehicle)
     local dealer = g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.DEALER)
     local hasColors = RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
@@ -363,6 +374,7 @@ function RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
     return left
 end
 
+---Returns the warranty corner of the repair order
 local function getWarrantyCorner(vehicle, workshopType)
     local R = RealisticMechanicalSystems
     local isCovered, status = vehicle:isWarrantyRepairCovered(workshopType)
@@ -435,7 +447,6 @@ RMS_WorkshopOrders.ORDERS = {
             if hasRunning then
                 table.insert(choices, REPAIR.LOW)
             end
-            -- a worn part picked for a preventive replacement opens the repair alone
             if hasPicked or #RealisticMechanicalSystems.getPreventiveParts(vehicle) > 0 then
                 table.insert(choices, REPAIR.MEDIUM)
                 table.insert(choices, REPAIR.HIGH)
@@ -443,7 +454,6 @@ RMS_WorkshopOrders.ORDERS = {
             return choices
         end,
         getDefaultChoice = function() return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM end,
-        -- a thorough repair that fits nothing more is greyed
         isChoiceLocked = function(vehicle, choice, workshopType)
             return choice == RealisticMechanicalSystems.REPAIR_TYPES.HIGH and RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType) == 0
         end,
@@ -454,7 +464,6 @@ RMS_WorkshopOrders.ORDERS = {
             local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
             return isCovered and choice == RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM and "rms_ws_badge_warranty" or nil
         end,
-        -- the warranty repairs its faults in Standard with original parts
         getImposed = function(vehicle, workshopType)
             if vehicle:isWarrantyRepairCovered(workshopType) then
                 return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM, RealisticMechanicalSystems.PART_TYPES.OEM
@@ -493,7 +502,6 @@ RMS_WorkshopOrders.ORDERS = {
                 name = wear ~= nil and string.format("%s%%", g_i18n:formatNumber(wear * 100, 1)) or g_i18n:getText("rms_bodywork_unavailable"),
                 reason = reasonKey ~= nil and g_i18n:getText(reasonKey) or "" }
         end,
-        -- why a choice does not start here; the corner already tells the wear
         getRefusalKey = function(vehicle, workshopType, choice)
             if choice == RMS_Bodywork.FULL and workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER then
                 return "rms_bodywork_dealer_only"

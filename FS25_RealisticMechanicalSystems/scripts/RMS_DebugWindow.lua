@@ -24,6 +24,7 @@ local MIN_VIEWPORT = 340
 -- the capitals of the game font stand 25 of its 35 units on the line
 local CAP_HALF = 25 / 35 / 2
 
+---Returns the linear colour of an sRGB hex code
 local function srgb(hex, alpha)
     local color = {}
     for index = 1, 3 do
@@ -58,7 +59,7 @@ local COLOR = {
     tick = srgb("f2f5e8", 0.9),
     axis = srgb("ffffff", 0.18)
 }
--- causes of a card in order of their share, never a colour of judgement
+-- causes of a card in order of their share
 local CAUSE_COLORS = {srgb("4fb4dc"), srgb("b48ae8"), srgb("45c79c"), srgb("e384bd"), srgb("8f9bf2"), srgb("d9b25a"), srgb("6fd0d6")}
 local LAMP_COLORS = {COLOR.red, COLOR.orange, COLOR.blue, COLOR.label}
 
@@ -74,6 +75,7 @@ RMS_DebugWindow.hits = {}
 
 local L = {}
 
+---Sets the scale and the origin of the layout for the screen
 local function setScreen()
     local scale = math.min(g_gameSettings:getValue(GameSettings.SETTING.UI_SCALE), 1)
     L.unit = math.min(g_screenHeight / SCREEN_H * scale, g_screenWidth * 0.98 / (MAIN.x + MAIN.w - SIDE.x))
@@ -85,26 +87,32 @@ local function setScreen()
     L.overflows = {}
 end
 
+---Returns a layout x on the screen
 local function screenX(x)
     return (L.left + x * L.unit) / g_screenWidth
 end
 
+---Returns a layout y on the screen
 local function screenY(y)
     return 1 - y * L.unit / g_screenHeight
 end
 
+---Returns a screen x in the layout
 local function toRefX(posX)
     return (posX * g_screenWidth - L.left) / L.unit
 end
 
+---Returns a screen y in the layout
 local function toRefY(posY)
     return (1 - posY) * g_screenHeight / L.unit
 end
 
+---Returns a text size on the screen
 local function textSize(px)
     return px * L.unit / g_screenHeight
 end
 
+---Returns the width of a text in the layout
 local function measure(text, px, bold)
     setTextBold(bold == true)
     local width = getTextWidth(textSize(px), text) * g_screenWidth / L.unit
@@ -112,7 +120,7 @@ local function measure(text, px, bold)
     return width
 end
 
--- the engine counts corner radii in 20 px of a 1080p screen
+---Returns a corner radius in the engine's unit, 20 px of a 1080p screen
 local function corner(radius)
     return radius * L.unit * 1080 / g_screenHeight / 20
 end
@@ -161,10 +169,12 @@ local function label(x, y, text, px, color, options)
     return width
 end
 
+---Adds an area the mouse can hit
 local function hit(kind, x, y, w, h, value)
     table.insert(L.hits, {kind = kind, x = x, y = y, w = w, h = h, value = value})
 end
 
+---Returns the items of a text joined by the separator
 local function splitItems(text)
     local items, start = {}, 1
     while true do
@@ -178,7 +188,7 @@ local function splitItems(text)
     end
 end
 
----Puts items on lines of a width, broken between two items only
+---Returns the lines items take in a width, broken between two items only
 local function wrapItems(items, w, px, bold)
     local lines, line = {}, nil
     for _, entry in ipairs(items) do
@@ -194,7 +204,7 @@ local function wrapItems(items, w, px, bold)
     return lines
 end
 
----Puts words on lines of a width, a longer word cut between letters
+---Returns the lines words take in a width, a longer word cut between letters
 local function wrapWords(text, w, px, bold)
     local lines, line = {}, nil
     for word in text:gmatch("%S+") do
@@ -220,16 +230,18 @@ local function wrapWords(text, w, px, bold)
     return lines
 end
 
+---Returns a share as a whole percentage
 local function pct(value)
     return string.format("%d %%", math.floor(value * 100 + 0.5))
 end
 
--- a rate of wear in % of life per hour, to three figures
+---Returns a rate of wear in % of life per hour, to three figures
 local function perHour(rate)
     local format = rate < 9.995 and "%.2f %%/h" or rate < 99.95 and "%.1f %%/h" or "%.0f %%/h"
     return string.format(format, rate)
 end
 
+---Draws a bar, its share filled, with a tick when one is given
 local function bar(x, y, w, h, share, color, tick)
     rect(x, y, w, h, COLOR.track, h / 2)
     if share > 0 then
@@ -240,14 +252,17 @@ local function bar(x, y, w, h, share, color, tick)
     end
 end
 
+---Draws a card
 local function card(x, y, w, h, color)
     rect(x, y, w, h, color or COLOR.card, 10)
 end
 
+---Draws a line one pixel high
 local function hairline(x, y, w, color)
     rect(x, y, w, 1, color or COLOR.line)
 end
 
+---Draws the title of a group, its note on the right
 local function title(x, y, w, text, note)
     rect(x, y + 3, 4, 18, HUD.COLOR.ACTIVE, 2)
     local width = label(x + 14, y + 12, text:upper(), 16, HUD.COLOR.ACTIVE, {bold = true}) or measure(text:upper(), 16, true)
@@ -258,10 +273,12 @@ end
 
 local CHIP_H, CHIP_ROW = 22, 28
 
+---Returns the width of a chip
 local function chipWidth(entry, px)
     return measure(entry.text, px, entry.bold) + 16 + (entry.dot and 14 or 0)
 end
 
+---Draws a chip, returning its width
 local function chip(x, y, entry, px)
     local w = chipWidth(entry, px)
     local color = entry.color
@@ -294,14 +311,17 @@ end
 
 local RISK_TIERS = {{"low", COLOR.ok}, {"moderate", COLOR.yellow}, {"high", COLOR.red}}
 
+---Returns the name and colour of a risk tier
 local function getRiskTier(risk)
     return RISK_TIERS[RMS_Utils.getBreakdownRiskTier(risk)]
 end
 
+---Returns the colour of a failing or worn part, nil for the others
 local function partColor(part)
     return part.stage > 0 and COLOR.red or part.isWorn and COLOR.orange or nil
 end
 
+---Returns the chance a part fails in the horizon
 local function chanceText(part)
     if part.stage > 0 then
         return "failing"
@@ -382,6 +402,7 @@ local function drawSheet(reading, x, y, w)
     return y - top
 end
 
+---Draws the sheet of the machine and the views
 local function drawSidebar(reading, isMouse)
     local window = RMS_DebugWindow
     local x, w = SIDE.x + 24, SIDE.w - 48
@@ -389,7 +410,6 @@ local function drawSidebar(reading, isMouse)
     -- the views and how to reach them, at the foot
     local ny = SIDE.bottom - 24 - (26 + 3 * 42 + 4 + 22)
 
-    -- the sheet above them, scrolled past a name of many lines
     local clipTop, top, bottom = SIDE.y + 14, SIDE.y + 22, ny - 22
     local height = measureHeight(function() return drawSheet(reading, x, top, w) end) + top - clipTop
     local maxScroll = math.max(height - (bottom - clipTop), 0)
@@ -488,6 +508,7 @@ end
 
 local EMPTY_COLUMN_H = 300
 
+---Draws the wear under way beyond the normal rate
 local function drawWearNow(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -519,6 +540,7 @@ local function drawWearNow(reading, x, y, w, h)
     return cy - y
 end
 
+---Draws the workshop work under way
 local function drawWork(reading, x, y, w, h)
     local work = reading.work
     local ix, iw = x + 16, w - 32
@@ -566,6 +588,7 @@ end
 
 local FAULT_PITCH_MAX, FAULT_PITCH_MIN = 22, 18
 
+---Draws a fault, returning its height
 local function drawFault(fault, x, y, w, pitch)
     local color = fault.isSeen and COLOR.red or COLOR.orange
     local px, pw = x + 14, w - 14
@@ -596,6 +619,7 @@ local function drawFault(fault, x, y, w, pitch)
     return h
 end
 
+---Draws the faults, their pitch shrunk to fit
 local function drawFaults(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -605,7 +629,6 @@ local function drawFaults(reading, x, y, w, h)
         label(x + w / 2, y + math.min(h, EMPTY_COLUMN_H) / 2 + 20, "No fault on this machine", 17, COLOR.label, {align = RenderText.ALIGN_CENTER})
         return EMPTY_COLUMN_H
     end
-    -- the rows close up to fit the column, then it scrolls
     local pitch = FAULT_PITCH_MAX
     local function getRowsHeight()
         local rowsH = 0
@@ -627,6 +650,7 @@ local function drawFaults(reading, x, y, w, h)
     return cy - y
 end
 
+---Draws the lamps, codes and effects
 local function drawDashboard(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -672,6 +696,7 @@ local function drawDashboard(reading, x, y, w, h)
     return cy - y
 end
 
+---Draws the overview: tiles, then three columns
 local function drawOverview(reading, area)
     local y = area.y + drawTiles(reading, area.x, area.y, area.w) + GAP
     local h = area.bottom - y
@@ -681,7 +706,6 @@ local function drawOverview(reading, area)
         {x = area.x + cw + GAP, draw = drawFaults},
         {x = area.x + 2 * (cw + GAP), draw = drawDashboard}
     }
-    -- the three columns as tall as the tallest
     for _, column in ipairs(columns) do
         h = math.max(h, measureHeight(function() return column.draw(reading, column.x, y, cw, h) end) + 14)
     end
@@ -691,10 +715,10 @@ local function drawOverview(reading, area)
     return y + h - area.y
 end
 
--- system places: engine over cooling, transmission over hydraulics...
 local PART_GRID = {{{"Engine", "Electric motor"}, {"Transmission"}, {"Fuel", "Traction battery"}, {"Chassis"}},
     {{"Cooling"}, {"Hydraulics"}, {"Electrical"}, {"PTO", "Harvest"}}}
 
+---Returns the system of a reading by one of its names
 local function findSystem(reading, names)
     for _, system in ipairs(reading.systems) do
         for _, name in ipairs(names) do
@@ -706,12 +730,13 @@ local function findSystem(reading, names)
     return nil
 end
 
+---Returns the colour of a wear cause, normal wear grey
 local function getCauseColor(cause)
     return cause == 1 and COLOR.normal or CAUSE_COLORS[(cause - 2) % #CAUSE_COLORS + 1]
 end
 
+---Returns the legend entries of a system card
 local function getLegend(system)
-    -- a cause a part still shows keeps its colour named
     local isShown = {}
     for _, part in ipairs(system.parts) do
         for _, entry in ipairs(part.causes) do
@@ -730,6 +755,7 @@ local function getLegend(system)
     return entries
 end
 
+---Returns the rows the legend of a system card takes
 local function getLegendRows(system, w)
     local rows, cx = 1, 0
     for _, entry in ipairs(getLegend(system)) do
@@ -742,6 +768,7 @@ local function getLegendRows(system, w)
     return rows
 end
 
+---Draws the card of a system and its parts
 local function drawPartCard(system, x, y, w, h, pitch, headH)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -758,7 +785,6 @@ local function drawPartCard(system, x, y, w, h, pitch, headH)
     end
     label(ix + iw, y + 52, "normal " .. perHour(system.normal), 14, COLOR.dim, {align = RenderText.ALIGN_RIGHT})
 
-    -- what wore the system, in the colours its parts use
     local lx, ly = ix, y + 80
     for _, entry in ipairs(getLegend(system)) do
         local ew = (entry.color ~= nil and 15 or 0) + measure(entry.text, 14) + 18
@@ -816,18 +842,20 @@ end
 
 local LEGEND_H = 30
 
+---Draws a legend text, returning its width
 local function legendText(x, y, text, color, bold)
     label(x, y, text, 14, color, {bold = bold})
     return measure(text, 14, bold)
 end
 
----Keeps the place of a system the machine has not
+---Draws the card of a system the machine has not, keeping its place
 local function drawAbsentCard(name, x, y, w, h)
     card(x, y, w, h)
     label(x + 16, y + 24, name, 20, COLOR.dim, {bold = true})
     label(x + 16, y + 52, "not followed on this machine", 15, COLOR.dim, {box = w - 32})
 end
 
+---Draws the legend of the parts view
 local function drawPartsLegend(reading, area, y)
     local ly = y + LEGEND_H / 2
     local lx = area.x
@@ -854,13 +882,13 @@ end
 
 local PITCH_MIN, PITCH_MAX = 21, 26
 
+---Draws the parts view, a card per system
 local function drawParts(reading, area)
     local colW = (area.w - 3 * GAP) / 4
     local grid, placed = {}, {}
     for row, places in ipairs(PART_GRID) do
         grid[row] = {}
         for column, names in ipairs(places) do
-            -- a place kept, named, for a system the machine has not
             local system = findSystem(reading, names)
             grid[row][column] = system or {absent = names[1]}
             if system ~= nil then
@@ -868,7 +896,6 @@ local function drawParts(reading, area)
             end
         end
     end
-    -- a system without a place of its own goes on a row below
     local extra = 0
     for _, system in ipairs(reading.systems) do
         if not placed[system] then
@@ -913,6 +940,7 @@ end
 local ROW = RMS_DebugReading.ROW
 local LABEL_W, LINE = 100, 20
 
+---Returns the width of an item, its label and value
 local function itemWidth(entry)
     return (entry.label ~= "" and measure(entry.label, 15) + 8 or 0) + measure(entry.value, 15, true)
 end
@@ -990,6 +1018,7 @@ end
 local COLUMNS = 5
 local GROUP_TITLE, ROW_GAP, GROUP_GAP = 36, 6, 20
 
+---Draws the machine view in five columns
 local function drawMachine(reading, area)
     local gap = 18
     local colW = (area.w - (COLUMNS - 1) * gap) / COLUMNS
@@ -1018,7 +1047,6 @@ local function drawMachine(reading, area)
     for index = 1, COLUMNS do
         height = math.max(height, measureHeight(function() return column(index, false) end))
     end
-    -- five frames of the same height, each column its groups
     for index = 1, COLUMNS do
         card(area.x + (index - 1) * (colW + gap), area.y, colW, height)
         column(index, true)
@@ -1026,7 +1054,7 @@ local function drawMachine(reading, area)
     return height
 end
 
--- the game's fill levels climb above its speed meter, a box each
+---Returns the top of the game's fill levels, a box each above its speed meter
 local function getFillLevelsTop()
     local hud = g_currentMission.hud
     local display = hud ~= nil and hud.fillLevelsDisplay or nil
@@ -1079,7 +1107,6 @@ function RMS_DebugWindow.layout(reading, isMouse)
     L.clip = nil
 
     if maxScroll > 0 then
-        -- the bar in the right padding, the view keeping its width
         window.scrollState = scrollBar("track", area.x + area.w + (PAD - SCROLL_W) / 2, area.y, viewport, height, window.scroll[view], isMouse)
     end
     window.hits, window.overflows = L.hits, L.overflows
@@ -1087,6 +1114,7 @@ function RMS_DebugWindow.layout(reading, isMouse)
     return L.commands
 end
 
+---Draws the commands of the layout
 local function render(commands)
     setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BASELINE)
     for _, command in ipairs(commands) do
@@ -1111,6 +1139,7 @@ local function render(commands)
     setTextColor(1, 1, 1, 1)
 end
 
+---Returns the reading of a machine, asked of the server on a client
 local function getReading(vehicle)
     if vehicle.isServer then
         return RMS_DebugReading.read(vehicle)
@@ -1138,7 +1167,7 @@ function RMS_DebugWindow.invalidate()
     RMS_DebugWindow.refreshTime = -math.huge
 end
 
----Gives the mouse and the controls back; the window stays
+---Gives the mouse and the controls back, the window staying open
 function RMS_DebugWindow.releaseMouse()
     RMS_DebugWindow.wantsMouse = false
     RMS_DebugWindow.dragging, RMS_DebugWindow.dragTarget = nil, nil
@@ -1169,6 +1198,7 @@ function RMS_DebugWindow.onToggleAction()
     end
 end
 
+---Registers the key opening the window
 local function onRegisterGlobalPlayerActionEvents()
     local _, eventId = g_inputBinding:registerActionEvent(InputAction.RMS_TOGGLE_DEBUG_WINDOW, RMS_DebugWindow,
         RMS_DebugWindow.onToggleAction, false, true, false, true)
@@ -1192,11 +1222,13 @@ local function setHelpHidden(isHidden)
     end
 end
 
+---Tells whether the window shows over a machine
 local function getIsShown(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     return RMS_DebugWindow.isOpen and g_currentMission.isMasterUser and spec ~= nil and not spec.isExcludedVehicle
 end
 
+---Reads the machine on its interval and lays the window out again
 local function refresh(vehicle, isMouse)
     local window = RMS_DebugWindow
     if vehicle ~= window.vehicle or g_time >= window.refreshTime then
@@ -1245,6 +1277,7 @@ function RMS_DebugWindow.drawMouse()
     render(RMS_DebugWindow.commands)
 end
 
+---Returns the area the mouse hits, nil without one
 local function findHit(x, y)
     for _, area in ipairs(RMS_DebugWindow.hits) do
         if x >= area.x and x <= area.x + area.w and y >= area.y and y <= area.y + area.h then
@@ -1254,11 +1287,12 @@ local function findHit(x, y)
     return nil
 end
 
--- the game measures texts as it draws them only while it draws
+---Lays the window out again at the next draw, where texts can be measured
 local function relayout()
     RMS_DebugWindow.commands = nil
 end
 
+---Returns the scroll state of a track
 local function getScrollState(kind)
     local window = RMS_DebugWindow
     return kind == "sideTrack" and window.sideState or window.scrollState
@@ -1276,6 +1310,7 @@ local function scrollTo(kind, value)
     relayout()
 end
 
+---Scrolls by the thumb dragged to a y
 local function dragTo(y)
     local window = RMS_DebugWindow
     local state = getScrollState(window.dragTarget)
@@ -1298,7 +1333,6 @@ function RMS_DebugWindow.onMouseEvent(posX, posY, isDown, isUp, button)
         return
     end
     if isDown and (button == Input.MOUSE_BUTTON_WHEEL_UP or button == Input.MOUSE_BUTTON_WHEEL_DOWN) then
-        -- over the side panel the sheet scrolls, if it can
         local isSide = x < SIDE.x + SIDE.w and window.sideState ~= nil
         local step = button == Input.MOUSE_BUTTON_WHEEL_UP and -WHEEL_STEP or WHEEL_STEP
         if isSide then

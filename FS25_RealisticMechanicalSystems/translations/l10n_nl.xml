@@ -2,8 +2,12 @@
     <texts>
         <!-- HUD -->
         <text name="rms_hud_mass_tractor" text="Voertuig"/>
-        <text name="rms_hud_mass_towed" text="Aangekoppeld"/>
+        <text name="rms_hud_mass_towed" text="Gekoppeld"/>
         <text name="rms_hud_mass_total" text="Totaal"/>
+        <text name="rms_hud_fuel_average" text="Gem."/>
+        <text name="rms_hud_unit_perHour" text="/u"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Logboek is nog leeg"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Thermische beveiliging: vermogensbegrenzing opgeheven"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue-niveau laag: vul AdBlue bij."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue-niveau zeer laag: vul AdBlue bij."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue-niveau zeer laag: motorvermogen verlaagd. Vul AdBlue bij."/>
+        <text name="rms_adblue_empty_message" text="AdBlue-tank leeg: vul AdBlue bij."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue-tank leeg: motorvermogen sterk verlaagd. Vul AdBlue bij."/>
+        <text name="rms_adblue_restored_message" text="AdBlue bijgevuld: motorvermogen hersteld."/>
         <text name="rms_breakdown_at_progress_message" text="loopt"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Waarschuwing! Motor koud: hij slijt tot hij warmgedraaid is."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van de hydrauliek tot het drievoudige verhogen, de hydrauliek warmer laten lopen en vertragen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dit product is niet bedoeld voor dit circuit. Het verontreinigt het en kan de slijtage van transmissie en hydrauliek tot het drievoudige verhogen, beide warmer laten lopen en de hydrauliek vertragen. Alleen een volledige vloeistofvervanging verwijdert de verontreiniging. Doorgaan?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Ongeschikte motorolie"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Deze motor gebruikt AdBlue of heeft een roetfilter: de handleiding schrijft een olie voor die daarvoor gemaakt is. Met deze olie komt de olieverversing tot twee keer zo vroeg. Een roetfilter loopt bovendien 1,5 keer zo snel vol met as. Doorgaan?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Deze motor gebruikt AdBlue of heeft een roetfilter: hij heeft een olie nodig die daarvoor gemaakt is. Met deze olie komt de olieverversing tot twee keer zo vroeg. Een roetfilter loopt bovendien 1,5 keer zo snel vol met as. Doorgaan?"/>
         <text name="rms_fluid_error_no_circuit" text="Voor dit voertuig hoeven geen vloeistoffen te worden bijgevuld"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Dit voertuig heeft geen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Zet de motor uit voordat je vloeistof overdraagt"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Koeling en luchtfilter"/>
         <text name="rms_tutorial_cooling_air_check_message" text="De radiateur of het luchtfilter is verstopt. Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om te zien welke van de twee. Reinig het met de persluchtblazer. Als het filter niet meer kan worden uitgeblazen, vervangt de werkplaats het vanaf het onderhoud %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Smering vereist"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft smeernippels die gesmeerd moeten worden.&#10;&#10;In RMS heeft elke machine de smeernippels uit haar handleiding. Ze moeten opnieuw gesmeerd worden naar de dagen dat de machine werkt: elke gebruiksdag, of om de paar gebruiksdagen voor de nippels die de handleiding minder vaak smeert. Te laat smeren versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit en patronen in de winkel. Ga met de vetspuit in de hand voor een patroon staan om die te laden en richt daarna op de machine: elke klik smeert één smeernippel en ingedrukt houden gaat door met de volgende.&#10;&#10;Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om de resterende smeernippels te zien."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s heeft smeernippels die gesmeerd moeten worden.&#10;&#10;In RMS heeft elke machine haar eigen smeernippels. Ze moeten opnieuw gesmeerd worden naar de dagen dat de machine werkt: elke gebruiksdag, of om de paar gebruiksdagen voor sommige ervan. Te laat smeren versnelt de slijtage van het chassis.&#10;&#10;Koop een vetspuit en patronen in de winkel. Ga met de vetspuit in de hand voor een patroon staan om die te laden en richt daarna op de machine: elke klik smeert één smeernippel en ingedrukt houden gaat door met de volgende.&#10;&#10;Houd de toets %s ingedrukt terwijl je naar het voertuig kijkt om de resterende smeernippels te zien."/>
         <text name="rms_tutorial_needs_repair_title" text="Storing gedetecteerd"/>
         <text name="rms_tutorial_needs_repair_message" text="%s heeft een probleem. Mogelijk is een van de onderdelen uitgevallen.&#10;&#10;Ga naar de werkplaats: een inspectie, of de onderhoudsbeurt als die nodig is, stelt de storing vast. Wacht niet: de storing kan blijven verergeren en de reparatiekosten stijgen mee.&#10;&#10;Laat de storing in de werkplaats repareren zodra die is vastgesteld."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisie vereist"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Warm weer"/>
         <text name="rms_tutorial_hot_weather_message" text="Het is vandaag zeer warm. Houd bij dit weer de radiateur schoon en voorkom overbelasting van de motor, anders is oververhitting slechts een kwestie van tijd.&#10;&#10;Je kunt de conditie van de radiateur controleren: houd de toets %s ingedrukt terwijl je naar de machine kijkt. Reinig hem met de persluchtblazer."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Te zware aanhanger"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="De getrokken last lijkt te zwaar voor dit voertuig. Je kunt blijven rijden, maar de transmissie en aandrijflijn worden zwaarder belast.&#10;&#10;RMS gebruikt twee richtwaarden: een tractor heeft minstens 10 pk per ton getrokken massa nodig en een vrachtwagen minstens 6 pk per ton totaal treingewicht. Onder de toepasselijke waarde en bij hoge motorbelasting neemt de transmissieslijtage toe."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="De getrokken last is zwaar voor dit voertuig. Je kunt blijven rijden, maar de remmen slijten sneller telkens wanneer je remt.&#10;&#10;RMS gebruikt twee richtwaarden: een tractor die meer dan 4,5 keer zijn eigen gewicht trekt en een vrachtwagen met minder dan 6 pk per ton totaal treingewicht. Hoe zwaarder de last, hoe sneller de remmen slijten."/>
         <text name="rms_tutorial_hard_start_title" text="Moeilijk starten"/>
         <text name="rms_tutorial_hard_start_message" text="De motor van %s start moeilijk. Een zwakke accu, vorst, een mechanische storing of slijtage van de startmotor kan de oorzaak zijn.&#10;&#10;Het elektrische systeem wordt tijdens het starten zwaar belast door de hoge inschakelstromen."/>
         <text name="rms_tutorial_low_fuel_title" text="Brandstofreserve"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Mobiele of eigen werkplaats met aangesloten diagnoseapparatuur, of dealer"/>
         <text name="rms_diagnostic_where_high_voltage" text="Eigen werkplaats of dealer"/>
         <text name="rms_diagnostic_note_inspection" text="Deze code zegt wat de machine meet, niet welk onderdeel defect is: een inspectie vindt het."/>
+        <text name="rms_diagnostic_note_adblue" text="Deze code meldt een lage AdBlue-tank: AdBlue bijvullen wist hem."/>
         <text name="rms_diagnostic_note_uncoded" text="Een inspectie van de machine vindt het betrokken onderdeel."/>
         <text name="rms_diagnostic_uncoded" text="Waarschuwingslampje aan zonder opgeslagen code. Geen sensor bewaakt het betrokken onderdeel."/>
         <text name="rms_diagnostic_uncoded_title" text="Lampje zonder code"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Startrelais"/>
         <text name="rms_diagnostic_spn_167" text="Laadspanning"/>
         <text name="rms_diagnostic_spn_157" text="Raildruk"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-tankniveau"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-pomp"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-doseerinjector"/>
         <text name="rms_diagnostic_spn_3216" text="NOx-sensor vóór de katalysator"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Defect apparaat of onderdeel"/>
         <text name="rms_diagnostic_fmi_14" text="Bijzondere instructies"/>
         <text name="rms_diagnostic_fmi_16" text="Gegevens boven het normale bereik (matig ernstig niveau)"/>
+        <text name="rms_diagnostic_fmi_17" text="Gegevens onder het normale bereik (minst ernstige niveau)"/>
         <text name="rms_diagnostic_fmi_18" text="Gegevens onder het normale bereik (matig ernstig niveau)"/>
         <text name="rms_diagnostic_fmi_31" text="Toestand aanwezig"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="defect onderdeel"/>
         <text name="rms_dashboard_fmi_14" text="ingreep vereist"/>
         <text name="rms_dashboard_fmi_16" text="hoge waarde"/>
+        <text name="rms_dashboard_fmi_17" text="licht lage waarde"/>
         <text name="rms_dashboard_fmi_18" text="lage waarde"/>
         <text name="rms_dashboard_fmi_31" text="storing aanwezig"/>
         <text name="rms_diagnostic_log_title" text="Codes uitlezen"/>

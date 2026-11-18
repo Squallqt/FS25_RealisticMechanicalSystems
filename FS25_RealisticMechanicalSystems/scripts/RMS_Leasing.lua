@@ -3,10 +3,10 @@
 ---Return of a leased machine: wash, overdue service and repairs billed
 RMS_Leasing = {}
 
----Share of the deposit a full wash costs
+-- share of the deposit a full wash costs
 RMS_Leasing.WASH_DEPOSIT_SHARE = 0.3
 
----Charges of a return, in the order of the dialog
+-- charges of a return, in the order of the dialog
 RMS_Leasing.CHARGES = {
     { key = "overdueMaintenance", label = "rms_sell_dialog_overdue_maintenance_penalty" },
     { key = "repair", label = "rms_sell_dialog_repair_penalty" },
@@ -46,7 +46,7 @@ function RMS_Leasing.isSupportedVehicle(vehicle)
     return RMS_Leasing.isRMSVehicle(vehicle) and RMS_Leasing.isLeasedVehicle(vehicle)
 end
 
----Deposit of the lease, as EconomyManager takes it
+---Deposit of the lease
 local function getDeposit(vehicle)
     return MathUtil.round(vehicle:getPrice() * EconomyManager.DEFAULT_LEASING_DEPOSIT_FACTOR, 0)
 end

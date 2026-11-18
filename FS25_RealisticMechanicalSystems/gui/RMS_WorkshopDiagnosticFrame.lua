@@ -5,11 +5,10 @@ RMS_WorkshopDiagnosticFrame = {}
 
 local RMS_WorkshopDiagnosticFrame_mt = Class(RMS_WorkshopDiagnosticFrame, RMS_WorkshopPage)
 
--- quote list in reference pixels, as laid out in the XML
+-- quote list in reference pixels
 local QUOTE_WIDTH, QUOTE_HEIGHT = 316, 288
 -- a fault row: its description, shortened beside its warranty
 local ROW_WIDTH, DESCRIPTION_WIDTH, DESCRIPTION_COVERED = 683, 547, 390
--- the warranty that pays a fault, named on its row
 local COVER_NAMES = { factory = "rms_ws_quote_cover_factory", part = "rms_ws_quote_cover_part", used = "rms_ws_quote_cover_used" }
 
 local READING_ROWS = {
@@ -122,7 +121,6 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     elseif index > #self.breakdownIds then
         local worn = self.wornParts[index - #self.breakdownIds - 1]
         if worn ~= nil then
-            -- a worn part is picked for its replacement as a fault is
             local isPicked = self.vehicle.spec_RealisticMechanicalSystems.preventiveParts[worn.partId] ~= nil
             local toggle = cell:getAttribute("wornSelect")
             RMS_Utils.mirrorSelectionToChildren(toggle, cell)
@@ -162,7 +160,6 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     cover:setText(isCovered and COVER_NAMES[reason] ~= nil and g_i18n:getText(COVER_NAMES[reason]) or "")
     description:setSize(((isCovered and COVER_NAMES[reason] ~= nil) and DESCRIPTION_COVERED or DESCRIPTION_WIDTH)
         * self.breakdownTable.size[1] / ROW_WIDTH, nil)
-    -- an unpicked row starts its description over
     description:setText(descriptionText, nil, nil, not isPicked)
 
     local toggle = cell:getAttribute("rms_tableBreakdownSelect")

@@ -6,10 +6,12 @@ local RMS_FluidTransferRequestEvent_mt = Class(RMS_FluidTransferRequestEvent, Ev
 
 InitEventClass(RMS_FluidTransferRequestEvent, "RMS_FluidTransferRequestEvent")
 
+---Create instance of Event class
 function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
+---Create new instance of event
 -- @param integer? index place poured from (the drum of a pallet), the first by default
 function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result, index)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
@@ -23,6 +25,7 @@ function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompati
     return self
 end
 
+---Writes event data to a stream.
 function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -33,6 +36,7 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteUInt8(streamId, self.index)
 end
 
+---Reads event data from a stream.
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -44,6 +48,7 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Starts or cancels the transfer on the server, or shows the refusal on the client
 function RMS_FluidTransferRequestEvent:run(connection)
     if connection:getIsServer() then
         local textKey = self.container ~= nil and RMS_FluidTransfer.getRefusalTextKey(self.container, self.result) or nil
@@ -87,6 +92,7 @@ function RMS_FluidTransferRequestEvent:run(connection)
     end
 end
 
+---Sends a transfer request from a client to the server
 function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel, index)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(

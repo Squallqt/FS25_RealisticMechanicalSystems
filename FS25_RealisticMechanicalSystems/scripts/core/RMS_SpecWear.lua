@@ -9,6 +9,7 @@ local isMissionVehicle = RealisticMechanicalSystems.isMissionVehicle
 local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 
 
+---Sets the condition of a system from the wear of its parts
 local function refreshSystemCondition(spec, systemKey)
     local parts = spec.systemParts[systemKey]
     if #parts == 0 then
@@ -23,6 +24,7 @@ local function refreshSystemCondition(spec, systemKey)
 end
 RealisticMechanicalSystems.refreshSystemCondition = refreshSystemCondition
 
+---Builds the parts of each system and the share of each cause on them
 function RealisticMechanicalSystems.buildSystemParts(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local recordedWear = spec.partWear or {}
@@ -88,6 +90,7 @@ for _, clock in ipairs(RealisticMechanicalSystems.SERVICE_CLOCKS) do
     end
 end
 
+---Returns the wear an overdue service adds to a system
 local function getExpiredServiceFactor(vehicle, systemKey, C)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local levelKey = SERVICE_LEVEL_KEY_BY_SYSTEM[systemKey]
@@ -121,11 +124,12 @@ local function getExpiredServiceFactor(vehicle, systemKey, C)
     return math.min(severity * C.SERVICE_EXPIRED_MULTIPLIER * 2 ^ doublings, C.SERVICE_EXPIRED_MAX)
 end
 
+---Tells whether a filter is clogged past its bypass
 local function getIsFilterBypassed(spec, stateKey)
     return RMS_Consumables.getFilterStage(spec[stateKey]) >= RMS_Config.CORE.HYDRAULICS_FACTOR_DATA.FILTER_BYPASS_STAGE
 end
 
--- a clogged filter opens its bypass, a defective one lets dirt pass
+---Returns the wear a filter bypass adds: a clogged filter opens it, a defective one lets dirt pass
 local function getFilterBypassFactor(vehicle, wearRate, stateKey)
     stateKey = stateKey or "hydraulicFilterClogging"
     local defective = RMS_Consumables.getDefectiveFilter(vehicle)
@@ -168,12 +172,12 @@ function RealisticMechanicalSystems:updateConditionLevel()
     spec.conditionLevel = totalWeight > 0 and math.clamp(weighted / totalWeight, 0.001, 1.0) or 1.0
 end
 
--- the red coolant lamp is lit
+---Returns the heat abuse while the red coolant lamp is lit
 local function getHeatAbuse(_, spec)
     return spec.engineTemperature >= RMS_Thermal.getDriveValues(spec).TELLTALE.CRITICAL and "heat" or nil
 end
 
--- the abuse a cause's wear is, past the warning the player was given
+-- the abuse a cause's wear is, past its warning
 local CAUSE_ABUSES = {
     hmf = getHeatAbuse,
     ohf = getHeatAbuse,
@@ -188,7 +192,6 @@ local CAUSE_ABUSES = {
     -- a defective filter wears unwarned: only a clogged one is abuse
     hfbf = function(_, spec) return getIsFilterBypassed(spec, "hydraulicFilterClogging") and "filter" or nil end,
     tfbf = function(_, spec) return getIsFilterBypassed(spec, "transmissionFilterClogging") and "filter" or nil end,
-    htf = function() return "trailer" end,
     bmf = function() return "trailer" end,
 }
 
@@ -205,7 +208,7 @@ function RealisticMechanicalSystems.markCauseAbuse(vehicle, systemKey, alias, ab
     end
 end
 
--- a part never recorded takes the system's causes, spread by its shares
+---Returns the cause wear of a part never recorded, the system's causes spread by its shares
 local function seedPartCauseWear(spec, systemKey, index, partId, wear)
     if wear <= 0 then
         return { base = 0 }
@@ -265,6 +268,7 @@ function RealisticMechanicalSystems.getPartCauseWear(spec, systemKey, index, par
 end
 local getPartCauseWear = RealisticMechanicalSystems.getPartCauseWear
 
+---Wears the parts of a system at a rate, each cause on the parts it reaches
 function RealisticMechanicalSystems:updateSystemWear(dt, systemKey, wearRate, factors)
     local spec = self.spec_RealisticMechanicalSystems
     local reliability = math.max(spec.reliability, 0.001)
@@ -366,7 +370,7 @@ function RealisticMechanicalSystems:applyInstantDamageToSystem(system, damageAmo
     end
 end
 
--- the wear of a system this update: its rate, each cause listed at 0
+---Returns the wear of a system this update, its rate and each cause at 0
 local function startWear(rate, causes)
     local wear = { rate = rate, factors = {} }
     for _, name in ipairs(causes) do
@@ -375,11 +379,13 @@ local function startWear(rate, causes)
     return wear
 end
 
+---Adds a cause to the wear of a system
 local function addCause(wear, name, value)
     wear.factors[name] = value
     wear.rate = wear.rate + value
 end
 
+---Applies the wear of a system with its readings
 local function finishWear(vehicle, dt, systemKey, wear, readings)
     for name, value in pairs(readings) do
         wear.factors[name] = value
@@ -387,16 +393,17 @@ local function finishWear(vehicle, dt, systemKey, wear, readings)
     vehicle:updateSystemWear(dt, systemKey, wear.rate, wear.factors)
 end
 
+---Returns the engine temperature, -99 without a reading
 local function getEngineTemperature(spec)
     return sanitizeNumber(spec.rawEngineTemperature or spec.engineTemperature, -99, -99, 160)
 end
 
--- an engine idling on a machine standing still wears little
+---Tells whether the engine idles on a machine standing still
 local function getIsIdling(vehicle, motorLoad)
     return motorLoad < RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_IDLING_THRESHOLD and vehicle:getLastSpeed() < 0.003
 end
 
--- in game hours
+---Returns the wear rate of a machine standing outdoors, in game hours
 local function getOutdoorWearRate(vehicle)
     local C = RMS_Config.CORE
     local class = C.RESALE.PROFILE_CLASSES[RMS_Fluids.getProfileName(vehicle)]
@@ -405,12 +412,13 @@ local function getOutdoorWearRate(vehicle)
         * g_currentMission:getEffectiveTimeScale()
 end
 
--- a stopped machine still ages outdoors
+---Sets the wear of a stopped machine, ageing outdoors only
 local function wearStopped(wear, vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     wear.rate = spec.isUnderRoof and 0 or getOutdoorWearRate(vehicle)
 end
 
+---Adds the wear of torque and of lugging
 local function addTorqueWear(vehicle, wear, load, C, overloadName)
     local isElectric = vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local torque = RMS_Utils.getRatedTorqueRatio(vehicle, load)
@@ -430,6 +438,7 @@ local function addTorqueWear(vehicle, wear, load, C, overloadName)
     end
 end
 
+---Returns the top of the normal engine temperature
 local function getNormalTop(spec)
     if spec.isElectricVehicle then
         return RMS_Config.THERMAL.PROFILES.evDrive.regulatedMax
@@ -437,6 +446,7 @@ local function getNormalTop(spec)
     return RMS_Config.CORE.ENGINE_FACTOR_DATA.OVERHEAT_MOTOR_THRESHOLD
 end
 
+---Wears the electric motor on load and heat
 local function updateElectricMotorSystem(vehicle, dt, systemKey)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.ELECTRIC_DRIVE
@@ -500,15 +510,16 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
     finishWear(self, dt, systemKey, wear, { dynamicMotorLoad = spec.dynamicMotorLoad, engineTemperature = temperature })
 end
 
+---Moves a tutorial timer up while its cause runs, down otherwise
 local function moveTutorialTimer(spec, key, isOn, dt, ceiling)
     spec[key] = isOn and math.min(spec[key] + dt, ceiling) or math.max(spec[key] - dt, 0)
 end
 
 local TRANSMISSION_CAUSES = { "expiredServiceFactor", "pullOverloadFactor", "filterBypassFactor",
-    "transmissionFilterBypassFactor", "heavyTrailerFactor", "luggingFactor", "wheelSlipFactor", "drivetrainWindupFactor",
+    "transmissionFilterBypassFactor", "luggingFactor", "wheelSlipFactor", "drivetrainWindupFactor",
     "coldTransFactor", "hotTransFactor" }
 
--- the driven work of the transmission, its gearbox in good order
+---Adds the wear of the driven work of the transmission
 local function addTransmissionWork(vehicle, wear, driveLoad, transTemp, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
@@ -538,7 +549,7 @@ local function addTransmissionWork(vehicle, wear, driveLoad, transTemp, dt)
     addCause(wear, "expiredServiceFactor", getExpiredServiceFactor(vehicle, "transmission", C))
 end
 
----Wears the transmission on pull, trailer, lugging, slip, windup and oil
+---Wears the transmission on pull, lugging, slip, windup and oil
 function RealisticMechanicalSystems:updateTransmissionSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
     local system = spec.systems.transmission
@@ -580,17 +591,14 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
         end
     end
 
-    local brakeState = spec.chassisBrakeState
     finishWear(self, dt, RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system.name), wear, {
-        driveTorqueRatio = RMS_Utils.getRatedTorqueRatio(self, driveLoad),
-        heavyTrailerMassRatio = spec.isTruck == true and brakeState.hpGrossMassRatio or brakeState.hpTrailerMassRatio,
-        heavyTrailerMassBasis = spec.isTruck == true and "gcw" or "trailer" })
+        driveTorqueRatio = RMS_Utils.getRatedTorqueRatio(self, driveLoad) })
 end
 
 local HYDRAULICS_CAUSES = { "expiredServiceFactor", "heavyLiftFactor", "filterBypassFactor", "vibFactor",
     "operatingFactor", "coldOilFactor", "hotOilFactor" }
 
--- the oil the pump works: its own circuit, or the transmission it shares
+---Returns the temperature of the oil the pump works: its own circuit, or the transmission it shares
 local function getHydraulicOilTemperature(spec)
     local transmission = spec.rawTransmissionTemperature or spec.transmissionTemperature
     local temperature = RMS_Thermal.getHasSeparateHydraulicCircuit(spec) and (spec.rawHydraulicTemperature or spec.hydraulicTemperature)
@@ -598,13 +606,13 @@ local function getHydraulicOilTemperature(spec)
     return sanitizeNumber(temperature, transmission or 20, -80, 180)
 end
 
----Wears the hydraulics on pump, lift load, vibration, cylinders and oil
--- fatigue past ordinary shaking, up to the hardest the game gives
+---Returns the fatigue wear past ordinary shaking, up to the hardest the game gives
 local function getVibrationWear(signal, C, multiplier)
     local ratio = math.min(signal, C.VIB_FACTOR_MAX_SIGNAL) / C.VIB_FACTOR_THRESHOLD
     return math.max(ratio ^ RMS_Config.CORE.CHASSIS_FACTOR_DATA.VIB_FATIGUE_EXPONENT - 1, 0) * multiplier
 end
 
+---Wears the hydraulics on pump, lift load, vibration, cylinders and oil
 function RealisticMechanicalSystems:updateHydraulicsSystem(dt)
     local spec = self.spec_RealisticMechanicalSystems
     local system = spec.systems.hydraulics
@@ -681,6 +689,7 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         ptoUtilization = spec.ptoUtilization, ptoEngagementCount = spec.ptoEngagementCount })
 end
 
+---Returns the stone multiplier, whether a pickup is attached and the crop conversion
 local function getAttachedCutterData(spec_combine, fruitTypeIndex)
     local stone, isPickup, conversion = 1, false, nil
     for cutter in pairs(spec_combine.attachedCutters) do
@@ -699,7 +708,7 @@ local function getAttachedCutterData(spec_combine, fruitTypeIndex)
     return stone, isPickup, conversion
 end
 
--- the crop counted since the time of the last measure
+---Returns the crop counted since the last measure
 local function getHarvestInput(spec)
     spec.harvestInput = spec.harvestInput or { liters = 0, time = g_currentMission.time }
     return spec.harvestInput
@@ -719,7 +728,7 @@ function RealisticMechanicalSystems.addCutterArea(self, superFunc, area, liters,
     return applied
 end
 
--- the straw of the crop as the combine buffers it, in t per l of grain
+---Returns the straw of the crop as the combine buffers it, in t per l of grain
 local function getStrawPerGrainLiter(fruitDesc, conversion)
     if fruitDesc.windrowLiterPerSqm == nil or fruitDesc.literPerSqm <= 0 then
         return 0
@@ -731,13 +740,13 @@ local function getStrawPerGrainLiter(fruitDesc, conversion)
         * g_fillTypeManager:getFillTypeByIndex(windrowFillType).massPerLiter
 end
 
--- a flow against the flow of full work, a model being a + c * t/h
+---Returns a flow against the flow of full work, a model being a + c * t/h
 local function getFullWorkShare(flow, model, engineKw)
     local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
     return flow * model.c / math.max(C.ROTARY_SHARE * engineKw - model.a, 1)
 end
 
--- the crop taken in since the last measure, over the time really gone by
+---Measures the work of the crop taken in since the last measure, over the time really gone by
 local function measureHarvestWork(vehicle, state, input, elapsedMs)
     local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
     local spec_combine = vehicle.spec_combine
@@ -758,7 +767,6 @@ local function measureHarvestWork(vehicle, state, input, elapsedMs)
     local fillType = g_fillTypeManager:getFillTypeByIndex(input.fillTypeIndex)
     if liters > 0 and fruitDesc ~= nil and fillType ~= nil then
         grainTph = liters * fillType.massPerLiter / hours
-        -- the share of straw the header takes in with the grain
         strawTph = liters * getStrawPerGrainLiter(fruitDesc, conversion) * strawRatio / hours
     end
 
@@ -772,7 +780,6 @@ local function measureHarvestWork(vehicle, state, input, elapsedMs)
         local model = isWholePlant and C.SMALL_GRAIN or C.MAIZE
         local flow = isWholePlant and strawTph or grainTph
         rotaryKw = model.a + model.c * flow
-        -- the elevators carry the grain of full work in this crop
         state.grain = getFullWorkShare(flow, model, engineKw)
         chopperKw = isChopping and C.CHOPPER_ENERGY * strawTph or 0
     elseif state.kind == "forage" and not isPickup then
@@ -814,6 +821,7 @@ local function measureHarvestWork(vehicle, state, input, elapsedMs)
     state.tons = (state.tons or 0) + grainTph * hours
 end
 
+---Returns the gamma function of a value
 local function gamma(x)
     local shift = 1
     while x < 7 do
@@ -822,6 +830,7 @@ local function gamma(x)
     return math.sqrt(2 * math.pi / x) * (x / math.exp(1)) ^ x * (1 + 1 / (12 * x) + 1 / (288 * x * x)) / shift
 end
 
+---Returns the mean life of a component
 -- @return float wear the mean life of a component, in part wear
 local function getMeanLifeWear(component)
     local C = RMS_Config.CORE
@@ -835,7 +844,7 @@ function RealisticMechanicalSystems.newHeaderDrive(starts)
         slipMs = 0, slipLimitMs = 0, isSlipSpent = false }
 end
 
--- the headers the machine drives and their steady power in W
+---Reads the headers the machine drives and their steady power in W
 local function readDrivenHeaders(vehicle, drive)
     drive.isTurning, drive.powerW, drive.header = false, 0, nil
     for cutter in pairs(vehicle.spec_combine.attachedCutters) do
@@ -849,6 +858,7 @@ local function readDrivenHeaders(vehicle, drive)
     drive.header = drive.header or next(vehicle.spec_combine.attachedCutters)
 end
 
+---Fails a part at its worst stage
 local function failAtWorst(vehicle, partId, abuse)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local stages = #RMS_Breakdowns.BreakdownRegistry[partId].stages
@@ -874,6 +884,7 @@ function RealisticMechanicalSystems.onHeaderBlocked(vehicle)
     end
 end
 
+---Returns the share of a cause on a part
 -- @return float share of the cause on the part, nil when it has none
 local function getPartCauseShare(spec, systemKey, partId, alias)
     for index, id in ipairs(spec.systemParts[systemKey]) do
@@ -885,7 +896,7 @@ local function getPartCauseShare(spec, systemKey, partId, alias)
     return nil
 end
 
--- a start slips the clutch: twice the kinetic energy of the header
+---Counts a header start, its clutch slipping twice the kinetic energy of the header
 local function startHeader(vehicle, spec, drive, systemKey)
     local C = RMS_Config.CORE.HEADER_DRIVE
     local motor = vehicle:getMotor()
@@ -916,7 +927,7 @@ local function startHeader(vehicle, spec, drive, systemKey)
         "headerEngagementFactor", isHigh and "header_engagement" or nil)
 end
 
--- past its setting the slip clutch slips until its heat ruins it
+---Slips the slip clutch past its setting, until its heat ruins it
 local function slipHeaderClutch(vehicle, drive, effort, dt)
     local C = RMS_Config.CORE.HEADER_DRIVE
     if not drive.isTurning or effort <= C.SLIP_EFFORT then
@@ -927,7 +938,6 @@ local function slipHeaderClutch(vehicle, drive, effort, dt)
         RealisticMechanicalSystems.onHeaderBlocked(vehicle)
         return
     end
-    -- a header the game gives no power heats nothing
     if drive.powerW <= 0 then
         return
     end
@@ -1033,7 +1043,7 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
     self:updateSystemWear(dt, systemKey, wearRate, factors)
 end
 
--- also asked while loading, before RMS builds the systems
+---Returns the spec of a machine with a harvest system, also asked while loading before RMS builds the systems
 local function getHarvestSpec(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil or spec.systems == nil or spec.isExcludedVehicle or spec.systems.harvest == nil or not spec.systems.harvest.enabled then
@@ -1162,7 +1172,7 @@ end
 local CHASSIS_CAUSES = { "lubricationFactor", "vibFactor", "steerLoadFactor", "steerLowSpeedFactor", "brakeMassFactor",
     "parkBrakeDragFactor" }
 
--- a trailer braked by a light machine wears its brakes, by the pedal
+---Returns the brake wear of a trailer braked by a light machine, by the pedal
 local function getBrakeMassWear(vehicle, spec, C)
     local brakeState = spec.chassisBrakeState
     local ratio = spec.isTruck == true and brakeState.hpGrossMassRatio or brakeState.hpTrailerMassRatio
@@ -1227,6 +1237,7 @@ function RealisticMechanicalSystems:updateChassisSystem(dt)
         brakeMassBasis = spec.isTruck == true and "gcw" or "trailer" })
 end
 
+---Wears the traction battery on heat and deep discharge
 local function updateTractionBatterySystem(vehicle, dt, systemKey)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.ELECTRIC_DRIVE
@@ -1265,7 +1276,6 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
 
     local C = RMS_Config.CORE.FUEL_FACTOR_DATA
     local fuelState = spec.fuelState
-    -- the notice says to fill up before the tank runs dry
     if (spec.lastFuelLevel or 0) > 0 and fuelState.level <= 0 and not isMissionVehicle(self) then
         RealisticMechanicalSystems.markCauseAbuse(self, systemKey, "lff", "fuel_dry")
     end
@@ -1305,6 +1315,7 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
     finishWear(self, dt, systemKey, wear, readings)
 end
 
+---Returns the limit and release of a direct failure
 local function getHeatLevels(key)
     local levels = RMS_Config.CORE.DIRECT_FAILURES[key]
     return levels.limit, levels.release
@@ -1342,6 +1353,7 @@ local function failAirDrawingParts(vehicle, spec)
     end
 end
 
+---Fails a part a stage further, its abuse marked
 local function failPart(vehicle, failure)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local partId = failure.partId
@@ -1355,7 +1367,7 @@ local function failPart(vehicle, failure)
     end
 end
 
----Fails the part an abuse strains past the maker's limit
+---Fails the part an abuse strains past its limit
 function RealisticMechanicalSystems:updateDirectFailures(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if isMissionVehicle(self) then

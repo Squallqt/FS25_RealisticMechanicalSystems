@@ -12,12 +12,14 @@ RMS_DiagnosticTool.SCAN = { NONE = 0, RUNNING = 1, DONE = 2, INTERRUPTED = 3 }
 
 local CONFIGURATION_KEY = "vehicle.rmsDiagnosticTool.rmsDiagnosticPcConfigurations.rmsDiagnosticPcConfiguration"
 local getIsAlive = RMS_BatteryCharger.getIsAlive
-local getDistance = RMS_BatteryCharger.getDistance
+local getDistanceToMachine = RMS_BatteryCharger.getDistanceToMachine
 
+---Returns the diagnostic specialization of a trolley, nil without one
 local function getSpec(tool)
     return tool ~= nil and tool[RMS_DiagnosticTool.SPEC_TABLE_NAME] or nil
 end
 
+---Lights the screen of the PC while it is plugged
 local function updateScreen(spec)
     local isPlugged = spec.target ~= nil or spec.targetObjectId ~= nil
     if spec.screenOn ~= nil then
@@ -28,10 +30,12 @@ local function updateScreen(spec)
     end
 end
 
+---Checks if all prerequisite specializations are loaded
 function RMS_DiagnosticTool.prerequisitesPresent(specializations)
     return SpecializationUtil.hasSpecialization(RMS_BatteryCharger, specializations)
 end
 
+---Registers the PC option, its object changes and the saved state
 function RMS_DiagnosticTool.initSpecialization()
     if g_iconGenerator == nil then
         g_vehicleConfigurationManager:addConfigurationType(RMS_DiagnosticTool.CONFIGURATION,
@@ -47,6 +51,7 @@ function RMS_DiagnosticTool.initSpecialization()
         .. "#licenceMonths", "Months left on the paid licence")
 end
 
+---Registers the event listeners of the PC
 function RMS_DiagnosticTool.registerEventListeners(vehicleType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "saveToXMLFile", "onReadStream", "onWriteStream",
         "onReadUpdateStream", "onWriteUpdateStream" }) do
@@ -54,6 +59,7 @@ function RMS_DiagnosticTool.registerEventListeners(vehicleType)
     end
 end
 
+---Called on loading
 function RMS_DiagnosticTool:onLoad(savegame)
     local spec = assert(getSpec(self))
     local option = self.configurations[RMS_DiagnosticTool.CONFIGURATION] or 1
@@ -78,12 +84,14 @@ function RMS_DiagnosticTool:onLoad(savegame)
     end
 end
 
+---Called on deleting, unplugging the PC
 function RMS_DiagnosticTool:onDelete()
     if self.isServer then
         RMS_DiagnosticTool.unplug(self)
     end
 end
 
+---Returns why the PC may not be plugged into a machine, "ok" when it may
 function RMS_DiagnosticTool.validate(tool, target)
     local spec = getSpec(tool)
     if spec == nil or not spec.hasPc or not getIsAlive(tool) or not getIsAlive(target) then
@@ -97,7 +105,7 @@ function RMS_DiagnosticTool.validate(tool, target)
     if not accessHandler:canFarmAccess(tool:getOwnerFarmId(), target) and not accessHandler:canFarmAccess(target:getOwnerFarmId(), tool) then
         return "access"
     end
-    if getDistance(tool, target) > RMS_BatteryCharger.MAX_DISTANCE then
+    if getDistanceToMachine(tool, target) > RMS_BatteryCharger.MAX_DISTANCE then
         return "distance"
     end
     if not RMS_DiagnosticTool.getHasControllers(target) then
@@ -172,11 +180,13 @@ function RMS_DiagnosticTool.getPcRoot(tool)
     return spec ~= nil and spec.hasPc and spec.pcRoot or nil
 end
 
+---Returns the machine the PC is plugged into, nil without one
 function RMS_DiagnosticTool.getTarget(tool)
     local target = RMS_Utils.getConnectedObject(assert(getSpec(tool)))
     return getIsAlive(target) and target or nil
 end
 
+---Logs the codes a finished scan read
 local function addReadingToLog(target, faults)
     local readings = {}
     for _, fault in ipairs(faults) do
@@ -191,6 +201,7 @@ local function addReadingToLog(target, faults)
     RMS_LogEntrySyncEvent.sendToClients(target, entry)
 end
 
+---Called on update: plugs the saved machine, runs and ends the scan
 function RMS_DiagnosticTool:onUpdate()
     local spec = assert(getSpec(self))
     if not self.isServer then
@@ -228,6 +239,7 @@ function RMS_DiagnosticTool:onUpdate()
     end
 end
 
+---Tells whether a machine carries controllers the PC can read
 function RMS_DiagnosticTool.getHasControllers(target)
     return target.spec_RealisticMechanicalSystems.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(target)
 end
@@ -242,15 +254,18 @@ function RMS_DiagnosticTool.getSpnName(spn)
     return g_i18n:getText("rms_diagnostic_spn_" .. spn)
 end
 
+---Returns the text the dashboard shows for a code
 function RMS_DiagnosticTool.getDisplayText(entry)
     return string.format(g_i18n:getText("rms_dashboard_code_message"), RMS_DiagnosticTool.getSpnName(entry.spn),
         g_i18n:getText("rms_dashboard_fmi_" .. entry.fmi))
 end
 
+---Tells whether the battery isolator of a machine is closed
 function RMS_DiagnosticTool.getIsPowered(target)
     return not target.spec_RealisticMechanicalSystems.batteryIsolated
 end
 
+---Returns the controller and parameter of a code on a machine, nil when none reports it
 local function getCodeController(target, code, breakdownId)
     local isElectric = target.spec_RealisticMechanicalSystems.isElectricVehicle
     if code.uncodedVariant ~= nil
@@ -277,6 +292,7 @@ local function getCodeController(target, code, breakdownId)
     return ecu, spn
 end
 
+---Returns the code a breakdown reports on a machine, or its system without a code
 function RMS_DiagnosticTool.getFaultEntry(target, breakdownId, isCritical)
     local code = RMS_Config.DIAGNOSTIC.FAULT_CODES[breakdownId]
     local breakdown = target:getActiveBreakdowns()[breakdownId]
@@ -302,6 +318,7 @@ function RMS_DiagnosticTool.getFaultEntry(target, breakdownId, isCritical)
         fmi = isCritical and code.critical or code.warning }
 end
 
+---Returns the controllers of a machine, in scan order
 function RMS_DiagnosticTool.getControllers(target)
     local present = { DASHBOARD = true }
     for breakdownId, code in pairs(RMS_Config.DIAGNOSTIC.FAULT_CODES) do
@@ -328,6 +345,7 @@ function RMS_DiagnosticTool.getControllers(target)
     return controllers
 end
 
+---Returns the codes the active breakdowns of a machine light, nil without power
 function RMS_DiagnosticTool.readFaultCodes(target)
     if not RMS_DiagnosticTool.getIsPowered(target) then
         return nil, "power"
@@ -354,6 +372,7 @@ function RMS_DiagnosticTool.readFaultCodes(target)
             end
         end
     end
+    RMS_AdBlue.addFaultCode(target, codes, stored)
     table.sort(codes, function(a, b)
         if (a.spn ~= nil) ~= (b.spn ~= nil) then
             return a.spn ~= nil
@@ -387,6 +406,7 @@ function RMS_DiagnosticTool.formatReadingCodes(vehicle, entry)
     return #codes > 0 and table.concat(codes, ", ") or g_i18n:getText("rms_diagnostic_no_fault")
 end
 
+---Starts a scan of the plugged machine, or returns why not
 function RMS_DiagnosticTool.startScan(tool)
     local spec = assert(getSpec(tool))
     if spec.target == nil then
@@ -413,6 +433,7 @@ function RMS_DiagnosticTool.getScanProgress(tool)
     return math.min((g_currentMission.time - spec.scanStartTime) / RMS_Config.DIAGNOSTIC.SCAN_DURATION_MS, 1)
 end
 
+---Counts a month off every licence still running
 function RMS_DiagnosticTool.advanceLicences()
     for _, tool in pairs(g_currentMission.vehicleSystem.vehicles) do
         local spec = getSpec(tool)
@@ -423,10 +444,12 @@ function RMS_DiagnosticTool.advanceLicences()
     end
 end
 
+---Tells whether the licence of a PC still runs
 function RMS_DiagnosticTool.getIsLicenceValid(tool)
     return assert(getSpec(tool)).licenceMonths > 0
 end
 
+---Returns the yearly licence price at the game's economic difficulty
 function RMS_DiagnosticTool.getLicencePrice()
     return RMS_Utils.getGamePrice(RMS_Config.DIAGNOSTIC.LICENCE_PRICE)
 end
@@ -438,6 +461,7 @@ function RMS_DiagnosticTool.getLicenceEnd(tool)
     return months % 12 + 1, environment.currentYear + math.floor(months / 12)
 end
 
+---Renews an expired licence, or returns why not
 function RMS_DiagnosticTool.renewLicence(tool)
     local spec = assert(getSpec(tool))
     if spec.licenceMonths > 0 then
@@ -454,12 +478,14 @@ function RMS_DiagnosticTool.renewLicence(tool)
     return "ok"
 end
 
+---Saves the plugged machine and the licence
 function RMS_DiagnosticTool:saveToXMLFile(xmlFile, key)
     local spec = assert(getSpec(self))
     xmlFile:setValue(key .. "#targetUniqueId", spec.target ~= nil and spec.targetUniqueId or "")
     xmlFile:setValue(key .. "#licenceMonths", spec.licenceMonths)
 end
 
+---Writes the plugged machine, the licence and the scan
 local function writeState(spec, streamId)
     local target = getIsAlive(spec.target) and spec.target or nil
     streamWriteBool(streamId, target ~= nil)
@@ -478,6 +504,7 @@ local function writeState(spec, streamId)
     end
 end
 
+---Reads the plugged machine, the licence and the scan
 local function readState(spec, streamId)
     spec.targetObjectId = nil
     if streamReadBool(streamId) then
@@ -495,14 +522,17 @@ local function readState(spec, streamId)
     updateScreen(spec)
 end
 
+---Called on server side on join
 function RMS_DiagnosticTool:onWriteStream(streamId)
     writeState(assert(getSpec(self)), streamId)
 end
 
+---Called on client side on join
 function RMS_DiagnosticTool:onReadStream(streamId)
     readState(assert(getSpec(self)), streamId)
 end
 
+---Called on server side on update
 function RMS_DiagnosticTool:onWriteUpdateStream(streamId, connection, dirtyMask)
     if not connection:getIsServer() then
         local spec = assert(getSpec(self))
@@ -514,6 +544,7 @@ function RMS_DiagnosticTool:onWriteUpdateStream(streamId, connection, dirtyMask)
     end
 end
 
+---Called on client side on update
 function RMS_DiagnosticTool:onReadUpdateStream(streamId, timestamp, connection)
     if connection:getIsServer() and streamReadBool(streamId) then
         readState(assert(getSpec(self)), streamId)

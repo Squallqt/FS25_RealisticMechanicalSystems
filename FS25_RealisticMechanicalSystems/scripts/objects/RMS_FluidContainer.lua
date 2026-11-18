@@ -10,15 +10,10 @@ RMS_FluidContainer.ADBLUE_DRUM_I3D_FILENAME = "data/placeables/brandless/decorat
 RMS_FluidContainer.CARRIED_CAPACITY = 20
 RMS_FluidContainer.PUMP_I3D_FILENAME = "objects/drumPump/drumPumpMounted.i3d"
 RMS_FluidContainer.PUMP_TRANSLATION = { 0, 0.898252845, 0.1980392635 }
--- pump on the AdBlue drum bung (+x), turned to face out
 RMS_FluidContainer.ADBLUE_DRUM_PUMP = { translation = { 0.2171, 0.9421, 0 }, rotationY = 90 }
--- left drum of a pallet: the -x bung, its hose clear of the other
 RMS_FluidContainer.ADBLUE_DRUM_PUMP_LEFT = { translation = { -0.2171, 0.9421, 0 }, rotationY = -90 }
--- pump on the cap of the tank
 RMS_FluidContainer.TANK_PUMP = { translation = { 0, 1.558, 0 }, rotationY = 0 }
--- parked hose lying on the tank roof, the drum's hangs over a rim
 RMS_FluidContainer.TANK_HOSE_I3D_FILENAME = "objects/drumPump/drumPumpTankHose.i3d"
--- drum places by number of drums: one centred, or two side by side
 RMS_FluidContainer.DRUM_PLACES = {
     { { link = "drumVisualLink", collision = "drumCollision" } },
     { { link = "drumVisualLinkA", collision = "drumCollisionA", isLeft = true },
@@ -83,6 +78,7 @@ function RMS_FluidContainer.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidHoseSpan", RMS_FluidContainer.getRMSFluidHoseSpan)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidSlotCount", RMS_FluidContainer.getRMSFluidSlotCount)
     SpecializationUtil.registerFunction(vehicleType, "getRMSFluidSlotAt", RMS_FluidContainer.getRMSFluidSlotAt)
+    SpecializationUtil.registerFunction(vehicleType, "getHandsJointBreakForceFactor", RMS_FluidContainer.getHandsJointBreakForceFactor)
 end
 
 ---Registers native container behavior overrides
@@ -108,7 +104,7 @@ function RMS_FluidContainer.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", RMS_FluidContainer)
 end
 
----Tells the kind of container a capacity stands for
+---Returns the format of a capacity
 -- @param float capacity liters
 -- @return string format "medium" (5 L can), "large" (20 L jerrican) or "drum"
 function RMS_FluidContainer.getFormat(capacity)
@@ -136,12 +132,12 @@ function RMS_FluidContainer.loadDrumPrints(container, parentNode, baseKey)
         Utils.getFilename(container.xmlFile:getValue(baseKey .. "#drumLabelDiffuse"), container.baseDirectory))
 end
 
----Loads the native GIANTS drum without importing its static rigid body
+---Loads the game's oil drum as a visual, without its rigid body
 function RMS_FluidContainer.loadNativeDrumVisual(parentNode)
     return RMS_FluidContainer.loadNativeVisual(RMS_FluidContainer.DRUM_I3D_FILENAME, parentNode)
 end
 
----Loads a GIANTS prop as a visual, without its static rigid body
+---Loads a game prop as a visual, without its rigid body
 function RMS_FluidContainer.loadNativeVisual(filename, parentNode)
     local i3dRoot = g_i3DManager:loadI3DFile(filename, false, false)
     if i3dRoot == nil or i3dRoot == 0 or getNumOfChildren(i3dRoot) == 0 then
@@ -162,6 +158,7 @@ function RMS_FluidContainer.loadNativeVisual(filename, parentNode)
     return true
 end
 
+---Loads the pump on a drum, returning its nodes
 -- @param table? place { translation, rotationY }, the oil drum's bung by default
 local function loadPump(container, drumLink, place)
     local i3dRoot = g_i3DManager:loadI3DFile(Utils.getFilename(RMS_FluidContainer.PUMP_I3D_FILENAME, container.baseDirectory), false, false)
@@ -190,6 +187,7 @@ local function loadTankHose(container, pump)
     pump.restHose = hose
 end
 
+---Shows the pump of a place, its nozzle and hose while hung up
 local function applyPump(slot)
     setVisibility(slot.pump.node, slot.hasPump)
     setVisibility(slot.pump.storedNozzle, not slot.isNozzleOut)
@@ -243,6 +241,7 @@ function RMS_FluidContainer.applySpecularToNodes(nodes, filename)
     end
 end
 
+---Returns a product map of the container
 local function getProductFilename(container, attribute)
     local filename = container.xmlFile:getValue("vehicle.rmsFluidContainer#" .. attribute)
     return Utils.getFilename(filename, container.baseDirectory)
@@ -342,8 +341,10 @@ function RMS_FluidContainer:onLoad(savegame)
         self:applyRMSFluidVisuals(largeRoots[1], RMS_FluidContainer.CARRIED_CAPACITY)
     end
 
-    -- one place for a can, one per drum with its fill unit and pump
     if spec.capacity <= RMS_FluidContainer.CARRIED_CAPACITY then
+        if self.isServer and savegame == nil and self:getNeedsSaving() then
+            g_messageCenter:subscribe(MessageType.VEHICLE_LOADED, RMS_FluidContainer.onNewCanLoaded, self)
+        end
         return
     end
     spec.slots = {}
@@ -473,6 +474,7 @@ end
 ---Cancels a running transfer and empties the hand before deletion
 function RMS_FluidContainer:onDelete()
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_LOADED, self)
     RMS_FluidTransfer.cancel(self)
     for _, slot in ipairs(spec.slots or {}) do
         if slot.carrierTool ~= nil then
@@ -481,6 +483,7 @@ function RMS_FluidContainer:onDelete()
     end
 end
 
+---Hides a carried container, or sets it down in the world
 local function applyCarried(container, isCarried, x, y, z, rotY)
     if isCarried then
         container:removeFromPhysics()
@@ -568,7 +571,7 @@ function RMS_FluidContainer:getRMSFluidHoseSpan(player, index)
     return MathUtil.vector2Length(x - outletX, z - outletZ)
 end
 
----Advances the active transfer only on the authoritative server
+---Called on update: runs the transfer on the server
 function RMS_FluidContainer:onUpdate(dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
     if self.isServer and RMS_FluidTransfer.getHasActive(self) then
         RMS_FluidTransfer.update(self, dt)
@@ -677,6 +680,7 @@ function RMS_FluidContainer:onReadUpdateStream(streamId, timestamp, connection)
     end
 end
 
+---Tells whether a transfer runs from a place
 -- @param integer? index place, the first by default
 function RMS_FluidContainer:getIsRMSFluidTransferActive(index)
     local slot = getSlot(self, index)
@@ -721,6 +725,7 @@ local FLUID_KIND_TEXT_KEYS = {
     adBlue = "rms_fluid_hud_adBlue"
 }
 
+---Returns the kind of fluid a product is
 local function getFluidKind(product)
     if product.compatibleCircuits.engineOil then
         return "engineOil"
@@ -756,7 +761,6 @@ function RMS_FluidContainer:showInfo(superFunc, box)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     local hasPump, hasDrum = false, false
     for index, slot in ipairs(spec.slots) do
-        -- two drums: a line each, named as the level panel names a drum
         local label = #spec.slots > 1 and string.format("%s %d", g_i18n:getText("rms_fluid_drum_label"), index)
             or self:getRMSFluidKindText()
         local liters = self:getRMSFluidLiters(index)
@@ -786,12 +790,35 @@ function RMS_FluidContainer:updateMass(superFunc)
     end
 end
 
----Lets a player aim at the 5 and 25 liter formats to take them in hand
+---Lets a player pick up a can or a jerrican
 function RMS_FluidContainer:getCanBePickedUp(superFunc, byPlayer)
     return self:getRMSFluidCapacity() <= RMS_FluidContainer.CARRIED_CAPACITY and superFunc(self, byPlayer)
 end
 
----Makes the delayed vehicle deletion idempotent
+---Returns the factor on the break force of the hands' joint
+-- @return float factor
+function RMS_FluidContainer:getHandsJointBreakForceFactor()
+    local mass = self:getTotalMass()
+    return mass > 0 and math.max(HandToolHands.MAXIMUM_PICKUP_MASS / mass, 1) or 1
+end
+
+---Sets a new can on the ground under it once loaded
+-- @param table vehicle vehicle just loaded
+function RMS_FluidContainer:onNewCanLoaded(vehicle)
+    if vehicle ~= self then
+        return
+    end
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_LOADED, self)
+    local x, y, z = getWorldTranslation(self.rootNode)
+    local _, rotY, _ = getWorldRotation(self.rootNode)
+    local groundY = getTerrainHeightAtWorldPos(g_terrainNode, x, y, z)
+    local _, _, hitY, _ = RaycastUtil.raycastClosest(x, y, z, 0, -1, 0, math.max(y - groundY, 0) + 0.1, RMS_FluidHandTool.CARRY_MASK)
+    self:removeFromPhysics()
+    self:setAbsolutePosition(x, math.max(groundY, hitY or groundY), z, 0, rotY, 0)
+    self:addToPhysics()
+end
+
+---Deletes the container once, a delayed deletion not repeated
 function RMS_FluidContainer:delete(superFunc, immediate)
     if self.isDeleted or self.isDeleting or (self.markedForDeletion and not immediate) then
         return
@@ -826,6 +853,7 @@ function RMS_FluidContainer:beginRMSFluidTransaction()
     spec.transactionDepth = (spec.transactionDepth or 0) + 1
 end
 
+---Ends an allocation, deleting an emptied container once committed
 function RMS_FluidContainer:endRMSFluidTransaction(committed)
     local spec = self[RMS_FluidContainer.SPEC_TABLE_NAME]
     spec.transactionDepth = math.max((spec.transactionDepth or 0) - 1, 0)
@@ -838,6 +866,7 @@ function RMS_FluidContainer:endRMSFluidTransaction(committed)
     end
 end
 
+---Sets the liters of a place, returning the change
 local function setLiters(container, liters, index)
     local spec = container[RMS_FluidContainer.SPEC_TABLE_NAME]
     local target = math.clamp(liters, 0, container:getRMSFluidCapacity(index))

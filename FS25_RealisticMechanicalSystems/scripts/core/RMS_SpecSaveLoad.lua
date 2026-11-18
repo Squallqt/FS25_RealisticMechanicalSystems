@@ -7,7 +7,7 @@ local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
 local ensureFactorStats = RealisticMechanicalSystems.ensureFactorStats
 local refreshExclusionState = RealisticMechanicalSystems.refreshExclusionState
 
----Wear statistics of systems not worked yet, their hours unrecorded
+---Returns empty wear statistics of the systems, their hours unrecorded
 local function createEmptyFactorStats(systems)
     local stats = {}
     for systemKey in pairs(type(systems) == "table" and systems or {}) do
@@ -16,7 +16,7 @@ local function createEmptyFactorStats(systems)
     return stats
 end
 
----Wear statistics as one map keyed system.cause, numbers only
+---Returns the wear statistics as one map keyed system.cause, numbers only
 local function flattenFactorStats(factorStats)
     local flat = {}
     for systemKey, stats in pairs(type(factorStats) == "table" and factorStats or {}) do
@@ -67,10 +67,12 @@ local function unflattenMap(flattenedMap)
     return map
 end
 
+---Tells whether a machine is left out of the switch between vehicles
 local function getIsAuxiliaryMachine(xmlFile)
     return not xmlFile:getValue("vehicle.enterable#isTabbable", true)
 end
 
+---Tells whether a machine is towed
 local function getIsTowedMachine(vehicle)
     return vehicle.getInputAttacherJoints ~= nil and #vehicle:getInputAttacherJoints() > 0
 end
@@ -122,7 +124,6 @@ function RealisticMechanicalSystems.getCanSetUserExclusion(vehicle, isExcluded, 
     return g_currentMission.userManager:getUserByConnection(connection):getIsMasterUser()
 end
 
----Tells whether the vehicle sits in the trucks store category
 RealisticMechanicalSystems.SAMPLE_NAMES = {
     "starterRelayClick", "batteryClicking", "preheatRelay",
     "hvContactor", "alarm", "warning", "transmissionShiftFailed", "gearDisengage", "powershiftClunk", "brakes",
@@ -135,6 +136,7 @@ RealisticMechanicalSystems.SAMPLE_NAMES = {
     "electricMotorBearing", "hoseBurst", "ptoShaftBreak", "inspection", "batteryIsolator"
 }
 
+---Tells whether the vehicle sits in the trucks store category
 local function getIsTruck(vehicle)
     if vehicle == nil or vehicle.configFileName == nil then
         return false
@@ -146,28 +148,28 @@ local function getIsTruck(vehicle)
 end
 
 
----Log entry attributes in saved order; isDetail: with condition data
+-- log entry attributes in saved order
 local LOG_ENTRY_XML = {
     { name = "id", write = function(entry) return entry.id or 0 end },
     { name = "type", write = function(entry) return entry.type or "" end },
     { name = "price", write = function(entry) return entry.price or 0 end },
     { name = "date", write = function(entry) return RMS_Utils.serializeDate(entry.date) end,
         read = function(value) return RMS_Utils.deserializeDate(value) end },
-    { name = "location", isDetail = true, default = "UNKNOWN" },
-    { name = "optionOne", isDetail = true, default = "NONE" },
-    { name = "optionTwo", isDetail = true, default = "NONE" },
-    { name = "isVisible", isDetail = true, default = true,
+    { name = "location", default = "UNKNOWN" },
+    { name = "optionOne", default = "NONE" },
+    { name = "optionTwo", default = "NONE" },
+    { name = "isVisible", default = true,
         write = function(entry) return tostring(RMS_Utils.normalizeBoolValue(entry.isVisible, true)) end,
         read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
-    { name = "isCompleted", isDetail = true, default = true,
+    { name = "isCompleted", default = true,
         write = function(entry) return RMS_Utils.normalizeBoolValue(entry.isCompleted, true) end,
         read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
-    { name = "invoice", isDetail = true,
+    { name = "invoice",
         write = function(entry) return entry.invoice ~= nil and RMS_Utils.serializeInvoice(entry.invoice) or nil end,
         read = function(value) return RMS_Utils.deserializeInvoice(value) end }
 }
 
----Attributes of the machine as a log entry found it, in saved order
+-- attributes of the machine as a log entry found it, in saved order
 local LOG_CONDITION_XML = {
     { name = "year", default = 0 },
     { name = "operatingHours", default = 0 },
@@ -261,7 +263,6 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         if spec.isExcludedByUser ~= nil then
             xmlFile:setValue(key .. "#userExclusion", spec.isExcludedByUser)
         end
-        -- RMS working time, from the game's while RMS has counted none
         local gameTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
         if (spec.realOperatingTime or 0) <= 0 and gameTime > 0 then
             spec.realOperatingTime = gameTime
@@ -365,6 +366,9 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
 
         RMS_Drivetrain.saveToXMLFile(self, xmlFile, key)
         xmlFile:setValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
+        for _, name in ipairs({ "tripFuelLitres", "tripEngineTime", "tripWorkFuelLitres", "tripWorkedHectares" }) do
+            xmlFile:setValue(key .. "#" .. name, spec[name])
+        end
 
         for index, entry in ipairs(spec.maintenanceLog or {}) do
             local entryKey = string.format("%s.maintenanceLog.entry(%d)", key, index - 1)
@@ -378,6 +382,7 @@ end
 
 local SYSTEM_KEYS = { "engine", "transmission", "hydraulics", "cooling", "electrical", "chassis", "fuel", "pto", "harvest" }
 
+---Called on loading
 function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.isExcludedVehicle = false
     self.spec_RealisticMechanicalSystems.isExcludedByRule = false
@@ -485,6 +490,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.odometerActionEvents = {}
     self.spec_RealisticMechanicalSystems.fanActionEvents = {}
     self.spec_RealisticMechanicalSystems.tripStartKilometers = 0
+    RMS_TripFuel.reset(self.spec_RealisticMechanicalSystems)
     self.spec_RealisticMechanicalSystems.odometerShowsTrip = false
     self.spec_RealisticMechanicalSystems.odometerHoldTime = 0
     self.spec_RealisticMechanicalSystems.odometerHoldHandled = false
@@ -550,7 +556,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.radiatorCloggingRate = 0
     self.spec_RealisticMechanicalSystems.airFilterCloggingRate = 0
     self.spec_RealisticMechanicalSystems.isRaisingDust = false
-    -- heat flows of the last thermal step
     self.spec_RealisticMechanicalSystems.engineHeatBalance = {}
     self.spec_RealisticMechanicalSystems.transmissionHeatBalance = {}
 
@@ -689,7 +694,7 @@ function RealisticMechanicalSystems:onLoad(savegame)
     end
 end
 
----Breakdown ids saved comma separated
+---Returns the ids of a comma separated list
 local function splitSavedIds(text)
     local ids = {}
     for id in string.gmatch(text or "", "[^,]+") do
@@ -698,6 +703,7 @@ local function splitSavedIds(text)
     return ids
 end
 
+---Reads the saved RMS state of a vehicle
 local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTime)
     local spec = self.spec_RealisticMechanicalSystems
     spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(xmlFile:getValue(key .. "#service", spec.serviceLevel), spec.serviceLevel or 1.0, 0.001)
@@ -816,6 +822,9 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     end
     RMS_Drivetrain.loadFromSavegame(self, xmlFile, key)
     spec.tripStartKilometers = xmlFile:getValue(key .. "#tripStartKilometers", spec.tripStartKilometers)
+    for _, name in ipairs({ "tripFuelLitres", "tripEngineTime", "tripWorkFuelLitres", "tripWorkedHectares" }) do
+        spec[name] = xmlFile:getValue(key .. "#" .. name, spec[name])
+    end
     local loadedWorkshopType = xmlFile:getValue(key .. "#workshopType", "")
     if loadedWorkshopType ~= nil and loadedWorkshopType ~= "" then
         spec.workshopType = loadedWorkshopType
@@ -893,7 +902,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         end
     end
 
-    -- A save without these values starts the vehicle at rest
     local defaults = {
         serviceLevel = spec.baseServiceLevel, conditionLevel = spec.baseConditionLevel, maintenanceTimer = 0,
         currentState = RealisticMechanicalSystems.STATUS.READY,
@@ -909,6 +917,7 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
     self:updateConditionLevel()
 end
 
+---Called after loading
 function RealisticMechanicalSystems:onPostLoad(savegame)
     local spec = self.spec_RealisticMechanicalSystems
     local currentOperatingTime = self.getOperatingTime ~= nil and self:getOperatingTime() or self.operatingTime or 0
@@ -999,7 +1008,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         end
     end
 
-    -- the systems the machine carries: a harvester drives its header, no PTO
     local capacities = RMS_Fluids.resolveCapacities(self)
     local isHarvester = RMS_Drivetrain.getHarvestKind(self) ~= nil
     spec.systems.hydraulics.enabled = RMS_Utils.hasHydraulicCapability(self) and capacities.hydraulicFluid > 0
@@ -1018,7 +1026,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
         spec.rawHydraulicTemperature = nil
         spec.hydraulicTemperature = nil
     end
-    -- Restart runtime clocks at the current mission time.
     spec._thermalEngineWorldTime, spec._thermalOilWorldTime, spec._thermalBatteryWorldTime = nil, nil, nil
     spec._thermalEngineAmbient, spec._thermalOilAmbient, spec._thermalBatteryAmbient = nil, nil, nil
     if spec.isElectricVehicle then
@@ -1029,7 +1036,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     spec.isVehicleNeedBlowOut = not isRoadVehicle
     resetIsMovingRecursive(self, {})
 
-    -- What loading set counts as sent
     RealisticMechanicalSystems.storeSyncBaseline(self)
     spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
     spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
@@ -1069,6 +1075,7 @@ function RealisticMechanicalSystems:onSaleItemSet(saleItem)
     RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP_ALL)
 end
 
+---Called on deleting
 function RealisticMechanicalSystems:onDelete()
     local spec = self.spec_RealisticMechanicalSystems
 

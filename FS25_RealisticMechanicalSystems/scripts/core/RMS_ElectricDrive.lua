@@ -54,6 +54,7 @@ function RMS_ElectricDrive.initBatteryCapacity(vehicle)
     RMS_ElectricDrive.applyBatteryCapacity(vehicle)
 end
 
+---Returns the share of the charge power a battery accepts at a temperature
 local function getColdChargeAcceptance(temperature)
     local curve = RMS_Config.ELECTRIC_DRIVE.CHARGE_ACCEPTANCE_CURVE
     if temperature <= curve[1][1] then
@@ -83,10 +84,12 @@ function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     return getColdChargeAcceptance(spec.tractionBatteryTempC) * chargerShare
 end
 
+---Tells whether a value is a finite number
 local function isFiniteChargeValue(value)
     return type(value) == "number" and value == value and value > -math.huge and value < math.huge
 end
 
+---Returns the level, capacity and elapsed time of a charge to observe, nil when none
 local function getChargeObservationInputs(trigger, object, dt)
     local spec = object.spec_RealisticMechanicalSystems
     local fillUnitIndex = trigger.fillUnitIndex
@@ -113,6 +116,7 @@ local function getChargeObservationInputs(trigger, object, dt)
     return level, capacity, elapsedMS
 end
 
+---Adds the energy a charge step brought to the traction battery
 local function recordChargeObservation(object, fillUnitIndex, levelBefore, capacity, elapsedMS)
     local spec = object.spec_RealisticMechanicalSystems
     local observation = spec.tractionBatteryChargeObservation

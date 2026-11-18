@@ -7,6 +7,7 @@ local getSyncOperatingTime = RealisticMechanicalSystems.getSyncOperatingTime
 -- [connection][packet number][vehicle] = sync groups the packet carried
 local unacknowledgedGroups = setmetatable({}, { __mode = "k" })
 
+---Notes the groups an update packet carried, to send them again when it is lost
 local function rememberSentGroups(vehicle, connection, groups)
     local packets = unacknowledgedGroups[connection] or {}
     unacknowledgedGroups[connection] = packets
@@ -44,14 +45,17 @@ end
 FSBaseMission.onConnectionPacketLost = Utils.appendedFunction(FSBaseMission.onConnectionPacketLost, RealisticMechanicalSystems.onConnectionPacketLost)
 FSBaseMission.onConnectionPacketSent = Utils.appendedFunction(FSBaseMission.onConnectionPacketSent, RealisticMechanicalSystems.onConnectionPacketSent)
 
+---Writes the resale price
 local function writeResalePrice(vehicle, streamId)
     streamWriteString(streamId, string.format("%.17g", RMS_Utils.getMarketValue(vehicle)))
 end
 
+---Reads the resale price
 local function readResalePrice(vehicle, streamId)
     vehicle.spec_RealisticMechanicalSystems.syncedSellPrice = tonumber(streamReadString(streamId))
 end
 
+---Writes the PTO and header event counters
 local function writePtoWearState(spec, streamId)
     for _, name in ipairs({ "ptoEngagementSequence", "ptoShockSequence", "headerShockSequence", "headerSeizedSequence" }) do
         streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec[name], 0, 0)))
@@ -59,6 +63,7 @@ local function writePtoWearState(spec, streamId)
     streamWriteBool(streamId, spec.isHeaderSlipping == true)
 end
 
+---Reads the PTO and header event counters, the tutorial taking them as seen on join
 local function readPtoWearState(spec, streamId, initializeTutorial)
     for _, name in ipairs({ "ptoEngagementSequence", "ptoShockSequence", "headerShockSequence", "headerSeizedSequence" }) do
         spec[name] = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
@@ -72,6 +77,7 @@ local function readPtoWearState(spec, streamId, initializeTutorial)
     end
 end
 
+---Writes the hydraulic and traction battery temperatures, each when the machine has one
 local function writeOptionalThermalState(vehicle, streamId)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local hasHydraulicTemperature = RMS_Thermal.getHasSeparateHydraulicCircuit(spec) and spec.rawHydraulicTemperature ~= nil
@@ -84,6 +90,7 @@ local function writeOptionalThermalState(vehicle, streamId)
     end
 end
 
+---Reads the hydraulic and traction battery temperatures
 local function readOptionalThermalState(spec, streamId, initializeDisplay)
     if streamReadBool(streamId) then
         local hydraulicTemp = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), spec.rawTransmissionTemperature or 20)
@@ -99,6 +106,7 @@ local function readOptionalThermalState(spec, streamId, initializeDisplay)
     end
 end
 
+---Writes the radiator, filters, greasing and fluids
 local function writeFieldcareState(self, spec, streamId)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.radiatorClogging, 0, 0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.fanReversalTime, 0, 0, RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS))
@@ -118,12 +126,13 @@ local function writeFieldcareState(self, spec, streamId)
     end
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.engineOilSuitedShare, 1, 0, 1))
     streamWriteString(streamId, RMS_Fluids.serializeLeakDebt(spec.fluidLeakLossDebt))
-    -- the server alone follows the oil: lamp, whine and wear agree
+    -- uncovered pickups are computed on the server only
     for _, circuit in ipairs(RMS_Fluids.PICKUP_CIRCUITS) do
         streamWriteBool(streamId, spec.pickupUncovered[circuit] == true)
     end
 end
 
+---Reads the radiator, filters, greasing and fluids
 local function readFieldcareState(self, spec, streamId)
     spec.radiatorClogging = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
     spec.fanReversalTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, RMS_Config.THERMAL.REVERSIBLE_FAN.REVERSAL_MS)
@@ -152,6 +161,7 @@ local function readFieldcareState(self, spec, streamId)
     RMS_Fluids.updateEffects(self)
 end
 
+---Writes the service levels, warranty, remap, condition and part wear
 local function writeWearState(spec, streamId)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.serviceLevel, 1.0, 0.001))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.transmissionServiceLevel, 1.0, 0.001))
@@ -170,6 +180,7 @@ local function writeWearState(spec, streamId)
     streamWriteString(streamId, RMS_Utils.serializeNumericMap(spec.partWear))
 end
 
+---Reads the service levels, warranty, remap, condition and part wear
 local function readWearState(spec, streamId)
     spec.serviceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
     spec.transmissionServiceLevel = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1.0, 0.001)
@@ -195,6 +206,7 @@ local function readWearState(spec, streamId)
     spec.partWear = RMS_Utils.deserializeNumericMap(streamReadString(streamId))
 end
 
+---Writes the engine and oil temperatures and the thermostats
 local function writeThermalState(self, spec, streamId)
     streamWriteFloat32(streamId, RMS_Thermal.getEngineTemperature(self))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.rawTransmissionTemperature, 20))
@@ -203,6 +215,23 @@ local function writeThermalState(self, spec, streamId)
     writeOptionalThermalState(self, streamId)
 end
 
+local TRIP_FUEL = { "tripFuelLitres", "tripEngineTime", "tripWorkFuelLitres", "tripWorkedHectares" }
+
+---Writes the trip fuel and work counters
+local function writeTripFuel(spec, streamId)
+    for _, name in ipairs(TRIP_FUEL) do
+        streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec[name], 0, 0))
+    end
+end
+
+---Reads the trip fuel and work counters
+local function readTripFuel(spec, streamId)
+    for _, name in ipairs(TRIP_FUEL) do
+        spec[name] = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    end
+end
+
+---Writes the battery, the system voltage and the start state
 local function writeElectricalState(spec, streamId)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.batterySoc, 1.0, 0, 1))
     streamWriteBool(streamId, spec.batteryIsolated)
@@ -269,7 +298,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingProgressTotalTime, 0, 0))
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingProgressElapsedTime, 0, 0))
 
-    -- [Group 10] Maintenance log (variable-length: count + entries)
+    -- [Group 10] Maintenance log
     local logCount = spec.maintenanceLog and #spec.maintenanceLog or 0
     streamWriteUInt16(streamId, logCount)
     for i = 1, logCount do
@@ -287,11 +316,12 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
     streamWriteBool(streamId, spec.isEngineDerated == true)
 
-    -- [Group 13] Authoritative resale quote
+    -- [Group 13] Resale price
     writeResalePrice(self, streamId)
 
     -- [Group 14] Trip meter: the game sends its odometer only with a cruise control
     streamWriteFloat32(streamId, (RMS_Utils.getOdometerKilometers(self) or 0) - spec.tripStartKilometers)
+    writeTripFuel(spec, streamId)
 end
 
 ---Called on client side on join
@@ -376,7 +406,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.pendingProgressTotalTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
     spec.pendingProgressElapsedTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
 
-    -- [Group 10] Maintenance log (variable-length)
+    -- [Group 10] Maintenance log
     local logCount = streamReadUInt16(streamId)
     spec.maintenanceLog = {}
     for i = 1, logCount do
@@ -396,11 +426,12 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
     spec.isEngineDerated = streamReadBool(streamId)
 
-    -- [Group 13] Authoritative resale quote
+    -- [Group 13] Resale price
     readResalePrice(self, streamId)
 
     -- [Group 14] Trip meter
     spec.tripStartKilometers = (RMS_Utils.getOdometerKilometers(self) or 0) - streamReadFloat32(streamId)
+    readTripFuel(spec, streamId)
 
     self:recalculateAndApplyEffects(true)
     self:recalculateAndApplyIndicators()
@@ -453,6 +484,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteBool(streamId, spec.fuelState.isParticulateFilterRegenerating == true)
             streamWriteBool(streamId, spec.isEngineDerated == true)
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.liftedMass, 0, 0))
+            writeTripFuel(spec, streamId)
         end
 
         -- [4] Thermal
@@ -495,7 +527,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             RMS_Drivetrain.writeStreamState(self, streamId)
         end
 
-        -- [10] Tutorial data (MP clients only)
+        -- [10] Tutorial data
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA) ~= 0) then
             local fuelState = spec.fuelState
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(fuelState.idleTimer, 0, 0, 600))
@@ -517,7 +549,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(elecSys ~= nil and elecSys.crankingTimer or 0, 0, 0, 10000))
         end
 
-        -- [13] Authoritative resale quote
+        -- [13] Resale price
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.RESALE) ~= 0) then
             writeResalePrice(self, streamId)
         end
@@ -569,6 +601,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.fuelState.isParticulateFilterRegenerating = streamReadBool(streamId)
             spec.isEngineDerated = streamReadBool(streamId)
             spec.liftedMass = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+            readTripFuel(spec, streamId)
         end
 
         -- [4] Thermal
@@ -634,7 +667,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             RMS_Drivetrain.readStreamState(self, streamId)
         end
 
-        -- [10] Tutorial data (MP clients only)
+        -- [10] Tutorial data
         if streamReadBool(streamId) then
             local fuelState = spec.fuelState
             fuelState.idleTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 600)
@@ -659,7 +692,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             end
         end
 
-        -- [13] Authoritative resale quote
+        -- [13] Resale price
         if streamReadBool(streamId) then
             readResalePrice(self, streamId)
         end

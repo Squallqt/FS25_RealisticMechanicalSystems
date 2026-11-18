@@ -128,8 +128,8 @@
         </TransformGroup>
         <TransformGroup name="spoutTip" translation="-0.095 0.109 0" rotation="-14 -90 0" nodeId="124"/>
       </TransformGroup>
-      <TransformGroup name="handNode" translation="-0.0395 0.08 -0.035" rotation="111.813 4.65387 85.2232" nodeId="125"/>
-      <TransformGroup name="firstPersonNode" translation="0.5955 0.191 0.214" rotation="0 -90 0" nodeId="126"/>
+      <TransformGroup name="handNode" translation="0.0741 -0.0756 -0.039" rotation="116.874 4.5822 -10.2108" nodeId="125"/>
+      <TransformGroup name="firstPersonNode" translation="0.1632 -0.4718 0.2582" rotation="-180 -87.481 91.8618" nodeId="126"/>
     </TransformGroup>
   </Scene>
 

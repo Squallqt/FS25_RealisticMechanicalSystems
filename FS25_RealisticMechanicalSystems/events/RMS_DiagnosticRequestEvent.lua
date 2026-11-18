@@ -13,10 +13,12 @@ local SHARED_ERRORS = {
     unavailable = "rms_charger_error_unavailable"
 }
 
+---Create instance of Event class
 function RMS_DiagnosticRequestEvent.emptyNew()
     return Event.new(RMS_DiagnosticRequestEvent_mt)
 end
 
+---Create new instance of event
 function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     local self = RMS_DiagnosticRequestEvent.emptyNew()
     self.tool = tool
@@ -26,6 +28,7 @@ function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_DiagnosticRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.tool)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -33,6 +36,7 @@ function RMS_DiagnosticRequestEvent:writeStream(streamId)
     streamWriteString(streamId, self.result)
 end
 
+---Reads event data from a stream.
 function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
     self.tool = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -41,6 +45,7 @@ function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Runs the command on the server and answers, or shows the refusal on the client
 function RMS_DiagnosticRequestEvent:run(connection)
     if connection:getIsServer() then
         if self.result ~= "" and self.result ~= "ok" then

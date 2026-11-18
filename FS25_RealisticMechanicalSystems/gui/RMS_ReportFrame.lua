@@ -27,7 +27,6 @@ local WEAR_CAUSE_TEXTS = {
     hcf = "rms_tutorial_engine_overheat_title",
     lf = "rms_tutorial_lugging_title",
     pof = "rms_report_wear_pull_overload",
-    htf = "rms_tutorial_heavy_trailer_title",
     wsf = "rms_tutorial_wheel_slip_title",
     dwf = "rms_tutorial_drivetrain_windup_title",
     ctf = "rms_tutorial_cold_oil_title",
@@ -79,6 +78,7 @@ RMS_ReportFrame.OVERHAUL_HOURS = 8000
 RMS_ReportFrame.SHEET_SCALE = { IDEAL = 99, HIGH = 90, MID = 70, LOW = 30 }
 local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 
+---Returns the value an effect had in the report, nil without it
 local function getRecorded(activeEffects, effectId)
     local effect = activeEffects[effectId]
     if type(effect) == "table" then
@@ -87,15 +87,17 @@ local function getRecorded(activeEffects, effectId)
     return nil
 end
 
+---Returns the share of its health an effect left, between 0 and 1
 local function getHealth(activeEffects, effectId)
     return math.clamp(1 + (getRecorded(activeEffects, effectId) or 0), 0, 1)
 end
 
+---Returns the text naming a system of the vehicle
 local function getSystemName(vehicle, systemKey)
     return g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, RMS_Utils.getSystemNameByKey(RealisticMechanicalSystems.SYSTEMS, systemKey)))
 end
 
--- Level once the shortest hourly clock has its notice hours left
+---Level once the shortest hourly clock has its notice hours left
 local function getServiceNoticeLevel(vehicle)
     local hours = math.huge
     for _, clock in ipairs(vehicle:getServiceClocks()) do
@@ -108,6 +110,7 @@ local function getServiceNoticeLevel(vehicle)
     return expired + (base - expired) * math.min(RMS_ReportFrame.SERVICE_NOTICE_HOURS / hours, 1)
 end
 
+---Joins part names in alphabetical order
 local function joinNames(names)
     local list = {}
     for name in pairs(names) do
@@ -117,6 +120,7 @@ local function joinNames(names)
     return table.concat(list, ", ")
 end
 
+---Returns the text key and the share of the gearbox state in the report
 local function readGearbox(activeEffects)
     local failed = "rms_report_transmission_failed"
     local value = getRecorded(activeEffects, "TRANSMISSION_SLIP_EFFECT")
@@ -188,7 +192,6 @@ function RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, is
     end
 
     if condition > overhaul then
-        -- A sound machine with one system to overhaul: the weakest
         local systems, weakestKey, weakest = conditionData.systems, nil, overhaul
         for _, systemName in ipairs(RealisticMechanicalSystems.SYSTEMS_ORDER) do
             local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemName)
@@ -201,7 +204,6 @@ function RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, is
             advise("rms_report_recommendation_system_overhaul", getSystemName(vehicle, weakestKey))
         end
 
-        -- The riskiest worn part the major service adjusts, system sound
         local riskiestKey, highest = nil, 0
         if isComplete then
             for _, partId in ipairs(RealisticMechanicalSystems.MAJOR_SERVICE_CHECKS) do
@@ -471,6 +473,7 @@ function RMS_ReportFrame:renderAssessmentRows()
     end
 end
 
+---Returns the colour of an extra wear in percent
 local function getWearColor(percent)
     return RMS_Utils.getValueColorInverted(percent, WEAR_NORMAL_PERCENT, WEAR_NORMAL_PERCENT, WEAR_HIGH_PERCENT, 100, false)
 end
@@ -595,7 +598,6 @@ function RMS_ReportFrame:renderSpecRows()
                 local percent = math.clamp(figure.ratio, 0, 1) * 100
                 local steps = figure.scale or RMS_ReportFrame.SHEET_SCALE
                 if figure.minPercent ~= nil then
-                    -- A tested part passes or fails at its limit
                     local limit = figure.minPercent
                     steps = { IDEAL = limit, HIGH = limit, MID = limit, LOW = limit }
                 end
@@ -618,6 +620,7 @@ function RMS_ReportFrame:renderSpecRows()
     self.specRows[1].parent:invalidateLayout()
 end
 
+---Adds the worn parts of a complete report under the breakdowns
 function RMS_ReportFrame:addWornPartRows()
     local color = { RMS_Utils.getValueColorInverted(3, 1, 1, 2, 3, false) }
     local entries = RMS_Utils.getWornPartEntries(self.vehicle, self.lastReport.conditionData, RMS_Utils.WORN_PARTS_SHOWN)

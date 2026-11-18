@@ -17,7 +17,6 @@ local SYSTEMS = {
     {key = "harvest", name = "Harvest", word = "harvest"}
 }
 
--- the groups of the machine view and the column each stays in
 RMS_DebugReading.GROUPS = {
     {title = "Engine and heat", column = 1}, {title = "Around", column = 1},
     {title = "Service", column = 2}, {title = "Fluids", column = 2}, {title = "Warranty", column = 2},
@@ -33,6 +32,7 @@ RMS_DebugReading.LAMP = {RED = 1, AMBER = 2, BLUE = 3, GREY = 4}
 
 local ACRONYMS = {cvt = "CVT", ecu = "ECU", nox = "NOx", adblue = "AdBlue", hv = "HV", dcdc = "DC/DC", pto = "PTO", gcw = "GCW", ["4wd"] = "4WD"}
 
+---Returns a number rounded, its thousands grouped by commas
 local function grouped(value)
     local text = tostring(math.floor(value + 0.5))
     while true do
@@ -44,41 +44,49 @@ local function grouped(value)
     end
 end
 
+---Returns a share as a whole percentage
 local function pct(value)
     return string.format("%d %%", math.floor(value * 100 + 0.5))
 end
 
+---Returns yes or no
 local function yesNo(value)
     return value and "yes" or "no"
 end
 
+---Returns the words of a text key, its prefixes left out
 local function plainKey(key)
     local words = tostring(key):gsub("^rms_spec_", ""):gsub("^%a+_types?_", ""):gsub("^%a+_", "")
     return (words:gsub("_", " "))
 end
 
--- heat flows from deg C per ms to deg C per minute, never -0.0
+---Returns a heat flow in deg C per minute from deg C per ms, never -0.0
 local function perMinute(value)
     local rounded = math.floor((value or 0) * 600 + 0.5) / 10
     return rounded == 0 and 0 or rounded
 end
 
+---Returns a temperature text, no reading before the first one
 local function temperature(value)
     return value == -99 and "no reading yet" or string.format("%.1f °C", value)
 end
 
+---Returns the power to mass text of a braking basis
 local function getPowerToMass(ratio, basis)
     return string.format("%.1f hp per tonne %s", ratio, basis == "gcw" and "in all" or "towed")
 end
 
+---Returns an item of a row
 local function item(label, value)
     return {label = label, value = value}
 end
 
+---Returns a row of items
 local function itemsRow(label, items)
     return {label = label, kind = ROW.ITEMS, items = items}
 end
 
+---Returns the level of the service clock covering a system
 local function getServiceLevel(vehicle, systemKey)
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         for _, covered in ipairs(clock.systems) do
@@ -90,6 +98,7 @@ local function getServiceLevel(vehicle, systemKey)
     return 1
 end
 
+---Returns the name of the current weather
 local function getWeatherName()
     for name, id in pairs(WeatherType) do
         if id == (RMS_Main.currentWeather or WeatherType.SUN) then
@@ -99,6 +108,7 @@ local function getWeatherName()
     return "sun"
 end
 
+---Returns the temperature of the oil the hydraulics run on
 local function getHydraulicOilTemperature(spec)
     if RMS_Thermal.getHasSeparateHydraulicCircuit(spec) then
         return spec.rawHydraulicTemperature
@@ -114,7 +124,6 @@ local CAUSES = {
     cmf = {"Cold engine worked", "cold", function(f) return string.format("%.0f °C engine", f.engineTemperature) end},
     hmf = {"Engine overheating", "overheating", function(f) return string.format("%.0f °C engine", f.engineTemperature) end},
     pof = {"Pull overload", "pull", function(f) return pct(f.driveTorqueRatio) .. " of rated torque" end},
-    htf = {"Heavy trailer", "trailer", function(f) return getPowerToMass(f.heavyTrailerMassRatio, f.heavyTrailerMassBasis) end},
     lf = {"Lugging", "lugging", function(_, _, vehicle) return string.format("%.0f rpm", vehicle:getMotor():getLastModulatedMotorRpm()) end},
     wsf = {"Wheel slip", "slip", function(_, spec) return string.format("ground grip %.2f", spec.avgTireGroundFrictionCoeff) end},
     dwf = {"Driveline windup", "windup", function(_, spec) return pct(spec.drivetrain.windupStress) .. " windup" end},
@@ -163,6 +172,7 @@ local CAUSES = {
 
 local SOURCES = {"wear", "poor parts", "quick fix"}
 
+---Returns the name of a part, the system word left out
 function RMS_DebugReading.getPartName(partId, systemWord)
     local key = RMS_Breakdowns.BreakdownRegistry[partId].part:gsub("^rms_breakdowns_part_", "")
     if systemWord ~= nil then
@@ -180,6 +190,7 @@ function RMS_DebugReading.getPartName(partId, systemWord)
     return name:sub(1, 1):upper() .. name:sub(2)
 end
 
+---Returns the name of a system, its electric name on an electric machine
 local function getSystemName(system, isElectric)
     return isElectric and system.electricName or system.name
 end
@@ -187,6 +198,7 @@ end
 local GEARBOXES = {manual = "manual gearbox", manual_powershift = "semi-powershift", automatic = "automatic gearbox",
     powershift = "powershift", variable = "CVT"}
 
+---Returns the year, family, gearbox and energy of a machine
 local function getKind(vehicle, spec)
     local profile = RMS_Fluids.getProfileName(vehicle)
     local kind = {tostring(spec.year), profile:sub(1, 1) .. (profile:sub(2):lower():gsub("_", " "))}
@@ -203,6 +215,7 @@ local function getKind(vehicle, spec)
     return kind
 end
 
+---Returns the faults a machine had, quick fixes left out
 local function countFaults(vehicle, spec)
     local R = RealisticMechanicalSystems
     local count = 0
@@ -219,6 +232,7 @@ local function countFaults(vehicle, spec)
     return count
 end
 
+---Returns the peak power now over the peak of the new torque curve
 -- @return float share peak power now over the peak of its new torque curve
 local function getPowerShare(motor)
     local peak = 0
@@ -228,6 +242,7 @@ local function getPowerShare(motor)
     return peak * math.pi / 30 / motor.peakMotorPower
 end
 
+---Returns the remap state text
 local function getRemapText(vehicle, spec)
     if not RMS_EngineRemap.getIsEligible(vehicle) and not RMS_EngineRemap.getIsRemapped(vehicle) then
         return "not offered (no engine control unit, not owned)"
@@ -242,13 +257,13 @@ local function getRemapText(vehicle, spec)
         stockHp * (1 + gain), stockHp, gain * 100, spec.remapAge, RMS_EngineRemap.getFreeRestoreUntil(vehicle))
 end
 
+---Reads the name, kind, vitals and facts of a machine
 local function readHeader(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
     reading.name = vehicle:getFullName()
     reading.kind = getKind(vehicle, spec)
 
     local lifeUsed = R.getRealOperatingHours(vehicle) * RMS_Config.CORE.BASE_SYSTEMS_WEAR
-    -- the sourced counts are a tractor's, no other machine has one
     local isTractor = string.find(RMS_Fluids.getVehicleCategory(vehicle) or "", "^TRACTORS") ~= nil
     reading.vitals = {
         condition = pct(vehicle:getConditionLevel()),
@@ -270,6 +285,7 @@ local function readHeader(vehicle, spec, reading)
     }
 end
 
+---Reads the service clocks, greasing, build and report
 local function readService(vehicle, spec, groups)
     local R = RealisticMechanicalSystems
     local rows = {}
@@ -329,6 +345,7 @@ local function readService(vehicle, spec, groups)
     groups["Service"] = {rows = rows, note = string.format("white mark: due at %s", pct(due))}
 end
 
+---Returns the shares of normal wear and of each cause in a system
 -- @return table shares {name, share}, normal first, then every cause
 local function getSystemShares(stats)
     local total = stats.total or 0
@@ -357,6 +374,7 @@ local function getSystemShares(stats)
     return shares
 end
 
+---Returns the causes of the wear of a part
 -- @return table causes {cause, share}, cause the index of its name in the system shares
 local function getPartCauses(spec, systemKey, index, partId, shares)
     local record = RealisticMechanicalSystems.getPartCauseWear(spec, systemKey, index, partId)
@@ -386,6 +404,7 @@ local function getPartCauses(spec, systemKey, index, partId, shares)
     return causes
 end
 
+---Reads the systems, their parts and the wear under way
 local function readSystems(vehicle, spec, reading)
     local rateScale = RMS_Config.CORE.BASE_SYSTEMS_WEAR * 100
     reading.systems, reading.wearNow = {}, {}
@@ -455,6 +474,7 @@ local function readSystems(vehicle, spec, reading)
     reading.legend = {fullAfter = 100 / normal, horizon = RMS_Config.CORE.RISK_HORIZON_WEAR * 100 / normal}
 end
 
+---Returns the name of a fault
 local function getFaultName(breakdownId, systemWord)
     local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if definition.system == nil or definition.part == RMS_Breakdowns.PARTS.VEHICLE then
@@ -463,6 +483,7 @@ local function getFaultName(breakdownId, systemWord)
     return RMS_DebugReading.getPartName(breakdownId, systemWord)
 end
 
+---Returns the system name and word of a breakdown
 local function getBreakdownSystem(definition, isElectric)
     for _, system in ipairs(SYSTEMS) do
         if RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, definition.system) == system.key then
@@ -472,7 +493,6 @@ local function getBreakdownSystem(definition, isElectric)
     return "Machine", nil
 end
 
--- the abuse that wore a part before its fault, by WARRANTY_ABUSES
 local ABUSE_READINGS = {
     impact = "hit by a collision", heat = "heat past the warning", low_level = "oil too low",
     fuel_dry = "tank run dry", park_brake = "parking brake on", pto_engagement = "PTO engaged high",
@@ -481,6 +501,7 @@ local ABUSE_READINGS = {
     oil = "unsuited engine oil", header_engagement = "header started above idle",
 }
 
+---Reads the faults, lamps, codes and effects
 local function readFaults(vehicle, spec, reading)
     local R = RealisticMechanicalSystems
     local isInWorkshop = spec.currentState ~= R.STATUS.READY
@@ -560,7 +581,8 @@ local function readFaults(vehicle, spec, reading)
     for _, entry in ipairs(readCodes or {}) do
         local code = entry.spn ~= nil and string.format("SPN %d FMI %d", entry.spn, entry.fmi)
             or getBreakdownSystem(RMS_Breakdowns.BreakdownRegistry[entry.breakdownId], spec.isElectricVehicle) .. " lamp, no code"
-        table.insert(codes, code .. (spec.activeBreakdowns[entry.breakdownId].isVisible and "" or " (hidden)"))
+        local breakdown = spec.activeBreakdowns[entry.breakdownId]
+        table.insert(codes, code .. ((breakdown == nil or breakdown.isVisible) and "" or " (hidden)"))
     end
     local effects = {}
     for effectId, effect in pairs(spec.activeEffects) do
@@ -577,6 +599,7 @@ local function readFaults(vehicle, spec, reading)
     reading.alerts = {lamps = lamps, display = shown, codes = codes, effects = effects}
 end
 
+---Reads the workshop work under way
 local function readWork(spec, reading)
     local R = RealisticMechanicalSystems
     reading.work = {isActive = false, title = "", chips = {}, price = "", progress = 0, progressText = "", repairs = {},
@@ -620,6 +643,7 @@ local function readWork(spec, reading)
     table.sort(work.serviceTo, function(a, b) return a.name < b.name end)
 end
 
+---Collects the names of the implements attached, through the chain
 local function collectToolNames(vehicle, names)
     if vehicle.getAttachedImplements == nil then
         return names
@@ -631,6 +655,7 @@ local function collectToolNames(vehicle, names)
     return names
 end
 
+---Returns the state of the reversible fan
 local function getReversibleFanText(spec)
     local fan = RMS_Config.THERMAL.REVERSIBLE_FAN
     if spec.fanReversalTime > 0 then
@@ -641,14 +666,17 @@ local function getReversibleFanText(spec)
     return string.format("next in %d min", math.ceil((fan.AUTO_INTERVAL_MS - spec.fanRunningSinceReversal) / 60000))
 end
 
+---Returns a row charting heat flows
 local function chartRow(label, net, flows)
     return {label = label, kind = ROW.CHART, net = perMinute(net), unit = "°C/min", flows = flows}
 end
 
+---Returns a heat flow of a chart
 local function flow(name, value)
     return {name = name, value = perMinute(value)}
 end
 
+---Reads the engine, gearbox and hydraulic temperatures and heat flows
 local function readHeat(spec, groups)
     local rows = {}
     local heat = spec.engineHeatBalance
@@ -695,8 +723,9 @@ local function readHeat(spec, groups)
     groups["Engine and heat"] = {rows = rows}
 end
 
+---Reads the fluid levels, losses, filters and dirt
 local function readFluids(vehicle, spec, groups)
-    -- each pump: the lean it stays covered to, the air it drew (server)
+    ---Returns the notes of a pump, the lean it stays covered to and the air it drew, and whether it draws air
     local function pickup(circuit)
         local partId = RMS_Fluids.PICKUP_PARTS[circuit]
         if not RMS_Fluids.hasCircuit(vehicle, circuit) or not RMS_Breakdowns.BreakdownRegistry[partId].isApplicable(vehicle) then
@@ -787,6 +816,7 @@ local function readFluids(vehicle, spec, groups)
             item("clogging rate", string.format("×%.1f", math.max(spec.radiatorCloggingRate, spec.airFilterCloggingRate)))})}}
 end
 
+---Returns the smoke and exhaust gas rows
 local function readExhaustRows(spec)
     local smoke = spec.exhaustSmoke
     local smokeItems = {item("", "no smoke")}
@@ -810,6 +840,7 @@ local function readExhaustRows(spec)
     return itemsRow("Smoke", smokeItems), itemsRow("Exhaust gas", gasItems)
 end
 
+---Reads the exhaust, or the traction battery of an electric machine
 local function readExhaust(vehicle, spec, groups)
     if spec.isElectricVehicle then
         -- Native electric consumption is kWh/h, equivalent to kW.
@@ -832,12 +863,17 @@ local function readExhaust(vehicle, spec, groups)
     end
     local defIndex = vehicle:getConsumerFillUnitIndex(FillType.DEF)
     if defIndex ~= nil then
+        local tank = RMS_AdBlue.getInducement(vehicle)
+        local cause = tank ~= nil and string.lower(tank) .. " tank"
+            or spec.scrInducementHours > 0 and string.format("dosing fault, %.1f h", spec.scrInducementHours) or "none"
         table.insert(rows, itemsRow("AdBlue", {item("tank", pct(vehicle:getFillUnitFillLevelPercentage(defIndex))),
-            item("inducement", spec.scrInducementHours > 0 and string.format("%.1f h", spec.scrInducementHours) or "none")}))
+            item("per diesel", string.format("%.1f %%", RMS_AdBlue.getRatio(vehicle) * 100)), item("derate", cause),
+            item("low tank", RMS_AdBlue.getHasInducement(vehicle) and "derates" or "warns only")}))
     end
     groups["Exhaust"] = {rows = rows}
 end
 
+---Reads the battery, rest, draw, currents and resistance
 local function readElectrical(spec, groups)
     local rows = {}
     local balance = spec.electricalBalance
@@ -876,6 +912,7 @@ local function readElectrical(spec, groups)
     groups["Electrical"] = {rows = rows}
 end
 
+---Reads the last start, the start sequence and the preheat
 local function readStarting(vehicle, spec, groups)
     if spec.isElectricVehicle then
         return
@@ -899,6 +936,7 @@ local function readStarting(vehicle, spec, groups)
     groups["Starting"] = {rows = rows}
 end
 
+---Returns the gear text of a motor
 local function getGear(motor)
     if motor.forwardGears == nil and motor.backwardGears == nil then
         local directions = {D = "forward", R = "reverse", N = "neutral"}
@@ -910,6 +948,7 @@ local function getGear(motor)
     return string.format("%s%s, %s", motor:getGearToDisplay(false), hasGroups and " in range " .. group or "", shifting)
 end
 
+---Reads the motor, load, drive train, axles, traction, chassis and overload
 local function readDrive(vehicle, spec, groups)
     local rows = {}
     local isRunning = vehicle:getIsMotorStarted()
@@ -966,11 +1005,11 @@ local function readDrive(vehicle, spec, groups)
     groups["Drive"] = {rows = rows}
 end
 
+---Reads the harvest, header drive, PTO, attached tools, trip and worker
 local function readWorkRows(vehicle, spec, groups)
     local rows = {}
     if spec.systems.harvest.enabled then
         local state = spec.harvestState or {}
-        -- the loss the threshing applies, capped like the effect
         local effect = spec.activeEffects.HARVEST_GRAIN_LOSS
         local loss = math.clamp(effect ~= nil and effect.value or 0, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS)
         local items = {item("kind", state.kind or RMS_Drivetrain.getHarvestKind(vehicle)),
@@ -1026,6 +1065,10 @@ local function readWorkRows(vehicle, spec, groups)
         table.insert(attached, item("", "none"))
     end
     table.insert(rows, itemsRow("Attached", attached))
+    table.insert(rows, itemsRow("Trip", {
+        item("burnt", string.format("%.1f l in %.1f h", spec.tripFuelLitres, spec.tripEngineTime / 3600000)),
+        item("worked", string.format("%.2f ha with %.1f l", spec.tripWorkedHectares, spec.tripWorkFuelLitres)),
+        item("width", string.format("%.1f m", spec.tripWorkingWidth or 0))}))
     if vehicle:getIsAIActive() then
         table.insert(rows, itemsRow("Worker", {item("overload", string.format("%.2f", spec.aiWorkerOverload)),
             item("speed limit", spec.aiWorkerSpeedLimit ~= nil and string.format("%.1f km/h", spec.aiWorkerSpeedLimit) or "none"),
@@ -1040,6 +1083,7 @@ local function readWorkRows(vehicle, spec, groups)
     groups["Work"] = {rows = rows}
 end
 
+---Reads the surroundings and the lights
 local function readAround(vehicle, spec, groups)
     local rows = {itemsRow("Around", {item("place", vehicle:getIsOnField() and "on a field" or "off field"), item("dust", yesNo(spec.isRaisingDust)),
         item("ground wet", pct(g_currentMission.environment.weather:getGroundWetness())), item("roof", spec.isUnderRoof and "under a roof" or "outdoors"),
@@ -1072,6 +1116,7 @@ local function readAround(vehicle, spec, groups)
     groups["Around"] = {rows = rows}
 end
 
+---Reads the warranty and the part covers
 local function readWarranty(vehicle, spec, groups)
     local months, hours = vehicle:getWarrantyLimits()
     local state = RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle) and "active" or "expired"
@@ -1092,6 +1137,7 @@ local function readWarranty(vehicle, spec, groups)
     groups["Warranty"] = {rows = rows}
 end
 
+---Reads the machine view, group by group
 local function readMachine(vehicle, spec, reading)
     local groups = {}
     readHeat(spec, groups)
@@ -1113,6 +1159,7 @@ local function readMachine(vehicle, spec, reading)
     end
 end
 
+---Returns the reading of a machine
 function RMS_DebugReading.read(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local reading = {}
@@ -1138,6 +1185,7 @@ function RMS_DebugReading.findRow(reading, title, label)
     return nil
 end
 
+---Puts the exhaust this computer draws in a reading
 function RMS_DebugReading.useLocalExhaust(vehicle, reading)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.isElectricVehicle then
@@ -1183,9 +1231,9 @@ local SCHEMA = {fields = {
         {"caption", "string"}, {"level", "float"}, {"due", "float"}, {"left", "string"}, {"overdue", "bool"}}}}}}}}}
 }}
 
--- the value a field takes on a row that leaves it empty
 local EMPTY = {string = "", float = 0, byte = 0}
 
+---Writes a value by its schema
 local function writeValue(streamId, schema, value)
     if schema == "string" or schema == "float" or schema == "byte" then
         if value == nil then
@@ -1215,6 +1263,7 @@ local function writeValue(streamId, schema, value)
     end
 end
 
+---Reads a value by its schema
 local function readValue(streamId, schema)
     if schema == "string" then
         return streamReadString(streamId)

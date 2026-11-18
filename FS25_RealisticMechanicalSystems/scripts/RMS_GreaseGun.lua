@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Grease gun emptying a real cartridge, one grease point per stroke
+---Grease gun emptying a cartridge, one grease point per stroke
 RMS_GreaseGun = {}
 
 local modName = g_currentModName
@@ -23,6 +23,7 @@ function RMS_GreaseGun.getPointMl()
     return C.STROKE_ML * C.STROKES_PER_POINT
 end
 
+---Tells whether a node belongs to a machine with greasing
 local function getIsMachineNode(node)
     local vehicle = g_currentMission:getNodeObject(node)
     if vehicle == nil then
@@ -32,32 +33,39 @@ local function getIsMachineNode(node)
     return vehicle.spec_rmsImplementGreasing ~= nil or machineSpec ~= nil and not machineSpec.isExcludedVehicle
 end
 
+---Tells whether a node belongs to a grease cartridge
 local function getIsCartridgeNode(node)
     local object = g_currentMission:getNodeObject(node)
     return object ~= nil and object.takeRMSGreaseCartridge ~= nil
 end
 
+---Tells whether the local player carries the gun
 local function getIsLocallyCarried(handTool)
     local player = handTool:getCarryingPlayer()
     return player ~= nil and player.isOwner
 end
 
+---Shows a warning to the local player
 local function warn(textKey, ...)
     g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), ...), RMS_GreaseGun.WARNING_DURATION)
 end
 
+---Checks if all prerequisite specializations are loaded
 function RMS_GreaseGun.prerequisitesPresent(specializations)
     return true
 end
 
+---Registers the saved grease of the gun
 function RMS_GreaseGun.registerSavegameXMLPaths(schema, basePath)
     schema:register(XMLValueType.FLOAT, basePath .. "." .. modName .. ".rmsGreaseGun#greaseMl", "Grease left in the gun")
 end
 
+---Registers the functions of the gun
 function RMS_GreaseGun.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "applyRMSGreaseGunState", RMS_GreaseGun.applyRMSGreaseGunState)
 end
 
+---Registers the event listeners of the gun
 function RMS_GreaseGun.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onPostLoad", "onDelete", "onUpdate", "onDraw", "onWriteStream", "onReadStream",
         "onHeldStart", "onHeldEnd", "onRegisterActionEvents" }) do
@@ -65,6 +73,7 @@ function RMS_GreaseGun.registerEventListeners(handToolType)
     end
 end
 
+---Called on loading
 function RMS_GreaseGun:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     spec.greaseMl = 0
@@ -81,16 +90,19 @@ function RMS_GreaseGun:onLoad(xmlFile, baseDirectory)
     end
 end
 
+---Called after loading, reading the saved grease
 function RMS_GreaseGun:onPostLoad(savegame)
     if savegame ~= nil then
         self[specName].greaseMl = savegame.xmlFile:getValue(savegame.key .. "." .. modName .. ".rmsGreaseGun#greaseMl", 0)
     end
 end
 
+---Saves the grease left in the gun
 function RMS_GreaseGun:saveToXMLFile(xmlFile, key, usedModNames)
     xmlFile:setValue(key .. "#greaseMl", self[specName].greaseMl)
 end
 
+---Called on deleting
 function RMS_GreaseGun:onDelete()
     local spec = self[specName]
     if spec.strokeSample ~= nil then
@@ -98,10 +110,12 @@ function RMS_GreaseGun:onDelete()
     end
 end
 
+---Called on server side on join
 function RMS_GreaseGun:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, self[specName].greaseMl)
 end
 
+---Called on client side on join
 function RMS_GreaseGun:onReadStream(streamId, connection)
     self[specName].greaseMl = streamReadFloat32(streamId)
 end
@@ -181,6 +195,7 @@ local function getFacedCartridge(player)
     return faced
 end
 
+---Finds the cartridge or the machine the player aims at
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local cartridgeNode = player.targeter:getClosestTargetedNodeFromType(RMS_GreaseCartridge)
@@ -195,6 +210,7 @@ local function updateTarget(handTool, player)
     end
 end
 
+---Called on update: aims on its interval, pumps while the key is held
 function RMS_GreaseGun:onUpdate(dt)
     local spec = self[specName]
     local player = self:getCarryingPlayer()
@@ -219,10 +235,12 @@ end
 
 local WHITE, GREY, TRACK = { 1, 1, 1, 1 }, { 1, 1, 1, 0.6 }, { 1, 1, 1, 0.12 }
 
+---Draws a filled rectangle
 local function fill(x, y, width, height, color, alpha)
     drawFilledRect(x, y, width, height, color[1], color[2], color[3], alpha or color[4] or 1)
 end
 
+---Draws the outline of a rectangle
 local function outline(hud, x, y, width, height, color)
     local lineX, lineY = hud:scalePixelToScreenWidth(1.5), hud:scalePixelToScreenHeight(1.5)
     fill(x, y, width, lineY, color)
@@ -231,6 +249,7 @@ local function outline(hud, x, y, width, height, color)
     fill(x + width - lineX, y, lineX, height, color)
 end
 
+---Draws a text, shrunk to a width when one is given
 local function text(x, y, size, value, bold, color, alignment, width)
     setTextBold(bold)
     setTextAlignment(alignment or RenderText.ALIGN_LEFT)
@@ -264,7 +283,7 @@ local function drawGreaseLeft(spec, right, y, size, smallSize)
     return capacityWidth + mlWidth
 end
 
----Draws the panel and the SKF logo, returning the frame of the panel
+---Draws the panel and the brand logo, returning the frame of the panel
 local function drawFrame(hud, height)
     local width, padding = hud:scalePixelToScreenWidth(RMS_GreaseGun.HUD_WIDTH), hud:scalePixelToScreenWidth(20)
     local x, y = 0.5 - width * 0.5, g_hudAnchorBottom
@@ -363,6 +382,7 @@ function RMS_GreaseGun:onDraw()
     setTextColor(1, 1, 1, 1)
 end
 
+---Registers the stroke and load keys
 function RMS_GreaseGun:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -415,6 +435,7 @@ function RMS_GreaseGun:onHeldStart()
     end
 end
 
+---Stops aiming once the gun leaves the hand
 function RMS_GreaseGun:onHeldEnd()
     local spec = self[specName]
     spec.isActionDown = false

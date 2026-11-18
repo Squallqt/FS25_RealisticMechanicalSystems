@@ -42,8 +42,6 @@
                 </fillUnits>
                 <objectChange node="canCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="canVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <!-- 10 L jerrican 585 g (Mauser) -->
-                <!-- 10 L up to 0.235 m: 0.133 m -->
                 <objectChange node="adBlueContainer_component1" massActive="0.585" centerOfMassActive="0 0.133 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="208 L" price="131">
@@ -58,7 +56,6 @@
                 <objectChange node="drumCollision" compoundChildActive="true" compoundChildInactive="false"/>
                 <objectChange node="drumVisualLink" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <!-- euro pallet 25 kg, drum 8.85 kg -->
                 <objectChange node="adBlueContainer_component1" massActive="33.85"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="2 × 208 L" price="275">
@@ -78,7 +75,6 @@
                 <objectChange node="drumVisualLinkA" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumVisualLinkB" visibilityActive="true" visibilityInactive="false"/>
                 <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
-                <!-- euro pallet 25 kg, two drums 8.85 kg -->
                 <objectChange node="adBlueContainer_component1" massActive="42.7"/>
             </fillUnitConfiguration>
     </fillUnitConfigurations></fillUnit>

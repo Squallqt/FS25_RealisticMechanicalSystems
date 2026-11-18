@@ -3,7 +3,11 @@
         <!-- HUD -->
         <text name="rms_hud_mass_tractor" text="Jármű"/>
         <text name="rms_hud_mass_towed" text="Csatolt"/>
-        <text name="rms_hud_mass_total" text="Összesen"/>
+        <text name="rms_hud_mass_total" text="Össz."/>
+        <text name="rms_hud_fuel_average" text="Átl."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="A napló üres"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Hővédelem: a teljesítménykorlátozás megszűnt"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Alacsony AdBlue-szint: töltsön utána AdBlue-t."/>
+        <text name="rms_adblue_very_low_message" text="Nagyon alacsony AdBlue-szint: töltsön utána AdBlue-t."/>
+        <text name="rms_adblue_very_low_derate_message" text="Nagyon alacsony AdBlue-szint: a motor teljesítménye csökkentve. Töltsön utána AdBlue-t."/>
+        <text name="rms_adblue_empty_message" text="Az AdBlue-tartály üres: töltsön utána AdBlue-t."/>
+        <text name="rms_adblue_empty_derate_message" text="Az AdBlue-tartály üres: a motor teljesítménye erősen csökkentve. Töltsön utána AdBlue-t."/>
+        <text name="rms_adblue_restored_message" text="AdBlue feltöltve: a motor teljesítménye helyreállt."/>
         <text name="rms_breakdown_at_progress_message" text="folyamatban"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="A motor hideg! Amíg fel nem melegszik, kopik."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a hidraulika kopását, fokozhatja a melegedését és lassíthatja a működését. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ez a termék nem ehhez a körhöz való. Beszennyezi a keveréket, és akár háromszorosára növelheti a váltó és a hidraulika kopását, fokozhatja a melegedésüket és lassíthatja a hidraulikát. A szennyeződést csak teljes folyadékcsere távolítja el. Folytatod?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Nem megfelelő motorolaj"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Ez a motor AdBlue-t használ, vagy részecskeszűrője van: a kezelési kézikönyve ezekhez készült olajat ír elő. Ezzel az olajjal az olajcsere akár kétszer olyan hamar esedékes. A részecskeszűrő ráadásul 1,5-szer gyorsabban telik meg hamuval. Folytatod?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ez a motor AdBlue-t használ, vagy részecskeszűrője van: ezekhez készült olajra van szüksége. Ezzel az olajjal az olajcsere akár kétszer olyan hamar esedékes. A részecskeszűrő ráadásul 1,5-szer gyorsabban telik meg hamuval. Folytatod?"/>
         <text name="rms_fluid_error_no_circuit" text="Ennél a járműnél nincs szükség folyadék utántöltésére"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Ennek a járműnek nincs AdBlue-tartálya"/>
         <text name="rms_fluid_error_motor_running" text="Állítsd le a motort a folyadék áttöltése előtt"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Hűtés és légszűrő"/>
         <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, a műhely a(z) %s karbantartástól kezdve cseréli."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Kenés szükséges"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek a kézikönyvében szereplő zsírzószemei vannak. A gép munkanapjai szerint igényelnek újra kenést: minden munkanapon, vagy néhány munkanaponta azok, amelyeket a kézikönyv ritkábban ken. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben állj egy patron elé a betöltéshez, majd célozz a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek saját zsírzószemei vannak. A gép munkanapjai szerint igényelnek újra kenést: minden munkanapon, vagy néhány munkanaponta némelyik. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben állj egy patron elé a betöltéshez, majd célozz a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
         <text name="rms_tutorial_needs_repair_title" text="Meghibásodás észlelve"/>
         <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe: egy átvizsgálás, vagy a karbantartás, ha esedékes, azonosítja a meghibásodást. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha a meghibásodás azonosítva van, javíttasd meg a műhelyben."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Nagyjavítás szükséges"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Forró időjárás"/>
         <text name="rms_tutorial_hot_weather_message" text="Ma nagyon meleg van. Ilyen időben figyelj a hűtő tisztaságára, és kerüld a motor túlterhelését, különben a túlmelegedés csak idő kérdése.&#10;&#10;A hűtő állapotát bármikor ellenőrizheted, ha a gépre nézve nyomva tartod az %s billentyűt. A hűtőt a légfúvóval tisztíthatod meg."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Túl nehéz pótkocsi"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="A vontatott terhelés túl nehéz lehet ehhez a járműhöz. Tovább haladhatsz, de a sebességváltó és a hajtáslánc nagyobb terhelést kap.&#10;&#10;Az RMS két viszonyítási értéket használ: traktoroknál legalább 10 LE szükséges a vontatott tömeg minden tonnájára, teherautóknál pedig legalább 6 LE a járműszerelvény össztömegének minden tonnájára. A járműre vonatkozó érték alatt, nagy motorterhelésnél nő a sebességváltó kopása."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="A vontatott teher nehéz ehhez a járműhöz. Tovább haladhatsz, de a fékek minden fékezéskor gyorsabban kopnak.&#10;&#10;Az RMS két viszonyítási értéket használ: a saját tömegének több mint 4,5-szeresét vontató traktort, illetve azt a teherautót, amelynél a járműszerelvény össztömegének minden tonnájára 6 LE-nél kevesebb jut. Minél nehezebb a teher, annál gyorsabban kopnak a fékek."/>
         <text name="rms_tutorial_hard_start_title" text="Nehéz indítás"/>
         <text name="rms_tutorial_hard_start_message" text="A következő jármű motorja nehezen indul: %s. Ezt okozhatja alacsony akkumulátortöltöttség, fagyos hőmérséklet, mechanikai hiba vagy az önindító kopása.&#10;&#10;Indítás közben az elektromos rendszer nagy terhelést kap a magas indulóáramok miatt."/>
         <text name="rms_tutorial_low_fuel_title" text="Kevés üzemanyag"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Mobil vagy saját műhely csatlakoztatott diagnosztikai eszközzel, vagy kereskedő"/>
         <text name="rms_diagnostic_where_high_voltage" text="Saját műhely vagy kereskedő"/>
         <text name="rms_diagnostic_note_inspection" text="Ez a kód azt mondja meg, mit mér a gép, nem azt, melyik alkatrész hibás: egy átvizsgálás megtalálja."/>
+        <text name="rms_diagnostic_note_adblue" text="Ez a kód alacsony AdBlue-szintet jelez: az AdBlue utántöltése törli."/>
         <text name="rms_diagnostic_note_uncoded" text="A gép átvizsgálása megtalálja az érintett alkatrészt."/>
         <text name="rms_diagnostic_uncoded" text="Figyelmeztető lámpa világít tárolt kód nélkül. Egyetlen érzékelő sem figyeli az érintett alkatrészt."/>
         <text name="rms_diagnostic_uncoded_title" text="Lámpa kód nélkül"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Indítórelé"/>
         <text name="rms_diagnostic_spn_167" text="Töltőfeszültség"/>
         <text name="rms_diagnostic_spn_157" text="Rail nyomás"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-tartály szintje"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-szivattyú"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-adagoló befecskendező"/>
         <text name="rms_diagnostic_spn_3216" text="Katalizátor előtti NOx-érzékelő"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Hibás eszköz vagy alkatrész"/>
         <text name="rms_diagnostic_fmi_14" text="Különleges utasítások"/>
         <text name="rms_diagnostic_fmi_16" text="Az adat a normál tartomány felett (közepesen súlyos szint)"/>
+        <text name="rms_diagnostic_fmi_17" text="Az adat a normál tartomány alatt (legkevésbé súlyos szint)"/>
         <text name="rms_diagnostic_fmi_18" text="Az adat a normál tartomány alatt (közepesen súlyos szint)"/>
         <text name="rms_diagnostic_fmi_31" text="Az állapot fennáll"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="hibás alkatrész"/>
         <text name="rms_dashboard_fmi_14" text="beavatkozás szükséges"/>
         <text name="rms_dashboard_fmi_16" text="magas érték"/>
+        <text name="rms_dashboard_fmi_17" text="kissé alacsony érték"/>
         <text name="rms_dashboard_fmi_18" text="alacsony érték"/>
         <text name="rms_dashboard_fmi_31" text="hiba áll fenn"/>
         <text name="rms_diagnostic_log_title" text="Kódkiolvasás"/>

@@ -1,9 +1,13 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Kendaraan"/>
+        <text name="rms_hud_mass_tractor" text="Kend."/>
         <text name="rms_hud_mass_towed" text="Terpasang"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_fuel_average" text="Rerata"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Log masih kosong"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Perlindungan termal: pembatasan daya dinonaktifkan"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Level AdBlue rendah: isi ulang AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Level AdBlue sangat rendah: isi ulang AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Level AdBlue sangat rendah: daya mesin dikurangi. Isi ulang AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Tangki AdBlue kosong: isi ulang AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Tangki AdBlue kosong: daya mesin sangat dikurangi. Isi ulang AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue telah diisi: daya mesin pulih."/>
         <text name="rms_breakdown_at_progress_message" text="berlangsung"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Peringatan! Mesin dingin: akan aus sampai mesin panas."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan hidraulis hingga tiga kali lipat, meningkatkan suhunya, dan memperlambatnya. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Produk ini tidak ditujukan untuk sirkuit tersebut. Produk ini akan mencemari sirkuit dan dapat meningkatkan keausan transmisi dan hidraulis hingga tiga kali lipat, meningkatkan suhu keduanya, dan memperlambat hidraulis. Hanya penggantian fluida secara menyeluruh yang dapat menghilangkan pencemaran. Lanjutkan?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Oli Mesin Tidak Sesuai"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Mesin ini memakai AdBlue atau memiliki filter partikulat: buku petunjuknya meminta oli yang dibuat untuk itu. Dengan oli ini, penggantian oli akan tiba hingga dua kali lebih cepat. Filter partikulat juga terisi abu 1,5 kali lebih cepat. Lanjutkan?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Mesin ini memakai AdBlue atau memiliki filter partikulat: mesin ini membutuhkan oli yang dibuat untuk itu. Dengan oli ini, penggantian oli akan tiba hingga dua kali lebih cepat. Filter partikulat juga terisi abu 1,5 kali lebih cepat. Lanjutkan?"/>
         <text name="rms_fluid_error_no_circuit" text="Kendaraan ini tidak memerlukan penambahan fluida"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Kendaraan ini tidak memiliki tangki AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Matikan mesin sebelum memindahkan fluida"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Pendinginan dan Filter Udara"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, bengkel menggantinya mulai dari servis %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Pelumasan Diperlukan"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sesuai buku petunjuknya. Nipel perlu dilumasi lagi menurut hari mesin dipakai: setiap hari dipakai, atau setiap beberapa hari dipakai untuk nipel yang lebih jarang dilumasi menurut buku petunjuk. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan berdirilah di depan kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sendiri. Nipel perlu dilumasi lagi menurut hari mesin dipakai: setiap hari dipakai, atau setiap beberapa hari dipakai untuk sebagian di antaranya. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan berdirilah di depan kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
         <text name="rms_tutorial_needs_repair_title" text="Kerusakan Terdeteksi"/>
         <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel: inspeksi, atau perawatan jika sudah waktunya, mengidentifikasi kerusakan. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Setelah kerusakan teridentifikasi, lakukan perbaikan di bengkel."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Rekondisi Diperlukan"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Cuaca Panas"/>
         <text name="rms_tutorial_hot_weather_message" text="Hari ini sangat panas. Dalam cuaca seperti ini, perhatikan kebersihan radiator dan hindari beban berlebih pada mesin, atau panas berlebih pasti akan terjadi.&#10;&#10;Kamu dapat memeriksa kondisi radiator: tahan tombol %s sambil melihat mesin. Pembersihan dilakukan dengan Peniup Udara Bertekanan."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Trailer Terlalu Berat"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Beban yang ditarik tampak terlalu berat untuk kendaraan ini. Kamu dapat terus berkendara, tetapi transmisi dan sistem penggerak akan menerima tegangan lebih besar.&#10;&#10;RMS menggunakan dua acuan: traktor memerlukan setidaknya 10 HP per ton beban yang ditarik, sedangkan truk memerlukan setidaknya 6 HP per ton bobot kombinasi bruto. Di bawah nilai yang berlaku dan saat beban mesin tinggi, keausan transmisi meningkat."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Beban yang ditarik berat untuk kendaraan ini. Kamu dapat terus berkendara, tetapi rem lebih cepat aus setiap kali kamu mengerem.&#10;&#10;RMS menggunakan dua acuan: traktor yang menarik lebih dari 4,5 kali bobotnya sendiri, dan truk dengan kurang dari 6 HP per ton bobot kombinasi bruto. Makin berat bebannya, makin cepat rem aus."/>
         <text name="rms_tutorial_hard_start_title" text="Mesin Sulit Dinyalakan"/>
         <text name="rms_tutorial_hard_start_message" text="Mesin %s milikmu sulit dinyalakan. Baterai lemah, suhu beku, kerusakan mekanis, atau keausan starter dapat menjadi penyebabnya.&#10;&#10;Sistem kelistrikan menerima beban berat selama penyalaan akibat arus masuk awal yang tinggi."/>
         <text name="rms_tutorial_low_fuel_title" text="Cadangan Bahan Bakar"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Bengkel bergerak atau pribadi dengan alat terhubung, atau dealer"/>
         <text name="rms_diagnostic_where_high_voltage" text="Bengkel pribadi atau dealer"/>
         <text name="rms_diagnostic_note_inspection" text="Kode ini menunjukkan apa yang diukur mesin, bukan komponen yang rusak: inspeksi akan menemukannya."/>
+        <text name="rms_diagnostic_note_adblue" text="Kode ini menandakan tangki AdBlue rendah: mengisi ulang AdBlue menghapusnya."/>
         <text name="rms_diagnostic_note_uncoded" text="Inspeksi mesin akan menemukan komponen yang bermasalah."/>
         <text name="rms_diagnostic_uncoded" text="Lampu peringatan menyala tanpa kode tersimpan. Tidak ada sensor yang memantau komponen yang bermasalah."/>
         <text name="rms_diagnostic_uncoded_title" text="Lampu Tanpa Kode"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Relai Starter"/>
         <text name="rms_diagnostic_spn_167" text="Tegangan pengisian"/>
         <text name="rms_diagnostic_spn_157" text="Tekanan rel injeksi"/>
+        <text name="rms_diagnostic_spn_1761" text="Level tangki AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Pompa AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Injektor Penakar AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Sensor NOx Sebelum Katalis"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Perangkat atau komponen rusak"/>
         <text name="rms_diagnostic_fmi_14" text="Petunjuk khusus"/>
         <text name="rms_diagnostic_fmi_16" text="Data di atas rentang normal (tingkat cukup parah)"/>
+        <text name="rms_diagnostic_fmi_17" text="Data di bawah rentang normal (tingkat paling ringan)"/>
         <text name="rms_diagnostic_fmi_18" text="Data di bawah rentang normal (tingkat cukup parah)"/>
         <text name="rms_diagnostic_fmi_31" text="Kondisi terjadi"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="komponen rusak"/>
         <text name="rms_dashboard_fmi_14" text="tindakan diperlukan"/>
         <text name="rms_dashboard_fmi_16" text="nilai tinggi"/>
+        <text name="rms_dashboard_fmi_17" text="nilai agak rendah"/>
         <text name="rms_dashboard_fmi_18" text="nilai rendah"/>
         <text name="rms_dashboard_fmi_31" text="ada gangguan"/>
         <text name="rms_diagnostic_log_title" text="Pembacaan Kode"/>

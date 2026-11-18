@@ -18,7 +18,7 @@ function RMS_Greasing.getUnit(tier)
     return "day"
 end
 
----Returns an interval in its unit, the hours of a notice in worked days
+---Returns an interval in its unit, its hours in worked days
 function RMS_Greasing.getInterval(tier)
     local unit = RMS_Greasing.getUnit(tier)
     if unit ~= "day" then
@@ -29,46 +29,55 @@ function RMS_Greasing.getInterval(tier)
     return math.max(math.floor(tier.hours / RMS_Config.GREASING.DAY_HOURS + 0.5), 1)
 end
 
-local function resolveFamily(vehicle, entry)
-    if type(entry) ~= "table" then
-        return entry
-    elseif entry.trailed ~= nil then
-        local wheels = vehicle.spec_wheels
-        return wheels ~= nil and #wheels.wheels >= 2 and entry.trailed or entry.mounted
-    elseif entry.baleLoader ~= nil then
-        return vehicle.spec_baleLoader ~= nil and entry.baleLoader or entry.flatbed
-    end
-    local cylindered = vehicle.spec_cylindered
-    if cylindered ~= nil and #cylindered.movingTools > 0 then
-        return entry.moving
-    end
-    return entry.fixed
+---Tells whether a joint type hitches a towed implement
+local function getIsTowingJoint(jointType)
+    return jointType == AttacherJoints.JOINTTYPE_TRAILER or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW
+        or jointType == AttacherJoints.JOINTTYPE_TRAILERSADDLED or jointType == AttacherJoints.JOINTTYPE_TRAILERCAR
+        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILER or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERHOOK
+        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERCAR
 end
 
-local function getImplementFamily(vehicle)
-    local C = RMS_Config.GREASING
-    local wheels, cylindered, powerConsumer = vehicle.spec_wheels, vehicle.spec_cylindered, vehicle.spec_powerConsumer
-    local isDriven = powerConsumer ~= nil and powerConsumer.ptoRpm > 0
-    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    for _, categoryName in ipairs(storeItem ~= nil and storeItem.categoryNames or {}) do
-        local entry = C.IMPLEMENT_CATEGORY_FAMILIES[string.upper(categoryName)]
-        if entry ~= nil then
-            local family = resolveFamily(vehicle, entry)
-            if family == false or family ~= nil and (#C.FAMILIES[family] > 0 or isDriven) then
-                return family
-            end
-            break
+---Returns the wheels of a towed chassis
+-- @return integer wheels of its own chassis, 0 when mounted, hooked or set on a carrier
+local function getChassisWheels(vehicle)
+    local wheels, attachable = vehicle.spec_wheels, vehicle.spec_attachable
+    if wheels == nil or #wheels.wheels < 2 or attachable == nil then
+        return 0
+    end
+    for _, joint in ipairs(attachable.inputAttacherJoints or {}) do
+        if getIsTowingJoint(joint.jointType) then
+            return #wheels.wheels
         end
     end
-    if wheels ~= nil and #wheels.wheels >= 2 then
-        return "IMP_TRAILER"
-    elseif cylindered ~= nil and #cylindered.movingTools > 0 then
-        return "IMP_LOADER_TOOL"
-    elseif isDriven then
-        return "IMP_DRIVEN"
-    end
+    return 0
 end
 
+---Tells whether a moving tool swings or is pushed by its own ram
+local function getIsArm(tool)
+    if tool.rotSpeed ~= nil or tool.rotMax ~= nil then
+        return true
+    end
+    for _, dependent in ipairs(tool.dependentPartData or {}) do
+        if dependent.part ~= nil and (dependent.part.numTranslatingParts or 0) > 0 then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns the arms the cylinders move
+-- @return integer arms a cylinder moves, sliding tines not
+local function getArmCount(vehicle)
+    local count = 0
+    for _, tool in ipairs(vehicle.spec_cylindered ~= nil and vehicle.spec_cylindered.movingTools or {}) do
+        if getIsArm(tool) then
+            count = count + 1
+        end
+    end
+    return count
+end
+
+---Returns the working width of the fitted configuration, 0 when unknown
 local function getWorkingWidth(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     if storeItem == nil then
@@ -82,17 +91,181 @@ local function getWorkingWidth(vehicle)
     return width
 end
 
+---Tells whether a trailer tips to the left and the right as well as to the rear
+local function getIsThreeWayTipper(vehicle)
+    local trailer = vehicle.spec_trailer
+    if trailer == nil or g_i18n == nil then
+        return false
+    end
+    local left, right = g_i18n:getText("info_tipSideLeft"), g_i18n:getText("info_tipSideRight")
+    local hasLeft, hasRight = false, false
+    for _, tipSide in ipairs(trailer.tipSides or {}) do
+        hasLeft = hasLeft or tipSide.name == left
+        hasRight = hasRight or tipSide.name == right
+    end
+    return hasLeft and hasRight
+end
+
+---Tells whether a baler presses small square bales
+local function getIsSmallBaler(vehicle)
+    local baler = vehicle.spec_baler
+    local baleType = baler ~= nil and baler.baleTypes ~= nil and baler.baleTypes[1] or nil
+    return baleType ~= nil and not baleType.isRoundBale and baleType.width <= RMS_Config.GREASING.SMALL_BALE_WIDTH
+end
+
+---Returns the build of a rake from its file
+-- @return string? build rotors, belts or wheels, nil once closed
+-- @return integer count the rotors its file declares
+local function getRakeBuild(vehicle)
+    local xmlFile = vehicle.xmlFile
+    if vehicle.spec_windrower == nil or xmlFile == nil or xmlFile.handle == nil then
+        return nil, 0
+    end
+    local rotors, index = 0, 0
+    while hasXMLProperty(xmlFile.handle, string.format("vehicle.windrower.animationNodes.animationNode(%d)", index)) do
+        if getXMLString(xmlFile.handle, string.format("vehicle.windrower.animationNodes.animationNode(%d)#class", index)) == "RotationAnimationSpikes" then
+            rotors = rotors + 1
+        end
+        index = index + 1
+    end
+    local effect = 0
+    while hasXMLProperty(xmlFile.handle, string.format("vehicle.windrower.effects.effect(%d)", effect)) do
+        local node = 0
+        while hasXMLProperty(xmlFile.handle, string.format("vehicle.windrower.effects.effect(%d).effectNode(%d)", effect, node)) do
+            local key = string.format("vehicle.windrower.effects.effect(%d).effectNode(%d).motionPathEffect#isPickup", effect, node)
+            if getXMLString(xmlFile.handle, key) == "true" then
+                return "belts", rotors
+            end
+            node = node + 1
+        end
+        effect = effect + 1
+    end
+    return rotors > 0 and "rotors" or "wheels", rotors
+end
+
+---Returns the family a category entry gives the implement
+local function resolveFamily(vehicle, entry)
+    if type(entry) ~= "table" then
+        return entry
+    elseif entry.byWidth ~= nil then
+        local width = getWorkingWidth(vehicle)
+        if width == 0 and entry.unknown ~= nil then
+            return resolveFamily(vehicle, entry.unknown)
+        end
+        for _, band in ipairs(entry.byWidth) do
+            if width <= band[1] then
+                return resolveFamily(vehicle, band[2])
+            end
+        end
+        return nil
+    elseif entry.trailed ~= nil then
+        return resolveFamily(vehicle, getChassisWheels(vehicle) > 0 and entry.trailed or entry.mounted)
+    elseif entry.baleLoader ~= nil then
+        return vehicle.spec_baleLoader ~= nil and entry.baleLoader or entry.flatbed
+    elseif entry.threeWay ~= nil then
+        return getIsThreeWayTipper(vehicle) and entry.threeWay or entry.rear
+    elseif entry.smallBales ~= nil then
+        return getIsSmallBaler(vehicle) and entry.smallBales or entry.bigBales
+    elseif entry.belts ~= nil then
+        return entry[getRakeBuild(vehicle) or "rotors"]
+    end
+    return resolveFamily(vehicle, getArmCount(vehicle) > 0 and entry.moving or entry.fixed)
+end
+
+---Returns the rotors of a rake
+-- @return integer rotors of a rake, by its width when its file is closed
+local function getRakeRotors(vehicle)
+    local _, rotors = getRakeBuild(vehicle)
+    if rotors > 0 then
+        return rotors
+    end
+    local width = getWorkingWidth(vehicle)
+    return width > 10.5 and 4 or width > 5 and 2 or 1
+end
+
+---Returns the points an interval of the family gives the implement
+-- @return integer points of the organs the implement carries
+local function getOrganPoints(vehicle, tier, wheels, arms)
+    if tier.organ == "chassis" and wheels == 0 or tier.organ == "tandem" and wheels < 4 then
+        return 0
+    end
+    local points = tier.points
+    if tier.noticeRows ~= nil then
+        local width = getWorkingWidth(vehicle)
+        local rows = width > 0 and math.min(math.max(math.floor(width / tier.rowWidth + 0.5), 1), tier.noticeRows) or tier.noticeRows
+        points = points + (rows - tier.noticeRows) * tier.rowPoints
+    end
+    if tier.unitWidth ~= nil then
+        local width = getWorkingWidth(vehicle)
+        points = points * (width > 0 and math.max(math.floor(width / tier.unitWidth + 0.5), 1) or tier.units)
+    end
+    if tier.perRotor ~= nil then
+        local rotors = getRakeRotors(vehicle)
+        points = tier.organ == "rotors" and rotors < 2 and 0 or points * rotors
+    end
+    if tier.perWheel ~= nil then
+        points = tier.perWheel * wheels
+    end
+    if tier.perArm ~= nil then
+        points = math.min(points, tier.perArm * arms)
+    end
+    return points
+end
+
+---Returns the greasing family of an implement, by its organs when its category gives none
+local function getImplementFamily(vehicle)
+    local C = RMS_Config.GREASING
+    local powerConsumer = vehicle.spec_powerConsumer
+    local isDriven = powerConsumer ~= nil and powerConsumer.ptoRpm > 0
+    local wheels, arms = getChassisWheels(vehicle), getArmCount(vehicle)
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    for _, categoryName in ipairs(storeItem ~= nil and storeItem.categoryNames or {}) do
+        local entry = C.IMPLEMENT_CATEGORY_FAMILIES[string.upper(categoryName)]
+        if entry ~= nil then
+            local family = resolveFamily(vehicle, entry)
+            if family == false or family ~= nil and isDriven then
+                return family
+            end
+            for _, tier in ipairs(family ~= nil and C.FAMILIES[family] or {}) do
+                if getOrganPoints(vehicle, tier, wheels, arms) > 0 then
+                    return family
+                end
+            end
+            break
+        end
+    end
+    if wheels > 0 then
+        return "IMP_TRAILER"
+    elseif arms > 0 then
+        return "IMP_LOADER_TOOL"
+    elseif isDriven then
+        return "IMP_DRIVEN"
+    end
+end
+
+---Adds an interval, joined to one of the same unit and length
+local function addTier(tiers, tier)
+    for index, other in ipairs(tiers) do
+        if not other.isDriveline and not tier.isDriveline and RMS_Greasing.getUnit(other) == RMS_Greasing.getUnit(tier)
+            and RMS_Greasing.getInterval(other) == RMS_Greasing.getInterval(tier) then
+            tiers[index] = { points = other.points + tier.points, hours = other.hours, months = other.months, bales = other.bales }
+            return
+        end
+    end
+    table.insert(tiers, tier)
+end
+
+---Returns the intervals of an implement, its cardan joined, false without points
 local function getImplementTiers(vehicle)
     local C = RMS_Config.GREASING
     local family = getImplementFamily(vehicle)
+    local wheels, arms = getChassisWheels(vehicle), getArmCount(vehicle)
     local tiers = {}
     for _, tier in ipairs(family and C.FAMILIES[family] or {}) do
-        if tier.noticeRows ~= nil then
-            local width = getWorkingWidth(vehicle)
-            local rows = width > 0 and math.min(math.max(math.floor(width / tier.rowWidth + 0.5), 1), tier.noticeRows) or tier.noticeRows
-            tier = { points = tier.points + (rows - tier.noticeRows) * tier.rowPoints, hours = tier.hours }
+        local points = getOrganPoints(vehicle, tier, wheels, arms)
+        if points > 0 then
+            addTier(tiers, { points = points, hours = tier.hours, months = tier.months, bales = tier.bales, isDriveline = tier.isDriveline })
         end
-        table.insert(tiers, tier)
     end
     local powerConsumer = vehicle.spec_powerConsumer
     if family and powerConsumer ~= nil and powerConsumer.ptoRpm > 0 and not C.CARDAN_INCLUDED[family] then
@@ -128,6 +301,7 @@ function RMS_Greasing.getTiers(vehicle)
     return spec.greasingTiers or nil
 end
 
+---Returns the greasing state, reset when the intervals changed
 local function getState(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     local tiers = RMS_Greasing.getTiers(vehicle)
@@ -150,6 +324,7 @@ local function getDryShare(lateShare)
     return (dry(1 + lateShare) - dry(1)) / (1 - dry(1))
 end
 
+---Updates the wear factor, the due points and the lubrication level
 -- @param boolean? isCounted true once a day, month or bale counted, or a service
 local function refresh(vehicle, isCounted)
     local spec = RMS_Greasing.getSpec(vehicle)
@@ -258,16 +433,12 @@ function RMS_Greasing.getIsWorking(vehicle)
     return false
 end
 
----Returns true for what rolls behind, a raised tool not
+---Tells whether an implement rolls behind, a raised tool not
 local function getIsTowed(child)
-    local jointType = child:getActiveInputAttacherJoint().jointType
-    return jointType == AttacherJoints.JOINTTYPE_TRAILER or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW
-        or jointType == AttacherJoints.JOINTTYPE_TRAILERSADDLED or jointType == AttacherJoints.JOINTTYPE_TRAILERCAR
-        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILER or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERHOOK
-        or jointType == AttacherJoints.JOINTTYPE_SEMITRAILERCAR
+    return getIsTowingJoint(child:getActiveInputAttacherJoint().jointType)
 end
 
--- organs first: a combine's header trailer on the road is no work
+---Tells whether the machine or what follows it works, a header trailer on the road not
 local function getIsMachineWorking(vehicle)
     local isTowing = false
     for _, child in ipairs(vehicle:getChildVehicles()) do
@@ -297,6 +468,7 @@ function RMS_Greasing.onBaleWrapped(vehicle)
     advance(vehicle, "bales", 1)
 end
 
+---Returns the interval greasing the driveline of a header
 -- @return integer? index the interval greasing the driveline of a header
 local function getDrivelineTier(vehicle)
     for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
@@ -307,6 +479,7 @@ local function getDrivelineTier(vehicle)
     return nil
 end
 
+---Returns the game hour
 -- @return number hour of play since the first day
 local function getGameHour()
     local environment = g_currentMission.environment
@@ -339,7 +512,7 @@ function RMS_Greasing.onHourChanged(vehicle)
     if index == nil or spec.isLimiterSeized or spec.headerTurnedHour == nil then
         return
     end
-    -- two weeks of the calendar, a month lasting the days set per period
+    -- SEIZE_DAYS of the calendar, a month lasting the days set per period
     local C = RMS_Config.CORE.HEADER_DRIVE
     if getGameHour() - spec.headerTurnedHour > C.SEIZE_DAYS / C.DAYS_PER_MONTH * g_currentMission.environment.daysPerPeriod * 24 then
         spec.isLimiterSeized = true
@@ -349,7 +522,7 @@ function RMS_Greasing.onHourChanged(vehicle)
     end
 end
 
--- greasing the driveline frees the slip clutch, as before a season
+---Frees the slip clutch once the driveline is greased
 local function releaseLimiter(vehicle)
     local spec, index = RMS_Greasing.getSpec(vehicle), getDrivelineTier(vehicle)
     if spec.isLimiterSeized and index ~= nil and getState(vehicle).due[index] == 0 then

@@ -28,7 +28,6 @@ RMS_Gui.FRAMES = {
     { RMS_WorkshopRecordFrame, "gui/RMS_WorkshopRecordFrame.xml" }
 }
 
--- each controller becomes the INSTANCE of its class
 RMS_Gui.DIALOGS = {
     { RMS_WorkshopDialog, "gui/RMS_WorkshopDialog.xml" },
     { RMS_InspectionDialog, "gui/RMS_InspectionDialog.xml" },
@@ -37,6 +36,7 @@ RMS_Gui.DIALOGS = {
     { RMS_DebugScreen, "gui/RMS_DebugScreen.xml" }
 }
 
+---Returns the file name of a layout, without its folder and extension
 local function getName(path)
     return path:match("([%w_]+)%.xml$")
 end

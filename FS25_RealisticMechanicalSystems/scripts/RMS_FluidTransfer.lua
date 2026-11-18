@@ -51,6 +51,7 @@ function RMS_FluidTransfer.getRequesterContext(connection)
     }
 end
 
+---Tells whether the requesting farm may use both the container and the machine
 local function getIsOwnedByRequester(container, target, requester)
     return requester ~= nil and requester.farmId ~= nil
         and container ~= nil and container.getOwnerFarmId ~= nil
@@ -59,6 +60,7 @@ local function getIsOwnedByRequester(container, target, requester)
         and g_currentMission.accessHandler:canFarmAccess(requester.farmId, target)
 end
 
+---Returns why a pour may not run now, OK when it may
 local function getRuntimeValidation(container, target, circuit, requester, index)
     if g_server == nil or container == nil or target == nil or requester == nil
         or container.isDeleted == true or target.isDeleted == true
@@ -197,7 +199,6 @@ function RMS_FluidTransfer.cancel(container, index)
         local transfer = slot.activeTransfer
         if transfer ~= nil and (index == nil or index == slotIndex) then
             slot.activeTransfer = nil
-            -- the circuit stays locked while the other drum pours into it
             local isStillPouring = false
             for _, other in ipairs(containerSpec.slots) do
                 isStillPouring = isStillPouring or other.activeTransfer ~= nil and other.activeTransfer.target == transfer.target
@@ -213,6 +214,7 @@ function RMS_FluidTransfer.cancel(container, index)
     end
 end
 
+---Returns the requester of a running transfer, nil once the player left
 local function getActiveRequester(transfer)
     local player = transfer.requesterUserId ~= nil
         and g_currentMission.playerSystem:getPlayerByUserId(transfer.requesterUserId) or nil
@@ -226,6 +228,7 @@ local function getActiveRequester(transfer)
     }
 end
 
+---Pours one step of a running transfer, ending it when it is done
 local function updateSlot(container, transfer, dt)
     local index = transfer.index
     local requester = getActiveRequester(transfer)

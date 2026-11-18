@@ -4,6 +4,10 @@
         <text name="rms_hud_mass_tractor" text="Pojazd"/>
         <text name="rms_hud_mass_towed" text="Osprzęt"/>
         <text name="rms_hud_mass_total" text="Razem"/>
+        <text name="rms_hud_fuel_average" text="Śr."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="Brak wpisów w dzienniku"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Ochrona termiczna: ograniczenie mocy zniesione"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Niski poziom AdBlue: uzupełnij AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Bardzo niski poziom AdBlue: uzupełnij AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Bardzo niski poziom AdBlue: moc silnika ograniczona. Uzupełnij AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Zbiornik AdBlue pusty: uzupełnij AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Zbiornik AdBlue pusty: moc silnika mocno ograniczona. Uzupełnij AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue uzupełniony: moc silnika przywrócona."/>
         <text name="rms_breakdown_at_progress_message" text="w toku"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Uwaga! Silnik jest zimny: zużywa się, dopóki się nie rozgrzeje."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie układu hydraulicznego, podnieść jego temperaturę i spowolnić jego pracę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Ten produkt nie jest przeznaczony do tego obiegu. Zanieczyści go i może nawet trzykrotnie zwiększyć zużycie skrzyni biegów i układu hydraulicznego, podnieść ich temperaturę i spowolnić hydraulikę. Zanieczyszczenie usunie tylko całkowita wymiana płynu. Kontynuować?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Nieodpowiedni olej silnikowy"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Ten silnik korzysta z AdBlue lub ma filtr cząstek stałych: jego instrukcja wymaga oleju przeznaczonego do nich. Z tym olejem wymiana oleju przypadnie nawet dwa razy wcześniej. Filtr cząstek stałych zapełni się też popiołem 1,5 raza szybciej. Kontynuować?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Ten silnik korzysta z AdBlue lub ma filtr cząstek stałych: potrzebuje oleju przeznaczonego do nich. Z tym olejem wymiana oleju przypadnie nawet dwa razy wcześniej. Filtr cząstek stałych zapełni się też popiołem 1,5 raza szybciej. Kontynuować?"/>
         <text name="rms_fluid_error_no_circuit" text="Ten pojazd nie wymaga uzupełniania płynu"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Ten pojazd nie ma zbiornika AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Wyłącz silnik przed przelaniem płynu"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Układ chłodzenia i filtr powietrza"/>
         <text name="rms_tutorial_cooling_air_check_message" text="Chłodnica lub filtr powietrza jest zapchany. Patrząc na pojazd, przytrzymaj klawisz %s, aby sprawdzić który element. Oczyść go dmuchawą sprężonego powietrza. Jeśli filtra nie da się już przedmuchać, warsztat wymienia go od przeglądu %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Wymagane smarowanie"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s ma smarowniczki do nasmarowania.&#10;&#10;W RMS każda maszyna ma smarowniczki wymienione w jej instrukcji. Wymagają ponownego smarowania w miarę dni pracy maszyny: każdego dnia pracy albo co kilka dni pracy te, które instrukcja smaruje rzadziej. Spóźnione smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie ręczną smarownicę i wkłady. Trzymając smarownicę w ręku, stań przed wkładem, aby go włożyć, a potem wyceluj w maszynę: każde kliknięcie smaruje jedną smarowniczkę, a przytrzymanie przycisku przechodzi do kolejnych.&#10;&#10;Aby zobaczyć pozostałe smarowniczki, przytrzymaj klawisz %s, patrząc na pojazd."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="Pojazd %s ma smarowniczki do nasmarowania.&#10;&#10;W RMS każda maszyna ma własne smarowniczki. Wymagają ponownego smarowania w miarę dni pracy maszyny: każdego dnia pracy albo co kilka dni pracy niektóre z nich. Spóźnione smarowanie przyspiesza zużycie podwozia.&#10;&#10;Kup w sklepie ręczną smarownicę i wkłady. Trzymając smarownicę w ręku, stań przed wkładem, aby go włożyć, a potem wyceluj w maszynę: każde kliknięcie smaruje jedną smarowniczkę, a przytrzymanie przycisku przechodzi do kolejnych.&#10;&#10;Aby zobaczyć pozostałe smarowniczki, przytrzymaj klawisz %s, patrząc na pojazd."/>
         <text name="rms_tutorial_needs_repair_title" text="Wykryto awarię"/>
         <text name="rms_tutorial_needs_repair_message" text="Pojazd %s ma problem. Jedna z jego części mogła ulec awarii.&#10;&#10;Odwiedź warsztat: przegląd albo obsługa techniczna, jeśli przypada, zidentyfikuje awarię. Nie zwlekaj: awaria może się pogłębiać, a wraz z nią wzrasta koszt naprawy.&#10;&#10;Gdy awaria zostanie zidentyfikowana, napraw ją w warsztacie."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Wymagany remont kapitalny"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Upalna pogoda"/>
         <text name="rms_tutorial_hot_weather_message" text="Dziś jest bardzo gorąco. Przy takiej pogodzie kontroluj czystość chłodnicy i unikaj przeciążania silnika, ponieważ prowadzi to do przegrzania.&#10;&#10;Stan chłodnicy możesz sprawdzić, przytrzymując klawisz %s i patrząc na maszynę. Do czyszczenia służy dmuchawa sprężonego powietrza."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Ciężka przyczepa"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Holowany ładunek może być zbyt ciężki dla tego pojazdu. Możesz jechać dalej, ale skrzynia biegów i układ napędowy będą pracować pod większym obciążeniem.&#10;&#10;RMS stosuje dwa punkty odniesienia: ciągnik potrzebuje co najmniej 10 KM na tonę holowanej masy, a ciężarówka co najmniej 6 KM na tonę całkowitej masy zestawu. Poniżej właściwej wartości i przy dużym obciążeniu silnika zużycie przekładni wzrasta."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="Holowany ładunek jest ciężki dla tego pojazdu. Możesz jechać dalej, ale hamulce zużywają się szybciej przy każdym hamowaniu.&#10;&#10;RMS stosuje dwa punkty odniesienia: ciągnik holujący ponad 4,5-krotność własnej masy oraz ciężarówkę mającą mniej niż 6 KM na tonę całkowitej masy zestawu. Im cięższy ładunek, tym szybciej zużywają się hamulce."/>
         <text name="rms_tutorial_hard_start_title" text="Trudny rozruch"/>
         <text name="rms_tutorial_hard_start_message" text="Silnik pojazdu %s uruchamia się z trudem. Przyczyną może być słaby akumulator, mróz, awaria mechaniczna lub zużycie rozrusznika.&#10;&#10;Podczas rozruchu układ elektryczny jest silnie obciążony przez wysoki prąd rozruchowy."/>
         <text name="rms_tutorial_low_fuel_title" text="Mało paliwa"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Warsztat mobilny lub własny z podłączonym urządzeniem diagnostycznym albo dealer"/>
         <text name="rms_diagnostic_where_high_voltage" text="Warsztat własny lub dealer"/>
         <text name="rms_diagnostic_note_inspection" text="Ten kod mówi, co mierzy maszyna, a nie która część jest uszkodzona: znajdzie ją przegląd."/>
+        <text name="rms_diagnostic_note_adblue" text="Ten kod zgłasza niski poziom w zbiorniku AdBlue: uzupełnienie AdBlue go kasuje."/>
         <text name="rms_diagnostic_note_uncoded" text="Przegląd maszyny znajdzie uszkodzoną część."/>
         <text name="rms_diagnostic_uncoded" text="Kontrolka świeci bez zapisanego kodu. Żaden czujnik nie nadzoruje uszkodzonej części."/>
         <text name="rms_diagnostic_uncoded_title" text="Kontrolka bez kodu"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Przekaźnik rozrusznika"/>
         <text name="rms_diagnostic_spn_167" text="Napięcie ładowania"/>
         <text name="rms_diagnostic_spn_157" text="Ciśnienie w listwie wtryskowej"/>
+        <text name="rms_diagnostic_spn_1761" text="Poziom w zbiorniku AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Pompa AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Wtryskiwacz dozujący AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Czujnik NOx przed katalizatorem"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Uszkodzone urządzenie lub podzespół"/>
         <text name="rms_diagnostic_fmi_14" text="Specjalne instrukcje"/>
         <text name="rms_diagnostic_fmi_16" text="Dane powyżej normalnego zakresu (umiarkowanie poważny poziom)"/>
+        <text name="rms_diagnostic_fmi_17" text="Dane poniżej normalnego zakresu (najmniej poważny poziom)"/>
         <text name="rms_diagnostic_fmi_18" text="Dane poniżej normalnego zakresu (umiarkowanie poważny poziom)"/>
         <text name="rms_diagnostic_fmi_31" text="Stan występuje"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="uszkodzony podzespół"/>
         <text name="rms_dashboard_fmi_14" text="wymagana interwencja"/>
         <text name="rms_dashboard_fmi_16" text="wysoka wartość"/>
+        <text name="rms_dashboard_fmi_17" text="nieco niska wartość"/>
         <text name="rms_dashboard_fmi_18" text="niska wartość"/>
         <text name="rms_dashboard_fmi_31" text="usterka obecna"/>
         <text name="rms_diagnostic_log_title" text="Odczyt kodów"/>

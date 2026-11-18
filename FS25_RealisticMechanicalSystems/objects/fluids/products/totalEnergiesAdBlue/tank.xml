@@ -19,12 +19,10 @@
     </storeData>
     <base>
         <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
-        <!-- the game's tank and its collisions -->
         <filename>$data/objects/pallets/liquidTank/liquidTank.i3d</filename>
         <size width="1.35" length="1.35" height="1.55"/>
         <input allowed="false"/>
         <canBeReset>false</canBeReset>
-        <!-- empty tank 100 kg, AdBlue 1.09 kg/L -->
         <components maxMass="1200">
             <component centerOfMass="0 0.1 0" solverIterationCount="10" mass="100"/>
         </components>

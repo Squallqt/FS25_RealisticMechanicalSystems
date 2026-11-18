@@ -11,6 +11,7 @@ for _, symptom in ipairs(RMS_Config.CORE.WORN_PART_SYMPTOMS) do
     end
 end
 
+---Plays the inspection sound while a player inspects the machine
 local function updateFieldInspectionSoundActive(vehicle, spec)
     local isActive = next(spec.fieldInspectionActivePlayers) ~= nil
     if spec.fieldInspectionSoundActive ~= isActive then
@@ -61,6 +62,7 @@ end
 local RADIATOR_DUST = { field = 2, road = 0.5, dust = 1, debris = 2, wetnessPower = 3, cloggingPerHour = 0.35 / 9 }
 local AIR_FILTER_DUST = { field = 2, road = 1, dust = 2, debris = 1, wetnessPower = 1, cloggingPerHour = 0.35 / 16 }
 
+---Returns the dust the machine takes in, and whether it raises dust itself
 local function getDustRate(machine, spec, weights)
     local isOnField = machine:getIsOnField()
     local raisesDust = isOnField and spec.isImplementLowered and machine:getLastSpeed() > 0.1
@@ -273,7 +275,7 @@ function RMS_Consumables.syncFilterBreakdowns(vehicle)
     end
 end
 
--- a maintenance changes the filters of its level that are due
+---Tells whether a maintenance changes a filter: one of its level, and due
 local function getIsChangedBy(vehicle, filter, maintenanceType)
     return maintenanceType == nil or (filter.maintenanceType == nil
         or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType)
@@ -313,6 +315,7 @@ function RMS_Consumables.addDefectiveFilter(vehicle, maintenanceType)
     end
 end
 
+---Renews the filters a service changes, or the one of a breakdown
 -- @param string? breakdownId breakdown of the one filter replaced, every filter when nil
 function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -327,6 +330,7 @@ function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
     end
 end
 
+---Returns the engine oil the machine burns, worn engines more
 -- @return float rate share of the sump per hour
 function RMS_Consumables.getEngineOilBurnRate(vehicle)
     local C = RMS_Config.FLUIDS

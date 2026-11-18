@@ -38,6 +38,7 @@ function RMS_DiagnosticScreen.new(target, customMt)
     return self
 end
 
+---Opens the PC of a trolley, on the scan page when it is plugged
 function RMS_DiagnosticScreen.show(tool)
     local screen = RMS_DiagnosticScreen.INSTANCE
     screen.tool = tool
@@ -45,6 +46,7 @@ function RMS_DiagnosticScreen.show(tool)
     g_gui:showDialog("RMS_DiagnosticScreen")
 end
 
+---Returns the category, brand and name of a machine as a path
 local function getMachinePath(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local parts = {}
@@ -62,13 +64,14 @@ local function getMachinePath(vehicle)
     return "> " .. table.concat(parts, "   > ")
 end
 
+---Returns the farm machines in reach of the trolley, nearest first
 local function getMachines(tool)
     local target = RMS_DiagnosticTool.getTarget(tool)
     local machines = {}
     for _, vehicle in pairs(g_currentMission.vehicleSystem.vehicles) do
         local spec = vehicle.spec_RealisticMechanicalSystems
         if spec ~= nil and not spec.isExcludedVehicle and vehicle:getOwnerFarmId() == tool:getOwnerFarmId() then
-            local distance = RMS_BatteryCharger.getDistance(tool, vehicle)
+            local distance = RMS_BatteryCharger.getDistanceToMachine(tool, vehicle)
             if distance <= RMS_BatteryCharger.MAX_DISTANCE then
                 local reason = vehicle == target and "plugged" or RMS_DiagnosticTool.validate(tool, vehicle)
                 if reason ~= "unavailable" and reason ~= "access" and reason ~= "distance" then
@@ -81,6 +84,7 @@ local function getMachines(tool)
     return machines
 end
 
+---Returns the parameter and failure mode of a code, as a sentence
 local function getCodeText(entry)
     if entry.spn == nil then
         return g_i18n:getText("rms_diagnostic_uncoded")
@@ -88,6 +92,7 @@ local function getCodeText(entry)
     return string.format("%s. %s.", RMS_DiagnosticTool.getSpnName(entry.spn), g_i18n:getText("rms_diagnostic_fmi_" .. entry.fmi))
 end
 
+---Returns the controller and code rows of the scan, and how many controllers answered
 local function getScanRows(tool, target, controllers)
     local spec = tool[RMS_DiagnosticTool.SPEC_TABLE_NAME]
     local SCAN = RMS_DiagnosticTool.SCAN
@@ -114,6 +119,7 @@ local function getScanRows(tool, target, controllers)
     return rows, answered, #controllers
 end
 
+---Returns a text that changes when the rows of a list change
 local function getRowsSignature(rows)
     local parts = {}
     for _, row in ipairs(rows) do
@@ -124,6 +130,7 @@ local function getRowsSignature(rows)
     return table.concat(parts, "|")
 end
 
+---Returns the detail fields of a code and the note under them
 local function getDetailFields(target, entry, isLicenceValid)
     local fields = {}
     local definition = RMS_Breakdowns.BreakdownRegistry[entry.breakdownId]
@@ -135,6 +142,9 @@ local function getDetailFields(target, entry, isLicenceValid)
     table.insert(fields, { g_i18n:getText("rms_diagnostic_ecu_label"), g_i18n:getText("rms_diagnostic_ecu_" .. string.lower(entry.ecu)) })
     table.insert(fields, { string.format(g_i18n:getText("rms_diagnostic_spn_label"), entry.spn), RMS_DiagnosticTool.getSpnName(entry.spn) })
     table.insert(fields, { string.format(g_i18n:getText("rms_diagnostic_fmi_label"), entry.fmi), g_i18n:getText("rms_diagnostic_fmi_" .. entry.fmi) })
+    if entry.breakdownId == RMS_AdBlue.FAULT_ID then
+        return fields, g_i18n:getText("rms_diagnostic_note_adblue")
+    end
     if not isLicenceValid then
         return fields, g_i18n:getText("rms_diagnostic_note_no_licence")
     end
@@ -181,6 +191,7 @@ function RMS_DiagnosticScreen:updateDetail()
     setText(self.detailNote, note or "")
 end
 
+---Writes the scan page: state, voltage, codes and buttons
 function RMS_DiagnosticScreen:refreshScanPage(target)
     local spec = self.tool[RMS_DiagnosticTool.SPEC_TABLE_NAME]
     local SCAN = RMS_DiagnosticTool.SCAN
@@ -222,6 +233,7 @@ function RMS_DiagnosticScreen:refreshScanPage(target)
     self:updateDetail()
 end
 
+---Writes the connection page: machines in reach and the reach
 function RMS_DiagnosticScreen:refreshConnectionPage()
     local machines = getMachines(self.tool)
     for _, machine in ipairs(machines) do
@@ -291,6 +303,7 @@ function RMS_DiagnosticScreen:refresh()
     end
 end
 
+---Links the focus over the menu, the page and the buttons
 function RMS_DiagnosticScreen:updateFocusLinks()
     local columns = { { { self.menuConnectionButton }, { self.menuScanButton } } }
     if self.page == PAGE.CONNECTION then
@@ -307,6 +320,7 @@ function RMS_DiagnosticScreen:updateFocusLinks()
     RMS_Utils.keepFocusShown(self.focusEntry)
 end
 
+---Closes the screen once the trolley is gone, refreshes it on its interval
 function RMS_DiagnosticScreen:update(dt)
     RMS_DiagnosticScreen:superClass().update(self, dt)
     if self.tool == nil then
@@ -367,6 +381,7 @@ function RMS_DiagnosticScreen:populateCellForItemInSection(list, section, index,
     cell:getAttribute("systemCount"):setText("x" .. #row.codes)
 end
 
+---Shows the detail of the selected code, or refreshes the machine list
 function RMS_DiagnosticScreen:onListSelectionChanged(list, section, index)
     if list == self.codeList then
         self:updateDetail()
@@ -422,6 +437,7 @@ function RMS_DiagnosticScreen:onClickBack()
     self:close()
 end
 
+---Closes the PC on back
 function RMS_DiagnosticScreen:inputEvent(action, value, eventUsed)
     if action == InputAction.MENU_BACK and not eventUsed then
         self:close()

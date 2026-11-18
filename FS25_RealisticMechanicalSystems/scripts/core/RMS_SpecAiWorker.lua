@@ -2,6 +2,7 @@
 
 ---AI worker easing off under overload, stopped when it cannot move
 
+---Returns the eased pace of a working helper, nil without one
 local function getAiWorkerSpeedLimit(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec ~= nil and vehicle:getIsAIActive() then

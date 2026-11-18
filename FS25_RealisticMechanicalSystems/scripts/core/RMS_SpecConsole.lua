@@ -22,6 +22,7 @@ function RealisticMechanicalSystems.ConsoleCommands:printOutput(...)
     consolePrint(...)
 end
 
+---Prints through printOutput, to the requester of a server command
 local function print(...)
     RealisticMechanicalSystems.ConsoleCommands:printOutput(...)
 end
@@ -48,7 +49,7 @@ function RealisticMechanicalSystems.ConsoleCommands:getTargetVehicle()
     return vehicle
 end
 
----Target vehicle on the server; a client sends the command there instead
+---Returns the target vehicle on the server, a client sending the command there instead
 -- @return table? vehicle nil on a client or without a target
 function RealisticMechanicalSystems.ConsoleCommands:getServerVehicle(command, argOne, argTwo)
     local vehicle = self:getTargetVehicle()
@@ -59,7 +60,7 @@ function RealisticMechanicalSystems.ConsoleCommands:getServerVehicle(command, ar
     return vehicle
 end
 
----Number of entries of a table, nil counting as empty
+---Returns the number of entries of a table, nil counting as empty
 local function countEntries(entries)
     local count = 0
     for _ in pairs(entries or {}) do
@@ -68,6 +69,7 @@ local function countEntries(entries)
     return count
 end
 
+---Returns the words of the console arguments
 local function parseArguments(argString, ...)
     local extraArgs = { ... }
     local hasExtraArgs = #extraArgs > 0
@@ -112,6 +114,7 @@ end
     return args
 end
 
+---Returns the keys of a dotted path, numbers as numbers
 local function parsePathTokens(path)
     local tokens = {}
     if type(path) ~= "string" or path == "" then
@@ -130,7 +133,7 @@ local function parsePathTokens(path)
     return tokens
 end
 
----Console word as a Lua value: boolean, nil, number, else the word
+---Returns a console word as a Lua value: boolean, nil, number, else the word
 local function parseConsoleValue(rawValue)
     local lowerValue = string.lower(tostring(rawValue))
     if lowerValue == "true" then
@@ -151,6 +154,7 @@ local function parseConsoleValue(rawValue)
     return rawValue
 end
 
+---Returns the table holding the last key of a path and that key, or why not
 local function resolvePathParent(rootTable, fullPath)
     if type(rootTable) ~= "table" then
         return nil, nil, nil, "Root is not a table."
@@ -177,6 +181,7 @@ local function resolvePathParent(rootTable, fullPath)
     return current, tokens[#tokens], tokens
 end
 
+---Returns the fill unit and fill type of the fuel or traction charge
 local function getPrimaryFuelConsumerInfo(vehicle)
     if vehicle == nil or vehicle.spec_motorized == nil or vehicle.spec_motorized.consumers == nil then
         return nil, nil
@@ -214,6 +219,7 @@ local function getPrimaryFuelConsumerInfo(vehicle)
     return nil, nil
 end
 
+---Clamps and sends the clogging a console command set
 local function syncConsoleCloggingState(vehicle, spec, parent, key)
     if vehicle == nil or spec == nil or parent ~= spec then
         return false
@@ -231,6 +237,7 @@ local function syncConsoleCloggingState(vehicle, spec, parent, key)
     return true
 end
 
+---Prints a value, its tables key by key
 local function printSpecValueRecursive(prefix, value, visited, depth)
     visited = visited or {}
     depth = depth or 0
@@ -356,7 +363,6 @@ function RealisticMechanicalSystems.ConsoleCommands:setSpecVar(rawArgs, rawValue
             spec._thermalOilAmbient = nil
         end
     end
-    -- Clamped before the change is printed
     local isCloggingSynced = syncConsoleCloggingState(vehicle, spec, parent, key)
     local name = vehicle:getFullName()
     print(string.format("RMS: spec_RealisticMechanicalSystems.%s changed on '%s': %s -> %s", path, name, tostring(oldValue), tostring(parent[key])))
@@ -426,7 +432,6 @@ function RealisticMechanicalSystems.ConsoleCommands:addBreakdown(rawArgs, rawArg
     end
     local args = parseArguments(rawArgs, rawArgTwo, rawArgThree)
 
-    -- Without an id, one the machine can have, at its first stage
     if args[1] == nil then
         local id = vehicle:getRandomBreakdown()
         if id ~= nil then
@@ -498,7 +503,6 @@ function RealisticMechanicalSystems.ConsoleCommands:removeBreakdown(rawArgs)
         return
     end
 
-    -- A clogged filter clears with a new filter
     id = string.upper(id)
     if RMS_Consumables.getFilterOfBreakdown(id) == nil then
         vehicle:removeBreakdown(id)
@@ -663,6 +667,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setCondition(rawArgs)
         changedSystems, vehicle:getFullName(), targetCondition, vehicle.spec_RealisticMechanicalSystems.conditionLevel or 0))
 end
 
+---Sets the wear of a part, usage rms_setPartWear [id] [wear]
 function RealisticMechanicalSystems.ConsoleCommands:setPartWear(rawArgs, rawArgTwo)
     local vehicle = self:getServerVehicle("setPartWear", rawArgs, rawArgTwo)
     if vehicle == nil then
@@ -715,7 +720,6 @@ function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTw
     end
     local args = parseArguments(rawArgs, rawArgTwo)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    -- Without a level, the clocks of a fresh service
     local value = args[1] == nil and 1.0 or tonumber(args[1])
     if value == nil or value < 0 or value > 1 then
         print("RMS Error: Invalid value. Please provide a number between 0.0 and 1.0.")
@@ -739,6 +743,7 @@ function RealisticMechanicalSystems.ConsoleCommands:setService(rawArgs, rawArgTw
     print(string.format("RMS: Set service clocks %s for '%s' to %.2f.", table.concat(setClockKeys, ", "), vehicle:getFullName(), value))
 end
 
+---Seeds the vehicle again as a used machine, usage rms_reinitializeVehicle [care]
 function RealisticMechanicalSystems.ConsoleCommands:reinitializeVehicle(care)
     local vehicle = self:getServerVehicle("reinitializeVehicle", care)
     if vehicle == nil then
@@ -782,7 +787,7 @@ function RealisticMechanicalSystems.ConsoleCommands:reinitializeFluidCapacities(
     ))
 end
 
----Entries of a list joined by commas, a dash for none
+---Returns the entries of a list joined by commas, a dash for none
 local function joinList(list)
     return (list == nil or #list == 0) and "-" or table.concat(list, ", ")
 end
@@ -1064,7 +1069,6 @@ function RealisticMechanicalSystems.ConsoleCommands:resetFactorStats()
         return
     end
 
-    -- Each counter restarts from zero at the hours of now
     local spec = vehicle.spec_RealisticMechanicalSystems
     local hours = getVehicleOperatingHours(vehicle)
     for _, stats in pairs(ensureFactorStats(spec)) do

@@ -10,12 +10,12 @@
     <description>
         <en><![CDATA[Your machines finally wear out like real ones.
 
-Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts and the header drive taking the place of the PTO on a harvester. Every one is made of the real parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
+Each vehicle is built from up to 8 individual systems: engine, transmission, hydraulics, cooling, fuel, electrical, chassis, and PTO, the harvesting parts and the header drive taking the place of the PTO on a harvester. Every one is made of the parts that fail in it, each wearing for its own reasons. Service on time, work within the machine's limits, and catch the first symptoms: the cheapest repair is always the earliest one.
 
 WEAR
 - Condition falls about 1% per operating hour under normal use, far faster under abuse, and each system has its own wear factors
-- Each part wears faster under what wears it on a real machine: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
-- Each part fails as real parts of its kind do, by published failure data: about fourteen breakdowns over the life of a machine in normal use, few when new and more as it ages, more on the parts you strain
+- Each part wears faster under what strains it: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
+- About fourteen breakdowns over the life of a machine in normal use, few when new and more as it ages, more on the parts you strain
 - Overdue service accelerates wear in the systems covered by the overdue fluid
 - On a combine or a forage harvester, the header drive wears too: its belt and its driveline U-joints while the header turns, its slip clutch at each start, heard slipping until the header is up to speed, about five times more when the header is engaged at high revs than at idle. Past twice full work the slip clutch is heard slipping and burns out within a few seconds; a header left standing two weeks (half a game month) seizes its slip clutch until it is greased, and a blockage meanwhile breaks its driveline with a bang
 
@@ -52,6 +52,7 @@ SIMULATION
 - Battery, alternator and starter sized for each machine by its power and age, in 12 or 24 V: charge kept out of reach by the cold, a starter that slows as the voltage drops, a battery disconnect switch for long storage, and jumper cables between vehicles
 - Diesel preheating that takes longer as it gets colder, and its own glow-plug breakdown
 - Exhaust smoke driven by vehicle age, engine wear, load and active faults: black soot, blue oil or white unburnt fuel; a hot engine makes the air shimmer above its pipe, even with no smoke
+- AdBlue on modern diesels, burnt with the diesel and no longer filled by the diesel nozzle; its gauge beside the fuel lights its lamp below 10 %, and Stage IV and V engines lose power below 2.5 % and more once empty, until AdBlue is poured in
 - Drivetrain management on tractors: 2WD / 4WD / AUTO modes and differential locks
 - Parking brake on every machine: recent CVT and powershift machines apply and release it on their own, the others use a hand brake; left released, the machine can roll down a slope
 - Original reliability shown as Average, Fair, Good or Very good; ease of maintenance as Easy, Average or Demanding. Mechanical condition and service deadlines remain separate
@@ -74,21 +75,27 @@ Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.3:
 - Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
-- Added TotalEnergies AdBlue in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank, poured into the AdBlue tank of the machines that have one; the drum pump also fits the AdBlue drum and tank
+- Added AdBlue: burnt with the diesel and filled on its own, its gauge beside the fuel and its lamp lit below 10 %; Stage IV and V engines lose power below 2.5 % and more once empty. TotalEnergies AdBlue comes in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank; the drum pump also fits the AdBlue drum and tank
 - Added the header drive of combines and forage harvesters: its belt, slip clutch and driveline wear and break, the slip clutch heard each time it slips; engaged at high revs, the header wears its slip clutch about five times more than at idle, a slip clutch slipping more than a few seconds burns out, and that of a header left standing two weeks seizes until the header is greased
-- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left
+- Added the average fuel consumption to the HUD, per hour and per hectare worked since the trip meter reset
+- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left; bought cans stand upright and stay in your hands
 - Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
 - Reworked the debug window: three views (Overview, Parts, Machine) browsed with the mouse and kept on screen while you drive, and the detailed log in a setting of its own
 - Reworked the sounds
+- Reworked the grease points of implements to follow how each one is built: a pallet fork whose tines only slide has none, a loader tool greases each arm its cylinder moves, a trailer its own axles and brakes and a three-way tipper its sides too, a body on a hook or a carrier only its own parts, and balers, rakes, tedders, mowers, cultivators, disc harrows, rollers, headers and potato harvesters follow their size and build
+- Reworked the weight card of the HUD: a weight icon, as on the fuel card, and figures no longer coloured by the load
+- Reworked the battery trolley: its charger and diagnostic tool reach long machines along their whole length, and the tools put away on it stay there after a dedicated server restart
 - Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
 - Fixed the Condition card showing parts replaced since the last inspection as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
-- Fixed the tools put away on the trolley returning to Hand Tools after a dedicated server restart
 - Fixed grain headers asking for the daily greasing of a tractor PTO shaft: their driveline takes 3 points every 50 hours, and windrower headers, driven by hydraulics, none
 - Fixed the mobile and personal workshops refusing the Complete inspection and electrical repairs of machines without a controller, which the diagnostic tool cannot connect to
 - Fixed a machine at the workshop hiding its work in progress with its battery disconnected or a broken-down engine, and able to crank in the last case
+- Fixed RMS messages covering the machine name and the game's prompts at the bottom of the screen
+- Fixed the fuel consumption shown in the HUD jumping for an instant
+- Fixed the heavy trailer tutorial tip: a load over 4.5 times the tractor's weight wears its brakes, not its transmission
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -316,12 +323,12 @@ Changelog 0.10.0.0:
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
 
-Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane und der Vorsatzantrieb anstelle der Zapfwelle. Jedes besteht aus den echten Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
+Jedes Fahrzeug besteht aus bis zu 8 einzelnen Systemen: Motor, Getriebe, Hydraulik, Kühlung, Kraftstoff, Elektrik, Fahrwerk und Zapfwelle, bei einer Erntemaschine die Ernteorgane und der Vorsatzantrieb anstelle der Zapfwelle. Jedes besteht aus den Teilen, die darin ausfallen, und jedes Teil verschleißt aus eigenen Gründen. Rechtzeitig warten, die Maschine in ihren Grenzen bewegen und die ersten Anzeichen erkennen: Die günstigste Reparatur ist immer die früheste.
 
 VERSCHLEISS
 - Der Zustand sinkt im Normalbetrieb um etwa 1 % je Betriebsstunde, bei Missbrauch deutlich schneller, und jedes System hat eigene Verschleißfaktoren
-- Jedes Teil verschleißt schneller unter dem, was es an einer echten Maschine verschleißt: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
-- Jedes Teil fällt aus wie echte Teile seiner Art, nach veröffentlichten Ausfalldaten: etwa vierzehn Defekte im Leben einer normal genutzten Maschine, wenige im Neuzustand und mehr mit dem Alter, mehr an den Teilen, die Sie überlasten
+- Jedes Teil verschleißt schneller unter dem, was es beansprucht: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
+- Etwa vierzehn Defekte im Leben einer normal genutzten Maschine, wenige im Neuzustand und mehr mit dem Alter, mehr an den Teilen, die Sie überlasten
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme
 - An Mähdrescher und Feldhäcksler verschleißt auch der Vorsatzantrieb: Riemen und Kreuzgelenke der Gelenkwelle, solange der Vorsatz läuft, die Rutschkupplung bei jedem Einschalten, hörbar rutschend, bis der Vorsatz auf Drehzahl ist, etwa fünfmal stärker, wenn der Vorsatz bei hoher Drehzahl statt im Leerlauf eingekuppelt wird. Über dem Doppelten der vollen Arbeit rutscht die Rutschkupplung hörbar und brennt binnen weniger Sekunden durch; an einem zwei Wochen (einen halben Spielmonat) abgestellten Vorsatz rostet die Rutschkupplung fest, bis er abgeschmiert wird, und eine Verstopfung bricht in dieser Zeit seine Gelenkwelle mit einem Knall
 
@@ -358,6 +365,7 @@ SIMULATION
 - Batterie, Lichtmaschine und Anlasser jeder Maschine nach Leistung und Baujahr ausgelegt, in 12 oder 24 V: Kälte hält einen Teil der Ladung zurück, der Anlasser dreht bei sinkender Spannung langsamer, ein Batterietrennschalter für lange Standzeiten und Starthilfekabel zwischen Fahrzeugen
 - Diesel-Vorglühen, das bei Kälte länger dauert, mit eigener Glühkerzenstörung
 - Abgasrauch nach Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff; ein warmer Motor lässt die Luft über dem Auspuff flimmern, auch ohne Rauch
+- AdBlue bei modernen Dieselmotoren, mit dem Diesel verbraucht und nicht mehr von der Dieselzapfpistole gefüllt; seine Anzeige neben dem Kraftstoff schaltet unter 10 % die Kontrollleuchte ein, und Motoren der Stufen IV und V verlieren unter 2,5 % Leistung und leer noch mehr, bis AdBlue nachgefüllt wird
 - Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO und Differentialsperren
 - Feststellbremse an jeder Maschine: Neuere Maschinen mit CVT- oder Powershift-Getriebe ziehen und lösen sie von selbst, die anderen haben eine Handbremse; ist sie gelöst, kann die Maschine am Hang wegrollen
 - Ursprüngliche Zuverlässigkeit als Durchschnittlich, Ordentlich, Gut oder Sehr gut; Wartungsfreundlichkeit als Einfach, Durchschnittlich oder Anspruchsvoll. Mechanischer Zustand und Wartungsfristen bleiben getrennt
@@ -380,21 +388,27 @@ Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystem
 
 Changelog 1.0.0.0-beta.3:
 - Abgashitze hinzugefügt: Über dem Auspuff eines warmen Motors flimmert die Luft, stärker unter Last und während einer Regeneration des Partikelfilters
-- TotalEnergies AdBlue hinzugefügt: 10-L-Kanister, 208-L-Fass (einzeln oder zu zweit auf einer Palette) und 1.000-L-Tank, eingefüllt in den AdBlue-Tank der Maschinen, die einen haben; die Fasspumpe passt auch auf AdBlue-Fass und -Tank
+- AdBlue hinzugefügt: mit dem Diesel verbraucht und eigens nachgefüllt, seine Anzeige neben dem Kraftstoff und seine Kontrollleuchte unter 10 % an; Motoren der Stufen IV und V verlieren unter 2,5 % Leistung und leer noch mehr. TotalEnergies AdBlue gibt es als 10-L-Kanister, 208-L-Fass (einzeln oder zu zweit auf einer Palette) und 1.000-L-Tank; die Fasspumpe passt auch auf AdBlue-Fass und -Tank
 - Vorsatzantrieb von Mähdreschern und Feldhäckslern hinzugefügt: Riemen, Rutschkupplung und Gelenkwelle verschleißen und brechen, die Rutschkupplung hörbar, sobald sie rutscht; bei hoher Drehzahl eingekuppelt verschleißt der Vorsatz seine Rutschkupplung etwa fünfmal stärker als im Leerlauf, eine Rutschkupplung, die länger als wenige Sekunden rutscht, brennt durch, und die eines zwei Wochen abgestellten Vorsatzes rostet fest, bis er abgeschmiert wird
-- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten; im Fahrzeug zeigt die Füllstandsanzeige den Produktnamen vollständig neben einem Symbol seiner Flüssigkeit, und zu Fuß trägt die Infobox Marke und Produkt als Titel über der verbleibenden Literzahl
+- Durchschnittsverbrauch im HUD hinzugefügt, je Stunde und je bearbeitetem Hektar seit dem Zurücksetzen des Tageskilometerzählers
+- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten; im Fahrzeug zeigt die Füllstandsanzeige den Produktnamen vollständig neben einem Symbol seiner Flüssigkeit, und zu Fuß trägt die Infobox Marke und Produkt als Titel über der verbleibenden Literzahl; gekaufte Kanister stehen aufrecht und bleiben in der Hand
 - Gebindegrößen überarbeitet: 20-L-Kanister statt 25 L und Fässer mit 200 L (Motorex), 205 L (FUCHS) oder 208 L (Motul), einzeln oder zu zweit auf einer Palette
 - Debug-Fenster überarbeitet: drei Ansichten (Overview, Parts, Machine), mit der Maus durchblättert und beim Fahren eingeblendet, und das detaillierte Protokoll mit eigener Einstellung
 - Sounds überarbeitet
+- Schmierstellen der Anbaugeräte nach ihrem Aufbau überarbeitet: Eine Palettengabel, deren Zinken nur seitlich verschoben werden, hat keine, ein Ladewerkzeug schmiert jeden Arm, den sein Zylinder bewegt, ein Anhänger seine eigenen Achsen und Bremsen und ein Dreiseitenkipper auch seine Bordwände, ein Aufbau am Haken oder auf einem Träger nur seine eigenen Teile, und Pressen, Schwader, Wender, Mähwerke, Grubber, Scheibeneggen, Walzen, Schneidwerke und Kartoffelroder folgen ihrer Größe und Bauart
+- Gewichtskarte im HUD überarbeitet: ein Gewichtssymbol wie auf der Kraftstoffkarte, und die Zahlen werden nicht mehr nach der Last eingefärbt
+- Batteriewagen überarbeitet: Ladegerät und Diagnosegerät erreichen lange Maschinen auf ihrer ganzen Länge, und die darauf abgelegten Werkzeuge bleiben nach einem Neustart des dedizierten Servers dort
 - Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
 - Zustandskarte behoben, die seit der letzten Inspektion ersetzte Teile als ausgefallen oder verschlissen zeigte
 - Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
-- Auf dem Wagen abgelegte Werkzeuge behoben, die nach einem Neustart des dedizierten Servers ins Menü Werkzeuge zurückkehrten
 - Getreideschneidwerke behoben, die das tägliche Abschmieren einer Traktor-Gelenkwelle verlangten: Ihre Gelenkwelle hat 3 Schmierstellen alle 50 Stunden, hydraulisch angetriebene Schwadmäher-Vorsätze keine
 - Mobile und eigene Werkstatt behoben, die an Maschinen ohne Steuergerät, an die sich das Diagnosegerät nicht anschließen lässt, die vollständige Inspektion und elektrische Reparaturen verweigerten
 - Maschine in der Werkstatt behoben, die bei getrennter Batterie oder Motorschaden die laufende Arbeit nicht anzeigte und im letzten Fall den Anlasser drehen lassen konnte
+- RMS-Meldungen behoben, die den Maschinennamen und die Hinweise des Spiels am unteren Bildschirmrand verdeckten
+- Kurze Sprünge des im HUD angezeigten Kraftstoffverbrauchs behoben
+- Tutorial-Tipp zum schweren Anhänger behoben: Eine Last über dem 4,5-Fachen des Traktorgewichts verschleißt die Bremsen, nicht das Getriebe
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -622,12 +636,12 @@ Changelog 0.10.0.0:
         
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
 
-Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte et l'entraînement de la coupe prenant la place de la prise de force sur une machine de récolte. Chacun est fait des vraies pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
+Chaque véhicule est composé de 8 systèmes distincts au maximum : moteur, transmission, hydraulique, refroidissement, carburant, électricité, châssis et prise de force, les organes de récolte et l'entraînement de la coupe prenant la place de la prise de force sur une machine de récolte. Chacun est fait des pièces qui y lâchent, chacune s'usant pour ses propres raisons. Entretenir à l'heure, travailler dans les limites de la machine et repérer les premiers signes : la réparation la moins chère est toujours la plus précoce.
 
 USURE
 - L'état baisse d'environ 1 % par heure de fonctionnement en usage normal, bien plus vite en cas d'abus, et chaque système a ses propres facteurs d'usure
-- Chaque pièce s'use plus vite sous ce qui l'use sur une vraie machine : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
-- Chaque pièce lâche comme les vraies pièces de son type, d'après des données de pannes publiées : environ quatorze pannes sur la vie d'une machine menée normalement, peu quand elle est neuve et davantage en vieillissant, davantage sur les pièces que vous malmenez
+- Chaque pièce s'use plus vite sous ce qui la sollicite : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
+- Environ quatorze pannes sur la vie d'une machine menée normalement, peu quand elle est neuve et davantage en vieillissant, davantage sur les pièces que vous malmenez
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer
 - Sur une moissonneuse ou une ensileuse, l'entraînement de la coupe s'use aussi : sa courroie et les croisillons de son arbre quand la coupe tourne, son limiteur de couple à chaque démarrage, qu'on entend glisser jusqu'à ce que la coupe ait pris son régime, environ cinq fois plus quand la coupe est embrayée à haut régime qu'au ralenti. Au-delà de deux fois le plein travail, on entend le limiteur glisser et il brûle en quelques secondes ; une coupe remisée deux semaines (un demi-mois du jeu) grippe son limiteur jusqu'à ce qu'on la graisse, et un bourrage entre-temps casse son arbre dans un claquement
 
@@ -664,6 +678,7 @@ SIMULATION
 - Batterie, alternateur et démarreur de chaque machine selon sa puissance et son époque, en 12 ou 24 V : une part de la charge retenue par le froid, un démarreur qui ralentit quand la tension baisse, un coupe-batterie pour les longs arrêts et des câbles de démarrage entre véhicules
 - Préchauffage diesel d'autant plus long qu'il fait froid, et sa propre panne de bougies
 - Fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives : suie noire, huile bleue ou carburant imbrûlé blanc ; un moteur chaud fait trembler l'air au-dessus de son pot, même sans fumée
+- AdBlue sur les diesels récents, consommé avec le gazole et que le pistolet à gazole ne remplit plus ; sa jauge à côté du carburant allume son voyant sous 10 %, et les moteurs de phase IV et V perdent de la puissance sous 2,5 % et davantage à vide, jusqu'au plein d'AdBlue
 - Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO et blocages de différentiel
 - Frein de parking sur toutes les machines : les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules, les autres ont un frein à main ; desserré, la machine peut partir dans la pente
 - Fiabilité d’origine affichée comme Moyenne, Correcte, Bonne ou Très bonne ; facilité d’entretien comme Facile, Moyenne ou Exigeante. L’état mécanique et les échéances d’entretien restent distincts
@@ -686,21 +701,27 @@ Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSyste
 
 Changelog 1.0.0.0-beta.3 :
 - Ajout de la chaleur de l'échappement : l'air tremble au-dessus du pot d'un moteur chaud, davantage en charge et pendant une régénération du filtre à particules
-- Ajout de l'AdBlue TotalEnergies en bidon de 10 L, fût de 208 L (seul ou par deux sur une palette) et cuve de 1 000 L, versé dans le réservoir d'AdBlue des machines qui en ont un ; la pompe de fût se pose aussi sur le fût et la cuve d'AdBlue
+- Ajout de l'AdBlue : il se consomme avec le gazole et se remplit à part, sa jauge à côté du carburant et son voyant allumé sous 10 % ; les moteurs de phase IV et V perdent de la puissance sous 2,5 % et davantage à vide. L'AdBlue TotalEnergies existe en bidon de 10 L, fût de 208 L (seul ou par deux sur une palette) et cuve de 1 000 L ; la pompe de fût se pose aussi sur le fût et la cuve d'AdBlue
 - Ajout de l'entraînement de la coupe des moissonneuses et des ensileuses : sa courroie, son limiteur de couple et son arbre s'usent et cassent, le limiteur s'entendant chaque fois qu'il glisse ; embrayée à haut régime, la coupe use son limiteur environ cinq fois plus qu'au ralenti, un limiteur qui glisse plus de quelques secondes brûle, et celui d'une coupe remisée deux semaines grippe jusqu'à ce qu'on la graisse
-- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes ; en véhicule, l'affichage du remplissage donne le nom du produit en entier, à côté d'un pictogramme de son liquide, et à pied l'infobulle prend pour titre la marque et le produit, au-dessus des litres restants
+- Ajout de la consommation moyenne au HUD, par heure et par hectare travaillé depuis la remise à zéro du compteur journalier
+- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes ; en véhicule, l'affichage du remplissage donne le nom du produit en entier, à côté d'un pictogramme de son liquide, et à pied l'infobulle prend pour titre la marque et le produit, au-dessus des litres restants ; les bidons achetés tiennent debout et ne tombent plus des mains
 - Refonte des formats : jerricans de 20 L au lieu de 25 L, et fûts de 200 L (Motorex), 205 L (FUCHS) ou 208 L (Motul), seuls ou par deux sur une palette
 - Refonte de la fenêtre de débogage : trois vues (Overview, Parts, Machine) parcourues à la souris et gardées à l'écran pendant la conduite, et le journal détaillé dans un réglage à part
 - Refonte des sons
+- Refonte des graisseurs des outils selon leur construction : une fourche à palettes dont les dents ne font que coulisser n'en a aucun, un outil de chargeur graisse chaque bras que son vérin déplace, une remorque ses propres essieux et freins et une benne trois côtés aussi ses ridelles, une caisse sur crochet ou sur porteur seulement ses propres organes, et presses, andaineurs, faneuses, faucheuses, cultivateurs, déchaumeurs à disques, rouleaux, coupes et arracheuses de pommes de terre suivent leur taille et leur construction
+- Refonte de la carte de poids du HUD : une icône de poids, comme sur la carte de carburant, et des chiffres que la charge ne colore plus
+- Refonte du chariot de batterie : son chargeur et sa valise de diagnostic atteignent les longues machines sur toute leur longueur, et les outils rangés dessus y restent après un redémarrage du serveur dédié
 - Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs
 - Correction de la carte État qui montrait en panne ou usées les pièces remplacées depuis la dernière inspection
 - Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
-- Correction des outils rangés sur le chariot qui revenaient dans les Outils manuels après un redémarrage du serveur dédié
 - Correction des coupes à grain qui demandaient le graissage quotidien d'un cardan de tracteur : leur arbre prend 3 points toutes les 50 heures, et les coupes d'andaineuse, entraînées en hydraulique, aucun
 - Correction des ateliers mobile et personnel qui refusaient l'inspection complète et les réparations électriques d'une machine sans calculateur, sur laquelle la valise de diagnostic ne se branche pas
 - Correction d'une machine à l'atelier qui cachait le travail en cours batterie coupée ou moteur en panne, et dont le démarreur pouvait tourner dans ce dernier cas
+- Correction des messages de RMS qui couvraient le nom de la machine et les indications du jeu en bas de l'écran
+- Correction des sauts brefs de la consommation de carburant affichée dans le HUD
+- Correction du conseil de tutoriel sur la remorque lourde : une charge de plus de 4,5 fois le poids du tracteur use ses freins, pas sa transmission
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel

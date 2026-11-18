@@ -1,5 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
+---Client-to-server request starting a workshop service
 RMS_ServiceRequestEvent = {}
 local RMS_ServiceRequestEvent_mt = Class(RMS_ServiceRequestEvent, Event)
 

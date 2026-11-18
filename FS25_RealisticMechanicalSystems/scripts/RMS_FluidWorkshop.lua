@@ -43,6 +43,7 @@ RMS_FluidWorkshop.RESULT_TEXT_KEYS = {
 RMS_FluidWorkshop.REMAP_REFUSALS = { top = "REMAP_TOP", byTuner = "REMAP_BY_TUNER", byDealer = "REMAP_BY_DEALER", leased = "REMAP_LEASED",
     notEligible = "REMAP_NOT_ELIGIBLE" }
 
+---Tells whether a repair type fixes a breakdown
 local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
     local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
     if definition == nil or definition.isSelectable ~= true or breakdown == nil
@@ -57,6 +58,7 @@ local function getIsBreakdownCoveredByRepair(breakdownId, breakdown, repairType)
         or repairType == RealisticMechanicalSystems.REPAIR_TYPES.HIGH
 end
 
+---Returns the breakdowns a repair type fixes, sorted
 local function collectCoveredRepairBreakdowns(vehicle, repairType)
     local result = {}
     for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns() or {}) do
@@ -82,6 +84,7 @@ function RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceT
     return total > 0 and uncovered / total or 0
 end
 
+---Returns the fluid lines the warranty does not supply
 local function getStockRequirements(vehicle, requirements, serviceType, workshopType)
     local result = {}
     for _, requirement in ipairs(requirements) do
@@ -100,7 +103,7 @@ function RMS_FluidWorkshop.getIsTopUpOffered(workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
 end
 
----Returns workshop equipment requirements.
+---Tells whether a workshop may run a service, else why and on which operation
 function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
     local workshops = RealisticMechanicalSystems.WORKSHOP
     if serviceType == RealisticMechanicalSystems.STATUS.REMAP then
@@ -140,7 +143,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
     return true
 end
 
----Formats missing workshop equipment.
+---Returns the text of what a workshop lacks to run a service, empty when it may
 function RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, workshopType, optionOne)
     local allowed, reason, operation = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
     if allowed then return "" end
@@ -200,11 +203,13 @@ function RMS_FluidWorkshop.showResult(result)
     end
 end
 
+---Tells whether the mobile workshop runs from its screen, without a selling point
 local function getIsScreenOnlyMobileWorkshop(workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE
         and g_modIsLoaded["FS25_mobileWorkshop"] == true
 end
 
+---Returns the root vehicle of an object
 local function getRootVehicle(object)
     if object == nil then
         return nil
@@ -215,6 +220,7 @@ local function getRootVehicle(object)
     return object.rootVehicle or object
 end
 
+---Returns the distance between two objects, math.huge without a node
 local function getDistance(objectA, objectB)
     local nodeA = objectA ~= nil and (objectA.rootNode or objectA.nodeId) or nil
     local nodeB = objectB ~= nil and (objectB.rootNode or objectB.nodeId) or nil
@@ -277,7 +283,6 @@ function RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
             if object ~= nil and not seen[object] and object[RMS_FluidContainer.SPEC_TABLE_NAME] ~= nil
                 and object:getOwnerFarmId() == farmId then
                 seen[object] = true
-                -- each drum of a pallet is a source of its own
                 for index = 1, object:getRMSFluidSlotCount() do
                     if object:getRMSFluidLiters(index) > RMS_Fluids.EPSILON then
                         table.insert(containers, {
@@ -297,6 +302,7 @@ function RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
     return containers
 end
 
+---Allocates the fluids from the containers in the zone, the emptiest and nearest first
 -- @return table? allocations liters per container, nil on shortage
 -- @return table shortages missing liters by circuit
 function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirements)
@@ -349,6 +355,7 @@ function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirem
     return next(shortages) == nil and allocations or nil, shortages
 end
 
+---Tells whether the workshop supplies the fluids itself
 local function getIsFluidSupplied(vehicle, serviceType, workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
         or serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE and vehicle:isLeaseMaintenanceCovered(workshopType)
@@ -370,6 +377,7 @@ function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType
     return shortages
 end
 
+---Returns the dealer price per litre of a circuit, from its cheapest drum
 local function getDealerPricePerLiter(vehicle, circuit)
     local cheapestPerLiter = nil
     for productKey, product in pairs(RMS_Fluids.PRODUCTS) do
@@ -439,6 +447,7 @@ function RMS_FluidWorkshop.buildInvoice(vehicle, serviceType, workshopType, opti
     return lines
 end
 
+---Returns the price of the service, fluids left out
 local function getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if serviceType == RealisticMechanicalSystems.STATUS.REFILL then
         return 0
@@ -446,6 +455,7 @@ local function getTransactionServicePrice(vehicle, serviceType, workshopType, op
     return math.max(tonumber(vehicle:getServicePrice(serviceType, optionOne, optionTwo, workshopType)) or 0, 0)
 end
 
+---Tells whether the dealer bills the fluids
 local function getIsFluidBilled(vehicle, serviceType, workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
         and not (serviceType == RealisticMechanicalSystems.STATUS.REPAIR and vehicle:isWarrantyRepairCovered(workshopType))
@@ -482,7 +492,6 @@ function RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopT
         getTransactionServicePrice(vehicle, serviceType, workshopType, optionOne, optionTwo), requirements, isFluidBilled)
 end
 
--- warranty status of a repaired part, by reason
 local WARRANTY_STATUS = {
     factory = "rms_ws_quote_warranty_covered", part = "rms_ws_quote_warranty_covered", used = "rms_ws_quote_warranty_used",
     expired = "rms_ws_quote_warranty_expired", own = "rms_ws_quote_warranty_own", lease = "rms_ws_quote_warranty_lease",
@@ -491,10 +500,9 @@ local WARRANTY_STATUS = {
 local WARRANTY_PAYS = { factory = true, part = true, used = true }
 -- reasons the warranty repairs the part for, its own way
 local COVERING = { factory = true, part = true }
--- the warranty that repairs the part, named before its status
 local WARRANTY_LABELS = { factory = "rms_ws_quote_warranty_label_factory", part = "rms_ws_quote_warranty_label_part" }
 
----Says what the warranty does for a repaired part
+---Returns what the warranty does for a repaired part
 -- @param string reason warranty reason of its line
 -- @return string status words that follow the warranty label
 -- @return boolean isCovered true when the warranty pays for the part
@@ -507,18 +515,17 @@ function RMS_FluidWorkshop.getWarrantyStatus(reason)
     return g_i18n:getText(WARRANTY_STATUS[reason]), WARRANTY_PAYS[reason] == true, label
 end
 
--- the warranty that pays a fault, named on its green line of the quote
 local COVER_NAMES = { factory = "rms_ws_quote_cover_factory", part = "rms_ws_quote_cover_part", used = "rms_ws_quote_cover_used" }
 
 local CONSUMABLE_QUALITY_KEYS = { USED = "rms_spec_consumable_types_used", AFTERMARKET = "rms_spec_consumable_types_aftermarket",
     OEM = "rms_spec_consumable_types_oem" }
 
----Names a quality of filters and fluids, nil for none
+---Returns the text key of a quality of filters and fluids, nil for none
 function RMS_FluidWorkshop.getConsumableQualityKey(partType)
     return CONSUMABLE_QUALITY_KEYS[RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, partType) or ""]
 end
 
----Labour of a quote line, its hours to a tenth under ten
+---Returns the labour text of a quote line, its hours to a tenth under ten
 function RMS_FluidWorkshop.formatLabour(hours)
     return string.format(g_i18n:getText("rms_ws_quote_labour"), g_i18n:formatNumber(hours, hours < 10 and 1 or 0))
 end
@@ -561,7 +568,6 @@ local function addRepairLines(vehicle, group, line, price, workshopType)
         if COVER_NAMES[reason] ~= nil and covered > 0 then
             group.isFree = price <= 0
             local name = g_i18n:getText(COVER_NAMES[reason])
-            -- a part still under its own warranty says for how long
             if reason == "part" and line.months ~= nil then
                 name = string.format("%s · %s", name, string.format(g_i18n:getText(line.months == 1 and "rms_service_month"
                     or "rms_service_months"), line.months))
@@ -573,7 +579,6 @@ local function addRepairLines(vehicle, group, line, price, workshopType)
             return
         end
     end
-    -- an ended warranty is left to the corner of the table
     if reason ~= nil and reason ~= "expired" and (WARRANTY_STATUS[reason] ~= nil or R.getIsWarrantyRefusal(reason)) then
         local status, isCovered, label = RMS_FluidWorkshop.getWarrantyStatus(reason)
         group.isFree = isCovered and price <= 0
@@ -587,7 +592,6 @@ end
 function RMS_FluidWorkshop.getQuoteGroups(vehicle, serviceType, optionOne, optionTwo, invoice, workshopType)
     local R = RealisticMechanicalSystems
     local groups, maintenance, fluids = {}, nil, nil
-    -- beside a paid fault, one the warranty repairs says how
     local hasCovered, hasPaid = false, false
     for _, line in ipairs(invoice or {}) do
         if line.kind == "repair" then
@@ -658,7 +662,7 @@ local QUOTE_INDENT, QUOTE_NOTE_X, QUOTE_BULLET_TEXT, QUOTE_AMOUNT, QUOTE_GAP = 1
 -- textColor of rms_workshopRecapQuoteName
 local COLOR_QUOTE_LINE = { 0.5028, 0.5028, 0.5028, 1 }
 
----Whether a quote line is drawn as a note: a bullet or a sentence
+---Tells whether a quote line is drawn as a note: a bullet or a sentence
 local function getIsQuoteNote(line)
     return line.kind == "bullet" or line.kind == "note" or line.note ~= nil
 end
@@ -680,7 +684,7 @@ function RMS_FluidWorkshop.getQuoteRows(groups)
     return rows, height
 end
 
----Names the list template that draws a row of a quote
+---Returns the list template that draws a row of a quote
 function RMS_FluidWorkshop.getQuoteCellType(row)
     if row == nil then
         return "quoteLine"
@@ -722,7 +726,6 @@ function RMS_FluidWorkshop.populateQuoteCell(cell, row, ux, width)
         name:setTextColor(unpack(row.isCovered and green or COLOR_QUOTE_LINE))
         amount:setTextColor(unpack((row.isCovered or row.isFree) and green or COLOR_QUOTE_LINE))
     end
-    -- a line without an amount takes the width of the row
     local amountRoom = (row.isHead or row.price ~= nil or row.value ~= nil) and QUOTE_AMOUNT + QUOTE_GAP or 0
     name:setSize((width - nameX - amountRoom) * ux, nil)
     name:setText(row.label)

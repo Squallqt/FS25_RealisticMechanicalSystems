@@ -10,7 +10,6 @@ RMS_Hud.INSPECTION_PERCENT_SHARE = 0.22
 RMS_Hud.INSPECTION_SHADE_ALPHA = 0.55
 RMS_Hud.INSPECTION_LABEL_SIZE = 17
 RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
-RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS = 10
 RMS_Hud.MOTOR_LOAD_BUCKETS = 2
 RMS_Hud.GEARBOX_OIL_ALERT_TEMP = { DEFAULT = 105, TRUCK = 121 }
 RMS_Hud.NOTIFICATION_DURATION_MS = 3000
@@ -25,19 +24,17 @@ RMS_Hud.INDICATOR_ORDER = { "transmission", "engine", "brakes", "battery", "cool
 RMS_Hud.LAMP_SLICE = { transmission = "transmissionTemperature", dpf = "particulateFilter", oil = "oilPressure" }
 RMS_Hud.ROAD_LAMP_SLICE = { oil = "oilCan", coolant = "coolantRoad", service = "wrench" }
 RMS_Hud.MACHINE_LAMP_SLICE = { service = "wrench" }
--- Lamp ink on its 72 px cell: width, height, px below the ink
 RMS_Hud.LAMP_INK = {
     brakes = { 59, 43, 15 }, battery = { 59, 43, 15 }, preheat = { 58, 35, 19 }, warning = { 60, 53, 10 },
     transmissionTemperature = { 60, 60, 6 }, engine = { 42, 54, 9 }, engineClassic = { 59, 44, 14 },
     oilPressure = { 68, 54, 9 }, coolant = { 61, 59, 7 }, service = { 60, 36, 18 }, limitedPower = { 60, 31, 21 },
     tractionBattery = { 58, 43, 15 }, particulateFilter = { 58, 43, 15 }, fanReversal = { 48, 60, 6 },
-    oilCan = { 60, 22, 25 }, coolantRoad = { 60, 52, 10 }, wrench = { 60, 56, 8 }
+    oilCan = { 60, 22, 25 }, coolantRoad = { 60, 52, 10 }, wrench = { 60, 56, 8 }, adBlue = { 60, 57, 7 }
 }
 RMS_Hud.LAMP = { SIZE = 19.2, CELL = 72, VALUE_SIZE = 9, VALUE_GAP = 2.5, VALUE_TOP = 2.05, VALUE_HEIGHT = 6.7 }
 RMS_Hud.LAMP_SCALE = { preheat = 1.2516, oilCan = 1.5521, limitedPower = 1.3075, tractionBattery = 1.1292,
     service = 1.2134, wrench = 0.9728 }
 RMS_Hud.VALUE_WIDTH = { engine = 24.71, coolant = 25.61, transmission = 25.61, battery = 24.87 }
--- Reference px from the gauge centre, baked into hud/rms_hud.dds
 RMS_Hud.CELL = { IN = 113, RADIUS = 129.8, OUT = 146, MARGIN = 2, SPACE = 2.4, HALF_MIN = 3, HALF_MAX = 10,
     HALF_STEP = 0.2, EXTENT = { -147, -26.3526, -110.2833, 26.3526 }, BOX = { -173.5, -45, -83.5, 45 }, ALPHA = 0.62 }
 RMS_Hud.BACKGROUND = { BOX = { -180, -116, 0, 116 }, EDGE = 161.584, CORNER = 17.8 }
@@ -57,13 +54,19 @@ RMS_Hud.DRIVE_INK_HEIGHT = { frontWheelDrive = 35 * RMS_Hud.BUBBLE.PICTURE_SCALE
 RMS_Hud.WHEEL_SLIP_INK_HEIGHT = 41 * RMS_Hud.BUBBLE.PICTURE_SCALE
 RMS_Hud.GLOW = { SIZE = 30.4, ALPHA = 0.35 }
 RMS_Hud.PARK_BRAKE = { SIZE = 27.6, GAP = 5.5 }
--- INK: ink left, right and weight centre from the top, slice px
-RMS_Hud.FUEL_ICON = { SIZE = 21, CELL = 30, GAP = 6,
+RMS_Hud.FUEL_ICON = { SIZE = 24, CELL = 30, GAP = 6, INK_HEIGHT = 18, INK_AREA = 0.1539,
     INK = { ["gui.icon_fuel"] = { 8, 23, 16.94 }, ["gui.icon_electricCharge"] = { 2, 28, 15.51 },
         ["gui.icon_methane"] = { 8, 22, 15.59 } } }
+RMS_Hud.WEIGHT_ICON = { SLICE = "gui.storeAttribute_maxLoadCapacity", CELL = 36, INK_AREA = 0.4158, INK = { 4, 32, 20.25 } }
+RMS_Hud.CARD_GAP = { LABEL = 6, UNIT = 4, AVERAGE = 12, SEPARATOR = 20 }
+RMS_Hud.CARD_SCALE = 12 / 13
+RMS_Hud.FIGURES_MIDDLE = 13.24 / 35
+RMS_Hud.CARD_END_SPACE = { a = 0.1187, h = 0.1087, ["а"] = 0.1277, ["顷"] = 0.0371, t = 0.0018, ["т"] = 0.0381,
+    u = 0.1199, ["ч"] = 0.1439, ["д"] = 0.0263, ["时"] = 0.0357, W = 0.0289, ["瓦"] = 0.0385 }
 
 local lampLayouts = {}
 
+---Returns the angles and radii a lamp and its value span at a place
 local function getLampSpan(unit, phi, radius)
     local lamp = RMS_Hud.LAMP
     local boxes = { { -unit.inkWidth * 0.5, -unit.inkHeight * 0.5, unit.inkWidth * 0.5, unit.inkHeight * 0.5 } }
@@ -87,6 +90,7 @@ local function getLampSpan(unit, phi, radius)
     return low, high, near, far
 end
 
+---Returns the half angle of a cell, on the steps baked in the atlas
 local function getCellHalf(half)
     local cell = RMS_Hud.CELL
     local steps = math.ceil((math.deg(half) - cell.HALF_MIN) / cell.HALF_STEP - 1e-6)
@@ -168,6 +172,7 @@ function RMS_Hud.getBubbleCentre(isHigh)
     return RMS_Hud.BUBBLE.X, isHigh and y or -y
 end
 
+---Returns the symbol centre, value middle and value bottom in a bubble
 function RMS_Hud.getBubbleContent(inkHeight)
     local bubble = RMS_Hud.BUBBLE
     local height = inkHeight + bubble.SYMBOL_GAP + bubble.VALUE_HEIGHT
@@ -175,6 +180,7 @@ function RMS_Hud.getBubbleContent(inkHeight)
     return height * 0.5 - inkHeight * 0.5, valueBottom + bubble.VALUE_HEIGHT - bubble.VALUE_TOP_ABOVE_ANCHOR, valueBottom
 end
 
+---Returns a value formatted, 0 when it rounds to zero
 local function formatValue(value, numberFormat)
     local amount = tonumber(value) or 0
     local text = string.format(numberFormat, amount)
@@ -186,25 +192,37 @@ local function formatValue(value, numberFormat)
     return text
 end
 
+---Returns a consumption to a tenth under 100, whole above
 local function formatConsumptionValue(value)
     local amount = math.max(tonumber(value) or 0, 0)
     return formatValue(amount, amount < 100 and "%.1f" or "%.0f")
 end
 
+---Returns an x on the pixel grid
 local function snapScreenX(x)
     return math.floor(x * g_screenWidth + 0.5) / g_screenWidth
 end
 
+---Returns a y on the pixel grid
 local function snapScreenY(y)
     return math.floor(y * g_screenHeight + 0.5) / g_screenHeight
 end
 
+---Draws a rule of whole pixels; off the grid a line can vanish
+local function drawRule(x, y, width, height, color)
+    width = math.max(math.floor(width * g_screenWidth + 0.5), 1) / g_screenWidth
+    height = math.max(math.floor(height * g_screenHeight + 0.5), 1) / g_screenHeight
+    drawFilledRect(snapScreenX(x), snapScreenY(y), width, height, color[1], color[2], color[3], color[4])
+end
+
+---Sets the text alignments and weight
 local function setTextStyle(alignment, verticalAlignment, isBold)
     setTextAlignment(alignment)
     setTextVerticalAlignment(verticalAlignment)
     setTextBold(isBold)
 end
 
+---Returns a text with single spaces, trimmed
 local function squeezeSpaces(text)
     return text:gsub("%s+", " "):match("^ ?(.-) ?$")
 end
@@ -217,19 +235,15 @@ function RMS_Hud:new()
         motorLoad = 0
     }
     self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
-    self.consumption = {
-        buckets = {},
-        current = { litres = 0, hectares = 0 },
-        timer = 0,
-        perHour = 0,
-        perArea = nil
-    }
     self.wheelSlipHud = {
         icon = g_overlayManager:createOverlay("rms_Hud.wheelSlip", 0, 0, 0, 0)
     }
     self.fuelConsumptionHud = {
         icon = g_overlayManager:createOverlay("gui.icon_fuel", 0, 0, 0, 0),
         sliceId = "gui.icon_fuel"
+    }
+    self.loadMassHud = {
+        icon = g_overlayManager:createOverlay(RMS_Hud.WEIGHT_ICON.SLICE, 0, 0, 0, 0)
     }
     self.halfMoon = {
         background = g_overlayManager:createOverlay("rms_Hud.background", 0, 0, 0, 0),
@@ -253,13 +267,15 @@ function RMS_Hud:new()
     self.parkBrakeHud = {
         icon = g_overlayManager:createOverlay("rms_Hud.parkBrake", 0, 0, 0, 0)
     }
+    self.meterStraight = g_overlayManager:createOverlay("rms_Hud.backgroundStraight", 0, 0, 0, 0)
 
     self.lampIcons = {}
     for slice in pairs(RMS_Hud.LAMP_INK) do
         self.lampIcons[slice] = g_overlayManager:createOverlay("rms_Hud." .. slice, 0, 0, 0, 0)
     end
     self.lampStates = {}
-    self.loadMassText = {}
+    self.telemetryText = {}
+    self.shownMasses = {}
 
     self.notification = nil
     self.closeText = g_i18n:getText("button_ok")
@@ -280,8 +296,12 @@ function RMS_Hud:delete()
     self.wheelSlipHud.icon = nil
     self.fuelConsumptionHud.icon:delete()
     self.fuelConsumptionHud.icon = nil
+    self.loadMassHud.icon:delete()
+    self.loadMassHud.icon = nil
     self.parkBrakeHud.icon:delete()
     self.parkBrakeHud.icon = nil
+    self.meterStraight:delete()
+    self.meterStraight = nil
 
     for _, overlay in pairs(self.halfMoon) do
         overlay:delete()
@@ -308,7 +328,7 @@ function RMS_Hud:delete()
     RMS_Hud:superClass().delete(self)
 end
 
----Binds the HUD to a vehicle; another one resets lamps and averages
+---Binds the HUD to a vehicle, another one resetting the lamps and the load
 function RMS_Hud:setVehicle(vehicle)
     if vehicle == self.vehicle then
         return
@@ -317,10 +337,9 @@ function RMS_Hud:setVehicle(vehicle)
     self.lampStates = {}
     self.telemetryDisplayValues.motorLoad = 0
     self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
-    self:resetConsumptionAverages()
 end
 
----Lighting up or turning red, a lamp blinks and beeps once
+---Blinks and beeps a lamp once as it lights up or turns red
 function RMS_Hud:updateLampAlert(id, severity, isMotorOn)
     local state = self.lampStates[id]
     if state == nil then
@@ -521,21 +540,54 @@ function RMS_Hud:drawInspectionProgress()
     renderText(centerX, centerY + ringHeight * 0.5 + labelSize * 0.6, labelSize, g_i18n:getText("rms_field_inspection_progress"))
 end
 
+---Tells whether a notification is on screen
+function RMS_Hud:getIsNotificationShown()
+    local notification = self.notification
+    return notification ~= nil and (notification.endTime == nil or g_time < notification.endTime)
+end
+
+---Returns the widest notification, clear of the half-moon by the meter
+function RMS_Hud:getNotificationMaxWidth()
+    local speedMeter = g_currentMission.hud.speedMeter
+    local meterX = speedMeter.speedBg.x + speedMeter.speedGaugeCenterOffsetX
+    local left = meterX + self:scalePixelToScreenWidth(RMS_Hud.BACKGROUND.BOX[1])
+    return (left - 0.5 - self.messagePaddingX) * 2
+end
+
+---Returns the bottom of a notification, above the cards and action band
+function RMS_Hud:getNotificationBottom()
+    local hud = g_currentMission.hud
+    local band = hud.contextActionDisplay
+    local bottom = g_hudAnchorBottom + RMS_Hud.getSpeedMeterLift(self.vehicle)
+    if not band:getVisible() or band.controls == nil or hud.ingameMessage:getVisible() then
+        return bottom
+    end
+    -- the band as its draw lays it out
+    setTextWrapWidth(band.textMaxWidth)
+    local height = getTextHeight(band.textSize, band.text) + band.titleTextOffsetY + band.titleTextSize
+    setTextWrapWidth(0)
+    height = math.max(height, band.iconOverlay.height, band.buttonHeight)
+    local _, bandY = band:getPosition()
+    return math.max(bottom, bandY + height + self.messagePaddingY)
+end
+
 ---Draws the notification: title, line, text, line and close key
 function RMS_Hud:drawNotification()
     local notification = self.notification
     if notification == nil then
         return
     end
-    if notification.endTime ~= nil and g_time >= notification.endTime then
+    if not self:getIsNotificationShown() then
         self.notification = nil
         return
     end
 
-    local title, width = notification.title, self.messageWidth
+    local title = notification.title
     local paddingX, paddingY = self.messagePaddingX, self.messagePaddingY
-    setTextWrapWidth(width - 2 * paddingX)
     setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_TOP, false)
+    local width = getTextWidth(self.messageTextSize, notification.text) + 2 * paddingX
+    width = math.max(math.min(width, self:getNotificationMaxWidth()), self.messageWidth)
+    setTextWrapWidth(width - 2 * paddingX)
     local textHeight = getTextHeight(self.messageTextSize, notification.text)
     local height = textHeight + 2 * paddingY
     local titleHeight = 0
@@ -548,7 +600,7 @@ function RMS_Hud:drawNotification()
         end
     end
 
-    local posX, posY = 0.5 - width * 0.5, g_hudAnchorBottom
+    local posX, posY = 0.5 - width * 0.5, self:getNotificationBottom()
     local background = HUD.COLOR.BACKGROUND_DARK
     drawFilledRectRound(posX, posY, width, height, 0.25, background[1], background[2], background[3], background[4])
 
@@ -559,10 +611,10 @@ function RMS_Hud:drawNotification()
         setTextColor(green[1], green[2], green[3], green[4])
         renderText(0.5, textY, self.messageTitleSize, title)
         textY = textY - titleHeight - self.messageTitleGap - g_pixelSizeY * 0.5
-        drawLine2D(lineStart, textY, lineEnd, textY, g_pixelSizeY, green[1], green[2], green[3], green[4])
+        drawRule(lineStart, textY - g_pixelSizeY * 0.5, lineEnd - lineStart, g_pixelSizeY, green)
         textY = textY - g_pixelSizeY * 0.5 - self.messageTitleGap
         local lineY = textY - textHeight - self.messageCloseGap - g_pixelSizeY * 0.5
-        drawLine2D(lineStart, lineY, lineEnd, lineY, g_pixelSizeY, green[1], green[2], green[3], green[4])
+        drawRule(lineStart, lineY - g_pixelSizeY * 0.5, lineEnd - lineStart, g_pixelSizeY, green)
     end
 
     setTextBold(false)
@@ -592,6 +644,14 @@ function RMS_Hud:drawCloseControl(bottomY)
     setTextColor(1, 1, 1, 0.95)
     renderText(keyX + keyWidth + self.closeTextGap - self.closeTextShiftX,
         keyY + self.closeGlyphHeight * 0.5 + self.closeTextShiftY, textSize, self.closeText)
+end
+
+---Sizes the icon of a card, in a square of px reference pixels
+function RMS_Hud:storeCardIcon(card, px)
+    local scale = RMS_Hud.CARD_SCALE
+    card.width, card.height = self:scalePixelValuesToScreenVector(px * scale, px * scale)
+    card.icon:setDimension(card.width, card.height)
+    card.iconGap = self:scalePixelToScreenWidth(RMS_Hud.FUEL_ICON.GAP * scale)
 end
 
 ---Recomputes every HUD size and position for the current screen resolution
@@ -638,16 +698,18 @@ function RMS_Hud:storeScaledValues()
         self.parkBrakeHud.offsetY = self:scalePixelToScreenHeight(0)
     end
 
-    self.loadMassText.size = self:scalePixelToScreenHeight(13)
-    self.loadMassText.paddingH, self.loadMassText.paddingV = self:scalePixelValuesToScreenVector(10, 4)
-    self.telemetryCardGap = self:scalePixelToScreenWidth(4)
+    local cardScale = RMS_Hud.CARD_SCALE
+    self.telemetryText.size = self:scalePixelToScreenHeight(13 * cardScale)
+    self.telemetryText.paddingH, self.telemetryText.paddingV = self:scalePixelValuesToScreenVector(10 * cardScale, 4 * cardScale)
+    self.telemetryCardGap = self:scalePixelToScreenWidth(4 * cardScale)
+    -- the game's gap between its meter and its fill levels
+    self.telemetryCardGapY = self:scalePixelToScreenHeight(4)
 
-    local fuelIcon = RMS_Hud.FUEL_ICON
-    local fuelIconWidth, fuelIconHeight = self:scalePixelValuesToScreenVector(fuelIcon.SIZE, fuelIcon.SIZE)
-    self.fuelConsumptionHud.icon:setDimension(fuelIconWidth, fuelIconHeight)
-    self.fuelConsumptionHud.width = fuelIconWidth
-    self.fuelConsumptionHud.height = fuelIconHeight
-    self.fuelConsumptionHud.iconGap = self:scalePixelToScreenWidth(fuelIcon.GAP)
+    local fuelIcon, weightIcon = RMS_Hud.FUEL_ICON, RMS_Hud.WEIGHT_ICON
+    -- the weight with as much ink as the pump
+    local weightSize = fuelIcon.SIZE * math.sqrt(fuelIcon.INK_AREA / weightIcon.INK_AREA)
+    self:storeCardIcon(self.fuelConsumptionHud, fuelIcon.SIZE)
+    self:storeCardIcon(self.loadMassHud, weightSize)
 
     self.messageWidth = self:scalePixelToScreenWidth(640)
     self.messagePaddingX, self.messagePaddingY = self:scalePixelValuesToScreenVector(20, 20)
@@ -670,6 +732,7 @@ function RMS_Hud:storeScaledValues()
     self.closeGlyphInputMode = nil
 end
 
+---Tells whether a full particulate filter waits for its regeneration
 function RMS_Hud.getIsParticulateFilterCalling(spec)
     return spec.fuelState.particulateFilterLevel >= 1 and not spec.fuelState.isParticulateFilterRegenerating
 end
@@ -719,7 +782,7 @@ function RMS_Hud.getCoolantTelltaleState(spec)
     return nil
 end
 
----Returns the colour a lit lamp has on a real dashboard
+---Returns the colour a lit lamp has
 function RMS_Hud.getLitLampColor(id, color, spec)
     local colors = RMS_Breakdowns.COLORS
     if color == colors.DEFAULT or color == colors.COOL then
@@ -796,7 +859,6 @@ function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultCo
     if RMS_Preheat.isHeating(vehicle) and lampColors.preheat == colors.DEFAULT then
         lampColors.preheat, isRoutine.preheat = colors.WARNING, true
     end
-    -- Charge and oil pressure lamps stay lit until the engine runs
     if motorState == MotorState.IGNITION or motorState == MotorState.STARTING then
         for _, id in ipairs({ "battery", "oil" }) do
             if lampColors[id] == colors.DEFAULT then
@@ -990,7 +1052,7 @@ function RMS_Hud:drawHalfMoon(posX, posY, units, layout, spec, isPowered, hasHig
     self:drawCoolantGauge(posX, posY, spec, isPowered)
 end
 
----Turns an atlas picture by its UVs; overlay rotation distorts it
+---Draws an atlas picture turned by its UVs, where overlay rotation would distort it
 function RMS_Hud:drawTurned(overlay, sliceId, box, extent, x, y, angle)
     local uvs = self.sliceUvs[sliceId]
     if uvs == nil then
@@ -1118,6 +1180,7 @@ function RMS_Hud:drawOdometer()
     setTextBold(false)
 end
 
+---Draws a bubble, returning its symbol and value positions
 local function drawBubble(self, isHigh, posX, posY, inkHeight)
     local bubbleX, bubbleY = RMS_Hud.getBubbleCentre(isHigh)
     local centreX = posX + self:scalePixelToScreenWidth(bubbleX)
@@ -1129,6 +1192,7 @@ local function drawBubble(self, isHigh, posX, posY, inkHeight)
     return centreY + self:scalePixelToScreenHeight(symbolY), centreY + self:scalePixelToScreenHeight(valueY), centreX
 end
 
+---Draws the value of a bubble
 local function drawBubbleValue(self, centreX, valueY, text, color)
     setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_MIDDLE, true)
     setTextColor(color[1], color[2], color[3], color[4])
@@ -1148,6 +1212,7 @@ function RMS_Hud:drawWheelSlipDisplay(spec, posX, posY)
     drawBubbleValue(self, centreX, valueY, string.format("%.0f%%", wheelSlip * 100), {1, 1, 1, 1})
 end
 
+---Returns the drive symbol and its colour
 function RMS_Hud.getDrivetrainDisplay(state, hasFrontAxleSwitch, time)
     local colors = RMS_Breakdowns.COLORS
     local windupStress = tonumber(state.windupStress) or 0
@@ -1167,6 +1232,7 @@ function RMS_Hud.getDrivetrainDisplay(state, hasFrontAxleSwitch, time)
     return "frontWheelDrive", isWindingUp and colors.WARNING or RMS_Hud.COLOR_GAME_GREEN
 end
 
+---Draws the drive mode in its bubble above the left of the dial
 function RMS_Hud:drawDrivetrainDisplay(vehicle, posX, posY)
     if not RMS_Drivetrain.getIsAvailable(vehicle) then
         return
@@ -1222,97 +1288,31 @@ function RMS_Hud:drawParkBrakeDisplay(vehicle)
 end
 
 
+---Returns the height of a telemetry card
+function RMS_Hud:getTelemetryCardHeight()
+    local text = self.telemetryText
+    return getTextHeight(text.size, "0") + text.paddingV * 2
+end
+
+---Returns how far the meter and fill levels rise above the cards
+function RMS_Hud.getSpeedMeterLift(vehicle)
+    local hud = RMS_Main.hud
+    if hud == nil or vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil then
+        return 0
+    end
+    local lift = hud:getTelemetryCardHeight() + hud.telemetryCardGapY
+    return math.floor(lift * g_screenHeight + 0.5) / g_screenHeight
+end
+
 ---Draws the fuel consumption and load mass cards
 function RMS_Hud:drawTelemetryCards()
     local speedMeter = g_currentMission.hud.speedMeter
-    if speedMeter == nil or speedMeter.speedBg == nil then
+    if speedMeter == nil or speedMeter.speedBg == nil or self.vehicle.spec_RealisticMechanicalSystems == nil then
         return
     end
 
     local cardRightX = speedMeter:getPosition()
-    cardRightX = self:drawLoadMass(cardRightX) or cardRightX
-    self:drawFuelConsumption(cardRightX)
-end
-
-local function getSteeringAssistWidth(vehicle)
-    local width = 0
-    local root = vehicle.rootVehicle or vehicle
-
-    for _, child in pairs(root.childVehicles or {}) do
-        local workAreaSpec = child.spec_workArea
-        if workAreaSpec ~= nil and workAreaSpec.workAreas ~= nil then
-            for _, workArea in pairs(workAreaSpec.workAreas) do
-                if g_workAreaTypeManager:getWorkAreaTypeIsSteeringAssistArea(workArea.type) then
-                    width = math.max(width, tonumber(workArea.workWidth) or 0)
-                end
-            end
-        end
-    end
-
-    return width
-end
-
----Returns the speed and the area the controlled vehicle works
-function RMS_Hud:getConsumptionAreaRate()
-    local speed = self.vehicle.getLastSpeed ~= nil and (tonumber(self.vehicle:getLastSpeed()) or 0) or 0
-    local width = self.vehicle.getAttacherToolWorkingWidth ~= nil and (tonumber(self.vehicle:getAttacherToolWorkingWidth()) or 0) or 0
-
-    if width <= 0 then
-        width = getSteeringAssistWidth(self.vehicle)
-    end
-
-    local guidanceSpec = self.vehicle.spec_globalPositioningSystem
-    if guidanceSpec ~= nil and guidanceSpec.guidanceData ~= nil and guidanceSpec.guidanceData.width ~= nil then
-        width = tonumber(guidanceSpec.guidanceData.width) or width
-    end
-
-    -- From km/h and m to ha/h
-    return speed, (speed * width) / 10
-end
-
----Clears the consumption samples and their averages
-function RMS_Hud:resetConsumptionAverages()
-    local state = self.consumption
-    state.buckets = {}
-    state.current = { litres = 0, hectares = 0 }
-    state.timer = 0
-    state.perHour = 0
-    state.perArea = nil
-end
-
----Uses the native hourly readout and samples the consumption per worked area
-function RMS_Hud:updateConsumptionAverages(consumptionPerHour, areaRate)
-    local state = self.consumption
-    local dt = tonumber(g_currentDt) or 0
-    local current = state.current
-
-    -- lastFuelUsageDisplay is already averaged by GIANTS.
-    state.perHour = consumptionPerHour
-
-    if areaRate > 0 then
-        current.litres = current.litres + consumptionPerHour * dt / (60 * 60 * 1000)
-        current.hectares = current.hectares + areaRate * dt / (60 * 60 * 1000)
-    end
-
-    state.timer = state.timer + dt
-    if state.timer < RMS_Hud.CONSUMPTION_REFRESH_INTERVAL then
-        return
-    end
-    state.timer = 0
-
-    table.insert(state.buckets, 1, current)
-    while #state.buckets > RMS_Hud.CONSUMPTION_PER_AREA_BUCKETS do
-        table.remove(state.buckets)
-    end
-    state.current = { litres = 0, hectares = 0 }
-
-    local litresSum, hectaresSum = 0, 0
-    for _, bucket in ipairs(state.buckets) do
-        litresSum = litresSum + bucket.litres
-        hectaresSum = hectaresSum + bucket.hectares
-    end
-
-    state.perArea = hectaresSum > 0.0001 and litresSum / hectaresSum or nil
+    self:drawFuelConsumption(self:drawLoadMass(cardRightX))
 end
 
 ---Samples the engine load and refreshes its average once a second
@@ -1342,240 +1342,150 @@ function RMS_Hud:updateMotorLoadAverage(motorLoad)
     return timeSum > 0 and valueSum / timeSum or motorLoad
 end
 
+---Draws a green separator one pixel thick, as many rows above as below
 local function drawCardSeparator(x, panelY, panelH, color)
-    local lineHeight = panelH * 0.55
-    local bottom = panelY + (panelH - lineHeight) * 0.5
-    drawLine2D(x, bottom, x, bottom + lineHeight, g_pixelSizeX, color[1], color[2], color[3], color[4])
+    local panelRows = math.floor(panelH * g_screenHeight + 0.5)
+    local rows = math.floor(panelRows * 0.55)
+    rows = rows + (panelRows - rows) % 2
+    drawRule(x - g_pixelSizeX * 0.5, panelY + (panelRows - rows) * 0.5 / g_screenHeight, g_pixelSizeX,
+        rows / g_screenHeight, color)
 end
 
----Draws the fuel consumption card
-function RMS_Hud:drawFuelConsumption(cardRightX)
-    if self.vehicle.spec_RealisticMechanicalSystems == nil or self.vehicle.spec_motorized == nil then
-        return
+---Returns an average, a dash without one
+local function formatAverage(value)
+    return value ~= nil and formatConsumptionValue(value) or "-"
+end
+
+---Returns the gaps of the card texts, in screen width
+-- @return float label, unit, separator and between the averages
+function RMS_Hud:getTelemetryGaps()
+    local gap, scale = RMS_Hud.CARD_GAP, RMS_Hud.CARD_SCALE
+    return self:scalePixelToScreenWidth(gap.LABEL * scale), self:scalePixelToScreenWidth(gap.UNIT * scale),
+        self:scalePixelToScreenWidth(gap.SEPARATOR * scale), self:scalePixelToScreenWidth(gap.AVERAGE * scale)
+end
+
+---Draws a card of the bottom row: its green icon, then its texts
+-- @param table pieces each text, bold, gap before it, separator in it
+function RMS_Hud:drawTelemetryCard(cardRightX, card, cell, ink, pieces)
+    local size, padH = self.telemetryText.size, self.telemetryText.paddingH
+    local textWidth = 0
+    for _, piece in ipairs(pieces) do
+        setTextBold(piece[2])
+        piece.width = getTextWidth(size, piece[1])
+        textWidth = textWidth + piece[3] + piece.width
     end
+    local lastLetter = pieces[#pieces][1]:match("[^\128-\191][\128-\191]*$")
+    local endSpace = getTextWidth(size, lastLetter) * (RMS_Hud.CARD_END_SPACE[lastLetter] or 0)
 
-    local _, fuelCapacity, fuelType = SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(self.vehicle)
-    if fuelCapacity == nil or fuelCapacity <= 0 then
-        return
-    end
-
-    local consumptionPerHour = self.vehicle:getIsMotorStarted() and self.vehicle.spec_motorized.lastFuelUsageDisplay or 0
-    local speed, areaRate = self:getConsumptionAreaRate()
-    self:updateConsumptionAverages(consumptionPerHour, speed > 0.9 and areaRate or 0)
-
-    local isElectric = fuelType == FillType.ELECTRICCHARGE
-    local isMethane = fuelType == FillType.METHANE
-    local perHourUnit = isElectric and "kW" or (isMethane and "kg/h" or "L/h")
-    local perAreaUnit = isElectric and "kWh/ha" or (isMethane and "kg/ha" or "L/ha")
-    local perHourStr = formatConsumptionValue(self.consumption.perHour)
-    local perAreaStr = self.consumption.perArea ~= nil and formatConsumptionValue(self.consumption.perArea) or "-"
-
-    local speedMeter = g_currentMission.hud.speedMeter
-    local size = self.loadMassText.size or 0.01
-    local padH = self.loadMassText.paddingH or 0
-    local padV = self.loadMassText.paddingV or 0
-    local sliceId = isElectric and "gui.icon_electricCharge" or (isMethane and "gui.icon_methane" or "gui.icon_fuel")
-    local fuelIcon = RMS_Hud.FUEL_ICON
-    local ink = fuelIcon.INK[sliceId]
-    local iconBoxWidth = self.fuelConsumptionHud.width or 0
-    local inkLeft = iconBoxWidth * ink[1] / fuelIcon.CELL
-    local iconWidth = iconBoxWidth * (ink[2] - ink[1]) / fuelIcon.CELL
-    local iconHeight = self.fuelConsumptionHud.height or 0
-    local iconGap = self.fuelConsumptionHud.iconGap or 0
-    local unitGap = self:scalePixelToScreenWidth(4)
-    local separatorGap = self:scalePixelToScreenWidth(20)
-    local perHourValueWidth = getTextWidth(size, perHourStr)
-    local perHourUnitWidth = getTextWidth(size, perHourUnit)
-    local perAreaValueWidth = getTextWidth(size, perAreaStr)
-    local perAreaUnitWidth = getTextWidth(size, perAreaUnit)
-    local perHourWidth = perHourValueWidth + unitGap + perHourUnitWidth
-    local perAreaWidth = perAreaValueWidth + unitGap + perAreaUnitWidth
-    local fullWidth = iconWidth + iconGap + perHourWidth + separatorGap + perAreaWidth
-    local textHeight = getTextHeight(size, perHourStr)
-    local panelH = textHeight + padV * 2
-    local panelW = fullWidth + padH * 2
-    local _, smBottomY = speedMeter:getPosition()
-    local panelX = cardRightX - panelW
-    local panelY = (smBottomY - panelH) * 0.5
-    local startX = panelX + padH
-    local textX = startX + iconWidth + iconGap
-    local textY = panelY + panelH * 0.5 + self:scalePixelToScreenHeight(2)
-    -- Figures of a middle-aligned text sit this far below its anchor.
-    local lamp = RMS_Hud.LAMP
-    local figuresMiddleY = textY - size * (lamp.VALUE_HEIGHT * 0.5 - lamp.VALUE_TOP) / lamp.VALUE_SIZE
+    local inkLeft = card.width * ink[1] / cell
+    local iconWidth = card.width * (ink[2] - ink[1]) / cell
+    local contentWidth = iconWidth + card.iconGap + textWidth - endSpace
+    local panelW = snapScreenX(contentWidth + padH * 2)
+    local panelH = snapScreenY(self:getTelemetryCardHeight())
+    local _, panelY = g_currentMission.hud.speedMeter:getPosition()
+    panelY = snapScreenY(panelY)
+    local panelX = snapScreenX(cardRightX) - panelW
+    local startX = panelX + (panelW - contentWidth) * 0.5
+    local textX = startX + iconWidth + card.iconGap
+    local middleY = panelY + panelH * 0.5
 
     local bg = HUD.COLOR.BACKGROUND
     drawFilledRectRound(panelX, panelY, panelW, panelH, 0.35, bg[1], bg[2], bg[3], bg[4])
 
-    local icon = self.fuelConsumptionHud.icon
-    if self.fuelConsumptionHud.sliceId ~= sliceId then
-        icon:setSliceId(sliceId)
-        self.fuelConsumptionHud.sliceId = sliceId
-    end
     local green = HUD.COLOR.ACTIVE
-    icon:setPosition(startX - inkLeft, figuresMiddleY - iconHeight * (1 - ink[3] / fuelIcon.CELL))
+    local icon = card.icon
+    icon:setPosition(startX - inkLeft, middleY - card.height * (1 - ink[3] / cell))
     icon:setColor(green[1], green[2], green[3], green[4])
     icon:setVisible(true)
     icon:render()
 
-    drawCardSeparator(textX + perHourWidth + separatorGap * 0.5, panelY, panelH, green)
-
-    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, true)
-    setTextColor(1, 1, 1, 1)
-    renderText(textX, textY, size, perHourStr)
+    local baselineY = middleY - size * RMS_Hud.FIGURES_MIDDLE
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_BASELINE, true)
+    for _, piece in ipairs(pieces) do
+        if piece[4] then
+            drawCardSeparator(textX + piece[3] * 0.5, panelY, panelH, green)
+        end
+        textX = textX + piece[3]
+        setTextBold(piece[2])
+        setTextColor(1, 1, 1, piece[2] and 1 or 0.55)
+        renderText(textX, baselineY, size, piece[1])
+        textX = textX + piece.width
+    end
     setTextBold(false)
-    setTextColor(1, 1, 1, 0.55)
-    renderText(textX + perHourValueWidth + unitGap, textY, size, perHourUnit)
-
-    textX = textX + perHourWidth + separatorGap
-    setTextBold(true)
-    setTextColor(1, 1, 1, 1)
-    renderText(textX, textY, size, perAreaStr)
-    setTextBold(false)
-    setTextColor(1, 1, 1, 0.55)
-    renderText(textX + perAreaValueWidth + unitGap, textY, size, perAreaUnit)
+    return panelX - self.telemetryCardGap
 end
 
-
----Returns the colour of a load severity
-function RMS_Hud:getLoadSeverityColor(severity)
-    local colors = RMS_Breakdowns.COLORS
-    local s = math.clamp(tonumber(severity) or 0, 0, 1)
-
-    if s <= 0 then
-        return HUD.COLOR.ACTIVE
+---Draws the fuel consumption card: now, then the trip's averages
+function RMS_Hud:drawFuelConsumption(cardRightX)
+    local vehicle = self.vehicle
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if vehicle.spec_motorized == nil then
+        return
     end
 
-    return {
-        colors.WARNING[1] + (colors.CRITICAL[1] - colors.WARNING[1]) * s,
-        colors.WARNING[2] + (colors.CRITICAL[2] - colors.WARNING[2]) * s,
-        colors.WARNING[3] + (colors.CRITICAL[3] - colors.WARNING[3]) * s,
-        1
-    }
-end
-
----Formats a mass in tons
-function RMS_Hud:formatMass(massTons)
-    return formatValue(math.max(tonumber(massTons) or 0, 0), "%.1f") .. " t"
-end
-
----Returns a mass that only changes past a threshold
-function RMS_Hud:getStableDisplayMass(cacheKey, massTons)
-    local mass = math.max(tonumber(massTons) or 0, 0)
-    local displayStep = 0.1
-    local roundedMass = math.floor(mass / displayStep + 0.5) * displayStep
-    local cachedMass = tonumber(self.loadMassText[cacheKey])
-
-    if cachedMass == nil or math.abs(mass - cachedMass) >= displayStep then
-        cachedMass = roundedMass
-        self.loadMassText[cacheKey] = cachedMass
+    local _, fuelCapacity, fuelType = SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(vehicle)
+    if fuelCapacity == nil or fuelCapacity <= 0 then
+        return
     end
 
-    return cachedMass
+    local isElectric = fuelType == FillType.ELECTRICCHARGE
+    local isMethane = fuelType == FillType.METHANE
+    local amount = g_i18n:getText(isMethane and "unit_kg" or "unit_literShort")
+    local perHourUnit = isElectric and g_i18n:getText("rms_hud_unit_kw") or amount .. g_i18n:getText("rms_hud_unit_perHour")
+    local perAreaUnit = (isElectric and g_i18n:getText("rms_hud_unit_kwh") or amount) .. "/" .. g_i18n:getText("unit_haShort")
+    local perHour = vehicle:getIsMotorStarted() and vehicle.spec_motorized.lastFuelUsageDisplay or 0
+
+    local labelGap, unitGap, separatorGap, averageGap = self:getTelemetryGaps()
+    local pieces = { { formatConsumptionValue(perHour), true, 0 }, { perHourUnit, false, unitGap } }
+    if not spec.isExcludedVehicle then
+        pieces[#pieces + 1] = { g_i18n:getText("rms_hud_fuel_average"), false, separatorGap, true }
+        pieces[#pieces + 1] = { formatAverage(RMS_TripFuel.getAveragePerHour(spec)), true, labelGap }
+        pieces[#pieces + 1] = { perHourUnit, false, unitGap }
+        pieces[#pieces + 1] = { formatAverage(RMS_TripFuel.getAveragePerArea(spec)), true, averageGap }
+        pieces[#pieces + 1] = { perAreaUnit, false, unitGap }
+    end
+
+    local sliceId = isElectric and "gui.icon_electricCharge" or (isMethane and "gui.icon_methane" or "gui.icon_fuel")
+    local card = self.fuelConsumptionHud
+    if card.sliceId ~= sliceId then
+        card.icon:setSliceId(sliceId)
+        card.sliceId = sliceId
+    end
+    local fuelIcon = RMS_Hud.FUEL_ICON
+    self:drawTelemetryCard(cardRightX, card, fuelIcon.CELL, fuelIcon.INK[sliceId], pieces)
 end
 
----Draws the load mass card
+---Returns a mass rounded to 100 kg, held until it moves as much
+function RMS_Hud:getShownMass(key, mass)
+    local shown = self.shownMasses[key]
+    if shown == nil or math.abs(mass - shown) >= 0.1 then
+        shown = math.floor(mass * 10 + 0.5) / 10
+        self.shownMasses[key] = shown
+    end
+    return shown
+end
+
+---Draws the weight card: the machine, what it tows, the whole
 function RMS_Hud:drawLoadMass(cardRightX)
-    local vehicle, spec = self.vehicle, self.vehicle.spec_RealisticMechanicalSystems
-    if spec == nil then
-        return cardRightX
+    local vehicle = self.vehicle
+    local totalMass = vehicle:getTotalMass()
+    -- a container locked on a hook lift is carried, not towed
+    local container = RMS_Utils.getLockedHookLiftContainer(vehicle)
+    local ownMass = vehicle:getTotalMass(true) + (container ~= nil and container:getTotalMass() or 0)
+    local shownOwn = self:getShownMass("own", math.min(ownMass, totalMass))
+    local shownTowed = self:getShownMass("towed", math.max(totalMass - ownMass, 0))
+
+    local labelGap, unitGap, separatorGap = self:getTelemetryGaps()
+    local unit = g_i18n:getText("unit_tonsShort")
+    local pieces = {}
+    for index, part in ipairs({ { "rms_hud_mass_tractor", shownOwn }, { "rms_hud_mass_towed", shownTowed },
+        { "rms_hud_mass_total", shownOwn + shownTowed } }) do
+        pieces[#pieces + 1] = { g_i18n:getText(part[1]), false, index > 1 and separatorGap or 0, index > 1 }
+        pieces[#pieces + 1] = { formatValue(part[2], "%.1f"), true, labelGap }
+        pieces[#pieces + 1] = { unit, false, unitGap }
     end
-
-    local selfMass  = tonumber(vehicle:getTotalMass(true)) or 0
-    local totalMass = tonumber(vehicle:getTotalMass())     or 0
-    local lockedHookLiftContainer = RMS_Utils.getLockedHookLiftContainer(vehicle)
-    local carriedMass = lockedHookLiftContainer ~= nil and (tonumber(lockedHookLiftContainer:getTotalMass()) or 0) or 0
-    local vehicleMass = math.min(selfMass + carriedMass, totalMass)
-    local towedMass = math.max(totalMass - vehicleMass, 0)
-
-    local loadColor = HUD.COLOR.ACTIVE
-
-    if spec.isExcludedVehicle ~= true and towedMass > 0.1 then
-        local motor      = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-        local horsepower = math.max(((motor ~= nil and motor.peakMotorPower) or 0) * 1.36, 0.001)
-        local isTruck    = spec.isTruck == true
-        local ratioBasis = isTruck and totalMass or towedMass
-        local powerToWeight = horsepower / math.max(ratioBasis, 0.01)
-
-        local threshold, fullEffect = RMS_Utils.getHeavyTrailerRatioLevels(vehicle)
-
-        local trailerSeverity = RMS_Utils.calculateQuadraticMultiplier(powerToWeight, threshold, true, fullEffect)
-
-        loadColor = self:getLoadSeverityColor(trailerSeverity)
-    end
-
-    local _, smBottomY = g_currentMission.hud.speedMeter:getPosition()
-    local padH = self.loadMassText.paddingH or 0
-    local padV = self.loadMassText.paddingV or 0
-    local size = self.loadMassText.size or 0.01
-    local sep  = "     "
-
-    local displaySelfMass = self:getStableDisplayMass("displaySelfMass", vehicleMass)
-    local displayTowedMass = self:getStableDisplayMass("displayTowedMass", towedMass)
-    local displayTotalMass = displaySelfMass + displayTowedMass
-
-    local tractorLabel = g_i18n:getText("rms_hud_mass_tractor") .. "  "
-    local tractorValue = self:formatMass(displaySelfMass)
-    local chargeLabel  = g_i18n:getText("rms_hud_mass_towed")   .. "  "
-    local chargeValue  = self:formatMass(displayTowedMass)
-    local totalLabel   = g_i18n:getText("rms_hud_mass_total")    .. "  "
-    local totalValue   = self:formatMass(displayTotalMass)
-
-    local wTL  = getTextWidth(size, tractorLabel)
-    local wTV  = getTextWidth(size, tractorValue)
-    local wCL  = getTextWidth(size, chargeLabel)
-    local wCV  = getTextWidth(size, chargeValue)
-    local wOL  = getTextWidth(size, totalLabel)
-    local wOV  = getTextWidth(size, totalValue)
-    local wsep = getTextWidth(size, sep)
-    local w1   = wTL + wTV
-    local w2   = wCL + wCV
-    local w3   = wOL + wOV
-    local fullW = w1 + wsep + w2 + wsep + w3
-
-    local textHeight = getTextHeight(size, totalValue)
-    local panelH = textHeight + padV * 2
-    local panelW = fullW + padH * 2
-    local panelX = cardRightX - panelW
-    local panelY = (smBottomY - panelH) * 0.5
-    local startX = panelX + padH
-    local textY  = panelY + panelH * 0.5 + self:scalePixelToScreenHeight(2)
-
-    local bg = HUD.COLOR.BACKGROUND
-    drawFilledRectRound(panelX, panelY, panelW, panelH, 0.35, bg[1], bg[2], bg[3], bg[4])
-
-    local green    = HUD.COLOR.ACTIVE
-    drawCardSeparator(startX + w1 + wsep * 0.5, panelY, panelH, green)
-    drawCardSeparator(startX + w1 + wsep + w2 + wsep * 0.5, panelY, panelH, green)
-
-    local cx = startX
-    local dimLabel = {1, 1, 1, 0.55}
-    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, false)
-    setTextColor(unpack(dimLabel))
-    renderText(cx, textY, size, tractorLabel)
-    setTextBold(true)
-    setTextColor(1, 1, 1, 1)
-    renderText(cx + wTL, textY, size, tractorValue)
-
-    cx = cx + w1 + wsep
-
-    setTextBold(false)
-    setTextColor(unpack(dimLabel))
-    renderText(cx, textY, size, chargeLabel)
-    setTextBold(true)
-    setTextColor(loadColor[1], loadColor[2], loadColor[3], 1)
-    renderText(cx + wCL, textY, size, chargeValue)
-
-    cx = cx + w2 + wsep
-
-    setTextBold(false)
-    setTextColor(unpack(dimLabel))
-    renderText(cx, textY, size, totalLabel)
-    setTextBold(true)
-    setTextColor(loadColor[1], loadColor[2], loadColor[3], 1)
-    renderText(cx + wOL, textY, size, totalValue)
-
-    return panelX - (self.telemetryCardGap or 0)
+    local weightIcon = RMS_Hud.WEIGHT_ICON
+    return self:drawTelemetryCard(cardRightX, self.loadMassHud, weightIcon.CELL, weightIcon.INK, pieces)
 end
 
 ---Returns the damage the game's bar shows for the selected machine
@@ -1585,7 +1495,6 @@ function RMS_Hud.getSelectedDamage(vehicle)
             if child.getLastInspectedCondition == nil then
                 return child:getDamageAmount()
             end
-            -- An RMS machine shows its last inspection, empty before any
             local condition, isComplete = child:getLastInspectedCondition()
             local bar = RMS_Hud.CONDITION_BAR
             if isComplete == nil then
@@ -1601,39 +1510,151 @@ end
 
 local shownDamage = 0
 
+---Returns the damage the speed meter shows
 local function getShownDamage()
     return shownDamage
+end
+
+---Returns how much wider an AdBlue machine's meter is: one game section
+function RMS_Hud.getSpeedMeterExtension(speedMeter, vehicle)
+    if RMS_AdBlue.getLevel(vehicle) == nil
+        or select(2, SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(vehicle)) == nil then
+        return 0
+    end
+    return math.floor(-speedMeter.fuelOffsetX * g_screenWidth + 0.5) / g_screenWidth
+end
+
+local WHITE = { 1, 1, 1, 1 }
+
+---Draws the AdBlue gauge where the fuel stood, its lamp above
+local function drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, neighbourOffsetX)
+    local level = RMS_AdBlue.getLevel(vehicle)
+    local config = RMS_Config.EXHAUST.ADBLUE
+    -- halfway between the fuel, moved out, and the section that stayed
+    local fuelX = posX + speedMeter.sectionOffsetX + speedMeter.fuelOffsetX
+    local x = fuelX + (extension + neighbourOffsetX) * 0.5
+    local y = posY + speedMeter.sectionOffsetY + speedMeter.fuelOffsetY
+
+    local bar, maxWidth = speedMeter.bar, speedMeter.barMaxScaleWidth
+    bar:setColor(0, 0, 0, 1)
+    bar:setMiddlePart(nil, maxWidth, nil)
+    bar:setPosition(x + speedMeter.fuelBarOffsetX, y + speedMeter.fuelBarOffsetY)
+    bar:render()
+    if level > 0 then
+        if level >= config.WARNING_LEVEL then
+            bar:setColor(unpack(config.GAUGE_COLOR))
+        else
+            bar:setColor(1, 0.1233, 0, math.abs(math.cos(g_time / 300)))
+        end
+        bar:setMiddlePart(nil, math.clamp(maxWidth * level, 0, maxWidth), nil)
+        bar:setPosition(x + speedMeter.fuelBarOffsetX, y + speedMeter.fuelBarOffsetY)
+        bar:render()
+    end
+
+    local hud = RMS_Main.hud
+    local icon = hud.lampIcons.adBlue
+    local fuelIcon = RMS_Hud.FUEL_ICON
+    local size = speedMeter.fuelIcon.height * fuelIcon.INK_HEIGHT / fuelIcon.CELL * RMS_Hud.LAMP.CELL / RMS_Hud.LAMP_INK.adBlue[2]
+    local px = math.floor(size * g_screenHeight + 0.5)
+    icon:setDimension(px / g_screenWidth, px / g_screenHeight)
+    local lit = RMS_AdBlue.getLampColor(level, g_time)
+    local centreX = x + speedMeter.fuelIconOffsetX + speedMeter.fuelIcon.width * 0.5
+    local centreY = y + speedMeter.fuelIconOffsetY + speedMeter.fuelIcon.height * 0.5
+    if lit ~= nil then
+        local glow = hud.lampGlow
+        glow:setPosition(snapScreenX(centreX - glow.width * 0.5), snapScreenY(centreY - glow.height * 0.5))
+        glow:setColor(lit[1], lit[2], lit[3], RMS_Hud.GLOW.ALPHA)
+        glow:render()
+    end
+    local color = lit or WHITE
+    icon:setPosition(snapScreenX(centreX - icon.width * 0.5), snapScreenY(centreY - icon.height * 0.5))
+    icon:setColor(color[1], color[2], color[3], color[4])
+    icon:render()
+end
+
+local AI_LINE_OFFSETS = { "aiSeperatorOffsetX", "aiTextOffsetX", "aiIconOffsetX" }
+
+---Draws the meter wider to the left: its end, fuel and AI line stay
+local function drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
+    local gameX, posY = speedMeter:getPosition()
+    local posX = gameX - extension
+    speedMeter:setPosition(posX, posY)
+    local hasRepair = vehicle.getDamageAmount ~= nil and vehicle:getDamageAmount() ~= nil
+    local neighbourKey = hasRepair and "repairOffsetX" or "gearOffsetX"
+    local sectionOffsetX, neighbourOffsetX = speedMeter.sectionOffsetX, speedMeter[neighbourKey]
+    local rightEnd = speedMeter.speedBgRight
+    local ownRender, gameRender = rawget(rightEnd, "render"), rightEnd.render
+    local aiOffsets = {}
+    speedMeter.sectionOffsetX = sectionOffsetX + extension
+    speedMeter[neighbourKey] = neighbourOffsetX - extension
+    for _, key in ipairs(AI_LINE_OFFSETS) do
+        aiOffsets[key] = speedMeter[key]
+        speedMeter[key] = aiOffsets[key] + extension
+    end
+    -- a straight part of the sheet pushes the game's own end out
+    rightEnd.render = function(gameEnd)
+        local straight = RMS_Main.hud.meterStraight
+        local x, y = gameEnd.x, gameEnd.y
+        straight:setDimension(extension, gameEnd.height)
+        straight:setPosition(x, y)
+        straight:setColor(0, 0, 0, 1)
+        straight:render()
+        gameEnd:setPosition(x + extension, y)
+        gameRender(gameEnd)
+        gameEnd:setPosition(x, y)
+    end
+    superFunc(speedMeter)
+    rightEnd.render = ownRender
+    speedMeter.sectionOffsetX = sectionOffsetX
+    speedMeter[neighbourKey] = neighbourOffsetX
+    for key, offset in pairs(aiOffsets) do
+        speedMeter[key] = offset
+    end
+    drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, neighbourOffsetX)
 end
 
 ---Draws the speed meter, its damage bar for the selected machine
 function RMS_Hud.drawSpeedMeter(speedMeter, superFunc)
     local vehicle = speedMeter.vehicle
-    local damage
-    if vehicle ~= nil and speedMeter.isVehicleDrawSafe then
-        local spec = vehicle.spec_RealisticMechanicalSystems
-        if spec == nil or not spec.isExcludedVehicle then
-            damage = RMS_Hud.getSelectedDamage(vehicle)
-        end
-    end
-    if damage == nil then
-        superFunc(speedMeter)
-        return
+    local isDrawn = vehicle ~= nil and speedMeter.isVehicleDrawSafe
+    local spec = isDrawn and vehicle.spec_RealisticMechanicalSystems or nil
+    local damage = nil
+    if isDrawn and (spec == nil or not spec.isExcludedVehicle) then
+        damage = RMS_Hud.getSelectedDamage(vehicle)
     end
 
     -- The game shows the worst damage; all report the shown one
-    shownDamage = damage
-    local vehicles = vehicle.rootVehicle.childVehicles
+    local vehicles = damage ~= nil and vehicle.rootVehicle.childVehicles or {}
     local getDamageAmounts = {}
+    shownDamage = damage or 0
     for index, child in ipairs(vehicles) do
         getDamageAmounts[index] = child.getDamageAmount
         if child.getDamageAmount ~= nil then
             child.getDamageAmount = getShownDamage
         end
     end
-    superFunc(speedMeter)
+
+    local extension = isDrawn and RMS_Hud.getSpeedMeterExtension(speedMeter, vehicle) or 0
+    local gameX, gameY = speedMeter:getPosition()
+    speedMeter:setPosition(gameX, gameY + RMS_Hud.getSpeedMeterLift(vehicle))
+    if extension > 0 then
+        drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
+    else
+        superFunc(speedMeter)
+    end
+    speedMeter:setPosition(gameX, gameY)
+
     for index, child in ipairs(vehicles) do
         child.getDamageAmount = getDamageAmounts[index]
     end
+end
+
+---Draws the fill levels risen with the meter
+function RMS_Hud.drawFillLevels(display, superFunc)
+    local gameX, gameY = display:getPosition()
+    display:setPosition(gameX, gameY + RMS_Hud.getSpeedMeterLift(display.vehicle))
+    superFunc(display)
+    display:setPosition(gameX, gameY)
 end
 
 ---Adds the grease points due, else what is left before the next ones
@@ -1652,7 +1673,26 @@ local function addGreasingLine(vehicle, box)
     end
 end
 
----Adds the RMS lines to the vanilla vehicle info box
+---Adds the AdBlue tank the game keeps out of the info box
+function RMS_Hud.addAdBlueLine(vehicle, box)
+    local tank = RMS_AdBlue.getTank(vehicle)
+    local fillUnit = tank ~= nil and vehicle:getFillUnitByIndex(tank) or nil
+    if fillUnit == nil or fillUnit.showOnInfoHud or fillUnit.fillLevel <= 0 then
+        return
+    end
+    local precision = fillUnit.uiPrecision or 0
+    local text
+    if precision > 0 then
+        local rounded = MathUtil.round(fillUnit.fillLevel, precision)
+        text = string.format("%d%s%0" .. precision .. "d", math.floor(rounded), g_i18n.decimalSeparator,
+            (rounded - math.floor(rounded)) * 10 ^ precision)
+    else
+        text = string.format("%d", MathUtil.round(fillUnit.fillLevel))
+    end
+    box:addLine(g_fillTypeManager:getFillTypeByIndex(fillUnit.fillType).title, text .. " " .. (fillUnit.unitText or g_i18n:getVolumeUnit()))
+end
+
+---Adds the RMS lines to the game's vehicle info box
 function RMS_Hud:showInfoVehicle(box)
     local spec = self.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -1661,6 +1701,8 @@ function RMS_Hud:showInfoVehicle(box)
     elseif spec.isExcludedVehicle then
         return
     end
+
+    RMS_Hud.addAdBlueLine(self, box)
 
     local schedule = self:getServiceSchedule()
     local _, isReportOutdated = self:getInspectionReportAge()
@@ -1682,5 +1724,15 @@ function RMS_Hud:showInfoVehicle(box)
     end
 end
 
+---Hides the machine name while an RMS message shows
+function RMS_Hud.drawVehicleName(hud, superFunc)
+    if RMS_Main.hud ~= nil and RMS_Main.hud:getIsNotificationShown() then
+        return
+    end
+    superFunc(hud)
+end
+
 Vehicle.showInfo = Utils.appendedFunction(Vehicle.showInfo, RMS_Hud.showInfoVehicle)
 SpeedMeterDisplay.draw = Utils.overwrittenFunction(SpeedMeterDisplay.draw, RMS_Hud.drawSpeedMeter)
+FillLevelsDisplay.draw = Utils.overwrittenFunction(FillLevelsDisplay.draw, RMS_Hud.drawFillLevels)
+HUD.drawVehicleName = Utils.overwrittenFunction(HUD.drawVehicleName, RMS_Hud.drawVehicleName)

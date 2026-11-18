@@ -15,7 +15,6 @@ end
 
 ---Create new instance of event
 -- @param string effectId effect the event comes from
--- @param string status what happened
 -- @param float? value the lights mask of a flicker, the length in ms of a grind
 function RMS_EffectSyncEvent.new(vehicle, effectId, status, value)
     local self = RMS_EffectSyncEvent.emptyNew()
@@ -46,17 +45,17 @@ function RMS_EffectSyncEvent:readStream(streamId, connection)
 end
 
 
--- the state of an effect the client runs as well, nil once it is gone
+---The state of an effect the client runs as well, nil once it is gone
 local function getState(vehicle, effectId)
     return vehicle.spec_RealisticMechanicalSystems.activeEffects[effectId] ~= nil
         and RMS_Breakdowns.getEffectState(vehicle, effectId) or nil
 end
 
+---Plays a sample of the vehicle by its name
 local function playSample(vehicle, name)
     RMS_SoundManager.playSample(vehicle.spec_RealisticMechanicalSystems.samples[name])
 end
 
--- what a client plays of each effect, by effect id
 local CLIENT_EVENTS = {
     ENGINE_STALLS_CHANCE = function(vehicle)
         vehicle:stopMotor()

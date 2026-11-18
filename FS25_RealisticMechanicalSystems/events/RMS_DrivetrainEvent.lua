@@ -1,5 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
+---Event sending the drive mode, lock request and park brake of a driver to the server
 RMS_DrivetrainEvent = {}
 local RMS_DrivetrainEvent_mt = Class(RMS_DrivetrainEvent, Event)
 

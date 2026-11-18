@@ -5,10 +5,12 @@ RMS_BatteryChargerRequestEvent = {}
 local RMS_BatteryChargerRequestEvent_mt = Class(RMS_BatteryChargerRequestEvent, Event)
 InitEventClass(RMS_BatteryChargerRequestEvent, "RMS_BatteryChargerRequestEvent")
 
+---Create instance of Event class
 function RMS_BatteryChargerRequestEvent.emptyNew()
     return Event.new(RMS_BatteryChargerRequestEvent_mt)
 end
 
+---Create new instance of event
 function RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, result, mode)
     local self = RMS_BatteryChargerRequestEvent.emptyNew()
     self.charger = charger
@@ -19,6 +21,7 @@ function RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, result,
     return self
 end
 
+---Writes event data to a stream.
 function RMS_BatteryChargerRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.charger)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -27,6 +30,7 @@ function RMS_BatteryChargerRequestEvent:writeStream(streamId)
     streamWriteUIntN(streamId, self.mode, 1)
 end
 
+---Reads event data from a stream.
 function RMS_BatteryChargerRequestEvent:readStream(streamId, connection)
     self.charger = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -36,6 +40,7 @@ function RMS_BatteryChargerRequestEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Runs the command on the server and answers, or shows the refusal on the client
 function RMS_BatteryChargerRequestEvent:run(connection)
     if connection:getIsServer() then
         if self.result ~= "" and self.result ~= "ok" then
@@ -68,6 +73,7 @@ function RMS_BatteryChargerRequestEvent:run(connection)
     connection:sendEvent(RMS_BatteryChargerRequestEvent.new(self.charger, nil, self.disconnect, result))
 end
 
+---Sends a charger command from a client to the server
 function RMS_BatteryChargerRequestEvent.send(charger, target, disconnect, mode)
     if g_client ~= nil then
         g_client:getServerConnection():sendEvent(RMS_BatteryChargerRequestEvent.new(charger, target, disconnect, nil, mode))

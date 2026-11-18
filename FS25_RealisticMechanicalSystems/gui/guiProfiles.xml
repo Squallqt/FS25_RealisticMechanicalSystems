@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <GUIProfiles>
-    <!-- Header icon -->
     <Profile name="rms_menuHeaderIcon" extends="fs25_menuHeaderIcon">
         <imageSliceId value="rms_MenuIcon.menuIcon"/>
     </Profile>
@@ -210,7 +209,6 @@
         <imageSliceId value="gui.colorPreset"/>
         <imageColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <!-- Fluid level gauge -->
     <Profile name="rms_fluidGaugeUnder" extends="rms_fluidGaugeFill">
         <imageColor value="0.8069 0.0097 0.0097 1"/>
     </Profile>
@@ -257,10 +255,7 @@
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
 
-    <!-- Shared compact info tables -->
-
     <!-- Workshop specific -->
-    <!-- Workshop dialog canvas -->
     <Profile name="rms_workshopDialogBg" extends="fs25_dialogBg">
         <size value="1550px 884px"/>
         <position value="0px -83px"/>
@@ -280,9 +275,7 @@
         <position value="0px -38px"/>
     </Profile>
 
-    <!-- Fills its parent, or a frame's place -->
     <Profile name="rms_fillParent" extends="emptyPanel" with="anchorStretchingYStretchingX" />
-    <!-- Foot of a card, held to its bottom -->
     <Profile name="rms_cardFoot" extends="emptyPanel" with="anchorBottomLeft">
         <position value="0px 22px"/>
     </Profile>
@@ -443,7 +436,6 @@
     <Profile name="rms_workshopCardGauge" extends="rms_workshopBlock">
         <size value="281px 566px"/>
     </Profile>
-    <!-- Fleet condition card -->
     <Profile name="rms_workshopCardCondition" extends="rms_workshopBlock">
         <size value="328px 566px"/>
     </Profile>
@@ -618,7 +610,7 @@
         <textMinSize value="11px"/>
         <textMaxNumLines value="2"/>
     </Profile>
-    <!-- Outdated report indicator -->
+    <!-- Condition ring value and its outdated mark -->
     <Profile name="rms_ringValueStack" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <fillDirectionY value="topToBottom"/>
@@ -718,15 +710,12 @@
     <Profile name="rms_workshopFluidIconLubrication" extends="rms_workshopFluidIcon">
         <imageSliceId value="rms_WorkshopFluids.lubrication"/>
     </Profile>
-    <!-- Inspection icon -->
     <Profile name="rms_workshopLevelIconFaultSearch" extends="rms_workshopFluidIcon">
         <imageSliceId value="gui.icon_vehicleDealer_search"/>
     </Profile>
-    <!-- Information icon -->
     <Profile name="rms_workshopNoteIcon" extends="rms_workshopIcon">
         <size value="18px 18px"/>
     </Profile>
-    <!-- Table note -->
     <Profile name="rms_workshopTableNote" extends="rms_workshopLevelRowName">
         <textColor value="$preset_fs25_colorGreyLight"/>
     </Profile>
@@ -790,8 +779,6 @@
         <textAutoWidth value="true"/>
         <textMaxWidth value="1350px"/>
     </Profile>
-    <!-- Buttons -->
-
     <!-- Intervention rows -->
     <Profile name="rms_workshopAction" extends="emptyPanel" with="anchorTopLeft">
         <size value="310px 50px"/>
@@ -948,7 +935,6 @@
         <textBold value="false"/>
         <textColor value="0.5028 0.5028 0.5028 1"/>
     </Profile>
-    <!-- Maintenance interval -->
     <Profile name="rms_workshopLevelFrequency" extends="rms_workshopLevelDuration">
         <textSize value="12px"/>
     </Profile>
@@ -1047,7 +1033,6 @@
     <Profile name="rms_workshopQualityGaugeFill" extends="rms_workshopQualityGaugeTrack">
         <colorDisabled value="0.1094 0.1094 0.1094 1"/>
     </Profile>
-    <!-- List whose rows touch -->
     <Profile name="rms_workshopPackedList" extends="rms_workshopTableList">
         <listItemSpacing value="0px"/>
     </Profile>
@@ -1341,7 +1326,6 @@
         <textAlignment value="center"/>
         <textColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
-    <!-- 7 x 201 px + 6 x 11 px = 1473 px -->
     <Profile name="rms_logKpiRow" extends="rms_workshopRow">
         <size value="1473px 104px"/>
         <elementSpacing value="11px"/>
@@ -1488,9 +1472,6 @@
         <textColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
 
-    <!-- Report specific -->
-
-    <!-- Sell dialog specific -->
     <!-- Lease return dialog -->
     <Profile name="rms_sellDialogTitle" extends="rms_inspectionDialogTitle">
         <textMaxWidth value="710px"/>
@@ -1695,7 +1676,6 @@
     <Profile name="rms_fleetCardButtonIcon" extends="rms_workshopActionIcon">
         <size value="24px 24px"/>
     </Profile>
-    <!-- Back action -->
     <Profile name="rms_fleetCardButtonBackIcon" extends="rms_fleetCardButtonIcon">
         <position value="28px 0px"/>
         <size value="12px 12px"/>
@@ -1799,13 +1779,11 @@
         <colorHighlighted value="$preset_fs25_colorGreyListItem"/>
         <cornerSize value="0.2"/>
     </Profile>
-    <!-- Expanded system -->
     <Profile name="rms_fleetStateBand" extends="baseReference" with="anchorTopLeft">
         <imageColor value="0.0177 0.0177 0.0177 1"/>
         <imageSelectedColor value="$preset_colorTransparent"/>
         <imageHighlightedColor value="$preset_colorTransparent"/>
     </Profile>
-    <!-- Row indicator -->
     <Profile name="rms_fleetStateTriangle" extends="rms_workshopIcon">
         <size value="8px 8px"/>
         <imageSliceId value="gui.arrow_round"/>
@@ -2013,7 +1991,6 @@
     <Profile name="rms_diagCodeRow" extends="rms_diagRow">
         <height value="46.9px"/>
     </Profile>
-    <!-- Selected row -->
     <Profile name="rms_diagRowMark" extends="baseReference" with="anchorStretchingYLeft">
         <size value="4.4px 46.9px"/>
         <imageColor value="0 0 0 0"/>

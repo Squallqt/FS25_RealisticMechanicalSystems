@@ -1,5 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
+---Hand tool of a fluid container: a carried can or the nozzle of a drum
 RMS_FluidHandTool = {}
 
 local specName = "spec_" .. g_currentModName .. ".rmsFluidHandTool"
@@ -46,15 +47,18 @@ RMS_FluidHandTool.setDowns = {}
 
 source(modDirectory .. "events/RMS_FluidCanisterEvent.lua")
 
+---Checks if all prerequisite specializations are loaded
 function RMS_FluidHandTool.prerequisitesPresent(specializations)
     return true
 end
 
+---Registers the functions of the hand tool
 function RMS_FluidHandTool.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "setRMSFluidContainer", RMS_FluidHandTool.setRMSFluidContainer)
     SpecializationUtil.registerFunction(handToolType, "rmsFluidCarryCallback", RMS_FluidHandTool.rmsFluidCarryCallback)
 end
 
+---Registers the event listeners of the hand tool
 function RMS_FluidHandTool.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "onDraw", "onWriteStream", "onReadStream", "onHeldStart",
         "onHeldEnd", "onHandToolHolderChanged", "onCarryingPlayerEnteredVehicle", "onRegisterActionEvents" }) do
@@ -62,6 +66,7 @@ function RMS_FluidHandTool.registerEventListeners(handToolType)
     end
 end
 
+---Tells whether the local player carries the hand tool
 local function getIsLocallyCarried(handTool)
     local player = handTool:getCarryingPlayer()
     return player ~= nil and player.isOwner
@@ -86,6 +91,7 @@ function RMS_FluidHandTool.registerOverlays()
     end
 end
 
+---Sizes and colours the context icon, a brand logo kept in its own colours
 local function setContext(contextDisplay, superFunc, contextAction, contextIconName, text, priority, actionText)
     superFunc(contextDisplay, contextAction, contextIconName, text, priority, actionText)
 
@@ -96,6 +102,7 @@ local function setContext(contextDisplay, superFunc, contextAction, contextIconN
 end
 ContextActionDisplay.setContext = Utils.overwrittenFunction(ContextActionDisplay.setContext, setContext)
 
+---Returns the can the hands hold or aim at, nil without one
 local function getHandsCan(hands)
     local node = hands:getHeldItem()
     if node == nil then
@@ -133,6 +140,7 @@ local function getHandsDrum(hands)
     return nil
 end
 
+---Takes the can or the nozzle of the drum the hands aim at
 local function onTakeAction(hands)
     local container = getHandsCan(hands)
     if container ~= nil then
@@ -145,6 +153,7 @@ local function onTakeAction(hands)
     end
 end
 
+---Takes the pump of the drum the hands aim at, else the game's pick up
 local function onPickUpAction(hands, superFunc, ...)
     local drum, index = nil, nil
     if hands:getCarryingPlayer().isOwner then
@@ -158,6 +167,7 @@ local function onPickUpAction(hands, superFunc, ...)
 end
 HandToolHands.onPickUpAction = Utils.overwrittenFunction(HandToolHands.onPickUpAction, onPickUpAction)
 
+---Registers the key taking a can or a nozzle
 local function onHandsRegisterActionEvents(hands)
     if hands:getIsActiveForInput(true) then
         local _, eventId = hands:addActionEvent(InputAction.RMS_TOGGLE_FLUID_CAN, hands, onTakeAction, true, false, false, false, nil)
@@ -168,6 +178,7 @@ local function onHandsRegisterActionEvents(hands)
 end
 HandToolHands.onRegisterActionEvents = Utils.appendedFunction(HandToolHands.onRegisterActionEvents, onHandsRegisterActionEvents)
 
+---Picks the can back up once carried, and offers the take and pump keys
 local function onHandsUpdate(hands)
     local player = hands:getCarryingPlayer()
     if player == nil or not player.isOwner or not hands:getIsHeld() then
@@ -337,6 +348,7 @@ function RMS_FluidHandTool.update()
     end
 end
 
+---Called on loading
 function RMS_FluidHandTool:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     if spec == nil then
@@ -376,7 +388,6 @@ function RMS_FluidHandTool:setRMSFluidContainer(container, index)
         g_inputBinding:setActionEventText(spec.pourEventId, spec.pourText)
         g_inputBinding:setActionEventText(spec.carryEventId, spec.carryText)
 
-        -- AdBlue pours like water, as the coolant does
         local isWatery = product.compatibleCircuits.coolant or product.compatibleCircuits.adBlue
         local sampleName = spec.isNozzle and "drumPump" or (isWatery and "fluidPourCoolant" or "fluidPourOil")
         local soundsFile = loadXMLFile("rmsFluidHandToolSounds", modDirectory .. "sounds/rms_sounds.xml")
@@ -386,11 +397,13 @@ function RMS_FluidHandTool:setRMSFluidContainer(container, index)
     end
 end
 
+---Called on server side on join
 function RMS_FluidHandTool:onWriteStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self[specName].container)
     streamWriteUInt8(streamId, self[specName].index or 1)
 end
 
+---Called on client side on join
 function RMS_FluidHandTool:onReadStream(streamId, connection)
     -- The container may arrive after its hand tool on join.
     self[specName].containerId = NetworkUtil.readNodeObjectId(streamId)
@@ -398,6 +411,7 @@ function RMS_FluidHandTool:onReadStream(streamId, connection)
     self:raiseActive()
 end
 
+---Stops the pour under way
 local function stopPour(handTool)
     local spec = handTool[specName]
     if spec.pourVehicle ~= nil then
@@ -413,6 +427,7 @@ function RMS_FluidHandTool.getIsMachineNode(node)
     return vehicleSpec ~= nil and not vehicleSpec.isExcludedVehicle and g_currentMission.accessHandler:canPlayerAccess(vehicle)
 end
 
+---Finds the machine aimed at, its circuit and why it may not be poured into
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local node = player.targeter:getClosestTargetedNodeFromType(RMS_FluidHandTool)
@@ -440,6 +455,7 @@ function RMS_FluidHandTool:rmsFluidCarryCallback(hitObjectId, x, y, z, distance)
     end
 end
 
+---Called on update: follows the carrier, plays the pour, watches the hose, aims
 function RMS_FluidHandTool:onUpdate(dt)
     local spec = self[specName]
     if spec.containerId ~= nil then
@@ -520,6 +536,7 @@ function RMS_FluidHandTool:onDraw()
     end
 end
 
+---Registers the pour and carry keys
 function RMS_FluidHandTool:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -538,6 +555,7 @@ function RMS_FluidHandTool:onRegisterActionEvents()
     spec.carryEventId = carryEventId
 end
 
+---Sets the can down short of what the player faces, to be carried in the hands
 local function carry(handTool)
     local spec = handTool[specName]
     local x, y, z, dx, dy, dz = handTool:getCarryingPlayer().targeter:getLastLookRay()
@@ -551,6 +569,7 @@ local function carry(handTool)
         z + dz * spec.carryDistance, MathUtil.getYRotationFromDirection(dx, dz) })
 end
 
+---Starts the pour into the machine aimed at, confirmed first when the fluid does not suit
 local function startPour(handTool)
     local spec = handTool[specName]
     local target, circuit = spec.target, spec.targetCircuit
@@ -626,7 +645,7 @@ function RMS_FluidHandTool:onHeldStart()
     end
 end
 
----A can that leaves the hand is set down: it is not put away like a tool
+---Sets the can down once it leaves the hand, never put away like a tool
 function RMS_FluidHandTool:onHeldEnd()
     if getIsLocallyCarried(self) then
         local spec = self[specName]
@@ -751,7 +770,6 @@ function RMS_FluidHandTool.draw()
     local capacity = RMS_Fluids.getCapacity(display.vehicle, display.circuit)
     local isLevelDone = not display.isPouring and capacity - liters <= RMS_FluidHandTool.LEVEL_TOLERANCE
     local isEmptied = not display.isPouring and not isLevelDone and display.containerLiters <= RMS_FluidHandTool.LEVEL_TOLERANCE
-    -- a tank reads from empty to full, a sump on its dipstick
     local isTank = RMS_Fluids.TANKS[display.circuit] ~= nil
     local fill, fillColor = RMS_Fluids.getLevel(display.vehicle, display.circuit), HUD.COLOR.ACTIVE
     if not isTank then

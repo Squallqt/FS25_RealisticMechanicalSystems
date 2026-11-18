@@ -24,7 +24,7 @@ local RECAP_FIGURES = {
     { label = "rms_ws_label_finish_time", field = "finish" }
 }
 
--- table geometry in reference pixels, as laid out in the XML
+-- table geometry in reference pixels
 local TABLE_WIDTH, TABLE_HEIGHT, LABEL_WIDTH, COLUMN_GAP = 619, 472, 220, 8
 local ORDER_WIDTH, NOTE_TEXT_X = 647, 26
 local HEADER, FREQUENCY, ROW, BOTTOM = 112, 16, 44, 8
@@ -45,7 +45,6 @@ local COVER_TEXTS = {
     warranty = { price = "rms_option_menu_warranty_repair_text", fluids = "rms_fluid_warranty_covered" },
     lease = { price = "rms_option_menu_lease_service_text", fluids = "rms_fluid_lease_covered" }
 }
--- flat rates whose option names the work alone: a full repaint, a remap
 local FLAT_RATE_NAMED = { [STATUS.BODYWORK] = true, [STATUS.REMAP] = true }
 -- the slider lane stays kept: rows never change width
 local QUOTE_WIDTH, QUOTE_HEIGHT, QUOTE_LIST, QUOTE_ROW_WIDTH = 372, 202, 166, 334
@@ -119,7 +118,7 @@ end
 
 local cloneTemplate = RMS_Utils.cloneTemplate
 
--- each layout of the cells hooks a block's first focusable to scroll
+---Each layout of the cells hooks a block's first focusable to scroll
 local function keepInPlaceOnFocus(element)
     if element.scrollingFocusEnter_orig ~= nil then
         element.onFocusEnter = element.scrollingFocusEnter_orig
@@ -128,10 +127,12 @@ end
 
 local formatPower = RMS_Utils.formatPower
 
+---Formats a torque in Nm
 local function formatTorque(nm)
     return string.format(g_i18n:getText("rms_remap_torque_format"), g_i18n:formatNumber(MathUtil.round(nm), 0))
 end
 
+---Formats the duration of a service, instant when the settings make it so
 -- @param float duration duration in hours
 local function formatServiceDuration(serviceType, duration, format)
     if duration > 0 and RealisticMechanicalSystems.getIsServiceInstant(serviceType) then
@@ -151,6 +152,7 @@ local function formatPrice(price, coverKey)
     return g_i18n:formatMoney(price, 0, true, false)
 end
 
+---Returns the quote group of the warranty a remap takes or a restore leaves lost
 local function getLostWarranty(vehicle, offer, isRestore)
     local lines = {}
     if offer.factoryTerm then
@@ -345,7 +347,6 @@ function RMS_WorkshopInterventionsFrame:refresh(state)
     self.remapPanel:setVisible(hasOrder and self.serviceType == STATUS.REMAP)
     self.orderScroll:setVisible(hasOrder and self.serviceType ~= STATUS.REMAP)
     self.orderSliderBox:setVisible(false)
-    -- a service the workshop cannot do keeps its start button, greyed
     self.startButton:setVisible(hasOrder or self.refusedService ~= nil and not state.isUnderService)
     if state.isUnderService then
         self:updateProgress()
@@ -514,7 +515,6 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     self.orderScroll:raiseSliderUpdateEvent()
     local hasSlider = self.orderSlider.needsSlider == true
     self.orderSliderBox:setVisible(hasSlider)
-    -- a fitting order takes the lane of the hidden slider
     local width = hasSlider and TABLE_WIDTH or ORDER_WIDTH
     if hasTable and width ~= self.tableWidth then
         self.tableWidth = width
@@ -660,12 +660,11 @@ function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     end
 end
 
--- info={origin, warranty, isCovered, wear, factory, isFactoryKept}
+---Returns the card of a part quality: origin, warranty, wear and factory warranty kept or lost
 local function getQualityPartInfo(frame, quality)
     local R, vehicle, workshopType = RealisticMechanicalSystems, frame.vehicle, frame.workshopType
     local OEM = R.PART_TYPES.OEM
     local newPart = g_i18n:getText("rms_ws_quality_new_part")
-    -- the warranty repairs every fault: original parts that keep its cover
     if vehicle:isWarrantyRepairCovered(workshopType) then
         local monthsLeft = RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
         return { origin = newPart, isCovered = true, wear = 0,
@@ -676,14 +675,12 @@ local function getQualityPartInfo(frame, quality)
     if count == 0 then
         return nil
     end
-    -- a lease or a remap honours none
     local isHonoured = vehicle.propertyState ~= VehiclePropertyState.LEASED and not vehicle.spec_RealisticMechanicalSystems.warrantyVoided
     local isFactoryRunning = isHonoured and R.getIsWithinWarrantyLimits(vehicle)
     local info = { origin = newPart, warranty = "rms_ws_quality_no_warranty", isCovered = false, wear = 0 }
     if quality == R.PART_TYPES.USED then
         info.origin = minimum == maximum and string.format(g_i18n:getText("rms_ws_quality_donor"), minimum)
             or string.format(g_i18n:getText("rms_ws_quality_donors"), minimum, maximum)
-        -- the most worn part the order fits
         info.wear = maximum * RMS_Config.CORE.BASE_SYSTEMS_WEAR
         if guaranteed == count then
             info.warranty, info.isCovered = "rms_ws_quality_used_warranty", true
@@ -701,7 +698,6 @@ local function getQualityPartInfo(frame, quality)
             info.warranty, info.isCovered = "rms_ws_quality_factory_warranty", true
         end
     end
-    -- a part not original leaves the factory warranty while it runs
     if isFactoryRunning and (quality ~= OEM or info.warranty ~= "rms_ws_quality_factory_warranty") then
         info.isFactoryKept = quality == OEM
         info.factory = g_i18n:getText(quality == OEM and "rms_ws_quality_factory_kept" or "rms_ws_quality_factory_lost")
@@ -716,7 +712,7 @@ local FILTER_DEFECT_KEYS = {
     [RealisticMechanicalSystems.PART_TYPES.OEM] = "rms_ws_quality_filters_sound"
 }
 
--- info={origin}: how often a filter of the quality is defective
+---Returns the card of a filter quality: how often a filter of it is defective
 local function getQualityFilterInfo(frame, quality)
     if #RMS_Consumables.getDefectiveFilterCandidates(frame.vehicle, frame.choice) == 0 then
         return nil
@@ -737,7 +733,6 @@ function RMS_WorkshopInterventionsFrame:updateQualities()
     local infos, layouts, height = {}, {}, 0
     for index, quality in ipairs(RealisticMechanicalSystems.PART_TYPES_ORDER) do
         local isLocked = imposedQuality ~= nil and quality ~= imposedQuality
-        -- a card the order cannot take keeps its layout, greyed
         if isRepair then
             infos[index] = not isLocked and getQualityPartInfo(self, quality) or nil
             layouts[index] = QUALITY_LAYOUTS.part
@@ -929,7 +924,6 @@ function RMS_WorkshopInterventionsFrame:getServiceQuote(serviceType, choice, opt
     if #groups > 0 or invoice == nil or invoice[1] == nil or invoice[1].kind ~= "service" then
         return groups
     end
-    -- a flat rate: its labour, then what its order table says it covers
     local option = RMS_Utils.formatServiceOption(vehicle, serviceType, choice, workshopType)
     local label = FLAT_RATE_NAMED[serviceType] and option or string.format("%s · %s", RMS_Utils.formatServiceState(serviceType), option)
     local group = { label = label, price = tonumber(invoice[1].price) or 0, lines = {} }
@@ -986,7 +980,6 @@ function RMS_WorkshopInterventionsFrame:writeRecap(recap)
     self.recapPriceLabel:setText(recap.priceLabel or g_i18n:getText("rms_option_menu_price_text"))
     self.recapPrice:setText(recap.price or "-")
     for index, entry in ipairs(RECAP_FIGURES) do
-        -- the label takes its width, the value the rest, right aligned
         local figure = self.recapFigures[index]
         local label, value = figure:getDescendantByName("label"), figure:getDescendantByName("figure")
         label:setSize(figure.size[1], nil)
@@ -1002,7 +995,6 @@ function RMS_WorkshopInterventionsFrame:writeRecap(recap)
 
     local rows, height = RMS_FluidWorkshop.getQuoteRows(recap.quote or {})
     self.quoteLines = rows
-    -- the block keeps its place, empty or not
     local isEmpty = #rows == 0
     self.quoteList:setVisible(not isEmpty)
     self.quoteEmptyTitle:setVisible(isEmpty)
@@ -1083,7 +1075,6 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
     local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, remap, workshopType, offer.option, nil)
     local duration = vehicle:getServiceDuration(remap, offer.option, nil, workshopType)
     local quote = self:getQuote(nil, nil)
-    -- the warranty a remap takes, or the factory term a restore leaves lost
     if isRestore and offer.warrantyVoided and offer.factoryTerm or not isRestore and offer.warrantyActive then
         table.insert(quote, getLostWarranty(vehicle, offer, isRestore))
     end
@@ -1113,6 +1104,7 @@ function RMS_WorkshopInterventionsFrame:onDrawLegendSwatch(element)
     end
 end
 
+---Returns the bottom and the step of a chart axis holding low to high in CHART_INTERVALS steps
 local function getAxisScale(low, high, steps)
     for _, step in ipairs(steps) do
         local bottom = math.floor(low / step) * step
@@ -1124,6 +1116,7 @@ local function getAxisScale(low, high, steps)
     return math.floor(low / step) * step, step
 end
 
+---Draws a text of the chart
 local function drawAxisText(x, y, size, text, color, isBold, alignment)
     setTextBold(isBold)
     setTextColor(color[1], color[2], color[3], color[4])
@@ -1131,6 +1124,7 @@ local function drawAxisText(x, y, size, text, color, isBold, alignment)
     renderText(x, y, size, text)
 end
 
+---Draws a text on a rounded pill centred on a point
 local function drawPill(x, y, text, size, background, textColor)
     setTextBold(true)
     local width = getTextWidth(size, text) + size * 1.2 * g_screenHeight / g_screenWidth

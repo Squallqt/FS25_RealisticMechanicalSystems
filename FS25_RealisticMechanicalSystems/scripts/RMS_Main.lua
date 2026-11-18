@@ -6,7 +6,6 @@ RMS_Main = {}
 RMS_SoundManager = {}
 
 ---Plays a sample once
--- @param table? sample audio sample
 -- @param table? afterSample sample whose end starts this one
 function RMS_SoundManager.playSample(sample, afterSample)
     if sample ~= nil then
@@ -48,7 +47,6 @@ function RMS_SoundManager.setSamplePitchOffset(sample, pitchOffset)
 end
 
 ---Plays a sample from a point of its recording
--- @param table sample audio sample
 -- @param float offset point of the recording in ms
 function RMS_SoundManager.playSampleFrom(sample, offset)
     if sample.isEmptySample or sample.soundSample == nil then
@@ -59,7 +57,6 @@ function RMS_SoundManager.playSampleFrom(sample, offset)
 end
 
 ---Returns the length of the start recording of an engine sound
--- @param table sample audio sample
 -- @return float duration duration in ms, 0 for a sound without one
 function RMS_SoundManager.getSampleStartDuration(sample)
     return g_soundManager:getSampleLoopSynthesisStartDuration(sample)
@@ -190,6 +187,7 @@ local RMS_REQUIRED_SPECIALIZATIONS = {"motorized", "wheels", "enterable"}
 
 local RMS_REJECTED_SPECIALIZATIONS = {"pushHandTool", "locomotive", "motorbike"}
 
+---Tells whether a vehicle type is a machine RMS manages
 local function getIsTypeManagedByRMS(vehicleType)
 	local specializations = vehicleType.specializationsByName
 	if specializations.RealisticMechanicalSystems ~= nil then
@@ -211,12 +209,14 @@ local function getIsTypeManagedByRMS(vehicleType)
 	return true
 end
 
+---Tells whether a vehicle type is an implement taking the greasing
 local function getIsImplementType(vehicleType)
 	local specializations = vehicleType.specializationsByName
 	return specializations.attachable ~= nil and specializations.wearable ~= nil
 		and specializations.RealisticMechanicalSystems == nil and specializations.rmsImplementGreasing == nil
 end
 
+---Adds a specialization to a vehicle type
 local function addSpecialization(vehicleType, specName)
 	local specObject = g_specializationManager:getSpecializationObjectByName(specName)
 	vehicleType.specializationsByName[specName] = specObject
@@ -262,7 +262,6 @@ function RMS_Main:onStartMission()
     hud:setVehicle(nil)
     RMS_Main.hud = hud
 
-    -- Drawn after the vehicle HUD, fed the vehicle the game controls
     local gameHud = g_currentMission.hud
     table.insert(gameHud.displayComponents, hud)
     gameHud.setControlledVehicle = Utils.appendedFunction(gameHud.setControlledVehicle, function(_, vehicle)
@@ -272,7 +271,6 @@ function RMS_Main:onStartMission()
         hud:draw()
     end)
 
-    -- Condition line of the shop, RMS first, the game for the rest
     local condition = g_storeManager:getSpecTypeByName("wearable")
     local getGameCondition = condition.getValueFunc
     condition.getValueFunc = function(storeItem, realItem, configurations, saleItem)
@@ -302,7 +300,7 @@ function RMS_Main.refreshWorkshopResalePrices(screen, dt)
     end
 end
 
----Workshop a vanilla workshop screen stands for
+---Returns the workshop a game workshop screen stands for
 function RMS_Main.getWorkshopType(screenInstance)
     local WORKSHOP = RealisticMechanicalSystems.WORKSHOP
     if screenInstance.isMobileWorkshop then
@@ -313,12 +311,12 @@ function RMS_Main.getWorkshopType(screenInstance)
     return WORKSHOP.DEALER
 end
 
----Opens the workshop dialog in place of the vanilla repair button
+---Opens the workshop dialog in place of the game's repair
 function RMS_Main.onCustomRepairClick(screenInstance)
     RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance))
 end
 
----Redirects the vanilla repair button to the mod workshop dialog
+---Redirects the game's repair button to the workshop dialog
 function RMS_Main.hookRepairButton(screenInstance, vehicle)
     local button = screenInstance.repairButton
     if screenInstance.rmsOriginalRepairCallback == nil and button.onClickCallback ~= nil then
@@ -336,7 +334,7 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
 end
 
 
----Finds the native repaint control by its actual GUI callback.
+---Returns the game's repaint button, found by its callback, nil when it is not unique
 function RMS_Main.findNativeRepaintButton(screenInstance)
     if screenInstance.rmsNativeRepaintButton ~= nil then
         return screenInstance.rmsNativeRepaintButton
@@ -368,7 +366,7 @@ function RMS_Main.findNativeRepaintButton(screenInstance)
 end
 
 
----Redirects the native repaint action for RMS vehicles only.
+---Redirects the game's repaint button to the bodywork dialog on a machine RMS manages
 function RMS_Main.hookRepaintButton(screenInstance, vehicle)
     local button = RMS_Main.findNativeRepaintButton(screenInstance)
     if button == nil then
@@ -495,6 +493,7 @@ function RMS_Main.updateShopConfigPaintPrices(screen, storeItem, vehicle)
     end
 end
 
+---Tells whether RMS tracks a store item
 local function loadIsTracked(xmlFile, customEnvironment)
     return RealisticMechanicalSystems.getIsStoreItemTracked(xmlFile, customEnvironment)
 end
@@ -509,6 +508,7 @@ local function getIsRated(storeItem, vehicle)
     return isTracked and storeItem.specs.power ~= nil
 end
 
+---Returns the launch year text of a rated item
 local function getLaunchYear(storeItem, vehicle)
     if getIsRated(storeItem, vehicle) then
         local year, source = RMS_ProductionYear.getYear(storeItem)
@@ -519,6 +519,7 @@ local function getLaunchYear(storeItem, vehicle)
     end
 end
 
+---Returns the reliability text of a rated item
 local function getReliability(storeItem, vehicle)
     if getIsRated(storeItem, vehicle) then
         local reliability = RealisticMechanicalSystems.getBrandReliability(vehicle, storeItem)
@@ -526,12 +527,14 @@ local function getReliability(storeItem, vehicle)
     end
 end
 
+---Returns the service access text of a rated item
 local function getServiceAccess(storeItem, vehicle, configurations)
     if getIsRated(storeItem, vehicle) then
         return RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations, true)
     end
 end
 
+---Returns the condition the shop shows: last maintenance of a machine, owner care of an offer
 -- @return string? text attribute, nil for an item RMS leaves to the game
 function RMS_Main.getShopCondition(storeItem, realItem, saleItem)
     if realItem ~= nil then
@@ -561,6 +564,7 @@ function RMS_Main.onVehicleWillSell(saleSystem, superFunc, vehicle)
     end
 end
 
+---Returns the used offer a sales file entry stands for
 local function getSaleItem(saleSystem, xmlFile, key)
     local xmlFilename = xmlFile:getString(key .. "#xmlFilename")
     local age = xmlFile:getInt(key .. "#age")
@@ -716,7 +720,6 @@ function RMS_Main.populateCellForItemInSection(frame, superFunc, list, section, 
     local _, isOutdated = vehicle:getInspectionReportAge()
     local conditionText = cell:getAttribute("damage")
     conditionText:setText(RMS_Utils.formatCondition(condition, isComplete))
-    -- An outdated report is dimmed, a current one coloured by its condition
     if isOutdated then
         conditionText:setTextColor(unpack(RMS_Utils.COLOR.TEXT_DIM))
     else
@@ -814,7 +817,7 @@ function RMS_Main:evaluateWorkshopState()
     return hour >= hours.OPEN_HOUR and hour < hours.CLOSE_HOUR
 end
 
----Setting that keeps each workshop type open around the clock
+-- setting keeping each workshop type open around the clock
 RMS_Main.ALWAYS_AVAILABLE_SETTINGS = {
     DEALER = "DEALER_ALWAYS_AVAILABLE",
     MOBILE = "MOBILE_ALWAYS_AVAILABLE",
@@ -892,7 +895,7 @@ function RMS_Main.updateWeather()
     RMS_Main.currentWeather = g_currentMission.environment.weather:getCurrentWeatherType()
 end
 
----Steps a tracked machine; weather and shelter every meta step
+---Steps a tracked machine, its weather and shelter on the meta interval
 function RMS_Main:stepVehicle(vehicle)
     local step = RMS_Config.CORE_UPDATE_DELAY
     vehicle:rmsUpdate(step, self.isWorkshopOpen)
@@ -904,14 +907,13 @@ function RMS_Main:stepVehicle(vehicle)
     end
     spec.metaUpdateTimer = spec.metaUpdateTimer - RMS_Config.META_UPDATE_DELAY
     RMS_Main.updateWeather()
-    -- A working machine keeps the shelter it was parked under
     if vehicle:getIsOperating() then
         return
     end
     spec.isUnderRoof = vehicle:isUnderRoof()
 end
 
----Next tracked machine of the round, back to the first after the last
+---Returns the next tracked machine of the round, the first after the last
 function RMS_Main:getNextRoundVehicle()
     local key, vehicle = next(self.vehicles, self.previousKey)
     if key == nil then
@@ -952,7 +954,6 @@ function RMS_Main:update(dt)
         end
     end
 
-    -- Server only: each machine steps once per CORE_UPDATE_DELAY
     local isStepping = g_currentMission:getIsServer() and self.numVehicles > 0
     if not isStepping then
         self.previousKey = nil
@@ -997,6 +998,7 @@ function RMS_Main:loadMap()
     delete(soundsXmlFile)
 end
 
+---Called on deleting the map
 function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     g_messageCenter:unsubscribe(MessageType.DAY_CHANGED, self)

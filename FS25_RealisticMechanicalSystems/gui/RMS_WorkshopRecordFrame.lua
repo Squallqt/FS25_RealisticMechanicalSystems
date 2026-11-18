@@ -25,6 +25,7 @@ local KPI_CARDS = {
     { profile = "rms_logKpiMaintenanceIcon", label = "rms_log_average_maintenance_interval_title", figure = "maintenanceInterval" }
 }
 
+---Returns the names of the parts a log entry picked, each once
 local function getPartNames(vehicle, entry)
     local names, seen = {}, {}
     for _, id in ipairs(entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}) do
@@ -39,10 +40,12 @@ local function getPartNames(vehicle, entry)
     return names
 end
 
+---Returns the text naming the workshop of a log entry, empty for none
 local function getLocation(entry)
     return RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, entry.location) ~= nil and g_i18n:getText(entry.location) or ""
 end
 
+---Returns the system of a log entry in brackets, empty without one
 local function getSystemSuffix(vehicle, entry)
     if entry.type ~= RealisticMechanicalSystems.STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
         return " (" .. g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, entry.optionTwo)) .. ")"
@@ -50,6 +53,7 @@ local function getSystemSuffix(vehicle, entry)
     return ""
 end
 
+---Returns the summary of a log entry and the list shown under it
 local function getPresentation(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(vehicle, entry)
@@ -80,6 +84,7 @@ local function getPresentation(vehicle, entry)
     return { summary = (RMS_Utils.getLogTypePresentation(entry)), detailLabel = "", detailItems = {} }
 end
 
+---Returns the one line description of a log entry in the history
 local function getDescription(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(vehicle, entry)
@@ -104,7 +109,7 @@ local function getDescription(vehicle, entry)
     return description
 end
 
--- invoice list in reference pixels, as laid out in the XML
+-- invoice list in reference pixels
 local INVOICE_WIDTH, INVOICE_HEIGHT = 457, 154
 
 ---Creates the page

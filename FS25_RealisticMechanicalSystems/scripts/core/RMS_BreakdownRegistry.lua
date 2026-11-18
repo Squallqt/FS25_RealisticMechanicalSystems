@@ -6,7 +6,6 @@ RMS_Breakdowns.DASHBOARD = { ENGINE = "engine", WARNING = "warning", TRANSMISSIO
     COOLANT = "coolant", SERVICE = "service", OIL = "oil", PREHEAT = "preheat", TRACTION_BATTERY = "tractionBattery",
     LIMITED_POWER = "limitedPower", DPF = "dpf" }
 
--- speed gauge blue and orange, mixer wagon bad mix red
 RMS_Breakdowns.COLORS = { DEFAULT = Dashboard.COLORS.GREY, COOL = { 0.0097, 0.4287, 0.6445, 1 }, WARNING = { 1, 0.4287, 0.0006, 1 },
     CRITICAL = { 0.8069, 0.0097, 0.0097, 1 } }
 
@@ -19,6 +18,7 @@ RMS_Breakdowns.COLOR_PRIORITY = { [color.DEFAULT] = 0, [color.COOL] = 1, [color.
 local getIsElectricVehicle = RMS_Utils.getIsElectricVehicle
 local hasCVTAddon = RMS_Utils.hasCVTAddon
 
+---Tells whether a powershift gearbox or range applies
 local function isPowershiftBreakdownApplicable(vehicle)
     if hasCVTAddon(vehicle) or getIsElectricVehicle(vehicle) then return false end
     local motor = vehicle:getMotor()
@@ -26,7 +26,7 @@ local function isPowershiftBreakdownApplicable(vehicle)
         or motor.groupType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT)
 end
 
--- the game shifts a truck's robotised gearbox like a powershift
+---Tells whether powershift clutches apply, a truck's robotised gearbox the game shifts alike left out
 local function isPowershiftClutchBreakdownApplicable(vehicle)
     return isPowershiftBreakdownApplicable(vehicle) and not vehicle.spec_RealisticMechanicalSystems.isTruck
 end
@@ -48,7 +48,7 @@ local function getHasRoadWheel(vehicle)
     return false
 end
 
----Tells whether one of those tyres steers
+---Tells whether a tyre outside the tracks steers
 local function getHasSteeredRoadWheel(vehicle)
     for _, wheel in ipairs(vehicle.spec_wheels ~= nil and vehicle.spec_wheels.wheels or {}) do
         if not getIsTrackWheel(wheel) and RMS_Drivetrain.getIsWheelSteerable(wheel) then
@@ -78,7 +78,7 @@ local function isSteeringUnitBreakdownApplicable(vehicle)
     return getHasSteeringWheel(vehicle) and (getHasSteeredRoadWheel(vehicle) or getIsArticulated(vehicle))
 end
 
----Names the steering gear of a road vehicle, cylinder included
+---Returns the steering gear of a road vehicle, its cylinder included
 local function getSteeringGearVariant(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.isTruck then
         return "box"
@@ -93,12 +93,12 @@ local function isServiceBrakeBreakdownApplicable(vehicle)
     return getHasRoadWheel(vehicle) or getIsArticulated(vehicle)
 end
 
+---Tells whether the machine runs on tracks
 local function isCrawlerBreakdownApplicable(vehicle)
     return vehicle.spec_crawlers ~= nil and vehicle.spec_crawlers.crawlers ~= nil and #vehicle.spec_crawlers.crawlers > 0
 end
 
--- the game also drives a sprayer's track width on the loader tool axis
----Names the arm a loader axis moves on a machine that is no loader
+---Returns the arm a loader axis moves on a machine that is no loader
 local function getLoaderVariant(vehicle)
     if RMS_Drivetrain.getIsInCategories(vehicle, { FORKLIFTS = true }) then
         return "mast"
@@ -112,6 +112,7 @@ local function getLoaderVariant(vehicle)
     return nil
 end
 
+---Tells whether the machine moves a front loader arm
 local function isFrontLoaderPivotBreakdownApplicable(vehicle)
     local spec = vehicle.spec_cylindered
     for _, tool in ipairs(spec ~= nil and spec.movingTools or {}) do
@@ -136,6 +137,7 @@ local function isWheelDifferentialBreakdownApplicable(vehicle)
     return false
 end
 
+---Tells whether the machine carries a trailer hitch
 local function isTrailerBrakeValveApplicable(vehicle)
     local spec = vehicle.spec_attacherJoints
     if spec == nil or spec.attacherJoints == nil then
@@ -152,6 +154,7 @@ local function isTrailerBrakeValveApplicable(vehicle)
     return false
 end
 
+---Tells whether the cab rides on a suspension
 local function isCabSuspensionApplicable(vehicle)
     local spec = vehicle.spec_suspensions
     for _, suspension in ipairs(spec ~= nil and spec.suspensionNodes or {}) do
@@ -162,6 +165,7 @@ local function isCabSuspensionApplicable(vehicle)
     return false
 end
 
+---Tells whether a gearbox with its own oil carries a filter
 local function isTransmissionFilterApplicable(vehicle)
     if getIsElectricVehicle(vehicle) or RMS_Fluids.getSumpCircuit(vehicle, "hydraulicFluid") == "transmissionOil" then
         return false
@@ -357,6 +361,7 @@ RMS_Breakdowns.PARTS = {
 
 local parts = RMS_Breakdowns.PARTS
 
+-- parts price of each stage in % of REPAIR_REFERENCE_VALUE, a stage with ways one per way
 local stagePartPrices = {
     ENGINE_JAM = { 4.578 },
     ECU_MALFUNCTION = { 0.6191, 0.6191, 0.6191, 0.6191 },
@@ -528,20 +533,22 @@ local stagePartPrices = {
     VEGETABLE_ELEVATOR_WEAR = { 0.1387, 0.1387, 0.2081, 0.2774 },
 }
 
+---Tells whether the machine carries hydraulics
 local function isHydraulicBreakdownApplicable(vehicle)
     return RMS_Utils.hasHydraulicCapability(vehicle)
 end
 
+---Tells whether the machine carries a hydraulic lift
 local function isHydraulicLiftBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicLiftCapability(vehicle)
 end
 
--- the game lowers a car's tow hitch like a three-point lift
+---Tells whether a hitch lift applies, a car's tow hitch the game lowers alike left out
 local function isHitchLiftBreakdownApplicable(vehicle)
     return isHydraulicLiftBreakdownApplicable(vehicle) and not RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
 end
 
----Names a lift that only ever raises a harvesting header
+---Returns header for a lift that only ever raises a harvesting header
 local function getLiftVariant(vehicle)
     local carriesHeader = false
     for _, jointDesc in pairs(vehicle.spec_attacherJoints ~= nil and vehicle.spec_attacherJoints.attacherJoints or {}) do
@@ -556,58 +563,78 @@ local function getLiftVariant(vehicle)
     return carriesHeader and "header" or nil
 end
 
+---Tells whether the machine carries hydraulic hoses
 local function isHydraulicHoseBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicHoseCapability(vehicle)
 end
 
+---Tells whether the machine carries a controllable hydraulic function
 local function isHydraulicActuatorBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicControllableTargetCapability(vehicle)
 end
 
+---Tells whether the machine carries a PTO output
 local function isPtoBreakdownApplicable(vehicle)
     return RMS_Utils.hasPtoOutputCapability(vehicle)
 end
 
+---Tells whether an electric machine drives through a reducer
 local function isReducerBreakdownApplicable(vehicle)
     return getIsElectricVehicle(vehicle) and vehicle:getMotor().minForwardGearRatio ~= nil
 end
 
+---Tells whether the machine carries a variator RMS manages
 local function isVariatorBreakdownApplicable(vehicle)
     return not hasCVTAddon(vehicle) and RMS_Utils.hasCVTTransmission(vehicle)
 end
 
+---Returns true
 local function always() return true end
+---Returns false
 local function never() return false end
+---Tells whether the machine has a combustion engine
 local function getHasEngine(vehicle) return not getIsElectricVehicle(vehicle) end
+---Tells whether the engine drives an accessory belt
 local function getHasEngineBelt(vehicle) return getHasEngine(vehicle) and vehicle.spec_motorbike == nil end
+---Tells whether the machine has a park brake
 local function getHasParkBrake(vehicle) return vehicle.spec_motorbike == nil end
+---Tells whether the engine has an ECU
 local function getHasEcu(vehicle) return RMS_Utils.getUsesEngineECUProfile(vehicle) end
+---Tells whether the engine is a diesel
 local function getIsDiesel(vehicle) return RMS_Preheat.isDieselVehicle(vehicle) end
+---Tells whether RMS runs the drivetrain
 local function getHasDrivetrain(vehicle) return RMS_Drivetrain.getIsAvailable(vehicle) end
+---Tells whether the engine protection applies
 local function getHasThermalProtection(vehicle) return RMS_Thermal.getUsesEngineProtection(vehicle) end
 
+---Tells whether the engine draws through an air filter
 local function getHasAirFilter(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec ~= nil and spec.isVehicleNeedBlowOut and not spec.isElectricVehicle
 end
 
+---Tells whether the engine is turbocharged
 local function getHasTurbocharger(vehicle)
     return getHasEngineBelt(vehicle) and (vehicle:getMotor().peakMotorPower or 0) >= RMS_Config.CORE.TURBO_MIN_POWER_KW
 end
 
+---Tells whether the fan runs on a clutch
 local function getHasFanClutch(vehicle)
     local drive = RMS_Utils.getFanDrive(vehicle)
     return vehicle.spec_motorbike == nil and (drive == "VISCOUS" or drive == "ELECTRONIC")
 end
 
+---Tells whether the lights run through a power distribution unit
 local function getHasPowerDistribution(vehicle)
     return vehicle.spec_RealisticMechanicalSystems.year >= 2000 and vehicle.spec_lights ~= nil
 end
 
+---Tells whether the exhaust carries a particulate filter
 local function getHasParticulateFilter(vehicle)
     return vehicle.spec_RealisticMechanicalSystems.hasParticulateFilter == true
 end
 
+---Returns the test of a light circuit lit by bulbs
 local function getCarriesBulbs(circuit)
     return function(vehicle)
         return vehicle.spec_RealisticMechanicalSystems.year < RMS_Config.ELECTRICAL.LED_YEARS[circuit]
@@ -615,107 +642,137 @@ local function getCarriesBulbs(circuit)
     end
 end
 
+---Returns the test of a light circuit switched on
 local function getIsCircuitLit(circuit)
     return function(vehicle) return RMS_Breakdowns.getIsLightCircuitLit(vehicle, circuit) end
 end
 
+---Tells whether the engine runs
 local function getIsEngineRunning(vehicle)
     return vehicle ~= nil and vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
 end
 
+---Tells whether the engine is stopped
 local function getIsEngineStopped(vehicle) return not getIsEngineRunning(vehicle) end
 
+---Tells whether the engine runs at full load
 local function getIsAtFullLoad(vehicle)
     return vehicle.spec_motorized ~= nil and vehicle:getIsMotorStarted() and vehicle:getMotorLoadPercentage() > 0.95
 end
 
+---Tells whether the engine runs below half load
 local function getIsBelowHalfLoad(vehicle)
     return vehicle.spec_motorized ~= nil and vehicle:getIsMotorStarted() and vehicle:getMotorLoadPercentage() <= 0.5
 end
 
+---Tells whether the engine burns a fill type
 local function getBurnsFuel(vehicle, fillTypeName)
     local motorized = vehicle.spec_motorized
     return motorized ~= nil and motorized.consumersByFillTypeName ~= nil and motorized.consumersByFillTypeName[fillTypeName] ~= nil
 end
 
+---Tells whether the engine burns methane
 local function getBurnsMethane(vehicle) return getBurnsFuel(vehicle, "METHANE") end
+---Tells whether the engine uses AdBlue
 local function isAdBlueApplicable(vehicle) return getBurnsFuel(vehicle, "DEF") end
+---Tells whether the engine runs on diesel fuel
 local function getHasDieselFuelSystem(vehicle) return getIsDiesel(vehicle) and not getBurnsMethane(vehicle) end
+---Tells whether a diesel injects by common rail
 local function getHasCommonRail(vehicle) return getIsDiesel(vehicle) and getHasEcu(vehicle) end
+---Tells whether a diesel injects by a mechanical pump
 local function getHasInjectionPump(vehicle) return getHasDieselFuelSystem(vehicle) and not getHasEcu(vehicle) end
 
--- an engine of unknown ECU profile keeps its high pressure pump
+---Tells whether a diesel has a high pressure pump, one of unknown ECU profile keeping it
 local function getHasHighPressurePump(vehicle)
     return getHasDieselFuelSystem(vehicle) and RMS_Utils.getUsesEngineECUProfile(vehicle) ~= false
 end
 
+---Tells whether a motor shifts its gears or ranges under load
 local function getIsPowershift(motor)
     return motor.gearType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT or motor.groupType == VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT
 end
 
+---Tells whether an engine drives a gearbox RMS manages
 local function getHasGearbox(vehicle)
     return not hasCVTAddon(vehicle) and getHasEngine(vehicle) and vehicle:getMotor() ~= nil
 end
 
+---Tells whether the gearbox carries its own pump
 local function getHasTransmissionPump(vehicle)
     local motor = getHasGearbox(vehicle) and vehicle:getMotor()
     return motor and (motor.minForwardGearRatio ~= nil or getIsPowershift(motor))
 end
 
+---Tells whether a powershift gearbox carries shift sensors
 local function getHasShiftSensors(vehicle)
     local motor = getHasGearbox(vehicle) and getHasEcu(vehicle) and vehicle:getMotor()
     return motor and getIsPowershift(motor)
 end
 
+---Tells whether the machine has a clutch pedal
 local function getHasClutchPedal(vehicle)
     local motor = not hasCVTAddon(vehicle) and not RMS_Drivetrain.getIsMachineCategory(vehicle) and vehicle:getMotor()
     return motor and motor.minForwardGearRatio == nil
 end
 
+---Tells whether a manual gearbox carries synchronizers
 local function getHasSynchronizers(vehicle)
     local motor = vehicle.spec_motorbike == nil and getHasClutchPedal(vehicle) and vehicle:getMotor()
     return motor and motor.gearType ~= VehicleMotor.TRANSMISSION_TYPE.POWERSHIFT
 end
 
+---Tells whether a variator carries sensors
 local function isVariatorSensorApplicable(vehicle)
     return isVariatorBreakdownApplicable(vehicle) and getHasEngine(vehicle) and getHasEcu(vehicle)
 end
 
+---Tells whether the front axle may be engaged
 local function getHasFrontDrive(vehicle)
     return getHasDrivetrain(vehicle) and RMS_Drivetrain.getHasCenterDifferential(vehicle)
 end
 
+---Tells whether the hitch lift carries a position sensor
 local function getHasLiftSensor(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return isHitchLiftBreakdownApplicable(vehicle) and spec.yearIsKnown == true and (tonumber(spec.year) or 0) >= 2000
 end
 
+---Tells whether the PTO engages electrically
 local function getHasElectricPtoEngagement(vehicle)
     return isPtoBreakdownApplicable(vehicle) and (tonumber(vehicle.spec_RealisticMechanicalSystems.year) or 0) >= 1990
 end
 
+---Tells whether the PTO carries a speed sensor
 local function getHasPtoSpeedSensor(vehicle) return isPtoBreakdownApplicable(vehicle) and getHasEcu(vehicle) end
+---Tells whether the machine carries a front PTO
 local function getHasFrontPto(vehicle) return isPtoBreakdownApplicable(vehicle) and RMS_Utils.getFrontPtoOutput(vehicle) ~= nil end
 
+---Tells whether a steering cylinder turns the machine
 local function getHasSteeringCylinder(vehicle)
     return isSteeringUnitBreakdownApplicable(vehicle) and getSteeringGearVariant(vehicle) == nil
 end
 
+---Tells whether the machine rolls
 local function getIsRolling(vehicle) return vehicle:getLastSpeed() > 0.01 end
+---Tells whether the engine runs
 local function getIsMotorStarted(vehicle) return vehicle:getIsMotorStarted() end
+---Tells whether the PTO turns
 local function getIsPtoTurning(vehicle) return vehicle.spec_RealisticMechanicalSystems.isPtoActive end
+---Tells whether the front PTO turns
 local function getIsFrontPtoTurning(vehicle) return RMS_Utils.getConnectedPtoData(vehicle, "front").isActive end
 
+---Tells whether the lift holds or moves an implement
 local function getIsLiftWorking(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec.isImplementLifted or spec.isHydraulicLiftMoving
 end
 
+---Tells whether the hydraulics work
 local function getIsHydraulicsWorking(vehicle)
     return vehicle:getIsMotorStarted() and vehicle.spec_RealisticMechanicalSystems.isHydraulicActive
 end
 
--- a part blocked in its second way passes no oil, so it wears no further
+---Returns the wear test of a hydraulic part, none while blocked in its second way
 local function getWearsWhileFlowing(breakdownId)
     return function(vehicle)
         local breakdown = vehicle.spec_RealisticMechanicalSystems.activeBreakdowns[breakdownId]
@@ -736,7 +793,6 @@ local SEVERITIES = { MINOR, MODERATE, MAJOR, CRITICAL }
 -- share of the base progress time each stage lasts but the last
 local STAGE_PROGRESS = { 2.0, 1.0, 0.5 }
 
--- how the same effect of several breakdowns adds up
 local AGGREGATIONS = {}
 for aggregation, effectIds in pairs({
     min = { "ALTERNATOR_HEALTH_MODIFIER", "BATTERY_HEALTH_MODIFIER", "BRAKE_FORCE_MODIFIER", "CAB_DAMPING_MODIFIER",
@@ -778,7 +834,7 @@ for aggregation, effectIds in pairs({
     end
 end
 
--- extraData={starter, reason, disableAi, message}
+---Returns an engine failure effect, extraData {starter, reason, disableAi, message}
 local function stopEngine(extraData)
     local stop = { starter = false, reason = "BREAKDOWN", disableAi = true }
     for key, value in pairs(extraData or {}) do
@@ -787,12 +843,13 @@ local function stopEngine(extraData)
     return { "ENGINE_FAILURE", 1.0, stop }
 end
 
--- rms_breakdowns_<texts>[_<variant>][_branch<n>]_stage<i>_description
+---Returns the text key of a stage, rms_breakdowns_<texts>[_<variant>][_branch<n>]_stage<i>_description
 local function getStageText(texts, variant, branch, index)
     return string.format("rms_breakdowns_%s%s%s_stage%d_description", texts, variant ~= nil and "_" .. variant or "",
         branch ~= nil and "_branch" .. branch or "", index)
 end
 
+---Returns the text keys of a stage, one per way
 local function getBranchTexts(shape, variant, index)
     local texts = {}
     for branch = 1, shape.branches do
@@ -801,6 +858,7 @@ local function getBranchTexts(shape, variant, index)
     return texts
 end
 
+---Returns the inspection hints of a stage
 local function getHints(shape, index, which)
     local hints = {}
     for slot = 0, shape.branches or 0 do
@@ -819,7 +877,7 @@ local function getHints(shape, index, which)
     return hints
 end
 
--- declared={effect..., lamps={lamp...}, hint, stage overrides}
+---Builds a stage, declared {effect..., lamps = {lamp...}, hint, stage overrides}
 local function buildStage(id, shape, index, count, declared)
     local firstBranch = shape.branches ~= nil and 1 or nil
     local stage = {
@@ -865,7 +923,7 @@ local function buildStage(id, shape, index, count, declared)
     return stage
 end
 
--- a breakdown never reaches a system switched off on the machine
+---Returns the applicability test of a breakdown, false on a system switched off
 local function getIsApplicableInSystem(system, isApplicable)
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, system)
     return function(vehicle)
@@ -877,7 +935,7 @@ local function getIsApplicableInSystem(system, isApplicable)
     end
 end
 
--- def={texts, progress, hints, variantHints, electric, entry fields}
+---Adds a breakdown to the registry, def {texts, progress, hints, variantHints, electric, entry fields}
 local function addBreakdown(id, def, stages)
     local entry = {
         isSelectable = def.isSelectable ~= false,
@@ -1674,7 +1732,7 @@ addBreakdown("TRANSMISSION_FILTER_CLOGGING", {
 
 addBreakdown("REAR_BEVEL_GEAR_FAILURE", {
     system = systems.TRANSMISSION, part = parts.REAR_BEVEL_GEAR, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1684,7 +1742,7 @@ addBreakdown("REAR_BEVEL_GEAR_FAILURE", {
 
 addBreakdown("FINAL_DRIVE_FAILURE", {
     system = systems.TRANSMISSION, part = parts.FINAL_DRIVES, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1694,7 +1752,7 @@ addBreakdown("FINAL_DRIVE_FAILURE", {
 
 addBreakdown("DIFFERENTIAL_FAILURE", {
     system = systems.TRANSMISSION, part = parts.DIFFERENTIAL, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 0.8 } },
@@ -1715,7 +1773,7 @@ addBreakdown("FRONT_AXLE_SHAFT_WEAR", {
 
 addBreakdown("AXLE_BEARING_WEAR", {
     system = systems.TRANSMISSION, part = parts.AXLE_BEARINGS, isApplicable = isWheelDifferentialBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "ROLLER_BEARING",
+        causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } }, component = "ROLLER_BEARING",
         progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 0.3 }, hint = true },
@@ -1742,7 +1800,7 @@ addBreakdown("FOUR_WD_CONTROL_FAILURE", {
 
 addBreakdown("REDUCER_GEAR_WEAR", {
     system = systems.TRANSMISSION, part = parts.REDUCER, isApplicable = isReducerBreakdownApplicable,
-        causes = { primary = { "pof", "htf" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
+        causes = { primary = { "pof" }, secondary = { "sf", "hfbf" } }, component = "GEAR", progress = 1.2
 }, {
     { { "GEAR_WHINE_NOISE_EFFECT", 1.0 } },
     { { "GEAR_WHINE_NOISE_EFFECT", 1.5 }, { "FUEL_CONSUMPTION_MODIFIER", 0.05 }, { "TRANSMISSION_HEAT_MODIFIER", 0.05 },
@@ -2652,10 +2710,12 @@ addBreakdown("HV_CONTACTOR_FAILURE", {
     { stopEngine(), lamps = { { db.TRACTION_BATTERY, color.CRITICAL } } }
 })
 
+---Tells whether the harvest runs
 local function isHarvestRunning(vehicle)
     return vehicle.spec_RealisticMechanicalSystems.isHarvestRunning == true
 end
 
+---Returns the test of a harvester of one of the kinds
 local function forHarvestKinds(...)
     local kinds = {}
     for _, kind in ipairs({...}) do
@@ -2677,22 +2737,24 @@ local isSugarcaneHarvester = forHarvestKinds("sugarcane")
 local isGrapeHarvester = forHarvestKinds("grape")
 local isVegetableHarvester = forHarvestKinds("vegetable")
 
--- an attached beet head carries the topper and the shares itself
+---Tells whether a beet harvester carries its topper itself, an attached head carrying its own
 local function isBeetHeadOrgan(vehicle)
     return isBeetHarvester(vehicle) and vehicle.spec_cutter ~= nil
 end
 
+---Tells whether a root harvester carries its lifting shares itself
 local function isLiftingShareOrgan(vehicle)
     return isRootHarvester(vehicle) and vehicle.spec_cutter ~= nil
 end
 
+---Tells whether a combine carries a straw chopper
 local function isStrawChopperOrgan(vehicle)
     return isGrainHarvester(vehicle) and vehicle.spec_combine.chopper.isAvailable == true
 end
 
 local isHeaderHarvester = forHarvestKinds("grain", "forage")
 
--- a header hitched to the feeder house and driven from the machine
+---Tells whether the machine drives a header hitched to its feeder house
 local function isHeaderDriveOrgan(vehicle)
     if not isHeaderHarvester(vehicle) or vehicle.spec_attacherJoints == nil then
         return false
@@ -2705,15 +2767,17 @@ local function isHeaderDriveOrgan(vehicle)
     return false
 end
 
+---Tells whether the header turns
 local function getIsHeaderTurning(vehicle)
     local drive = vehicle.spec_RealisticMechanicalSystems.headerDrive
     return drive ~= nil and drive.isTurning == true
 end
 
+---Returns the stages of a harvest organ by its symptom profile
 local function getHarvestSymptoms(profile)
     local function throughput(value) return { "HARVEST_THROUGHPUT_LIMIT", value } end
     local function squeal(value) return { "HEADER_BELT_SQUEAL_NOISE_EFFECT", value } end
-    -- value is the mean time between two blockages, in minutes
+    ---Returns a blockage effect, minutes the mean time between two blockages
     local function blockage(minutes) return { "HARVEST_BLOCKAGE_CHANCE", minutes } end
     local function grainLoss(value) return { "HARVEST_GRAIN_LOSS", value } end
     local function powerDemand(value) return { "HARVEST_POWER_DEMAND", value } end
@@ -2735,12 +2799,10 @@ local function getHarvestSymptoms(profile)
     elseif profile == "drive" then
         return { { throughput(0.05) }, { blockage(30) }, { throughput(0.15), blockage(10) }, { stop() } }
     elseif profile == "belt" then
-        -- squeals as loud as a worn accessory belt
         return { { throughput(0.05), squeal(0.3) }, { blockage(30), squeal(0.5) }, { throughput(0.15), blockage(10), squeal(0.8) }, { stop() } }
     elseif profile == "bearing" then
         return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop() } }
     elseif profile == "driveline" then
-        -- a U-joint breaks with the bang of a tractor's shaft
         local bang = { "HEADER_SHAFT_BREAK_NOISE_EFFECT", 1.0 }
         return { { bearingNoise(0.7) }, { bearingNoise(1.2) }, { bearingNoise(1.7) }, { bearingNoise(1.7), stop(), bang } }
     elseif profile == "detector" then
@@ -2751,7 +2813,7 @@ local function getHarvestSymptoms(profile)
     error("unknown harvest symptoms " .. tostring(profile))
 end
 
--- def={part, isApplicable, component, causes, symptoms, texts, ...}
+---Adds a harvest organ to the registry, def {part, isApplicable, component, causes, symptoms, texts, ...}
 local function addHarvestOrgan(id, def)
     local stages = getHarvestSymptoms(def.symptoms)
     for index = 2, #stages do
@@ -2762,6 +2824,7 @@ local function addHarvestOrgan(id, def)
         progress = def.progress, wearsWhileDriven = def.wearsWhileDriven, wearsByCausesOnly = def.wearsByCausesOnly }, stages)
 end
 
+---Returns the causes of a harvest organ, harvest effort first
 local function causes(primary, secondary)
     table.insert(primary, 1, "hef")
     return { primary = primary, secondary = secondary or {} }
@@ -2772,11 +2835,9 @@ addHarvestOrgan("HARVEST_DRIVE_BELT_WEAR", { part = parts.HARVEST_DRIVE_BELTS, i
 addHarvestOrgan("HARVEST_DRIVE_BEARING_WEAR", { part = parts.HARVEST_DRIVE_BEARINGS, isApplicable = isAnyHarvester, component = "ROLLER_BEARING",
     causes = causes({ "lubf" }), symptoms = "bearing", texts = "harvest_drive_bearing_wear", progress = 1.2 })
 
--- the header drive wears while a header turns, not on the threshing
 addHarvestOrgan("HEADER_DRIVE_BELT_WEAR", { part = parts.HEADER_DRIVE_BELT, isApplicable = isHeaderDriveOrgan, component = "DRIVE_BELT",
     causes = { primary = {}, secondary = {} }, symptoms = "belt", texts = "header_drive_belt_wear",
     isCanProgress = getIsHeaderTurning, wearsWhileDriven = getIsHeaderTurning })
--- its linings wear only as it slips
 addHarvestOrgan("HEADER_SLIP_CLUTCH_WEAR", { part = parts.HEADER_SLIP_CLUTCH, isApplicable = isHeaderDriveOrgan, component = "FRICTION_CLUTCH",
     causes = { primary = { "hdef", "hdlf" }, secondary = {} }, symptoms = "drive", texts = "header_slip_clutch_wear",
     isCanProgress = getIsHeaderTurning, wearsByCausesOnly = true })

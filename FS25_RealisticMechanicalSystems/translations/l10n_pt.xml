@@ -1,9 +1,13 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Veículo"/>
+        <text name="rms_hud_mass_tractor" text="Veíc."/>
         <text name="rms_hud_mass_towed" text="Atrelado"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_fuel_average" text="Méd."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
@@ -210,6 +214,13 @@
         <text name="rms_log_empty" text="O registo está vazio"/>
         <!-- Breakdowns -->
         <text name="rms_thermal_power_restored_message" text="Proteção térmica: limitação de potência retirada"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Nível de AdBlue baixo: abasteça AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Nível de AdBlue muito baixo: abasteça AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Nível de AdBlue muito baixo: potência do motor reduzida. Abasteça AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Depósito de AdBlue vazio: abasteça AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Depósito de AdBlue vazio: potência do motor muito reduzida. Abasteça AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue abastecido: potência do motor restabelecida."/>
         <text name="rms_breakdown_at_progress_message" text="em curso"/>
         <!-- Vehicle Specifications -->
         <text name="rms_spec_cold_engine_message" text="Motor frio! Desgasta-se até aquecer."/>
@@ -708,7 +719,7 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Este produto não é indicado para este circuito. Contaminará a mistura e poderá chegar a triplicar o desgaste da hidráulica, aumentar o seu aquecimento e torná-la mais lenta. Apenas uma substituição completa do fluido removerá a contaminação. Continuar?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Este produto não é indicado para este circuito. Contaminará a mistura e poderá chegar a triplicar o desgaste da transmissão e da hidráulica, aumentar o seu aquecimento e tornar a hidráulica mais lenta. Apenas uma substituição completa do fluido removerá a contaminação. Continuar?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Óleo de motor inadequado"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Este motor usa AdBlue ou tem filtro de partículas: o seu manual exige um óleo feito para eles. Com este óleo, a mudança de óleo chegará até duas vezes mais cedo. Um filtro de partículas também se enche de cinzas 1,5 vezes mais depressa. Continuar?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Este motor usa AdBlue ou tem filtro de partículas: precisa de um óleo feito para eles. Com este óleo, a mudança de óleo chegará até duas vezes mais cedo. Um filtro de partículas também se enche de cinzas 1,5 vezes mais depressa. Continuar?"/>
         <text name="rms_fluid_error_no_circuit" text="Este veículo não necessita de atesto de fluido"/>
         <text name="rms_fluid_error_no_adblue_tank" text="Este veículo não tem depósito de AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Desliga o motor antes de transferir fluido"/>
@@ -992,7 +1003,7 @@
         <text name="rms_tutorial_cooling_air_check_title" text="Sistema de arrefecimento e filtro de ar"/>
         <text name="rms_tutorial_cooling_air_check_message" text="O radiador ou o filtro de ar está sujo. Mantém premida a tecla %s enquanto olhas para o veículo para identificares qual deles. Limpa-o com o soprador de ar comprimido. Se o filtro já não puder ser limpo, a oficina substitui-o a partir da revisão %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrificação necessária"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="O veículo %s tem copos de lubrificação por lubrificar.&#10;&#10;No RMS, cada máquina tem os copos de lubrificação do seu manual. Precisam novamente de lubrificação conforme os dias em que a máquina trabalha: a cada dia de trabalho, ou a cada poucos dias de trabalho os que o manual lubrifica com menos frequência. Lubrificar com atraso acelera o desgaste do chassis.&#10;&#10;Compra uma pistola de massa lubrificante e cartuchos na loja. Com a pistola na mão, coloca-te em frente a um cartucho para o carregar e depois aponta para a máquina: cada clique lubrifica um copo e manter o botão premido continua nos seguintes.&#10;&#10;Para ver os copos de lubrificação pendentes, mantém premida a tecla %s enquanto olhas para o veículo."/>
+        <text name="rms_tutorial_needs_lubrication_message" text="O veículo %s tem copos de lubrificação por lubrificar.&#10;&#10;No RMS, cada máquina tem os seus próprios copos de lubrificação. Precisam novamente de lubrificação conforme os dias em que a máquina trabalha: a cada dia de trabalho, ou a cada poucos dias de trabalho para alguns deles. Lubrificar com atraso acelera o desgaste do chassis.&#10;&#10;Compra uma pistola de massa lubrificante e cartuchos na loja. Com a pistola na mão, coloca-te em frente a um cartucho para o carregar e depois aponta para a máquina: cada clique lubrifica um copo e manter o botão premido continua nos seguintes.&#10;&#10;Para ver os copos de lubrificação pendentes, mantém premida a tecla %s enquanto olhas para o veículo."/>
         <text name="rms_tutorial_needs_repair_title" text="Avaria detetada"/>
         <text name="rms_tutorial_needs_repair_message" text="O veículo %s apresenta um problema. Uma das peças pode ter avariado.&#10;&#10;Passa numa oficina: uma inspeção, ou a manutenção se estiver na altura, identifica a avaria. Não demores: a avaria pode continuar a agravar-se e o custo da reparação aumenta com ela.&#10;&#10;Depois de identificada a avaria, efetua a reparação na oficina."/>
         <text name="rms_tutorial_needs_overhaul_title" text="Revisão necessária"/>
@@ -1023,7 +1034,7 @@
         <text name="rms_tutorial_hot_weather_title" text="Tempo quente"/>
         <text name="rms_tutorial_hot_weather_message" text="Está muito calor hoje. Com este tempo, vigia a limpeza do radiador e evita sobrecarregar o motor, caso contrário o sobreaquecimento será apenas uma questão de tempo.&#10;&#10;Podes verificar o estado do radiador: mantém premida a tecla %s enquanto olhas para a máquina. A limpeza faz-se com o soprador de ar comprimido."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Atrelado demasiado pesado"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="A carga rebocada parece ser demasiado pesada para este veículo. Podes continuar a conduzir, mas a transmissão e o sistema de tração ficarão sob maior tensão.&#10;&#10;O RMS usa duas referências: um trator precisa de pelo menos 10 CV por tonelada rebocada, enquanto um camião precisa de pelo menos 6 CV por tonelada de peso bruto combinado. Abaixo do valor aplicável e com elevada carga do motor, o desgaste da transmissão aumenta."/>
+        <text name="rms_tutorial_heavy_trailer_message" text="A carga rebocada é pesada para este veículo. Podes continuar a conduzir, mas os travões desgastam-se mais depressa a cada travagem.&#10;&#10;O RMS usa duas referências: um trator que reboca mais de 4,5 vezes o seu próprio peso e um camião com menos de 6 CV por tonelada de peso bruto combinado. Quanto mais pesada for a carga, mais depressa se desgastam os travões."/>
         <text name="rms_tutorial_hard_start_title" text="Arranque difícil"/>
         <text name="rms_tutorial_hard_start_message" text="O motor do veículo %s tem dificuldade em arrancar. Uma bateria fraca, o frio intenso, uma avaria mecânica ou o desgaste do motor de arranque podem ser a causa.&#10;&#10;O sistema elétrico suporta cargas elevadas durante o arranque, devido aos fortes picos de corrente."/>
         <text name="rms_tutorial_low_fuel_title" text="Pouco combustível"/>
@@ -1117,6 +1128,7 @@
         <text name="rms_diagnostic_where_diagnostic" text="Oficina móvel ou própria com o equipamento ligado, ou concessionário"/>
         <text name="rms_diagnostic_where_high_voltage" text="Oficina própria ou concessionário"/>
         <text name="rms_diagnostic_note_inspection" text="Este código indica o que a máquina mede, não a peça afetada: uma inspeção a encontra."/>
+        <text name="rms_diagnostic_note_adblue" text="Este código indica depósito de AdBlue baixo: abastecer AdBlue apaga-o."/>
         <text name="rms_diagnostic_note_uncoded" text="Uma inspeção da máquina encontra a peça afetada."/>
         <text name="rms_diagnostic_uncoded" text="Luz de aviso acesa sem código registado. Nenhum sensor vigia a peça afetada."/>
         <text name="rms_diagnostic_uncoded_title" text="Luz sem código"/>
@@ -1146,6 +1158,7 @@
         <text name="rms_diagnostic_spn_677" text="Relé do motor de arranque"/>
         <text name="rms_diagnostic_spn_167" text="Tensão do circuito de carga"/>
         <text name="rms_diagnostic_spn_157" text="Pressão da rampa de injeção"/>
+        <text name="rms_diagnostic_spn_1761" text="Nível do depósito de AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Bomba de AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Injetor doseador de AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Sensor NOx a montante"/>
@@ -1185,6 +1198,7 @@
         <text name="rms_diagnostic_fmi_12" text="Dispositivo ou componente defeituoso"/>
         <text name="rms_diagnostic_fmi_14" text="Instruções especiais"/>
         <text name="rms_diagnostic_fmi_16" text="Dado acima da gama normal (nível moderadamente grave)"/>
+        <text name="rms_diagnostic_fmi_17" text="Dado abaixo da gama normal (nível menos grave)"/>
         <text name="rms_diagnostic_fmi_18" text="Dado abaixo da gama normal (nível moderadamente grave)"/>
         <text name="rms_diagnostic_fmi_31" text="Condição presente"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1198,6 +1212,7 @@
         <text name="rms_dashboard_fmi_12" text="componente defeituoso"/>
         <text name="rms_dashboard_fmi_14" text="intervenção necessária"/>
         <text name="rms_dashboard_fmi_16" text="valor alto"/>
+        <text name="rms_dashboard_fmi_17" text="valor ligeiramente baixo"/>
         <text name="rms_dashboard_fmi_18" text="valor baixo"/>
         <text name="rms_dashboard_fmi_31" text="falha presente"/>
         <text name="rms_diagnostic_log_title" text="Leitura de códigos"/>

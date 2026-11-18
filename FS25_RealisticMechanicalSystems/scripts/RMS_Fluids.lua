@@ -47,6 +47,7 @@ RMS_Fluids.SYSTEM_TO_CIRCUIT = {
     hydraulics = "hydraulicFluid"
 }
 
+-- litres at PROFILE_REFERENCE_POWER hp, maxPower in hp
 RMS_Fluids.PROFILES = {
     ROAD_LIGHT =          { engineOil = 5.9,  coolant = 11.0, transmissionOil = 7.1,  hydraulicFluid = 0.0,   maxPower = 950,
                             exponents = { engineOil = 0.4, coolant = 0.55, transmissionOil = 0.3 } },
@@ -236,7 +237,7 @@ RMS_Fluids.PRODUCTS = {
     }
 }
 
----Machine tanks of the game's own fill units, poured into like a circuit
+-- machine tanks of the game's own fill units, poured into like a circuit
 RMS_Fluids.TANKS = {
     adBlue = { fillTypeName = "DEF" }
 }
@@ -250,11 +251,13 @@ RMS_Fluids.LEAK_BREAKDOWN_CIRCUITS = {
 
 RMS_Fluids._warnedUnknownVehicles = {}
 
+---Returns a value clamped, the minimum when it is not a number
 local function clamp(value, minimum, maximum)
     value = tonumber(value) or minimum
     return math.max(minimum, math.min(value, maximum))
 end
 
+---Returns the circuit holding a circuit's oil, the common sump taking the hydraulics
 local function getSpecSumpCircuit(spec, circuit)
     if circuit == "hydraulicFluid" and spec ~= nil and spec.hasCommonSump then
         return "transmissionOil"
@@ -262,6 +265,7 @@ local function getSpecSumpCircuit(spec, circuit)
     return circuit
 end
 
+---Returns a copy of the capacities of every circuit
 local function copyCapacities(source)
     local result = {}
     for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
@@ -580,7 +584,6 @@ function RMS_Fluids.getIsPickupUncovered(vehicle, circuit, lean, wasUncovered)
         return false
     end
     local level = RMS_Fluids.getLevel(vehicle, circuit)
-    -- at the MIN mark or over, the makers' angle is never reached
     if level >= RMS_Config.FLUIDS.LEVEL_MIN_MARK then
         return false
     end
@@ -604,13 +607,11 @@ function RMS_Fluids.updatePickups(vehicle, dt)
     if upY * maxLean > math.max(math.abs(sideY), math.abs(frontY)) then
         leanX, leanZ = -sideY / upY, -frontY / upY
     end
-    -- the oil settles over the smoothing time, a bump rocks nothing
     local blend = spec.sumpLeanX == nil and 1 or math.min(dt / 1000 / RMS_Config.FLUIDS.PICKUP_SMOOTHING_SECONDS, 1)
     spec.sumpLeanX = (spec.sumpLeanX or 0) + (leanX - (spec.sumpLeanX or 0)) * blend
     spec.sumpLeanZ = (spec.sumpLeanZ or 0) + (leanZ - (spec.sumpLeanZ or 0)) * blend
 
     local lean = RMS_Fluids.getSumpLean(vehicle)
-    -- a pump turns with the engine; stopped, it draws nothing
     local isTurning = vehicle:getIsMotorStarted()
     local isCounted = not RealisticMechanicalSystems.isMissionVehicle(vehicle)
     for circuit, partId in pairs(RMS_Fluids.PICKUP_PARTS) do
@@ -661,7 +662,7 @@ function RMS_Fluids.getNeedsLowAshOil(vehicle)
     return vehicle.spec_RealisticMechanicalSystems.hasParticulateFilter == true or consumers ~= nil and consumers.DEF ~= nil
 end
 
----Tells whether a product is the oil the manual of the machine asks for
+---Tells whether a product is the oil the machine asks for
 function RMS_Fluids.getIsProductSuited(vehicle, productKey, circuit)
     return circuit ~= "engineOil" or RMS_Fluids.PRODUCTS[productKey].isLowAsh == true or not RMS_Fluids.getNeedsLowAshOil(vehicle)
 end

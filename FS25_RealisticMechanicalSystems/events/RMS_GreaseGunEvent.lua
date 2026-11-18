@@ -11,10 +11,12 @@ RMS_GreaseGunEvent.LOAD = 1
 RMS_GreaseGunEvent.STATE = 2
 RMS_GreaseGunEvent.KIND_BITS = 2
 
+---Create instance of Event class
 function RMS_GreaseGunEvent.emptyNew()
     return Event.new(RMS_GreaseGunEvent_mt)
 end
 
+---Create new instance of event
 -- @param table? target machine to grease or cartridge to load, nil for a state
 function RMS_GreaseGunEvent.new(handTool, kind, target, greaseMl, isStroke)
     local self = RMS_GreaseGunEvent.emptyNew()
@@ -26,6 +28,7 @@ function RMS_GreaseGunEvent.new(handTool, kind, target, greaseMl, isStroke)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_GreaseGunEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.handTool)
     streamWriteUIntN(streamId, self.kind, RMS_GreaseGunEvent.KIND_BITS)
@@ -37,6 +40,7 @@ function RMS_GreaseGunEvent:writeStream(streamId, connection)
     end
 end
 
+---Reads event data from a stream.
 function RMS_GreaseGunEvent:readStream(streamId, connection)
     self.handTool = NetworkUtil.readNodeObject(streamId)
     self.kind = streamReadUIntN(streamId, RMS_GreaseGunEvent.KIND_BITS)
@@ -49,6 +53,7 @@ function RMS_GreaseGunEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Serves a request on the server, applies a gun state on a client
 function RMS_GreaseGunEvent:run(connection)
     if self.handTool == nil then
         return

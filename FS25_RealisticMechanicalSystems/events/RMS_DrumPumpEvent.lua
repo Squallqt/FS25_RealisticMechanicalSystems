@@ -6,10 +6,12 @@ local RMS_DrumPumpEvent_mt = Class(RMS_DrumPumpEvent, Event)
 
 InitEventClass(RMS_DrumPumpEvent, "RMS_DrumPumpEvent")
 
+---Create instance of Event class
 function RMS_DrumPumpEvent.emptyNew()
     return Event.new(RMS_DrumPumpEvent_mt)
 end
 
+---Create new instance of event
 -- @param table? handTool pump in hand to set on it, nil to take its pump back
 -- @param integer? index drum of the pallet, the first by default
 function RMS_DrumPumpEvent.new(container, handTool, index)
@@ -21,6 +23,7 @@ function RMS_DrumPumpEvent.new(container, handTool, index)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_DrumPumpEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     streamWriteUInt8(streamId, self.index)
@@ -29,6 +32,7 @@ function RMS_DrumPumpEvent:writeStream(streamId, connection)
     end
 end
 
+---Reads event data from a stream.
 function RMS_DrumPumpEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.index = streamReadUInt8(streamId)
@@ -39,6 +43,7 @@ function RMS_DrumPumpEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Sets or takes back the pump on the server for the requesting player
 function RMS_DrumPumpEvent:run(connection)
     if connection:getIsServer() or self.container == nil then
         return

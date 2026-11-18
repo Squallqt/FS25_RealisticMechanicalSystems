@@ -45,6 +45,7 @@ function RMS_SettingsSyncEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Writes the received settings and refreshes what depends on them
 local function applySettings(event)
     for index, setting in ipairs(RMS_Config.SHARED_SETTINGS) do
         RMS_Config.getSettingTable(setting)[setting.field] = event.values[index]

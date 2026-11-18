@@ -15,6 +15,7 @@ function RMS_ProgressRing.createOverlays()
     RMS_ProgressRing.disc = g_overlayManager:createOverlay("rms_ProgressRing.disc", 0, 0, 0, 0)
 end
 
+---Draws the segments of a ring around a centre, the first share of them lit
 function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColor, trackColor)
     local overlay = RMS_ProgressRing.segment
     local segmentWidth, segmentHeight = width * RMS_ProgressRing.SEGMENT_WIDTH, height * RMS_ProgressRing.SEGMENT_HEIGHT

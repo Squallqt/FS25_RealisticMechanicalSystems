@@ -4,6 +4,7 @@
 
 local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
 
+---Tells whether a player sits in the machine or in what it carries
 local function hasEnteredPlayerInVehicleChain(rootVehicle)
     if rootVehicle == nil then
         return false
@@ -25,6 +26,7 @@ local function hasEnteredPlayerInVehicleChain(rootVehicle)
 end
 
 
+---Returns the effect a worn part gives at a wear
 local function getWornPartEffect(symptom, wear)
     local start = symptom.rampStart or RMS_Config.CORE.WORN_PART_RAMP_START
     local exponent = symptom.exponent
@@ -32,6 +34,7 @@ local function getWornPartEffect(symptom, wear)
     return symptom.amplitude * math.max(0, (wear ^ exponent - start ^ exponent) / (1 - start ^ exponent))
 end
 
+---Returns the parts carrying a symptom, nil when its system is disabled
 local function getSymptomCarriers(spec, symptom)
     local carriers = symptom.combustion
     if spec.isElectricVehicle then
@@ -49,6 +52,7 @@ local function getSymptomCarriers(spec, symptom)
     return nil
 end
 
+---Returns the symptom a part carries for an effect, nil without one
 local function getCarriedSymptom(spec, partId, effectId)
     for _, symptom in ipairs(RMS_Config.CORE.WORN_PART_SYMPTOMS) do
         if symptom.effect == effectId then
@@ -66,6 +70,7 @@ local function getCarriedSymptom(spec, partId, effectId)
     return nil
 end
 
+---Returns the effects of the worn parts
 local function getWornPartEffects(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local effects = {}
@@ -88,6 +93,7 @@ local function getWornPartEffects(vehicle)
     return effects
 end
 
+---Draws a breakdown on each part by the wear it took since the last draw
 function RealisticMechanicalSystems:tryTriggerBreakdown()
     local spec = self.spec_RealisticMechanicalSystems
 
@@ -123,7 +129,7 @@ function RealisticMechanicalSystems:getRandomBreakdown()
     return candidates[math.random(#candidates)]
 end
 
--- the breakdowns under way, one suspended until it comes back left out
+---Returns the breakdowns under way, suspended ones left out
 local function countActiveBreakdowns(spec)
     local count = 0
     for _, breakdown in pairs(spec.activeBreakdowns) do
@@ -159,7 +165,6 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
         return
     end
 
-    -- a suspended breakdown comes back after a drawn delay
     local isActive = options.isActive ~= false
     local resumeTimer = math.max(tonumber(options.resumeTimer) or 0, 0)
     if not isActive and resumeTimer <= 0 then
@@ -347,6 +352,7 @@ end
 
 local RAMP_STEPS = 20
 
+---Returns the duration of a stage in ms, nil when it does not progress
 local function getStageDuration(stageData)
     if stageData.progressMultiplier == nil or stageData.progressMultiplier <= 0 then
         return nil
@@ -356,7 +362,7 @@ local function getStageDuration(stageData)
 end
 RealisticMechanicalSystems.getStageDuration = getStageDuration
 
--- the share of its stage a breakdown has run, none at the last stage
+---Returns the share of its stage a breakdown has run, none at the last stage
 local function getStageProgress(registryEntry, breakdown)
     local stages = registryEntry.stages
     local duration = stages[breakdown.stage] ~= nil and stages[breakdown.stage + 1] ~= nil and getStageDuration(stages[breakdown.stage]) or nil
@@ -443,6 +449,7 @@ function RealisticMechanicalSystems:processBreakdowns(dt)
     end
 end
 
+---Reapplies the effects once a worn part symptom changes step
 function RealisticMechanicalSystems:processWornParts()
     local spec = self.spec_RealisticMechanicalSystems
     if not spec or not self.isServer then
@@ -461,7 +468,7 @@ function RealisticMechanicalSystems:processWornParts()
     end
 end
 
--- a failure that keeps the starter still wins over one that turns it
+---Merges the data of an engine failure, one keeping the starter still winning
 local function mergeEngineFailure(existing, extraData)
     local current = existing.extraData
     if current == nil or extraData == nil then
@@ -476,6 +483,7 @@ local function mergeEngineFailure(existing, extraData)
     end
 end
 
+---Tells whether a value is set
 local function getIsSet(value)
     return value ~= nil and value ~= false and value ~= 0
 end
@@ -517,6 +525,7 @@ local AGGREGATIONS = {
     end
 }
 
+---Folds an effect value into the effects
 local function aggregateEffect(effects, effectData, value)
     local effect = effects[effectData.id]
     if effect == nil then
@@ -528,13 +537,15 @@ local function aggregateEffect(effects, effectData, value)
     end
 end
 
+---Notes the codes on display and queues the messages of new ones
 local function queueFaultCodeMessages(vehicle, noSideNotifications)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local shown = spec.displayedFaultCodes or {}
     local codes, entries = {}, {}
     if RMS_DiagnosticTool.getHasControllers(vehicle) then
         for _, entry in ipairs(RMS_DiagnosticTool.readFaultCodes(vehicle) or {}) do
-            if entry.spn ~= nil then
+            -- the AdBlue gauge tells a low tank in words
+            if entry.spn ~= nil and entry.breakdownId ~= RMS_AdBlue.FAULT_ID then
                 local key = string.format("%d %d", entry.spn, entry.fmi)
                 codes[key] = true
                 table.insert(entries, { key = key, entry = entry })
@@ -555,6 +566,7 @@ local function queueFaultCodeMessages(vehicle, noSideNotifications)
     end
 end
 
+---Returns the value of an effect, computed when it is a function
 local function getEffectValue(vehicle, effectData)
     if type(effectData.value) == "function" then
         return effectData.value(vehicle)
@@ -562,7 +574,7 @@ local function getEffectValue(vehicle, effectData)
     return effectData.value
 end
 
--- a number runs toward the next stage, a worn part may carry more
+---Returns the value of an effect, eased toward the next stage, a worn part carrying more
 local function getStageEffectValue(vehicle, breakdownId, breakdown, effectData, nextStageData, progress)
     local value = getEffectValue(vehicle, effectData)
     if type(value) ~= "number" then

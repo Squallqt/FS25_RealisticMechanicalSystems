@@ -112,7 +112,6 @@
                         </Button>
                     </GuiElement>
 
-                    <!-- Identity -->
                     <GuiElement profile="rms_workshopBlock" id="identityCard" size="400px 626px">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Text profile="rms_workshopVehicleBrand" id="brandText" position="20px -16px" size="360px 22px" />
@@ -283,7 +282,6 @@
                         </GuiElement>
                     </GuiElement>
 
-                    <!-- Untracked machine -->
                     <GuiElement profile="rms_workshopBlock" id="untrackedCard" size="669px 626px" visible="false">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Bitmap profile="rms_workshopIcon" position="298px -235px" size="72px 72px" imageSliceId="gui.loadingAnimationFull">
@@ -292,7 +290,6 @@
                         <Text profile="rms_workshopTitle" position="40px -327px" size="589px 36px" textAlignment="center" text="$l10n_rms_ingame_menu_section_other" />
                     </GuiElement>
 
-                    <!-- Nothing to show -->
                     <GuiElement profile="rms_workshopBlock" id="emptyCard" size="1081px 626px" visible="false">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Bitmap profile="rms_workshopIcon" position="504px -235px" size="72px 72px" imageSliceId="gui.icon_construction_buildings" />
@@ -302,7 +299,6 @@
             </BoxLayout>
         </GuiElement>
 
-        <!-- Settings -->
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="settingsContainer">
             <GuiElement profile="rms_menuSettingsContainer" id="settingsPage">
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">

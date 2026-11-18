@@ -1,15 +1,17 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Return of a leased machine, asked as the sell dialog of the game
+---Return of a leased machine
 RMS_SellItemDialog = {}
 
 local RMS_SellItemDialog_mt = Class(RMS_SellItemDialog, YesNoDialog)
 
+---Formats an amount of money with its sign
 local function formatSignedMoney(amount)
     local sign = amount > 0 and "+" or amount < 0 and "-" or ""
     return sign .. g_i18n:formatMoney(math.abs(amount), 0, true, false)
 end
 
+---Colours an amount: credited, charged or none
 local function setAmountColor(element, amount)
     local COLOR = RMS_Utils.COLOR
     element:setTextColor(unpack(amount > 0 and COLOR.HIGHLIGHT or amount < 0 and COLOR.ALERT or COLOR.TEXT_DIM))
@@ -29,7 +31,7 @@ function RMS_SellItemDialog:onCreate()
     self.costList:setDelegate(self)
 end
 
----Asks to confirm the return, as SellItemDialog.show asks a sale
+---Asks to confirm the return
 function RMS_SellItemDialog.show(vehicle, callback, target, args)
     local self = RMS_SellItemDialog.INSTANCE
     self:setVehicle(vehicle)

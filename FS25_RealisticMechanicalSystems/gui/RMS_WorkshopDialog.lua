@@ -126,7 +126,6 @@ function RMS_WorkshopDialog:refresh()
         isUnderService = isUnderService
     }
     self.state = state
-    -- the record alone answers when the vehicle is outside a workshop
     for index, page in ipairs(self.pages) do
         if not isRecord or index == RMS_WorkshopDialog.TAB.RECORD then
             page:refresh(state)

@@ -6,10 +6,12 @@ local RMS_FluidCanisterEvent_mt = Class(RMS_FluidCanisterEvent, Event)
 
 InitEventClass(RMS_FluidCanisterEvent, "RMS_FluidCanisterEvent")
 
+---Create instance of Event class
 function RMS_FluidCanisterEvent.emptyNew()
     return Event.new(RMS_FluidCanisterEvent_mt)
 end
 
+---Create new instance of event
 -- @param table? pose world position and heading the can is set down at, nil to take
 -- @param integer? index drum of a pallet whose nozzle is taken, the first by default
 function RMS_FluidCanisterEvent.new(object, pose, index)
@@ -20,6 +22,7 @@ function RMS_FluidCanisterEvent.new(object, pose, index)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_FluidCanisterEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.object)
     streamWriteUInt8(streamId, self.index)
@@ -30,6 +33,7 @@ function RMS_FluidCanisterEvent:writeStream(streamId, connection)
     end
 end
 
+---Reads event data from a stream.
 function RMS_FluidCanisterEvent:readStream(streamId, connection)
     self.object = NetworkUtil.readNodeObject(streamId)
     self.index = streamReadUInt8(streamId)
@@ -42,6 +46,7 @@ function RMS_FluidCanisterEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Takes or sets down the can on the server for the requesting player
 function RMS_FluidCanisterEvent:run(connection)
     if connection:getIsServer() or self.object == nil then
         return

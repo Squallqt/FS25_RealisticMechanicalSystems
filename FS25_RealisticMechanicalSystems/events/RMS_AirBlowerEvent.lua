@@ -6,10 +6,12 @@ local RMS_AirBlowerEvent_mt = Class(RMS_AirBlowerEvent, Event)
 
 InitEventClass(RMS_AirBlowerEvent, "RMS_AirBlowerEvent")
 
+---Create instance of Event class
 function RMS_AirBlowerEvent.emptyNew()
     return Event.new(RMS_AirBlowerEvent_mt)
 end
 
+---Create new instance of event
 function RMS_AirBlowerEvent.new(blower, isBlowing, target, distance)
     local self = RMS_AirBlowerEvent.emptyNew()
     self.blower = blower
@@ -19,6 +21,7 @@ function RMS_AirBlowerEvent.new(blower, isBlowing, target, distance)
     return self
 end
 
+---Writes event data to a stream.
 function RMS_AirBlowerEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.blower)
     streamWriteBool(streamId, self.isBlowing)
@@ -26,6 +29,7 @@ function RMS_AirBlowerEvent:writeStream(streamId, connection)
     streamWriteFloat32(streamId, self.distance)
 end
 
+---Reads event data from a stream.
 function RMS_AirBlowerEvent:readStream(streamId, connection)
     self.blower = NetworkUtil.readNodeObject(streamId)
     self.isBlowing = streamReadBool(streamId)
@@ -34,6 +38,7 @@ function RMS_AirBlowerEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Applies the state, the server passing it on to the other players
 function RMS_AirBlowerEvent:run(connection)
     local blower = self.blower
     if blower == nil or not blower:getIsSynchronized() or blower.setRMSAirBlowerState == nil then

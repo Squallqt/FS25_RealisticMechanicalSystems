@@ -13,7 +13,6 @@ RMS_EngineRemap.PRICE = 1000
 RMS_EngineRemap.PRICE_POWER = 160
 RMS_EngineRemap.PRICE_EXPONENT = 0.6
 RMS_EngineRemap.RESTORE_PRICE = 80
--- months of free restore after a remap
 RMS_EngineRemap.FREE_RESTORE_MONTHS = 12
 RMS_EngineRemap.DURATION_HOURS = {
     [RMS_EngineRemap.REMAP] = 3,
@@ -22,12 +21,14 @@ RMS_EngineRemap.DURATION_HOURS = {
 -- rpm between two points of the bench curve
 RMS_EngineRemap.CURVE_STEP = 10
 
+---Returns the engine configurations of the store item and the one fitted
 local function getMotorItems(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local items = storeItem ~= nil and storeItem.configurations ~= nil and storeItem.configurations.motor or nil
     return items, vehicle.configurations ~= nil and vehicle.configurations.motor or 1
 end
 
+---Returns the weakest and strongest engines of the store item, power first
 local function getFamilyPower(vehicle)
     local items = getMotorItems(vehicle)
     local low, high, lowItem, highItem = nil, nil, nil, nil
@@ -101,6 +102,7 @@ function RMS_EngineRemap.getStockLoad(vehicle, load)
     return load * RMS_EngineRemap.getTorqueFactor(vehicle)
 end
 
+---Returns the power of the strongest engine of the store item over the one fitted
 local function getBlockRatio(vehicle)
     local _, high = getFamilyPower(vehicle)
     local power = RMS_Fluids.getEnginePower(vehicle)
@@ -206,6 +208,7 @@ function RMS_EngineRemap.getIsWarrantyActive(vehicle)
     return RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle) or #RMS_EngineRemap.getCoveredParts(vehicle) > 0
 end
 
+---Returns the weakest and strongest engines and their gains, nil with one engine
 local function getRangeEnds(vehicle)
     local _, _, lowItem, highItem = getFamilyPower(vehicle)
     if lowItem == nil or lowItem == highItem then

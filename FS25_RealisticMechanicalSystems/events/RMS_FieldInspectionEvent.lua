@@ -1,5 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
+---Event telling the server which player inspects a machine on foot
 RMS_FieldInspectionEvent = {}
 local RMS_FieldInspectionEvent_mt = Class(RMS_FieldInspectionEvent, Event)
 

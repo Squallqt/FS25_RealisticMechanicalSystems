@@ -2,6 +2,7 @@
 
 ---Vehicle state measurements.
 
+---Sums the draft force of the implements pulling in the ground
 local function updateActiveDraftStats(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -62,6 +63,7 @@ local function updateActiveDraftStats(vehicle)
     spec.activeDraftEffectiveForceCap = result.effectiveForceCap
 end
 
+---Stores the engine load at stock power
 local function updateDynamicMotorLoad(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -72,11 +74,13 @@ local function updateDynamicMotorLoad(vehicle)
         0, 0, 1.5)
 end
 
+---Stores whether the starter turns the engine
 local function updateStarterState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.isCranking = not spec.isElectricVehicle and RMS_Start.getIsCranking(vehicle)
 end
 
+---Stores the slip of the driven wheels, a single spike filtered out
 local function updateWheelSlip(vehicle)
     local spec_wheels = vehicle.spec_wheels
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -178,6 +182,7 @@ local function updateWheelSlip(vehicle)
         - math.max(longitudinalSlipIntensity, previousSlip, olderSlip)
 end
 
+---Stores the tyre friction and the share of hard ground under the wheels
 local function updateWheelGroundState(vehicle)
     local spec_wheels = vehicle.spec_wheels
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -226,6 +231,7 @@ local HYDRAULIC_LIFT_RATIO_DEADBAND = 0.05
 local LOAD_RISE_DEADBAND = 0.01
 local HYDRAULIC_LIFT_RATIO_INTERPOLATION_RATE = 1 / 1000
 
+---Returns the load the wheels of a vehicle carry on the ground
 local function getWheelSupportLoad(vehicle)
     local supportWheelLoad = 0
 
@@ -240,6 +246,7 @@ local function getWheelSupportLoad(vehicle)
     return supportWheelLoad
 end
 
+---Tells whether a joint type hitches a trailer
 local function isTrailerJointType(jointTypeId)
     return jointTypeId == AttacherJoints.JOINTTYPE_TRAILER
         or jointTypeId == AttacherJoints.JOINTTYPE_TRAILERLOW
@@ -247,6 +254,7 @@ local function isTrailerJointType(jointTypeId)
         or jointTypeId == AttacherJoints.JOINTTYPE_SEMITRAILERCAR
 end
 
+---Tells whether a hitch moves since the last update
 local function getMoveState(vehicle, moveKey, jointDesc, nextMoveAlphaCache)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -266,6 +274,7 @@ local function getMoveState(vehicle, moveKey, jointDesc, nextMoveAlphaCache)
     return isMovingRaw and moveAlpha > 0.001 and moveAlpha < 0.999
 end
 
+---Returns whether the cylinders, the joint control and a hammer work
 local function getHydraulicMotionFlags(vehicle)
     local isCylinderedMoving = false
     local isAttacherJointControlMoving = false
@@ -288,6 +297,7 @@ local function getHydraulicMotionFlags(vehicle)
     return isCylinderedMoving, isAttacherJointControlMoving, isHydraulicHammerActive
 end
 
+---Stores the lifted and raising masses and the hydraulic activity of the implements
 local function updateImplementChainState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -485,6 +495,7 @@ local function updateImplementChainState(vehicle, dt)
 end
 
 
+---Stores the chassis vibration from the suspension strokes and the speed
 local function updateChassisVibState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -544,6 +555,7 @@ local function updateChassisVibState(vehicle, dt)
     vibState.isWearing = vibState.smoothed > RMS_Config.CORE.CHASSIS_FACTOR_DATA.VIB_FACTOR_THRESHOLD
 end
 
+---Stores the steering angle, its travel rate and the steered axle load
 local function updateChassisSteeringState(vehicle, dt)
     local steerState = vehicle.spec_RealisticMechanicalSystems.chassisSteerState
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
@@ -579,6 +591,7 @@ local function updateChassisSteeringState(vehicle, dt)
     steerState.isMoving = steerState.travelRate > C.STEER_LOAD_RATE_DEADZONE
 end
 
+---Stores the braking and the power to mass ratios
 local function updateChassisBrakingState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -631,6 +644,7 @@ local function updateChassisBrakingState(vehicle)
     brakeState.isBrakingByAxis = isBrakingByAxis
 end
 
+---Stores the fuel level and use, the idle time and the exhaust deposits
 local function updateFuelState(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec == nil then
@@ -799,6 +813,7 @@ local function updateFuelState(vehicle, dt)
     end
 end
 
+---Stores the PTO power, its engagements and the shaft angles
 local function updatePtoState(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local systemData = spec.systems.pto
@@ -864,14 +879,12 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     spec.updateVehicleStateTimerTwo = spec.updateVehicleStateTimerTwo + dt
     spec.updateVehicleStateTimerThree = spec.updateVehicleStateTimerThree + dt
 
-    -- GROUP 1
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
         updatePtoState(self)
         updateDynamicMotorLoad(self)
     end
 
-    -- GROUP 2
     if spec.updateVehicleStateTimerTwo >= delayTwo then
         spec.updateVehicleStateTimerTwo = spec.updateVehicleStateTimerTwo % delayTwo
         updateStarterState(self)
@@ -882,7 +895,6 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
         updateChassisBrakingState(self)
     end
     
-    -- GROUP 3
     if spec.updateVehicleStateTimerThree >= delayThree then
         spec.updateVehicleStateTimerThree = spec.updateVehicleStateTimerThree % delayThree
         updateActiveDraftStats(self)
