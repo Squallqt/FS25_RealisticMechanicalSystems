@@ -1677,10 +1677,9 @@ RMS_Config = {
 
     SERVICE_REFERENCE_HOURS = 500,
     SERVICE_ACCESS_PROFILES = {
-        SIMPLE = {label = "rms_service_access_easy", shopLabel = "rms_shop_service_access_easy", transmission = 0.9},
-        STANDARD = {label = "rms_service_access_average", shopLabel = "rms_shop_service_access_average"},
-        COMPLEX = {label = "rms_service_access_demanding", shopLabel = "rms_shop_service_access_demanding", transmission = 1.25,
-            diagnostic = 1.25}
+        SIMPLE = {label = "rms_service_access_easy", shopLabel = "rms_shop_service_access_easy", tier = 1},
+        STANDARD = {label = "rms_service_access_average", shopLabel = "rms_shop_service_access_average", tier = 2},
+        COMPLEX = {label = "rms_service_access_demanding", shopLabel = "rms_shop_service_access_demanding", tier = 3}
     },
     SERVICE_PROGRAM = {
         engine = { hours = 500, months = 12 },

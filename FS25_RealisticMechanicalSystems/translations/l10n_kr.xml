@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. 카트의 진단 장비를 기계에 연결하세요."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="전자 진단 필요"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="분해 또는 전문 공구 필요"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="고전압 장비 필요"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="고전압 자격 정비사 필요"/>
         <text name="rms_ws_status_in_progress_format" text="%s 진행 중 (완료 예정: %s)"/>
         <text name="rms_ws_status_open" text="정비소 영업 중"/>
         <text name="rms_ws_status_closed" text="정비소가 닫혀 있습니다"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="수리 시간:"/>
         <text name="rms_diagnostic_where_label" text="수리 장소:"/>
         <text name="rms_diagnostic_where_diagnostic" text="진단 장비를 연결한 이동식 또는 소유한 정비소, 또는 대리점"/>
-        <text name="rms_diagnostic_where_high_voltage" text="소유한 정비소 또는 대리점"/>
+        <text name="rms_diagnostic_where_high_voltage" text="대리점"/>
         <text name="rms_diagnostic_note_inspection" text="이 코드는 기계가 측정한 내용을 알려 줄 뿐 고장 난 부품은 알려 주지 않습니다: 점검으로 찾습니다."/>
         <text name="rms_diagnostic_note_adblue" text="이 코드는 요소수 탱크 수위가 낮음을 알립니다: 요소수를 보충하면 지워집니다."/>
         <text name="rms_diagnostic_note_uncoded" text="기계를 점검하면 해당 부품을 찾습니다."/>

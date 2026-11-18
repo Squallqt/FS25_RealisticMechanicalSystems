@@ -611,7 +611,7 @@ function RMS_Main.loadVehicleSales(saleSystem, superFunc, xmlFilename)
 end
 
 g_storeManager:addSpecType("reliability", "shopListAttributeIconReliability", loadIsTracked, getReliability, StoreSpecies.VEHICLE)
-g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", RMS_Utils.loadServiceAccess, getServiceAccess, StoreSpecies.VEHICLE)
+g_storeManager:addSpecType("serviceAccess", "shopListAttributeIconServiceAccess", nil, getServiceAccess, StoreSpecies.VEHICLE)
 g_storeManager:addSpecType("rmsLaunchYear", "shopListAttributeIconRmsLaunchYear", nil, getLaunchYear, StoreSpecies.VEHICLE)
 
 ---Moves the entry a test picks to a position of a list

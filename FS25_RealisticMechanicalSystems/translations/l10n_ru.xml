@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Подключите к машине диагностическое оборудование тележки."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Требуется электронная диагностика"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Требуется разборка или специальный инструмент"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Требуется высоковольтное оборудование"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Требуется специалист с допуском к высокому напряжению"/>
         <text name="rms_ws_status_in_progress_format" text="%s в процессе до %s"/>
         <text name="rms_ws_status_open" text="Мастерская открыта"/>
         <text name="rms_ws_status_closed" text="Мастерская закрыта"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Время ремонта:"/>
         <text name="rms_diagnostic_where_label" text="Где ремонтировать:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Мобильная или собственная мастерская с подключённым оборудованием либо дилер"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Собственная мастерская или дилер"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Дилер"/>
         <text name="rms_diagnostic_note_inspection" text="Этот код говорит, что измеряет машина, а не какая деталь неисправна: её найдёт осмотр."/>
         <text name="rms_diagnostic_note_adblue" text="Этот код сообщает о низком уровне в баке AdBlue: заправка AdBlue его стирает."/>
         <text name="rms_diagnostic_note_uncoded" text="Осмотр машины найдёт неисправную деталь."/>

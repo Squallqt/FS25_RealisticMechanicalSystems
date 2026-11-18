@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Das Diagnosegerät eines Wagens an die Maschine anschließen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische Diagnose erforderlich"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Demontage oder Spezialwerkzeug erforderlich"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Hochvoltausrüstung erforderlich"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Hochvolt-Fachkraft erforderlich"/>
         <text name="rms_ws_status_in_progress_format" text="%s läuft bis %s"/>
         <text name="rms_ws_status_open" text="Werkstatt ist geöffnet"/>
         <text name="rms_ws_status_closed" text="Werkstatt ist geschlossen"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparaturzeit:"/>
         <text name="rms_diagnostic_where_label" text="Reparaturort:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobile oder eigene Werkstatt mit angeschlossenem Diagnosegerät, oder Händler"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Eigene Werkstatt oder Händler"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Händler"/>
         <text name="rms_diagnostic_note_inspection" text="Dieser Code sagt, was die Maschine misst, nicht welches Teil betroffen ist: Eine Inspektion findet es."/>
         <text name="rms_diagnostic_note_adblue" text="Dieser Code meldet einen niedrigen AdBlue-Tank: Nachfüllen von AdBlue löscht ihn."/>
         <text name="rms_diagnostic_note_uncoded" text="Eine Inspektion der Maschine findet das betroffene Teil."/>

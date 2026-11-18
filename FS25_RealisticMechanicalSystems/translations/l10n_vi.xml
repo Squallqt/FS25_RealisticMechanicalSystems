@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Hãy cắm thiết bị chẩn đoán của một xe đẩy vào máy."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Cần chẩn đoán điện tử"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Cần tháo dỡ hoặc dụng cụ chuyên dụng"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Cần thiết bị điện áp cao"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Cần kỹ thuật viên có chứng chỉ điện áp cao"/>
         <text name="rms_ws_status_in_progress_format" text="Đang thực hiện %s đến %s"/>
         <text name="rms_ws_status_open" text="Xưởng đang mở cửa"/>
         <text name="rms_ws_status_closed" text="Xưởng đang đóng cửa"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Thời gian sửa chữa:"/>
         <text name="rms_diagnostic_where_label" text="Nơi sửa chữa:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Xưởng lưu động hoặc xưởng cá nhân có cắm thiết bị, hoặc đại lý"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Xưởng cá nhân hoặc đại lý"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Đại lý"/>
         <text name="rms_diagnostic_note_inspection" text="Mã này cho biết máy đo được gì, không cho biết bộ phận nào hỏng: kiểm tra sẽ tìm ra bộ phận đó."/>
         <text name="rms_diagnostic_note_adblue" text="Mã này báo bình AdBlue thấp: châm AdBlue sẽ xóa mã."/>
         <text name="rms_diagnostic_note_uncoded" text="Kiểm tra máy sẽ tìm ra bộ phận liên quan."/>

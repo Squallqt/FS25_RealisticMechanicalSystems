@@ -103,8 +103,22 @@ function RMS_FluidWorkshop.getIsTopUpOffered(workshopType)
     return workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER
 end
 
+---Tells whether an overhaul works on a system carrying a high voltage fault
+local function getIsHighVoltageOverhaul(vehicle, optionOne, optionTwo)
+    local isPartial = optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
+    for id, operation in pairs(RMS_Config.MAINTENANCE.REPAIR_OPERATIONS) do
+        local definition = RMS_Breakdowns.BreakdownRegistry[id]
+        if operation.mobileRequirement == "MOBILE_HIGH_VOLTAGE" and definition ~= nil and definition.isApplicable(vehicle)
+            and (not isPartial or definition.system == optionTwo) then
+            return true
+        end
+    end
+    return false
+end
+
 ---Tells whether a workshop may run a service, else why and on which operation
-function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
+-- @param string? optionTwo system of a partial overhaul
+function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne, optionTwo)
     local workshops = RealisticMechanicalSystems.WORKSHOP
     if serviceType == RealisticMechanicalSystems.STATUS.REMAP then
         local isAllowed, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType, optionOne)
@@ -122,6 +136,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
     if serviceType == states.MAINTENANCE then return true end
     if serviceType == states.OVERHAUL then
         if isMobile then return false, "MOBILE_HEAVY_WORK", optionOne end
+        if getIsHighVoltageOverhaul(vehicle, optionOne, optionTwo) then return false, "MOBILE_HIGH_VOLTAGE", optionOne end
         return true
     end
     if serviceType == states.INSPECTION then
@@ -134,7 +149,7 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
     if serviceType == states.REPAIR then
         for _, id in ipairs(collectCoveredRepairBreakdowns(vehicle, optionOne)) do
             local requirement = RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[id].mobileRequirement
-            if requirement == "MOBILE_DIAGNOSTIC" and lacksDiagnosticTool
+            if requirement == "MOBILE_DIAGNOSTIC" and lacksDiagnosticTool or requirement == "MOBILE_HIGH_VOLTAGE"
                 or requirement ~= nil and requirement ~= "MOBILE_DIAGNOSTIC" and isMobile then
                 return false, requirement, RMS_Utils.getBreakdownPartKey(vehicle, RMS_Breakdowns.BreakdownRegistry[id])
             end
@@ -144,8 +159,9 @@ function RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, worksho
 end
 
 ---Returns the text of what a workshop lacks to run a service, empty when it may
-function RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, workshopType, optionOne)
-    local allowed, reason, operation = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
+function RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, workshopType, optionOne, optionTwo)
+    local allowed, reason, operation = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne,
+        optionTwo)
     if allowed then return "" end
     return string.format(g_i18n:getText(reason == "MOBILE_DIAGNOSTIC" and "rms_workshop_diagnostic_blocked" or "rms_mobile_workshop_operation_blocked"),
         g_i18n:getText(operation or serviceType), g_i18n:getText(RMS_FluidWorkshop.RESULT_TEXT_KEYS[reason]))
@@ -762,7 +778,7 @@ function RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, w
         return false, RMS_FluidWorkshop.RESULT.SERVICE_REFUSED
     end
 
-    local isAllowed, refusal = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne)
+    local isAllowed, refusal = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if not isAllowed then return false, RMS_FluidWorkshop.RESULT[refusal] end
 
     sellingPoint = RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, sellingPoint)

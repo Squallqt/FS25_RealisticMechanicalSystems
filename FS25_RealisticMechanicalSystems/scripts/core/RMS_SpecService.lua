@@ -204,10 +204,9 @@ local function getSizeScale(vehicle, exponent, factorKey)
     return (RMS_Fluids.getEnginePower(vehicle) / C.REFERENCE_POWER) ^ exponent * factors[factorKey]
 end
 
----Returns labour hours scaled to the machine and its service access
-local function getLabourHours(vehicle, hours, category)
+---Returns labour hours scaled to the machine
+local function getLabourHours(vehicle, hours)
     return hours * getSizeScale(vehicle, RMS_Config.MAINTENANCE.LABOUR_POWER_EXPONENT, "labour")
-        * RMS_Utils.getServiceAccessLabourFactor(vehicle, category)
 end
 
 ---Returns the labour hours of a repair of a fault
@@ -216,23 +215,7 @@ function RealisticMechanicalSystems.getRepairLabourHours(vehicle, breakdownId, r
     local operation = C.REPAIR_OPERATIONS[breakdownId]
     if operation == nil then return 0 end
     local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.REPAIR_TYPES, repairType)
-    return getLabourHours(vehicle, operation.hours * C.REPAIR_TIME_MULTIPLIERS[key], operation.category)
-end
-
----Returns the service access factor of an overhaul, weighed over its systems
-local function getOverhaulAccessFactor(vehicle, systemName)
-    local systems = RealisticMechanicalSystems.SYSTEMS
-    local function getFactor(name)
-        local key = RMS_Utils.getKeyByValue(systems, name) or string.upper(name)
-        local category = (key == "TRANSMISSION" or key == "PTO") and "transmission" or "mechanical"
-        return RMS_Utils.getServiceAccessLabourFactor(vehicle, category)
-    end
-    if systemName ~= nil then return getFactor(systemName) end
-    local factor = 1
-    for key in pairs(vehicle.spec_RealisticMechanicalSystems.systems) do
-        factor = factor + (getFactor(key) - 1) * RMS_Utils.getEffectiveSystemWeight(vehicle, key, systems)
-    end
-    return factor
+    return getLabourHours(vehicle, operation.hours * C.REPAIR_TIME_MULTIPLIERS[key])
 end
 
 ---Returns the real work hours of a service
@@ -241,11 +224,10 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
     local C, states = RMS_Config.MAINTENANCE, RealisticMechanicalSystems.STATUS
     if serviceType == states.INSPECTION then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.INSPECTION_TYPES, optionOne)
-        return getLabourHours(vehicle, C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key] / 3600000,
-            key == "VISUAL" and "external" or "diagnostic")
+        return getLabourHours(vehicle, C.INSPECTION_TIME * C.INSPECTION_TIME_MULTIPLIERS[key] / 3600000)
     elseif serviceType == states.MAINTENANCE then
         local key = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.MAINTENANCE_TYPES, optionOne)
-        local hours = getLabourHours(vehicle, C.MAINTENANCE_LABOUR_HOURS[key], "maintenance")
+        local hours = getLabourHours(vehicle, C.MAINTENANCE_LABOUR_HOURS[key])
         for _, partId in ipairs(getRenewedParts(vehicle, optionOne)) do
             hours = hours + RealisticMechanicalSystems.getRepairLabourHours(vehicle, partId, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM)
         end
@@ -276,9 +258,7 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
         if optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL then
             hours = hours * RMS_Utils.getEffectiveSystemWeight(vehicle, optionTwo, RealisticMechanicalSystems.SYSTEMS)
         end
-        local selectedSystem = optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and optionTwo or nil
-        hours = getLabourHours(vehicle, hours, "mechanical") * getOverhaulAccessFactor(vehicle, selectedSystem)
-        return hours
+        return getLabourHours(vehicle, hours)
     elseif serviceType == states.BODYWORK then
         return (RMS_Bodywork.getDurationMs(vehicle, optionOne) or 0) / 3600000
     elseif serviceType == states.REMAP then
@@ -462,7 +442,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
         return false
     end
 
-    if not RMS_FluidWorkshop.getWorkshopAvailability(self, type, workshopType, optionOne) then
+    if not RMS_FluidWorkshop.getWorkshopAvailability(self, type, workshopType, optionOne, optionTwo) then
         return false
     end
 

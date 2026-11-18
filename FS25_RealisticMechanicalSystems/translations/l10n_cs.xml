@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s：%s。请将推车的检测设备连接到机器上。"/>
         <text name="rms_mobile_workshop_diagnostic_required" text="需要电子检测"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="需要拆卸或专用工具"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="需要高压设备"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="需要具备高压资质的技师"/>
         <text name="rms_ws_status_in_progress_format" text="正在进行%s，结束时间为%s"/>
         <text name="rms_ws_status_open" text="维修车间已开放"/>
         <text name="rms_ws_status_closed" text="维修车间未开放"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="维修时间："/>
         <text name="rms_diagnostic_where_label" text="维修地点："/>
         <text name="rms_diagnostic_where_diagnostic" text="已连接检测设备的移动或自有维修车间，或经销商"/>
-        <text name="rms_diagnostic_where_high_voltage" text="自有维修车间或经销商"/>
+        <text name="rms_diagnostic_where_high_voltage" text="经销商"/>
         <text name="rms_diagnostic_note_inspection" text="此故障码说明机器测得的内容，而不是哪个部件故障：检查才能找到它。"/>
         <text name="rms_diagnostic_note_adblue" text="此故障码表示车用尿素罐液位低：加注车用尿素后即清除。"/>
         <text name="rms_diagnostic_note_uncoded" text="检查机器即可找到相关部件。"/>

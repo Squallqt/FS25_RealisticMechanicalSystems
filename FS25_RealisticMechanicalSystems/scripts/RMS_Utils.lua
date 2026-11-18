@@ -1638,48 +1638,41 @@ function RMS_Utils.formatReliability(value, isShop)
     return g_i18n:getText((isShop and SHOP_RELIABILITY_LABELS or RELIABILITY_LABELS)[tier])
 end
 
----Returns the service access class of a transmission name
-function RMS_Utils.getServiceAccessKey(transmissionName)
-    local name = string.lower(tostring(transmissionName or ""))
-    if name:find("powershift", 1, true) or name:find("power_shift", 1, true) then return "STANDARD" end
-    if name:find("cvt", 1, true) or name:find("variable", 1, true) then return "COMPLEX" end
-    if name:find("manual", 1, true) then return "SIMPLE" end
-    return "STANDARD"
-end
-
----Loads the service access class of each motor configuration
-function RMS_Utils.loadServiceAccess(xmlFile)
-    local result = {}
-    xmlFile:iterate("vehicle.motorized.motorConfigurations.motorConfiguration", function(index, key)
-        local name = xmlFile:getString(key .. ".transmission#name")
-        result[index] = name ~= nil and RMS_Utils.getServiceAccessKey(name) or result[1] or "STANDARD"
-    end)
-    return result
-end
-
----Returns the service access profile of an owned or store vehicle
-function RMS_Utils.getServiceAccessProfile(vehicle, storeItem, configurations)
-    if storeItem == nil and vehicle ~= nil then
-        storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+---Returns the fill type names a shop configuration consumes, as the shop reads its fuel
+local function getStoreConsumerFillTypes(storeItem, configurations)
+    local index = 1
+    local motor = configurations ~= nil and configurations.motor or nil
+    local motorConfigurations = storeItem.configurations ~= nil and storeItem.configurations.motor or nil
+    if motor ~= nil and motorConfigurations ~= nil and motorConfigurations[motor] ~= nil then
+        index = motorConfigurations[motor].consumerConfigurationIndex or index
     end
-    local selected = configurations or (vehicle ~= nil and vehicle.configurations) or {}
-    local index = selected.motor or 1
-    local classifications = storeItem ~= nil and storeItem.specs ~= nil and storeItem.specs.serviceAccess or {}
-    local key = classifications[index] or classifications[1]
-    if key == nil and vehicle ~= nil then
-        key = RMS_Utils.getServiceAccessKey(RealisticMechanicalSystems.getTransmissionType(vehicle))
+    local fillTypes = {}
+    local fuel = storeItem.specs ~= nil and storeItem.specs.fuel or nil
+    for _, consumer in ipairs(fuel ~= nil and fuel.consumers[index] or {}) do
+        fillTypes[string.upper(consumer.fillType or "")] = true
     end
-    return RMS_Config.SERVICE_ACCESS_PROFILES[key or "STANDARD"]
+    return fillTypes
 end
 
----Returns the labour factor of the service access of a vehicle
-function RMS_Utils.getServiceAccessLabourFactor(vehicle, category)
-    return RMS_Utils.getServiceAccessProfile(vehicle)[category] or 1
+---Returns the ease of service class of an owned machine or of a shop configuration
+function RMS_Utils.getServiceAccessKey(vehicle, storeItem, configurations)
+    local isElectric, hasControllers
+    if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil then
+        isElectric = vehicle.spec_RealisticMechanicalSystems.isElectricVehicle == true
+        hasControllers = RMS_DiagnosticTool.getHasControllers(vehicle)
+    else
+        local fillTypes = getStoreConsumerFillTypes(storeItem, configurations)
+        local year, source = RMS_ProductionYear.getYear(storeItem)
+        isElectric = fillTypes.ELECTRICCHARGE == true and fillTypes.DIESEL == nil and fillTypes.METHANE == nil
+        hasControllers = isElectric
+            or RMS_Utils.getHasEngineECU(fillTypes.DEF == true, year, source ~= RMS_ProductionYear.SOURCE.UNKNOWN)
+    end
+    return isElectric and "COMPLEX" or hasControllers and "STANDARD" or "SIMPLE"
 end
 
----Returns the service access label of a vehicle
+---Returns the ease of service label of an owned machine or of a shop configuration
 function RMS_Utils.formatServiceAccess(vehicle, storeItem, configurations, isShop)
-    local profile = RMS_Utils.getServiceAccessProfile(vehicle, storeItem, configurations)
+    local profile = RMS_Config.SERVICE_ACCESS_PROFILES[RMS_Utils.getServiceAccessKey(vehicle, storeItem, configurations)]
     return g_i18n:getText(isShop and profile.shopLabel or profile.label)
 end
 
@@ -1690,9 +1683,7 @@ end
 
 ---Returns the colour of the ease of service of a vehicle
 function RMS_Utils.getServiceAccessColor(vehicle)
-    local profiles = RMS_Config.SERVICE_ACCESS_PROFILES
-    local profile = RMS_Utils.getServiceAccessProfile(vehicle)
-    local tier = profile == profiles.SIMPLE and 1 or profile == profiles.COMPLEX and 3 or 2
+    local tier = RMS_Config.SERVICE_ACCESS_PROFILES[RMS_Utils.getServiceAccessKey(vehicle)].tier
     return RMS_Utils.getValueColorInverted(tier, 1, 1, 2, 3, false)
 end
 
@@ -2628,6 +2619,11 @@ function RMS_Utils.getIsElectricVehicle(vehicle)
     return isElectric
 end
 
+---Tells whether a combustion engine has an ECU, by its AdBlue and its year
+function RMS_Utils.getHasEngineECU(usesDef, year, isYearKnown)
+    return usesDef or isYearKnown and (tonumber(year) or 0) >= 2000
+end
+
 ---Tells whether an engine uses the shared ECU profile
 function RMS_Utils.getUsesEngineECUProfile(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
@@ -2637,8 +2633,7 @@ function RMS_Utils.getUsesEngineECUProfile(vehicle)
 
     local motorized = vehicle.spec_motorized
     local consumers = motorized ~= nil and motorized.consumersByFillTypeName or nil
-    return (consumers ~= nil and consumers.DEF ~= nil)
-        or (spec.yearIsKnown == true and (tonumber(spec.year) or 0) >= 2000)
+    return RMS_Utils.getHasEngineECU(consumers ~= nil and consumers.DEF ~= nil, spec.year, spec.yearIsKnown == true)
 end
 
 ---Returns the fan drive type for the machine's generation

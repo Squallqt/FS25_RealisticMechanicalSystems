@@ -313,9 +313,6 @@ function RMS_BatteryCharger.validate(charger, target, mode)
     if not connected and math.abs(target:getLastSpeed()) > RMS_BatteryCharger.STOPPED_SPEED then
         return "moving"
     end
-    if target:isUnderService() then
-        return "service"
-    end
     if targetSpec.externalPowerConnection ~= nil then
         return "cables"
     end

@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conectează la utilaj echipamentul de diagnoză al unui cărucior."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Este necesar un diagnostic electronic"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Este necesară demontarea sau o unealtă specializată"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Este necesar echipament de înaltă tensiune"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Este necesar un tehnician autorizat pentru înaltă tensiune"/>
         <text name="rms_ws_status_in_progress_format" text="%s în curs până la %s"/>
         <text name="rms_ws_status_open" text="Atelierul este deschis"/>
         <text name="rms_ws_status_closed" text="Atelierul este închis"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Timp de reparație:"/>
         <text name="rms_diagnostic_where_label" text="Unde se repară:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Atelier mobil sau propriu cu echipamentul conectat, ori reprezentanță"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Atelier propriu sau reprezentanță"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Reprezentanță"/>
         <text name="rms_diagnostic_note_inspection" text="Acest cod arată ce măsoară utilajul, nu piesa în cauză: o inspecție o găsește."/>
         <text name="rms_diagnostic_note_adblue" text="Acest cod semnalează un rezervor de AdBlue scăzut: alimentarea cu AdBlue îl șterge."/>
         <text name="rms_diagnostic_note_uncoded" text="O inspecție a utilajului găsește piesa în cauză."/>

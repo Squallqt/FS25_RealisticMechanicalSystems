@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Sluit de diagnoseapparatuur van een kar aan op de machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische diagnose vereist"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Demontage of speciaal gereedschap vereist"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Hoogspanningsapparatuur vereist"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Gekwalificeerde hoogspanningstechnicus vereist"/>
         <text name="rms_ws_status_in_progress_format" text="%s wordt uitgevoerd tot %s"/>
         <text name="rms_ws_status_open" text="De werkplaats is geopend"/>
         <text name="rms_ws_status_closed" text="De werkplaats is gesloten"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparatietijd:"/>
         <text name="rms_diagnostic_where_label" text="Waar te repareren:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobiele of eigen werkplaats met aangesloten diagnoseapparatuur, of dealer"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Eigen werkplaats of dealer"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Dealer"/>
         <text name="rms_diagnostic_note_inspection" text="Deze code zegt wat de machine meet, niet welk onderdeel defect is: een inspectie vindt het."/>
         <text name="rms_diagnostic_note_adblue" text="Deze code meldt een lage AdBlue-tank: AdBlue bijvullen wist hem."/>
         <text name="rms_diagnostic_note_uncoded" text="Een inspectie van de machine vindt het betrokken onderdeel."/>

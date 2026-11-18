@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Tilslut en vogns diagnoseudstyr til maskinen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kræves"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Adskillelse eller specialværktøj kræves"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Højspændingsudstyr kræves"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Højspændingsuddannet tekniker kræves"/>
         <text name="rms_ws_status_in_progress_format" text="%s i gang indtil %s"/>
         <text name="rms_ws_status_open" text="Værkstedet er åbent"/>
         <text name="rms_ws_status_closed" text="Værkstedet er lukket"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparationstid:"/>
         <text name="rms_diagnostic_where_label" text="Hvor repareres:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobilt eller eget værksted med tilsluttet diagnoseudstyr, eller forhandler"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Eget værksted eller forhandler"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Forhandler"/>
         <text name="rms_diagnostic_note_inspection" text="Denne kode fortæller, hvad maskinen måler, ikke hvilken del der er defekt: en inspektion finder den."/>
         <text name="rms_diagnostic_note_adblue" text="Denne kode melder lavt niveau i AdBlue-tanken: påfyldning af AdBlue sletter den."/>
         <text name="rms_diagnostic_note_uncoded" text="En inspektion af maskinen finder den berørte del."/>

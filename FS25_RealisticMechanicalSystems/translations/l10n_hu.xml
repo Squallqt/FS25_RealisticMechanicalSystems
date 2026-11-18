@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Csatlakoztasd egy kocsi diagnosztikai eszközét a géphez."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronikus diagnosztika szükséges"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Szétszerelés vagy speciális szerszám szükséges"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Nagyfeszültségű felszerelés szükséges"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Nagyfeszültségre képesített szerelő szükséges"/>
         <text name="rms_ws_status_in_progress_format" text="%s folyamatban, befejezés: %s"/>
         <text name="rms_ws_status_open" text="A műhely nyitva van"/>
         <text name="rms_ws_status_closed" text="A műhely zárva van"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Javítási idő:"/>
         <text name="rms_diagnostic_where_label" text="Javítás helye:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobil vagy saját műhely csatlakoztatott diagnosztikai eszközzel, vagy kereskedő"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Saját műhely vagy kereskedő"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Kereskedő"/>
         <text name="rms_diagnostic_note_inspection" text="Ez a kód azt mondja meg, mit mér a gép, nem azt, melyik alkatrész hibás: egy átvizsgálás megtalálja."/>
         <text name="rms_diagnostic_note_adblue" text="Ez a kód alacsony AdBlue-szintet jelez: az AdBlue utántöltése törli."/>
         <text name="rms_diagnostic_note_uncoded" text="A gép átvizsgálása megtalálja az érintett alkatrészt."/>

@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s：%s。カートのスキャンツールを車両に接続してください。"/>
         <text name="rms_mobile_workshop_diagnostic_required" text="電子系の故障判定が必要"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="分解または専用工具が必要"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="高電圧用設備が必要"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="高電圧の有資格整備士が必要"/>
         <text name="rms_ws_status_in_progress_format" text="%s：%sまで実施中"/>
         <text name="rms_ws_status_open" text="ワークショップ営業中"/>
         <text name="rms_ws_status_closed" text="ワークショップ営業時間外"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="修理時間："/>
         <text name="rms_diagnostic_where_label" text="修理場所："/>
         <text name="rms_diagnostic_where_diagnostic" text="スキャンツール接続の移動式・個人ワークショップ、またはディーラー"/>
-        <text name="rms_diagnostic_where_high_voltage" text="個人ワークショップまたはディーラー"/>
+        <text name="rms_diagnostic_where_high_voltage" text="ディーラー"/>
         <text name="rms_diagnostic_note_inspection" text="このコードは車両が測定した内容を示し、故障部品は示しません：点検で特定します。"/>
         <text name="rms_diagnostic_note_adblue" text="このコードは尿素水タンクの残量低下を示します：尿素水を補給すると消えます。"/>
         <text name="rms_diagnostic_note_uncoded" text="車両の点検で対象部品を特定します。"/>

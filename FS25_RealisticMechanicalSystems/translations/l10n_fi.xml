@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Kytke kärryn vianmäärityslaite koneeseen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektroninen diagnostiikka vaaditaan"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Purkaminen tai erikoistyökalut vaaditaan"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Suurjännitevarusteet vaaditaan"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Suurjännitepätevä asentaja vaaditaan"/>
         <text name="rms_ws_status_in_progress_format" text="%s käynnissä %s asti"/>
         <text name="rms_ws_status_open" text="Korjaamo on auki"/>
         <text name="rms_ws_status_closed" text="Korjaamo on kiinni"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Korjausaika:"/>
         <text name="rms_diagnostic_where_label" text="Korjauspaikka:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Liikkuva tai oma korjaamo vianmäärityslaite kytkettynä, tai jälleenmyyjä"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Oma korjaamo tai jälleenmyyjä"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Jälleenmyyjä"/>
         <text name="rms_diagnostic_note_inspection" text="Tämä koodi kertoo, mitä kone mittaa, ei sitä, mikä osa on viallinen: tarkastus löytää sen."/>
         <text name="rms_diagnostic_note_adblue" text="Tämä koodi ilmoittaa AdBlue-säiliön matalasta pinnasta: AdBlue-tankkaus poistaa sen."/>
         <text name="rms_diagnostic_note_uncoded" text="Koneen tarkastus löytää vikaantuneen osan."/>

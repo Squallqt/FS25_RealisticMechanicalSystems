@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Connect a trolley's diagnostic tool to the machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Dismantling or specialist equipment required"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="High-voltage equipment required"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Qualified high-voltage technician required"/>
         <text name="rms_ws_status_in_progress_format" text="%s in progress until %s"/>
         <text name="rms_ws_status_open" text="Workshop is open"/>
         <text name="rms_ws_status_closed" text="Workshop is closed"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Repair time:"/>
         <text name="rms_diagnostic_where_label" text="Where to repair:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobile or personal workshop with the tool connected, or dealer"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Personal workshop or dealer"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Dealer"/>
         <text name="rms_diagnostic_note_inspection" text="This code tells what the machine measures, not which part is at fault: an inspection finds it."/>
         <text name="rms_diagnostic_note_adblue" text="This code tells the AdBlue tank is low: refilling AdBlue clears it."/>
         <text name="rms_diagnostic_note_uncoded" text="An inspection of the machine finds the part at fault."/>

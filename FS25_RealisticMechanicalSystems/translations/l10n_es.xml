@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conecta el equipo de diagnóstico de un carro a la máquina."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico electrónico necesario"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Desmontaje o herramientas especializadas necesarios"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Equipo de alta tensión necesario"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Técnico habilitado en alta tensión necesario"/>
         <text name="rms_ws_status_in_progress_format" text="%s en curso hasta %s"/>
         <text name="rms_ws_status_open" text="El taller está abierto"/>
         <text name="rms_ws_status_closed" text="El taller está cerrado"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Tiempo de reparación:"/>
         <text name="rms_diagnostic_where_label" text="Dónde repararla:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Taller móvil o personal con el equipo conectado, o concesionario"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Taller personal o concesionario"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Concesionario"/>
         <text name="rms_diagnostic_note_inspection" text="Este código indica lo que mide la máquina, no la pieza afectada: una inspección la encuentra."/>
         <text name="rms_diagnostic_note_adblue" text="Este código indica un depósito de AdBlue bajo: repostar AdBlue lo borra."/>
         <text name="rms_diagnostic_note_uncoded" text="Una inspección de la máquina encuentra la pieza afectada."/>

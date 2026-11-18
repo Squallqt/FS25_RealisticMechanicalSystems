@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Conecte o equipamento de diagnóstico de um carrinho à máquina."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnóstico eletrônico necessário"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Desmontagem ou ferramentas especializadas necessárias"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Equipamento de alta tensão necessário"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Técnico habilitado em alta tensão necessário"/>
         <text name="rms_ws_status_in_progress_format" text="%s em andamento até %s"/>
         <text name="rms_ws_status_open" text="A oficina está aberta"/>
         <text name="rms_ws_status_closed" text="A oficina está fechada"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Tempo de reparo:"/>
         <text name="rms_diagnostic_where_label" text="Onde reparar:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Oficina móvel ou própria com o equipamento conectado, ou concessionária"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Oficina própria ou concessionária"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Concessionária"/>
         <text name="rms_diagnostic_note_inspection" text="Este código indica o que a máquina mede, não a peça afetada: uma inspeção a encontra."/>
         <text name="rms_diagnostic_note_adblue" text="Este código indica tanque de ARLA 32 baixo: reabastecer o ARLA 32 o apaga."/>
         <text name="rms_diagnostic_note_uncoded" text="Uma inspeção da máquina encontra a peça afetada."/>

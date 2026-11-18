@@ -55,7 +55,7 @@ SIMULATION
 - AdBlue on modern diesels, burnt with the diesel and no longer filled by the diesel nozzle; its gauge beside the fuel lights its lamp below 10 %, and Stage IV and V engines lose power below 2.5 % and more once empty, until AdBlue is poured in
 - Drivetrain management on tractors: 2WD / 4WD / AUTO modes and differential locks
 - Parking brake on every machine: recent CVT and powershift machines apply and release it on their own, the others use a hand brake; left released, the machine can roll down a slope
-- Original reliability shown as Average, Fair, Good or Very good; ease of maintenance as Easy, Average or Demanding. Mechanical condition and service deadlines remain separate
+- Original reliability shown as Average, Fair, Good or Very good; ease of maintenance as Easy, Average or Demanding, by what your farm repairs on its own. Mechanical condition and service deadlines remain separate
 - Multiplayer and dedicated server, 27 languages
 - Electric vehicles tracked with their own parts: an electric motor, a traction battery that loses capacity with age and range in the cold, power electronics, and maintenance limited to its present fluid circuits
 
@@ -84,7 +84,9 @@ Changelog 1.0.0.0-beta.3:
 - Reworked the sounds
 - Reworked the grease points of implements to follow how each one is built: a pallet fork whose tines only slide has none, a loader tool greases each arm its cylinder moves, a trailer its own axles and brakes and a three-way tipper its sides too, a body on a hook or a carrier only its own parts, and balers, rakes, tedders, mowers, cultivators, disc harrows, rollers, headers and potato harvesters follow their size and build
 - Reworked the weight card of the HUD: a weight icon, as on the fuel card, and figures no longer coloured by the load
-- Reworked the battery trolley: its charger and diagnostic tool reach long machines along their whole length, and the tools put away on it stay there after a dedicated server restart
+- Reworked the battery trolley: its charger and diagnostic tool reach long machines along their whole length, its charger keeps charging during workshop work, and the tools put away on it stay there after a dedicated server restart
+- Reworked the ease of maintenance to show what your farm repairs on its own: Easy without a controller, Average when the electronics need the diagnostic tool, Demanding on electric vehicles; each job now takes its own time, whatever the gearbox
+- Reworked the repair of electric vehicles: only the dealer works on their high voltage, overhauls included
 - Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
@@ -368,7 +370,7 @@ SIMULATION
 - AdBlue bei modernen Dieselmotoren, mit dem Diesel verbraucht und nicht mehr von der Dieselzapfpistole gefüllt; seine Anzeige neben dem Kraftstoff schaltet unter 10 % die Kontrollleuchte ein, und Motoren der Stufen IV und V verlieren unter 2,5 % Leistung und leer noch mehr, bis AdBlue nachgefüllt wird
 - Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO und Differentialsperren
 - Feststellbremse an jeder Maschine: Neuere Maschinen mit CVT- oder Powershift-Getriebe ziehen und lösen sie von selbst, die anderen haben eine Handbremse; ist sie gelöst, kann die Maschine am Hang wegrollen
-- Ursprüngliche Zuverlässigkeit als Durchschnittlich, Ordentlich, Gut oder Sehr gut; Wartungsfreundlichkeit als Einfach, Durchschnittlich oder Anspruchsvoll. Mechanischer Zustand und Wartungsfristen bleiben getrennt
+- Ursprüngliche Zuverlässigkeit als Durchschnittlich, Ordentlich, Gut oder Sehr gut; Wartbarkeit als Einfach, Durchschnittlich oder Anspruchsvoll, je nachdem, was der eigene Betrieb selbst repariert. Mechanischer Zustand und Wartungsfristen bleiben getrennt
 - Mehrspieler und Dedicated Server, 27 Sprachen
 - Elektrofahrzeuge mit ihren eigenen Bauteilen: Elektromotor, Traktionsbatterie, die mit dem Alter Kapazität und bei Kälte Reichweite verliert, Leistungselektronik und Wartung nur für vorhandene Flüssigkeitskreisläufe
 
@@ -397,7 +399,9 @@ Changelog 1.0.0.0-beta.3:
 - Sounds überarbeitet
 - Schmierstellen der Anbaugeräte nach ihrem Aufbau überarbeitet: Eine Palettengabel, deren Zinken nur seitlich verschoben werden, hat keine, ein Ladewerkzeug schmiert jeden Arm, den sein Zylinder bewegt, ein Anhänger seine eigenen Achsen und Bremsen und ein Dreiseitenkipper auch seine Bordwände, ein Aufbau am Haken oder auf einem Träger nur seine eigenen Teile, und Pressen, Schwader, Wender, Mähwerke, Grubber, Scheibeneggen, Walzen, Schneidwerke und Kartoffelroder folgen ihrer Größe und Bauart
 - Gewichtskarte im HUD überarbeitet: ein Gewichtssymbol wie auf der Kraftstoffkarte, und die Zahlen werden nicht mehr nach der Last eingefärbt
-- Batteriewagen überarbeitet: Ladegerät und Diagnosegerät erreichen lange Maschinen auf ihrer ganzen Länge, und die darauf abgelegten Werkzeuge bleiben nach einem Neustart des dedizierten Servers dort
+- Batteriewagen überarbeitet: Ladegerät und Diagnosegerät erreichen lange Maschinen auf ihrer ganzen Länge, das Ladegerät lädt auch während Werkstattarbeiten weiter, und die darauf abgelegten Werkzeuge bleiben nach einem Neustart des dedizierten Servers dort
+- Wartbarkeit überarbeitet: Sie zeigt, was der eigene Betrieb selbst repariert, Einfach ohne Steuergerät, Durchschnittlich, wenn die Elektronik das Diagnosegerät braucht, Anspruchsvoll bei Elektrofahrzeugen; jede Arbeit dauert jetzt ihre eigene Zeit, unabhängig vom Getriebe
+- Reparatur von Elektrofahrzeugen überarbeitet: Nur der Händler arbeitet an ihrer Hochvoltanlage, Überholungen eingeschlossen
 - Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
@@ -681,7 +685,7 @@ SIMULATION
 - AdBlue sur les diesels récents, consommé avec le gazole et que le pistolet à gazole ne remplit plus ; sa jauge à côté du carburant allume son voyant sous 10 %, et les moteurs de phase IV et V perdent de la puissance sous 2,5 % et davantage à vide, jusqu'au plein d'AdBlue
 - Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO et blocages de différentiel
 - Frein de parking sur toutes les machines : les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules, les autres ont un frein à main ; desserré, la machine peut partir dans la pente
-- Fiabilité d’origine affichée comme Moyenne, Correcte, Bonne ou Très bonne ; facilité d’entretien comme Facile, Moyenne ou Exigeante. L’état mécanique et les échéances d’entretien restent distincts
+- Fiabilité d’origine affichée comme Moyenne, Correcte, Bonne ou Très bonne ; facilité d’entretien comme Facile, Moyenne ou Exigeante, selon ce que votre ferme répare elle-même. L’état mécanique et les échéances d’entretien restent distincts
 - Multijoueur et serveur dédié, 27 langues
 - Véhicules électriques suivis avec leurs propres organes : moteur électrique, batterie de traction qui perd de la capacité en vieillissant et de l'autonomie au froid, électronique de puissance, et des entretiens limités aux circuits présents
 
@@ -710,7 +714,9 @@ Changelog 1.0.0.0-beta.3 :
 - Refonte des sons
 - Refonte des graisseurs des outils selon leur construction : une fourche à palettes dont les dents ne font que coulisser n'en a aucun, un outil de chargeur graisse chaque bras que son vérin déplace, une remorque ses propres essieux et freins et une benne trois côtés aussi ses ridelles, une caisse sur crochet ou sur porteur seulement ses propres organes, et presses, andaineurs, faneuses, faucheuses, cultivateurs, déchaumeurs à disques, rouleaux, coupes et arracheuses de pommes de terre suivent leur taille et leur construction
 - Refonte de la carte de poids du HUD : une icône de poids, comme sur la carte de carburant, et des chiffres que la charge ne colore plus
-- Refonte du chariot de batterie : son chargeur et sa valise de diagnostic atteignent les longues machines sur toute leur longueur, et les outils rangés dessus y restent après un redémarrage du serveur dédié
+- Refonte du chariot de batterie : son chargeur et sa valise de diagnostic atteignent les longues machines sur toute leur longueur, son chargeur continue de charger pendant une intervention d'atelier, et les outils rangés dessus y restent après un redémarrage du serveur dédié
+- Refonte de la facilité d'entretien, qui montre ce que votre ferme répare elle-même : Facile sans calculateur, Moyenne quand l'électronique demande la valise de diagnostic, Exigeante sur les machines électriques ; chaque travail prend désormais son propre temps, quelle que soit la boîte
+- Refonte de la réparation des machines électriques : seul le concessionnaire travaille sur leur haute tension, révisions comprises
 - Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs

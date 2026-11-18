@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Bir arabanın teşhis cihazını makineye bağla."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Söküm veya özel aletler gerekli"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim ekipmanı gerekli"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim yetkili teknisyen gerekli"/>
         <text name="rms_ws_status_in_progress_format" text="%s devam ediyor; bitiş: %s"/>
         <text name="rms_ws_status_open" text="Atölye açık"/>
         <text name="rms_ws_status_closed" text="Atölye kapalıdır"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Onarım Süresi:"/>
         <text name="rms_diagnostic_where_label" text="Onarım Yeri:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Cihaz bağlıyken mobil atölye veya kendi atölyen ya da bayi"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Kendi atölyen veya bayi"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Bayi"/>
         <text name="rms_diagnostic_note_inspection" text="Bu kod, makinenin neyi ölçtüğünü söyler, hangi parçanın arızalı olduğunu değil: bir muayene onu bulur."/>
         <text name="rms_diagnostic_note_adblue" text="Bu kod, AdBlue tankının düşük olduğunu bildirir: AdBlue doldurmak onu siler."/>
         <text name="rms_diagnostic_note_uncoded" text="Makinenin muayenesi etkilenen parçayı bulur."/>

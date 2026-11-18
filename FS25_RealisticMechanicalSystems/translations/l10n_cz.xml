@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Připojte ke stroji diagnostické zařízení vozíku."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Vyžadována demontáž nebo speciální nástroje"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadováno vysokonapěťové vybavení"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadován technik s vysokonapěťovou kvalifikací"/>
         <text name="rms_ws_status_in_progress_format" text="Probíhá %s do %s"/>
         <text name="rms_ws_status_open" text="Dílna je otevřena"/>
         <text name="rms_ws_status_closed" text="Dílna je zavřena"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Doba opravy:"/>
         <text name="rms_diagnostic_where_label" text="Kde opravit:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobilní nebo vlastní dílna s připojeným diagnostickým zařízením, nebo prodejce"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Vlastní dílna nebo prodejce"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Prodejce"/>
         <text name="rms_diagnostic_note_inspection" text="Tento kód říká, co stroj měří, ne který díl je vadný: prohlídka ho najde."/>
         <text name="rms_diagnostic_note_adblue" text="Tento kód hlásí nízkou hladinu v nádrži AdBlue: doplnění AdBlue ho vymaže."/>
         <text name="rms_diagnostic_note_uncoded" text="Prohlídka stroje najde dotčený díl."/>

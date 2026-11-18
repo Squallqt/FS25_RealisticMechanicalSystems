@@ -165,7 +165,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Collega alla macchina lo strumento di diagnosi di un carrello."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosi elettronica necessaria"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Smontaggio o attrezzatura specializzata necessari"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Attrezzatura per alta tensione necessaria"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Tecnico abilitato all'alta tensione necessario"/>
         <text name="rms_ws_status_in_progress_format" text="%s in corso fino alle %s"/>
         <text name="rms_ws_status_open" text="L'officina è aperta"/>
         <text name="rms_ws_status_closed" text="L'officina è chiusa"/>
@@ -1126,7 +1126,7 @@
         <text name="rms_diagnostic_repair_time_label" text="Tempo di riparazione:"/>
         <text name="rms_diagnostic_where_label" text="Dove ripararlo:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Officina mobile o propria con lo strumento collegato, oppure concessionario"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Officina propria o concessionario"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Concessionario"/>
         <text name="rms_diagnostic_note_inspection" text="Questo codice dice cosa misura la macchina, non quale componente è guasto: un'ispezione lo trova."/>
         <text name="rms_diagnostic_note_adblue" text="Questo codice segnala il serbatoio AdBlue basso: il rifornimento di AdBlue lo cancella."/>
         <text name="rms_diagnostic_note_uncoded" text="Un'ispezione della macchina trova il componente coinvolto."/>

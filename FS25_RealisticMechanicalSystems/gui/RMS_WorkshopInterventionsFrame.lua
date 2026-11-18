@@ -463,10 +463,11 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     if order.footerKeys ~= nil then
         self.footer:setText(g_i18n:getText(order.footerKeys[1]) .. " " .. g_i18n:getText(order.footerKeys[2]))
     end
-    local isAllowed = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, self.choice)
+    local isAllowed = RMS_FluidWorkshop.getWorkshopAvailability(vehicle, serviceType, workshopType, self.choice, optionTwo)
     local refusalKey = isAllowed and order.getRefusalKey ~= nil and order.getRefusalKey(vehicle, workshopType, self.choice) or nil
     self.restriction:setVisible(not isAllowed or refusalKey ~= nil)
-    self.restriction:setText(not isAllowed and RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, workshopType, self.choice)
+    self.restriction:setText(not isAllowed
+        and RMS_FluidWorkshop.getWorkshopRestrictionText(vehicle, serviceType, workshopType, self.choice, optionTwo)
         or refusalKey ~= nil and g_i18n:getText(refusalKey) or "")
 
     self:updateSecondOption(order)
