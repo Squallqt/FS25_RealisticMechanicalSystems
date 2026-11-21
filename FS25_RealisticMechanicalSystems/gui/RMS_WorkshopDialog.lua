@@ -34,6 +34,7 @@ function RMS_WorkshopDialog.show(vehicle, workshopType, serviceType)
     local self = RMS_WorkshopDialog.INSTANCE
     self.vehicle = vehicle
     self.workshopType = workshopType
+    self.sellingPoint = workshopType ~= nil and g_workshopScreen.owner or nil
     self.observedStatus = nil
     for _, page in ipairs(self.pages) do
         page:setVehicle(vehicle, workshopType)
@@ -84,6 +85,7 @@ function RMS_WorkshopDialog:onClose()
         page:setVehicle(nil, nil)
     end
     self.vehicle = nil
+    self.sellingPoint = nil
     g_currentMission:showMoneyChange(MoneyType.VEHICLE_RUNNING_COSTS)
     g_currentMission:showMoneyChange(MoneyType.SHOP_VEHICLE_BUY)
     g_currentMission:showMoneyChange(MoneyType.SHOP_VEHICLE_SELL)
@@ -103,6 +105,11 @@ function RMS_WorkshopDialog:update(dt)
         or isValueDue and getResaleValue(self) ~= self.observedResaleValue then
         self:refresh()
     end
+end
+
+---Updates the order which received a server stock reply
+function RMS_WorkshopDialog:onStockQuote(requestId, shortages)
+    self.pages[RMS_WorkshopDialog.TAB.INTERVENTIONS]:onStockQuote(requestId, shortages)
 end
 
 ---Writes the workshop state into the header and every page

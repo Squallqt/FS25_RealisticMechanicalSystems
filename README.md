@@ -506,6 +506,7 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
 - Fixed the estimate of a running procedure on multiplayer servers
+- Fixed workshop orders overlooking fluids already in the workshop area
 - Fixed the Condition card showing replaced parts as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due after an engine oil change
 - Fixed grain headers asking for the daily greasing of a PTO shaft

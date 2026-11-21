@@ -527,7 +527,7 @@ function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionT
 end
 
 ---Starts an order on the server, or asks the server from a client
-function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo)
+function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo, sellingPoint)
     local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if price == nil then
         RMS_FluidWorkshop.showResult(RMS_FluidWorkshop.RESULT.PRICE_UNAVAILABLE)
@@ -537,10 +537,10 @@ function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne,
         return false
     end
     if g_server == nil then
-        RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo)
+        RMS_ServiceRequestEvent.send(vehicle, serviceType, workshopType, optionOne, optionTwo, sellingPoint)
         return true
     end
-    local isStarted, result = RMS_FluidWorkshop.tryStartService(vehicle, g_workshopScreen.sellingPoint, serviceType, workshopType, optionOne,
+    local isStarted, result = RMS_FluidWorkshop.tryStartService(vehicle, sellingPoint, serviceType, workshopType, optionOne,
         optionTwo, g_currentMission:getFarmId())
     if not isStarted then
         RMS_FluidWorkshop.showResult(result)

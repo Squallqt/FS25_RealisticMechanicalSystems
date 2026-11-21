@@ -125,6 +125,7 @@ Changelog 1.0.0.0-beta.3:
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
 - Fixed the estimate of a running procedure on multiplayer servers
+- Fixed workshop orders overlooking fluids already in the workshop area
 - Fixed the Condition card showing replaced parts as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due after an engine oil change
 - Fixed grain headers asking for the daily greasing of a PTO shaft
@@ -483,6 +484,7 @@ Changelog 1.0.0.0-beta.3:
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile auf Multiplayer-Servern behoben
 - Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
+- Fehler behoben, durch den Werkstattaufträge vorhandene Betriebsflüssigkeiten im Arbeitsbereich übersahen
 - Zustandskarte behoben, die ersetzte Teile als ausgefallen oder verschlissen zeigte
 - Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
 - Getreideschneidwerke behoben, die das tägliche Abschmieren einer Gelenkwelle verlangten
@@ -841,6 +843,7 @@ Changelog 1.0.0.0-beta.3 :
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis sur les serveurs multijoueurs
 - Correction du devis de l'intervention en cours sur les serveurs multijoueurs
+- Correction des interventions qui ignoraient les fluides déjà présents dans la zone d’atelier
 - Correction de la carte d'état qui montrait des pièces remplacées comme en panne ou usées
 - Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
 - Correction des coupes à grains qui demandaient le graissage quotidien d'un cardan de prise de force

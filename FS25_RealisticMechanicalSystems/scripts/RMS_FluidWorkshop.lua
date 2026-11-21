@@ -236,6 +236,22 @@ local function getRootVehicle(object)
     return object.rootVehicle or object
 end
 
+---Resolves a trigger shape through its compound to the object the game registered
+local function getObjectFromShape(shapeId)
+    if not entityExists(shapeId) then
+        return nil
+    end
+    local nodeToObject = g_currentMission.nodeToObject
+    while shapeId ~= 0 do
+        local object = nodeToObject[shapeId]
+        if object ~= nil then
+            return object
+        end
+        shapeId = getParent(shapeId)
+    end
+    return nil
+end
+
 ---Returns the distance between two objects, math.huge without a node
 local function getDistance(objectA, objectB)
     local nodeA = objectA ~= nil and (objectA.rootNode or objectA.nodeId) or nil
@@ -256,11 +272,8 @@ function RMS_FluidWorkshop.getIsVehicleInSellingPoint(vehicle, sellingPoint)
     end
 
     for shapeId, inRange in pairs(sellingPoint.vehicleShapesInRange or {}) do
-        if inRange and entityExists(shapeId) then
-            local object = g_currentMission.nodeToObject[shapeId]
-            if getRootVehicle(object) == targetRoot then
-                return true
-            end
+        if inRange and getRootVehicle(getObjectFromShape(shapeId)) == targetRoot then
+            return true
         end
     end
     return false
@@ -274,9 +287,8 @@ function RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, preferred)
             or workshopType == RealisticMechanicalSystems.WORKSHOP.MOBILE and sellingPoint.mobileWorkshop
     end
 
-    if preferred ~= nil and matchesWorkshopType(preferred)
-        and RMS_FluidWorkshop.getIsVehicleInSellingPoint(vehicle, preferred) then
-        return preferred
+    if preferred ~= nil and matchesWorkshopType(preferred) then
+        return RMS_FluidWorkshop.getIsVehicleInSellingPoint(vehicle, preferred) and preferred or nil
     end
 
     for _, sellingPoint in ipairs(RMS_FluidWorkshop.sellingPoints) do
@@ -293,22 +305,26 @@ function RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
     local seen = {}
 
     for shapeId, inRange in pairs(sellingPoint ~= nil and sellingPoint.vehicleShapesInRange or {}) do
-        if inRange and entityExists(shapeId) then
-            local object = g_currentMission.nodeToObject[shapeId]
-            object = getRootVehicle(object)
-            if object ~= nil and not seen[object] and object[RMS_FluidContainer.SPEC_TABLE_NAME] ~= nil
-                and object:getOwnerFarmId() == farmId then
-                seen[object] = true
+        local object = inRange and getObjectFromShape(shapeId) or nil
+        if object ~= nil and not seen[object] then
+            seen[object] = true
+            local spec = object[RMS_FluidContainer.SPEC_TABLE_NAME]
+            if spec ~= nil and object:getOwnerFarmId() == farmId
+                and not object.isDeleted and not object.isDeleting and not object.markedForDeletion and not spec.isCarried then
+                local distance = getDistance(object, vehicle)
+                local productKey = object:getRMSFluidProductKey()
+                local networkId = NetworkUtil.getObjectId(object) or 0
                 for index = 1, object:getRMSFluidSlotCount() do
-                    if object:getRMSFluidLiters(index) > RMS_Fluids.EPSILON then
+                    local liters = object:getRMSFluidLiters(index)
+                    if liters > RMS_Fluids.EPSILON then
                         table.insert(containers, {
                             object = object,
                             index = index,
-                            productKey = object:getRMSFluidProductKey(),
-                            available = object:getRMSFluidLiters(index),
+                            productKey = productKey,
+                            available = liters,
                             percentage = object:getRMSFluidPercentage(index),
-                            distance = getDistance(object, vehicle),
-                            networkId = NetworkUtil.getObjectId(object) or 0
+                            distance = distance,
+                            networkId = networkId
                         })
                     end
                 end
@@ -322,11 +338,14 @@ end
 -- @return table? allocations liters per container, nil on shortage
 -- @return table shortages missing liters by circuit
 function RMS_FluidWorkshop.allocateStock(vehicle, sellingPoint, farmId, requirements)
-    local containers = RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
     local allocations = {}
     local shortages = {}
+    if requirements == nil or #requirements == 0 then
+        return allocations, shortages
+    end
+    local containers = RMS_FluidWorkshop.collectContainers(vehicle, sellingPoint, farmId)
 
-    for _, requirement in ipairs(requirements or {}) do
+    for _, requirement in ipairs(requirements) do
         local candidates = {}
         for _, container in ipairs(containers) do
             if container.available > RMS_Fluids.EPSILON
@@ -377,8 +396,21 @@ local function getIsFluidSupplied(vehicle, serviceType, workshopType)
         or serviceType == RealisticMechanicalSystems.STATUS.MAINTENANCE and vehicle:isLeaseMaintenanceCovered(workshopType)
 end
 
+---Tells whether the order needs fluid from the farm's stock
+function RMS_FluidWorkshop.getNeedsStock(vehicle, workshopType, serviceType, requirements)
+    if getIsFluidSupplied(vehicle, serviceType, workshopType) then
+        return false
+    end
+    for _, requirement in ipairs(requirements) do
+        if RMS_FluidWorkshop.getUncoveredFluidShare(vehicle, requirement, serviceType, workshopType) > 0 then
+            return true
+        end
+    end
+    return false
+end
+
 ---Tells what a farm or mobile workshop zone lacks to run a service
--- @param table jobs in their order, each { serviceType, requirements, optionOne, optionTwo }
+-- @param table jobs in their order, each { serviceType, requirements }
 function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType, jobs)
     local lines = {}
     for _, job in ipairs(jobs) do
@@ -387,6 +419,9 @@ function RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType
                 table.insert(lines, line)
             end
         end
+    end
+    if #lines == 0 then
+        return {}
     end
     local _, shortages = RMS_FluidWorkshop.allocateStock(vehicle,
         RMS_FluidWorkshop.findSellingPoint(vehicle, workshopType, sellingPoint), vehicle:getOwnerFarmId(), lines)

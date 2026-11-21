@@ -6,6 +6,7 @@ RMS_WorkshopInterventionsFrame = {}
 local RMS_WorkshopInterventionsFrame_mt = Class(RMS_WorkshopInterventionsFrame, RMS_WorkshopPage)
 
 local STATUS = RealisticMechanicalSystems.STATUS
+local nextStockRequestId = 0
 
 local ACTIONS = {
     { service = STATUS.INSPECTION, label = "rms_ws_action_choice_inspection", icon = "rms_workshopActionIcon", slice = "gui.icon_vehicleDealer_search" },
@@ -280,12 +281,14 @@ end
 function RMS_WorkshopInterventionsFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopInterventionsFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.serviceType, self.refusedService = nil, nil
+    self.stockQuote = nil
 end
 
 ---Opens an intervention, or says why it has nothing to do here
 function RMS_WorkshopInterventionsFrame:selectService(serviceType)
     local vehicle, workshopType = self.vehicle, self.workshopType
     self.serviceType, self.refusedService = nil, nil
+    self.stockQuote = nil
     if RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType) ~= nil then
         self.refusedService = serviceType
         return
@@ -480,23 +483,24 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     if serviceType == STATUS.REFILL then
         typeText = g_i18n:getText("rms_fluid_refill_work_order")
     end
+    local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, self.choice, optionTwo)
     self:writeRecap({
         type = typeText,
         options = self:getRecapOptions(optionTwo),
         price = priceText,
         duration = formatServiceDuration(serviceType, duration, RMS_Utils.formatShortDuration),
         finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(serviceType, self.choice, optionTwo, workshopType)),
-        quote = self:getQuote(optionTwo, coverKey)
+        quote = self:getQuote(optionTwo, coverKey, requirements)
     })
 
-    local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, self.choice, optionTwo)
     local isValid = self.choice ~= nil or (serviceType == STATUS.REFILL and #requirements > 0)
     if serviceType == STATUS.OVERHAUL then
         isValid = self.choice ~= RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL or self.optionTwo ~= nil
     elseif serviceType == STATUS.BODYWORK then
         isValid = RMS_Bodywork.isAllowed(vehicle, workshopType, self.choice, optionTwo)
     end
-    self.startButton:setDisabled(not isValid or not isAllowed or not self.state.isOpen or price == nil or self.hasStockShortage)
+    self.startButton:setDisabled(not isValid or not isAllowed or not self.state.isOpen or price == nil
+        or self.hasStockShortage or self.isStockPending)
 
     self.orderScroll:invalidateLayout()
     for _, group in ipairs({ self.tableColumns, self.systemCards, self.qualityCards }) do
@@ -941,13 +945,65 @@ function RMS_WorkshopInterventionsFrame:getServiceQuote(serviceType, choice, opt
     return { group }
 end
 
+---Asks for the current stock of the open order
+function RMS_WorkshopInterventionsFrame:requestStock()
+    local quote = self.stockQuote
+    nextStockRequestId = (nextStockRequestId + 1) % 4294967296
+    quote.requestId = nextStockRequestId
+    RMS_ServiceRequestEvent.send(self.vehicle, quote.serviceType, self.workshopType, quote.optionOne, quote.optionTwo,
+        self.dialog.sellingPoint, quote.requestId)
+end
+
+---Returns nil while the server checks the stock for these choices
+function RMS_WorkshopInterventionsFrame:getQuoteShortages(optionTwo, requirements)
+    local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
+    local sellingPoint = self.dialog.sellingPoint
+    if not RMS_FluidWorkshop.getNeedsStock(vehicle, workshopType, serviceType, requirements) then
+        self.stockQuote = nil
+        return {}
+    end
+    if g_server ~= nil then
+        return RMS_FluidWorkshop.getStockShortages(vehicle, sellingPoint, workshopType,
+            { { serviceType = serviceType, requirements = requirements } })
+    end
+    local quote = self.stockQuote
+    if quote == nil or quote.serviceType ~= serviceType or quote.optionOne ~= self.choice or quote.optionTwo ~= optionTwo then
+        quote = { serviceType = serviceType, optionOne = self.choice, optionTwo = optionTwo }
+        self.stockQuote = quote
+        self:requestStock()
+    end
+    return quote.shortages
+end
+
+---Applies a reply only to the order that asked for it
+function RMS_WorkshopInterventionsFrame:onStockQuote(requestId, shortages)
+    local quote = self.stockQuote
+    if quote == nil or requestId ~= quote.requestId or self.serviceType ~= quote.serviceType or self.state.isUnderService then
+        return
+    end
+    local changed = quote.shortages == nil
+    if not changed then
+        for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
+            if quote.shortages[circuit] ~= shortages[circuit] then
+                changed = true
+                break
+            end
+        end
+    end
+    quote.shortages = shortages
+    if changed then
+        self:updateOrder()
+        self.dialog:updateButtons()
+    end
+end
+
 ---Lines of the quote of the open order, gathered by group
-function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
+function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey, requirements)
     local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
     local invoice = RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, self.choice, optionTwo)
-    local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, self.choice, optionTwo)
-    local shortages = RMS_FluidWorkshop.getStockShortages(vehicle, g_workshopScreen.sellingPoint, workshopType,
-        { { serviceType = serviceType, requirements = requirements, optionOne = self.choice, optionTwo = optionTwo } })
+    local shortages = self:getQuoteShortages(optionTwo, requirements or {})
+    self.isStockPending = shortages == nil
+    shortages = shortages or {}
     self.hasStockShortage = next(shortages) ~= nil
     local groups = self:getServiceQuote(serviceType, self.choice, optionTwo, invoice, workshopType)
     for _, group in ipairs(groups) do
@@ -963,7 +1019,8 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey)
                 end
             end
         end
-        if group.isFluids and not self.hasStockShortage and (coverKey ~= nil or workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER) then
+        if group.isFluids and not self.isStockPending and not self.hasStockShortage
+            and (coverKey ~= nil or workshopType ~= RealisticMechanicalSystems.WORKSHOP.DEALER) then
             table.insert(group.lines, { kind = "note", label = g_i18n:getText(coverKey ~= nil and COVER_TEXTS[coverKey].fluids
                 or "rms_fluid_stock_required") })
         end
@@ -1230,6 +1287,9 @@ end
 ---Picks the option of a clicked column
 function RMS_WorkshopInterventionsFrame:onClickColumn(button)
     self.choice = self.choices[button.templateIndex]
+    if self.hasStockShortage then
+        self.stockQuote = nil
+    end
     self.dialog:refresh()
 end
 
@@ -1346,8 +1406,9 @@ end
 
 ---Sends the open order and leaves it
 function RMS_WorkshopInterventionsFrame:startOrder()
-    if RMS_WorkshopOrders.start(self.vehicle, self.workshopType, self.serviceType, self.choice, self:getOptionTwo(self.choice)) then
-        self.serviceType = nil
+    if RMS_WorkshopOrders.start(self.vehicle, self.workshopType, self.serviceType, self.choice, self:getOptionTwo(self.choice),
+        self.dialog.sellingPoint) then
+        self.serviceType, self.stockQuote = nil, nil
         self.dialog:refresh()
     end
 end
@@ -1358,6 +1419,7 @@ function RMS_WorkshopInterventionsFrame:goBack()
         return false
     end
     self.serviceType, self.refusedService = nil, nil
+    self.stockQuote = nil
     self.dialog:refresh()
     return true
 end
