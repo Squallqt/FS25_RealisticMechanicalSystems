@@ -54,6 +54,45 @@ local function getInspectionKey()
     return RMS_Utils.getPrimaryKeyboardInputText("RMS_FIELD_INSPECTION", "R")
 end
 
+---Returns a speed in the game's unit
+local function formatSpeed(speed)
+    return string.format("%d %s", math.floor(g_i18n:getSpeed(speed) + 0.5), g_i18n:getSpeedMeasuringUnit())
+end
+
+---Returns a °C temperature in the game's unit
+local function formatTemperature(celsius)
+    return string.format("%d %s", math.floor(g_i18n:getTemperature(celsius) + 0.5), g_i18n:getTemperatureUnit())
+end
+
+---Returns the cold engine and cold cooling thresholds
+local function getColdEngineTemperatures()
+    return formatTemperature(RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD),
+        formatTemperature(RMS_Config.CORE.COOLING_FACTOR_DATA.COLD_SHOCK_FACTOR_THRESHOLD)
+end
+
+---Returns the cold transmission and hydraulic oil thresholds
+local function getColdOilTemperatures()
+    return formatTemperature(RMS_Config.CORE.TRANSMISSION_FACTOR_DATA.COLD_TRANSMISSION_THRESHOLD),
+        formatTemperature(RMS_Config.CORE.HYDRAULICS_FACTOR_DATA.COLD_OIL_THRESHOLD)
+end
+
+---Returns the AUTO and diff lock release speeds
+local function getDriveSpeeds()
+    local C = RMS_Config.DRIVETRAIN
+    return formatSpeed(C.AUTO_DISENGAGE_SPEED), formatSpeed(C.DIFF_LOCK_RELEASE_SPEED)
+end
+
+---Returns the diff lock release speed
+local function getDiffLockSpeed()
+    return formatSpeed(RMS_Config.DRIVETRAIN.DIFF_LOCK_RELEASE_SPEED)
+end
+
+---Tells whether the machine has a diff lock only
+local function hasLockAlone(machine)
+    local drivetrain = machine.spec.drivetrain
+    return machine.isStarted and drivetrain ~= nil and drivetrain.hasControl == true and drivetrain.hasCenterDiff ~= true
+end
+
 ---Tells whether the load is heavy enough to wear the brakes
 local function hasHeavyTrailer(machine)
     local spec = machine.spec
@@ -81,13 +120,28 @@ local function hasMajorServiceWear(machine)
     return false
 end
 
----Tells whether a poor quality part has a breakdown waiting to show
-local function hasPoorPartsBreakdown(machine)
+---Tells whether an inspection found a poor quality part
+local function hasFoundPoorPart(machine)
     for id, breakdown in pairs(machine.spec.activeBreakdowns or {}) do
         local definition = RMS_Breakdowns.BreakdownRegistry[id]
-        if definition ~= nil and definition.isSelectable == true and breakdown.isActive == false
+        if definition ~= nil and definition.isSelectable == true and breakdown.isActive == false and breakdown.isVisible == true
             and breakdown.source == RealisticMechanicalSystems.BREAKDOWN_SOURCES.POOR_PARTS then
             return true
+        end
+    end
+    return false
+end
+
+local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
+
+---Tells whether the last complete report found a bad filter
+local function hasFoundPoorConsumables(machine)
+    local log = machine.spec.maintenanceLog or {}
+    for index = #log, 1, -1 do
+        local entry = log[index]
+        if RealisticMechanicalSystems.getIsLogEntryHasReport(entry) then
+            return RealisticMechanicalSystems.getIsCompleteReport(entry) and entry.conditionData ~= nil
+                and entry.conditionData.activeBreakdowns[POOR_CONSUMABLES] ~= nil and machine.vehicle:hasBreakdown(POOR_CONSUMABLES)
         end
     end
     return false
@@ -123,7 +177,7 @@ end
 RMS_Tutorial.TIPS = {
     { key = "HEAVY_TRAILER", text = "rms_tutorial_heavy_trailer", isDue = function(m)
         return m.enabled.chassis and m.isStarted and m.speed > 5 and hasHeavyTrailer(m) end },
-    { key = "AGE_DEGRADATION", text = "rms_tutorial_age_degradation", getArguments = getName, isDue = function(m)
+    { key = "AGE_DEGRADATION", text = "rms_tutorial_age_degradation", isDue = function(m)
         return m.vehicle:getConditionLevel() < 0.66 end },
     { key = "IDLE_AND_DOWNTIME", text = "rms_tutorial_idle_and_downtime", isDue = function(m)
         return m.isStarted and m.spec.fuelState.idleTimer > 30 end },
@@ -143,7 +197,7 @@ RMS_Tutorial.TIPS = {
         getArguments = function(m) return getName(m), getInspectionKey() end },
     { key = "ENGINE_OVERHEAT", text = "rms_tutorial_engine_overheat", alsoSeen = { "CVT_OVERHEAT" }, isDue = function(m)
         return m.enabled.engine and m.isStarted and m.spec.engineTemperature > 100 and not m.isElectric end },
-    { key = "COLD_ENGINE", text = "rms_tutorial_cold_engine", isDue = function(m)
+    { key = "COLD_ENGINE", text = "rms_tutorial_cold_engine", getArguments = getColdEngineTemperatures, isDue = function(m)
         return m.enabled.engine and m.spec.engineTemperature < 40 and m.isStarted and m.speed < 1 and not m.isElectric end },
     { key = "OVERLOAD_INDICATOR", text = "rms_tutorial_overload_indicator", getArguments = getName, isDue = function(m)
         return m.isStarted and m.vehicle:hasBreakdown("STRESS_OVERLOAD") end },
@@ -162,8 +216,17 @@ RMS_Tutorial.TIPS = {
         local smoke = m.spec.exhaustSmoke
         return m.enabled.engine and m.isStarted and smoke ~= nil and smoke.isActive == true
             and math.max(tonumber(smoke.soot) or 0, tonumber(smoke.oil) or 0, tonumber(smoke.unburnt) or 0) > 0.25 end },
-    { key = "DRIVETRAIN_MODES", text = "rms_tutorial_drivetrain_modes", isDue = function(m)
-        return m.isStarted and m.spec.drivetrain ~= nil and m.spec.drivetrain.hasControl == true end },
+    -- One drivetrain tip per kind of selector and diff lock
+    { key = "DRIVETRAIN_MODES", text = "rms_tutorial_drivetrain_modes", getArguments = getDriveSpeeds, isDue = function(m)
+        return m.isStarted and m.spec.drivetrain ~= nil and RMS_Drivetrain.getHasAutoMode(m.vehicle) end },
+    { key = "DRIVETRAIN_MODES_MANUAL", text = "rms_tutorial_drivetrain_modes", message = "rms_tutorial_drivetrain_modes_manual_message",
+        isDue = function(m)
+            return m.isStarted and m.spec.drivetrain ~= nil and m.spec.drivetrain.hasCenterDiff == true
+                and not RMS_Drivetrain.getHasAutoMode(m.vehicle) end },
+    { key = "DIFF_LOCK", text = "rms_tutorial_diff_lock", getArguments = getDiffLockSpeed, isDue = function(m)
+        return hasLockAlone(m) and RMS_Drivetrain.getHasDriveManagement(m.vehicle) end },
+    { key = "DIFF_LOCK_MANUAL", text = "rms_tutorial_diff_lock", message = "rms_tutorial_diff_lock_manual_message", isDue = function(m)
+        return hasLockAlone(m) and not RMS_Drivetrain.getHasDriveManagement(m.vehicle) end },
     -- One park brake tip per kind of brake, the same title
     { key = "PARK_BRAKE", text = "rms_tutorial_park_brake", isDue = function(m)
         return m.spec.drivetrain.parkKind == RMS_Drivetrain.PARK_KIND.AUTOMATIC and RMS_Drivetrain.getIsParkBrakeEngaged(m.vehicle) end },
@@ -211,7 +274,7 @@ RMS_Tutorial.TIPS = {
         return m.enabled.harvest and m.hasNewHeaderSeized end },
     { key = "HEADER_ENGAGEMENT", text = "rms_tutorial_header_engagement", isDue = function(m)
         return m.enabled.harvest and m.hasNewHeaderShock end },
-    { key = "COLD_OIL", text = "rms_tutorial_cold_oil", isDue = hasColdOil },
+    { key = "COLD_OIL", text = "rms_tutorial_cold_oil", getArguments = getColdOilTemperatures, isDue = hasColdOil },
     { key = "SERVICE_DUE_SOON", text = "rms_tutorial_service_due_soon", getArguments = getName, isDue = function(m)
         local used = getServiceIntervalUsed(m)
         return used >= 0.9 and used < 1.0 end },
@@ -227,9 +290,8 @@ RMS_Tutorial.TIPS = {
             local interval = m.vehicle:getMaintenanceLevelInterval(RealisticMechanicalSystems.MAINTENANCE_TYPES.PREVENTIVE)
             return getName(m), RMS_Utils.formatHours(interval)
         end },
-    { key = "POOR_CONSUMABLES", text = "rms_tutorial_poor_consumables", getArguments = getName, isDue = function(m)
-        return m.vehicle:hasBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES") end },
-    { key = "POOR_PARTS", text = "rms_tutorial_poor_parts", getArguments = getName, isDue = hasPoorPartsBreakdown }
+    { key = "POOR_CONSUMABLES", text = "rms_tutorial_poor_consumables", getArguments = getName, isDue = hasFoundPoorConsumables },
+    { key = "POOR_PARTS", text = "rms_tutorial_poor_parts", getArguments = getName, isDue = hasFoundPoorPart }
 }
 
 ---What the tips read of the machine; PTO events marked as seen

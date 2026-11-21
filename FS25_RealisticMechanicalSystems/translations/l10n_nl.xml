@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="Achterwielaandrijving (vooras uitgeschakeld)"/>
         <text name="rms_drivetrain_mode_4wd" text="Vierwielaandrijving (vooras ingeschakeld)"/>
         <text name="rms_drivetrain_mode_auto" text="Vierwielaandrijving AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="De geschiedenis van tutorialtips wissen en alle tips opnieuw tonen?"/>
         <text name="rms_drivetrainEnabled_label" text="Beheer van vierwielaandrijving en differentieelslot"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Bepaalt of de vooras en differentieelsloten van tractoren met de hand worden bediend. Deze optie vervangt de differentieelbesturing van Enhanced Vehicle: schakel de optie uit en de differentiëlen weer in via zijn menu om de besturing terug te geven."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-modus toestaan"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Bepaalt of de keuzeschakelaar AUTO biedt: de vooras schakelt in bij wielslip of werk onder belasting en uit op de weg. Uitschakelen zet voertuigen die in AUTO staan terug op vierwielaandrijving."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Deze instelling vereist dat het beheer van vierwielaandrijving en differentieelslot is ingeschakeld."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeerrem"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Bepaalt of gevolgde voertuigen een parkeerrem hebben: automatisch op recente machines met CVT- of Powershift-transmissie, met een eigen toets op de overige. De optie vervangt de parkeerrem van Enhanced Vehicle: schakel de optie uit en zijn parkeerrem weer in via zijn menu om die terug te geven."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Onderhoudslogboek"/>
         <text name="rms_ws_label_last_maintenance" text="Laatste onderhoud"/>
         <text name="rms_ws_task_inspection" text="Inspectie"/>
-        <text name="rms_ws_task_maintenance" text="Onderhoud"/>
         <text name="rms_ws_task_overhaul" text="Revisie"/>
         <text name="rms_ws_info_no_breakdowns" text="Geen vastgestelde storing. Een inspectie of een onderhoudsbeurt stelt de storingen vast die de machine nog niet toont."/>
         <text name="rms_ws_info_warning_unidentified" text="Waarschuwingslampje aan: storing vast te stellen. Een inspectie of een onderhoudsbeurt stelt hem vast, daarna kan hij worden gerepareerd."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Inspectie"/>
         <text name="rms_fleet_location" text="Locatie"/>
         <text name="rms_fleet_next_service" text="Volgend onderhoud"/>
-        <text name="rms_fleet_remaining" text="%s u resterend"/>
-        <text name="rms_fleet_overdue" text="%s u te laat"/>
         <text name="rms_fleet_overdue_label" text="Te laat"/>
         <text name="rms_fleet_overdue_count" text="Te laat: %d"/>
         <text name="rms_fleet_due_soon_label" text="Binnenkort"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Terugbetaalde borg"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Laag vloeistofniveau"/>
-        <text name="rms_tutorial_fluid_level_message" text="Een van de vloeistoffen van deze machine is onder de markering op de meter gezakt.&#10;&#10;Motorolie wordt met de bedrijfsuren verbruikt en een versleten motor verbruikt er veel meer van. Koelvloeistof, transmissieolie en hydrauliekolie dalen alleen door een lekkage.&#10;&#10;Onder de markering hoeft alleen te worden bijgevuld en werkt de machine nog normaal. Hoe lager het niveau, hoe makkelijker de pomp lucht aanzuigt op hellingen: het oliedruklampje knippert, en aan de kant van de transmissie of de hydrauliek giert de pomp en worden de hydraulische bewegingen trager. Elke minuut die zo verstrijkt beschadigt de krukaslagers of de pomp: stop en vul het niveau bij. Een machine met te weinig koelvloeistof, transmissieolie of hydrauliekolie wordt bovendien heet.&#10;&#10;Koop in de winkel een kan met een geschikt product, breng deze naar de machine en vul het niveau bij. Alle producten voor dit circuit hebben hetzelfde effect; een verkeerde vloeistof verontreinigt alleen dit circuit. Bij de dealer worden de benodigde liters geleverd en gefactureerd."/>
+        <text name="rms_tutorial_fluid_level_message" text="Een van de vloeistoffen van deze machine staat onder de markering van de meter. Motorolie neemt af met de uren, sneller bij een versleten motor; de andere vloeistoffen dalen alleen door een lek.&#10;&#10;De machine werkt nog normaal, maar hoe lager het peil, hoe makkelijker de pomp op een helling lucht aanzuigt: elke minuut daarvan beschadigt de lagers of de pomp. Met te weinig koelvloeistof, transmissieolie of hydraulische olie wordt het circuit ook warm.&#10;&#10;Vul bij met een verpakking van de vloeistof die voor dat circuit bedoeld is, gekocht in de winkel: elke andere vloeistof vervuilt het. Ook de dealer kan bijvullen."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welkom bij Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tips uitschakelen"/>
         <text name="rms_tutorial_welcome_enable_button" text="Tips inschakelen"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Wielslip"/>
         <text name="rms_tutorial_wheel_slip_message" text="Je wielen slippen sterk. Slip is een van de schadelijkste factoren voor de transmissie en zorgt ervoor dat je veel sneller naar de werkplaats moet."/>
         <text name="rms_tutorial_service_due_soon_title" text="Onderhoud binnenkort nodig"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s heeft binnenkort onderhoud nodig. Kies in de werkplaats het aanbevolen pakket: het dekt de nodige werkzaamheden. Bedrijfsuren of kalendertijd bepalen het eerste bereikte moment, ook bij weinig gebruik. Onderhoudsgemak vat de complexiteit van ingrepen samen; regulier onderhoud blijft mogelijk in de mobiele werkplaats."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s heeft binnenkort onderhoud nodig. Kies in de werkplaats het aanbevolen pakket: het dekt de nodige werkzaamheden. Bedrijfsuren of kalendertijd bepalen het eerste bereikte moment, ook bij weinig gebruik. Onderhoudsgemak geeft aan wat je bedrijf zelf repareert; onderhoud blijft mogelijk in de mobiele werkplaats."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Onderhoudsinterval overschreden"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Het onderhoudsinterval van %s is overschreden.&#10;&#10;Ga zo snel mogelijk naar een werkplaats en kies 'Onderhoud'. Als je een voertuig met achterstallig onderhoud blijft gebruiken, neemt het risico op meerdere storingen sterk toe."/>
         <text name="rms_tutorial_steering_title" text="Sturen bij stilstand"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Revisie vereist"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s vertoont de eerste tekenen van ouderdom. Het is tijd om vervanging of revisie te overwegen. Dit is een lange en dure procedure, maar de enige manier om de machine in de oorspronkelijke conditie te herstellen.&#10;&#10;De levensduur wordt ingesteld in de modinstellingen: hoe hoger de ingestelde waarde, hoe langzamer je voertuigen slijten."/>
         <text name="rms_tutorial_needs_preventive_title" text="Verhoogd storingsrisico"/>
-        <text name="rms_tutorial_needs_preventive_message" text="De motor, het brandstofsysteem of het koelsysteem van %s heeft een verhoogd storingsrisico.&#10;&#10;Onderhoud %s: stelt de kleppen af en controleert de injectoren en de thermostaat, wat dat risico verlaagt."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Versleten onderdelen van %s verhogen het risico op pech.&#10;&#10;Onderhoud %s: stelt de kleppen af en vervangt bij een oogstmachine de versleten oogstonderdelen, wat dat risico verlaagt."/>
         <text name="rms_tutorial_age_degradation_title" text="Leeftijdsgebonden slijtage"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS verliezen voertuigen bij het ouder worden geleidelijk een deel van hun oorspronkelijke prestaties.&#10;&#10;Na ongeveer een derde van hun levensduur vermindert leeftijdsgebonden slijtage belangrijke eigenschappen zoals vermogen of remwerking licht. Het effect wordt daarna sterker en is tegen het einde van de levensduur duidelijk zichtbaar.&#10;&#10;Deze verslechtering kan in de modinstellingen worden uitgeschakeld."/>
+        <text name="rms_tutorial_age_degradation_message" text="In RMS verliezen voertuigen bij het ouder worden geleidelijk een deel van hun oorspronkelijke prestaties.&#10;&#10;Na ongeveer een derde van hun levensduur vermindert leeftijdsgebonden slijtage belangrijke eigenschappen zoals vermogen of remwerking licht. Het effect wordt daarna sterker en is tegen het einde van de levensduur duidelijk zichtbaar.&#10;&#10;Een nieuw onderdeel neemt de slijtage weg: een revisie vervangt de versleten onderdelen."/>
         <text name="rms_tutorial_poor_consumables_title" text="Verbruiksmaterialen van slechte kwaliteit"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s kreeg bij het laatste onderhoud een defect filter. Dit kan gebeuren wanneer voor een goedkope kwaliteit wordt gekozen.&#10;&#10;Dit filter laat vuil door: het circuit dat het beschermt, slijt sneller tot het filter wordt vervangen. Nieuw onderhoud vervangt het. Alleen een volledige inspectie identificeert het."/>
+        <text name="rms_tutorial_poor_consumables_message" text="De volledige inspectie heeft een defect filter gevonden op %s, geplaatst tijdens een onderhoud. Dat gebeurt met de goedkopere kwaliteiten.&#10;&#10;Dit filter laat vuil door: het circuit dat het beschermt slijt sneller tot het filter wordt vervangen. Een nieuw onderhoud vervangt het."/>
         <text name="rms_tutorial_poor_parts_title" text="Onderdelen van slechte kwaliteit"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s kreeg tijdens een reparatie een onderdeel van slechte kwaliteit. De storing keert waarschijnlijk snel terug.&#10;&#10;Je kunt wachten totdat dat gebeurt of een volledige inspectie uitvoeren, die het betrokken onderdeel betrouwbaar identificeert."/>
+        <text name="rms_tutorial_poor_parts_message" text="De volledige inspectie heeft op %s een defect onderdeel gevonden dat in de werkplaats is geplaatst: het zal uitvallen. Dat gebeurt met de goedkopere kwaliteiten.&#10;&#10;Je kunt het nu in de werkplaats laten vervangen, of wachten tot het uitvalt."/>
         <text name="rms_tutorial_park_brake_title" text="Parkeerrem"/>
         <text name="rms_tutorial_park_brake_message" text="De parkeerrem is aangetrokken. Hij wordt automatisch aangetrokken zodra je de stilstaande machine verlaat en losgezet zodra je weer gas geeft. Hij wordt ook aangetrokken wanneer je de motor uitzet, of na 45 seconden stilstand.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="De parkeerrem is aangetrokken. Je trekt hem zelf aan en zet hem los met de bijbehorende toets: als je gas geeft terwijl de rem is aangetrokken, werkt de machine tegen de rem in en slijten de remmen.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt: verlaat je de machine zonder hem aan te trekken, dan kan de machine wegrollen."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="De parkeerrem is aangetrokken. Je trekt hem zelf aan en zet hem los met de bijbehorende toets: als je gas geeft terwijl de rem is aangetrokken, werkt de machine tegen de rem in en slijt de parkeerrem.&#10;&#10;Op een helling voorkomt hij dat de machine vanzelf wegrolt: verlaat je de machine zonder hem aan te trekken, dan kan de machine wegrollen."/>
         <text name="rms_tutorial_preheat_title" text="Dieselvoorverwarming"/>
         <text name="rms_tutorial_preheat_message" text="Bij een koude dieselmotor schakelt één druk op de startknop het contact in en begint automatisch de voorgloeicyclus. De dashboardlampjes lichten kort op; daarna blijft het voorgloeilampje branden totdat de motor gereed is. Druk niet opnieuw: de startmotor schakelt automatisch in wanneer het lampje uitgaat."/>
         <text name="rms_tutorial_pto_engagement_title" text="Aftakas inschakelen"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Stationair draaien en stilstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="De slijtage is veel lager wanneer de machine draait zonder te werken. Met uitgeschakelde motor is de slijtage minimaal. Onder een afdak verdwijnt de slijtage volledig."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lang stationair draaien"/>
-        <text name="rms_tutorial_idle_deposit_message" text="De machine heeft te lang stationair gedraaid. Langdurig stationair draaien verspilt niet alleen brandstof: na verloop van tijd bevordert het ook afzettingen in het brandstofsysteem en schaadt het de algemene motorconditie.&#10;&#10;Zet de motor uit als de machine nu niet nodig is."/>
+        <text name="rms_tutorial_idle_deposit_message" text="De machine heeft te lang stationair gedraaid. Langdurig stationair draaien verspilt niet alleen brandstof: na verloop van tijd bevordert het ook afzettingen in het brandstofsysteem, dat daardoor sneller slijt.&#10;&#10;Zet de motor uit als de machine nu niet nodig is."/>
         <text name="rms_tutorial_hot_weather_title" text="Warm weer"/>
         <text name="rms_tutorial_hot_weather_message" text="Het is vandaag zeer warm. Houd bij dit weer de radiateur schoon en voorkom overbelasting van de motor, anders is oververhitting slechts een kwestie van tijd.&#10;&#10;Je kunt de conditie van de radiateur controleren: houd de toets %s ingedrukt terwijl je naar de machine kijkt. Reinig hem met de persluchtblazer."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Te zware aanhanger"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Moeilijk starten"/>
         <text name="rms_tutorial_hard_start_message" text="De motor van %s start moeilijk. Een zwakke accu, vorst, een mechanische storing of slijtage van de startmotor kan de oorzaak zijn.&#10;&#10;Het elektrische systeem wordt tijdens het starten zwaar belast door de hoge inschakelstromen."/>
         <text name="rms_tutorial_low_fuel_title" text="Brandstofreserve"/>
-        <text name="rms_tutorial_low_fuel_message" text="De tank nadert de reserve. Hoe minder brandstof er overblijft, hoe harder de brandstofpomp moet werken om deze aan te zuigen, en de bodem van de tank stuurt water en bezinksel naar het filter, dat sneller verstopt raakt.&#10;&#10;Tank liever vol aan het eind van de dag: in een volle tank vormt zich minder condens."/>
+        <text name="rms_tutorial_low_fuel_message" text="De tank nadert de reserve. Hoe minder brandstof er overblijft, hoe harder de brandstofpomp moet werken om deze aan te zuigen, en de bodem van de tank stuurt water en bezinksel naar het filter, dat sneller verstopt raakt.&#10;&#10;Tank zo snel mogelijk."/>
         <text name="rms_tutorial_lugging_title" text="Motor op te laag toerental"/>
         <text name="rms_tutorial_lugging_message" text="De motor en vooral de transmissie lijden onder een te laag toerental bij zware belasting. Het aangekoppelde werktuig is misschien te zwaar voor de machine, of bij een handgeschakelde transmissie is de gekozen versnelling niet juist."/>
         <text name="rms_tutorial_engine_overheat_title" text="Motor oververhit"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Harde klap"/>
         <text name="rms_tutorial_terrain_impact_message" text="Het onderstel heeft zojuist een harde klap gekregen. Een obstakel dat de machine abrupt tot stilstand brengt of sterk afremt, verslijt het chassis meteen en brengt de volgende storing dichterbij, meestal aan de besturing of de wiellagers.&#10;&#10;Rijd langzamer voor obstakels."/>
         <text name="rms_tutorial_cranking_title" text="Veelvuldig starten"/>
-        <text name="rms_tutorial_cranking_message" text="De motor wordt te vaak gestart. Elke start stuurt een zeer hoge stroom door het elektrische systeem, waardoor de bedrading, startmotor en andere elektrische componenten sneller slijten.&#10;&#10;Zet de motor niet uit voor korte onderbrekingen."/>
+        <text name="rms_tutorial_cranking_message" text="De startmotor heeft in korte tijd veel gedraaid. Boven enkele seconden in totaal slijt elke start de startmotor, de accu en de rest van het startcircuit.&#10;&#10;Zet de motor niet af bij korte onderbrekingen."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritieke storing"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s kan niet meer op eigen kracht rijden.&#10;&#10;Een mobiele werkplaats maakt een noodreparatie mogelijk, voldoende om de machine zelf naar de werkplaats te laten rijden. Anders moet het voertuig op een andere manier worden geborgen."/>
+        <text name="rms_tutorial_critical_failure_message" text="%s kan niet meer op eigen kracht rijden.&#10;&#10;Afhankelijk van de storing kan een mobiele werkplaats die ter plekke repareren, op zijn minst provisorisch, genoeg om de machine op eigen kracht naar de werkplaats te laten rijden. Anders moet ze er op een andere manier naartoe."/>
         <text name="rms_tutorial_cold_engine_title" text="Koude motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Warm de motor geleidelijk op voordat je hem zwaar belast. Gebruik matig gas en een gemiddeld toerental totdat hij zijn bedrijfstemperatuur bereikt."/>
+        <text name="rms_tutorial_cold_engine_message" text="De motor is koud: onder %s slijt hij sneller zodra hij draait, ongeacht de belasting, en hoe kouder hij is, hoe meer.&#10;&#10;Blijf onder %s ook onder driekwart van het maximale toerental: hogere toeren belasten het koelsysteem."/>
         <text name="rms_tutorial_cold_oil_title" text="Koude transmissieolie"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmissie- en hydrauliekolie warmen veel langzamer op dan de motor. Vermijd zwaar werk zolang deze oliën koud zijn; warm ze geleidelijk op door rustig te rijden en de hydrauliek licht te gebruiken."/>
+        <text name="rms_tutorial_cold_oil_message" text="De versnellingsbakolie is koud: onder %s slijt de bak sneller zodra de motor draait, ongeacht de belasting.&#10;&#10;Onder %s slijt de hydraulische olie ook de pomp wanneer je de hydrauliek gebruikt."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Transmissie oververhit"/>
         <text name="rms_tutorial_transmission_overheat_message" text="De transmissieolie begint oververhit te raken. Dit kan komen door een te zware belasting, een vervuilde radiateur, zeer warm weer of een defect in de transmissiekoeling.&#10;&#10;Transmissieolie warmt op in elke machine, niet alleen in een CVT. Te hete olie verslijt de transmissie en beschadigt de afdichtingen."/>
         <text name="rms_tutorial_overload_indicator_title" text="Overbelastingswaarschuwing"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Spanning in aandrijflijn"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Je stuurt op een ondergrond met veel grip terwijl het differentieelslot is ingeschakeld. In een bocht leggen de binnen- en buitenwielen verschillende afstanden af, maar het differentieelslot dwingt ze met dezelfde snelheid te draaien: de aandrijflijn komt onder spanning en de transmissie slijt sneller. Schakel het slot uit voordat je stuurt."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Aandrijfmodi en differentieelslot"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Bij deze machine kun je de aandrijving kiezen: achterwielaandrijving, vierwielaandrijving of AUTO, waarbij de vooras wordt ingeschakeld zodra de wielen slippen.&#10;&#10;Het differentieelslot zorgt voor grip waar die ontbreekt, maar belast de aandrijflijn zwaar in bochten op een ondergrond met veel grip: de binnen- en buitenwielen kunnen niet met dezelfde snelheid draaien en de aandrijflijn vangt de klap op. Schakel het slot uit voordat je stuurt."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Bij deze machine kun je de aandrijving kiezen: achterwielaandrijving, vierwielaandrijving of AUTO. In AUTO blijft de vooras tijdens het werk ingeschakeld: boven %s en in krappe bochten wordt hij uitgeschakeld, en zodra je remt, wordt hij weer ingeschakeld.&#10;&#10;Het differentieelslot zorgt voor grip waar die ontbreekt en schakelt de vooras mee in. In bochten, bij het remmen en boven %s gaat het vanzelf uit: schakel het weer in wanneer je het nodig hebt."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Bij deze machine kun je de aandrijving kiezen: achterwielaandrijving of vierwielaandrijving.&#10;&#10;Het differentieelslot zorgt voor grip waar die ontbreekt, maar belast de aandrijflijn zwaar in bochten op een ondergrond met veel grip: de binnen- en buitenwielen kunnen niet met dezelfde snelheid draaien en de aandrijflijn vangt de klap op. Schakel het slot uit voordat je stuurt."/>
+        <text name="rms_tutorial_diff_lock_title" text="Differentieelslot"/>
+        <text name="rms_tutorial_diff_lock_message" text="Het differentieelslot zorgt voor grip waar die ontbreekt. In bochten, bij het remmen en boven %s gaat het vanzelf uit: schakel het weer in wanneer je het nodig hebt."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Het differentieelslot zorgt voor grip waar die ontbreekt, maar belast de aandrijflijn zwaar in bochten op een ondergrond met veel grip: de binnen- en buitenwielen kunnen niet met dezelfde snelheid draaien en de aandrijflijn vangt de klap op. Schakel het slot uit voordat je stuurt."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (przedni most rozłączony)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (przedni most załączony)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Zresetować historię wskazówek samouczka i pokazać wszystkie ponownie?"/>
         <text name="rms_drivetrainEnabled_label" text="Sterowanie 4WD i blokadą mechanizmu różnicowego"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Określa, czy przedni most i blokady mechanizmu różnicowego ciągników są sterowane ręcznie. Opcja zastępuje sterowanie mechanizmami różnicowymi w Enhanced Vehicle: aby je przywrócić, wyłącz opcję, a potem włącz mechanizmy różnicowe w jego menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Zezwól na tryb AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Określa, czy przełącznik oferuje pozycję AUTO, która załącza przedni most przy poślizgu kół lub pracy pod obciążeniem i rozłącza go na drodze. Wyłączenie opcji przełącza pojazdy pozostawione w AUTO na 4WD."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="To ustawienie wymaga włączenia sterowania 4WD i blokadą mechanizmu różnicowego."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Hamulec postojowy"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Określa, czy śledzone pojazdy mają hamulec postojowy: automatyczny w nowszych maszynach z przekładnią CVT lub Powershift, na osobnym klawiszu w pozostałych. Opcja zastępuje hamulec postojowy Enhanced Vehicle: aby go przywrócić, wyłącz opcję i włącz jego hamulec postojowy w jego menu."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Historia obsługi"/>
         <text name="rms_ws_label_last_maintenance" text="Ostatnia obsługa"/>
         <text name="rms_ws_task_inspection" text="Przegląd"/>
-        <text name="rms_ws_task_maintenance" text="Obsługa techniczna"/>
         <text name="rms_ws_task_overhaul" text="Remont kapitalny"/>
         <text name="rms_ws_info_no_breakdowns" text="Brak zidentyfikowanych awarii. Przegląd lub obsługa techniczna identyfikuje te, których maszyna jeszcze nie pokazuje."/>
         <text name="rms_ws_info_warning_unidentified" text="Kontrolka świeci: awaria do zidentyfikowania. Przegląd lub obsługa techniczna ją identyfikuje, a potem można ją naprawić."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Kontrola"/>
         <text name="rms_fleet_location" text="Lokalizacja"/>
         <text name="rms_fleet_next_service" text="Następna konserwacja"/>
-        <text name="rms_fleet_remaining" text="Pozostało %s h"/>
-        <text name="rms_fleet_overdue" text="Opóźnienie %s h"/>
         <text name="rms_fleet_overdue_label" text="Po terminie"/>
         <text name="rms_fleet_overdue_count" text="Po terminie: %d"/>
         <text name="rms_fleet_due_soon_label" text="Wkrótce"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Zwrot kaucji"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niski poziom płynu"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny spadł poniżej oznaczenia na wskaźniku.&#10;&#10;Olej silnikowy ubywa wraz z godzinami pracy, a zużyty silnik zużywa go znacznie więcej. Płyn chłodniczy, olej przekładniowy i olej hydrauliczny ubywają tylko wskutek wycieku.&#10;&#10;Poniżej oznaczenia maszyna wymaga jedynie uzupełnienia i nadal pracuje normalnie. Im niżej spada poziom, tym łatwiej pompa zasysa powietrze na stokach: kontrolka ciśnienia oleju miga, a po stronie skrzyni biegów lub hydrauliki pompa wyje i ruchy hydrauliczne zwalniają. Każda tak spędzona minuta uszkadza panewki wału korbowego lub pompę: zatrzymaj się i uzupełnij poziom. Maszyna z niedoborem płynu chłodniczego, oleju przekładniowego lub hydraulicznego również się przegrzewa.&#10;&#10;Kup w sklepie pojemnik z odpowiednim produktem, dostarcz go do maszyny i uzupełnij poziom. Wszystkie produkty przeznaczone do danego obiegu mają ten sam efekt; niewłaściwy płyn zanieczyszcza tylko ten obieg. U dealera potrzebne litry są dostarczane i doliczane do rachunku."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jeden z płynów tej maszyny jest poniżej znacznika na wskaźniku. Olej silnikowy ubywa z godzinami, szybciej w zużytym silniku; pozostałe płyny ubywają tylko przez wyciek.&#10;&#10;Maszyna wciąż pracuje normalnie, ale im niższy poziom, tym łatwiej jej pompa zasysa powietrze na pochyłości: każda taka minuta uszkadza łożyska lub pompę. Przy braku płynu chłodzącego, oleju przekładniowego lub hydraulicznego obwód także się nagrzewa.&#10;&#10;Uzupełnij poziom pojemnikiem płynu przeznaczonego do tego obwodu, kupionym w sklepie: każdy inny płyn go zanieczyszcza. Dealer też może uzupełnić płyny."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Witamy w Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Wyłącz wskazówki"/>
         <text name="rms_tutorial_welcome_enable_button" text="Włącz wskazówki"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Poślizg kół"/>
         <text name="rms_tutorial_wheel_slip_message" text="Twoje koła mocno się ślizgają. Poślizg kół to jeden z najbardziej destrukcyjnych czynników dla przekładni i znacząco przybliża Twoją następną wizytę w warsztacie."/>
         <text name="rms_tutorial_service_due_soon_title" text="Zbliżająca się obsługa"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s wkrótce będzie wymagać przeglądu. W warsztacie wybierz zalecany pakiet: obejmuje należne prace. Decyduje pierwszy osiągnięty limit godzin pracy lub czasu kalendarzowego, nawet przy małym użyciu. Łatwość obsługi opisuje złożoność prac; zwykły przegląd jest nadal możliwy w warsztacie mobilnym."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s wkrótce będzie wymagać przeglądu. W warsztacie wybierz zalecany pakiet: obejmuje należne prace. Decyduje pierwszy osiągnięty limit godzin pracy lub czasu kalendarzowego, nawet przy małym użyciu. Łatwość obsługi pokazuje, co twoje gospodarstwo naprawi samo; przegląd jest nadal możliwy w warsztacie mobilnym."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Przekroczony okres międzyobsługowy"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Okres międzyobsługowy pojazdu %s został przekroczony.&#10;&#10;Jak najszybciej odwiedź warsztat i wybierz „Obsługa techniczna”. Dalsza eksploatacja pojazdu z zaległą obsługą znacznie zwiększa ryzyko wielu awarii."/>
         <text name="rms_tutorial_steering_title" text="Skręcanie na postoju"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Wymagany remont kapitalny"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Pojazd %s wykazuje oznaki starzenia. Nadszedł czas, aby rozważyć wymianę lub remont kapitalny. To długa i kosztowna czynność, ale tylko ona może przywrócić maszynie jej pierwotny stan.&#10;&#10;Okres eksploatacji można zmienić w ustawieniach moda: im jest dłuższy, tym wolniej zużywają się pojazdy."/>
         <text name="rms_tutorial_needs_preventive_title" text="Podwyższone ryzyko awarii"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Silnik, układ paliwowy lub układ chłodzenia pojazdu %s ma podwyższone ryzyko awarii.&#10;&#10;Przegląd %s: reguluje zawory oraz sprawdza wtryskiwacze i termostat, co zmniejsza to ryzyko."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Zużyte części maszyny %s zwiększają ryzyko awarii.&#10;&#10;Przegląd %s: reguluje zawory, a w maszynie do zbioru wymienia zużyte części zespołów zbierających, co zmniejsza to ryzyko."/>
         <text name="rms_tutorial_age_degradation_title" text="Starzenie się pojazdu"/>
-        <text name="rms_tutorial_age_degradation_message" text="W RMS pojazdy stopniowo tracą część swoich pierwotnych osiągów wraz z wiekiem.&#10;&#10;Po około jednej trzeciej okresu eksploatacji zużycie związane z wiekiem zaczyna nieznacznie obniżać ważne parametry, takie jak moc czy skuteczność hamowania. Efekt narasta i staje się wyraźny pod koniec życia pojazdu.&#10;&#10;Tę degradację można wyłączyć w ustawieniach moda."/>
+        <text name="rms_tutorial_age_degradation_message" text="W RMS pojazdy stopniowo tracą część swoich pierwotnych osiągów wraz z wiekiem.&#10;&#10;Po około jednej trzeciej okresu eksploatacji zużycie związane z wiekiem zaczyna nieznacznie obniżać ważne parametry, takie jak moc czy skuteczność hamowania. Efekt narasta i staje się wyraźny pod koniec życia pojazdu.&#10;&#10;Nowa część usuwa zużycie: remont kapitalny wymienia zużyte części."/>
         <text name="rms_tutorial_poor_consumables_title" text="Słabej jakości materiały eksploatacyjne"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Podczas ostatniej obsługi technicznej pojazdu %s założono wadliwy filtr. Zdarza się to przy wyborze tańszych klas.&#10;&#10;Ten filtr przepuszcza zanieczyszczenia: układ, który chroni, zużywa się szybciej aż do wymiany filtra. Ponowna obsługa techniczna go wymienia. Tylko pełny przegląd go wskazuje."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Pełna inspekcja wykryła wadliwy filtr w maszynie %s, założony podczas przeglądu. Zdarza się to przy tańszych jakościach.&#10;&#10;Ten filtr przepuszcza zanieczyszczenia: obwód, który chroni, zużywa się szybciej, dopóki filtr nie zostanie wymieniony. Kolejny przegląd go wymieni."/>
         <text name="rms_tutorial_poor_parts_title" text="Słabej jakości części"/>
-        <text name="rms_tutorial_poor_parts_message" text="Podczas naprawy pojazdu %s zamontowano część niskiej jakości. Awaria najprawdopodobniej wkrótce powróci.&#10;&#10;Możesz poczekać na jej powrót albo wykonać pełny przegląd, który niezawodnie wskaże wadliwą część."/>
+        <text name="rms_tutorial_poor_parts_message" text="Pełna inspekcja wykryła w maszynie %s wadliwą część założoną w warsztacie: ulegnie awarii. Zdarza się to przy tańszych jakościach.&#10;&#10;Możesz ją wymienić w warsztacie już teraz albo poczekać, aż się zepsuje."/>
         <text name="rms_tutorial_park_brake_title" text="Hamulec postojowy"/>
         <text name="rms_tutorial_park_brake_message" text="Hamulec postojowy jest zaciągnięty. Załącza się sam, gdy tylko opuścisz maszynę na postoju, i zwalnia się, gdy tylko znów dodasz gazu. Załącza się też, gdy wyłączysz silnik, albo po 45 sekundach postoju.&#10;&#10;Na pochyłości to on nie pozwala maszynie stoczyć się samej."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Hamulec postojowy jest zaciągnięty. Zaciągasz go i zwalniasz sam, jego własnym klawiszem: jeśli dodasz gazu przy zaciągniętym hamulcu, maszyna pracuje przeciwko niemu, a jej hamulce się zużywają.&#10;&#10;Na pochyłości to on nie pozwala maszynie stoczyć się samoczynnie: jeśli opuścisz ją bez zaciągnięcia hamulca, może się stoczyć."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Hamulec postojowy jest zaciągnięty. Zaciągasz go i zwalniasz sam, jego własnym klawiszem: jeśli dodasz gazu przy zaciągniętym hamulcu, maszyna pracuje przeciwko niemu, a hamulec postojowy się zużywa.&#10;&#10;Na pochyłości to on nie pozwala maszynie stoczyć się samoczynnie: jeśli opuścisz ją bez zaciągnięcia hamulca, może się stoczyć."/>
         <text name="rms_tutorial_preheat_title" text="Podgrzewanie silnika Diesla"/>
         <text name="rms_tutorial_preheat_message" text="Przy zimnym silniku Diesla jedno naciśnięcie przycisku rozruchu włącza zapłon i automatycznie rozpoczyna cykl podgrzewania. Kontrolki na desce rozdzielczej zapalają się na chwilę, a kontrolka podgrzewania pozostaje włączona do chwili gotowości silnika. Nie naciskaj przycisku ponownie: rozrusznik włączy się automatycznie po zgaśnięciu kontrolki."/>
         <text name="rms_tutorial_pto_engagement_title" text="Włączanie WOM"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Praca jałowa i postój"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Zużycie jest znacznie mniejsze, gdy maszyna pracuje bez wykonywania pracy. Gdy silnik jest wyłączony, zużycie staje się minimalne, a jeśli maszyna stoi pod dachem, znika całkowicie."/>
         <text name="rms_tutorial_idle_deposit_title" text="Długa praca na biegu jałowym"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Maszyna zbyt długo pracuje na biegu jałowym. Długie okresy pracy bez obciążenia nie tylko marnują paliwo: z czasem sprzyjają też odkładaniu się osadów w układzie paliwowym i pogarszają ogólny stan silnika.&#10;&#10;Jeśli maszyna nie jest teraz potrzebna, lepiej wyłączyć silnik."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Maszyna zbyt długo pracuje na biegu jałowym. Długie okresy pracy bez obciążenia nie tylko marnują paliwo: z czasem sprzyjają też odkładaniu się osadów w układzie paliwowym, który przez to szybciej się zużywa.&#10;&#10;Jeśli maszyna nie jest teraz potrzebna, lepiej wyłączyć silnik."/>
         <text name="rms_tutorial_hot_weather_title" text="Upalna pogoda"/>
         <text name="rms_tutorial_hot_weather_message" text="Dziś jest bardzo gorąco. Przy takiej pogodzie kontroluj czystość chłodnicy i unikaj przeciążania silnika, ponieważ prowadzi to do przegrzania.&#10;&#10;Stan chłodnicy możesz sprawdzić, przytrzymując klawisz %s i patrząc na maszynę. Do czyszczenia służy dmuchawa sprężonego powietrza."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Ciężka przyczepa"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Trudny rozruch"/>
         <text name="rms_tutorial_hard_start_message" text="Silnik pojazdu %s uruchamia się z trudem. Przyczyną może być słaby akumulator, mróz, awaria mechaniczna lub zużycie rozrusznika.&#10;&#10;Podczas rozruchu układ elektryczny jest silnie obciążony przez wysoki prąd rozruchowy."/>
         <text name="rms_tutorial_low_fuel_title" text="Mało paliwa"/>
-        <text name="rms_tutorial_low_fuel_message" text="Zbiornik zbliża się do rezerwy. Im mniej zostaje paliwa, tym mocniej pompa paliwa musi pracować, aby je zassać, a z dna zbiornika do filtra trafiają woda i osady, przez co filtr szybciej się zapycha.&#10;&#10;Najlepiej tankować do pełna pod koniec dnia: w pełnym zbiorniku skrapla się mniej wody."/>
+        <text name="rms_tutorial_low_fuel_message" text="Zbiornik zbliża się do rezerwy. Im mniej zostaje paliwa, tym mocniej pompa paliwa musi pracować, aby je zassać, a z dna zbiornika do filtra trafiają woda i osady, przez co filtr szybciej się zapycha.&#10;&#10;Zatankuj jak najszybciej."/>
         <text name="rms_tutorial_lugging_title" text="Dławienie silnika na niskich obrotach"/>
         <text name="rms_tutorial_lugging_message" text="Silnik, a zwłaszcza przekładnia, zużywają się podczas pracy na niskich obrotach pod dużym obciążeniem. Podłączone narzędzie może być zbyt ciężkie dla maszyny albo, w przypadku ręcznej skrzyni biegów, wybrany bieg może być niewłaściwy."/>
         <text name="rms_tutorial_engine_overheat_title" text="Przegrzewanie silnika"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Silne uderzenie"/>
         <text name="rms_tutorial_terrain_impact_message" text="Podwozie właśnie przyjęło silne uderzenie. Przeszkoda, która gwałtownie zatrzymuje lub wyhamowuje maszynę, od razu zużywa podwozie i przybliża jego kolejną awarię, najczęściej układu kierowniczego lub łożysk.&#10;&#10;Zwolnij przed przeszkodami."/>
         <text name="rms_tutorial_cranking_title" text="Częste rozruchy"/>
-        <text name="rms_tutorial_cranking_message" text="Silnik jest uruchamiany zbyt często. Każdy rozruch powoduje przepływ bardzo wysokiego prądu przez układ elektryczny, co przyspiesza zużycie przewodów, rozrusznika i innych podzespołów elektrycznych.&#10;&#10;Nie wyłączaj silnika podczas krótkich przerw."/>
+        <text name="rms_tutorial_cranking_message" text="Rozrusznik pracował dużo w krótkim czasie. Po przekroczeniu kilku sekund łącznie każde uruchomienie zużywa rozrusznik, akumulator i resztę obwodu rozruchowego.&#10;&#10;Unikaj wyłączania silnika na krótkie przerwy."/>
         <text name="rms_tutorial_critical_failure_title" text="Krytyczna awaria"/>
-        <text name="rms_tutorial_critical_failure_message" text="Pojazd %s nie może już poruszać się o własnych siłach.&#10;&#10;Mobilny warsztat umożliwia naprawę tymczasową, wystarczającą, aby maszyna samodzielnie dotarła do warsztatu. W przeciwnym razie trzeba będzie przetransportować ją w inny sposób."/>
+        <text name="rms_tutorial_critical_failure_message" text="Pojazd %s nie może już poruszać się o własnych siłach.&#10;&#10;W zależności od usterki warsztat mobilny może ją naprawić na miejscu, przynajmniej prowizorycznie, na tyle, by maszyna dotarła do warsztatu o własnych siłach. W przeciwnym razie trzeba ją będzie tam dostarczyć inaczej."/>
         <text name="rms_tutorial_cold_engine_title" text="Zimny silnik"/>
-        <text name="rms_tutorial_cold_engine_message" text="Rozgrzewaj silnik stopniowo przed dużym obciążeniem. Używaj umiarkowanego gazu i obrotów, aż silnik osiągnie temperaturę roboczą."/>
+        <text name="rms_tutorial_cold_engine_message" text="Silnik jest zimny: poniżej %s zużywa się szybciej, gdy tylko pracuje, bez względu na obciążenie, i tym bardziej, im jest zimniejszy.&#10;&#10;Poniżej %s nie przekraczaj też trzech czwartych maksymalnych obrotów: cierpi na tym układ chłodzenia."/>
         <text name="rms_tutorial_cold_oil_title" text="Zimny olej przekładniowy"/>
-        <text name="rms_tutorial_cold_oil_message" text="Olej przekładniowy i hydrauliczny nagrzewają się znacznie wolniej niż silnik. Unikaj ciężkiej pracy, gdy olej jest zimny; rozgrzewaj go stopniowo podczas spokojnej jazdy i lekkiej pracy układu hydraulicznego."/>
+        <text name="rms_tutorial_cold_oil_message" text="Olej w skrzyni biegów jest zimny: poniżej %s skrzynia zużywa się szybciej, gdy tylko pracuje silnik, bez względu na obciążenie.&#10;&#10;Poniżej %s olej hydrauliczny zużywa też pompę, gdy korzystasz z hydrauliki."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Przegrzewanie skrzyni"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Olej przekładniowy zaczyna się przegrzewać. Przyczyną może być zbyt duże obciążenie, zatkana chłodnica, bardzo wysoka temperatura otoczenia albo awaria chłodzenia skrzyni biegów.&#10;&#10;Olej przekładniowy nagrzewa się w każdej maszynie, nie tylko w CVT. Zbyt gorący olej zużywa skrzynię i niszczy jej uszczelnienia."/>
         <text name="rms_tutorial_overload_indicator_title" text="Ostrzeżenie o przeciążeniu"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Obciążenie układu napędowego"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Skręcasz na przyczepnym podłożu z załączoną blokadą mechanizmu różnicowego. W zakręcie koła po wewnętrznej i zewnętrznej stronie pokonują różne odległości, ale blokada mechanizmu różnicowego wymusza tę samą prędkość obrotową: układ napędowy zostaje obciążony, zwiększając zużycie skrzyni biegów. Zwolnij blokadę przed skrętem."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Tryby napędu i blokada mechanizmu różnicowego"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Ta maszyna pozwala wybrać tryb napędu: 2WD, 4WD lub AUTO, który załącza przedni most, gdy tylko koła zaczną się ślizgać.&#10;&#10;Blokada mechanizmu różnicowego pomaga odzyskać przyczepność, ale powoduje duże naprężenia podczas skręcania na przyczepnym podłożu: koła wewnętrzne i zewnętrzne nie mogą obracać się z taką samą prędkością, więc obciążenie przejmuje układ napędowy. Zwolnij blokadę przed skrętem."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Ta maszyna pozwala wybrać tryb napędu: 2WD, 4WD lub AUTO. W trybie AUTO przedni most pozostaje załączony podczas pracy: wyłącza się powyżej %s i na ciasnych zakrętach, a załącza ponownie, gdy tylko zahamujesz.&#10;&#10;Blokada mechanizmu różnicowego pomaga odzyskać przyczepność i jednocześnie załącza przedni most. Zwalnia się sama na zakrętach, podczas hamowania i powyżej %s: włącz ją ponownie, gdy będzie potrzebna."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Ta maszyna pozwala wybrać tryb napędu: 2WD lub 4WD.&#10;&#10;Blokada mechanizmu różnicowego pomaga odzyskać przyczepność, ale powoduje duże naprężenia podczas skręcania na przyczepnym podłożu: koła wewnętrzne i zewnętrzne nie mogą obracać się z taką samą prędkością, więc obciążenie przejmuje układ napędowy. Zwolnij blokadę przed skrętem."/>
+        <text name="rms_tutorial_diff_lock_title" text="Blokada mechanizmu różnicowego"/>
+        <text name="rms_tutorial_diff_lock_message" text="Blokada mechanizmu różnicowego pomaga odzyskać przyczepność. Zwalnia się sama na zakrętach, podczas hamowania i powyżej %s: włącz ją ponownie, gdy będzie potrzebna."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Blokada mechanizmu różnicowego pomaga odzyskać przyczepność, ale powoduje duże naprężenia podczas skręcania na przyczepnym podłożu: koła wewnętrzne i zewnętrzne nie mogą obracać się z taką samą prędkością, więc obciążenie przejmuje układ napędowy. Zwolnij blokadę przed skrętem."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

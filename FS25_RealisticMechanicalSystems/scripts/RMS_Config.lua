@@ -858,6 +858,7 @@ RMS_Config = {
             COMBINE = { { points = 10 }, { points = 24, hours = 50 }, { points = 12, hours = 100 }, { points = 8, hours = 500 } },
             FORAGE_HARVESTER = { { points = 13, hours = 100 }, { points = 17, hours = 250 } },
             WINDROWER = { { points = 8, hours = 50 } },
+            SELF_PROPELLED_MOWER = { { points = 8, hours = 50 }, { points = 3, hours = 50, isDriveline = true } },
             SUGARCANE_HARVESTER = { { points = 53 }, { points = 19, hours = 250 } },
             FORWARDER = { { points = 46 }, { points = 2, hours = 125 }, { points = 1, hours = 250 }, { points = 9, hours = 500 },
                 { points = 2, hours = 1000 } },
@@ -1089,16 +1090,22 @@ RMS_Config = {
 
     DRIVETRAIN = {
         ENABLED = true,
-        ALLOW_AUTO_MODE = true,
 
         OPEN_AXLE_SPEED_RATIO = 4.0,
         LOCKED_AXLE_SPEED_RATIO = 1.0,
 
-        AUTO_ENGAGE_SLIP_THRESHOLD = 0.12,
-        AUTO_ENGAGE_LOAD_THRESHOLD = 0.55,
-        AUTO_ENGAGE_SPEED = 13,
+        DRIVE_MANAGEMENT_MIN_YEAR = 1993,
+        DRIVE_MANAGEMENT_CATEGORIES = {
+            TRACTORSS = true,
+            TRACTORSM = true,
+            TRACTORSL = true
+        },
+        STEERING_LOCK_MARGIN = 1,
         AUTO_DISENGAGE_SPEED = 20,
+        AUTO_DISENGAGE_STEER_ANGLE = 25,
         AUTO_HYSTERESIS_MS = 250,
+        DIFF_LOCK_RELEASE_SPEED = 20,
+        DIFF_LOCK_RELEASE_STEER_ANGLE = 15,
 
         WINDUP_STEER_THRESHOLD = 0.12,
         WINDUP_FRICTION_THRESHOLD = 0.85,
@@ -1346,7 +1353,7 @@ RMS_Config = {
             WARNING_LEVEL = 0.10,
             INDUCEMENT_LEVEL = 0.025,
             EMPTY_BLINK_FACTOR = 0.5,
-            GAUGE_COLOR = { 0.0091, 0.0123, 0.1812, 1 }
+            GAUGE_COLOR = { 0.0075, 0.1248, 0.4508, 1 }
         },
         PARTICULATE_FILTER = {
             FILL_HOURS = 28,
@@ -1898,7 +1905,6 @@ RMS_Config.SHARED_SETTINGS = {
     { group = "WORKSHOP", field = "OPEN_HOUR", isFloat = true },
     { group = "WORKSHOP", field = "CLOSE_HOUR", isFloat = true },
     { group = "DRIVETRAIN", field = "ENABLED", element = "DRIVETRAIN_ENABLED" },
-    { group = "DRIVETRAIN", field = "ALLOW_AUTO_MODE", element = "DRIVETRAIN_ALLOW_AUTO_MODE" },
     { group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED", element = "DRIVETRAIN_PARKBRAKE_ENABLED" },
     { group = "EXHAUST", field = "ENABLED", element = "EXHAUST_SMOKE_ENABLED" },
     { field = "DEBUG", element = "DEBUG_MODE" }

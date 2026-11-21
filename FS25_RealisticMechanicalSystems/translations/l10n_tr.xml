@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="OTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (ön aks devre dışı)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (ön aks devrede)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD OTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Öğretici ipucu geçmişini sıfırlayıp tüm ipuçlarını yeniden göstermek istiyor musun?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD / Diferansiyel Kilidi Yönetimi"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Traktörlerin ön aksı ve diferansiyel kilitlerinin elle kontrol edilip edilmeyeceğini belirler. Bu seçenek Enhanced Vehicle'ın diferansiyel yönetiminin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde diferansiyelleri yeniden aç."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="OTO Moduna İzin Ver"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Seçicide AUTO konumu sunulup sunulmayacağını belirler; bu konum patinajda veya yük altında çalışırken ön aksı devreye alır, yolda çıkarır. Seçenek kapatıldığında AUTO'da bırakılan araçlar 4WD'ye döner."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Bu ayar, 4WD / Diferansiyel Kilidi Yönetiminin açık olmasını gerektirir."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="El Freni"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="İzlenen araçlarda el freni olup olmayacağını belirler: yeni CVT veya Powershift makinelerde otomatik, diğerlerinde kendi tuşuyla. Seçenek Enhanced Vehicle'ın el freninin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde el frenini yeniden aç."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_maintenance" text="Son Bakım"/>
         <text name="rms_ws_task_inspection" text="Muayene"/>
-        <text name="rms_ws_task_maintenance" text="Bakım"/>
         <text name="rms_ws_task_overhaul" text="Revizyon"/>
         <text name="rms_ws_info_no_breakdowns" text="Tespit edilmiş arıza yok. Muayene ya da bakım, makinenin henüz göstermediği arızaları tespit eder."/>
         <text name="rms_ws_info_warning_unidentified" text="Uyarı lambası yanıyor: tespit edilecek arıza. Muayene ya da bakım onu tespit eder, ardından onarılabilir."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Kontrol"/>
         <text name="rms_fleet_location" text="Konum"/>
         <text name="rms_fleet_next_service" text="Sonraki bakım"/>
-        <text name="rms_fleet_remaining" text="%s sa kaldı"/>
-        <text name="rms_fleet_overdue" text="%s sa gecikme"/>
         <text name="rms_fleet_overdue_label" text="Gecikmiş"/>
         <text name="rms_fleet_overdue_count" text="Gecikmiş: %d"/>
         <text name="rms_fleet_due_soon_label" text="Yakında"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Depozito iadesi"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Sıvı Seviyesi Düşük"/>
-        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
+        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü. Motor yağı çalışma saatleriyle azalır, aşınmış bir motorda daha hızlı; diğer sıvılar yalnızca bir kaçakla azalır.&#10;&#10;Makine hâlâ normal çalışır, ancak seviye düştükçe pompası eğimde daha kolay hava emer: bu şekilde geçen her dakika yatakları veya pompayı hasara uğratır. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksikse devre de ısınır.&#10;&#10;Seviyeyi, mağazadan alınmış ve o devre için öngörülen sıvının bir kabıyla tamamlayın: başka herhangi bir sıvı devreyi kirletir. Bayi de tamamlayabilir."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems’e Hoş Geldin"/>
         <text name="rms_tutorial_welcome_disable_button" text="İpuçlarını Devre Dışı Bırak"/>
         <text name="rms_tutorial_welcome_enable_button" text="İpuçlarını Etkinleştir"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Tekerlek Patinajı"/>
         <text name="rms_tutorial_wheel_slip_message" text="Tekerlekler çok fazla patinaj yapıyor. Patinaj, şanzıman için en yıkıcı etkenlerden biridir ve sonraki atölye ziyaretini belirgin biçimde yaklaştırır."/>
         <text name="rms_tutorial_service_due_soon_title" text="Yaklaşan Bakım"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s yakında bakım gerektirecek. Atölyede önerilen paketi seçin: zamanı gelen işleri kapsar. Az kullanımda bile, çalışma saati veya takvim sınırından önce dolan geçerlidir. Bakım kolaylığı müdahalelerin karmaşıklığını gösterir; rutin bakım mobil atölyede hâlâ yapılabilir."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s yakında bakım gerektirecek. Atölyede önerilen paketi seçin: zamanı gelen işleri kapsar. Az kullanımda bile, çalışma saati veya takvim sınırından önce dolan geçerlidir. Bakım kolaylığı, çiftliğinizin neleri kendisinin onarabileceğini gösterir; bakım mobil atölyede hâlâ yapılabilir."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Bakım Aralığı Aşıldı"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Bu %s için bakım aralığı aşıldı.&#10;&#10;En kısa sürede atölyeye git ve &quot;Bakım&quot; işlemini seç. Bakımı gecikmiş bir aracı kullanmaya devam etmek birden fazla arıza riskini büyük ölçüde artırır."/>
         <text name="rms_tutorial_steering_title" text="Dururken Direksiyon Kullanımı"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Bu %s yaşını belli ediyor. Değiştirmeyi veya revizyonu düşünme zamanı geldi. Bu uzun ve pahalı bir işlemdir ancak makineyi orijinal durumuna döndürmenin tek yoludur.&#10;&#10;Kullanım ömrü mod ayarlarından değiştirilebilir: değer yükseldikçe araçlar daha yavaş aşınır."/>
         <text name="rms_tutorial_needs_preventive_title" text="Artan Arıza Riski"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s üzerinde motorun, yakıt sisteminin veya soğutma sisteminin arıza riski artmış.&#10;&#10;%s bakımı: valfleri ayarlar, enjektörleri ve termostatı kontrol eder; bu da riski azaltır."/>
+        <text name="rms_tutorial_needs_preventive_message" text="%s üzerindeki aşınmış parçalar arıza riskini artırıyor.&#10;&#10;%s bakımı: valfleri ayarlar ve hasat makinesinde aşınmış hasat parçalarını değiştirir; bu da riski azaltır."/>
         <text name="rms_tutorial_age_degradation_title" text="Yaşlanmaya Bağlı Bozulma"/>
-        <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Bu aşınma mod ayarlarından devre dışı bırakılabilir."/>
+        <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Yeni bir parça aşınmayı ortadan kaldırır: revizyon aşınmış parçaları değiştirir."/>
         <text name="rms_tutorial_poor_consumables_title" text="Kalitesiz Sarf Malzemeleri"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda kusurlu bir filtre takıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bu filtre kiri geçirir: koruduğu devre, filtre değiştirilene kadar daha hızlı aşınır. Yeni bir bakım filtreyi değiştirir. Yalnızca kapsamlı muayene bu filtreyi belirler."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Kapsamlı muayene %s üzerinde, bir bakım sırasında takılmış arızalı bir filtre buldu. Bu, daha ucuz kalitelerde olur.&#10;&#10;Bu filtre kirleri geçirir: koruduğu devre, filtre değiştirilene kadar daha hızlı aşınır. Yeni bir bakım onu değiştirir."/>
         <text name="rms_tutorial_poor_parts_title" text="Kalitesiz Parçalar"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s için onarımda düşük kaliteli bir parça takıldı. Arıza büyük olasılıkla yakında yeniden ortaya çıkacak.&#10;&#10;Tekrar etmesini bekle veya kusurlu parçayı güvenilir biçimde belirleyen kapsamlı bir muayene başlat."/>
+        <text name="rms_tutorial_poor_parts_message" text="Kapsamlı muayene %s üzerinde atölyede takılmış arızalı bir parça buldu: arıza yapacak. Bu, daha ucuz kalitelerde olur.&#10;&#10;Parçayı şimdi atölyede değiştirtebilir ya da arıza yapmasını bekleyebilirsiniz."/>
         <text name="rms_tutorial_park_brake_title" text="El Freni"/>
         <text name="rms_tutorial_park_brake_message" text="El freni çekili. Duran makineden indiğinde kendiliğinden devreye girer ve yeniden hızlandığında bırakılır. Motoru durdurduğunda veya makine 45 saniye durduğunda da devreye girer.&#10;&#10;Eğimde makinenin kendi kendine kaymasını engeller."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="El freni çekili. Kendi tuşuyla çekip bırakırsın: fren çekiliyken gaz verirsen makine frene karşı zorlanır ve frenleri aşınır.&#10;&#10;Eğimde makinenin kendiliğinden kaymasını engeller: freni çekmeden makineden inersen makine kayabilir."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="El freni çekili. Kendi tuşuyla çekip bırakırsın: fren çekiliyken gaz verirsen makine frene karşı zorlanır ve el freni aşınır.&#10;&#10;Eğimde makinenin kendiliğinden kaymasını engeller: freni çekmeden makineden inersen makine kayabilir."/>
         <text name="rms_tutorial_preheat_title" text="Dizel Ön Isıtma"/>
         <text name="rms_tutorial_preheat_message" text="Soğuk dizel motorda çalıştırma kumandasına bir kez basmak kontağı açar ve kızdırma çevrimini otomatik başlatır. Gösterge paneli ışıkları kısa süre yanar, ardından motor hazır olana kadar kızdırma göstergesi açık kalır. Komutu tekrarlama: gösterge söndüğünde marş motoru otomatik devreye girer."/>
         <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Rölanti ve Hareketsizlik"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Makine çalışır durumda olsa da aktif olarak iş yapmadığında aşınma çok daha azdır. Motor kapalıyken aşınma çok az olur ve makine kapalı bir yerde saklanırsa aşınma tamamen ortadan kalkar."/>
         <text name="rms_tutorial_idle_deposit_title" text="Uzun Süreli Rölanti"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Görünüşe göre makine çok uzun süredir rölantide çalışıyor. Uzun süreli rölanti sadece yakıt israfı anlamına gelmez: zamanla yakıt sisteminde birikintilere yol açar ve motorun genel sağlığını da olumsuz etkiler.&#10;&#10;Makineye şu anda ihtiyaç duyulmuyorsa, motoru kapatmak daha iyidir."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Görünüşe göre makine çok uzun süredir rölantide çalışıyor. Uzun süreli rölanti sadece yakıt israfı anlamına gelmez: zamanla yakıt sisteminde birikintilere yol açar ve bu sistemin daha hızlı aşınmasına neden olur.&#10;&#10;Makineye şu anda ihtiyaç duyulmuyorsa, motoru kapatmak daha iyidir."/>
         <text name="rms_tutorial_hot_weather_title" text="Sıcak Hava"/>
         <text name="rms_tutorial_hot_weather_message" text="Bugün hava çok sıcak. Böyle havalarda radyatörün temizliğine dikkat et ve motoru aşırı yüklemekten kaçın; yoksa aşırı ısınma yalnızca zaman meselesidir.&#10;&#10;Makineye bakarken %s tuşunu basılı tutarak radyatörün durumunu kontrol edebilirsin. Temizlik hava üfleyicisiyle yapılır."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Römork Çok Ağır"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Zor Çalıştırma"/>
         <text name="rms_tutorial_hard_start_message" text="Bu %s üzerindeki motor zor çalışıyor. Nedeni zayıf akü, don, mekanik arıza veya marş motoru aşınması olabilir.&#10;&#10;Yüksek ilk akımlar nedeniyle elektrik sistemi çalıştırma sırasında ağır yük altında kalır."/>
         <text name="rms_tutorial_low_fuel_title" text="Yakıt Rezervi"/>
-        <text name="rms_tutorial_low_fuel_message" text="Depo, yedek seviyeye yaklaşıyor. Depoda ne kadar az yakıt kalırsa, yakıt pompasının onu çekmek için o kadar zorlanması gerekir; deponun dibindeki su ve tortu da filtreye gider ve filtre daha çabuk tıkanır.&#10;&#10;Depoyu gün sonunda doldurmak en iyisidir: Dolu bir depoda daha az yoğuşma olur."/>
+        <text name="rms_tutorial_low_fuel_message" text="Depo, yedek seviyeye yaklaşıyor. Depoda ne kadar az yakıt kalırsa, yakıt pompasının onu çekmek için o kadar zorlanması gerekir; deponun dibindeki su ve tortu da filtreye gider ve filtre daha çabuk tıkanır.&#10;&#10;En kısa sürede yakıt alın."/>
         <text name="rms_tutorial_lugging_title" text="Düşük Devirde Zorlanma"/>
         <text name="rms_tutorial_lugging_message" text="Motor ve özellikle şanzıman, ağır yük altında düşük devirde çalışmaktan zarar görür. Takılı ekipman makine için fazla ağır olabilir; şanzıman manuelse seçilen vites de uygun olmayabilir."/>
         <text name="rms_tutorial_engine_overheat_title" text="Motorun Aşırı Isınması"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Sert Darbe"/>
         <text name="rms_tutorial_terrain_impact_message" text="Yürüyen aksam az önce sert bir darbe aldı. Makineyi aniden durduran veya sertçe yavaşlatan bir engel şasiyi anında yıpratır ve bir sonraki arızasını yaklaştırır; bu çoğunlukla direksiyonda veya rulmanlarda olur.&#10;&#10;Engellerden önce yavaşla."/>
         <text name="rms_tutorial_cranking_title" text="Sık Marş Verme"/>
-        <text name="rms_tutorial_cranking_message" text="Motor çok sık çalıştırılıyor. Her çalıştırma elektrik sisteminden çok yüksek akım geçirerek kabloların, marş motorunun ve diğer elektrikli bileşenlerin aşınmasını hızlandırır.&#10;&#10;Kısa kesintilerde motoru kapatmaktan kaçın."/>
+        <text name="rms_tutorial_cranking_message" text="Marş motoru kısa sürede çok çalıştı. Toplamda birkaç saniyeyi aşınca her çalıştırma marş motorunu, aküyü ve marş devresinin geri kalanını aşındırır.&#10;&#10;Kısa molalar için motoru kapatmaktan kaçının."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritik Arıza"/>
-        <text name="rms_tutorial_critical_failure_message" text="Bu %s artık kendi gücüyle hareket edemiyor.&#10;&#10;Mobil atölye, makinenin atölyeye kendi başına ulaşmasına yetecek geçici onarım sağlar. Aksi halde onu başka bir yolla kurtarman gerekir."/>
+        <text name="rms_tutorial_critical_failure_message" text="Bu %s artık kendi gücüyle hareket edemiyor.&#10;&#10;Arızaya bağlı olarak mobil atölye onu yerinde, en azından geçici olarak onarabilir; bu, makinenin atölyeye kendi gücüyle ulaşması için yeterlidir. Aksi halde makinenin oraya başka bir yolla götürülmesi gerekir."/>
         <text name="rms_tutorial_cold_engine_title" text="Soğuk Motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Motoru ağır yük altına sokmadan önce kademeli olarak ısıt. Çalışma sıcaklığına ulaşana kadar orta düzeyde gaz ve motor devri kullan."/>
+        <text name="rms_tutorial_cold_engine_message" text="Motor soğuk: %s altında, yük ne olursa olsun çalıştığı anda daha hızlı aşınır; ne kadar soğuksa o kadar çok aşınır.&#10;&#10;%s altında devri de azami devrin dörtte üçünün altında tutun: daha yüksek devir soğutma sistemini zorlar."/>
         <text name="rms_tutorial_cold_oil_title" text="Soğuk Şanzıman Yağı"/>
-        <text name="rms_tutorial_cold_oil_message" text="Şanzıman ve hidrolik yağı motordan çok daha yavaş ısınır. Yağ soğukken ağır işlerden kaçın; yavaş sürerek ve hidroliği hafifçe kullanarak yağı kademeli biçimde ısıt."/>
+        <text name="rms_tutorial_cold_oil_message" text="Şanzıman yağı soğuk: %s altında, yük ne olursa olsun motor çalıştığı anda şanzıman daha hızlı aşınır.&#10;&#10;%s altında hidrolik yağı da hidrolik kullanıldığında pompayı aşındırır."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Şanzımanın Aşırı Isınması"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Şanzıman yağı aşırı ısınmaya başlıyor. Bunun nedeni fazla yük, kirli radyatör, çok sıcak hava veya şanzıman soğutmasındaki bir arıza olabilir.&#10;&#10;Şanzıman yağı yalnızca CVT’de değil, her makinede ısınır. Aşırı sıcak yağ şanzımanı aşındırır ve keçelerini bozar."/>
         <text name="rms_tutorial_overload_indicator_title" text="Aşırı Yük Uyarısı"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Aktarma Organları Gerilimi"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Diferansiyel kilidi devredeyken tutunmalı zeminde dönüyorsun. Virajda iç ve dış tekerlekler farklı mesafeler kat eder ancak kilit onları aynı hızda dönmeye zorlar: aktarma organlarında zorlanma birikir ve şanzıman aşınması hızlanır. Dönmeden önce kilidi bırak."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Çekiş Modları ve Diferansiyel Kilidi"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD, 4WD veya patinaj başlar başlamaz ön aksı devreye alan OTO.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD, 4WD veya OTO. OTO modunda ön aks çalışırken devrede kalır: %s üzerinde ve keskin virajlarda devreden çıkar, fren yaptığın anda yeniden devreye girer.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ve ön aksı da devreye alır. Virajlarda, fren yaparken ve %s üzerinde kendiliğinden devre dışı kalır: gerektiğinde yeniden devreye al."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD veya 4WD.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
+        <text name="rms_tutorial_diff_lock_title" text="Diferansiyel Kilidi"/>
+        <text name="rms_tutorial_diff_lock_message" text="Diferansiyel kilidi tutuş kalmadığında çekiş sağlar. Virajlarda, fren yaparken ve %s üzerinde kendiliğinden devre dışı kalır: gerektiğinde yeniden devreye al."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

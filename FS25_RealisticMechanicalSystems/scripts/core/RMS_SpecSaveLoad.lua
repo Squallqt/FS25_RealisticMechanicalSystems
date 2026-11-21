@@ -543,8 +543,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems._thermalOilAmbient = nil
     self.spec_RealisticMechanicalSystems._thermalBatteryAmbient = nil
     self.spec_RealisticMechanicalSystems.transmissionThermostatState = 0.0
-    self.spec_RealisticMechanicalSystems.transmissionThermostatHealth = 1.0
-    self.spec_RealisticMechanicalSystems.transmissionThermostatStuckedPosition = nil
     self.spec_RealisticMechanicalSystems.overloadLevel = 0
     self.spec_RealisticMechanicalSystems.aiWorkerOverload = 0
     self.spec_RealisticMechanicalSystems.aiWorkerSpeedLimit = nil
@@ -1011,8 +1009,8 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     local capacities = RMS_Fluids.resolveCapacities(self)
     local isHarvester = RMS_Drivetrain.getHarvestKind(self) ~= nil
     spec.systems.hydraulics.enabled = RMS_Utils.hasHydraulicCapability(self) and capacities.hydraulicFluid > 0
-    spec.systems.pto.enabled = not isHarvester and RMS_Utils.hasPtoOutputCapability(self)
-    spec.systems.harvest.enabled = isHarvester
+    spec.systems.pto.enabled = RMS_Utils.getHasWearablePto(self)
+    spec.systems.harvest.enabled = isHarvester or RMS_Utils.getIsSelfPropelledMower(self)
     RealisticMechanicalSystems.buildSystemParts(self)
     if spec.partWear.HEADER_DRIVE_BELT_WEAR ~= nil then
         spec.headerDrive = RealisticMechanicalSystems.newHeaderDrive(spec.loadedHeaderStarts)

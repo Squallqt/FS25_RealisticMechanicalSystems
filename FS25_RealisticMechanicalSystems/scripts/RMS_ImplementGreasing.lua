@@ -47,6 +47,9 @@ end
 ---Called after loading, reading the saved greasing
 function RMS_ImplementGreasing:onPostLoad(savegame)
     RMS_Greasing.initialize(self)
+    if self.spec_powerTakeOffs ~= nil and next(self.spec_powerTakeOffs.inputPowerTakeOffs or {}) ~= nil then
+        RMS_Greasing.getImplementPtoRating(self)
+    end
     if savegame ~= nil then
         local spec, key = self.spec_rmsImplementGreasing, savegame.key .. ".rmsImplementGreasing"
         RMS_Greasing.deserialize(self, savegame.xmlFile:getValue(key .. "#greasing"))

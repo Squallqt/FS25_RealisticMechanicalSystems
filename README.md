@@ -18,7 +18,7 @@ Electric vehicles are tracked with the parts they really have: an electric motor
 
 Three rules are enough to play without constant breakdowns:
 
-1. **Follow the service recommendation.** Maintenance spacing adapts each vehicle’s service intervals to your playing time; each fluid can also reach its calendar limit. Check it in the workshop, in the vehicle info panel, or in the fleet menu (`P` key), then run `Maintenance`.
+1. **Follow the service recommendation.** Maintenance spacing adapts each vehicle’s service intervals to your playing time; each fluid can also reach its calendar limit. Check it on the dashboard screen of a machine with an engine controller or an electric drive, in the workshop, in the vehicle info panel, or in the fleet menu (`P` key), then run `Maintenance`.
 2. **Prepare your machines daily.** Hold `R` near a vehicle for a pre-shift check, clean it with the `Air Blower`, and grease what needs greasing with the `Grease Gun`.
 3. **Do not abuse your equipment.** If it would damage a real machine, it damages this one: overloading, overheating, cold-engine work, wheel slip in mud, oversized implements, speed over rough ground.
 
@@ -181,7 +181,8 @@ The oils, coolants, grease cartridges and hand tools of RMS are all in the shop'
 - **Putting containers away**: cans and drums go into a `Bale & Pallet Storage` like any pallet, as long as the building accepts their product. Its list names each container with the liters left in it out of what it holds, drum by drum on a pallet of two, and says when a pump is fitted. Each one comes back out as it went in: same format, same liters, pump still fitted.
 - **Wrong fluid**: watch what you hold. When the circuit made for its fluid is full, a can or the nozzle of a drum offers the circuit that is short instead. Manually transferring an incompatible product contaminates only the selected circuit, and the pour gauge says `Incompatible Fluid` for as long as it runs. Depending on the proportion in the mixture, system wear can rise to three times its normal rate, heat can increase, and contaminated hydraulic fluid can slow hydraulic functions by up to `25%`. The transfer requires explicit confirmation, which says what the wrong fluid harms on that circuit, and only a complete fluid replacement clears the contamination. Workshop procedures only reserve compatible products.
 - **Air Blower**: clears dust from the cooling pack and the air filter. Blowing an air filter out only recovers part of it, since what is embedded in the media stays until the workshop replaces it, from the second maintenance level up. Washing the vehicle exterior does not clear either component. Their clogging speed follows the game's dirt speed independently of the RMS service interval.
-- **Grease Gun and cartridges**: the SKF grease gun empties SKF grease cartridges, bought one at a time or up to twelve in a carton. Each machine has its own grease points, counted in the days it worked, however long, a day of work standing for 10 hours: the points it greases every 10 hours or daily come due each worked day, those of every 50 hours every 5 worked days, those of every 100 hours every 10. A machine counts its day only when it really works: its threshing or other organs turned on, its arm or hydraulics moving, what it carries at work, or, for a machine without organs of its own such as a tractor, towing a trailer; driving alone or idling counts nothing. Implements have the grease points of their kind too: a mower, a plough or a baler over the days it worked, counted only while the implement itself works, never while it is only carried on the road; a trailer every few months of the calendar; a bale wrapper after the bales it drops; an implement driven by the PTO adds its shaft, while a grain header greases its own driveline, 3 points every 50 hours, and a windrower header, driven by hydraulics, has none. Points fall due together at the change of day, ready for one round of greasing in the morning. An implement greases only the parts it has: a loader tool each arm its cylinder moves, a pallet fork whose tines only slide apart none; a trailer the chassis it rolls on, a brake per wheel and the rocker of a tandem, a three-way tipper its sides and locks too, a container on a hook or a body on a carrier only its own parts; a disc harrow, sprayer or spreader takes the trailed plan on its own wheels behind a drawbar, the mounted plan on the three-point hitch. Size and build count too: a small square baler has fewer points than a big one, a rotary rake greases each rotor, a belt merger its pick-ups, a tedder each rotor, a butterfly mower two mowing units, a wide cultivator or disc harrow its folding wings, a roller, a header or a potato harvester the points of its size. Weights and pallets have none. Gun in hand, face a cartridge or a carton within reach and press `R`, the key that takes a can, to load the gun once it is empty; then aim at the machine: each click greases one point with the stroke of the pump, holding the click carries on to the next, and a machine already greased takes nothing. Gun in hand, a display at the bottom of the screen shows the grease left in the cartridge, in millilitres; aimed at a machine, it shows the points greased out of all those of the machine, as the fleet page and the pre-shift check count them, one segment per point lit at each stroke, and whether the greasing is due, late or up to date. In multiplayer, the machines of other farms can be greased too. One cartridge greases `304` points. Points are late once a day of work has passed without greasing them, and the machine wears faster as their grease runs out, in proportion to the points left late: with all its points a whole interval late, twice as fast, four times two intervals late, up to 26 times once every joint is dry; a few points left late wear it only a little faster. A daily point left for a worked day is a whole interval late; a workshop maintenance greases a machine, a workshop repair an implement. Standing next to a machine or implement, its information shows the points due, in the warning style once they are late, or what is left before the next greasing.- **Aiming a hand tool**: point it directly at the machine within `5 m`.
+- **Grease Gun and cartridges**: the SKF grease gun empties SKF grease cartridges, bought one at a time or up to twelve in a carton. Each machine has its own grease points, counted in the days it worked, however long, a day of work standing for 10 hours: the points it greases every 10 hours or daily come due each worked day, those of every 50 hours every 5 worked days, those of every 100 hours every 10. A machine counts its day only when it really works: its threshing or other organs turned on, its arm or hydraulics moving, what it carries at work, or, for a machine without organs of its own such as a tractor, towing a trailer; driving alone or idling counts nothing. Implements have the grease points of their kind too: a mower, a plough or a baler over the days it worked, counted only while the implement itself works, never while it is only carried on the road; a trailer every few months of the calendar; a bale wrapper after the bales it drops; an implement driven by the PTO adds its shaft, while a grain header greases its own driveline, 3 points every 50 hours, and a windrower header, driven by hydraulics, has none. Points fall due together at the change of day, ready for one round of greasing in the morning. An implement greases only the parts it has: a loader tool each arm its cylinder moves, a pallet fork whose tines only slide apart none; a trailer the chassis it rolls on, a brake per wheel and the rocker of a tandem, a three-way tipper its sides and locks too, a container on a hook or a body on a carrier only its own parts; a disc harrow, sprayer or spreader takes the trailed plan on its own wheels behind a drawbar, the mounted plan on the three-point hitch. Size and build count too: a small square baler has fewer points than a big one, a rotary rake greases each rotor, a belt merger its pick-ups, a tedder each rotor, a butterfly mower two mowing units, a wide cultivator or disc harrow its folding wings, a roller, a header or a potato harvester the points of its size. Weights and pallets have none. Gun in hand, face a cartridge or a carton within reach and press `R`, the key that takes a can, to load the gun once it is empty; then aim at the machine: each click greases one point with the stroke of the pump, holding the click carries on to the next, and a machine already greased takes nothing. Gun in hand, a display at the bottom of the screen shows the grease left in the cartridge, in millilitres; aimed at a machine, it shows the points greased out of all those of the machine, as the fleet page and the pre-shift check count them, one segment per point lit at each stroke, and whether the greasing is due, late or up to date. In multiplayer, the machines of other farms can be greased too. One cartridge greases `304` points. Points are late once a day of work has passed without greasing them, and the machine wears faster as their grease runs out, in proportion to the points left late: with all its points a whole interval late, twice as fast, four times two intervals late, up to 26 times once every joint is dry; a few points left late wear it only a little faster. A daily point left for a worked day is a whole interval late; a workshop maintenance greases a machine, a workshop repair an implement. Standing next to a machine or implement, its information shows the points due, in the warning style once they are late, or what is left before the next greasing.
+- **Aiming a hand tool**: point it directly at the machine within `5 m`.
 
 ## Reliability and Workshop Access
 
@@ -213,6 +214,13 @@ Its maintenance is included in the lease, as a rental company has the dealer ser
 
 Returning it charges what the lease does not cover: a maintenance left overdue at the dealer's price, every active breakdown at the dealer's repair price, and washing in proportion to the dirt. The return window lists each charge before you confirm. With Extended Leasing installed, that mod charges the washing and refunds the deposit; the return window shows the deposit refunded and counts it in its total.
 
+## Dashboard
+
+Left of the speed dial, RMS shows the dashboard of the machine's age and equipment. Each lamp is there from the year dashboards got it: the battery and coolant lamps from `1950`, the service lamp from `1970`, the brake lamp from `1980`, the engine, gearbox oil and warning lamps from `1990`, a car having no gearbox oil lamp; the oil lamp on every engine, the glow lamp on a diesel, the particulate filter and reversible fan lamps only with them.
+
+- **A machine with an engine controller** (a combustion machine that uses AdBlue or was built from `2000`) **or an electric drive** reads its figures on a screen, lit with the gauges from the ignition on: the hours run since the last service out of its interval, the voltage and the gearbox oil temperature, each figure in the colour of its lamp once lit. The coolant temperature reads in the bulb at the foot of the water gauge, and a power gauge on the right of the dial follows the engine load as it changes, its figure refreshed four times a second, figure and last segments amber once the load overloads the engine; the speedometer widens to the left to make room for it. The power gauge reaches the same height as the water gauge. The drivetrain card shows the rated speed of the PTO or header drive. The symbol turns green when the drive runs. A dash means the speed is unavailable. The card also shows the drive mode and wheel slip where fitted. An electric watches the oil of its reducer with a lamp, without a figure.
+- **An older machine** shows its lamps alone, without a figure, beside its water gauge.
+
 ## Temperatures
 
 Work and weather set the temperatures of the engine, the oils and the traction battery. There is nothing to set.
@@ -228,11 +236,11 @@ Work and weather set the temperatures of the engine, the oils and the traction b
 
 ## Drivetrain and Parking Brake
 
-Tractors and other field machines get the drivetrain controls their axles allow; cars and trucks are left as they are. Every machine gets a parking brake.
+Tractors and other field machines get the drivetrain controls their axles allow; cars and trucks are left as they are. Articulated machines drive all their wheels at all times: they have no drive mode and keep their differential locks. Every machine gets a parking brake.
 
-- **Drive mode** (`Left Alt + 1`): `2WD`, `4WD` or `4WD AUTO`. In AUTO, the front axle engages as soon as the wheels slip or the machine pulls hard below `13 km/h`, and disengages above `20 km/h`. The front axle shows beside the speed dial, in a small round bubble at its top left corner with the drive mode under it; the wheel slip has the same bubble at its bottom left corner, its percentage under it.
-- **Differential lock** (`Left Alt + 2`): finds grip where there is none left. It releases by itself above `10 km/h`.
-- **Drivetrain stress**: turning on a high-grip surface with the differential lock or the front axle engaged strains the drivetrain and wears the transmission. A warning tells you: release the lock or disengage the front axle before you turn.
+- **Drive mode** (`Left Alt + 1`): `2WD` or `4WD`, and `4WD AUTO` on tractors from `1993`. In AUTO, the front axle stays engaged up to `20 km/h`: it disengages above that speed and past `25°` of steering, a degree short of full lock on a tractor that steers less, and engages whenever you brake. Only the front axle lamp shows AUTO engaging and releasing. The front axle lamp stands left of the speed dial, the drive mode written beside it and the differential lock lamp next to them; a machine with a dashboard screen reads its wheel slip under them, in percent.
+- **Differential lock** (`Left Alt + 2`): finds grip where there is none left. On tractors from `1993`, it engages the front axle with it and releases by itself above `20 km/h`, past `15°` of steering and when you brake; on older tractors and other machines, it releases by itself above `10 km/h`. Once released, engage it again by hand.
+- **Drivetrain stress**: turning on a high-grip surface with the differential lock engaged, or with `4WD` chosen by hand, strains the drivetrain and wears the transmission. A warning tells you: release the lock or disengage the front axle before you turn. The front axle engaged by AUTO causes no stress.
 - **Parking brake** (`Left Alt + 3`): a new machine is delivered with it applied.
   - Recent CVT and powershift machines, from `2010` on, apply it by themselves when you leave the machine at a standstill, when you stop the engine or after `45` seconds standing still, and release it as soon as you press the throttle. With the engine off, it cannot be released.
   - The others have a hand brake that you apply and release yourself. Leave the machine with the brake released and it may roll down the slope; with the engine off, a manual gearbox left in gear holds it. Drive against the brake and the brakes wear.
@@ -437,30 +445,83 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 
 ### v1.0.0.0-beta.3
 
-- Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
-- Added AdBlue: burnt with the diesel and filled on its own, its gauge beside the fuel and its lamp lit below 10 %; Stage IV and V engines lose power below 2.5 % and more once empty. TotalEnergies AdBlue comes in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank; the drum pump also fits the AdBlue drum and tank
-- Added the header drive of combines and forage harvesters: its belt, slip clutch and driveline wear and break, the slip clutch heard each time it slips; engaged at high revs, the header wears its slip clutch about five times more than at idle, a slip clutch slipping more than a few seconds burns out, and that of a header left standing two weeks seizes until the header is greased
-- Added the average fuel consumption to the HUD, per hour and per hectare worked since the trip meter reset
-- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left; bought cans stand upright and stay in your hands
-- Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
-- Reworked the debug window: three views (Overview, Parts, Machine) browsed with the mouse and kept on screen while you drive, and the detailed log in a setting of its own
-- Reworked the sounds
-- Reworked the grease points of implements to follow how each one is built: a pallet fork whose tines only slide has none, a loader tool greases each arm its cylinder moves, a trailer its own axles and brakes and a three-way tipper its sides too, a body on a hook or a carrier only its own parts, and balers, rakes, tedders, mowers, cultivators, disc harrows, rollers, headers and potato harvesters follow their size and build
-- Reworked the weight card of the HUD: a weight icon, as on the fuel card, and figures no longer coloured by the load
-- Reworked the battery trolley: its charger and diagnostic tool reach long machines along their whole length, its charger keeps charging during workshop work, and the tools put away on it stay there after a dedicated server restart
-- Reworked the ease of maintenance to show what your farm repairs on its own: Easy without a controller, Average when the electronics need the diagnostic tool, Demanding on electric vehicles; each job now takes its own time, whatever the gearbox
-- Reworked the repair of electric vehicles: only the dealer works on their high voltage, overhauls included
-- Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
+#### New Features
+
+- Added heat shimmer above the exhaust pipe of hot engines
+- Added the AdBlue gauge and warning lamp to the HUD
+- Added warning messages when AdBlue runs low or empty
+- Added power loss on Stage IV and V engines when AdBlue runs low
+- Added AdBlue drums and tanks to the drum pump
+- Added the AdBlue tank level code to the diagnostic tool
+- Added wear and breakdowns to the header drive of combines and forage harvesters
+- Added warranty refusal for header drive faults after late greasing or a seized slip clutch
+- Added the sounds of the header belt squealing, slip clutch slipping and driveline breaking
+- Added wear and greasing to the driveshafts of self-propelled mowers
+- Added tutorial tips on engaging a header and on a header left standing
+- Added the average fuel consumption per hour and per hectare to the HUD
+- Added the hours run since the last service, out of its interval, to the dashboard screen
+- Added the gearbox oil temperature to the dashboard screen of combustion machines other than cars
+- Added the rated speed of the PTO or header drive to the dashboard
+
+#### New Shop Items
+
+- Added TotalEnergies AdBlue 10 L can
+- Added TotalEnergies AdBlue 208 L drum, alone or two to a pallet
+- Added TotalEnergies AdBlue 1,000 L tank
+
+#### Changes
+
+- Changed AdBlue consumption to follow the diesel burnt, by brand
+- Changed AdBlue so that filling up with diesel no longer fills it
+- Changed the AUTO drive mode to tractors from 1993 only
+- Changed the front axle in AUTO to follow speed, steering and braking
+- Changed the differential lock of tractors from 1993 to release with speed, steering and braking
+- Changed the differential lock of tractors from 1993 to engage the front axle with it
+- Changed articulated machines to drive all their wheels at all times
+- Removed the Allow AUTO Drive Mode setting
+- Changed the engine load of machines with a controller or an electric drive to a power gauge
+- Changed the front axle, differential lock and wheel slip display of the dashboard
+- Changed the service deadline of the fleet page to hours and months run out of the interval
+- Changed ease of maintenance to show what your farm repairs on its own
+- Changed workshop jobs to take their own time, whatever the gearbox
+- Changed the high-voltage repairs and overhauls of electric vehicles to the dealer only
+- Changed jerricans to 20 L instead of 25 L
+- Changed drums to 200 L (Motorex), 205 L (FUCHS) and 208 L (Motul)
+- Added drums sold two to a pallet
+- Improved Motorex, Motul and FUCHS cans, jerricans and drums with their brand colours and labels
+- Changed the vehicle fill display of oils and coolants to show the product name and a fluid icon
+- Improved the info box of containers on foot with the brand and product as title
+- Adjusted the grease points of implements to follow how each one is built
+- Debug window: three views, Overview, Parts and Machine, browsed with the mouse
+- Debug window: the detailed log has a setting of its own
+- Improved the HUD weight card with a weight icon
+- Adjusted the volume, range and cabin muffling of the RMS sounds
+- Improved texts and translations of tutorial tips, engine oil message and workshop messages
+- Improved the performance of workshop menus, exhaust effects and resale price updates
+- Removed PTO shaft wear on mounted implements raised with the PTO turning
+- Added the production years of the Tony 10900 TTR and Faresin Leader PF 2.26
+
+#### Fixes
+
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
-- Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
-- Fixed the Condition card showing parts replaced since the last inspection as failed or worn
-- Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
-- Fixed grain headers asking for the daily greasing of a tractor PTO shaft: their driveline takes 3 points every 50 hours, and windrower headers, driven by hydraulics, none
-- Fixed the mobile and personal workshops refusing the Complete inspection and electrical repairs of machines without a controller, which the diagnostic tool cannot connect to
-- Fixed a machine at the workshop hiding its work in progress with its battery disconnected or a broken-down engine, and able to crank in the last case
-- Fixed RMS messages covering the machine name and the game's prompts at the bottom of the screen
-- Fixed the fuel consumption shown in the HUD jumping for an instant
-- Fixed the heavy trailer tutorial tip: a load over 4.5 times the tractor's weight wears its brakes, not its transmission
+- Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
+- Fixed the estimate of a running procedure on multiplayer servers
+- Fixed the Condition card showing replaced parts as failed or worn
+- Fixed the recommended maintenance leaving the transmission oil due after an engine oil change
+- Fixed grain headers asking for the daily greasing of a PTO shaft
+- Fixed mobile and personal workshops refusing Complete inspections of machines without a controller
+- Fixed mobile and personal workshops refusing electrical repairs on machines without a controller
+- Fixed the work in progress at the workshop hidden by a disconnected battery or a broken engine
+- Fixed a machine at the workshop able to crank with a broken-down engine
+- Fixed the trolley charger stopping its charge while the machine is in the workshop
+- Fixed tools put away on the trolley returning to Hand Tools after a dedicated server restart
+- Fixed the trolley charger and diagnostic tool not reaching long machines
+- Fixed RMS messages covering the vehicle name and the game's prompts at the bottom of the screen
+- Fixed the heavy trailer tutorial tip naming the transmission instead of the brakes
+- Fixed tutorial tips losing their paragraph breaks
+- Fixed the defective filter and part tips showing before an inspection found them
+- Fixed wrong tutorial tips on ageing, cold, fuel, starting, breakdowns, servicing and the hand brake
+- Fixed sold or returned machines staying on the fleet page for a few seconds
 
 ### v1.0.0.0-beta.2
 

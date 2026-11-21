@@ -1,7 +1,7 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Voz."/>
+        <text name="rms_hud_mass_tractor" text="Vozidlo"/>
         <text name="rms_hud_mass_towed" text="Tažené"/>
         <text name="rms_hud_mass_total" text="Celkem"/>
         <text name="rms_hud_fuel_average" text="Prům."/>
@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="4x2"/>
         <text name="rms_hud_drive_4wd" text="4x4"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="4x2 (přední náprava odpojena)"/>
         <text name="rms_drivetrain_mode_4wd" text="4x4 (přední náprava připojena)"/>
         <text name="rms_drivetrain_mode_auto" text="4x4 AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Resetovat historii rad výukového programu a znovu je všechny zobrazit?"/>
         <text name="rms_drivetrainEnabled_label" text="Správa 4x4 a uzávěrky diferenciálu"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Určuje, zda se přední náprava a uzávěrky diferenciálu traktorů ovládají ručně. Tato možnost nahrazuje správu diferenciálů v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a pak znovu zapni diferenciály v jeho menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Povolit režim AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Určuje, zda volič nabízí polohu AUTO, která připojuje přední nápravu při prokluzu kol nebo práci pod zatížením a odpojuje ji na silnici. Vypnutí přepne vozidla ponechaná v AUTO na 4x4."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Toto nastavení vyžaduje zapnutou správu 4x4 a uzávěrky diferenciálu."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkovací brzda"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Určuje, zda mají sledovaná vozidla parkovací brzdu: automatickou u novějších strojů s převodovkou CVT nebo Powershift, ovládanou klávesou u ostatních. Tato možnost nahrazuje brzdu v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a znovu zapni parkovací brzdu v jeho menu."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Deník údržby"/>
         <text name="rms_ws_label_last_maintenance" text="Poslední údržba"/>
         <text name="rms_ws_task_inspection" text="Prohlídka"/>
-        <text name="rms_ws_task_maintenance" text="Údržba"/>
         <text name="rms_ws_task_overhaul" text="Generální oprava"/>
         <text name="rms_ws_info_no_breakdowns" text="Žádná zjištěná porucha. Prohlídka nebo údržba zjistí ty, které stroj ještě nedává najevo."/>
         <text name="rms_ws_info_warning_unidentified" text="Kontrolka svítí: porucha ke zjištění. Prohlídka nebo údržba ji zjistí, pak ji lze opravit."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Kontrola"/>
         <text name="rms_fleet_location" text="Poloha"/>
         <text name="rms_fleet_next_service" text="Příští údržba"/>
-        <text name="rms_fleet_remaining" text="Zbývá %s h"/>
-        <text name="rms_fleet_overdue" text="Zpoždění %s h"/>
         <text name="rms_fleet_overdue_label" text="Po termínu"/>
         <text name="rms_fleet_overdue_count" text="Po termínu: %d"/>
         <text name="rms_fleet_due_soon_label" text="Brzy"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Vrácená kauce"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nízká hladina kapaliny"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
+        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje je pod značkou na ukazateli. Motorový olej ubývá s hodinami, rychleji u opotřebeného motoru; ostatní kapaliny ubývají jen únikem.&#10;&#10;Stroj ještě pracuje normálně, ale čím nižší je hladina, tím snáz jeho čerpadlo nasává ve svahu vzduch: každá taková minuta poškozuje ložiska nebo čerpadlo. Při nedostatku chladicí kapaliny, převodového nebo hydraulického oleje se okruh také zahřívá.&#10;&#10;Doplň hladinu nádobou kapaliny určené pro tento okruh, koupenou v obchodě: jakákoli jiná kapalina ho znečistí. Doplnit může i prodejce."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Vítejte v Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Vypnout rady"/>
         <text name="rms_tutorial_welcome_enable_button" text="Zapnout rady"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Prokluz kol"/>
         <text name="rms_tutorial_wheel_slip_message" text="Tvá kola silně prokluzují. Prokluz kol je jedním z nejničivějších faktorů pro převodovku a výrazně ti přiblíží příští návštěvu dílny."/>
         <text name="rms_tutorial_service_due_soon_title" text="Blížící se údržba"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s bude brzy potřebovat údržbu. V dílně zvolte doporučený balíček: pokrývá potřebné práce. Rozhoduje první dosažený limit provozních hodin nebo kalendáře, i při malém používání. Snadnost údržby vystihuje náročnost zásahů; běžná údržba je nadále možná v mobilní dílně."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s bude brzy potřebovat údržbu. V dílně zvolte doporučený balíček: pokrývá potřebné práce. Rozhoduje první dosažený limit provozních hodin nebo kalendáře, i při malém používání. Snadnost údržby ukazuje, co váš statek opraví sám; údržba je nadále možná v mobilní dílně."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Interval údržby překročen"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Interval údržby stroje %s je překročen.&#10;&#10;Co nejdříve se vydej do dílny a zvol „Údržba“. Další používání vozidla s opožděnou údržbou výrazně zvyšuje riziko několika poruch."/>
         <text name="rms_tutorial_steering_title" text="Otáčení kol na místě"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Nutná generální oprava"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Stroj %s už ukazuje svůj věk. Je čas zvážit jeho výměnu nebo generální opravu. Je to dlouhý a nákladný úkon, ale jedině tak lze stroji vrátit původní stav.&#10;&#10;Životnost lze nastavit v parametrech modu: čím je vyšší, tím pomaleji se tvá vozidla opotřebovávají."/>
         <text name="rms_tutorial_needs_preventive_title" text="Zvýšené riziko poruchy"/>
-        <text name="rms_tutorial_needs_preventive_message" text="U motoru, palivové soustavy nebo chladicího systému stroje %s je zvýšené riziko poruchy.&#10;&#10;Údržba %s: seřídí ventily a zkontroluje vstřikovače a termostat, čímž toto riziko sníží."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Opotřebené díly stroje %s zvyšují riziko poruchy.&#10;&#10;Údržba %s: seřídí ventily a u sklízecího stroje vymění opotřebené sklízecí díly, což toto riziko snižuje."/>
         <text name="rms_tutorial_age_degradation_title" text="Zhoršování stářím"/>
-        <text name="rms_tutorial_age_degradation_message" text="V RMS vozidla s věkem postupně ztrácejí část své původní výkonnosti.&#10;&#10;Přibližně po první třetině životnosti opotřebení související s věkem mírně snižuje některé důležité vlastnosti, například výkon nebo účinnost brzd. Účinek potom zesiluje a na konci životnosti je jasně patrný.&#10;&#10;Tuto degradaci lze vypnout v parametrech modu."/>
+        <text name="rms_tutorial_age_degradation_message" text="V RMS vozidla s věkem postupně ztrácejí část své původní výkonnosti.&#10;&#10;Přibližně po první třetině životnosti opotřebení související s věkem mírně snižuje některé důležité vlastnosti, například výkon nebo účinnost brzd. Účinek potom zesiluje a na konci životnosti je jasně patrný.&#10;&#10;Nový díl opotřebení odstraní: generální oprava vymění opotřebené díly."/>
         <text name="rms_tutorial_poor_consumables_title" text="Nekvalitní spotřební materiál"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Stroj %s dostal při poslední údržbě vadný filtr. To se stává u levných variant.&#10;&#10;Tento filtr propouští nečistoty: okruh, který chrání, se až do výměny filtru opotřebovává rychleji. Nová údržba ho vymění. Pouze úplná prohlídka ho určí."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Úplná prohlídka našla na stroji %s vadný filtr, namontovaný při údržbě. Stává se to u levnějších kvalit.&#10;&#10;Tento filtr propouští nečistoty: okruh, který chrání, se opotřebovává rychleji, dokud se filtr nevymění. Další údržba ho vymění."/>
         <text name="rms_tutorial_poor_parts_title" text="Nekvalitní díly"/>
-        <text name="rms_tutorial_poor_parts_message" text="Stroj %s dostal při opravě nekvalitní díl. Porucha se pravděpodobně brzy vrátí.&#10;&#10;Můžeš počkat, až se vrátí, nebo zahájit úplnou prohlídku, která spolehlivě určí příslušný díl."/>
+        <text name="rms_tutorial_poor_parts_message" text="Úplná prohlídka našla na stroji %s vadný díl namontovaný v dílně: porouchá se. Stává se to u levnějších kvalit.&#10;&#10;Můžeš ho nechat vyměnit v dílně hned, nebo počkat, až se porouchá."/>
         <text name="rms_tutorial_park_brake_title" text="Parkovací brzda"/>
         <text name="rms_tutorial_park_brake_message" text="Parkovací brzda je zatažená. Sama se zatáhne, jakmile opustíš zastavený stroj, a uvolní se, jakmile znovu přidáš plyn. Zatáhne se také, když vypneš motor, nebo po 45 sekundách stání.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Parkovací brzda je zatažená. Zatahuješ a uvolňuješ ji příslušnou klávesou: pokud přidáš plyn se zataženou brzdou, stroj pracuje proti ní a jeho brzdy se opotřebovávají.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel: pokud stroj opustíš, aniž ji zatáhneš, může se rozjet."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Parkovací brzda je zatažená. Zatahuješ a uvolňuješ ji příslušnou klávesou: pokud přidáš plyn se zataženou brzdou, stroj pracuje proti ní a parkovací brzda se opotřebovává.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel: pokud stroj opustíš, aniž ji zatáhneš, může se rozjet."/>
         <text name="rms_tutorial_preheat_title" text="Předehřev vznětového motoru"/>
         <text name="rms_tutorial_preheat_message" text="U studeného vznětového motoru jedno stisknutí ovladače spuštění zapne zapalování a automaticky zahájí cyklus předehřevu. Kontrolky na palubní desce se krátce rozsvítí a potom zůstane kontrolka předehřevu svítit, dokud není motor připraven. Povel neopakuj: startér se zapne automaticky, jakmile kontrolka zhasne."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapínání vývodového hřídele"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Volnoběh a odstavení"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Opotřebení je mnohem nižší, když stroj běží, ale aktivně nepracuje. Pokud je motor vypnutý, opotřebení je minimální, a pokud je stroj zaparkován pod střechou, mizí úplně."/>
         <text name="rms_tutorial_idle_deposit_title" text="Dlouhý volnoběh"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Stroj zřejmě běžel příliš dlouho na volnoběh. Dlouhá období volnoběhu nejen plýtvají palivem, ale časem také podporují tvorbu usazenin v palivovém systému a zhoršují celkový stav motoru.&#10;&#10;Pokud stroj právě nepotřebuješ, raději motor vypni."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Stroj zřejmě běžel příliš dlouho na volnoběh. Dlouhá období volnoběhu nejen plýtvají palivem, ale časem také podporují tvorbu usazenin v palivovém systému, který se pak rychleji opotřebovává.&#10;&#10;Pokud stroj právě nepotřebuješ, raději motor vypni."/>
         <text name="rms_tutorial_hot_weather_title" text="Horké počasí"/>
         <text name="rms_tutorial_hot_weather_message" text="Dnes je velmi horko. Za tohoto počasí sleduj čistotu chladiče a nepřetěžuj motor, jinak je přehřátí jen otázkou času.&#10;&#10;Stav chladiče můžeš zkontrolovat: při pohledu na stroj podrž klávesu %s. K čištění použij ofukovací pistoli."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Příliš těžký přívěs"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Obtížné startování"/>
         <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
         <text name="rms_tutorial_low_fuel_title" text="Nízká zásoba paliva"/>
-        <text name="rms_tutorial_low_fuel_message" text="Nádrž se blíží k rezervě. Čím méně paliva zbývá, tím více se palivové čerpadlo musí namáhat, aby ho nasálo, a ze dna nádrže se do filtru dostává voda a usazeniny, takže se rychleji zanáší.&#10;&#10;Nejlépe je dotankovat na konci dne: v plné nádrži vzniká méně kondenzátu."/>
+        <text name="rms_tutorial_low_fuel_message" text="Nádrž se blíží k rezervě. Čím méně paliva zbývá, tím více se palivové čerpadlo musí namáhat, aby ho nasálo, a ze dna nádrže se do filtru dostává voda a usazeniny, takže se rychleji zanáší.&#10;&#10;Natankuj co nejdříve."/>
         <text name="rms_tutorial_lugging_title" text="Podtáčení motoru"/>
         <text name="rms_tutorial_lugging_message" text="Motor, a zejména převodovka, trpí při podtáčení, tedy při nízkých otáčkách pod vysokým zatížením. Připojené nářadí je možná pro stroj příliš těžké, nebo je u manuální převodovky zařazen nesprávný rychlostní stupeň."/>
         <text name="rms_tutorial_engine_overheat_title" text="Přehřívání motoru"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Prudký náraz"/>
         <text name="rms_tutorial_terrain_impact_message" text="Podvozek právě dostal prudký náraz. Překážka, která stroj prudce zastaví nebo zbrzdí, okamžitě opotřebí podvozek a přiblíží jeho další poruchu, nejčastěji řízení nebo ložisek.&#10;&#10;Před překážkami zpomal."/>
         <text name="rms_tutorial_cranking_title" text="Časté startování"/>
-        <text name="rms_tutorial_cranking_message" text="Motor je spouštěn příliš často. Při každém spuštění prochází elektrickým systémem velmi vysoký proud, což urychluje opotřebení kabeláže, startéru a dalších elektrických součástí.&#10;&#10;Při krátkých přerušeních motor nevypínej."/>
+        <text name="rms_tutorial_cranking_message" text="Startér se v krátké době hodně natočil. Po překročení několika sekund celkem opotřebovává každé startování startér, baterii a zbytek startovacího okruhu.&#10;&#10;Nevypínej motor kvůli krátkým přestávkám."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritická porucha"/>
-        <text name="rms_tutorial_critical_failure_message" text="Stroj %s se již nemůže pohybovat vlastní silou.&#10;&#10;Mobilní dílna umožňuje provizorní opravu, která stačí k tomu, aby stroj dojel do dílny vlastní silou. Jinak bude nutné zajistit jeho odvoz jiným způsobem."/>
+        <text name="rms_tutorial_critical_failure_message" text="Stroj %s se již nemůže pohybovat vlastní silou.&#10;&#10;Podle poruchy ji mobilní dílna může opravit na místě, alespoň provizorně, natolik, aby stroj dojel do dílny po vlastní ose. Jinak ho bude nutné dopravit jinak."/>
         <text name="rms_tutorial_cold_engine_title" text="Studený motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Před vysokým zatížením motor postupně zahřej. Používej mírný plyn a otáčky, dokud motor nedosáhne provozní teploty."/>
+        <text name="rms_tutorial_cold_engine_message" text="Motor je studený: pod %s se opotřebovává rychleji, jakmile běží, bez ohledu na zatížení, a tím víc, čím je studenější.&#10;&#10;Pod %s také nepřekračuj tři čtvrtiny maximálních otáček: trpí tím chladicí soustava."/>
         <text name="rms_tutorial_cold_oil_title" text="Studený převodový olej"/>
-        <text name="rms_tutorial_cold_oil_message" text="Převodový a hydraulický olej se zahřívají mnohem pomaleji než motor. Dokud jsou oleje studené, vyhni se těžké práci; zahřívej je postupně klidnou jízdou a lehkým používáním hydrauliky."/>
+        <text name="rms_tutorial_cold_oil_message" text="Olej v převodovce je studený: pod %s se převodovka opotřebovává rychleji, jakmile běží motor, bez ohledu na zatížení.&#10;&#10;Pod %s opotřebovává hydraulický olej také čerpadlo, když používáš hydrauliku."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Přehřívání převodovky"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Převodový olej se začíná přehřívat. Příčinou může být příliš vysoké zatížení, zanesený chladič, velmi horké počasí nebo vada chlazení převodovky.&#10;&#10;Převodový olej se zahřívá v každém stroji, nejen v převodovce CVT. Příliš horký olej opotřebovává převodovku a ničí její těsnění."/>
         <text name="rms_tutorial_overload_indicator_title" text="Varování před přetížením"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Namáhání hnacího ústrojí"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Zatáčíš na přilnavém povrchu se zapnutou uzávěrkou diferenciálu. V zatáčce urazí vnitřní a vnější kola různé vzdálenosti, ale uzávěrka je nutí otáčet se stejnou rychlostí: hnací ústrojí se namáhá a jeho opotřebení se zrychluje. Před zatáčením uzávěrku uvolni."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Režimy pohonu a uzávěrka diferenciálu"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Tento stroj ti umožňuje zvolit pohon: 4x2, 4x4 nebo AUTO, který připojí přední nápravu, jakmile kola začnou prokluzovat.&#10;&#10;Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, ale zatáčení na přilnavém povrchu s ní silně namáhá hnací ústrojí: vnitřní a vnější kola se nemohou otáčet stejnou rychlostí. Před zatáčením ji uvolni."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Tento stroj ti umožňuje zvolit pohon: 4x2, 4x4 nebo AUTO. V režimu AUTO zůstává přední náprava při práci připojená: nad %s a v ostrých zatáčkách se odpojí a připojí se znovu, jakmile zabrzdíš.&#10;&#10;Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, a zároveň připojí přední nápravu. V zatáčkách, při brzdění a nad %s se sama uvolní: zapni ji znovu, když ji budeš potřebovat."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Tento stroj ti umožňuje zvolit pohon: 4x2 nebo 4x4.&#10;&#10;Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, ale zatáčení na přilnavém povrchu s ní silně namáhá hnací ústrojí: vnitřní a vnější kola se nemohou otáčet stejnou rychlostí. Před zatáčením ji uvolni."/>
+        <text name="rms_tutorial_diff_lock_title" text="Uzávěrka diferenciálu"/>
+        <text name="rms_tutorial_diff_lock_message" text="Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí. V zatáčkách, při brzdění a nad %s se sama uvolní: zapni ji znovu, když ji budeš potřebovat."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, ale zatáčení na přilnavém povrchu s ní silně namáhá hnací ústrojí: vnitřní a vnější kola se nemohou otáčet stejnou rychlostí. Před zatáčením ji uvolni."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

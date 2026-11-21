@@ -112,6 +112,8 @@ RealisticMechanicalSystems = {
     },
 }
 
+MessageType.RMS_VEHICLE_RESALE_CHANGED = nextMessageTypeId()
+
 RealisticMechanicalSystems.SYSTEMS_ORDER = {
     RealisticMechanicalSystems.SYSTEMS.ENGINE,
     RealisticMechanicalSystems.SYSTEMS.TRANSMISSION,
@@ -421,6 +423,7 @@ function RealisticMechanicalSystems:setRMSUserExcluded(isExcluded, noEventSend)
     end
 
     spec.isExcludedByUser = isWanted
+    spec.networkResaleValue = nil
     refreshExclusionState(spec)
     if not spec.isExcludedVehicle then
         RealisticMechanicalSystems.registerVehicle(self)
@@ -781,6 +784,10 @@ function RealisticMechanicalSystems.markSyncGroupsDirty(vehicle, spec)
     if not canRaiseDirtyFlag(vehicle, spec) then
         return
     end
+    if next(spec.rmsPendingByConnection) == nil then
+        RMS_Thermal.getEngineTemperature(vehicle)
+        return
+    end
     local TUTORIAL = RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA
     for _, entry in ipairs(getSyncGroups()) do
         if entry.group == TUTORIAL then
@@ -998,6 +1005,7 @@ function RealisticMechanicalSystems.registerEventListeners(vehicleType)
     SpecializationUtil.registerEventListener(vehicleType, "onPostUpdate", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onStartMotor", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onStopMotor", RealisticMechanicalSystems)
+    SpecializationUtil.registerEventListener(vehicleType, "onVehiclePhysicsUpdate", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onReadStream", RealisticMechanicalSystems)
     SpecializationUtil.registerEventListener(vehicleType, "onWriteUpdateStream", RealisticMechanicalSystems)
@@ -1991,6 +1999,11 @@ function RealisticMechanicalSystems:onStartMotor()
     end
 end
 
+---Called on each physics update with the pedals
+function RealisticMechanicalSystems:onVehiclePhysicsUpdate(acceleratorPedal, brakePedal, automaticBrake, currentSpeed)
+    RMS_Drivetrain.onVehiclePhysicsUpdate(self, brakePedal, automaticBrake, currentSpeed)
+end
+
 ---Called on stopping the engine, the lights out without current
 function RealisticMechanicalSystems:onStopMotor()
     local spec = self.spec_RealisticMechanicalSystems
@@ -2028,7 +2041,7 @@ end
 RealisticMechanicalSystems.syncPropertyState = syncPropertyState
 
 ---Runs the vehicle simulation step: state, wear, thermal, electrical, services
-function RealisticMechanicalSystems:rmsUpdate(dt, isWorkshopOpen)
+function RealisticMechanicalSystems:rmsUpdate(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if spec.isExcludedVehicle then return end
     syncPropertyState(self, spec)
@@ -2096,7 +2109,7 @@ function RealisticMechanicalSystems.updateDamageAmount(wearable, superFunc, dt)
     return superFunc(wearable, dt)
 end
 
----Flags the resale quote dirty when either payment changes
+---Flags the resale quote dirty on a payment change
 function RealisticMechanicalSystems.updateResalePrice(self)
     local spec = self.spec_RealisticMechanicalSystems
     if not canRaiseDirtyFlag(self, spec) or spec.isExcludedVehicle then
@@ -2104,6 +2117,7 @@ function RealisticMechanicalSystems.updateResalePrice(self)
     end
 
     local value = RMS_Utils.getMarketValue(self)
+    spec.networkResaleValue = value
     local price = self:getPrice()
     local menuValue = math.min(math.floor(value), price)
     local dealerValue = math.min(math.floor(value * EconomyManager.DIRECT_SELL_MULTIPLIER), price)
@@ -2111,6 +2125,7 @@ function RealisticMechanicalSystems.updateResalePrice(self)
         spec._lastSyncResale_menu = menuValue
         spec._lastSyncResale_dealer = dealerValue
         RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.RESALE)
+        g_messageCenter:publish(MessageType.RMS_VEHICLE_RESALE_CHANGED, self)
     end
 end
 

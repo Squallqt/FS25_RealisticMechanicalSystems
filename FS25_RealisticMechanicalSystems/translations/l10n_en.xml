@@ -1,7 +1,7 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Veh."/>
+        <text name="rms_hud_mass_tractor" text="Vehicle"/>
         <text name="rms_hud_mass_towed" text="Attached"/>
         <text name="rms_hud_mass_total" text="Total"/>
         <text name="rms_hud_fuel_average" text="Avg."/>
@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (front axle disengaged)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (front axle engaged)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Reset tutorial tip history and show all tips again?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD and Differential Lock Management"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Sets whether the front axle and differential locks of tractors are controlled by hand. This option replaces the differential control of Enhanced Vehicle: to hand it back, turn this option off, then turn the differentials back on in its menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Allow AUTO Drive Mode"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Sets whether the drive mode switch offers the AUTO position, which engages the front axle when the wheels slip or when working under load, and disengages it on the road. When turned off, vehicles left in AUTO fall back to 4WD."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="This setting requires 4WD and differential lock management to be enabled."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parking Brake"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Sets whether RMS vehicles have a parking brake: automatic on recent machines with a CVT or Powershift transmission, on its own key binding on the others. This option replaces the parking brake of Enhanced Vehicle: to hand it back, turn this option off, then turn its parking brake back on in its menu."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_maintenance" text="Last Maintenance"/>
         <text name="rms_ws_task_inspection" text="Inspection"/>
-        <text name="rms_ws_task_maintenance" text="Maintenance"/>
         <text name="rms_ws_task_overhaul" text="Overhaul"/>
         <text name="rms_ws_info_no_breakdowns" text="No identified breakdown. An inspection or a service identifies those the machine does not show yet."/>
         <text name="rms_ws_info_warning_unidentified" text="Warning light on: breakdown to identify. An inspection or a service identifies it, then it can be repaired."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Inspection"/>
         <text name="rms_fleet_location" text="Location"/>
         <text name="rms_fleet_next_service" text="Next maintenance"/>
-        <text name="rms_fleet_remaining" text="%s h remaining"/>
-        <text name="rms_fleet_overdue" text="%s h overdue"/>
         <text name="rms_fleet_overdue_label" text="Overdue"/>
         <text name="rms_fleet_overdue_count" text="Overdue: %d"/>
         <text name="rms_fleet_due_soon_label" text="Due soon"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Deposit Refund"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Low Fluid Level"/>
-        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
+        <text name="rms_tutorial_fluid_level_message" text="One of this machine's fluids is below the mark on its gauge. Engine oil goes down with the hours, faster on a worn engine; the other fluids only drop through a leak.&#10;&#10;The machine still works normally, but the lower the level, the more easily its pump draws air on a slope: every minute of it damages the bearings or the pump. Short of coolant, transmission oil or hydraulic oil, its circuit also runs hot.&#10;&#10;Top up with a container of the fluid meant for that circuit, bought in the shop: any other fluid contaminates it. The dealer can also top it up."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Welcome to Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Disable tips"/>
         <text name="rms_tutorial_welcome_enable_button" text="Enable tips"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Wheel Slip"/>
         <text name="rms_tutorial_wheel_slip_message" text="Your wheels are slipping badly. Slip is one of the most destructive factors for the transmission and brings your next workshop visit much closer."/>
         <text name="rms_tutorial_service_due_soon_title" text="Maintenance Due Soon"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s will soon need maintenance. Select the recommended package at the workshop: it covers the work due. Operating hours or calendar time trigger service, whichever comes first, even with little use. Ease of maintenance summarizes intervention complexity; routine servicing remains possible at a mobile workshop."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s will soon need maintenance. Select the recommended package at the workshop: it covers the work due. Operating hours or calendar time trigger service, whichever comes first, even with little use. Ease of maintenance shows what your farm repairs on its own; servicing remains possible at a mobile workshop."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Maintenance Interval Expired"/>
         <text name="rms_tutorial_service_interval_expired_message" text="The maintenance interval of %s has expired.&#10;&#10;Head to a workshop as soon as possible and select &quot;Maintenance&quot;. Continuing to operate a vehicle with overdue maintenance greatly increases the risk of multiple breakdowns."/>
         <text name="rms_tutorial_steering_title" text="Steering While Stationary"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaul Required"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Your %s is showing its age. It is time to consider a replacement or an overhaul. It is a long and expensive operation, but it is the only way to return the machine to its original condition.&#10;&#10;Vehicle lifespan is set in the mod settings: the higher it is, the slower your vehicles wear."/>
         <text name="rms_tutorial_needs_preventive_title" text="Elevated Breakdown Risk"/>
-        <text name="rms_tutorial_needs_preventive_message" text="The engine, fuel system or cooling system of %s has an increased risk of failure.&#10;&#10;%s service: adjusts the valves and checks the injectors and the thermostat, which lowers that risk."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Worn parts on your %s are raising its risk of breakdown.&#10;&#10;%s service: it adjusts the valves and, on a harvester, replaces its worn harvesting parts, which lowers that risk."/>
         <text name="rms_tutorial_age_degradation_title" text="Age Degradation"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;This degradation can be disabled in the mod settings."/>
+        <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;A new part takes its wear away: an overhaul replaces the worn parts."/>
         <text name="rms_tutorial_poor_consumables_title" text="Poor-Quality Consumables"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Your %s received a defective filter at its last maintenance. This happens with the cheaper grades.&#10;&#10;The filter lets dirt through: the circuit it protects wears faster until the filter is changed. New maintenance changes it. Only a complete inspection identifies it."/>
+        <text name="rms_tutorial_poor_consumables_message" text="The complete inspection found a defective filter on your %s, fitted during a service. It happens with the cheaper qualities.&#10;&#10;This filter lets dirt through: the circuit it protects wears faster until the filter is changed. Another maintenance replaces it."/>
         <text name="rms_tutorial_poor_parts_title" text="Poor-Quality Parts"/>
-        <text name="rms_tutorial_poor_parts_message" text="Your %s received a poor-quality part during a repair. The breakdown will most likely return soon.&#10;&#10;You can wait for it to come back, or run a complete inspection, which identifies the faulty part reliably."/>
+        <text name="rms_tutorial_poor_parts_message" text="The complete inspection found a defective part fitted by the workshop on your %s: it will fail. It happens with the cheaper qualities.&#10;&#10;You can have it replaced at the workshop now, or wait for it to fail."/>
         <text name="rms_tutorial_park_brake_title" text="Parking Brake"/>
         <text name="rms_tutorial_park_brake_message" text="The parking brake is engaged. It engages by itself once you leave the machine at a standstill, and it releases as soon as you press the throttle again. It also engages when you stop the engine, or after 45 seconds at a standstill.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="The parking brake is engaged. You engage and release it yourself with its own key: press the throttle with the brake engaged and the machine strains against it, wearing out its brakes.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own: leave the machine without engaging it, and it may roll away."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="The parking brake is engaged. You engage and release it yourself with its own key: press the throttle with the brake engaged and the machine strains against it, wearing out the parking brake.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own: leave the machine without engaging it, and it may roll away."/>
         <text name="rms_tutorial_preheat_title" text="Diesel Preheating"/>
         <text name="rms_tutorial_preheat_message" text="On a cold diesel engine, one press of the start control switches on the ignition and begins the automatic glow-plug cycle. The dashboard lamps light up briefly, then the preheat lamp remains on until the engine is ready. Do not repeat the command: the starter engages automatically when the lamp goes out."/>
         <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Idling and Downtime"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Wear is much lower when the machine is running without working. With the engine off it becomes minimal. Under cover, it disappears entirely."/>
         <text name="rms_tutorial_idle_deposit_title" text="Extended Idling"/>
-        <text name="rms_tutorial_idle_deposit_message" text="The machine has been idling for too long. Long idle periods do not just waste fuel: over time they also encourage deposits in the fuel system and harm the general condition of the engine.&#10;&#10;If the machine is not needed right now, it is better to shut the engine down."/>
+        <text name="rms_tutorial_idle_deposit_message" text="The machine has been idling for too long. Long idle periods do not just waste fuel: over time they also encourage deposits in the fuel system, which then wears faster.&#10;&#10;If the machine is not needed right now, it is better to shut the engine down."/>
         <text name="rms_tutorial_hot_weather_title" text="Hot Weather"/>
         <text name="rms_tutorial_hot_weather_message" text="It is very hot today. In this weather, watch the radiator cleanliness and avoid overloading the engine, or overheating is only a matter of time.&#10;&#10;You can check the radiator condition: hold the %s key while looking at the machine. Cleaning is done with the Air Blower."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Heavy Trailer"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Hard Start"/>
         <text name="rms_tutorial_hard_start_message" text="The engine of your %s is hard to start. A weak battery, frost, a mechanical breakdown or starter wear can be the cause.&#10;&#10;The electrical system takes heavy loads during starting, because of the high inrush currents."/>
         <text name="rms_tutorial_low_fuel_title" text="Low Fuel"/>
-        <text name="rms_tutorial_low_fuel_message" text="The tank is nearing reserve. The less fuel is left, the harder the fuel pump has to work to draw it, and the bottom of the tank sends its water and sediment to the filter, which clogs faster.&#10;&#10;Better to fill up at the end of the day: a full tank gathers less condensation."/>
+        <text name="rms_tutorial_low_fuel_message" text="The tank is nearing reserve. The less fuel is left, the harder the fuel pump has to work to draw it, and the bottom of the tank sends its water and sediment to the filter, which clogs faster.&#10;&#10;Refuel without waiting."/>
         <text name="rms_tutorial_lugging_title" text="Engine Lugging"/>
         <text name="rms_tutorial_lugging_message" text="The engine, and especially the transmission, do not like lugging: low engine speed under heavy load. The attached implement may be too heavy for the machine, or the selected gear is not the right one if the gearbox is manual."/>
         <text name="rms_tutorial_engine_overheat_title" text="Engine Overheating"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Hard Impact"/>
         <text name="rms_tutorial_terrain_impact_message" text="The running gear has just taken a hard impact. Hitting an obstacle that stops the machine dead or slows it sharply wears the chassis on the spot and brings its next breakdown closer, most often in the steering or the wheel bearings.&#10;&#10;Slow down before obstacles."/>
         <text name="rms_tutorial_cranking_title" text="Frequent Starting"/>
-        <text name="rms_tutorial_cranking_message" text="The engine is being started too often. Every start sends a very high current through the electrical system, which accelerates wear on the wiring, the starter and the other electrical components.&#10;&#10;Avoid shutting the engine down for short breaks."/>
+        <text name="rms_tutorial_cranking_message" text="The starter has turned a lot in a short time. Beyond a few seconds in total, every start wears the starter, the battery and the rest of the starting circuit.&#10;&#10;Avoid shutting the engine down for short breaks."/>
         <text name="rms_tutorial_critical_failure_title" text="Critical Failure"/>
-        <text name="rms_tutorial_critical_failure_message" text="Your %s can no longer move under its own power.&#10;&#10;A mobile workshop allows a temporary repair, enough for the machine to reach the workshop on its own. Otherwise, you will have to have it recovered another way."/>
+        <text name="rms_tutorial_critical_failure_message" text="Your %s can no longer move under its own power.&#10;&#10;Depending on the fault, a mobile workshop can repair it on the spot, at least temporarily, enough for the machine to reach the workshop on its own. Otherwise it will have to be brought there another way."/>
         <text name="rms_tutorial_cold_engine_title" text="Cold Engine"/>
-        <text name="rms_tutorial_cold_engine_message" text="Warm the engine gently before applying high load. Use moderate throttle and engine speed until it reaches operating temperature."/>
+        <text name="rms_tutorial_cold_engine_message" text="The engine is cold: below %s it wears faster whenever it runs, whatever the load, and the colder it is, the more it wears.&#10;&#10;Below %s, also keep the revs under three quarters of their maximum: higher revs strain the cooling system."/>
         <text name="rms_tutorial_cold_oil_title" text="Cold Transmission Oil"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmission and hydraulic oil warms much more slowly than the engine. Avoid heavy work while the oil is cold; warm it gradually with light driving and light hydraulic use."/>
+        <text name="rms_tutorial_cold_oil_message" text="The gearbox oil is cold: below %s the gearbox wears faster whenever the engine runs, whatever the load.&#10;&#10;Below %s, the hydraulic oil also wears the pump when you use the hydraulics."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Transmission Overheating"/>
         <text name="rms_tutorial_transmission_overheat_message" text="The transmission oil is starting to overheat. It can come from too much load, a clogged radiator, very hot weather, or a fault in the transmission cooling.&#10;&#10;Transmission oil heats up on every machine, not only on a CVT. Oil that runs too hot wears the gearbox and destroys its seals."/>
         <text name="rms_tutorial_overload_indicator_title" text="Overload Warning"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Drivetrain Wind-Up"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="You are turning on a high-grip surface with the differential lock engaged. Inside and outside wheels travel different distances in a curve, but the differential lock forces them to rotate at the same speed: the drivetrain winds up and transmission wear increases. Release the differential lock before turning."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Drivetrain Modes and Differential Lock"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="This machine lets you choose its drivetrain: 2WD, 4WD or AUTO, which engages the front axle as soon as the wheels slip.&#10;&#10;The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="This machine lets you choose its drivetrain: 2WD, 4WD or AUTO. In AUTO, the front axle stays engaged while you work: it disengages above %s and in tight turns, and engages again as soon as you brake.&#10;&#10;The differential lock finds grip where there is none left and engages the front axle with it. It releases by itself in turns, when you brake and above %s: engage it again when you need it."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="This machine lets you choose its drivetrain: 2WD or 4WD.&#10;&#10;The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
+        <text name="rms_tutorial_diff_lock_title" text="Differential Lock"/>
+        <text name="rms_tutorial_diff_lock_message" text="The differential lock finds grip where there is none left. It releases by itself in turns, when you brake and above %s: engage it again when you need it."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

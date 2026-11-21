@@ -47,10 +47,8 @@ local COVER_TEXTS = {
 }
 local FLAT_RATE_NAMED = { [STATUS.BODYWORK] = true, [STATUS.REMAP] = true }
 -- the slider lane stays kept: rows never change width
-local QUOTE_WIDTH, QUOTE_HEIGHT, QUOTE_LIST, QUOTE_ROW_WIDTH = 372, 202, 166, 334
+local QUOTE_WIDTH, QUOTE_LIST, QUOTE_ROW_WIDTH = 372, 166, 334
 -- $preset_colorDisabled and $preset_fs25_colorMainDark
-local COLOR_DISABLED = { 0.3, 0.3, 0.3, 1 }
-local COLOR_MAIN_DARK = { 0.00439, 0.00478, 0.00368, 1 }
 
 -- remap chart, in reference pixels of its area
 local CHART_WIDTH, CHART_HEIGHT = 647, 278
@@ -197,7 +195,7 @@ end
 function RMS_WorkshopInterventionsFrame:initialize(dialog)
     RMS_WorkshopInterventionsFrame:superClass().initialize(self, dialog)
     self.unitX, self.unitY = self.optionTable.size[1] / TABLE_WIDTH, self.optionTable.size[2] / TABLE_HEIGHT
-    self.quoteUnitX, self.quoteUnitY = self.quoteBlock.size[1] / QUOTE_WIDTH, self.quoteBlock.size[2] / QUOTE_HEIGHT
+    self.quoteUnitX = self.quoteBlock.size[1] / QUOTE_WIDTH
     self.restriction:setTextColor(unpack(RMS_Utils.COLOR.ALERT))
 
     self.tableRows = cloneTemplate(self.rowTemplate, MAX_ROWS)
@@ -369,8 +367,8 @@ function RMS_WorkshopInterventionsFrame:updateActions()
         button:applyProfile("rms_workshopActionChoice" .. suffix, true)
         button:getDescendantByName("background"):applyProfile("rms_workshopActionBg" .. suffix, true)
         local icon = button:getDescendantByName("icon")
-        icon:setImageColor(nil, unpack(isRefused and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
-        icon:setImageColor(GuiOverlay.STATE_SELECTED, unpack(isRefused and COLOR_DISABLED or COLOR_MAIN_DARK))
+        icon:setImageColor(nil, unpack(isRefused and RMS_Utils.COLOR.DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
+        icon:setImageColor(GuiOverlay.STATE_SELECTED, unpack(isRefused and RMS_Utils.COLOR.DISABLED or RMS_Utils.COLOR.MAIN_DARK))
         button:setDisabled(not self.state.isOpen or self.state.isUnderService)
         button:setSelected(not self.state.isUnderService and (self.serviceType == serviceType or self.refusedService == serviceType))
         RMS_Utils.centerActionContent(button)
@@ -394,7 +392,7 @@ function RMS_WorkshopInterventionsFrame:updateReady()
         text = string.format(g_i18n:getText("rms_ws_status_closed_hint"), RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.OPEN_HOUR),
             RMS_Utils.formatFinishTime(RMS_Config.WORKSHOP.CLOSE_HOUR))
     end
-    self.readyIcon:setImageColor(nil, unpack((isRefusedHere or isClosed) and COLOR_DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
+    self.readyIcon:setImageColor(nil, unpack((isRefusedHere or isClosed) and RMS_Utils.COLOR.DISABLED or RMS_Utils.COLOR.HIGHLIGHT))
     self.readyTitle:setText(g_i18n:getText(titleKeys[self.refusedService] or isClosed and "rms_ws_status_closed" or "rms_ws_status_ready_title"))
     self.readyHint:setText(text or g_i18n:getText("rms_ws_status_ready_hint"))
     self.readyHint:setTextColor(unpack(isWarning and RMS_Breakdowns.COLORS.WARNING or self.readyHintColor))
@@ -1215,7 +1213,7 @@ function RMS_WorkshopInterventionsFrame:onDrawRemapChart()
     drawAxisText(px(PLOT_RIGHT), labelY, textSize, g_i18n:getText("unit_rpmShort"), RMS_Utils.COLOR.TEXT, true, RenderText.ALIGN_RIGHT)
 
     local pillSize = 13 * unitY
-    drawPill(peakX, peakRemap + 22 * unitY, formatPower(offer.remapHp), pillSize, RMS_Utils.COLOR.HIGHLIGHT, COLOR_MAIN_DARK)
+    drawPill(peakX, peakRemap + 22 * unitY, formatPower(offer.remapHp), pillSize, RMS_Utils.COLOR.HIGHLIGHT, RMS_Utils.COLOR.MAIN_DARK)
     drawPill(peakX, peakStock + 20 * unitY, formatPower(offer.stockHp), pillSize, CHART_PILL_STOCK, RMS_Utils.COLOR.TEXT)
 
     setTextBold(false)

@@ -46,8 +46,6 @@ local SETTINGS = {
     { row = "rmsWorkshopCloseHour", key = "closeHour", group = "WORKSHOP", field = "CLOSE_HOUR", hours = CLOCK_HOURS,
         isNeeded = hasWorkshopHours, lockReason = "rms_workshopHours_locked" },
     { row = "rmsDrivetrainEnabled", key = "drivetrainEnabled", group = "DRIVETRAIN", field = "ENABLED" },
-    { row = "rmsDrivetrainAllowAutoMode", key = "drivetrainAllowAutoMode", group = "DRIVETRAIN", field = "ALLOW_AUTO_MODE",
-        isNeeded = function(values) return values.drivetrainEnabled end, lockReason = "rms_drivetrainAllowAutoMode_locked" },
     { row = "rmsDrivetrainParkBrakeEnabled", key = "drivetrainParkBrakeEnabled", group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED" }
 }
 

@@ -257,6 +257,28 @@ local function text(x, y, size, value, bold, color, alignment, width)
     renderText(x, y, width ~= nil and RMS_FluidHandTool.fitTextSize(value, size, width) or size, value)
 end
 
+---Returns a height of the panel in screen units
+local function scaledY(hud, pixels)
+    return hud:scalePixelToScreenHeight(pixels)
+end
+
+---Returns the height of a row of the panel
+-- @param float y foot of the panel
+local function rowY(hud, y, pixels)
+    return y + hud:scalePixelToScreenHeight(pixels)
+end
+
+local STATUS_TEXTS = { done = "rms_grease_hud_done", due = "rms_inspection_status_grease_due", late = "rms_inspection_status_grease_late" }
+local lateRest = { 0, 0, 0, 0.35 }
+
+---Returns the colour of a greasing status
+local function getStatusColor(state)
+    if state == "done" then
+        return HUD.COLOR.ACTIVE
+    end
+    return state == "due" and RMS_Breakdowns.COLORS.WARNING or RMS_Breakdowns.COLORS.CRITICAL
+end
+
 ---Draws the cartridge as a tube, filled by the grease left
 local function drawCartridge(hud, x, y, width, height, share)
     local inset = hud:scalePixelToScreenWidth(3)
@@ -301,15 +323,15 @@ local function drawGunPanel(handTool, hud)
     local spec = handTool[specName]
     local x, y, width, padding = drawFrame(hud, RMS_GreaseGun.HUD_GUN_HEIGHT)
     local right, textX = x + width - padding, x + padding + hud:scalePixelToScreenWidth(56)
-    local function rowY(pixels) return y + hud:scalePixelToScreenHeight(pixels) end
-    local function size(pixels) return hud:scalePixelToScreenHeight(pixels) end
-    local leftWidth = drawGreaseLeft(spec, right, rowY(54), size(22), size(18))
+    local leftWidth = drawGreaseLeft(spec, right, rowY(hud, y, 54), scaledY(hud, 22), scaledY(hud, 18))
     local room = right - leftWidth - hud:scalePixelToScreenWidth(12) - textX
-    text(textX, rowY(54), size(20), g_i18n:getText("rms_grease_cartridge_typedesc"), true, WHITE, nil, room)
+    text(textX, rowY(hud, y, 54), scaledY(hud, 20), g_i18n:getText("rms_grease_cartridge_typedesc"), true, WHITE, nil, room)
     if spec.greaseMl < RMS_GreaseGun.getPointMl() then
-        text(textX, rowY(29), size(15), g_i18n:getText("rms_grease_gun_empty"), true, RMS_Breakdowns.COLORS.CRITICAL, nil, right - textX)
+        text(textX, rowY(hud, y, 29), scaledY(hud, 15), g_i18n:getText("rms_grease_gun_empty"), true, RMS_Breakdowns.COLORS.CRITICAL, nil,
+            right - textX)
     else
-        drawCartridge(hud, textX, rowY(22), hud:scalePixelToScreenWidth(300), size(12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
+        drawCartridge(hud, textX, rowY(hud, y, 22), hud:scalePixelToScreenWidth(300), scaledY(hud, 12),
+            spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
     end
 end
 
@@ -322,46 +344,47 @@ local function drawMachinePanel(handTool, hud)
     local x, y, width, padding = drawFrame(hud, RMS_GreaseGun.HUD_MACHINE_HEIGHT)
     local right, textX = x + width - padding, x + padding + hud:scalePixelToScreenWidth(56)
     local gap = hud:scalePixelToScreenWidth(12)
-    local function rowY(pixels) return y + hud:scalePixelToScreenHeight(pixels) end
-    local function size(pixels) return hud:scalePixelToScreenHeight(pixels) end
-    local status = ({ done = { "rms_grease_hud_done", HUD.COLOR.ACTIVE }, due = { "rms_inspection_status_grease_due", RMS_Breakdowns.COLORS.WARNING },
-        late = { "rms_inspection_status_grease_late", RMS_Breakdowns.COLORS.CRITICAL } })[state]
 
     local totalText = string.format(" / %d", total)
     setTextBold(false)
-    local totalWidth = getTextWidth(size(18), totalText)
-    text(right, rowY(142), size(18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
+    local totalWidth = getTextWidth(scaledY(hud, 18), totalText)
+    text(right, rowY(hud, y, 142), scaledY(hud, 18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
     setTextBold(true)
-    local countWidth = totalWidth + getTextWidth(size(30), tostring(done))
-    text(right - totalWidth, rowY(144), size(30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
+    local countWidth = totalWidth + getTextWidth(scaledY(hud, 30), tostring(done))
+    text(right - totalWidth, rowY(hud, y, 144), scaledY(hud, 30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
     local greasedText = utf8ToUpper(g_i18n:getText("rms_grease_hud_greased"))
     setTextBold(true)
-    local greasedWidth = getTextWidth(size(15), greasedText)
-    text(right, rowY(117), size(15), greasedText, true, GREY, RenderText.ALIGN_RIGHT)
-    text(textX, rowY(144), size(22), g_i18n:getText("rms_grease_hud_title"), true, WHITE, nil, right - countWidth - gap - textX)
-    text(textX, rowY(119), size(16), vehicle:getFullName(), false, GREY, nil, right - greasedWidth - gap - textX)
+    local greasedWidth = getTextWidth(scaledY(hud, 15), greasedText)
+    text(right, rowY(hud, y, 117), scaledY(hud, 15), greasedText, true, GREY, RenderText.ALIGN_RIGHT)
+    text(textX, rowY(hud, y, 144), scaledY(hud, 22), g_i18n:getText("rms_grease_hud_title"), true, WHITE, nil, right - countWidth - gap - textX)
+    text(textX, rowY(hud, y, 119), scaledY(hud, 16), vehicle:getFullName(), false, GREY, nil, right - greasedWidth - gap - textX)
 
-    local barX, barWidth, barY, barHeight = x + padding, width - padding * 2, rowY(78), size(16)
+    local barX, barWidth, barY, barHeight = x + padding, width - padding * 2, rowY(hud, y, 78), scaledY(hud, 16)
     local segmentGap = hud:scalePixelToScreenWidth(RMS_Utils.getSegmentGap(total, 4))
     local critical = RMS_Breakdowns.COLORS.CRITICAL
-    local rest = state == "late" and { critical[1], critical[2], critical[3], 0.35 } or TRACK
+    local rest = TRACK
+    if state == "late" then
+        lateRest[1], lateRest[2], lateRest[3] = critical[1], critical[2], critical[3]
+        rest = lateRest
+    end
     local nextX, nextY, nextWidth, nextHeight = RMS_Utils.drawSegments(barX, barY, barWidth, barHeight, total, done,
         HUD.COLOR.ACTIVE, rest, segmentGap)
     if nextX ~= nil then
         outline(hud, nextX, nextY, nextWidth, nextHeight, state == "late" and critical or WHITE)
     end
-    local statusText = utf8ToUpper(g_i18n:getText(status[1]))
+    local statusText = utf8ToUpper(g_i18n:getText(STATUS_TEXTS[state]))
     setTextBold(true)
-    local statusWidth = getTextWidth(size(14), statusText)
-    text(barX + barWidth, rowY(63), size(14), statusText, true, status[2], RenderText.ALIGN_RIGHT)
-    text(barX, rowY(63), size(14), string.format(g_i18n:getText("rms_grease_gun_points"), due), true, GREY, nil, barWidth - statusWidth - gap)
-    fill(barX, rowY(47), barWidth, size(1), WHITE, 0.16)
+    local statusWidth = getTextWidth(scaledY(hud, 14), statusText)
+    text(barX + barWidth, rowY(hud, y, 63), scaledY(hud, 14), statusText, true, getStatusColor(state), RenderText.ALIGN_RIGHT)
+    text(barX, rowY(hud, y, 63), scaledY(hud, 14), string.format(g_i18n:getText("rms_grease_gun_points"), due), true, GREY, nil,
+        barWidth - statusWidth - gap)
+    fill(barX, rowY(hud, y, 47), barWidth, scaledY(hud, 1), WHITE, 0.16)
 
-    local leftWidth = drawGreaseLeft(spec, right, rowY(31), size(16), size(16))
+    local leftWidth = drawGreaseLeft(spec, right, rowY(hud, y, 31), scaledY(hud, 16), scaledY(hud, 16))
     local gaugeWidth = hud:scalePixelToScreenWidth(150)
     local gaugeX = right - leftWidth - gap - gaugeWidth
-    drawCartridge(hud, gaugeX, rowY(25), gaugeWidth, size(12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
-    text(barX, rowY(31), size(16), g_i18n:getText("rms_grease_cartridge_typedesc"), false, GREY, nil, gaugeX - gap - barX)
+    drawCartridge(hud, gaugeX, rowY(hud, y, 25), gaugeWidth, scaledY(hud, 12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
+    text(barX, rowY(hud, y, 31), scaledY(hud, 16), g_i18n:getText("rms_grease_cartridge_typedesc"), false, GREY, nil, gaugeX - gap - barX)
 end
 
 ---Shows the cartridge in hand, and the greasing of the machine aimed at

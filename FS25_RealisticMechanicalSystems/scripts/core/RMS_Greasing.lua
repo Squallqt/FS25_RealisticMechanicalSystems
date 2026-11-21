@@ -143,6 +143,138 @@ local function getRakeBuild(vehicle)
     return rotors > 0 and "rotors" or "wheels", rotors
 end
 
+local PTO_RATINGS = {
+    TEDDERS = 540, LOADERWAGONS = 540, STRAWBLOWERS = 540, FORESTRYWINCHES = 540,
+    VEGETABLEHARVESTERS = 540, ONIONPLANTING = 540, BALELOADERS = 540, GRAPETOOLS = 540, WINTEREQUIPMENT = 540,
+    FORAGEMIXERS = 540, SLURRYTANKS = 540,
+    FORAGEHARVESTERS = 1000, POWERHARROWS = 1000, SPADERS = 1000, VEGETABLEPLANTERS = 1000,
+    SEEDERS = 1000, PLANTERS = 1000, MANURESPREADERS = 1000, FORESTRYMULCHERS = 1000,
+    FORESTRYSTUMPCUTTERS = 1000, WOODCHIPPERS = 1000, BEETHARVESTERS = 1000, BEETHARVESTERCUTTERS = 1000,
+    SLURRYTOOLS = 1000, SLURRYTRANSPORT = 1000, POTATOHARVESTING = 1000
+}
+local ptoRatings = setmetatable({}, { __mode = "k" })
+
+---Tells whether the implement produces pellets
+local function getIsPelletHarvester(vehicle)
+    for _, unit in ipairs(vehicle.spec_fillUnit ~= nil and vehicle.spec_fillUnit.fillUnits or {}) do
+        if unit.supportedFillTypes[FillType.STRAW_PELLETS] and unit.supportedFillTypes[FillType.HAY_PELLETS] then
+            return true
+        end
+    end
+    return false
+end
+
+---Tells whether the implement cuts beet at discharge
+local function getIsBeetChopper(vehicle)
+    for _, node in ipairs(vehicle.spec_dischargeable.dischargeNodes or {}) do
+        if node.fillTypeConverter ~= nil and node.fillTypeConverter[FillType.SUGARBEET] ~= nil then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns the rating and the implement family
+local function resolvePtoRating(vehicle)
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    if vehicle.spec_baler ~= nil then
+        if vehicle.spec_baleWrapper ~= nil or vehicle.typeName == "cuttingBaler" then
+            return 1000, vehicle.spec_baleWrapper ~= nil and "balerWrapper" or "cuttingBaler"
+        end
+        local baleTypes = vehicle.spec_baler.baleTypes or {}
+        if baleTypes[1] == nil then
+            return nil, "baler"
+        end
+        if not baleTypes[1].isRoundBale then
+            return getIsSmallBaler(vehicle) and 540 or 1000, "squareBaler"
+        end
+        return 540, "roundBaler"
+    end
+    local categories = storeItem ~= nil and storeItem.categoryNames or {}
+    for _, name in ipairs(categories) do
+        local category = string.upper(name)
+        if category == "AUGERWAGONS" then
+            if vehicle.spec_forageWagon ~= nil and vehicle.spec_pickup ~= nil then
+                return 540, "forageOverloader"
+            end
+            if RMS_Utils.hasPtoOutputCapability(vehicle) then
+                return 540, "grainBagging"
+            end
+            for _, unit in ipairs(vehicle.spec_fillUnit ~= nil and vehicle.spec_fillUnit.fillUnits or {}) do
+                local types = unit.supportedFillTypes
+                if types[FillType.POTATO] and not types[FillType.WHEAT] then
+                    return nil, "rootCropOverloader"
+                end
+            end
+            return 1000, "augerWagon"
+        elseif category == "MOWERS" then
+            local width = getWorkingWidth(vehicle)
+            if getChassisWheels(vehicle) > 0 then
+                return width > 0 and (width >= 5 and 1000 or 540) or nil, "trailedMower"
+            end
+            return width > 0 and (width >= 5 and 1000 or 540) or nil, "mountedMower"
+        elseif category == "WINDROWERS" then
+            local build = getRakeBuild(vehicle)
+            if build == "belts" then
+                return 1000, build
+            end
+            if build == "rotors" or build == "wheels" then
+                return 540, build
+            end
+            return nil, "unclassifiedRake"
+        elseif category == "FERTILIZERSPREADERS" then
+            return getChassisWheels(vehicle) == 0 and 540 or 1000, category
+        elseif category == "SPRAYERS" then
+            return 540, category
+        elseif category == "MULCHERS" then
+            if getChassisWheels(vehicle) > 0 then
+                return 1000, category
+            end
+            return 540, "mountedMulcher"
+        elseif category == "BIGBAGS" then
+            return nil, "grainBag"
+        elseif category == "ONIONHARVESTING" then
+            if vehicle.typeName == "attachableDropHarvester" then
+                return 1000, "onionTopper"
+            elseif vehicle.spec_combine ~= nil and vehicle.spec_fruitPreparer ~= nil then
+                return 1000, "rowCropHarvester"
+            elseif vehicle.typeName == "tedderExtended" then
+                return 540, "onionLifter"
+            end
+        elseif category == "BELTS" and vehicle.typeName == "conveyorBeltUnpowered" then
+            return 540, "auger"
+        elseif category == "BALINGMISC" and getIsPelletHarvester(vehicle) then
+            return 1000, "pelletHarvester"
+        elseif (category == "TRAILERS" or category == "TRAILERSCHANGINGSYSTEM") and vehicle.spec_dischargeable ~= nil then
+            if getIsBeetChopper(vehicle) then
+                return nil, "beetChopper"
+            end
+            return 1000, category
+        elseif PTO_RATINGS[category] ~= nil then
+            return PTO_RATINGS[category], category
+        end
+    end
+    local consumer = vehicle.spec_powerConsumer
+    if RMS_Utils.hasPtoOutputCapability(vehicle) and (consumer == nil or consumer.ptoRpm == 0) then
+        return nil, "ptoPassThrough"
+    end
+    return nil, categories[1] or "unclassified"
+end
+
+---Returns the cached rating for each hitch
+function RMS_Greasing.getImplementPtoRating(vehicle, isFront)
+    local rating = ptoRatings[vehicle]
+    if rating == nil then
+        local rpm, family = resolvePtoRating(vehicle)
+        rating = { rpm = rpm, family = family }
+        ptoRatings[vehicle] = rating
+    end
+    if isFront and (rating.family == "mountedMower" or rating.family == "mountedMulcher") then
+        return 1000, rating.family
+    end
+    return rating.rpm, rating.family
+end
+
 ---Returns the family a category entry gives the implement
 local function resolveFamily(vehicle, entry)
     if type(entry) ~= "table" then
@@ -292,7 +424,8 @@ function RMS_Greasing.getTiers(vehicle)
     if spec.greasingTiers == nil then
         local C = RMS_Config.GREASING
         if vehicle.spec_RealisticMechanicalSystems ~= nil then
-            local family = C.CATEGORY_FAMILIES[RMS_Fluids.getVehicleCategory(vehicle)]
+            local family = RMS_Utils.getIsSelfPropelledMower(vehicle) and "SELF_PROPELLED_MOWER"
+                or C.CATEGORY_FAMILIES[RMS_Fluids.getVehicleCategory(vehicle)]
             spec.greasingTiers = family ~= nil and C.FAMILIES[family] or false
         else
             spec.greasingTiers = getImplementTiers(vehicle)

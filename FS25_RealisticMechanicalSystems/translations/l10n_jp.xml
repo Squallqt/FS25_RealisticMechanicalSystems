@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2駆"/>
         <text name="rms_hud_drive_4wd" text="4駆"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="2駆（前輪駆動解除）"/>
         <text name="rms_drivetrain_mode_4wd" text="4駆（前輪駆動作動）"/>
         <text name="rms_drivetrain_mode_auto" text="4駆 AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="チュートリアルのヒント履歴をリセットし、すべて再表示しますか？"/>
         <text name="rms_drivetrainEnabled_label" text="4駆・デフロック管理"/>
         <text name="rms_drivetrainEnabled_tooltip" text="トラクターの前輪駆動とデフロックを手動で操作するか設定します。Enhanced Vehicleのデフ管理を置き換えます。管理を戻すには、この設定を無効にしてから同MODのメニューでデフを再び有効にします。"/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="AUTO駆動モードを許可"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="駆動モードスイッチにAUTOを用意するか設定します。車輪が滑る時や負荷のかかる作業中は前輪駆動を接続し、路上では解除します。無効にすると、AUTOの車両は4駆に戻ります。"/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="この設定を変更するには、4駆・デフロック管理を有効にする必要があります。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="駐車ブレーキ"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="管理対象の車両に駐車ブレーキを付けるか設定します。新しいCVT・Powershift車は自動、他は専用キーで操作します。Enhanced Vehicleの駐車ブレーキを置き換えます。戻すにはこの設定を無効にし、同MODのメニューで駐車ブレーキを再び有効にします。"/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="メンテナンス履歴"/>
         <text name="rms_ws_label_last_maintenance" text="前回のメンテナンス"/>
         <text name="rms_ws_task_inspection" text="点検"/>
-        <text name="rms_ws_task_maintenance" text="メンテナンス"/>
         <text name="rms_ws_task_overhaul" text="オーバーホール"/>
         <text name="rms_ws_info_no_breakdowns" text="特定された故障はありません。未発現の故障は点検かメンテナンスで特定します。"/>
         <text name="rms_ws_info_warning_unidentified" text="警告灯点灯：要特定の故障です。点検かメンテナンスで特定後に修理できます。"/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="点検"/>
         <text name="rms_fleet_location" text="場所"/>
         <text name="rms_fleet_next_service" text="次回の整備"/>
-        <text name="rms_fleet_remaining" text="残り %s 時間"/>
-        <text name="rms_fleet_overdue" text="%s 時間超過"/>
         <text name="rms_fleet_overdue_label" text="期限超過"/>
         <text name="rms_fleet_overdue_count" text="期限超過：%d"/>
         <text name="rms_fleet_due_soon_label" text="間もなく"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="保証金の返還"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油水類の残量低下"/>
-        <text name="rms_tutorial_fluid_level_message" text="この車両の油水類の一つが、ゲージの基準線を下回りました。&#10;&#10;エンジンオイルは稼働時間に応じて消費され、摩耗したエンジンでは消費量が大幅に増えます。冷却液、ミッションオイル、作動油はもれが発生した場合にだけ減少します。&#10;&#10;基準線を下回っただけなら補給が必要ですが、車両はまだ正常に作動します。量が減るほど、坂道でポンプが空気を吸いやすくなります。エンジンオイル圧の警告灯が点滅し、ミッションや油圧の側ではポンプが鳴り、油圧の動きが遅くなります。この状態で1分過ごすごとにクランクシャフト軸受やポンプが傷みます。停止して補給してください。冷却液、ミッションオイル、作動油が不足した車両は過熱もします。&#10;&#10;ショップで該当回路に適合する製品容器を購入し、車両まで運んで補給してください。その回路用の製品はすべて機械的に同等で、誤った油水類を入れた場合はその回路だけが汚染されます。ディーラーでは必要な量が供給され、料金が請求されます。"/>
+        <text name="rms_tutorial_fluid_level_message" text="この車両の液体のひとつがゲージの目盛りを下回っています。エンジンオイルは稼働時間とともに減り、摩耗したエンジンほど早く減ります。その他の液体はもれがある場合にだけ減ります。&#10;&#10;車両はまだ普通に作業できますが、液面が下がるほど、坂道でポンプが空気を吸い込みやすくなり、その1分ごとにベアリングやポンプが傷みます。冷却液、トランスミッションオイル、作動油が不足すると、その系統の温度も上がります。&#10;&#10;ショップで購入した、その系統用の液体の容器で補充してください。ほかの液体を入れると系統が汚染されます。販売店でも補充できます。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systemsへようこそ"/>
         <text name="rms_tutorial_welcome_disable_button" text="ヒントを無効化"/>
         <text name="rms_tutorial_welcome_enable_button" text="ヒントを有効化"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="ホイールスリップ"/>
         <text name="rms_tutorial_wheel_slip_message" text="車輪が激しく空転しています。ホイールスリップはミッションに最も大きな損傷を与える要因の一つで、次回のワークショップ入庫時期が大幅に早まります。"/>
         <text name="rms_tutorial_service_due_soon_title" text="メンテナンス時期"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%sはまもなく整備が必要です。整備工場で推奨プランを選ぶと、期限に達した作業をまとめて行えます。稼働時間またはカレンダー上の期限のうち先に達した方が適用され、使用が少なくても整備が必要です。整備のしやすさは作業の複雑さを表します。通常の整備は移動整備工場でも行えます。"/>
+        <text name="rms_tutorial_service_due_soon_message" text="%sはまもなく整備が必要です。整備工場で推奨プランを選ぶと、期限に達した作業をまとめて行えます。稼働時間またはカレンダー上の期限のうち先に達した方が適用され、使用が少なくても整備が必要です。整備のしやすさは、自分の農場で修理できる範囲を表します。整備は移動整備工場でも行えます。"/>
         <text name="rms_tutorial_service_interval_expired_title" text="メンテナンス間隔超過"/>
         <text name="rms_tutorial_service_interval_expired_message" text="%sのメンテナンス間隔を超過しています。&#10;&#10;できるだけ早くワークショップへ移動し、「メンテナンス」を実施してください。期限を超えた車両を使い続けると、複数の故障が同時に発生するリスクが大幅に高まります。"/>
         <text name="rms_tutorial_steering_title" text="停止状態での操舵"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="オーバーホール時期"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%sに経年劣化が現れています。交換またはオーバーホールを検討する時期です。時間と費用がかかる作業ですが、車両を本来の状態に戻す唯一の方法です。&#10;&#10;車両耐用期間はMOD設定で調整できます。値を大きくするほど車両の摩耗が遅くなります。"/>
         <text name="rms_tutorial_needs_preventive_title" text="故障リスク上昇"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s のエンジン、燃料システムまたは冷却システムの故障リスクが高まっています。&#10;&#10;%s整備：バルブを調整し、インジェクターとサーモスタットを点検して、このリスクを下げます。"/>
+        <text name="rms_tutorial_needs_preventive_message" text="%sの摩耗した部品が故障のリスクを高めています。&#10;&#10;%s整備：バルブを調整し、収穫機では摩耗した収穫部品を交換するため、このリスクが下がります。"/>
         <text name="rms_tutorial_age_degradation_title" text="経年劣化"/>
-        <text name="rms_tutorial_age_degradation_message" text="RMSでは、車両が古くなるにつれて本来の性能が少しずつ失われます。&#10;&#10;車両耐用期間の約三分の一を過ぎると、経年摩耗によって出力や制動性能など一部の重要な特性がわずかに低下し始めます。その後、影響が強まり、耐用期間末期には明確に現れます。&#10;&#10;この経年劣化はMOD設定で無効にできます。"/>
+        <text name="rms_tutorial_age_degradation_message" text="RMSでは、車両が古くなるにつれて本来の性能が少しずつ失われます。&#10;&#10;車両耐用期間の約三分の一を過ぎると、経年摩耗によって出力や制動性能など一部の重要な特性がわずかに低下し始めます。その後、影響が強まり、耐用期間末期には明確に現れます。&#10;&#10;新しい部品に替えれば摩耗はなくなります。オーバーホールで摩耗した部品が交換されます。"/>
         <text name="rms_tutorial_poor_consumables_title" text="低品質の消耗品"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%sには、前回のメンテナンスで不良フィルターが取り付けられました。安価な等級を選ぶと、この状態になります。&#10;&#10;このフィルターは汚れを通してしまうため、フィルターを交換するまで保護対象の系統が早く摩耗します。もう一度メンテナンスを行うと交換されます。完全点検だけがこのフィルターを特定できます。"/>
+        <text name="rms_tutorial_poor_consumables_message" text="完全点検で、%sに整備時に取り付けられた不良フィルターが見つかりました。安価な品質で起こることがあります。&#10;&#10;このフィルターは汚れを通してしまうため、フィルターを交換するまで、保護している系統の摩耗が早まります。次の整備で交換されます。"/>
         <text name="rms_tutorial_poor_parts_title" text="低品質の部品"/>
-        <text name="rms_tutorial_poor_parts_message" text="%sには、修理時に低品質の部品が使用されました。故障は近いうちに再発する可能性が高くなっています。&#10;&#10;再発を待つか、完全点検を実施できます。完全点検では原因となった部品を確実に特定できます。"/>
+        <text name="rms_tutorial_poor_parts_message" text="完全点検で、%sに整備工場で取り付けられた不良部品が見つかりました。この部品は故障します。安価な品質で起こることがあります。&#10;&#10;今すぐ整備工場で交換するか、故障するまで待つことができます。"/>
         <text name="rms_tutorial_park_brake_title" text="駐車ブレーキ"/>
         <text name="rms_tutorial_park_brake_message" text="駐車ブレーキが作動しています。停止中の車両から降りると自動的に作動し、再びアクセルを踏むと解除されます。エンジンを切ったときや、停止したまま45秒が経過したときにも作動します。&#10;&#10;傾斜地では、車両が自然に動き出すのを防ぎます。"/>
-        <text name="rms_tutorial_park_brake_manual_message" text="駐車ブレーキが作動しています。専用キーで作動と解除を切り替えます。ブレーキを作動させたままアクセルを踏むと、車両はブレーキに逆らって走り、ブレーキが摩耗します。&#10;&#10;傾斜地では、車両が自然に動き出すのを防ぎます。ブレーキを作動させずに車両を降りると、車両が動き出すことがあります。"/>
+        <text name="rms_tutorial_park_brake_manual_message" text="駐車ブレーキが作動しています。専用キーで作動と解除を切り替えます。ブレーキを作動させたままアクセルを踏むと、車両はブレーキに逆らって走り、駐車ブレーキが摩耗します。&#10;&#10;傾斜地では、車両が自然に動き出すのを防ぎます。ブレーキを作動させずに車両を降りると、車両が動き出すことがあります。"/>
         <text name="rms_tutorial_preheat_title" text="ディーゼル予熱"/>
         <text name="rms_tutorial_preheat_message" text="冷えたディーゼルエンジンでは、始動操作を一度行うとイグニッションがONになり、グロープラグの予熱サイクルが自動的に始まります。ダッシュボードの警告灯が短時間点灯した後、エンジンの準備が整うまで予熱灯が点灯します。操作を繰り返さないでください。予熱灯が消えるとスターターが自動的に作動します。"/>
         <text name="rms_tutorial_pto_engagement_title" text="PTOの接続"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="アイドリングと保管"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="エンジンがかかっていても実作業をしていない間は、摩耗が大幅に少なくなります。エンジンを停止すると摩耗はごくわずかになり、屋内に保管すると完全に止まります。"/>
         <text name="rms_tutorial_idle_deposit_title" text="長時間のアイドリング"/>
-        <text name="rms_tutorial_idle_deposit_message" text="車両が長時間アイドリングしていたようです。長いアイドリングは燃料を浪費するだけでなく、時間とともに燃料システム内の堆積物を増やし、エンジン全体の状態を悪化させます。&#10;&#10;現在車両を使用しない場合は、エンジンを停止してください。"/>
+        <text name="rms_tutorial_idle_deposit_message" text="車両が長時間アイドリングしていたようです。長いアイドリングは燃料を浪費するだけでなく、時間とともに燃料システム内の堆積物を増やし、その摩耗を早めます。&#10;&#10;現在車両を使用しない場合は、エンジンを停止してください。"/>
         <text name="rms_tutorial_hot_weather_title" text="気温の高い天候"/>
         <text name="rms_tutorial_hot_weather_message" text="今日は非常に気温が高くなっています。このような天候ではラジエーターの汚れを確認し、エンジンの過負荷を避けてください。そうしなければ、やがて過熱します。&#10;&#10;ラジエーターの状態を確認するには、車両を見ながら%sキーを長押ししてください。清掃にはエアブロワーを使用します。"/>
         <text name="rms_tutorial_heavy_trailer_title" text="重すぎるトレーラー"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="始動不良"/>
         <text name="rms_tutorial_hard_start_message" text="%sのエンジンが始動しにくくなっています。バッテリーの電力不足、厳しい冷え込み、機械的な故障、スターターの摩耗などが原因です。&#10;&#10;始動時の大きな突入電流により、電気システムには大きな負荷がかかります。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃料残量低下"/>
-        <text name="rms_tutorial_low_fuel_message" text="燃料タンクの残量が予備水準に近づいています。燃料が少なくなるほど吸い上げる燃料ポンプへの負荷が増え、タンク底の水分や沈んだ汚れがフィルターへ送られて目詰まりが早まります。&#10;&#10;一日の終わりに満タンにしておくのがおすすめです。満タンのタンクは結露が少なくなります。"/>
+        <text name="rms_tutorial_low_fuel_message" text="燃料タンクの残量が予備水準に近づいています。燃料が少なくなるほど吸い上げる燃料ポンプへの負荷が増え、タンク底の水分や沈んだ汚れがフィルターへ送られて目詰まりが早まります。&#10;&#10;早めに給油してください。"/>
         <text name="rms_tutorial_lugging_title" text="低回転高負荷運転"/>
         <text name="rms_tutorial_lugging_message" text="エンジン、特にミッションは低回転高負荷運転に弱く、低い回転数で大きな負荷をかけると損傷します。装着した作業機が車両には重すぎるか、手動変速の場合は選択したギアが適切でない可能性があります。"/>
         <text name="rms_tutorial_engine_overheat_title" text="エンジン過熱"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="強いショック"/>
         <text name="rms_tutorial_terrain_impact_message" text="足回りが強いショックを受けました。車両を急に止めたり、急激に減速させたりする障害物にぶつかると、シャーシがその場で傷み、次の故障が早まります。多くはステアリングかベアリングです。&#10;&#10;障害物の手前で速度を落としてください。"/>
         <text name="rms_tutorial_cranking_title" text="頻繁な始動"/>
-        <text name="rms_tutorial_cranking_message" text="エンジンを頻繁に始動しすぎています。始動するたびに非常に大きな電流が電気システムへ流れ、配線、スターター、その他の電気部品の摩耗が速まります。&#10;&#10;短時間の停止ではエンジンを切らないでください。"/>
+        <text name="rms_tutorial_cranking_message" text="短時間にスターターを長く回しています。合計で数秒を超えると、始動のたびにスターター、バッテリー、その他の始動回路が摩耗します。&#10;&#10;短い休憩でエンジンを止めないようにしてください。"/>
         <text name="rms_tutorial_critical_failure_title" text="重大故障"/>
-        <text name="rms_tutorial_critical_failure_message" text="%sは自力で移動できません。&#10;&#10;移動式ワークショップでは、車両が自力でワークショップまで移動できる程度の応急修理を行えます。利用できなければ、別の方法で回収する必要があります。"/>
+        <text name="rms_tutorial_critical_failure_message" text="%sは自力で移動できません。&#10;&#10;故障によっては、移動整備工場がその場で少なくとも応急的に修理でき、車両は自力で整備工場まで移動できます。そうでなければ、別の方法で運ぶ必要があります。"/>
         <text name="rms_tutorial_cold_engine_title" text="冷えたエンジン"/>
-        <text name="rms_tutorial_cold_engine_message" text="高い負荷をかける前に、エンジンをゆっくり暖機してください。運転温度に達するまで、アクセルと回転数を適度に抑えてください。"/>
+        <text name="rms_tutorial_cold_engine_message" text="エンジンが冷えています。%s未満では、負荷に関係なく回っているだけで摩耗が早まり、冷たいほど摩耗は大きくなります。&#10;&#10;%s未満では、最高回転数の4分の3を超えないようにしてください。冷却系統に負担がかかります。"/>
         <text name="rms_tutorial_cold_oil_title" text="冷えたミッションオイル"/>
-        <text name="rms_tutorial_cold_oil_message" text="ミッション・作動油はエンジンよりはるかにゆっくり暖まります。オイルが冷えている間は高負荷の作業を避け、穏やかな走行と軽い油圧操作で少しずつ暖めてください。"/>
+        <text name="rms_tutorial_cold_oil_message" text="トランスミッションオイルが冷えています。%s未満では、負荷に関係なくエンジンが回っているだけでトランスミッションの摩耗が早まります。&#10;&#10;作動油も%s未満では、油圧を使うとポンプを摩耗させます。"/>
         <text name="rms_tutorial_transmission_overheat_title" text="ミッション過熱"/>
         <text name="rms_tutorial_transmission_overheat_message" text="ミッションオイルが過熱し始めています。過度の負荷、ラジエーターの目詰まり、非常に気温の高い天候、ミッション冷却装置の不良などが原因です。&#10;&#10;ミッションオイルはCVTだけでなく、すべての車両で高温になります。オイルの温度が上がりすぎるとミッションが摩耗し、シールが損傷します。"/>
         <text name="rms_tutorial_overload_indicator_title" text="過負荷警告"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="駆動系応力"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="デフロックを作動させたまま、グリップの高い路面で旋回しています。カーブでは内輪と外輪の走行距離が異なりますが、デフロックは両方を同じ速度で回転させます。そのため駆動系に応力がかかり、ミッションの摩耗が増えます。旋回する前にデフロックを解除してください。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="駆動モードとデフロック"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="この車両では駆動方式を2駆、4駆、AUTOから選択できます。AUTOでは車輪が滑ると前輪駆動が自動的に作動します。&#10;&#10;デフロックはグリップが失われた場所で駆動力を確保しますが、グリップの高い路面で旋回すると駆動系に大きな負担をかけます。内輪と外輪は同じ速度で回転できないため、その応力を駆動系が受けます。旋回する前に解除してください。"/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="この車両では駆動方式を2駆、4駆、AUTOから選択できます。AUTOでは作業中は前輪駆動が入ったままになり、%sを超えたときと急な旋回のときに切れ、ブレーキをかけるとすぐに再び入ります。&#10;&#10;デフロックはグリップが失われた場所で駆動力を確保し、同時に前輪駆動も入れます。旋回時、制動時、%sを超えたときに自動的に解除されます。必要なときに再び入れてください。"/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="この車両では駆動方式を2駆、4駆から選択できます。&#10;&#10;デフロックはグリップが失われた場所で駆動力を確保しますが、グリップの高い路面で旋回すると駆動系に大きな負担をかけます。内輪と外輪は同じ速度で回転できないため、その応力を駆動系が受けます。旋回する前に解除してください。"/>
+        <text name="rms_tutorial_diff_lock_title" text="デフロック"/>
+        <text name="rms_tutorial_diff_lock_message" text="デフロックはグリップが失われた場所で駆動力を確保します。旋回時、制動時、%sを超えたときに自動的に解除されます。必要なときに再び入れてください。"/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="デフロックはグリップが失われた場所で駆動力を確保しますが、グリップの高い路面で旋回すると駆動系に大きな負担をかけます。内輪と外輪は同じ速度で回転できないため、その応力を駆動系が受けます。旋回する前に解除してください。"/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

@@ -484,15 +484,6 @@
                         <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainEnabled_label"/>
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainAllowAutoMode" onClick="onClickRmsOption" useYesNoTexts="true">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainAllowAutoMode_tooltip"/>
-                        </BinaryOption>
-                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
-                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
-                        </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainAllowAutoMode_label"/>
-                    </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer">
                         <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainParkBrakeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainParkBrakeEnabled_tooltip"/>
                         </BinaryOption>

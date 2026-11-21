@@ -15,6 +15,15 @@ function RMS_ProgressRing.createOverlays()
     RMS_ProgressRing.disc = g_overlayManager:createOverlay("rms_ProgressRing.disc", 0, 0, 0, 0)
 end
 
+---Deletes the segment and disc overlays
+function RMS_ProgressRing.deleteOverlays()
+    if RMS_ProgressRing.segment ~= nil then
+        RMS_ProgressRing.segment:delete()
+        RMS_ProgressRing.disc:delete()
+        RMS_ProgressRing.segment, RMS_ProgressRing.disc = nil, nil
+    end
+end
+
 ---Draws the segments of a ring around a centre, the first share of them lit
 function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColor, trackColor)
     local overlay = RMS_ProgressRing.segment

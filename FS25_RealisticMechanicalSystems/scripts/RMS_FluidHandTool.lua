@@ -79,13 +79,21 @@ function RMS_FluidHandTool.registerOverlays()
         return
     end
 
+    if RMS_FluidHandTool.contextDisplay ~= nil then
+        RMS_FluidHandTool.gaugeZone:delete()
+        for _, logo in pairs(RMS_FluidHandTool.logos) do
+            logo:delete()
+        end
+    end
     RMS_FluidHandTool.contextDisplay = contextDisplay
     RMS_FluidHandTool.gaugeZone = g_overlayManager:createOverlay("rms_LevelGauge.pourZone", 0, 0, 0, 0)
     RMS_FluidHandTool.gaugeZone:setColor(1, 1, 1, RMS_FluidHandTool.GAUGE_ZONE_ALPHA)
     RMS_FluidHandTool.logos = {}
     for brand, sheet in pairs(RMS_FluidHandTool.LOGO_SHEETS) do
         local prefix = RMS_FluidHandTool.LOGO_SLICE_PREFIX .. brand
-        g_overlayManager:addTextureConfigFile(modDirectory .. sheet, prefix)
+        if g_overlayManager.textureConfigs[prefix] == nil then
+            g_overlayManager:addTextureConfigFile(modDirectory .. sheet, prefix)
+        end
         RMS_FluidHandTool.logos[brand] = g_overlayManager:createOverlay(prefix .. ".logo", 0, 0, 0, 0)
         contextDisplay.slicesIds[prefix] = prefix .. ".logo"
     end
@@ -751,6 +759,22 @@ function RMS_FluidHandTool.fitTextSize(text, textSize, width)
     return textSize
 end
 
+---Returns a height of the pour panel in screen units
+local function scaledY(hud, pixels)
+    return hud:scalePixelToScreenHeight(pixels)
+end
+
+---Returns the height of a row of the pour panel
+-- @param float y foot of the panel
+local function rowY(hud, y, pixels)
+    return y + hud:scalePixelToScreenHeight(pixels)
+end
+
+---Returns a height on whole screen pixels
+local function onPixels(value)
+    return math.floor(value / g_pixelSizeY + 0.5) * g_pixelSizeY
+end
+
 ---Draws the pour of the local player: circuit level and what the can holds
 function RMS_FluidHandTool.draw()
     local display = RMS_FluidHandTool.display
@@ -782,20 +806,11 @@ function RMS_FluidHandTool.draw()
     local padding = hud:scalePixelToScreenWidth(20)
     local x, y = 0.5 - width * 0.5, g_hudAnchorBottom
     local right = x + width - padding
-    local function rowY(pixels)
-        return y + hud:scalePixelToScreenHeight(pixels)
-    end
-    local function size(pixels)
-        return hud:scalePixelToScreenHeight(pixels)
-    end
-    local function onPixels(value)
-        return math.floor(value / g_pixelSizeY + 0.5) * g_pixelSizeY
-    end
 
     local background = HUD.COLOR.BACKGROUND_DARK
     drawFilledRectRound(x, y, width, height, 0.25, background[1], background[2], background[3], background[4])
-    display.logo:setDimension(hud:scalePixelToScreenWidth(44), size(44))
-    display.logo:setPosition(x + padding, rowY(82))
+    display.logo:setDimension(hud:scalePixelToScreenWidth(44), scaledY(hud, 44))
+    display.logo:setPosition(x + padding, rowY(hud, y, 82))
     display.logo:render()
 
     local litersText = RMS_FluidWorkshop.formatLiters(liters)
@@ -815,38 +830,40 @@ function RMS_FluidHandTool.draw()
     setTextAlignment(RenderText.ALIGN_RIGHT)
     setTextBold(false)
     setTextColor(1, 1, 1, 0.6)
-    local capacityWidth = getTextWidth(size(16), capacityText)
-    renderText(right, rowY(111), size(16), capacityText)
+    local capacityWidth = getTextWidth(scaledY(hud, 16), capacityText)
+    renderText(right, rowY(hud, y, 111), scaledY(hud, 16), capacityText)
     setTextBold(true)
     if isLevelDone and display.isCompatible then
         setTextColor(active[1], active[2], active[3], 1)
     else
         setTextColor(1, 1, 1, 1)
     end
-    local litersWidth = getTextWidth(size(26), litersText)
-    renderText(right - capacityWidth, rowY(113), size(26), litersText)
+    local litersWidth = getTextWidth(scaledY(hud, 26), litersText)
+    renderText(right - capacityWidth, rowY(hud, y, 113), scaledY(hud, 26), litersText)
     local statusWidth = 0
     if statusKey ~= nil then
         local statusText = utf8ToUpper(g_i18n:getText(statusKey))
-        statusWidth = getTextWidth(size(13), statusText)
+        statusWidth = getTextWidth(scaledY(hud, 13), statusText)
         setTextColor(statusColor[1], statusColor[2], statusColor[3], 1)
-        renderText(right, rowY(90), size(13), statusText)
+        renderText(right, rowY(hud, y, 90), scaledY(hud, 13), statusText)
     end
 
     local textX, gap = x + padding + hud:scalePixelToScreenWidth(58), hud:scalePixelToScreenWidth(12)
     setTextAlignment(RenderText.ALIGN_LEFT)
     setTextColor(1, 1, 1, 1)
-    renderText(textX, rowY(115), RMS_FluidHandTool.fitTextSize(display.circuitText, size(20), right - capacityWidth - litersWidth - gap - textX), display.circuitText)
+    renderText(textX, rowY(hud, y, 115), RMS_FluidHandTool.fitTextSize(display.circuitText, scaledY(hud, 20),
+        right - capacityWidth - litersWidth - gap - textX), display.circuitText)
     setTextBold(false)
     setTextColor(1, 1, 1, 0.6)
-    renderText(textX, rowY(92), RMS_FluidHandTool.fitTextSize(display.machineText, size(14), right - statusWidth - gap - textX), display.machineText)
-    renderText(x + padding, rowY(16), size(13), display.productText)
+    renderText(textX, rowY(hud, y, 92), RMS_FluidHandTool.fitTextSize(display.machineText, scaledY(hud, 14), right - statusWidth - gap - textX),
+        display.machineText)
+    renderText(x + padding, rowY(hud, y, 16), scaledY(hud, 13), display.productText)
 
     local trackX, trackWidth = x + padding, width - padding * 2
     local minX = trackX + trackWidth * RMS_Fluids.GAUGE_MIN_POSITION
     local maxX = trackX + trackWidth * RMS_Fluids.GAUGE_MAX_POSITION
     local markWidth = hud:scalePixelToScreenWidth(2)
-    local barY, barHeight = onPixels(rowY(58)), onPixels(size(10))
+    local barY, barHeight = onPixels(rowY(hud, y, 58)), onPixels(scaledY(hud, 10))
     drawFilledRect(trackX, barY, trackWidth, barHeight, 1, 1, 1, 0.12)
     if fill > 0 then
         drawFilledRect(trackX, barY, trackWidth * fill, barHeight, fillColor[1], fillColor[2], fillColor[3], 1)
@@ -858,33 +875,33 @@ function RMS_FluidHandTool.draw()
         zone:setDimension(maxX - minX, barHeight)
         zone:setPosition(minX, barY)
         zone:render()
-        drawFilledRect(minX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
-        drawFilledRect(maxX - markWidth * 0.5, rowY(54), markWidth, size(18), 1, 1, 1, 1)
+        drawFilledRect(minX - markWidth * 0.5, rowY(hud, y, 54), markWidth, scaledY(hud, 18), 1, 1, 1, 1)
+        drawFilledRect(maxX - markWidth * 0.5, rowY(hud, y, 54), markWidth, scaledY(hud, 18), 1, 1, 1, 1)
     end
-    drawFilledRect(trackX, rowY(30), trackWidth, size(1), 1, 1, 1, 0.16)
+    drawFilledRect(trackX, rowY(hud, y, 30), trackWidth, scaledY(hud, 1), 1, 1, 1, 0.16)
 
     if not isTank then
         setTextBold(true)
         setTextAlignment(RenderText.ALIGN_CENTER)
         setTextColor(1, 1, 1, 0.6)
-        renderText(minX, rowY(46), size(11), "MIN")
-        renderText(maxX, rowY(46), size(11), "MAX")
+        renderText(minX, rowY(hud, y, 46), scaledY(hud, 11), "MIN")
+        renderText(maxX, rowY(hud, y, 46), scaledY(hud, 11), "MAX")
     end
 
     local canText = string.format(" / %s %s", RMS_FluidWorkshop.formatLiters(display.containerCapacity), unit)
     local canLitersText = RMS_FluidWorkshop.formatLiters(display.containerLiters)
     setTextAlignment(RenderText.ALIGN_RIGHT)
     setTextColor(1, 1, 1, 1)
-    local canLitersWidth = getTextWidth(size(13), canLitersText)
+    local canLitersWidth = getTextWidth(scaledY(hud, 13), canLitersText)
     setTextBold(false)
-    local canWidth = getTextWidth(size(13), canText)
+    local canWidth = getTextWidth(scaledY(hud, 13), canText)
     setTextColor(1, 1, 1, 0.6)
-    renderText(right, rowY(16), size(13), canText)
-    renderText(right - canWidth - canLitersWidth - hud:scalePixelToScreenWidth(8), rowY(16), size(13),
+    renderText(right, rowY(hud, y, 16), scaledY(hud, 13), canText)
+    renderText(right - canWidth - canLitersWidth - hud:scalePixelToScreenWidth(8), rowY(hud, y, 16), scaledY(hud, 13),
         g_i18n:getText(RMS_FluidHandTool.getContainerTextKey(display, "label")))
     setTextBold(true)
     setTextColor(1, 1, 1, 1)
-    renderText(right - canWidth, rowY(16), size(13), canLitersText)
+    renderText(right - canWidth, rowY(hud, y, 16), scaledY(hud, 13), canLitersText)
 
     setTextBold(false)
     setTextAlignment(RenderText.ALIGN_LEFT)

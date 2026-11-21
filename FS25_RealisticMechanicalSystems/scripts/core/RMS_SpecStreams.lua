@@ -45,14 +45,40 @@ end
 FSBaseMission.onConnectionPacketLost = Utils.appendedFunction(FSBaseMission.onConnectionPacketLost, RealisticMechanicalSystems.onConnectionPacketLost)
 FSBaseMission.onConnectionPacketSent = Utils.appendedFunction(FSBaseMission.onConnectionPacketSent, RealisticMechanicalSystems.onConnectionPacketSent)
 
----Writes the resale price
-local function writeResalePrice(vehicle, streamId)
-    streamWriteString(streamId, string.format("%.17g", RMS_Utils.getMarketValue(vehicle)))
+---Writes the details of the current or pending service
+local function writeServiceContext(spec, streamId)
+    streamWriteString(streamId, spec.serviceOptionOne or "")
+    streamWriteString(streamId, spec.serviceOptionTwo or "")
+    streamWriteString(streamId, spec.workshopType or "")
+    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
+    streamWriteString(streamId, RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
 end
 
----Reads the resale price
+---Reads the same service details on join and on update
+local function readServiceContext(spec, streamId)
+    spec.serviceOptionOne = streamReadString(streamId)
+    spec.serviceOptionTwo = streamReadString(streamId)
+    spec.workshopType = streamReadString(streamId)
+    spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
+    spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(streamReadString(streamId))
+    if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
+    if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
+    if spec.workshopType == "" then spec.workshopType = nil end
+end
+
+---Writes the resale price
+local function writeResalePrice(streamId, value)
+    streamWriteString(streamId, string.format("%.17g", value))
+end
+
+---Reads the resale price and announces it when it changes
 local function readResalePrice(vehicle, streamId)
-    vehicle.spec_RealisticMechanicalSystems.syncedSellPrice = tonumber(streamReadString(streamId))
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local sellPrice = tonumber(streamReadString(streamId))
+    if sellPrice ~= spec.syncedSellPrice then
+        spec.syncedSellPrice = sellPrice
+        g_messageCenter:publish(MessageType.RMS_VEHICLE_RESALE_CHANGED, vehicle)
+    end
 end
 
 ---Writes the PTO and header event counters
@@ -249,6 +275,10 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     if spec == nil then return end
 
     if spec.rmsPendingByConnection ~= nil then
+        if next(spec.rmsPendingByConnection) == nil then
+            -- a first receiver resets the last state sent
+            spec.rmsLastSync = nil
+        end
         spec.rmsPendingByConnection[connection] = 0
     end
 
@@ -263,11 +293,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.maintenanceTimer, 0, 0))
 
     -- [Group 2] Service context
-    streamWriteString(streamId, spec.serviceOptionOne or "")
-    streamWriteString(streamId, spec.serviceOptionTwo or "")
-    streamWriteString(streamId, spec.workshopType or "")
-    streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
-    streamWriteString(streamId, RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
+    writeServiceContext(spec, streamId)
 
     -- [Group 3] Telemetry
     streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(getSyncOperatingTime(self), 0, 0))
@@ -317,7 +343,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteBool(streamId, spec.isEngineDerated == true)
 
     -- [Group 13] Resale price
-    writeResalePrice(self, streamId)
+    writeResalePrice(streamId, RMS_Utils.getMarketValue(self))
 
     -- [Group 14] Trip meter: the game sends its odometer only with a cruise control
     streamWriteFloat32(streamId, (RMS_Utils.getOdometerKilometers(self) or 0) - spec.tripStartKilometers)
@@ -343,14 +369,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.maintenanceTimerTime = RMS_Thermal.getWorldTimeMS()
 
     -- [Group 2] Service context
-    spec.serviceOptionOne = streamReadString(streamId)
-    spec.serviceOptionTwo = streamReadString(streamId)
-    spec.workshopType = streamReadString(streamId)
-    spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-    spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(streamReadString(streamId))
-    if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
-    if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
-    if spec.workshopType == "" then spec.workshopType = nil end
+    readServiceContext(spec, streamId)
 
     -- [Group 3] Telemetry
     self:setOperatingTime(RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), currentOperatingTime, 0), true)
@@ -464,11 +483,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
 
         -- [2] Service context
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.SERVICE_CONTEXT) ~= 0) then
-            streamWriteString(streamId, spec.serviceOptionOne or "")
-            streamWriteString(streamId, spec.serviceOptionTwo or "")
-            streamWriteString(streamId, spec.workshopType or "")
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingServicePrice, 0, 0))
-            streamWriteString(streamId, RMS_Utils.serializeInvoice(spec.pendingServiceInvoice))
+            writeServiceContext(spec, streamId)
         end
 
         -- [3] Telemetry
@@ -551,7 +566,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
 
         -- [13] Resale price
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.RESALE) ~= 0) then
-            writeResalePrice(self, streamId)
+            writeResalePrice(streamId, spec.networkResaleValue or RMS_Utils.getMarketValue(self))
         end
     end
 end
@@ -573,14 +588,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
 
         -- [2] Service context
         if streamReadBool(streamId) then
-            spec.serviceOptionOne = streamReadString(streamId)
-            spec.serviceOptionTwo = streamReadString(streamId)
-            spec.workshopType = streamReadString(streamId)
-            spec.pendingServicePrice = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-            spec.pendingServiceInvoice = RMS_Utils.deserializeInvoice(streamReadString(streamId))
-            if spec.serviceOptionOne == "" then spec.serviceOptionOne = nil end
-            if spec.serviceOptionTwo == "" then spec.serviceOptionTwo = nil end
-            if spec.workshopType == "" then spec.workshopType = nil end
+            readServiceContext(spec, streamId)
             RMS_Bodywork.syncPreview(self)
         end
 

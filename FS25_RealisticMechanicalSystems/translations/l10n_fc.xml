@@ -1,7 +1,7 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Véh."/>
+        <text name="rms_hud_mass_tractor" text="Véhicule"/>
         <text name="rms_hud_mass_towed" text="Attelé"/>
         <text name="rms_hud_mass_total" text="Total"/>
         <text name="rms_hud_fuel_average" text="Moy."/>
@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2RM"/>
         <text name="rms_hud_drive_4wd" text="4RM"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="tr/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2RM (pont avant débrayé)"/>
         <text name="rms_drivetrain_mode_4wd" text="4RM (pont avant embrayé)"/>
         <text name="rms_drivetrain_mode_auto" text="4RM AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Réinitialiser l'historique des conseils du didacticiel et tous les réafficher ?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestion du 4RM et du blocage de différentiel"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Détermine si le pont avant et les blocages de différentiel des tracteurs se commandent à la main. Cette option remplace la gestion des différentiels d'Enhanced Vehicle : pour la lui rendre, désactivez-la puis réactivez les différentiels dans son menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Autoriser le mode AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Détermine si le sélecteur propose la position AUTO, qui embraye le pont avant quand les roues patinent ou en travail sous charge et le débraye sur route. Désactivée, elle fait repasser en 4RM les véhicules laissés en AUTO."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Ce paramètre nécessite l'activation de la gestion du 4RM et du blocage de différentiel."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Frein de stationnement"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Détermine si les véhicules suivis ont un frein de stationnement : automatique sur les machines récentes à transmission CVT ou Powershift, à sa touche sur les autres. Cette option remplace le frein de stationnement d'Enhanced Vehicle : pour le lui rendre, désactivez-la puis réactivez son frein de stationnement dans son menu."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Journal d'entretien"/>
         <text name="rms_ws_label_last_maintenance" text="Dernier entretien"/>
         <text name="rms_ws_task_inspection" text="Inspection"/>
-        <text name="rms_ws_task_maintenance" text="Entretien"/>
         <text name="rms_ws_task_overhaul" text="Révision"/>
         <text name="rms_ws_info_no_breakdowns" text="Aucune panne identifiée. Une inspection ou un entretien identifie celles que la machine ne montre pas encore."/>
         <text name="rms_ws_info_warning_unidentified" text="Voyant allumé : panne à identifier. Une inspection ou un entretien l'identifie. Sa réparation se commande ensuite."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Contrôle"/>
         <text name="rms_fleet_location" text="Localisation"/>
         <text name="rms_fleet_next_service" text="Prochain entretien"/>
-        <text name="rms_fleet_remaining" text="%s h restantes"/>
-        <text name="rms_fleet_overdue" text="%s h de retard"/>
         <text name="rms_fleet_overdue_label" text="En retard"/>
         <text name="rms_fleet_overdue_count" text="En retard : %d"/>
         <text name="rms_fleet_due_soon_label" text="À prévoir"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Dépôt remboursé"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niveau de fluide bas"/>
-        <text name="rms_tutorial_fluid_level_message" text="Un des fluides de cette machine est descendu sous le repère de sa jauge.&#10;&#10;L'huile moteur se consomme avec les heures, et un moteur fatigué en boit beaucoup plus. Le liquide de refroidissement, l'huile de transmission et l'huile hydraulique ne baissent que par une fuite.&#10;&#10;Sous le repère, la machine réclame seulement un appoint et travaille encore normalement. Plus le niveau baisse, plus sa pompe aspire facilement de l'air dans les pentes : le voyant de pression d'huile clignote, et côté boîte ou hydraulique, la pompe siffle et les mouvements hydrauliques ralentissent. Chaque minute passée ainsi abîme les coussinets de vilebrequin ou la pompe : arrêtez-vous et refaites le niveau. Une machine qui manque de liquide de refroidissement, d'huile de boîte ou d'huile hydraulique chauffe aussi.&#10;&#10;Achetez au magasin un contenant de produit compatible, apportez-le à la machine et refaites le niveau. Tous les produits destinés à ce circuit ont le même effet ; un mauvais fluide contamine uniquement ce circuit. Chez le concessionnaire, les litres nécessaires sont fournis et facturés."/>
+        <text name="rms_tutorial_fluid_level_message" text="Un des fluides de cette machine est sous le repère de sa jauge. L'huile moteur baisse avec les heures, plus vite sur un moteur usé ; les autres fluides ne baissent que par une fuite.&#10;&#10;La machine travaille encore normalement, mais plus le niveau baisse, plus sa pompe aspire facilement de l'air en pente : chaque minute ainsi abîme les coussinets ou la pompe. Sans assez de liquide de refroidissement, d'huile de boîte ou d'huile hydraulique, son circuit chauffe aussi.&#10;&#10;Refaites le niveau avec un contenant du fluide prévu pour ce circuit, acheté au magasin : un autre fluide le contamine. Le concessionnaire fait aussi l'appoint."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bienvenue dans Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Désactiver les conseils"/>
         <text name="rms_tutorial_welcome_enable_button" text="Activer les conseils"/>
@@ -995,13 +990,13 @@
         <text name="rms_tutorial_wheel_slip_title" text="Patinage des roues"/>
         <text name="rms_tutorial_wheel_slip_message" text="Vos roues patinent fortement. Le patinage est l'un des facteurs les plus destructeurs pour la transmission et rapproche nettement votre prochaine visite à l'atelier."/>
         <text name="rms_tutorial_service_due_soon_title" text="Entretien à prévoir"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s aura bientôt besoin d'un entretien. Choisissez à l'atelier la formule conseillée : elle couvre les travaux dus. Les heures de fonctionnement ou le calendrier déclenchent l'échéance au premier terme atteint, même si le véhicule roule peu. La facilité d'entretien résume la complexité des interventions ; les entretiens courants restent possibles en atelier mobile."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s aura bientôt besoin d'un entretien. Choisissez à l'atelier la formule conseillée : elle couvre les travaux dus. Les heures de fonctionnement ou le calendrier déclenchent l'échéance au premier terme atteint, même si le véhicule roule peu. La facilité d'entretien indique ce que votre ferme répare elle-même ; les entretiens restent possibles en atelier mobile."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Intervalle d'entretien dépassé"/>
         <text name="rms_tutorial_service_interval_expired_message" text="L'intervalle d'entretien de %s est dépassé.&#10;&#10;Rendez-vous à l'atelier dès que possible et choisissez « Entretien ». Continuer à utiliser un véhicule dont l'entretien est en retard augmente fortement le risque de pannes multiples."/>
         <text name="rms_tutorial_steering_title" text="Braquage à l'arrêt"/>
         <text name="rms_tutorial_steering_message" text="Il vaut mieux éviter de braquer à l'arrêt. Cela impose une forte charge au mécanisme de direction et aux composants du train avant, ce qui augmente l'usure du train roulant.&#10;&#10;Avancez légèrement avant de braquer : les roues tourneront bien plus facilement."/>
         <text name="rms_tutorial_cooling_air_check_title" text="Refroidissement et filtre à air"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Le radiateur ou le filtre à air est encrassé. Maintenez la touche %s en regardant le véhicule pour savoir lequel. Utilisez le souffleur d'air comprimé pour le nettoyer. Si le filtre ne peut plus être nettoyé, l'atelier le remplace à partir de la révision %s."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="Le radiateur ou le filtre à air est encrassé. Maintenez la touche %s en regardant le véhicule pour savoir lequel. Utilisez le souffleur d'air comprimé pour le nettoyer. Si le filtre ne peut plus être nettoyé, l'atelier le remplace à partir de l'entretien %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Graissage nécessaire"/>
         <text name="rms_tutorial_needs_lubrication_message" text="Votre %s a des graisseurs à graisser.&#10;&#10;Dans RMS, chaque machine a ses propres graisseurs. Ils reviennent à graisser au fil des jours où la machine travaille : chaque jour de travail, ou tous les quelques jours de travail pour certains. Une machine graissée en retard use son châssis plus vite.&#10;&#10;Achetez un pistolet à graisse et des cartouches au magasin. Pistolet en main, placez-vous devant une cartouche pour la charger, puis visez la machine : chaque clic graisse un graisseur, et garder le clic enfoncé enchaîne les graisseurs.&#10;&#10;Pour voir les graisseurs à faire, maintenez la touche %s en regardant le véhicule."/>
         <text name="rms_tutorial_needs_repair_title" text="Panne détectée"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Révision nécessaire"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Votre %s accuse son âge. Il est temps d'envisager un remplacement ou une révision. C'est une opération longue et coûteuse, mais c'est le seul moyen de rendre à la machine son état d'origine.&#10;&#10;La durée de vie se règle dans les paramètres du mod : plus elle est élevée, plus vos véhicules s'usent lentement."/>
         <text name="rms_tutorial_needs_preventive_title" text="Risque de panne accru"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Le moteur, le circuit de carburant ou le refroidissement de votre %s présente un risque de panne accru.&#10;&#10;Révision %s : elle règle les soupapes et contrôle les injecteurs et le thermostat, ce qui réduit ce risque."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Des pièces usées de votre %s font monter son risque de panne.&#10;&#10;Entretien %s : il règle les soupapes et, sur une machine de récolte, remplace ses pièces de récolte usées, ce qui réduit ce risque."/>
         <text name="rms_tutorial_age_degradation_title" text="Dégradation liée à l'âge"/>
-        <text name="rms_tutorial_age_degradation_message" text="Dans RMS, les véhicules perdent progressivement une partie de leurs performances d'origine en vieillissant.&#10;&#10;Après environ un tiers de leur durée de vie, l'usure liée à l'âge réduit légèrement certaines caractéristiques importantes, comme la puissance ou le freinage. L'effet se renforce ensuite et devient nettement visible en fin de vie.&#10;&#10;Cette dégradation peut être désactivée dans les paramètres du mod."/>
+        <text name="rms_tutorial_age_degradation_message" text="Dans RMS, les véhicules perdent progressivement une partie de leurs performances d'origine en vieillissant.&#10;&#10;Après environ un tiers de leur durée de vie, l'usure liée à l'âge réduit légèrement certaines caractéristiques importantes, comme la puissance ou le freinage. L'effet se renforce ensuite et devient nettement visible en fin de vie.&#10;&#10;Une pièce neuve efface son usure : la révision remplace les pièces usées."/>
         <text name="rms_tutorial_poor_consumables_title" text="Consommables de mauvaise qualité"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Votre %s a reçu un filtre défectueux lors de son dernier entretien. Cela arrive avec les qualités bon marché.&#10;&#10;Ce filtre laisse passer les impuretés : le circuit qu'il protège s'use plus vite jusqu'à ce que le filtre soit changé. Un nouvel entretien le remplace. Seule une inspection complète l'identifie."/>
+        <text name="rms_tutorial_poor_consumables_message" text="L'inspection complète a trouvé un filtre défectueux sur votre %s, posé lors d'un entretien. Cela arrive avec les qualités bon marché.&#10;&#10;Ce filtre laisse passer les impuretés : le circuit qu'il protège s'use plus vite jusqu'à ce que le filtre soit changé. Un nouvel entretien le remplace."/>
         <text name="rms_tutorial_poor_parts_title" text="Pièces de mauvaise qualité"/>
-        <text name="rms_tutorial_poor_parts_message" text="Votre %s a reçu une pièce de mauvaise qualité lors d'une réparation. La panne réapparaîtra probablement sous peu.&#10;&#10;Vous pouvez attendre qu'elle revienne, ou lancer une inspection complète, qui identifie la pièce en cause de façon fiable."/>
+        <text name="rms_tutorial_poor_parts_message" text="L'inspection complète a trouvé sur votre %s une pièce défectueuse posée à l'atelier : elle tombera en panne. Cela arrive avec les qualités bon marché.&#10;&#10;Vous pouvez la faire remplacer dès maintenant à l'atelier, ou attendre qu'elle lâche."/>
         <text name="rms_tutorial_park_brake_title" text="Frein de stationnement"/>
         <text name="rms_tutorial_park_brake_message" text="Le frein de stationnement est serré. Il se serre tout seul dès que vous quittez la machine à l'arrêt, et se desserre dès que vous accélérez de nouveau. Il se serre aussi quand vous coupez le moteur, ou après 45 secondes à l'arrêt.&#10;&#10;En pente, c'est lui qui empêche la machine de partir toute seule."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Le frein de stationnement est serré. C'est vous qui le serrez et le desserrez avec sa touche : si vous accélérez frein serré, la machine force et ses freins s'usent.&#10;&#10;En pente, c'est lui qui empêche la machine de partir toute seule : si vous la quittez sans le serrer, elle peut partir."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Le frein de stationnement est serré. C'est vous qui le serrez et le desserrez avec sa touche : si vous accélérez frein serré, la machine force et son frein de stationnement s'use.&#10;&#10;En pente, c'est lui qui empêche la machine de partir toute seule : si vous la quittez sans le serrer, elle peut partir."/>
         <text name="rms_tutorial_preheat_title" text="Préchauffage diesel"/>
         <text name="rms_tutorial_preheat_message" text="Sur un moteur diesel froid, une impulsion sur la commande de démarrage met le contact et lance automatiquement le cycle de préchauffage. Les voyants du tableau de bord s'allument brièvement, puis le voyant de préchauffage reste allumé jusqu'à ce que le moteur soit prêt. Ne répétez pas la commande : le démarreur s'engage automatiquement lorsque le voyant s'éteint."/>
         <text name="rms_tutorial_pto_engagement_title" text="Embrayage de la PDF"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Ralenti et immobilisation"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="L'usure est bien plus faible lorsque la machine tourne sans travailler. Moteur coupé, elle devient minime. Sous abri, elle disparaît complètement."/>
         <text name="rms_tutorial_idle_deposit_title" text="Ralenti prolongé"/>
-        <text name="rms_tutorial_idle_deposit_message" text="La machine semble être restée trop longtemps au ralenti. Les longues périodes au ralenti ne gaspillent pas seulement du carburant : avec le temps, elles favorisent aussi les dépôts dans le système de carburant et nuisent à l'état général du moteur.&#10;&#10;Si la machine n'est pas nécessaire pour le moment, mieux vaut couper le moteur."/>
+        <text name="rms_tutorial_idle_deposit_message" text="La machine semble être restée trop longtemps au ralenti. Les longues périodes au ralenti ne gaspillent pas seulement du carburant : avec le temps, elles favorisent aussi les dépôts dans le système de carburant, qui s'use plus vite.&#10;&#10;Si la machine n'est pas nécessaire pour le moment, mieux vaut couper le moteur."/>
         <text name="rms_tutorial_hot_weather_title" text="Temps chaud"/>
         <text name="rms_tutorial_hot_weather_message" text="Il fait très chaud aujourd'hui. Par ce temps, surveillez la propreté du radiateur et évitez de surcharger le moteur, sinon la surchauffe n'est qu'une question de temps.&#10;&#10;Vous pouvez vérifier l'état du radiateur : maintenez la touche %s en regardant la machine. Le nettoyage se fait au souffleur d'air comprimé."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Remorque trop lourde"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Démarrage difficile"/>
         <text name="rms_tutorial_hard_start_message" text="Le moteur de votre %s démarre difficilement. Une batterie faible, le gel, une panne mécanique ou l'usure du démarreur peuvent en être la cause.&#10;&#10;Le système électrique subit de fortes charges au démarrage, à cause des courants d'appel élevés."/>
         <text name="rms_tutorial_low_fuel_title" text="Réserve de carburant"/>
-        <text name="rms_tutorial_low_fuel_message" text="Le réservoir approche de la réserve. Moins il reste de carburant, plus la pompe à carburant doit forcer pour l'aspirer, et le fond du réservoir envoie son eau et ses dépôts au filtre, qui s'encrasse plus vite.&#10;&#10;Mieux vaut faire le plein en fin de journée : un réservoir plein prend moins de condensation."/>
+        <text name="rms_tutorial_low_fuel_message" text="Le réservoir approche de la réserve. Moins il reste de carburant, plus la pompe à carburant doit forcer pour l'aspirer, et le fond du réservoir envoie son eau et ses dépôts au filtre, qui s'encrasse plus vite.&#10;&#10;Refaites le plein sans attendre."/>
         <text name="rms_tutorial_lugging_title" text="Moteur en sous-régime"/>
         <text name="rms_tutorial_lugging_message" text="Le moteur, et surtout la transmission, souffrent en sous-régime, c'est-à-dire à bas régime sous forte charge. L'outil attelé est peut-être trop lourd pour la machine, ou le rapport engagé n'est pas le bon si la boîte est manuelle."/>
         <text name="rms_tutorial_engine_overheat_title" text="Surchauffe moteur"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Choc violent"/>
         <text name="rms_tutorial_terrain_impact_message" text="Le train roulant vient d'encaisser un choc violent. Heurter un obstacle qui arrête ou ralentit net la machine entame le châssis sur le coup et rapproche sa prochaine panne, le plus souvent de direction ou de roulements.&#10;&#10;Ralentissez avant les obstacles."/>
         <text name="rms_tutorial_cranking_title" text="Démarrages fréquents"/>
-        <text name="rms_tutorial_cranking_message" text="Le moteur est démarré trop souvent. Chaque démarrage fait passer un courant très élevé dans le système électrique, ce qui accélère l'usure du câblage, du démarreur et des autres composants électriques.&#10;&#10;Évitez de couper le moteur pour de courtes interruptions."/>
+        <text name="rms_tutorial_cranking_message" text="Le démarreur a beaucoup tourné en peu de temps. Au-delà de quelques secondes cumulées, chaque démarrage use le démarreur, la batterie et le reste du circuit de démarrage.&#10;&#10;Évitez de couper le moteur pour de courtes interruptions."/>
         <text name="rms_tutorial_critical_failure_title" text="Panne critique"/>
-        <text name="rms_tutorial_critical_failure_message" text="Votre %s ne peut plus se déplacer par ses propres moyens.&#10;&#10;Un atelier mobile permet une réparation de fortune, suffisante pour que la machine rejoigne l'atelier par elle-même. Sinon, il faudra la faire récupérer autrement."/>
+        <text name="rms_tutorial_critical_failure_message" text="Votre %s ne peut plus se déplacer par ses propres moyens.&#10;&#10;Selon la panne, un atelier mobile peut la réparer sur place, au moins provisoirement, assez pour que la machine rejoigne l'atelier par elle-même. Sinon, il faudra l'y amener autrement."/>
         <text name="rms_tutorial_cold_engine_title" text="Moteur froid"/>
-        <text name="rms_tutorial_cold_engine_message" text="Faites monter le moteur en température progressivement avant de le solliciter fortement. Utilisez une accélération et un régime modérés jusqu'à ce qu'il atteigne sa température de fonctionnement."/>
+        <text name="rms_tutorial_cold_engine_message" text="Le moteur est froid : sous %s, il s'use plus vite dès qu'il tourne, quelle que soit la charge, et d'autant plus qu'il est froid.&#10;&#10;Sous %s, évitez aussi de dépasser les trois quarts du régime maximal : le circuit de refroidissement en souffre."/>
         <text name="rms_tutorial_cold_oil_title" text="Huile de transmission froide"/>
-        <text name="rms_tutorial_cold_oil_message" text="L'huile de transmission et hydraulique chauffe beaucoup plus lentement que le moteur. Évitez les travaux lourds tant que l'huile est froide ; faites-la monter progressivement en température en roulant doucement et en sollicitant légèrement l'hydraulique."/>
+        <text name="rms_tutorial_cold_oil_message" text="L'huile de boîte est froide : sous %s, la boîte s'use plus vite dès que le moteur tourne, quelle que soit la charge.&#10;&#10;Sous %s, l'huile hydraulique use aussi la pompe quand vous vous servez de l'hydraulique."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Surchauffe de la transmission"/>
         <text name="rms_tutorial_transmission_overheat_message" text="L'huile de transmission commence à surchauffer. Cela peut venir d'une charge trop lourde, d'un radiateur encrassé, d'un temps très chaud, ou d'un défaut du refroidissement de la boîte.&#10;&#10;L'huile de transmission chauffe sur toutes les machines, pas seulement sur une CVT. Une huile trop chaude use la boîte et détruit ses joints."/>
         <text name="rms_tutorial_overload_indicator_title" text="Avertissement de surcharge"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Contrainte de transmission"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Vous braquez sur un sol adhérent avec le blocage de différentiel enclenché. Dans une courbe, les roues intérieures et extérieures parcourent des distances différentes, mais le blocage de différentiel les force à tourner à la même vitesse : la transmission se met sous contrainte et son usure s'accélère. Désenclenchez le blocage avant de braquer."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Modes de transmission et blocage"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Cette machine vous laisse choisir sa transmission : 2RM, 4RM ou AUTO, qui embraye le pont avant dès que les roues patinent.&#10;&#10;Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus, mais il coûte cher en virage sur sol adhérent : les roues intérieures et extérieures ne peuvent pas tourner à la même vitesse, et c'est la transmission qui encaisse. Désenclenchez-le avant de tourner."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Cette machine vous laisse choisir sa transmission : 2RM, 4RM ou AUTO. En AUTO, le pont avant reste embrayé au travail : il se débraye au-dessus de %s et dans les virages serrés, et revient dès que vous freinez.&#10;&#10;Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus et embraye le pont avant avec lui. Il se désenclenche de lui-même en virage, au freinage et au-dessus de %s : réenclenchez-le quand vous en avez besoin."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Cette machine vous laisse choisir sa transmission : 2RM ou 4RM.&#10;&#10;Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus, mais il coûte cher en virage sur sol adhérent : les roues intérieures et extérieures ne peuvent pas tourner à la même vitesse, et c'est la transmission qui encaisse. Désenclenchez-le avant de tourner."/>
+        <text name="rms_tutorial_diff_lock_title" text="Blocage de différentiel"/>
+        <text name="rms_tutorial_diff_lock_message" text="Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus. Il se désenclenche de lui-même en virage, au freinage et au-dessus de %s : réenclenchez-le quand vous en avez besoin."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Le blocage de différentiel va chercher de l'adhérence là où il n'y en a plus, mais il coûte cher en virage sur sol adhérent : les roues intérieures et extérieures ne peuvent pas tourner à la même vitesse, et c'est la transmission qui encaisse. Désenclenchez-le avant de tourner."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

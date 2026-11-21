@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (cầu trước đã ngắt)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (cầu trước đã gài)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD TỰ ĐỘNG"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Đặt lại lịch sử mẹo hướng dẫn và hiển thị lại tất cả các mẹo?"/>
         <text name="rms_drivetrainEnabled_label" text="Quản lý 4WD và khóa vi sai"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Xác định xem cầu trước và khóa vi sai trên máy kéo có được điều khiển thủ công hay không. Tùy chọn này thay thế điều khiển vi sai của Enhanced Vehicle: để trả lại, hãy tắt tùy chọn rồi bật lại vi sai trong menu của mod đó."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Cho phép chế độ TỰ ĐỘNG"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Xác định xem bộ chọn có vị trí AUTO hay không: cầu trước gài khi bánh trượt hoặc làm việc có tải và ngắt trên đường. Khi tắt, các xe đang ở AUTO trở về 4WD."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Cài đặt này yêu cầu bật quản lý 4WD và khóa vi sai."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Phanh đỗ"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Xác định xem xe được theo dõi có phanh đỗ hay không: tự động trên máy đời mới dùng hộp số CVT hoặc Powershift, dùng phím riêng trên máy khác. Tùy chọn thay thế phanh đỗ của Enhanced Vehicle: để trả lại, hãy tắt tùy chọn rồi bật lại phanh đỗ trong menu của mod đó."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Nhật ký bảo dưỡng"/>
         <text name="rms_ws_label_last_maintenance" text="Lần bảo dưỡng gần nhất"/>
         <text name="rms_ws_task_inspection" text="Kiểm tra"/>
-        <text name="rms_ws_task_maintenance" text="Bảo dưỡng"/>
         <text name="rms_ws_task_overhaul" text="Đại tu"/>
         <text name="rms_ws_info_no_breakdowns" text="Chưa xác định hỏng hóc nào. Kiểm tra hoặc bảo dưỡng sẽ xác định những hỏng hóc mà máy chưa biểu hiện."/>
         <text name="rms_ws_info_warning_unidentified" text="Đèn cảnh báo sáng: cần xác định hỏng hóc. Kiểm tra hoặc bảo dưỡng sẽ xác định, sau đó có thể sửa chữa."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Kiểm tra"/>
         <text name="rms_fleet_location" text="Vị trí"/>
         <text name="rms_fleet_next_service" text="Bảo dưỡng tiếp theo"/>
-        <text name="rms_fleet_remaining" text="Còn %s giờ"/>
-        <text name="rms_fleet_overdue" text="Trễ %s giờ"/>
         <text name="rms_fleet_overdue_label" text="Quá hạn"/>
         <text name="rms_fleet_overdue_count" text="Quá hạn: %d"/>
         <text name="rms_fleet_due_soon_label" text="Sắp đến"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Hoàn tiền đặt cọc"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Mức chất lỏng thấp"/>
-        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã giảm xuống dưới vạch đánh dấu trên đồng hồ.&#10;&#10;Dầu động cơ bị tiêu hao theo giờ hoạt động, và động cơ đã mòn tiêu thụ nhiều dầu hơn hẳn. Nước làm mát, dầu hộp số và dầu thủy lực chỉ giảm khi có rò rỉ.&#10;&#10;Khi mức chất lỏng chỉ thấp hơn vạch đánh dấu, máy mới cần bổ sung và vẫn hoạt động bình thường. Mức càng thấp, bơm càng dễ hút phải không khí trên dốc: đèn áp suất dầu nhấp nháy, còn ở phía hộp số hoặc thủy lực, bơm rít lên và các chuyển động thủy lực chậm lại. Mỗi phút như vậy đều làm hỏng bạc trục khuỷu hoặc bơm: hãy dừng lại và bổ sung đến đúng mức. Máy thiếu nước làm mát, dầu hộp số hoặc dầu thủy lực cũng sẽ nóng lên.&#10;&#10;Mua một bình sản phẩm tương thích trong cửa hàng, mang đến chỗ máy và bổ sung đến đúng mức. Mọi sản phẩm dành cho mạch đó đều có cùng tác dụng; chất lỏng không phù hợp chỉ làm nhiễm bẩn mạch đó. Tại đại lý, số lít cần thiết được cung cấp và tính phí."/>
+        <text name="rms_tutorial_fluid_level_message" text="Một trong các chất lỏng của máy này đã xuống dưới vạch trên đồng hồ. Dầu động cơ giảm dần theo giờ chạy, nhanh hơn ở động cơ đã mòn; các chất lỏng khác chỉ giảm khi bị rò rỉ.&#10;&#10;Máy vẫn làm việc bình thường, nhưng mức càng thấp thì bơm càng dễ hút phải không khí khi trên dốc: mỗi phút như vậy làm hỏng bạc lót hoặc bơm. Khi thiếu nước làm mát, dầu truyền động hoặc dầu thủy lực, mạch cũng nóng lên.&#10;&#10;Hãy châm thêm bằng một bình chứa đúng loại chất lỏng dành cho mạch đó, mua tại cửa hàng: bất kỳ chất lỏng nào khác cũng làm nhiễm bẩn mạch. Đại lý cũng có thể châm thêm."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Chào mừng bạn đến với Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Tắt mẹo"/>
         <text name="rms_tutorial_welcome_enable_button" text="Bật mẹo"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Trượt bánh"/>
         <text name="rms_tutorial_wheel_slip_message" text="Các bánh xe của bạn đang trượt mạnh. Trượt bánh là một trong những yếu tố gây hư hại lớn nhất cho hộp số và khiến lần đến xưởng tiếp theo xảy ra sớm hơn đáng kể."/>
         <text name="rms_tutorial_service_due_soon_title" text="Sắp đến hạn bảo dưỡng"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s sẽ sớm cần bảo dưỡng. Chọn gói được đề xuất tại xưởng: gói này bao gồm các công việc đến hạn. Giới hạn giờ vận hành hoặc thời gian lịch nào đến trước sẽ áp dụng, kể cả khi ít sử dụng. Mức dễ bảo dưỡng thể hiện độ phức tạp của công việc; bảo dưỡng thường xuyên vẫn thực hiện được tại xưởng di động."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s sẽ sớm cần bảo dưỡng. Chọn gói được đề xuất tại xưởng: gói này bao gồm các công việc đến hạn. Giới hạn giờ vận hành hoặc thời gian lịch nào đến trước sẽ áp dụng, kể cả khi ít sử dụng. Mức dễ bảo dưỡng cho biết trang trại của bạn tự sửa được những gì; vẫn có thể bảo dưỡng tại xưởng di động."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Đã quá chu kỳ bảo dưỡng"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Chu kỳ bảo dưỡng của %s đã hết hạn.&#10;&#10;Hãy đến xưởng sớm nhất có thể và chọn “Bảo dưỡng”. Tiếp tục vận hành một chiếc xe đã quá hạn bảo dưỡng làm tăng mạnh nguy cơ xảy ra nhiều hỏng hóc."/>
         <text name="rms_tutorial_steering_title" text="Đánh lái khi đứng yên"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Cần đại tu"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s của bạn đã có dấu hiệu xuống cấp do tuổi tác. Đã đến lúc cân nhắc thay thế hoặc đại tu. Đây là một quy trình lâu và tốn kém, nhưng là cách duy nhất để phục hồi máy về tình trạng ban đầu.&#10;&#10;Tuổi thọ xe được đặt trong cài đặt mod: giá trị càng cao thì xe của bạn càng mòn chậm."/>
         <text name="rms_tutorial_needs_preventive_title" text="Nguy cơ hỏng hóc tăng cao"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Động cơ, hệ thống nhiên liệu hoặc hệ thống làm mát của %s có nguy cơ hỏng cao hơn.&#10;&#10;Bảo dưỡng %s: chỉnh xupáp, kiểm tra kim phun và van hằng nhiệt, nhờ đó giảm nguy cơ này."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Các phụ tùng đã mòn của %s làm tăng nguy cơ hỏng hóc.&#10;&#10;Bảo dưỡng %s: chỉnh xupáp và, trên máy thu hoạch, thay các bộ phận thu hoạch đã mòn, giúp giảm nguy cơ này."/>
         <text name="rms_tutorial_age_degradation_title" text="Xuống cấp do tuổi tác"/>
-        <text name="rms_tutorial_age_degradation_message" text="Trong RMS, xe dần mất một phần hiệu suất ban đầu khi cũ đi.&#10;&#10;Sau khoảng một phần ba tuổi thọ, hao mòn do tuổi tác làm giảm nhẹ các đặc tính quan trọng như công suất hoặc hiệu quả phanh. Sau đó, tác động tăng dần và trở nên rõ rệt khi gần hết tuổi thọ.&#10;&#10;Có thể tắt sự xuống cấp này trong cài đặt mod."/>
+        <text name="rms_tutorial_age_degradation_message" text="Trong RMS, xe dần mất một phần hiệu suất ban đầu khi cũ đi.&#10;&#10;Sau khoảng một phần ba tuổi thọ, hao mòn do tuổi tác làm giảm nhẹ các đặc tính quan trọng như công suất hoặc hiệu quả phanh. Sau đó, tác động tăng dần và trở nên rõ rệt khi gần hết tuổi thọ.&#10;&#10;Phụ tùng mới xóa bỏ hao mòn: đại tu thay các phụ tùng đã mòn."/>
         <text name="rms_tutorial_poor_consumables_title" text="Vật tư tiêu hao chất lượng kém"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s của bạn đã nhận một bộ lọc bị lỗi trong lần bảo dưỡng gần nhất. Điều này xảy ra khi chọn loại giá rẻ.&#10;&#10;Bộ lọc này để lọt chất bẩn: hệ thống mà nó bảo vệ mòn nhanh hơn cho đến khi thay bộ lọc. Một lần bảo dưỡng mới sẽ thay nó. Chỉ kiểm tra toàn diện mới xác định được nó."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Đợt kiểm tra toàn diện đã phát hiện một bộ lọc bị lỗi trên %s, được lắp trong một lần bảo dưỡng. Điều này xảy ra với các loại chất lượng rẻ hơn.&#10;&#10;Bộ lọc này để lọt tạp chất: mạch mà nó bảo vệ mòn nhanh hơn cho đến khi thay bộ lọc. Một lần bảo dưỡng mới sẽ thay nó."/>
         <text name="rms_tutorial_poor_parts_title" text="Linh kiện chất lượng kém"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s của bạn đã nhận một linh kiện chất lượng kém trong quá trình sửa chữa. Hỏng hóc rất có thể sẽ sớm tái xuất hiện.&#10;&#10;Bạn có thể chờ hỏng hóc quay lại hoặc thực hiện kiểm tra toàn diện để xác định chắc chắn linh kiện gây ra vấn đề."/>
+        <text name="rms_tutorial_poor_parts_message" text="Đợt kiểm tra toàn diện đã phát hiện trên %s một phụ tùng lỗi được lắp tại xưởng: nó sẽ hỏng. Điều này xảy ra với các loại chất lượng rẻ hơn.&#10;&#10;Bạn có thể thay nó ngay tại xưởng, hoặc chờ đến khi nó hỏng."/>
         <text name="rms_tutorial_park_brake_title" text="Phanh đỗ"/>
         <text name="rms_tutorial_park_brake_message" text="Phanh đỗ đã được kéo. Phanh tự kéo khi bạn rời khỏi máy đang đứng yên và tự nhả ngay khi bạn nhấn ga trở lại. Phanh cũng tự kéo khi bạn tắt động cơ, hoặc sau 45 giây đứng yên.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Phanh đỗ đã được kéo. Bạn tự kéo và nhả phanh bằng phím riêng: nếu nhấn ga khi vẫn kéo phanh, máy vẫn chạy nhưng bị phanh ghì lại và phanh sẽ mòn.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi: nếu bạn rời khỏi máy mà không kéo phanh, máy có thể trôi."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Phanh đỗ đã được kéo. Bạn tự kéo và nhả phanh bằng phím riêng: nếu nhấn ga khi vẫn kéo phanh, máy vẫn chạy nhưng bị phanh ghì lại và phanh đỗ sẽ mòn.&#10;&#10;Trên dốc, phanh này ngăn máy tự trôi: nếu bạn rời khỏi máy mà không kéo phanh, máy có thể trôi."/>
         <text name="rms_tutorial_preheat_title" text="Sấy nóng động cơ diesel"/>
         <text name="rms_tutorial_preheat_message" text="Trên động cơ diesel nguội, nhấn lệnh khởi động một lần sẽ bật khóa điện và tự động bắt đầu chu trình sấy nóng. Các đèn trên bảng điều khiển sáng trong chốc lát, sau đó đèn sấy tiếp tục sáng cho đến khi động cơ sẵn sàng. Không lặp lại lệnh: bộ đề tự động hoạt động khi đèn tắt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Gài PTO"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Chạy không tải và ngừng hoạt động"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Hao mòn thấp hơn nhiều khi máy chạy mà không làm việc. Khi tắt động cơ, hao mòn trở nên tối thiểu. Khi được cất dưới mái che, hao mòn biến mất hoàn toàn."/>
         <text name="rms_tutorial_idle_deposit_title" text="Chạy không tải kéo dài"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Máy có vẻ đã chạy không tải quá lâu. Thời gian chạy không tải kéo dài không chỉ lãng phí nhiên liệu: theo thời gian, nó còn thúc đẩy sự hình thành cặn trong hệ thống nhiên liệu và làm xấu tình trạng chung của động cơ.&#10;&#10;Nếu không cần dùng máy lúc này, tốt hơn hết hãy tắt động cơ."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Máy có vẻ đã chạy không tải quá lâu. Thời gian chạy không tải kéo dài không chỉ lãng phí nhiên liệu: theo thời gian, nó còn thúc đẩy sự hình thành cặn trong hệ thống nhiên liệu, khiến hệ thống này mòn nhanh hơn.&#10;&#10;Nếu không cần dùng máy lúc này, tốt hơn hết hãy tắt động cơ."/>
         <text name="rms_tutorial_hot_weather_title" text="Thời tiết nóng"/>
         <text name="rms_tutorial_hot_weather_message" text="Hôm nay trời rất nóng. Trong thời tiết này, hãy theo dõi độ sạch của két tản nhiệt và tránh để động cơ quá tải, nếu không việc quá nhiệt chỉ còn là vấn đề thời gian.&#10;&#10;Bạn có thể kiểm tra tình trạng két tản nhiệt: giữ phím %s khi nhìn vào máy. Việc vệ sinh được thực hiện bằng Máy thổi khí nén."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Rơ-moóc quá nặng"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Khó khởi động"/>
         <text name="rms_tutorial_hard_start_message" text="Động cơ của %s khó khởi động. Nguyên nhân có thể là ắc quy yếu, thời tiết giá rét, hỏng hóc cơ học hoặc bộ đề bị mòn.&#10;&#10;Hệ thống điện chịu tải nặng trong lúc khởi động do dòng khởi động rất cao."/>
         <text name="rms_tutorial_low_fuel_title" text="Nhiên liệu dự trữ"/>
-        <text name="rms_tutorial_low_fuel_message" text="Bình nhiên liệu sắp chạm mức dự trữ. Nhiên liệu còn lại càng ít thì bơm nhiên liệu càng phải làm việc nhiều hơn để hút nhiên liệu, và nước cùng cặn dưới đáy bình bị đưa tới bộ lọc, khiến bộ lọc tắc nhanh hơn.&#10;&#10;Tốt nhất nên đổ đầy bình vào cuối ngày: bình đầy ít bị ngưng tụ hơi nước hơn."/>
+        <text name="rms_tutorial_low_fuel_message" text="Bình nhiên liệu sắp chạm mức dự trữ. Nhiên liệu còn lại càng ít thì bơm nhiên liệu càng phải làm việc nhiều hơn để hút nhiên liệu, và nước cùng cặn dưới đáy bình bị đưa tới bộ lọc, khiến bộ lọc tắc nhanh hơn.&#10;&#10;Hãy đổ nhiên liệu càng sớm càng tốt."/>
         <text name="rms_tutorial_lugging_title" text="Động cơ ì ở vòng tua thấp"/>
         <text name="rms_tutorial_lugging_message" text="Động cơ, đặc biệt là hộp số, chịu ảnh hưởng xấu khi động cơ ì ở vòng tua thấp, tức là vòng tua thấp dưới tải nặng. Nông cụ được nối có thể quá nặng đối với máy, hoặc số đang chọn không phù hợp nếu dùng hộp số sàn."/>
         <text name="rms_tutorial_engine_overheat_title" text="Động cơ quá nhiệt"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Va đập mạnh"/>
         <text name="rms_tutorial_terrain_impact_message" text="Hệ thống gầm vừa chịu một cú va đập mạnh. Chướng ngại vật khiến xe dừng khựng lại hoặc giảm tốc đột ngột sẽ làm mòn khung gầm ngay lập tức và khiến hư hỏng tiếp theo đến sớm hơn, thường là ở hệ thống lái hoặc vòng bi.&#10;&#10;Hãy giảm tốc trước chướng ngại vật."/>
         <text name="rms_tutorial_cranking_title" text="Khởi động thường xuyên"/>
-        <text name="rms_tutorial_cranking_message" text="Động cơ đang được khởi động quá thường xuyên. Mỗi lần khởi động đưa dòng điện rất cao qua hệ thống điện, làm dây điện, bộ đề và các bộ phận điện khác mòn nhanh hơn.&#10;&#10;Tránh tắt động cơ trong những lần dừng ngắn."/>
+        <text name="rms_tutorial_cranking_message" text="Máy khởi động đã quay nhiều trong thời gian ngắn. Khi tổng thời gian vượt quá vài giây, mỗi lần khởi động đều làm mòn máy khởi động, ắc quy và phần còn lại của mạch khởi động.&#10;&#10;Tránh tắt máy cho những lần dừng ngắn."/>
         <text name="rms_tutorial_critical_failure_title" text="Hỏng hóc nghiêm trọng"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s của bạn không còn có thể tự di chuyển.&#10;&#10;Xưởng lưu động cho phép thực hiện sửa chữa tạm thời, đủ để máy tự đến xưởng. Nếu không, bạn sẽ phải vận chuyển máy bằng cách khác."/>
+        <text name="rms_tutorial_critical_failure_message" text="%s của bạn không còn có thể tự di chuyển.&#10;&#10;Tùy theo hỏng hóc, xưởng di động có thể sửa ngay tại chỗ, ít nhất là sửa tạm, đủ để máy tự chạy về xưởng. Nếu không, sẽ phải đưa máy đến đó bằng cách khác."/>
         <text name="rms_tutorial_cold_engine_title" text="Động cơ nguội"/>
-        <text name="rms_tutorial_cold_engine_message" text="Hãy làm nóng động cơ từ từ trước khi đặt tải cao. Sử dụng ga và vòng tua động cơ vừa phải cho đến khi động cơ đạt nhiệt độ vận hành."/>
+        <text name="rms_tutorial_cold_engine_message" text="Động cơ đang lạnh: dưới %s, động cơ mòn nhanh hơn ngay khi chạy, bất kể tải, và càng lạnh càng mòn nhiều.&#10;&#10;Dưới %s, cũng đừng vượt quá ba phần tư vòng tua tối đa: hệ thống làm mát sẽ chịu ảnh hưởng."/>
         <text name="rms_tutorial_cold_oil_title" text="Dầu hộp số nguội"/>
-        <text name="rms_tutorial_cold_oil_message" text="Dầu dùng chung cho hộp số và hệ thống thủy lực nóng lên chậm hơn động cơ nhiều. Tránh công việc nặng khi dầu còn nguội; hãy làm nóng dầu từ từ bằng cách lái nhẹ và chỉ vận hành nhẹ hệ thống thủy lực."/>
+        <text name="rms_tutorial_cold_oil_message" text="Dầu hộp số đang lạnh: dưới %s, hộp số mòn nhanh hơn ngay khi động cơ chạy, bất kể tải.&#10;&#10;Dưới %s, dầu thủy lực cũng làm mòn bơm khi bạn dùng hệ thống thủy lực."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Hộp số quá nhiệt"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Dầu hộp số đang bắt đầu quá nhiệt. Nguyên nhân có thể là tải quá nặng, két tản nhiệt bị tắc, thời tiết rất nóng hoặc hệ thống làm mát hộp số gặp lỗi.&#10;&#10;Dầu hộp số nóng lên trên mọi loại máy, không chỉ CVT. Dầu quá nóng làm hộp số mòn và phá hủy các phớt."/>
         <text name="rms_tutorial_overload_indicator_title" text="Cảnh báo quá tải"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Ứng suất hệ truyền động"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Bạn đang rẽ trên bề mặt có độ bám cao khi khóa vi sai đang được gài. Trong khúc cua, các bánh xe bên trong và bên ngoài đi quãng đường khác nhau, nhưng khóa vi sai buộc chúng quay cùng tốc độ: hệ truyền động chịu ứng suất và mòn nhanh hơn. Hãy mở khóa vi sai trước khi rẽ."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Chế độ dẫn động và khóa vi sai"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Máy này cho phép bạn chọn hệ dẫn động: 2WD, 4WD hoặc TỰ ĐỘNG, chế độ này sẽ gài cầu trước ngay khi bánh xe trượt.&#10;&#10;Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt, nhưng gây tải cơ học lớn khi rẽ trên bề mặt có độ bám cao: các bánh xe bên trong và bên ngoài không thể quay cùng tốc độ nên hệ truyền động phải chịu ứng suất. Hãy mở khóa trước khi rẽ."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Máy này cho phép bạn chọn hệ dẫn động: 2WD, 4WD hoặc TỰ ĐỘNG. Ở chế độ TỰ ĐỘNG, cầu trước luôn được gài khi làm việc: cầu trước nhả ra khi vượt quá %s và khi vào cua gấp, rồi gài lại ngay khi bạn phanh.&#10;&#10;Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt và đồng thời gài cầu trước. Khóa tự nhả khi vào cua, khi phanh và khi vượt quá %s: hãy bật lại khi bạn cần."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Máy này cho phép bạn chọn hệ dẫn động: 2WD hoặc 4WD.&#10;&#10;Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt, nhưng gây tải cơ học lớn khi rẽ trên bề mặt có độ bám cao: các bánh xe bên trong và bên ngoài không thể quay cùng tốc độ nên hệ truyền động phải chịu ứng suất. Hãy mở khóa trước khi rẽ."/>
+        <text name="rms_tutorial_diff_lock_title" text="Khóa vi sai"/>
+        <text name="rms_tutorial_diff_lock_message" text="Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt. Khóa tự nhả khi vào cua, khi phanh và khi vượt quá %s: hãy bật lại khi bạn cần."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Khóa vi sai giúp lấy lại độ bám khi bánh xe bị trượt, nhưng gây tải cơ học lớn khi rẽ trên bề mặt có độ bám cao: các bánh xe bên trong và bên ngoài không thể quay cùng tốc độ nên hệ truyền động phải chịu ứng suất. Hãy mở khóa trước khi rẽ."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

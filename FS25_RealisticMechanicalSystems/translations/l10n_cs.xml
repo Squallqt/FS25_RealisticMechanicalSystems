@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="两驱"/>
         <text name="rms_hud_drive_4wd" text="四驱"/>
         <text name="rms_hud_drive_auto" text="自动"/>
+        <text name="rms_hud_pto_rpm_unit" text="转/分"/>
         <text name="rms_drivetrain_mode_4x2" text="两轮驱动（前桥分离）"/>
         <text name="rms_drivetrain_mode_4wd" text="四轮驱动（前桥接合）"/>
         <text name="rms_drivetrain_mode_auto" text="四轮驱动（自动）"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="是否重置教程提示记录并再次显示所有提示？"/>
         <text name="rms_drivetrainEnabled_label" text="四轮驱动与差速锁管理"/>
         <text name="rms_drivetrainEnabled_tooltip" text="设置是否手动控制拖拉机的驱动前桥和差速锁。此选项取代Enhanced Vehicle的差速器控制；如需交还，关闭此选项，再在其菜单中重新启用差速器。"/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="允许自动驱动模式"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="设置驱动模式选择器是否提供AUTO位置：车轮打滑或带负荷作业时接合前桥，在道路上分离。关闭后，留在AUTO的载具恢复为四轮驱动。"/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="此设置要求启用四轮驱动与差速锁管理。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="停车制动"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="设置受管理的载具是否有停车制动：配备CVT或Powershift变速箱的新型机器自动控制，其他机器使用专用按键。此选项取代Enhanced Vehicle的停车制动；如需交还，关闭此选项，再在其菜单中重新启用停车制动。"/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="保养记录"/>
         <text name="rms_ws_label_last_maintenance" text="上次保养"/>
         <text name="rms_ws_task_inspection" text="检查"/>
-        <text name="rms_ws_task_maintenance" text="保养"/>
         <text name="rms_ws_task_overhaul" text="大修"/>
         <text name="rms_ws_info_no_breakdowns" text="没有已确认的故障。检查或保养可以确认机器尚未表现出来的故障。"/>
         <text name="rms_ws_info_warning_unidentified" text="警告灯亮起：有待确认的故障。检查或保养确认后即可修理。"/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="检查"/>
         <text name="rms_fleet_location" text="位置"/>
         <text name="rms_fleet_next_service" text="下次保养"/>
-        <text name="rms_fleet_remaining" text="剩余 %s 小时"/>
-        <text name="rms_fleet_overdue" text="逾期 %s 小时"/>
         <text name="rms_fleet_overdue_label" text="逾期"/>
         <text name="rms_fleet_overdue_count" text="逾期：%d"/>
         <text name="rms_fleet_due_soon_label" text="即将到期"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="押金退还"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="油液液位过低"/>
-        <text name="rms_tutorial_fluid_level_message" text="此机器的一种油液已经降到液位标记以下。&#10;&#10;发动机机油会随工作小时增加而消耗，磨损的发动机会消耗更多机油。冷却液、变速箱油和液压油只会因外流而减少。&#10;&#10;液位刚低于标记时，机器只需补充油液，仍可正常工作。液位越低，泵在坡道上越容易吸入空气：机油压力警告灯会闪烁；在变速箱或液压一侧，泵会发出异响，液压动作变慢。每这样运转一分钟，都会损伤曲轴轴瓦或泵：请停车并补足液位。冷却液、变速箱油或液压油不足的机器也会过热。&#10;&#10;请在商店购买一桶兼容产品，带到机器旁并补足液位。适用于同一回路的产品作用相同；错误油液只会污染对应回路。在经销商处，所需油液会直接供应并收费。"/>
+        <text name="rms_tutorial_fluid_level_message" text="这台机器的某种液体已低于其液位表的标记。机油会随运行小时数减少，磨损的发动机减少得更快；其他液体只会因外流而减少。&#10;&#10;机器仍能正常工作，但液位越低，油泵在坡道上越容易吸入空气：每这样运行一分钟都会损伤轴瓦或油泵。冷却液、变速箱油或液压油不足时，回路温度也会升高。&#10;&#10;请用在商店购买的、该回路专用液体的容器补充：任何其他液体都会污染该回路。经销商也可以补充。"/>
         <text name="rms_tutorial_welcome_dialog_title" text="欢迎使用Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="禁用提示"/>
         <text name="rms_tutorial_welcome_enable_button" text="启用提示"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="车轮打滑"/>
         <text name="rms_tutorial_wheel_slip_message" text="车轮正在严重打滑。打滑是对变速箱破坏最大的因素之一，会明显提前下次前往维修车间的时间。"/>
         <text name="rms_tutorial_service_due_soon_title" text="即将需要保养"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s即将需要保养。请在车间选择推荐套餐，它包括到期作业。运行小时数或日历期限先到者触发保养，即使车辆很少使用也一样。保养便利性表示作业的复杂程度；日常保养仍可在移动车间进行。"/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s即将需要保养。请在车间选择推荐套餐，它包括到期作业。运行小时数或日历期限先到者触发保养，即使车辆很少使用也一样。保养便利性表示您的农场能自行修理哪些项目；保养仍可在移动车间进行。"/>
         <text name="rms_tutorial_service_interval_expired_title" text="保养间隔已超期"/>
         <text name="rms_tutorial_service_interval_expired_message" text="%s的保养间隔已超期。&#10;&#10;请尽快前往维修车间并选择“保养”。继续使用保养逾期的载具会大幅增加同时发生多个故障的风险。"/>
         <text name="rms_tutorial_steering_title" text="原地转向"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s已经显现老化迹象。现在应考虑更换或大修。这项作业耗时长、费用高，但只有这样才能使机器恢复原有状况。&#10;&#10;载具使用期限可在模组设置中调整：数值越高，载具磨损越慢。"/>
         <text name="rms_tutorial_needs_preventive_title" text="故障风险升高"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s 的发动机、燃油系统或冷却系统发生故障的风险升高。&#10;&#10;%s保养：调整气门，检查喷油器和节温器，从而降低该风险。"/>
+        <text name="rms_tutorial_needs_preventive_message" text="%s的磨损零件正在提高故障风险。&#10;&#10;%s保养：调整气门，并在收获机上更换磨损的收获部件，从而降低这一风险。"/>
         <text name="rms_tutorial_age_degradation_title" text="老化导致的退化"/>
-        <text name="rms_tutorial_age_degradation_message" text="在RMS中，载具会随使用年限增加而逐步失去一部分原有性能。&#10;&#10;达到约三分之一使用期限后，老化磨损会略微降低功率和制动等重要特性。此影响随后会不断加剧，并在使用期限末期变得十分明显。&#10;&#10;可以在模组设置中禁用这种退化。"/>
+        <text name="rms_tutorial_age_degradation_message" text="在RMS中，载具会随使用年限增加而逐步失去一部分原有性能。&#10;&#10;达到约三分之一使用期限后，老化磨损会略微降低功率和制动等重要特性。此影响随后会不断加剧，并在使用期限末期变得十分明显。&#10;&#10;换上新零件即可消除磨损：大修会更换磨损的零件。"/>
         <text name="rms_tutorial_poor_consumables_title" text="低质量消耗品"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s在上次保养中装上了质量有问题的滤清器。选择便宜等级时会出现这种情况。&#10;&#10;这个滤清器会让杂质通过，在更换滤清器之前，它所保护的系统磨损更快。再次进行保养即可更换。只有全面检查才能确定这个滤清器。"/>
+        <text name="rms_tutorial_poor_consumables_message" text="全面检查在%s上发现了一个保养时装上的劣质滤清器。较便宜的品质会出现这种情况。&#10;&#10;该滤清器会让杂质通过：在更换滤清器之前，它保护的回路会加速磨损。下一次保养会将其更换。"/>
         <text name="rms_tutorial_poor_parts_title" text="低质量部件"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s在修理时使用了低质量部件。故障很可能会在不久后再次出现。&#10;&#10;可以等待故障复发，也可以进行全面检查，以可靠确定有质量问题的部件。"/>
+        <text name="rms_tutorial_poor_parts_message" text="全面检查在%s上发现了一个在车间装上的劣质零件：它将会出现故障。较便宜的品质会出现这种情况。&#10;&#10;您可以现在就去车间更换，或等到它出现故障。"/>
         <text name="rms_tutorial_park_brake_title" text="停车制动"/>
         <text name="rms_tutorial_park_brake_message" text="停车制动已经启用。离开静止的机器时，它会自动启用；再次踩下油门时则会自动解除。关闭发动机时，或静止满45秒后，它也会自动启用。&#10;&#10;在坡道上，停车制动可以防止机器自行滑动。"/>
-        <text name="rms_tutorial_park_brake_manual_message" text="停车制动已经启用。需要使用专用按键自行启用和解除：制动启用时踩下油门，机器会顶着制动行驶，制动器会磨损。&#10;&#10;在坡道上，停车制动可以防止机器自行滑动：未启用停车制动就离开机器，机器可能会自行滑动。"/>
+        <text name="rms_tutorial_park_brake_manual_message" text="停车制动已经启用。需要使用专用按键自行启用和解除：制动启用时踩下油门，机器会顶着制动行驶，停车制动器会磨损。&#10;&#10;在坡道上，停车制动可以防止机器自行滑动：未启用停车制动就离开机器，机器可能会自行滑动。"/>
         <text name="rms_tutorial_preheat_title" text="柴油机预热"/>
         <text name="rms_tutorial_preheat_message" text="柴油发动机处于冷机状态时，按一次启动控制即可打开点火开关，并自动开始预热塞循环。仪表板指示灯会短暂亮起，随后预热灯保持点亮，直到发动机准备就绪。不要重复操作：预热灯关闭后，启动机会自动接合。"/>
         <text name="rms_tutorial_pto_engagement_title" text="动力输出轴接合"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="空转与停用"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="机器运行但不作业时，磨损会低得多。发动机关闭后，磨损降至最低；存放在遮蔽物下时，磨损会完全停止。"/>
         <text name="rms_tutorial_idle_deposit_title" text="长时间空转"/>
-        <text name="rms_tutorial_idle_deposit_message" text="机器似乎已经空转过久。长时间空转不仅浪费燃油，久而久之还会使燃油系统形成沉积物，并损害发动机的整体状况。&#10;&#10;如果目前不需要使用机器，最好关闭发动机。"/>
+        <text name="rms_tutorial_idle_deposit_message" text="机器似乎已经空转过久。长时间空转不仅浪费燃油，久而久之还会使燃油系统形成沉积物，加速其磨损。&#10;&#10;如果目前不需要使用机器，最好关闭发动机。"/>
         <text name="rms_tutorial_hot_weather_title" text="高温天气"/>
         <text name="rms_tutorial_hot_weather_message" text="今天气温很高。在这种天气下，请留意散热器是否清洁，并避免发动机过载，否则过热只是时间问题。&#10;&#10;可以检查散热器状况：看向机器时按住%s键。请使用压缩空气吹尘器清洁。"/>
         <text name="rms_tutorial_heavy_trailer_title" text="挂车过重"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="启动困难"/>
         <text name="rms_tutorial_hard_start_message" text="%s的发动机难以启动。电池电量低、极低温、机械故障或启动机磨损都可能是原因。&#10;&#10;启动时的高启动电流会使电气系统承受很大负载。"/>
         <text name="rms_tutorial_low_fuel_title" text="燃油余量低"/>
-        <text name="rms_tutorial_low_fuel_message" text="油箱接近备用油量。剩余燃油越少，燃油泵吸取燃油时负担越重，油箱底部的水分和沉积物也会被送入滤清器，使其更快堵塞。&#10;&#10;最好在一天结束时加满油：加满的油箱产生的冷凝水更少。"/>
+        <text name="rms_tutorial_low_fuel_message" text="油箱接近备用油量。剩余燃油越少，燃油泵吸取燃油时负担越重，油箱底部的水分和沉积物也会被送入滤清器，使其更快堵塞。&#10;&#10;请尽快加油。"/>
         <text name="rms_tutorial_lugging_title" text="发动机低转速重负荷"/>
         <text name="rms_tutorial_lugging_message" text="发动机，尤其是变速箱，在低转速重负荷下会受到损害。所连接的农具可能对机器而言过重；如果使用手动变速箱，也可能是当前挡位不合适。"/>
         <text name="rms_tutorial_engine_overheat_title" text="发动机过热"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="剧烈冲击"/>
         <text name="rms_tutorial_terrain_impact_message" text="行走机构刚刚受到剧烈冲击。撞上使机器突然停下或急速减速的障碍物，会当场损伤底盘，并使下一次故障提前到来，多数发生在转向或轴承上。&#10;&#10;请在障碍物前减速。"/>
         <text name="rms_tutorial_cranking_title" text="频繁启动"/>
-        <text name="rms_tutorial_cranking_message" text="发动机启动过于频繁。每次启动都会让很大的电流通过电气系统，加快线束、启动机和其他电气部件磨损。&#10;&#10;短暂停工时请避免关闭发动机。"/>
+        <text name="rms_tutorial_cranking_message" text="起动机在短时间内运转过多。累计超过几秒后，每次起动都会磨损起动机、电池和起动电路的其他部件。&#10;&#10;短暂停顿时请避免关闭发动机。"/>
         <text name="rms_tutorial_critical_failure_title" text="极重度故障"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s已经无法依靠自身动力移动。&#10;&#10;移动维修车间可以进行临时修理，使机器足以自行前往维修车间。否则必须通过其他方式将机器拖回。"/>
+        <text name="rms_tutorial_critical_failure_message" text="%s已经无法依靠自身动力移动。&#10;&#10;视故障而定，移动车间可在现场进行修理，至少是临时修理，足以让机器自行开到车间。否则就需要用其他方式把它运过去。"/>
         <text name="rms_tutorial_cold_engine_title" text="发动机温度低"/>
-        <text name="rms_tutorial_cold_engine_message" text="施加高负载前，请让发动机逐步升温。在达到工作温度前，请使用适中的油门和发动机转速。"/>
+        <text name="rms_tutorial_cold_engine_message" text="发动机温度过低：低于%s时，只要运转就会加速磨损，与负荷无关，温度越低磨损越严重。&#10;&#10;低于%s时，也请不要超过最高转速的四分之三：这会损伤冷却系统。"/>
         <text name="rms_tutorial_cold_oil_title" text="变速箱油温低"/>
-        <text name="rms_tutorial_cold_oil_message" text="变速箱与液压油的升温速度远慢于发动机。油温较低时请避免重负荷作业；通过缓慢行驶和轻度使用液压系统让油液逐步升温。"/>
+        <text name="rms_tutorial_cold_oil_message" text="变速箱油温度过低：低于%s时，只要发动机运转，变速箱就会加速磨损，与负荷无关。&#10;&#10;液压油低于%s时，使用液压系统也会磨损液压泵。"/>
         <text name="rms_tutorial_transmission_overheat_title" text="变速箱过热"/>
         <text name="rms_tutorial_transmission_overheat_message" text="变速箱油开始过热。原因可能是负载过大、散热器堵塞、气温很高，或变速箱冷却系统存在故障。&#10;&#10;所有机器的变速箱油都会升温，并非只有CVT如此。油温过高会磨损变速箱并损坏其密封件。"/>
         <text name="rms_tutorial_overload_indicator_title" text="过载警告"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="传动系统应力"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="差速锁保持锁定时，正在高附着力地面转弯。转弯时，内外侧车轮行驶的距离不同，但差速锁强制它们以相同速度旋转，因此传动系统承受应力，变速箱磨损加快。请在转弯前解除差速锁。"/>
         <text name="rms_tutorial_drivetrain_modes_title" text="驱动模式与差速锁"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="这台机器可选择两轮驱动、四轮驱动或自动模式；自动模式会在车轮开始打滑时接合前桥。&#10;&#10;差速锁能在失去附着力时获得牵引力，但在高附着力地面转弯会付出很大代价：内外侧车轮无法以相同速度旋转，传动系统会承受全部应力。请在转弯前解除差速锁。"/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="这台机器可选择两轮驱动、四轮驱动或自动模式。自动模式下，作业时前桥保持接合；车速超过%s或急转弯时前桥断开，一踩制动便重新接合。&#10;&#10;差速锁能在失去附着力时获得牵引力，并同时接合前桥。转弯、制动或车速超过%s时，差速锁会自动解除；需要时请重新接合。"/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="这台机器可选择两轮驱动或四轮驱动。&#10;&#10;差速锁能在失去附着力时获得牵引力，但在高附着力地面转弯会付出很大代价：内外侧车轮无法以相同速度旋转，传动系统会承受全部应力。请在转弯前解除差速锁。"/>
+        <text name="rms_tutorial_diff_lock_title" text="差速锁"/>
+        <text name="rms_tutorial_diff_lock_message" text="差速锁能在失去附着力时获得牵引力。转弯、制动或车速超过%s时，差速锁会自动解除；需要时请重新接合。"/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="差速锁能在失去附着力时获得牵引力，但在高附着力地面转弯会付出很大代价：内外侧车轮无法以相同速度旋转，传动系统会承受全部应力。请在转弯前解除差速锁。"/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

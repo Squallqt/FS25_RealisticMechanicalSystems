@@ -53,7 +53,8 @@ SIMULATION
 - Diesel preheating that takes longer as it gets colder, and its own glow-plug breakdown
 - Exhaust smoke driven by vehicle age, engine wear, load and active faults: black soot, blue oil or white unburnt fuel; a hot engine makes the air shimmer above its pipe, even with no smoke
 - AdBlue on modern diesels, burnt with the diesel and no longer filled by the diesel nozzle; its gauge beside the fuel lights its lamp below 10 %, and Stage IV and V engines lose power below 2.5 % and more once empty, until AdBlue is poured in
-- Drivetrain management on tractors: 2WD / 4WD / AUTO modes and differential locks
+- On machines with an engine controller or an electric drive, the dashboard shows the time since the last service against its interval, the voltage and the gearbox oil temperature where available. The drivetrain card shows the rated speed of the PTO or header drive. The symbol turns green when the drive runs. A dash means the speed is unavailable. The card also shows the drive mode and wheel slip where fitted. The power and coolant gauges reach the same height. Older machines show the lamps of their year.
+- Drivetrain management on tractors: 2WD / 4WD modes, AUTO on tractors from 1993, and differential locks; articulated machines in all-wheel drive at all times
 - Parking brake on every machine: recent CVT and powershift machines apply and release it on their own, the others use a hand brake; left released, the machine can roll down a slope
 - Original reliability shown as Average, Fair, Good or Very good; ease of maintenance as Easy, Average or Demanding, by what your farm repairs on its own. Mechanical condition and service deadlines remain separate
 - Multiplayer and dedicated server, 27 languages
@@ -74,30 +75,72 @@ Mod for Farming Simulator
 Issues & suggestions: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.3:
-- Added the heat of the exhaust: the air shimmers above the pipe of a hot engine, more under load and during a particulate filter regeneration
-- Added AdBlue: burnt with the diesel and filled on its own, its gauge beside the fuel and its lamp lit below 10 %; Stage IV and V engines lose power below 2.5 % and more once empty. TotalEnergies AdBlue comes in a 10 L can, a 208 L drum (alone or two to a pallet) and a 1,000 L tank; the drum pump also fits the AdBlue drum and tank
-- Added the header drive of combines and forage harvesters: its belt, slip clutch and driveline wear and break, the slip clutch heard each time it slips; engaged at high revs, the header wears its slip clutch about five times more than at idle, a slip clutch slipping more than a few seconds burns out, and that of a header left standing two weeks seizes until the header is greased
-- Added the average fuel consumption to the HUD, per hour and per hectare worked since the trip meter reset
-- Reworked the oil and coolant containers: Motorex, Motul and FUCHS cans, jerricans and drums take their brand's colours and product labels; in a vehicle, the fill display shows the product's name in full beside an icon of its fluid, and on foot the info box is titled with the brand and product above the liters left; bought cans stand upright and stay in your hands
-- Reworked the container sizes: 20 L jerricans instead of 25 L, and drums of 200 L (Motorex), 205 L (FUCHS) or 208 L (Motul), sold alone or two to a pallet
-- Reworked the debug window: three views (Overview, Parts, Machine) browsed with the mouse and kept on screen while you drive, and the detailed log in a setting of its own
-- Reworked the sounds
-- Reworked the grease points of implements to follow how each one is built: a pallet fork whose tines only slide has none, a loader tool greases each arm its cylinder moves, a trailer its own axles and brakes and a three-way tipper its sides too, a body on a hook or a carrier only its own parts, and balers, rakes, tedders, mowers, cultivators, disc harrows, rollers, headers and potato harvesters follow their size and build
-- Reworked the weight card of the HUD: a weight icon, as on the fuel card, and figures no longer coloured by the load
-- Reworked the battery trolley: its charger and diagnostic tool reach long machines along their whole length, its charger keeps charging during workshop work, and the tools put away on it stay there after a dedicated server restart
-- Reworked the ease of maintenance to show what your farm repairs on its own: Easy without a controller, Average when the electronics need the diagnostic tool, Demanding on electric vehicles; each job now takes its own time, whatever the gearbox
-- Reworked the repair of electric vehicles: only the dealer works on their high voltage, overhauls included
-- Fixed PTO shafts of mounted implements wearing and breaking when raised with the PTO turning
+- Added heat shimmer above the exhaust pipe of hot engines
+- Added the AdBlue gauge and warning lamp to the HUD
+- Added warning messages when AdBlue runs low or empty
+- Added power loss on Stage IV and V engines when AdBlue runs low
+- Added AdBlue drums and tanks to the drum pump
+- Added the AdBlue tank level code to the diagnostic tool
+- Added wear and breakdowns to the header drive of combines and forage harvesters
+- Added warranty refusal for header drive faults after late greasing or a seized slip clutch
+- Added the sounds of the header belt squealing, slip clutch slipping and driveline breaking
+- Added wear and greasing to the driveshafts of self-propelled mowers
+- Added tutorial tips on engaging a header and on a header left standing
+- Added the average fuel consumption per hour and per hectare to the HUD
+- Added the hours run since the last service, out of its interval, to the dashboard screen
+- Added the gearbox oil temperature to the dashboard screen of combustion machines other than cars
+- Added the rated speed of the PTO or header drive to the dashboard
+- Added TotalEnergies AdBlue 10 L can
+- Added TotalEnergies AdBlue 208 L drum, alone or two to a pallet
+- Added TotalEnergies AdBlue 1,000 L tank
+- Changed AdBlue consumption to follow the diesel burnt, by brand
+- Changed AdBlue so that filling up with diesel no longer fills it
+- Changed the AUTO drive mode to tractors from 1993 only
+- Changed the front axle in AUTO to follow speed, steering and braking
+- Changed the differential lock of tractors from 1993 to release with speed, steering and braking
+- Changed the differential lock of tractors from 1993 to engage the front axle with it
+- Changed articulated machines to drive all their wheels at all times
+- Removed the Allow AUTO Drive Mode setting
+- Changed the engine load of machines with a controller or an electric drive to a power gauge
+- Changed the front axle, differential lock and wheel slip display of the dashboard
+- Changed the service deadline of the fleet page to hours and months run out of the interval
+- Changed ease of maintenance to show what your farm repairs on its own
+- Changed workshop jobs to take their own time, whatever the gearbox
+- Changed the high-voltage repairs and overhauls of electric vehicles to the dealer only
+- Changed jerricans to 20 L instead of 25 L
+- Changed drums to 200 L (Motorex), 205 L (FUCHS) and 208 L (Motul)
+- Added drums sold two to a pallet
+- Improved Motorex, Motul and FUCHS cans, jerricans and drums with their brand colours and labels
+- Changed the vehicle fill display of oils and coolants to show the product name and a fluid icon
+- Improved the info box of containers on foot with the brand and product as title
+- Adjusted the grease points of implements to follow how each one is built
+- Debug window: three views, Overview, Parts and Machine, browsed with the mouse
+- Debug window: the detailed log has a setting of its own
+- Improved the HUD weight card with a weight icon
+- Adjusted the volume, range and cabin muffling of the RMS sounds
+- Improved texts and translations of tutorial tips, engine oil message and workshop messages
+- Improved the performance of workshop menus, exhaust effects and resale price updates
+- Removed PTO shaft wear on mounted implements raised with the PTO turning
+- Added the production years of the Tony 10900 TTR and Faresin Leader PF 2.26
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
-- Fixed the breakdowns and worn parts ticked in Diagnostic and Estimate, and the estimate of a running procedure, on multiplayer servers
-- Fixed the Condition card showing parts replaced since the last inspection as failed or worn
-- Fixed the recommended maintenance leaving the transmission oil due just after an engine oil change
-- Fixed grain headers asking for the daily greasing of a tractor PTO shaft: their driveline takes 3 points every 50 hours, and windrower headers, driven by hydraulics, none
-- Fixed the mobile and personal workshops refusing the Complete inspection and electrical repairs of machines without a controller, which the diagnostic tool cannot connect to
-- Fixed a machine at the workshop hiding its work in progress with its battery disconnected or a broken-down engine, and able to crank in the last case
-- Fixed RMS messages covering the machine name and the game's prompts at the bottom of the screen
-- Fixed the fuel consumption shown in the HUD jumping for an instant
-- Fixed the heavy trailer tutorial tip: a load over 4.5 times the tractor's weight wears its brakes, not its transmission
+- Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
+- Fixed the estimate of a running procedure on multiplayer servers
+- Fixed the Condition card showing replaced parts as failed or worn
+- Fixed the recommended maintenance leaving the transmission oil due after an engine oil change
+- Fixed grain headers asking for the daily greasing of a PTO shaft
+- Fixed mobile and personal workshops refusing Complete inspections of machines without a controller
+- Fixed mobile and personal workshops refusing electrical repairs on machines without a controller
+- Fixed the work in progress at the workshop hidden by a disconnected battery or a broken engine
+- Fixed a machine at the workshop able to crank with a broken-down engine
+- Fixed the trolley charger stopping its charge while the machine is in the workshop
+- Fixed tools put away on the trolley returning to Hand Tools after a dedicated server restart
+- Fixed the trolley charger and diagnostic tool not reaching long machines
+- Fixed RMS messages covering the vehicle name and the game's prompts at the bottom of the screen
+- Fixed the heavy trailer tutorial tip naming the transmission instead of the brakes
+- Fixed tutorial tips losing their paragraph breaks
+- Fixed the defective filter and part tips showing before an inspection found them
+- Fixed wrong tutorial tips on ageing, cold, fuel, starting, breakdowns, servicing and the hand brake
+- Fixed sold or returned machines staying on the fleet page for a few seconds
 
 Changelog 1.0.0.0-beta.2:
 - Added the required tractor power to the implement cards of the fleet page
@@ -368,7 +411,8 @@ SIMULATION
 - Diesel-Vorglühen, das bei Kälte länger dauert, mit eigener Glühkerzenstörung
 - Abgasrauch nach Fahrzeugalter, Motorverschleiß, Last und aktiven Defekten: schwarzer Ruß, blaues Öl oder weißer unverbrannter Kraftstoff; ein warmer Motor lässt die Luft über dem Auspuff flimmern, auch ohne Rauch
 - AdBlue bei modernen Dieselmotoren, mit dem Diesel verbraucht und nicht mehr von der Dieselzapfpistole gefüllt; seine Anzeige neben dem Kraftstoff schaltet unter 10 % die Kontrollleuchte ein, und Motoren der Stufen IV und V verlieren unter 2,5 % Leistung und leer noch mehr, bis AdBlue nachgefüllt wird
-- Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad / AUTO und Differentialsperren
+- Bei Maschinen mit Motorsteuergerät oder Elektroantrieb zeigt das Armaturenbrett die Zeit seit der letzten Wartung im Verhältnis zum Intervall sowie die Spannung und, falls vorhanden, die Getriebeöltemperatur. Die Karte zeigt die Nenndrehzahl der Zapfwelle oder des Vorsatzantriebs. Das Symbol leuchtet grün, sobald der Antrieb läuft. Ein Strich zeigt an, dass die Drehzahl nicht verfügbar ist. Je nach Ausstattung erscheinen auch der Antriebsmodus und der Radschlupf. Leistungs- und Kühlmittelanzeige reichen gleich hoch. Ältere Maschinen zeigen die Kontrollleuchten ihres Baujahrs.
+- Antriebsstrangverwaltung für Traktoren: Hinterradantrieb / Allrad, AUTO bei Traktoren ab Baujahr 1993, und Differentialsperren; knickgelenkte Maschinen fahren immer mit Allrad
 - Feststellbremse an jeder Maschine: Neuere Maschinen mit CVT- oder Powershift-Getriebe ziehen und lösen sie von selbst, die anderen haben eine Handbremse; ist sie gelöst, kann die Maschine am Hang wegrollen
 - Ursprüngliche Zuverlässigkeit als Durchschnittlich, Ordentlich, Gut oder Sehr gut; Wartbarkeit als Einfach, Durchschnittlich oder Anspruchsvoll, je nachdem, was der eigene Betrieb selbst repariert. Mechanischer Zustand und Wartungsfristen bleiben getrennt
 - Mehrspieler und Dedicated Server, 27 Sprachen
@@ -389,30 +433,72 @@ Mod for Farming Simulator
 Issues & Vorschläge: https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.3:
-- Abgashitze hinzugefügt: Über dem Auspuff eines warmen Motors flimmert die Luft, stärker unter Last und während einer Regeneration des Partikelfilters
-- AdBlue hinzugefügt: mit dem Diesel verbraucht und eigens nachgefüllt, seine Anzeige neben dem Kraftstoff und seine Kontrollleuchte unter 10 % an; Motoren der Stufen IV und V verlieren unter 2,5 % Leistung und leer noch mehr. TotalEnergies AdBlue gibt es als 10-L-Kanister, 208-L-Fass (einzeln oder zu zweit auf einer Palette) und 1.000-L-Tank; die Fasspumpe passt auch auf AdBlue-Fass und -Tank
-- Vorsatzantrieb von Mähdreschern und Feldhäckslern hinzugefügt: Riemen, Rutschkupplung und Gelenkwelle verschleißen und brechen, die Rutschkupplung hörbar, sobald sie rutscht; bei hoher Drehzahl eingekuppelt verschleißt der Vorsatz seine Rutschkupplung etwa fünfmal stärker als im Leerlauf, eine Rutschkupplung, die länger als wenige Sekunden rutscht, brennt durch, und die eines zwei Wochen abgestellten Vorsatzes rostet fest, bis er abgeschmiert wird
-- Durchschnittsverbrauch im HUD hinzugefügt, je Stunde und je bearbeitetem Hektar seit dem Zurücksetzen des Tageskilometerzählers
-- Öl- und Kühlmittelbehälter überarbeitet: Kanister und Fässer von Motorex, Motul und FUCHS tragen die Farben ihrer Marke und ihre Produktetiketten; im Fahrzeug zeigt die Füllstandsanzeige den Produktnamen vollständig neben einem Symbol seiner Flüssigkeit, und zu Fuß trägt die Infobox Marke und Produkt als Titel über der verbleibenden Literzahl; gekaufte Kanister stehen aufrecht und bleiben in der Hand
-- Gebindegrößen überarbeitet: 20-L-Kanister statt 25 L und Fässer mit 200 L (Motorex), 205 L (FUCHS) oder 208 L (Motul), einzeln oder zu zweit auf einer Palette
-- Debug-Fenster überarbeitet: drei Ansichten (Overview, Parts, Machine), mit der Maus durchblättert und beim Fahren eingeblendet, und das detaillierte Protokoll mit eigener Einstellung
-- Sounds überarbeitet
-- Schmierstellen der Anbaugeräte nach ihrem Aufbau überarbeitet: Eine Palettengabel, deren Zinken nur seitlich verschoben werden, hat keine, ein Ladewerkzeug schmiert jeden Arm, den sein Zylinder bewegt, ein Anhänger seine eigenen Achsen und Bremsen und ein Dreiseitenkipper auch seine Bordwände, ein Aufbau am Haken oder auf einem Träger nur seine eigenen Teile, und Pressen, Schwader, Wender, Mähwerke, Grubber, Scheibeneggen, Walzen, Schneidwerke und Kartoffelroder folgen ihrer Größe und Bauart
-- Gewichtskarte im HUD überarbeitet: ein Gewichtssymbol wie auf der Kraftstoffkarte, und die Zahlen werden nicht mehr nach der Last eingefärbt
-- Batteriewagen überarbeitet: Ladegerät und Diagnosegerät erreichen lange Maschinen auf ihrer ganzen Länge, das Ladegerät lädt auch während Werkstattarbeiten weiter, und die darauf abgelegten Werkzeuge bleiben nach einem Neustart des dedizierten Servers dort
-- Wartbarkeit überarbeitet: Sie zeigt, was der eigene Betrieb selbst repariert, Einfach ohne Steuergerät, Durchschnittlich, wenn die Elektronik das Diagnosegerät braucht, Anspruchsvoll bei Elektrofahrzeugen; jede Arbeit dauert jetzt ihre eigene Zeit, unabhängig vom Getriebe
-- Reparatur von Elektrofahrzeugen überarbeitet: Nur der Händler arbeitet an ihrer Hochvoltanlage, Überholungen eingeschlossen
-- Verschleiß und Bruch der Gelenkwellen von Anbaugeräten behoben, die mit laufender Zapfwelle angehoben werden
+- Hitzeflimmern über dem Auspuff warmer Motoren hinzugefügt
+- AdBlue-Anzeige und Kontrollleuchte im HUD hinzugefügt
+- Warnmeldungen bei knappem oder leerem AdBlue hinzugefügt
+- Leistungsverlust bei Motoren der Stufen IV und V bei knappem AdBlue hinzugefügt
+- AdBlue-Fässer und -Tanks für die Fasspumpe hinzugefügt
+- Fehlercode für den AdBlue-Tankfüllstand im Diagnosegerät hinzugefügt
+- Verschleiß und Störungen des Vorsatzantriebs von Mähdreschern und Feldhäckslern hinzugefügt
+- Garantieablehnung für Störungen des Vorsatzantriebs nach verspäteter Schmierung oder festgerostener Rutschkupplung hinzugefügt
+- Geräusche des quietschenden Riemens, der rutschenden Rutschkupplung und der brechenden Gelenkwelle des Vorsatzes hinzugefügt
+- Verschleiß und Schmierung der Gelenkwellen selbstfahrender Mäher hinzugefügt
+- Tutorial-Tipps zum Einkuppeln des Vorsatzes und zu einem abgestellten Vorsatz hinzugefügt
+- Durchschnittsverbrauch je Stunde und je Hektar im HUD hinzugefügt
+- Betriebsstunden seit der letzten Wartung im Verhältnis zum Intervall auf dem Bildschirm des Armaturenbretts hinzugefügt
+- Getriebeöltemperatur auf dem Bildschirm des Armaturenbretts von Verbrennungsmaschinen außer Autos hinzugefügt
+- Nenndrehzahl der Zapfwelle oder des Vorsatzantriebs im Armaturenbrett hinzugefügt
+- TotalEnergies AdBlue 10-L-Kanister hinzugefügt
+- TotalEnergies AdBlue 208-L-Fass, einzeln oder zu zweit auf einer Palette, hinzugefügt
+- TotalEnergies AdBlue 1.000-L-Tank hinzugefügt
+- AdBlue-Verbrauch geändert: Er folgt dem verbrannten Diesel, je nach Marke
+- AdBlue geändert: Das Tanken von Diesel füllt es nicht mehr nach
+- AUTO-Antriebsmodus geändert: nur noch bei Traktoren ab Baujahr 1993
+- Vorderachse in AUTO geändert: Sie folgt Geschwindigkeit, Lenkeinschlag und Bremsen
+- Differentialsperre von Traktoren ab Baujahr 1993 geändert: Sie löst sich je nach Geschwindigkeit, Lenkeinschlag und Bremsen
+- Differentialsperre von Traktoren ab Baujahr 1993 geändert: Sie schaltet die Vorderachse mit zu
+- Knickgelenkte Maschinen geändert: Sie fahren immer mit Allrad
+- Einstellung „AUTO-Antriebsmodus erlauben“ entfernt
+- Motorlast von Maschinen mit Steuergerät oder Elektroantrieb geändert: eine Leistungsanzeige
+- Anzeige von Vorderachse, Differentialsperre und Radschlupf im Armaturenbrett geändert
+- Wartungsfrist der Fuhrpark-Seite geändert: die abgelaufenen Stunden und Monate im Verhältnis zum Intervall
+- Wartbarkeit geändert: Sie zeigt, was der eigene Betrieb selbst repariert
+- Werkstattarbeiten geändert: Jede dauert ihre eigene Zeit, unabhängig vom Getriebe
+- Reparatur von Elektrofahrzeugen geändert: Hochvolt-Arbeiten, Überholungen eingeschlossen, nur noch beim Händler
+- Kanister geändert: 20 L statt 25 L
+- Fässer geändert: 200 L (Motorex), 205 L (FUCHS) und 208 L (Motul)
+- Fässer, die zu zweit auf einer Palette verkauft werden, hinzugefügt
+- Kanister und Fässer von Motorex, Motul und FUCHS verbessert: Farben und Etiketten ihrer Marke
+- Füllstandsanzeige im Fahrzeug für Öle und Kühlmittel geändert: Produktname und Symbol ihrer Flüssigkeit
+- Infobox der Behälter zu Fuß verbessert: Marke und Produkt als Titel
+- Schmierstellen der Anbaugeräte nach ihrem Aufbau angepasst
+- Debug-Fenster: drei Ansichten, Overview, Parts und Machine, mit der Maus durchblättert
+- Debug-Fenster: Das detaillierte Protokoll hat eine eigene Einstellung
+- Gewichtskarte im HUD verbessert: ein Gewichtssymbol
+- Lautstärke, Reichweite und Dämpfung in der Kabine der RMS-Sounds angepasst
+- Texte und Übersetzungen der Tutorial-Tipps, der Motorölmeldung und der Werkstattmeldungen verbessert
+- Performance der Werkstattmenüs, der Abgaseffekte und der Aktualisierung von Verkaufspreisen verbessert
+- Verschleiß der Gelenkwelle von Anbaugeräten entfernt, die mit laufender Zapfwelle angehoben werden
+- Baujahre von Tony 10900 TTR und Faresin Leader PF 2.26 hinzugefügt
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
-- In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile sowie Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
-- Zustandskarte behoben, die seit der letzten Inspektion ersetzte Teile als ausgefallen oder verschlissen zeigte
+- In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile auf Multiplayer-Servern behoben
+- Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
+- Zustandskarte behoben, die ersetzte Teile als ausgefallen oder verschlissen zeigte
 - Empfohlene Wartung behoben, die den Getriebeölwechsel kurz nach dem Motorölwechsel fällig ließ
-- Getreideschneidwerke behoben, die das tägliche Abschmieren einer Traktor-Gelenkwelle verlangten: Ihre Gelenkwelle hat 3 Schmierstellen alle 50 Stunden, hydraulisch angetriebene Schwadmäher-Vorsätze keine
-- Mobile und eigene Werkstatt behoben, die an Maschinen ohne Steuergerät, an die sich das Diagnosegerät nicht anschließen lässt, die vollständige Inspektion und elektrische Reparaturen verweigerten
-- Maschine in der Werkstatt behoben, die bei getrennter Batterie oder Motorschaden die laufende Arbeit nicht anzeigte und im letzten Fall den Anlasser drehen lassen konnte
+- Getreideschneidwerke behoben, die das tägliche Abschmieren einer Gelenkwelle verlangten
+- Mobile und eigene Werkstatt behoben, die die vollständige Inspektion von Maschinen ohne Steuergerät verweigerten
+- Mobile und eigene Werkstatt behoben, die elektrische Reparaturen an Maschinen ohne Steuergerät verweigerten
+- Laufende Arbeit in der Werkstatt behoben, die bei getrennter Batterie oder Motorschaden nicht angezeigt wurde
+- Maschine in der Werkstatt behoben, die bei Motorschaden den Anlasser drehen lassen konnte
+- Ladegerät des Batteriewagens behoben, das die Ladung beendete, solange die Maschine in der Werkstatt stand
+- Auf dem Wagen abgelegte Werkzeuge behoben, die nach einem Neustart des dedizierten Servers ins Menü Werkzeuge zurückkehrten
+- Ladegerät und Diagnosegerät des Batteriewagens behoben, die lange Maschinen nicht erreichten
 - RMS-Meldungen behoben, die den Maschinennamen und die Hinweise des Spiels am unteren Bildschirmrand verdeckten
-- Kurze Sprünge des im HUD angezeigten Kraftstoffverbrauchs behoben
-- Tutorial-Tipp zum schweren Anhänger behoben: Eine Last über dem 4,5-Fachen des Traktorgewichts verschleißt die Bremsen, nicht das Getriebe
+- Tutorial-Tipp zum schweren Anhänger behoben, der das Getriebe statt der Bremsen nannte
+- Tutorial-Tipps behoben, die ihre Absätze verloren
+- Tipps zu defektem Filter und Teil behoben, die erschienen, bevor eine Inspektion sie fand
+- Fehlerhafte Tutorial-Tipps zu Alter, Kälte, Kraftstoff, Starten, Pannen, Wartung und Handbremse behoben
+- Verkaufte oder zurückgegebene Maschinen behoben, die noch einige Sekunden auf der Fuhrpark-Seite blieben
 
 Changelog 1.0.0.0-beta.2:
 - Benötigte Traktorleistung auf den Gerätekarten der Fuhrpark-Seite hinzugefügt
@@ -683,7 +769,8 @@ SIMULATION
 - Préchauffage diesel d'autant plus long qu'il fait froid, et sa propre panne de bougies
 - Fumée d'échappement pilotée par l'âge du véhicule, l'usure moteur, la charge et les pannes actives : suie noire, huile bleue ou carburant imbrûlé blanc ; un moteur chaud fait trembler l'air au-dessus de son pot, même sans fumée
 - AdBlue sur les diesels récents, consommé avec le gazole et que le pistolet à gazole ne remplit plus ; sa jauge à côté du carburant allume son voyant sous 10 %, et les moteurs de phase IV et V perdent de la puissance sous 2,5 % et davantage à vide, jusqu'au plein d'AdBlue
-- Gestion de transmission sur les tracteurs : modes 2RM / 4RM / AUTO et blocages de différentiel
+- Avec un calculateur moteur ou une motorisation électrique, le tableau de bord affiche le temps écoulé depuis le dernier entretien par rapport à son intervalle, la tension et la température d’huile de boîte selon l’équipement. La carte transmission indique le régime nominal de la prise de force ou de l’entraînement de coupe. Le symbole passe au vert quand l’entraînement tourne. Un tiret indique un régime indisponible. La carte affiche aussi le mode de transmission et le patinage selon l’équipement. Les jauges de puissance et de température d’eau montent à la même hauteur. Les machines plus anciennes affichent les voyants de leur époque.
+- Gestion de transmission sur les tracteurs : modes 2RM / 4RM, AUTO sur les tracteurs dès 1993, et blocages de différentiel ; machines articulées en transmission intégrale permanente
 - Frein de parking sur toutes les machines : les machines récentes à transmission CVT ou Powershift le serrent et le desserrent toutes seules, les autres ont un frein à main ; desserré, la machine peut partir dans la pente
 - Fiabilité d’origine affichée comme Moyenne, Correcte, Bonne ou Très bonne ; facilité d’entretien comme Facile, Moyenne ou Exigeante, selon ce que votre ferme répare elle-même. L’état mécanique et les échéances d’entretien restent distincts
 - Multijoueur et serveur dédié, 27 langues
@@ -704,30 +791,72 @@ Mod for Farming Simulator
 Issues & suggestions : https://github.com/Squallqt/FS25_RealisticMechanicalSystems
 
 Changelog 1.0.0.0-beta.3 :
-- Ajout de la chaleur de l'échappement : l'air tremble au-dessus du pot d'un moteur chaud, davantage en charge et pendant une régénération du filtre à particules
-- Ajout de l'AdBlue : il se consomme avec le gazole et se remplit à part, sa jauge à côté du carburant et son voyant allumé sous 10 % ; les moteurs de phase IV et V perdent de la puissance sous 2,5 % et davantage à vide. L'AdBlue TotalEnergies existe en bidon de 10 L, fût de 208 L (seul ou par deux sur une palette) et cuve de 1 000 L ; la pompe de fût se pose aussi sur le fût et la cuve d'AdBlue
-- Ajout de l'entraînement de la coupe des moissonneuses et des ensileuses : sa courroie, son limiteur de couple et son arbre s'usent et cassent, le limiteur s'entendant chaque fois qu'il glisse ; embrayée à haut régime, la coupe use son limiteur environ cinq fois plus qu'au ralenti, un limiteur qui glisse plus de quelques secondes brûle, et celui d'une coupe remisée deux semaines grippe jusqu'à ce qu'on la graisse
-- Ajout de la consommation moyenne au HUD, par heure et par hectare travaillé depuis la remise à zéro du compteur journalier
-- Refonte des contenants d'huile et de liquide de refroidissement : bidons, jerricans et fûts Motorex, Motul et FUCHS aux couleurs de leur marque et avec leurs étiquettes ; en véhicule, l'affichage du remplissage donne le nom du produit en entier, à côté d'un pictogramme de son liquide, et à pied l'infobulle prend pour titre la marque et le produit, au-dessus des litres restants ; les bidons achetés tiennent debout et ne tombent plus des mains
-- Refonte des formats : jerricans de 20 L au lieu de 25 L, et fûts de 200 L (Motorex), 205 L (FUCHS) ou 208 L (Motul), seuls ou par deux sur une palette
-- Refonte de la fenêtre de débogage : trois vues (Overview, Parts, Machine) parcourues à la souris et gardées à l'écran pendant la conduite, et le journal détaillé dans un réglage à part
-- Refonte des sons
-- Refonte des graisseurs des outils selon leur construction : une fourche à palettes dont les dents ne font que coulisser n'en a aucun, un outil de chargeur graisse chaque bras que son vérin déplace, une remorque ses propres essieux et freins et une benne trois côtés aussi ses ridelles, une caisse sur crochet ou sur porteur seulement ses propres organes, et presses, andaineurs, faneuses, faucheuses, cultivateurs, déchaumeurs à disques, rouleaux, coupes et arracheuses de pommes de terre suivent leur taille et leur construction
-- Refonte de la carte de poids du HUD : une icône de poids, comme sur la carte de carburant, et des chiffres que la charge ne colore plus
-- Refonte du chariot de batterie : son chargeur et sa valise de diagnostic atteignent les longues machines sur toute leur longueur, son chargeur continue de charger pendant une intervention d'atelier, et les outils rangés dessus y restent après un redémarrage du serveur dédié
-- Refonte de la facilité d'entretien, qui montre ce que votre ferme répare elle-même : Facile sans calculateur, Moyenne quand l'électronique demande la valise de diagnostic, Exigeante sur les machines électriques ; chaque travail prend désormais son propre temps, quelle que soit la boîte
-- Refonte de la réparation des machines électriques : seul le concessionnaire travaille sur leur haute tension, révisions comprises
-- Correction des cardans des outils portés qui s'usaient et cassaient une fois relevés, prise de force tournante
+- Ajout du scintillement de la chaleur au-dessus du pot d'échappement des moteurs chauds
+- Ajout de la jauge et du voyant d'AdBlue au HUD
+- Ajout des messages d'alerte quand l'AdBlue vient à manquer ou est vide
+- Ajout de la perte de puissance des moteurs de phase IV et V quand l'AdBlue vient à manquer
+- Ajout des fûts et des cuves d'AdBlue à la pompe de fût
+- Ajout du code de niveau du réservoir d'AdBlue à la valise de diagnostic
+- Ajout de l'usure et des pannes de l'entraînement de la coupe des moissonneuses et des ensileuses
+- Ajout du refus de garantie des pannes de l'entraînement de la coupe après un graissage en retard ou un limiteur grippé
+- Ajout des sons de la courroie de la coupe qui crisse, du limiteur de couple qui glisse et de l'arbre qui casse
+- Ajout de l'usure et du graissage des cardans des faucheuses automotrices
+- Ajout de conseils de tutoriel sur l'embrayage de la coupe et sur une coupe remisée
+- Ajout de la consommation moyenne par heure et par hectare au HUD
+- Ajout des heures écoulées depuis le dernier entretien, sur son intervalle, à l'écran du tableau de bord
+- Ajout de la température d'huile de boîte à l'écran du tableau de bord des machines thermiques, hors voitures
+- Ajout du régime nominal de la prise de force ou de l'entraînement de la coupe au tableau de bord
+- Ajout du bidon d'AdBlue TotalEnergies de 10 L
+- Ajout du fût d'AdBlue TotalEnergies de 208 L, seul ou par deux sur une palette
+- Ajout de la cuve d'AdBlue TotalEnergies de 1 000 L
+- Modification de la consommation d'AdBlue : elle suit le gazole brûlé, selon la marque
+- Modification de l'AdBlue : le plein de gazole ne le remplit plus
+- Modification de la position AUTO : tracteurs de 1993 et après seulement
+- Modification du pont avant en AUTO : il suit la vitesse, le braquage et le freinage
+- Modification du blocage de différentiel des tracteurs de 1993 et après : il se relâche selon la vitesse, le braquage et le freinage
+- Modification du blocage de différentiel des tracteurs de 1993 et après : il embraye le pont avant avec lui
+- Modification des machines articulées : elles entraînent toutes leurs roues en permanence
+- Suppression du réglage « Autoriser le mode AUTO »
+- Modification de la charge moteur des machines à calculateur ou à motorisation électrique : une jauge de puissance
+- Modification de l'affichage du pont avant, du blocage de différentiel et du patinage au tableau de bord
+- Modification de l'échéance d'entretien de la page du parc : les heures et les mois écoulés sur l'intervalle
+- Modification de la facilité d'entretien : elle montre ce que votre ferme répare elle-même
+- Modification des travaux d'atelier : chacun prend son propre temps, quelle que soit la boîte
+- Modification de la réparation des machines électriques : la haute tension, révisions comprises, revient au seul concessionnaire
+- Modification des jerricans : 20 L au lieu de 25 L
+- Modification des fûts : 200 L (Motorex), 205 L (FUCHS) et 208 L (Motul)
+- Ajout des fûts vendus par deux sur une palette
+- Amélioration des bidons, jerricans et fûts Motorex, Motul et FUCHS : couleurs et étiquettes de leur marque
+- Modification de l'affichage du remplissage en véhicule des huiles et liquides : le nom du produit et un pictogramme de son liquide
+- Amélioration de l'infobulle des contenants à pied : la marque et le produit en titre
+- Ajustement des graisseurs des outils selon leur construction
+- Fenêtre de débogage : trois vues, Overview, Parts et Machine, parcourues à la souris
+- Fenêtre de débogage : le journal détaillé a son propre réglage
+- Amélioration de la carte de poids du HUD : une icône de poids
+- Ajustement du volume, de la portée et de l'atténuation en cabine des sons de RMS
+- Amélioration des textes et des traductions des conseils de tutoriel, du message d'huile moteur et des messages d'atelier
+- Amélioration des performances des menus d'atelier, des effets d'échappement et de l'actualisation des prix de revente
+- Suppression de l'usure du cardan des outils portés relevés, prise de force tournante
+- Ajout des années de production du Tony 10900 TTR et du Faresin Leader PF 2.26
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
-- Correction des pannes et pièces usées cochées dans Diagnostic et devis, et du devis de l'intervention en cours, sur les serveurs multijoueurs
-- Correction de la carte État qui montrait en panne ou usées les pièces remplacées depuis la dernière inspection
+- Correction des pannes et pièces usées cochées dans Diagnostic et devis sur les serveurs multijoueurs
+- Correction du devis de l'intervention en cours sur les serveurs multijoueurs
+- Correction de la carte d'état qui montrait des pièces remplacées comme en panne ou usées
 - Correction de l'entretien recommandé qui laissait la vidange de boîte due juste après celle du moteur
-- Correction des coupes à grain qui demandaient le graissage quotidien d'un cardan de tracteur : leur arbre prend 3 points toutes les 50 heures, et les coupes d'andaineuse, entraînées en hydraulique, aucun
-- Correction des ateliers mobile et personnel qui refusaient l'inspection complète et les réparations électriques d'une machine sans calculateur, sur laquelle la valise de diagnostic ne se branche pas
-- Correction d'une machine à l'atelier qui cachait le travail en cours batterie coupée ou moteur en panne, et dont le démarreur pouvait tourner dans ce dernier cas
+- Correction des coupes à grains qui demandaient le graissage quotidien d'un cardan de prise de force
+- Correction des ateliers mobile et personnel qui refusaient l'inspection complète d'une machine sans calculateur
+- Correction des ateliers mobile et personnel qui refusaient les réparations électriques d'une machine sans calculateur
+- Correction du travail en cours à l'atelier caché par une batterie coupée ou un moteur en panne
+- Correction d'une machine à l'atelier dont le démarreur pouvait tourner moteur en panne
+- Correction du chargeur du chariot qui arrêtait la charge pendant que la machine était à l'atelier
+- Correction des outils rangés sur le chariot qui revenaient dans les Outils manuels après un redémarrage du serveur dédié
+- Correction du chargeur et de la valise de diagnostic du chariot qui n'atteignaient pas les longues machines
 - Correction des messages de RMS qui couvraient le nom de la machine et les indications du jeu en bas de l'écran
-- Correction des sauts brefs de la consommation de carburant affichée dans le HUD
-- Correction du conseil de tutoriel sur la remorque lourde : une charge de plus de 4,5 fois le poids du tracteur use ses freins, pas sa transmission
+- Correction du conseil de tutoriel sur la remorque lourde qui citait la transmission au lieu des freins
+- Correction des conseils du tutoriel qui perdaient leurs paragraphes
+- Correction des conseils sur le filtre et la pièce défectueux qui s'affichaient avant qu'une inspection les trouve
+- Correction des conseils du tutoriel erronés sur l'âge, le froid, le carburant, le démarrage, les pannes, l'entretien et le frein à main
+- Correction des machines vendues ou rendues qui restaient quelques secondes sur la page du parc
 
 Changelog 1.0.0.0-beta.2 :
 - Ajout de la puissance de tracteur requise sur les fiches d'outil du parc de matériel

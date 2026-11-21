@@ -14,28 +14,28 @@
         </BoxLayout>
         <GuiElement profile="rms_workshopBlock" position="20px -242px" size="288px 224px">
             <RoundCorner profile="rms_workshopSurfaceSoft" />
-            <GuiElement profile="rms_workshopBlock" id="systemsLayout" position="2px -12px" size="274px 180px">
-                <SmoothList profile="rms_workshopPackedList" id="stateList" position="0px 0px" size="268px 180px" onClick="onClickStateRow" showHighlights="true">
-                    <ListItem profile="rms_fleetStateRow" name="system" size="268px 24px" handleFocus="true">
-                        <Bitmap profile="rms_fleetStateBand" name="band" position="10px 0px" size="252px 24px" />
-                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="252px 24px" />
-                        <Bitmap profile="rms_fleetStateTriangle" name="triangle" position="12px -8px" />
-                        <RoundCorner profile="rms_fleetStateDot" name="dot" position="14px -10px" size="4px 4px" />
-                        <Text profile="rms_fleetSystemName" name="name" position="24px 0px" size="164px 24px" />
-                        <Bitmap profile="rms_workshopGaugeTrack" name="track" position="194px -9px" size="36px 6px" />
-                        <Bitmap profile="rms_workshopGaugeFill" name="gauge" position="194px -9px" size="36px 6px" />
-                        <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
-                        <Text profile="rms_fleetSystemRating" name="rating" position="162px 0px" size="100px 24px" />
+            <GuiElement profile="rms_workshopBlock" id="systemsLayout" position="2px -12px" size="274px 175px">
+                <SmoothList profile="rms_workshopPackedList" id="stateList" position="0px 0px" size="268px 175px" onClick="onClickStateRow" showHighlights="true">
+                    <ListItem profile="rms_fleetStateRow" name="system" size="268px 25px" handleFocus="true">
+                        <Bitmap profile="rms_fleetStateBand" name="band" position="10px 0px" size="252px 25px" />
+                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="252px 25px" />
+                        <Bitmap profile="rms_fleetStateTriangle" name="triangle" position="16px -8.5px" />
+                        <RoundCorner profile="rms_fleetStateDot" name="dot" position="18px -10.5px" size="4px 4px" />
+                        <Text profile="rms_fleetSystemName" name="name" position="28px 0px" size="166px 25px" />
+                        <Bitmap profile="rms_workshopGaugeTrack" name="track" position="199px -8.5px" size="27px 8px" />
+                        <Bitmap profile="rms_workshopGaugeFill" name="gauge" position="199px -8.5px" size="27px 8px" />
+                        <Text profile="rms_fleetSystemValue" name="value" position="230px 0px" size="26px 25px" />
+                        <Text profile="rms_fleetSystemRating" name="rating" position="156px 0px" size="100px 25px" />
                     </ListItem>
-                    <ListItem profile="rms_fleetStateRow" name="part" size="268px 24px" handleFocus="true">
-                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="252px 24px" />
-                        <Bitmap profile="rms_fleetStateGuide" position="16px 0px" size="1px 24px" />
-                        <Text profile="rms_fleetPartName" name="name" position="30px 0px" size="200px 24px" />
-                        <Text profile="rms_fleetPartState" name="state" position="130px 0px" size="100px 24px" />
-                        <Text profile="rms_fleetSystemValue" name="value" position="236px 0px" size="26px 24px" />
+                    <ListItem profile="rms_fleetStateRow" name="part" size="268px 25px" handleFocus="true">
+                        <RoundCorner profile="rms_fleetStateSelection" position="10px 0px" size="252px 25px" />
+                        <Bitmap profile="rms_fleetStateGuide" position="20px 0px" size="1px 25px" />
+                        <Text profile="rms_fleetPartName" name="name" position="34px 0px" size="190px 25px" />
+                        <Text profile="rms_fleetPartState" name="state" position="124px 0px" size="100px 25px" />
+                        <Text profile="rms_fleetSystemValue" name="value" position="230px 0px" size="26px 25px" />
                     </ListItem>
                 </SmoothList>
-                <ThreePartBitmap profile="rms_listSliderBox" id="stateSliderBox" position="0px 0px" size="6px 180px">
+                <ThreePartBitmap profile="rms_listSliderBox" id="stateSliderBox" position="0px 0px" size="6px 175px">
                     <Slider profile="fs25_listSlider" dataElementId="stateList" id="stateSlider" />
                 </ThreePartBitmap>
             </GuiElement>

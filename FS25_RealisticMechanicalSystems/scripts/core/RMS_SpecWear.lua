@@ -981,6 +981,12 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
 
     local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, systemData.name)
+    if RMS_Utils.getIsSelfPropelledMower(self) then
+        local isTurning = self:getIsMotorStarted() and self:getIsTurnedOn()
+        local lubrication = isTurning and RMS_Greasing.getHeaderWearFactor(self) - 1 or 0
+        self:updateSystemWear(dt, systemKey, isTurning and 1 + lubrication or 0, { headerLubricationFactor = lubrication })
+        return
+    end
     local state = spec.harvestState
     if state == nil then
         state = { kind = RMS_Drivetrain.getHarvestKind(self) }

@@ -9,8 +9,7 @@ RMS_Hud.INSPECTION_RING_SIZE = 138
 RMS_Hud.INSPECTION_PERCENT_SHARE = 0.22
 RMS_Hud.INSPECTION_SHADE_ALPHA = 0.55
 RMS_Hud.INSPECTION_LABEL_SIZE = 17
-RMS_Hud.CONSUMPTION_REFRESH_INTERVAL = 500
-RMS_Hud.MOTOR_LOAD_BUCKETS = 2
+RMS_Hud.POWER_REFRESH_MS = 250
 RMS_Hud.GEARBOX_OIL_ALERT_TEMP = { DEFAULT = 105, TRUCK = 121 }
 RMS_Hud.NOTIFICATION_DURATION_MS = 3000
 RMS_Hud.LAMP_BLINK = { PHASE_MS = 500, SHORT_PHASES = 8 }
@@ -18,42 +17,35 @@ RMS_Hud.LIT_LAMP_COLOR = { oil = "CRITICAL", battery = "CRITICAL", coolant = "CR
     preheat = "WARNING", dpf = "WARNING", service = "WARNING", tractionBattery = "WARNING", limitedPower = "WARNING" }
 RMS_Hud.LAMP_BEEP_PAUSE_MS = { DEFAULT = 1800, warning = 1400, service = 2500 }
 RMS_Hud.CONDITION_BAR = { FILL_MIN = 0.1, FILL_BY_TIER = { 1, 0.75, 0.5, 0.25, 0.1 } }
-RMS_Hud.ARC_ORDER = { "brakes", "engine", "dpf", "coolant", "fanReversal", "transmission", "battery" }
 RMS_Hud.INDICATOR_ORDER = { "transmission", "engine", "brakes", "battery", "coolant", "dpf", "fanReversal", "preheat",
     "oil", "service", "tractionBattery", "limitedPower", "warning" }
-RMS_Hud.LAMP_SLICE = { transmission = "transmissionTemperature", dpf = "particulateFilter", oil = "oilPressure" }
-RMS_Hud.ROAD_LAMP_SLICE = { oil = "oilCan", coolant = "coolantRoad", service = "wrench" }
-RMS_Hud.MACHINE_LAMP_SLICE = { service = "wrench" }
 RMS_Hud.LAMP_INK = {
-    brakes = { 59, 43, 15 }, battery = { 59, 43, 15 }, preheat = { 58, 35, 19 }, warning = { 60, 53, 10 },
-    transmissionTemperature = { 60, 60, 6 }, engine = { 42, 54, 9 }, engineClassic = { 59, 44, 14 },
-    oilPressure = { 68, 54, 9 }, coolant = { 61, 59, 7 }, service = { 60, 36, 18 }, limitedPower = { 60, 31, 21 },
-    tractionBattery = { 58, 43, 15 }, particulateFilter = { 58, 43, 15 }, fanReversal = { 48, 60, 6 },
-    oilCan = { 60, 22, 25 }, coolantRoad = { 60, 52, 10 }, wrench = { 60, 56, 8 }, adBlue = { 60, 57, 7 }
+    preheat = { 58, 35, 19 }, warning = { 60, 53, 10 }, oilPressure = { 68, 54, 9 }, oilCan = { 60, 22, 25 },
+    limitedPower = { 60, 31, 21 }, tractionBattery = { 58, 43, 15 }, adBlue = { 60, 57, 7 }
 }
-RMS_Hud.LAMP = { SIZE = 19.2, CELL = 72, VALUE_SIZE = 9, VALUE_GAP = 2.5, VALUE_TOP = 2.05, VALUE_HEIGHT = 6.7 }
-RMS_Hud.LAMP_SCALE = { preheat = 1.2516, oilCan = 1.5521, limitedPower = 1.3075, tractionBattery = 1.1292,
-    service = 1.2134, wrench = 0.9728 }
-RMS_Hud.VALUE_WIDTH = { engine = 24.71, coolant = 25.61, transmission = 25.61, battery = 24.87 }
-RMS_Hud.CELL = { IN = 113, RADIUS = 129.8, OUT = 146, MARGIN = 2, SPACE = 2.4, HALF_MIN = 3, HALF_MAX = 10,
-    HALF_STEP = 0.2, EXTENT = { -147, -26.3526, -110.2833, 26.3526 }, BOX = { -173.5, -45, -83.5, 45 }, ALPHA = 0.62 }
-RMS_Hud.BACKGROUND = { BOX = { -180, -116, 0, 116 }, EDGE = 161.584, CORNER = 17.8 }
-RMS_Hud.GAUGE = { IN = 149, OUT = 155.5, SPAN = 39, PITCH = 5.2, GAP = 1.2, LOW = 40, HIGH = 120, GLOW = 11,
-    GLOW_ALPHA = 0.22, UNLIT_ALPHA = 0.75, BAND_IN = 156.5, BAND_OUT = 158,
-    BAR_EXTENT = { -3.75, -2.4908, 3.75, 2.4908 }, BAR_BOX = { -6.25, -6.25, 6.25, 6.25 },
-    BAND_EXTENT = { -1.25, -3.3259, 1.25, 3.3259 }, BAND_BOX = { -4.75, -4.75, 4.75, 4.75 } }
-RMS_Hud.GAUGE_GREY = { 0.3049, 0.3049, 0.3049 }
-RMS_Hud.GAUGE_LIT = { 1, 1, 1 }
+RMS_Hud.LAMP = { SIZE = 19.2, CELL = 72 }
+RMS_Hud.LAMP_SCALE = { preheat = 1.2516, oilCan = 1.5521, limitedPower = 1.3075, tractionBattery = 1.1292 }
 RMS_Hud.ROW = { PITCH = 28 }
-RMS_Hud.PICTURE_SCALE = 19 / 72
-local bubbleScale = 1.2
-RMS_Hud.BUBBLE = { RADIUS = 20 * bubbleScale, DARK_RADIUS = 16.5 * bubbleScale, SYMBOL_GAP = 2.5 * bubbleScale,
-    VALUE_SIZE = 8 * bubbleScale, VALUE_HEIGHT = 5.95 * bubbleScale, VALUE_TOP_ABOVE_ANCHOR = 1.82 * bubbleScale,
-    PICTURE_SCALE = RMS_Hud.PICTURE_SCALE * bubbleScale, X = -155.6427, POD_BOX = 21 }
-RMS_Hud.DRIVE_INK_HEIGHT = { frontWheelDrive = 35 * RMS_Hud.BUBBLE.PICTURE_SCALE, diffLock = 48 * RMS_Hud.BUBBLE.PICTURE_SCALE }
-RMS_Hud.WHEEL_SLIP_INK_HEIGHT = 41 * RMS_Hud.BUBBLE.PICTURE_SCALE
 RMS_Hud.GLOW = { SIZE = 30.4, ALPHA = 0.35 }
-RMS_Hud.PARK_BRAKE = { SIZE = 27.6, GAP = 5.5 }
+RMS_Hud.DASHBOARD = {
+    ENGINE_LAMPS = { "engine", "dpf", "fanReversal" },
+    READINGS = { "service", "battery", "transmission" },
+    LEGACY_READINGS = { "service", "transmission", "battery" },
+    PICTO = { engine = "engine", dpf = "particulateFilter", fanReversal = "fanReversal", service = "serviceBook",
+        transmission = "transmissionTemperature", battery = "battery", coolant = "coolantAgri", brakes = "brakes", parkBrake = "parkBrake" },
+    WATER_SCALE = { LOW = 40, HIGH = 120 },
+    LABEL = { 0.5149, 0.5149, 0.5149, 1 },
+    SEGMENT_UNLIT = { 0.3049, 0.3049, 0.3049, 0.75 },
+    HAIRLINE = { 1, 1, 1, 0.08 },
+    RIM = { 1, 1, 1, 0.15 },
+    POD_GLASS = { 0, 0, 0, 0.6 },
+    OUTLINE = { SAGITTA = 0.05, MIN_STROKE = 1, NUDGE = 0.02, NUDGE_STEPS = 50, TAPER = 6, STRAIGHT = 8 },
+    HALO = { MARGIN = 5, ALPHA = 0.45, LEAD_ALPHA = 0.6 },
+    LAMP_GLOW = { SIZE = 30, ALPHA = 0.38, GREEN_ALPHA = 0.3 },
+    UNIT_GAP = 2,
+    READING_PICTO_OFFSET = -3,
+    SLIP_READING_OFFSET = 2
+}
 RMS_Hud.FUEL_ICON = { SIZE = 24, CELL = 30, GAP = 6, INK_HEIGHT = 18, INK_AREA = 0.1539,
     INK = { ["gui.icon_fuel"] = { 8, 23, 16.94 }, ["gui.icon_electricCharge"] = { 2, 28, 15.51 },
         ["gui.icon_methane"] = { 8, 22, 15.59 } } }
@@ -63,122 +55,6 @@ RMS_Hud.CARD_SCALE = 12 / 13
 RMS_Hud.FIGURES_MIDDLE = 13.24 / 35
 RMS_Hud.CARD_END_SPACE = { a = 0.1187, h = 0.1087, ["а"] = 0.1277, ["顷"] = 0.0371, t = 0.0018, ["т"] = 0.0381,
     u = 0.1199, ["ч"] = 0.1439, ["д"] = 0.0263, ["时"] = 0.0357, W = 0.0289, ["瓦"] = 0.0385 }
-
-local lampLayouts = {}
-
----Returns the angles and radii a lamp and its value span at a place
-local function getLampSpan(unit, phi, radius)
-    local lamp = RMS_Hud.LAMP
-    local boxes = { { -unit.inkWidth * 0.5, -unit.inkHeight * 0.5, unit.inkWidth * 0.5, unit.inkHeight * 0.5 } }
-    if unit.valueWidth ~= nil then
-        local top = -unit.inkHeight * 0.5 - lamp.VALUE_GAP
-        boxes[2] = { -unit.valueWidth * 0.5, top - lamp.VALUE_HEIGHT, unit.valueWidth * 0.5, top }
-    end
-    local cx, cy = radius * math.cos(phi), radius * math.sin(phi)
-    local low, high, near, far = math.huge, -math.huge, math.huge, 0
-    for _, box in ipairs(boxes) do
-        for _, x in ipairs({ box[1], box[3] }) do
-            for _, y in ipairs({ box[2], box[4] }) do
-                local px, py = cx + x, cy + y
-                local angle = (math.atan2(py, px) - phi + math.pi) % (2 * math.pi) - math.pi
-                low, high = math.min(low, angle), math.max(high, angle)
-                local r = math.sqrt(px * px + py * py)
-                near, far = math.min(near, r), math.max(far, r)
-            end
-        end
-    end
-    return low, high, near, far
-end
-
----Returns the half angle of a cell, on the steps baked in the atlas
-local function getCellHalf(half)
-    local cell = RMS_Hud.CELL
-    local steps = math.ceil((math.deg(half) - cell.HALF_MIN) / cell.HALF_STEP - 1e-6)
-    return math.rad(math.min(cell.HALF_MAX, cell.HALF_MIN + math.max(0, steps) * cell.HALF_STEP))
-end
-
----Places the lamp cells left of the dial
-function RMS_Hud.getLampLayout(units)
-    local keys = {}
-    for index, unit in ipairs(units) do
-        keys[index] = string.format("%s:%.3f:%.3f:%s", unit.id, unit.inkWidth, unit.inkHeight, tostring(unit.valueWidth))
-    end
-    local key = table.concat(keys, ";")
-    if lampLayouts[key] == nil then
-        local cell = RMS_Hud.CELL
-        local radius = cell.RADIUS
-        local places = {}
-        for index = 1, #units do
-            places[index] = { phi = math.pi, centre = math.pi, radius = radius, half = math.rad(cell.HALF_MIN) }
-        end
-        for _ = 1, 8 do
-            local total = cell.SPACE / radius * (#units - 1)
-            for index, unit in ipairs(units) do
-                local place = places[index]
-                local _, _, near, far = getLampSpan(unit, place.phi, radius)
-                local inner, outer = near - cell.IN, cell.OUT - far
-                place.radius = radius
-                if inner < cell.MARGIN or outer < cell.MARGIN then
-                    local isCentred = inner + outer < 2 * cell.MARGIN
-                    local isInward = inner < cell.MARGIN
-                    for _ = 1, 6 do
-                        if isCentred then
-                            place.radius = place.radius + (outer - inner) * 0.5
-                        elseif isInward then
-                            place.radius = place.radius + cell.MARGIN - inner
-                        else
-                            place.radius = place.radius - (cell.MARGIN - outer)
-                        end
-                        _, _, near, far = getLampSpan(unit, place.phi, place.radius)
-                        inner, outer = near - cell.IN, cell.OUT - far
-                    end
-                end
-                local low, high = getLampSpan(unit, place.phi, place.radius)
-                place.offset = (low + high) * 0.5
-                place.half = getCellHalf((high - low) * 0.5 + cell.MARGIN / radius)
-                total = total + 2 * place.half
-            end
-            local angle = math.pi - total * 0.5
-            for _, place in ipairs(places) do
-                place.centre = angle + place.half
-                place.phi = place.centre - place.offset
-                angle = angle + 2 * place.half + cell.SPACE / radius
-            end
-        end
-        local layout = {}
-        for index, unit in ipairs(units) do
-            local place = places[index]
-            layout[unit.id] = { x = place.radius * math.cos(place.phi), y = place.radius * math.sin(place.phi),
-                phi = place.centre, half = place.half,
-                cell = string.format("rms_Hud.cell%03d", math.floor(math.deg(place.half) * 10 + 0.5)) }
-        end
-        lampLayouts[key] = layout
-    end
-    return lampLayouts[key]
-end
-
----Places the row lamps one pitch apart, centred on the axis
-function RMS_Hud.getRowLayout(count)
-    local offsets = {}
-    for index = 1, count do
-        offsets[index] = (index - (count + 1) * 0.5) * RMS_Hud.ROW.PITCH
-    end
-    return offsets
-end
-
----Returns a bubble centre, flush with the top or bottom of the dial
-function RMS_Hud.getBubbleCentre(isHigh)
-    local y = 116 - RMS_Hud.BUBBLE.RADIUS
-    return RMS_Hud.BUBBLE.X, isHigh and y or -y
-end
-
----Returns the symbol centre, value middle and value bottom in a bubble
-function RMS_Hud.getBubbleContent(inkHeight)
-    local bubble = RMS_Hud.BUBBLE
-    local height = inkHeight + bubble.SYMBOL_GAP + bubble.VALUE_HEIGHT
-    local valueBottom = -height * 0.5
-    return height * 0.5 - inkHeight * 0.5, valueBottom + bubble.VALUE_HEIGHT - bubble.VALUE_TOP_ABOVE_ANCHOR, valueBottom
-end
 
 ---Returns a value formatted, 0 when it rounds to zero
 local function formatValue(value, numberFormat)
@@ -227,17 +103,24 @@ local function squeezeSpaces(text)
     return text:gsub("%s+", " "):match("^ ?(.-) ?$")
 end
 
+---Collapses the spaces of each line of a text
+local function squeezeLines(text)
+    return text:gsub("[ \t\r]+", " "):gsub(" ?\n ?", "\n"):match("^%s*(.-)%s*$")
+end
+
+---Returns the width of the widest line of a text
+local function getWidestLineWidth(size, text)
+    local width = 0
+    for line in (text .. "\n"):gmatch("(.-)\n") do
+        width = math.max(width, getTextWidth(size, line))
+    end
+    return width
+end
+
 ---Create instance of RMS_Hud, loading its overlays
 function RMS_Hud:new()
     local self = RMS_Hud:superClass().new(RMS_Hud_mt)
 
-    self.telemetryDisplayValues = {
-        motorLoad = 0
-    }
-    self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
-    self.wheelSlipHud = {
-        icon = g_overlayManager:createOverlay("rms_Hud.wheelSlip", 0, 0, 0, 0)
-    }
     self.fuelConsumptionHud = {
         icon = g_overlayManager:createOverlay("gui.icon_fuel", 0, 0, 0, 0),
         sliceId = "gui.icon_fuel"
@@ -245,28 +128,18 @@ function RMS_Hud:new()
     self.loadMassHud = {
         icon = g_overlayManager:createOverlay(RMS_Hud.WEIGHT_ICON.SLICE, 0, 0, 0, 0)
     }
-    self.halfMoon = {
-        background = g_overlayManager:createOverlay("rms_Hud.background", 0, 0, 0, 0),
-        cell = g_overlayManager:createOverlay("rms_Hud.cell030", 0, 0, 0, 0),
-        bar = g_overlayManager:createOverlay("rms_Hud.bar", 0, 0, 0, 0),
-        band = g_overlayManager:createOverlay("rms_Hud.band", 0, 0, 0, 0)
+    local pieces = RMS_HudLayout.pieces
+    self.dashboard = {
+        glass = g_overlayManager:createOverlay(pieces.panelShade, 0, 0, 0, 0),
+        piece = g_overlayManager:createOverlay(pieces.window, 0, 0, 0, 0),
+        glow = g_overlayManager:createOverlay(pieces.glow, 0, 0, 0, 0),
+        stroke = g_overlayManager:createOverlay(pieces.stroke, 0, 0, 0, 0),
+        gauge = g_overlayManager:createOverlay(RMS_HudLayout.gauges.water.piece, 0, 0, 0, 0)
     }
-    self.sliceUvs = {}
-    self.turnedUvs = {}
+    self.glasses = {}
 
-    self.bubble = g_overlayManager:createOverlay("rms_Hud.pod", 0, 0, 0, 0)
     self.lampGlow = g_overlayManager:createOverlay("rms_LampGlow.glow", 0, 0, 0, 0)
 
-    self.drivetrainHud = {
-        icons = {
-            frontWheelDrive = { overlay = g_overlayManager:createOverlay("rms_Hud.frontWheelDrive", 0, 0, 0, 0), width = 86, height = 72 },
-            diffLock        = { overlay = g_overlayManager:createOverlay("rms_Hud.diffLock", 0, 0, 0, 0),        width = 72, height = 72 }
-        }
-    }
-
-    self.parkBrakeHud = {
-        icon = g_overlayManager:createOverlay("rms_Hud.parkBrake", 0, 0, 0, 0)
-    }
     self.meterStraight = g_overlayManager:createOverlay("rms_Hud.backgroundStraight", 0, 0, 0, 0)
 
     self.lampIcons = {}
@@ -274,6 +147,8 @@ function RMS_Hud:new()
         self.lampIcons[slice] = g_overlayManager:createOverlay("rms_Hud." .. slice, 0, 0, 0, 0)
     end
     self.lampStates = {}
+    self.lampColors, self.routineLamps, self.resolvedLamps = {}, {}, {}
+    self.dashboardLamps = { count = 0 }
     self.telemetryText = {}
     self.shownMasses = {}
 
@@ -292,31 +167,19 @@ end
 ---Deletes the overlays of the HUD
 function RMS_Hud:delete()
     self:setNotificationInputActive(false)
-    self.wheelSlipHud.icon:delete()
-    self.wheelSlipHud.icon = nil
     self.fuelConsumptionHud.icon:delete()
     self.fuelConsumptionHud.icon = nil
     self.loadMassHud.icon:delete()
     self.loadMassHud.icon = nil
-    self.parkBrakeHud.icon:delete()
-    self.parkBrakeHud.icon = nil
     self.meterStraight:delete()
     self.meterStraight = nil
 
-    for _, overlay in pairs(self.halfMoon) do
+    for _, overlay in pairs(self.dashboard) do
         overlay:delete()
     end
-    self.halfMoon = nil
-
-    self.bubble:delete()
-    self.bubble = nil
+    self.dashboard = nil
     self.lampGlow:delete()
     self.lampGlow = nil
-
-    for _, icon in pairs(self.drivetrainHud.icons) do
-        icon.overlay:delete()
-        icon.overlay = nil
-    end
 
     for _, icon in pairs(self.lampIcons) do
         icon:delete()
@@ -328,15 +191,15 @@ function RMS_Hud:delete()
     RMS_Hud:superClass().delete(self)
 end
 
----Binds the HUD to a vehicle, another one resetting the lamps and the load
+---Binds the HUD to a vehicle
 function RMS_Hud:setVehicle(vehicle)
     if vehicle == self.vehicle then
         return
     end
     self.vehicle = vehicle
     self.lampStates = {}
-    self.telemetryDisplayValues.motorLoad = 0
-    self.motorLoadAverage = { buckets = {}, current = { value = 0, time = 0 }, timer = 0 }
+    self.vehicleDashboard = nil
+    self.powerReading = nil
 end
 
 ---Blinks and beeps a lamp once as it lights up or turns red
@@ -388,7 +251,6 @@ function RMS_Hud:getLampBlinkColor(id, color, isContinuous, isMotorOn)
     return color
 end
 
-local hasCVTTransmission = RMS_Utils.hasCVTTransmission
 local hasCVTAddon = RMS_Utils.hasCVTAddon
 
 ---Draws the whole HUD for the current frame
@@ -436,7 +298,7 @@ end
 
 ---Shows a notification in place of the one on screen
 function RMS_Hud:setNotification(text, durationMs, title, playSound)
-    text = squeezeSpaces(text)
+    text = squeezeLines(text)
     if text == "" then
         self.notification = nil
         return
@@ -546,11 +408,11 @@ function RMS_Hud:getIsNotificationShown()
     return notification ~= nil and (notification.endTime == nil or g_time < notification.endTime)
 end
 
----Returns the widest notification, clear of the half-moon by the meter
+---Returns the widest notification
 function RMS_Hud:getNotificationMaxWidth()
     local speedMeter = g_currentMission.hud.speedMeter
     local meterX = speedMeter.speedBg.x + speedMeter.speedGaugeCenterOffsetX
-    local left = meterX + self:scalePixelToScreenWidth(RMS_Hud.BACKGROUND.BOX[1])
+    local left = meterX + self:scalePixelToScreenWidth(RMS_HudLayout.left)
     return (left - 0.5 - self.messagePaddingX) * 2
 end
 
@@ -585,7 +447,8 @@ function RMS_Hud:drawNotification()
     local title = notification.title
     local paddingX, paddingY = self.messagePaddingX, self.messagePaddingY
     setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_TOP, false)
-    local width = getTextWidth(self.messageTextSize, notification.text) + 2 * paddingX
+    local posY = self:getNotificationBottom()
+    local width = getWidestLineWidth(self.messageTextSize, notification.text) + 2 * paddingX
     width = math.max(math.min(width, self:getNotificationMaxWidth()), self.messageWidth)
     setTextWrapWidth(width - 2 * paddingX)
     local textHeight = getTextHeight(self.messageTextSize, notification.text)
@@ -600,7 +463,7 @@ function RMS_Hud:drawNotification()
         end
     end
 
-    local posX, posY = 0.5 - width * 0.5, self:getNotificationBottom()
+    local posX = 0.5 - width * 0.5
     local background = HUD.COLOR.BACKGROUND_DARK
     drawFilledRectRound(posX, posY, width, height, 0.25, background[1], background[2], background[3], background[4])
 
@@ -656,6 +519,10 @@ end
 
 ---Recomputes every HUD size and position for the current screen resolution
 function RMS_Hud:storeScaledValues()
+    self.glasses = {}
+    self.gaugeGeometry = {}
+    self.vehicleDashboard = nil
+    self.odometerLayout = nil
     local function pixelSize(width, height)
         width, height = self:scalePixelValuesToScreenVector(width, height)
         return math.max(math.floor(width * g_screenWidth + 0.5), 1) / g_screenWidth,
@@ -667,7 +534,6 @@ function RMS_Hud:storeScaledValues()
         local size = lamp.SIZE * (RMS_Hud.LAMP_SCALE[slice] or 1)
         icon:setDimension(pixelSize(size, size))
     end
-    self.lampValueSize = self:scalePixelToScreenHeight(lamp.VALUE_SIZE)
 
     local speedMeter = g_currentMission.hud.speedMeter
     local serviceAnchorY = (speedMeter.gaugeTextOffsets[4].offsetY + speedMeter.gaugeTextOffsets[7].offsetY) * 0.5
@@ -675,28 +541,7 @@ function RMS_Hud:storeScaledValues()
     -- The service anchor is the foot of an 11 px mark.
     self.serviceCentreY = serviceAnchorY + self:scalePixelToScreenHeight(5.5)
 
-    local back = RMS_Hud.BACKGROUND.BOX
-    self.halfMoon.background:setDimension(self:scalePixelValuesToScreenVector(back[3] - back[1], back[4] - back[2]))
-
-    local bubble = RMS_Hud.BUBBLE
-    self.bubble:setDimension(pixelSize(bubble.POD_BOX * 2, bubble.POD_BOX * 2))
-    self.bubble:setColor(0, 0, 0, RMS_Hud.CELL.ALPHA)
-    self.bubbleValueSize = self:scalePixelToScreenHeight(bubble.VALUE_SIZE)
-    self.wheelSlipHud.icon:setDimension(pixelSize(72 * bubble.PICTURE_SCALE, 72 * bubble.PICTURE_SCALE))
-    for _, iconData in pairs(self.drivetrainHud.icons) do
-        iconData.overlay:setDimension(pixelSize(iconData.width * bubble.PICTURE_SCALE, iconData.height * bubble.PICTURE_SCALE))
-    end
-
     self.lampGlow:setDimension(pixelSize(RMS_Hud.GLOW.SIZE, RMS_Hud.GLOW.SIZE))
-
-    if self.parkBrakeHud ~= nil and self.parkBrakeHud.icon ~= nil then
-        local parkWidth, parkHeight = self:scalePixelValuesToScreenVector(RMS_Hud.PARK_BRAKE.SIZE, RMS_Hud.PARK_BRAKE.SIZE)
-        self.parkBrakeHud.icon:setDimension(parkWidth, parkHeight)
-        self.parkBrakeHud.width = parkWidth
-        self.parkBrakeHud.height = parkHeight
-        self.parkBrakeHud.gapX = self:scalePixelToScreenWidth(RMS_Hud.PARK_BRAKE.GAP)
-        self.parkBrakeHud.offsetY = self:scalePixelToScreenHeight(0)
-    end
 
     local cardScale = RMS_Hud.CARD_SCALE
     self.telemetryText.size = self:scalePixelToScreenHeight(13 * cardScale)
@@ -737,31 +582,22 @@ function RMS_Hud.getIsParticulateFilterCalling(spec)
     return spec.fuelState.particulateFilterLevel >= 1 and not spec.fuelState.isParticulateFilterRegenerating
 end
 
----Returns the offset putting a row lamp's ink bottom on the warning's
+---Returns the lift aligning a row lamp by its ink
 function RMS_Hud.getRowLampLift(slice)
     local lamp = RMS_Hud.LAMP
     local function foot(name)
         return (RMS_Hud.LAMP_INK[name][3] - lamp.CELL * 0.5) * lamp.SIZE * (RMS_Hud.LAMP_SCALE[name] or 1) / lamp.CELL
     end
-    return foot("warning") - foot(slice)
+    local reference = slice == "oilCan" and "preheat" or slice
+    return foot("warning") - foot(reference)
 end
 
----Returns the road or machine slice replacing the tractor one
-function RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine)
-    if isRoadVehicle then
-        return RMS_Hud.ROAD_LAMP_SLICE[id]
-    elseif isMachine then
-        return RMS_Hud.MACHINE_LAMP_SLICE[id]
+---Returns the picture of a dial lamp
+function RMS_Hud.getDialLampSlice(id, isRoadVehicle)
+    if id == "oil" then
+        return isRoadVehicle and "oilCan" or "oilPressure"
     end
-    return nil
-end
-
----Returns the picture a lamp takes on this vehicle
-function RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
-    if id == "engine" and (isRoadVehicle or spec.isElectricVehicle) then
-        return "engineClassic"
-    end
-    return RMS_Hud.getFamilyLampSlice(id, isRoadVehicle, isMachine) or RMS_Hud.LAMP_SLICE[id] or id
+    return id
 end
 
 ---Tells whether the engine oil pump draws air, lighting the oil lamp
@@ -797,15 +633,16 @@ function RMS_Hud.getLitLampColor(id, color, spec)
 end
 
 ---Returns the colour of every lamp this frame
-function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor)
+function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor, lampColors, isRoutine)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local colors = RMS_Breakdowns.COLORS
     local isOff = motorState == MotorState.OFF
     -- A routine lamp is a check or a normal operation: no blink, no beep
-    local lampColors, isRoutine = {}, {}
+    lampColors, isRoutine = lampColors or {}, isRoutine or {}
 
     for _, id in ipairs(RMS_Hud.INDICATOR_ORDER) do
         lampColors[id] = colors.DEFAULT
+        isRoutine[id] = nil
         local light = spec.activeIndicators[id]
         if light ~= nil then
             light.isActive = not isOff and not light.switchOff(vehicle) and (light.isActive or light.switchOn(vehicle))
@@ -869,100 +706,256 @@ function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultCo
     return lampColors, isRoutine
 end
 
----Builds the figures drawn beside the telltales
-function RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperature)
-    local overloadThreshold = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD
-    local overloadLoad = motorLoad
-    if not spec.isElectricVehicle and motorLoad > 0 then
-        overloadLoad = tonumber(spec.dynamicMotorLoad) or motorLoad
+---Returns the steps a reading shows
+-- @param integer shown steps shown
+-- @param float value value in steps
+-- @return integer steps to show
+local function holdSteps(shown, value)
+    local reached = math.floor(value)
+    if reached >= shown then
+        return reached
     end
-    local values = {
-        coolant = { text = g_i18n:formatTemperature(spec.engineTemperature, 0) },
-        engine = { text = string.format("%.0f%%", math.max(motorLoad * 100, 0)), isWarning = overloadLoad > overloadThreshold },
-        battery = { text = formatValue(spec.batteryIsolated and 0 or spec.systemVoltageV, "%.1f") .. "V" }
-    }
-    if showTransmissionTemperature then
-        values.transmission = { text = g_i18n:formatTemperature(math.min(spec.transmissionTemperature, RMS_Config.THERMAL.OIL_GAUGE_MAX), 0) }
-    end
-    return values
+    return math.min(shown, math.floor(value + 0.5))
 end
 
----Draws the dashboard indicators, the gauges and the vehicle condition
-function RMS_Hud:drawDashboard()
-    local vehicle, speedMeter = self.vehicle, g_currentMission.hud.speedMeter
+---Tells whether the wear counts an engine load as an overload
+-- @param float load engine load
+-- @return boolean isOverloaded
+function RMS_Hud.getIsOverloaded(vehicle, load)
+    -- the load the wear reads
+    local stockLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, load), 0, 0, 1.5)
+    return stockLoad > RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD * RMS_EngineRemap.getOverloadRatio(vehicle)
+end
+
+---Updates the power gauge and its figure
+-- @param boolean isRunning engine running
+-- @return integer squares lit
+-- @return string figure whole percent
+-- @return boolean isWarning
+function RMS_Hud:updatePowerReading(vehicle, isRunning)
+    if not isRunning then
+        self.powerReading = nil
+        return 0, "0", false
+    end
+    local load = vehicle:getMotor():getSmoothLoadPercentage()
+    local squares = math.clamp(load, 0, 1) * RMS_HudLayout.gauges.power.count
+    local reading = self.powerReading
+    if reading == nil then
+        reading = { buffer = ValueBuffer.new(RMS_Hud.POWER_REFRESH_MS), time = 0, squares = 0,
+            figure = math.floor(math.clamp(load * 100, 0, 100)) }
+        self.powerReading = reading
+    end
+    reading.buffer:add(load)
+    reading.time = reading.time + g_currentDt
+    if reading.time > RMS_Hud.POWER_REFRESH_MS then
+        reading.time = 0
+        reading.figure = holdSteps(reading.figure, math.clamp(reading.buffer:getAverage() * 100, 0, 100))
+    end
+    reading.squares = holdSteps(reading.squares, squares)
+    return reading.squares, string.format("%d", reading.figure), RMS_Hud.getIsOverloaded(vehicle, load)
+end
+
+---Tells whether a machine has a screen
+function RMS_Hud.getHasScreen(vehicle)
+    return RMS_Utils.getHasDashboardScreen(vehicle)
+end
+
+---Returns the picture of a dashboard lamp
+function RMS_Hud.getDashboardPicto(id, spec, isRoadVehicle, isMachine)
+    if id == "engine" and (isRoadVehicle or spec.isElectricVehicle) then
+        return "engineClassic"
+    elseif id == "coolant" and isRoadVehicle then
+        return "coolantRoad"
+    elseif id == "service" and (isRoadVehicle or isMachine) then
+        return "wrench"
+    end
+    return RMS_Hud.DASHBOARD.PICTO[id]
+end
+
+local DRIVE_LAMPS = { P = "park", B = "brakes", D = "diff" }
+local DRIVE_READINGS = { R = "pto", T = "fwd", S = "slip" }
+
+local panels = {} -- dialKey -> engine -> drive -> panel
+
+---Returns the cached panel of a layout
+local function getPanel(dialKey, engine, drive)
+    local byEngine = panels[dialKey]
+    if byEngine == nil then
+        byEngine = {}
+        panels[dialKey] = byEngine
+    end
+    local byDrive = byEngine[engine or false]
+    if byDrive == nil then
+        byDrive = {}
+        byEngine[engine or false] = byDrive
+    end
+    local panel = byDrive[drive or false]
+    if panel == nil then
+        local blocks = {}
+        blocks[#blocks + 1] = engine
+        blocks[#blocks + 1] = drive
+        panel = { glass = RMS_HudLayout.panel[dialKey], blocks = blocks }
+        byDrive[drive or false] = panel
+    end
+    return panel
+end
+
+---Returns what a machine's dashboard shows
+function RMS_Hud.getDashboardContent(vehicle, isRoadVehicle)
+    local isFitted = RealisticMechanicalSystems.getIsTelltaleFitted
+    local hasScreen = RMS_Hud.getHasScreen(vehicle)
+    local family = hasScreen and "screen" or "plain"
+    local windows, readings = {}, {}
+    for _, id in ipairs(RMS_Hud.DASHBOARD.ENGINE_LAMPS) do
+        if isFitted(vehicle, id) then
+            windows[#windows + 1] = id
+        end
+    end
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec == nil or spec.isExcludedVehicle then
-        return
+    local readingOrder = hasScreen and RMS_Hud.DASHBOARD.READINGS or RMS_Hud.DASHBOARD.LEGACY_READINGS
+    for _, id in ipairs(readingOrder) do
+        if isFitted(vehicle, id) then
+            -- an electric's reducer has its lamp, no oil reading
+            local isReading = hasScreen and not (id == "transmission" and spec.isElectricVehicle)
+            local list = isReading and readings or windows
+            list[#list + 1] = id
+        end
     end
 
-    RMS_Thermal.getEngineTemperature(vehicle)
+    local drivetrain = nil
+    if RMS_Drivetrain.getIsAvailable(vehicle) then
+        drivetrain = RMS_Drivetrain.getState(vehicle)
+    end
+    local hasTile = drivetrain ~= nil and RMS_Drivetrain.getHasCenterDifferential(vehicle)
+    local hasSlip = hasScreen and not isRoadVehicle
+    local hasBrakes = isFitted(vehicle, "brakes")
+    local hasParkBrake = RMS_Drivetrain.getIsParkBrakeManaged(vehicle)
+    local row1 = (hasTile and "T" or "") .. (drivetrain ~= nil and "D" or "")
+    local row2 = ""
+    -- without a screen, the brake lamp sits with the other lamps
+    if hasScreen then
+        row1 = (hasParkBrake and "P" or "") .. (hasBrakes and "B" or "") .. (drivetrain ~= nil and "D" or "")
+        local hasPto = RMS_Utils.getHasPtoDisplay(vehicle)
+        row2 = (hasPto and "R" or "") .. (hasTile and "T" or "") .. (hasSlip and "S" or "")
+    else
+        local index = #windows + 1
+        if hasBrakes and hasParkBrake and index % 3 == 0 then
+            index = index - 1
+        end
+        if hasBrakes then
+            table.insert(windows, index, "brakes")
+            index = index + 1
+        end
+        if hasParkBrake then
+            table.insert(windows, index, "parkBrake")
+        end
+    end
+
+    local layout = RMS_HudLayout
+    local engine = nil
+    if #windows > 0 or #readings > 0 then
+        if hasScreen then
+            engine = layout.engine[string.format("screen:%d:%d", math.min(#windows, 3), #readings)]
+        else
+            engine = layout.engine[string.format("plain:%d:0", #windows)]
+        end
+    end
+    local driveTag = engine ~= nil and engine.driveTag or "none"
+    local driveKey = hasScreen and (#row1 .. ":" .. (row2 == "R" and "R" or #row2)) or (row1 .. ":" .. row2)
+    local driveLayout = layout.drive[family .. ":" .. driveTag .. ":" .. driveKey]
+    local drive = (row1 ~= "" or row2 ~= "") and driveLayout or nil
+    if drive ~= nil and hasScreen then
+        drive = { top = driveLayout.top, bottom = driveLayout.bottom, outer = driveLayout.outer,
+            notch = driveLayout.notch, hairlines = driveLayout.hairlines }
+        for index = 1, #row1 do
+            drive[DRIVE_LAMPS[row1:sub(index, index)]] = driveLayout.lamps[index]
+        end
+        for index = 1, #row2 do
+            drive[DRIVE_READINGS[row2:sub(index, index)]] = driveLayout.readings[index]
+        end
+    end
+    local dialKey = "screen"
+    if not hasScreen then
+        dialKey = isFitted(vehicle, "coolant") and "plain" or "bare"
+    end
+    local pod = nil
+    if dialKey ~= "bare" then
+        pod = hasScreen and "water" or "plain"
+    end
+    return { hasScreen = hasScreen, windows = windows, readings = readings, drivetrain = drivetrain, hasTile = hasTile,
+        hasSlip = hasSlip, hasBrakes = hasBrakes, hasParkBrake = hasParkBrake, engine = engine, drive = drive, pod = pod,
+        panel = getPanel(dialKey, engine, drive ~= nil and driveLayout or nil), dial = layout.dial[dialKey],
+        driveGlass = drive ~= nil and driveLayout or nil }
+end
+
+---Formats a figure to one decimal
+local function formatTenths(value)
+    local tenths = math.floor(math.max(tonumber(value) or 0, 0) * 10 + 0.5)
+    return string.format("%d%s%d", math.floor(tenths / 10), g_i18n.decimalSeparator, tenths % 10)
+end
+
+---Returns a reading's figure and its unit
+function RMS_Hud.getReading(vehicle, spec, id)
+    if id == "service" then
+        local used, interval = vehicle:getServiceCountdown()
+        if interval == nil or interval <= 0 or interval == math.huge then
+            return "-", ""
+        end
+        return formatTenths(used), "/" .. g_i18n:formatNumber(interval, 1) .. " " .. g_i18n:getText("rms_spec_op_hours_short")
+    elseif id == "transmission" then
+        local temperature = math.min(spec.transmissionTemperature, RMS_Config.THERMAL.OIL_GAUGE_MAX)
+        return string.format("%.0f", g_i18n:getTemperature(temperature)), g_i18n:getTemperatureUnit()
+    end
+    return formatTenths(spec.batteryIsolated and 0 or spec.systemVoltageV), "V"
+end
+
+---Returns the water gauge's figure and unit
+function RMS_Hud.getWaterFigure(spec)
+    return string.format("%.0f", g_i18n:getTemperature(spec.engineTemperature)), g_i18n:getTemperatureUnit()
+end
+
+---Returns the front-wheel drive lamp's colour
+function RMS_Hud.getFrontWheelDriveColor(state, vehicle)
+    local isDriving = state.driveMode == RMS_Drivetrain.MODE.FOUR_WD
+        or (state.driveMode == RMS_Drivetrain.MODE.AUTO and state.autoEngaged == true)
+        or (state.diffLockEngaged == true and RMS_Drivetrain.getHasDriveManagement(vehicle))
+    if not isDriving then
+        return RMS_Breakdowns.COLORS.DEFAULT
+    end
+    local windupStress = tonumber(state.windupStress) or 0
+    local isWindingUp = state.windupActive == true and windupStress > RMS_Config.DRIVETRAIN.WINDUP_4WD_WARNING_THRESHOLD
+    return isWindingUp and RMS_Breakdowns.COLORS.WARNING or RMS_Hud.COLOR_GAME_GREEN
+end
+
+---Returns the diff lock lamp's colour
+function RMS_Hud.getDiffLockColor(state, time)
     local colors = RMS_Breakdowns.COLORS
-    local motorState = vehicle:getMotorState()
-    local isMotorOn = motorState == MotorState.ON
-    local isRoadVehicle = RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
-    local isMachine = RMS_Drivetrain.getIsMachineCategory(vehicle)
-    local cvtAddonSpec = hasCVTAddon(vehicle) and vehicle.spec_CVTaddon or nil
-    local cvtFaultColor = colors.DEFAULT
-    if cvtAddonSpec ~= nil then
-        if cvtAddonSpec.forDBL_critdamage == 1 then
-            cvtFaultColor = colors.CRITICAL
-        elseif cvtAddonSpec.forDBL_warndamage == 1 or cvtAddonSpec.forDBL_highpressure == 1 then
-            cvtFaultColor = colors.WARNING
-        end
+    if not state.diffLockEngaged then
+        return colors.DEFAULT
     end
-    local isServiceOverdue = vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
-    local lampColors, isRoutine = RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor)
+    local isBlinkOn = math.floor(time / 250) % 2 == 0
+    local windupStress = tonumber(state.windupStress) or 0
+    return (windupStress > RMS_Config.DRIVETRAIN.WINDUP_CRITICAL_THRESHOLD and isBlinkOn) and colors.CRITICAL or colors.WARNING
+end
 
-    speedMeter.speedTextSize = self:scalePixelToScreenHeight(43)
-    local posX, posY = speedMeter.speedBg:getPosition()
-    posX, posY = posX + speedMeter.speedGaugeCenterOffsetX, posY + speedMeter.speedGaugeCenterOffsetY
-    local hasTransmissionOilTempDisplay = hasCVTTransmission(vehicle) or cvtAddonSpec ~= nil
-    local lamp = RMS_Hud.LAMP
-
-    local units, unitsById = {}, {}
-    for _, id in ipairs(RMS_Hud.ARC_ORDER) do
-        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
-            local ink = RMS_Hud.LAMP_INK[RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)]
-            local hasValue = id == "engine" or id == "coolant" or id == "battery" or (id == "transmission" and hasTransmissionOilTempDisplay)
-            local unit = { id = id, inkWidth = ink[1] * lamp.SIZE / lamp.CELL, inkHeight = ink[2] * lamp.SIZE / lamp.CELL,
-                valueWidth = hasValue and RMS_Hud.VALUE_WIDTH[id] or nil }
-            units[#units + 1] = unit
-            unitsById[id] = unit
-        end
+---Returns the text of the drive mode
+function RMS_Hud.getDriveModeText(state)
+    if state.driveMode == RMS_Drivetrain.MODE.AUTO then
+        return g_i18n:getText("rms_hud_drive_auto")
+    elseif state.driveMode == RMS_Drivetrain.MODE.FOUR_WD then
+        return g_i18n:getText("rms_hud_drive_4wd")
     end
-    local layout = RMS_Hud.getLampLayout(units)
-    local hasDriveBubble = RMS_Drivetrain.getIsAvailable(vehicle) and RMS_Drivetrain.getState(vehicle) ~= nil
-    self:drawHalfMoon(posX, posY, units, layout, spec, motorState ~= MotorState.OFF, hasDriveBubble, not isRoadVehicle)
+    return g_i18n:getText("rms_hud_drive_2wd")
+end
 
-    local rowIds = {}
-    for _, id in ipairs({ spec.isElectricVehicle and "limitedPower" or "preheat", "warning",
-        spec.isElectricVehicle and "tractionBattery" or "oil" }) do
-        if RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
-            rowIds[#rowIds + 1] = id
-        end
-    end
-    local rowPlaces = {}
-    for index, x in ipairs(RMS_Hud.getRowLayout(#rowIds)) do
-        rowPlaces[rowIds[index]] = x
-    end
-
-    local lamps = {}
+---Returns the colour of every lamp this frame
+function RMS_Hud:resolveLampColors(spec, lampColors, isRoutine, shown, isMotorOn)
+    local colors = RMS_Breakdowns.COLORS
+    local resolved = self.resolvedLamps
     for _, id in ipairs(RMS_Hud.INDICATOR_ORDER) do
-        local slice = RMS_Hud.getLampSlice(id, spec, isRoadVehicle, isMachine)
-        local x, y
-        if layout[id] ~= nil then
-            x = posX + self:scalePixelToScreenWidth(layout[id].x)
-            y = posY + self:scalePixelToScreenHeight(layout[id].y)
-        elseif rowPlaces[id] ~= nil then
-            x = posX + self:scalePixelToScreenWidth(rowPlaces[id])
-            y = posY + self.rowCenterY + self:scalePixelToScreenHeight(RMS_Hud.getRowLampLift(slice))
-        elseif id == "service" and RealisticMechanicalSystems.getIsTelltaleFitted(vehicle, id) then
-            x, y = posX, posY + self.serviceCentreY
-        end
-
         local color = lampColors[id]
         local severity = 0
-        if x ~= nil and not isRoutine[id] then
+        if shown[id] and not isRoutine[id] then
             if color == colors.CRITICAL then
                 severity = 2
             elseif color == colors.WARNING then
@@ -977,157 +970,1355 @@ function RMS_Hud:drawDashboard()
                 or id == "dpf" and color == colors.WARNING and RMS_Hud.getIsParticulateFilterCalling(spec)
             color = self:getLampBlinkColor(id, color, isContinuous, isMotorOn)
         end
-
-        if x ~= nil then
-            local icon = self.lampIcons[slice]
-            icon:setPosition(snapScreenX(x - icon.width * 0.5), snapScreenY(y - icon.height * 0.5))
-            lamps[#lamps + 1] = { icon = icon, color = color, x = x, y = y }
-        end
+        resolved[id] = color
     end
-
-    -- Draw glows first to keep them behind neighbouring lamps.
-    local glow = RMS_Hud.GLOW
-    for _, lit in ipairs(lamps) do
-        if lit.color ~= colors.DEFAULT then
-            self.lampGlow:setPosition(snapScreenX(lit.x - self.lampGlow.width * 0.5), snapScreenY(lit.y - self.lampGlow.height * 0.5))
-            self.lampGlow:setColor(lit.color[1], lit.color[2], lit.color[3], glow.ALPHA)
-            self.lampGlow:render()
-        end
-    end
-    for _, lit in ipairs(lamps) do
-        lit.icon:setColor(unpack(lit.color))
-        lit.icon:render()
-    end
-
-    local motorLoad = isMotorOn and self:updateMotorLoadAverage(math.clamp(tonumber(spec.dynamicMotorLoad) or 0, 0, 1)) or 0
-    self.telemetryDisplayValues.motorLoad = motorLoad
-    local showTransmissionTemperatureText = hasTransmissionOilTempDisplay and unitsById.transmission ~= nil
-    local gaugeValues = RMS_Hud.getGaugeValues(spec, motorLoad, showTransmissionTemperatureText)
-
-    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_MIDDLE, true)
-    for _, indicatorName in ipairs({ "coolant", "transmission", "engine", "battery" }) do
-        local gaugeValue = gaugeValues[indicatorName]
-        local place, unit = layout[indicatorName], unitsById[indicatorName]
-        if gaugeValue ~= nil and place ~= nil and unit.valueWidth ~= nil then
-            local valueSize = self.lampValueSize
-            local valueWidth = getTextWidth(valueSize, gaugeValue.text)
-            local maxWidth = self:scalePixelToScreenWidth(unit.valueWidth)
-            if valueWidth > maxWidth then
-                valueSize = valueSize * maxWidth / valueWidth
-            end
-            local valueTop = place.y - unit.inkHeight * 0.5 - lamp.VALUE_GAP
-            local color = gaugeValue.isWarning and colors.WARNING or RMS_Hud.GAUGE_LIT
-            setTextColor(color[1], color[2], color[3], 1)
-            renderText(snapScreenX(posX + self:scalePixelToScreenWidth(place.x)),
-                snapScreenY(posY + self:scalePixelToScreenHeight(valueTop - lamp.VALUE_TOP)), valueSize, gaugeValue.text)
-        end
-    end
-
-    self:drawDrivetrainDisplay(vehicle, posX, posY)
-    if not isRoadVehicle then
-        self:drawWheelSlipDisplay(spec, posX, posY)
-    end
-    self:drawParkBrakeDisplay(vehicle)
-    self:drawOdometer()
+    return resolved
 end
 
----Draws the half-moon: background, lamp cells, coolant gauge
-function RMS_Hud:drawHalfMoon(posX, posY, units, layout, spec, isPowered, hasHigh, hasLow)
-    local halfMoon = self.halfMoon
-    local back = RMS_Hud.BACKGROUND.BOX
-    halfMoon.background:setSliceId(hasHigh and (hasLow and "rms_Hud.backgroundBubbles" or "rms_Hud.backgroundHigh")
-        or (hasLow and "rms_Hud.backgroundLow" or "rms_Hud.background"))
-    halfMoon.background:setPosition(posX + self:scalePixelToScreenWidth(back[1]), posY + self:scalePixelToScreenHeight(back[2]))
-    halfMoon.background:setColor(0, 0, 0, 1)
-    halfMoon.background:render()
+local FIGURE_COLOR = { 1, 1, 1, 1 }
+local GLASS_COVERAGE_STEPS = 63
 
-    local cell = RMS_Hud.CELL
-    halfMoon.cell:setColor(0, 0, 0, cell.ALPHA)
-    -- Cells are baked pointing left and turned about the gauge centre.
-    for _, unit in ipairs(units) do
-        local place = layout[unit.id]
-        self:drawTurned(halfMoon.cell, place.cell, cell.BOX, cell.EXTENT, posX, posY, place.phi - math.pi)
-    end
-
-    self:drawCoolantGauge(posX, posY, spec, isPowered)
+---Returns the box of a dashboard picture
+local function getPieceBox(sliceId)
+    return RMS_HudLayout.slices[sliceId].box
 end
 
----Draws an atlas picture turned by its UVs, where overlay rotation would distort it
-function RMS_Hud:drawTurned(overlay, sliceId, box, extent, x, y, angle)
-    local uvs = self.sliceUvs[sliceId]
-    if uvs == nil then
-        uvs = g_overlayManager:getSliceInfoById(sliceId).uvs
-        self.sliceUvs[sliceId] = uvs
-    end
-    local c, s = math.cos(angle), math.sin(angle)
-    local x0, y0, x1, y1 = math.huge, math.huge, -math.huge, -math.huge
-    for _, px in ipairs({ extent[1], extent[3] }) do
-        for _, py in ipairs({ extent[2], extent[4] }) do
-            local tx, ty = c * px - s * py, s * px + c * py
-            x0, x1 = math.min(x0, tx), math.max(x1, tx)
-            y0, y1 = math.min(y0, ty), math.max(y1, ty)
+---Returns a dashboard picture's rectangle on screen
+-- @param boolean isPlaced whole-pixel size about its given middle
+-- @return float left screen space
+-- @return float bottom
+-- @return float width
+-- @return float height
+function RMS_Hud:getDashboardPieceBounds(box, x, y, isSnapped, isPlaced)
+    local left, bottom = x + self:scalePixelToScreenWidth(box[1]), y + self:scalePixelToScreenHeight(box[2])
+    local width, height = self:scalePixelToScreenWidth(box[3] - box[1]), self:scalePixelToScreenHeight(box[4] - box[2])
+    if isSnapped then
+        local middleX, middleY = left + width * 0.5, bottom + height * 0.5
+        width = math.max(math.floor(width * g_screenWidth + 0.5), 1) / g_screenWidth
+        height = math.max(math.floor(height * g_screenHeight + 0.5), 1) / g_screenHeight
+        left, bottom = middleX - width * 0.5, middleY - height * 0.5
+        if not isPlaced then
+            left, bottom = snapScreenX(left), snapScreenY(bottom)
         end
     end
-    -- UV corner order: bottom left, top left, bottom right, top right
-    local turned, index = self.turnedUvs, 0
-    for _, qx in ipairs({ x0, x1 }) do
-        for _, qy in ipairs({ y0, y1 }) do
-            local tx, ty = c * qx + s * qy, c * qy - s * qx
-            turned[index + 1] = uvs[1] + (tx - box[1]) / (box[3] - box[1]) * (uvs[5] - uvs[1])
-            turned[index + 2] = uvs[2] + (ty - box[2]) / (box[4] - box[2]) * (uvs[4] - uvs[2])
-            index = index + 2
-        end
-    end
-    overlay:setUVs(turned)
-    overlay:setPosition(x + self:scalePixelToScreenWidth(x0), y + self:scalePixelToScreenHeight(y0))
-    overlay:setDimension(self:scalePixelToScreenWidth(x1 - x0), self:scalePixelToScreenHeight(y1 - y0))
+    return left, bottom, width, height
+end
+
+local function drawDashboardPieceAt(overlay, sliceId, color, left, bottom, width, height)
+    overlay:setSliceId(sliceId)
+    overlay:setPosition(left, bottom)
+    overlay:setDimension(width, height)
+    overlay:setColor(color[1], color[2], color[3], color[4] or 1)
+    overlay:render()
+    return left, bottom, width, height
+end
+
+function RMS_Hud:drawDashboardPiece(overlay, sliceId, box, x, y, color, isSnapped, isPlaced)
+    return drawDashboardPieceAt(overlay, sliceId, color, self:getDashboardPieceBounds(box, x, y, isSnapped, isPlaced))
+end
+
+local function drawHalo(overlay, x, y, width, height, color, alpha)
+    overlay:setDimension(width, height)
+    overlay:setPosition(x - width * 0.5, y - height * 0.5)
+    overlay:setColor(color[1], color[2], color[3], alpha)
     overlay:render()
 end
 
----Draws the coolant gauge and its zone band
-function RMS_Hud:drawCoolantGauge(posX, posY, spec, isPowered)
-    local gauge = RMS_Hud.GAUGE
-    local telltale = RMS_Thermal.getDriveValues(spec).TELLTALE
-    local temperature = tonumber(spec.engineTemperature) or gauge.LOW
-    local share = isPowered and math.clamp((temperature - gauge.LOW) / (gauge.HIGH - gauge.LOW), 0, 1) or 0
-    local mid = (gauge.IN + gauge.OUT) * 0.5
-    local bandMid = (gauge.BAND_IN + gauge.BAND_OUT) * 0.5
-    local span = math.rad(gauge.SPAN)
-    local count = math.floor(2 * span * mid / gauge.PITCH + 0.5)
-    local step = 2 * span / count
-    local bar, band, glow = self.halfMoon.bar, self.halfMoon.band, self.lampGlow
-    local glowWidth, glowHeight = glow.width, glow.height
-    glow:setDimension(self:scalePixelValuesToScreenVector(gauge.GLOW, gauge.GLOW))
-    for index = 0, count - 1 do
-        local angle = math.pi + span - (index + 0.5) * step
-        local c, s = math.cos(angle), math.sin(angle)
-        local isLit = (index + 0.5) / count <= share
-        local color, alpha = RMS_Hud.GAUGE_GREY, gauge.UNLIT_ALPHA
-        if isLit then
-            color, alpha = RMS_Hud.GAUGE_LIT, 1
-        end
-        local x = posX + self:scalePixelToScreenWidth(mid * c)
-        local y = posY + self:scalePixelToScreenHeight(mid * s)
-        if isLit then
-            glow:setPosition(x - glow.width * 0.5, y - glow.height * 0.5)
-            glow:setColor(color[1], color[2], color[3], gauge.GLOW_ALPHA)
-            glow:render()
-        end
-        bar:setColor(color[1], color[2], color[3], alpha)
-        self:drawTurned(bar, "rms_Hud.bar", gauge.BAR_BOX, gauge.BAR_EXTENT, x, y, angle)
-        local level = gauge.LOW + (index + 0.5) / count * (gauge.HIGH - gauge.LOW)
-        local zone = level > telltale.WARNING and RMS_Breakdowns.COLORS.CRITICAL
-            or not spec.isElectricVehicle and level < RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
-                and RMS_Breakdowns.COLORS.COOL
-            or RMS_Hud.COLOR_GAME_GREEN
-        band:setColor(zone[1], zone[2], zone[3], 1)
-        self:drawTurned(band, "rms_Hud.band", gauge.BAND_BOX, gauge.BAND_EXTENT,
-            posX + self:scalePixelToScreenWidth(bandMid * c), posY + self:scalePixelToScreenHeight(bandMid * s), angle)
-    end
-    glow:setDimension(glowWidth, glowHeight)
+local function getLampCentre(sliceId, left, bottom, width, height)
+    local centre = RMS_HudLayout.lampCentres[sliceId]
+    return left + width * centre[1], bottom + height * centre[2]
 end
 
----Draws the native odometer, or the trip meter read off it
+function RMS_Hud:drawDialLampHalo(icon, slice, color)
+    local x, y = icon:getPosition()
+    x, y = getLampCentre("rms_Hud." .. slice, x, y, icon.width, icon.height)
+    local glow = self.lampGlow
+    drawHalo(glow, x, y, glow.width, glow.height, color, RMS_Hud.GLOW.ALPHA)
+end
+
+---Adds the points of an arc after its first
+local function addArc(points, centreX, centreY, radius, from, to, pxPerRef)
+    local step = 2 * math.acos(math.max(1 - RMS_Hud.DASHBOARD.OUTLINE.SAGITTA / (radius * pxPerRef), 0))
+    local count = math.max(math.ceil(math.abs(to - from) / step), 1)
+    for i = 1, count do
+        local angle = from + (to - from) * i / count
+        points[#points + 1] = centreX + radius * math.cos(angle)
+        points[#points + 1] = centreY + radius * math.sin(angle)
+    end
+end
+
+---Returns the angle of a point left of the dial
+local function getLeftAngle(x, y)
+    local angle = math.atan2(y, x)
+    return angle < 0 and angle + 2 * math.pi or angle
+end
+
+---Returns an angle within a turn after another
+local function getAngleAfter(angle, from)
+    return from + (angle - from) % (2 * math.pi)
+end
+
+---Returns the corner centres round a block's notch
+-- @param table notch its circle's centre and radius, reference px with y up
+-- @return float footX
+-- @return float footY
+-- @return float curveX
+-- @return float curveY
+local function getNotchCorners(notch, inner, round, bottom)
+    local x, y, reach = notch[1], notch[2], notch[3] + round
+    local footY = bottom + round
+    local distance = math.sqrt(x * x + y * y)
+    local along = ((inner + round) ^ 2 - reach * reach + distance * distance) / (2 * distance)
+    local across = math.sqrt((inner + round) ^ 2 - along * along)
+    local ux, uy = x / distance, y / distance
+    local curveX, curveY = ux * along + uy * across, uy * along - ux * across
+    if uy * along + ux * across > curveY then
+        curveX, curveY = ux * along - uy * across, uy * along + ux * across
+    end
+    return x - math.sqrt(reach * reach - (footY - y) ^ 2), footY, curveX, curveY
+end
+
+---Returns a block's outline about the dial centre
+-- @param table block top, bottom, outer radius and notch, reference px
+-- @param float pxPerRef screen pixels of a reference px
+-- @return table points x and y in turn
+local function getBlockLoop(block, pxPerRef)
+    local inner, round, outer = RMS_HudLayout.blocks.inner, RMS_HudLayout.blocks.round, block.outer
+    local top, bottom = block.top, block.bottom
+    local function corner(y, distance)
+        return -math.sqrt(distance * distance - y * y), y
+    end
+    local topOuterX, topOuterY = corner(top - round, outer - round)
+    local bottomOuterX, bottomOuterY = corner(bottom + round, outer - round)
+    local bottomInnerX, bottomInnerY = corner(bottom + round, inner + round)
+    local topInnerX, topInnerY = corner(top - round, inner + round)
+    local topOuter, bottomOuter = getLeftAngle(topOuterX, topOuterY), getLeftAngle(bottomOuterX, bottomOuterY)
+    local bottomInner, topInner = getLeftAngle(bottomInnerX, bottomInnerY), getLeftAngle(topInnerX, topInnerY)
+    local points = { topInnerX, top, topOuterX, top }
+    addArc(points, topOuterX, topOuterY, round, math.pi * 0.5, topOuter, pxPerRef)
+    addArc(points, 0, 0, outer, topOuter, bottomOuter, pxPerRef)
+    addArc(points, bottomOuterX, bottomOuterY, round, bottomOuter, math.pi * 1.5, pxPerRef)
+    local notch = block.notch
+    if notch == nil then
+        points[#points + 1], points[#points + 2] = bottomInnerX, bottom
+        addArc(points, bottomInnerX, bottomInnerY, round, math.pi * 1.5, bottomInner + math.pi, pxPerRef)
+    else
+        local footX, footY, curveX, curveY = getNotchCorners(notch, inner, round, bottom)
+        points[#points + 1], points[#points + 2] = footX, bottom
+        addArc(points, footX, footY, round, math.pi * 1.5, getAngleAfter(math.atan2(notch[2] - footY, notch[1] - footX), math.pi * 1.5), pxPerRef)
+        -- clockwise round the notch, the block outside its circle
+        local fromFoot = math.atan2(footY - notch[2], footX - notch[1])
+        local toCurve = math.atan2(curveY - notch[2], curveX - notch[1])
+        addArc(points, notch[1], notch[2], notch[3], fromFoot, fromFoot - (fromFoot - toCurve) % (2 * math.pi), pxPerRef)
+        local fromNotch = math.atan2(notch[2] - curveY, notch[1] - curveX)
+        addArc(points, curveX, curveY, round, fromNotch, getAngleAfter(math.atan2(-curveY, -curveX), fromNotch), pxPerRef)
+        bottomInner = getLeftAngle(curveX, curveY)
+    end
+    addArc(points, 0, 0, inner, bottomInner, topInner, pxPerRef)
+    addArc(points, topInnerX, topInnerY, round, topInner + math.pi, math.pi * 2.5, pxPerRef)
+    points[#points], points[#points - 1] = nil, nil
+    return points
+end
+
+---Returns the leftmost point of a widened block on a row
+-- @param table block its top, bottom and outer radius, reference px with y up
+-- @param float margin reference px
+-- @param float y the row, reference px with y up
+-- @return float x reference px or math.huge off its rows
+local function getBlockLeft(block, margin, y)
+    local round = RMS_HudLayout.blocks.round
+    local radius, centre = round + margin, block.outer - round
+    local topY, bottomY = block.top - round, block.bottom + round
+    if y > topY + radius or y < bottomY - radius then
+        return math.huge
+    end
+    -- arc and corner meet on the line from the dial centre through the corner's centre
+    local reach = (centre + radius) / centre
+    local cornerY
+    if y >= topY * reach then
+        cornerY = topY
+    elseif y <= bottomY * reach then
+        cornerY = bottomY
+    else
+        return -math.sqrt((centre + radius) ^ 2 - y * y)
+    end
+    return -math.sqrt(centre * centre - cornerY * cornerY) - math.sqrt(radius * radius - (y - cornerY) ^ 2)
+end
+
+---Returns the left side of a block widened by the panel's gutter
+-- @return table points x and y in turn, top to foot, reference px with y up
+local function getBlockSide(block, pxPerRef)
+    local round, gutter = RMS_HudLayout.blocks.round, RMS_HudLayout.blocks.gutter
+    local radius, centre = round + gutter, block.outer - round
+    local topY, bottomY = block.top - round, block.bottom + round
+    local topX, bottomX = -math.sqrt(centre * centre - topY * topY), -math.sqrt(centre * centre - bottomY * bottomY)
+    local topAngle, bottomAngle = getLeftAngle(topX, topY), getLeftAngle(bottomX, bottomY)
+    local points = { 0, block.top + gutter, topX, block.top + gutter }
+    addArc(points, topX, topY, radius, math.pi * 0.5, topAngle, pxPerRef)
+    addArc(points, 0, 0, block.outer + gutter, topAngle, bottomAngle, pxPerRef)
+    addArc(points, bottomX, bottomY, radius, bottomAngle, math.pi * 1.5, pxPerRef)
+    points[#points + 1], points[#points + 2] = 0, block.bottom - gutter
+    return points
+end
+
+---Returns the leftmost point of a widened run on a row
+local function getRunLeft(points, first, last, y, radius)
+    local left = math.huge
+    for i = first, last do
+        local x1, y1 = points[2 * i - 1], points[2 * i]
+        if (y1 - y) ^ 2 <= radius * radius then
+            left = math.min(left, x1 - math.sqrt(radius * radius - (y1 - y) ^ 2))
+        end
+        if i < last then
+            local x2, y2 = points[2 * i + 1], points[2 * i + 2]
+            if math.min(y1, y2) - radius <= y and math.max(y1, y2) + radius >= y then
+                -- the side moved out by the radius, off the region
+                local dx, dy = x2 - x1, y2 - y1
+                local length = math.sqrt(dx * dx + dy * dy)
+                local outX, outY = dy / length * radius, -dx / length * radius
+                local fromY, toY = y1 + outY, y2 + outY
+                if fromY ~= toY and (fromY - y) * (toY - y) <= 0 then
+                    left = math.min(left, x1 + outX + (y - fromY) / (toY - fromY) * dx)
+                end
+            end
+        end
+    end
+    return left
+end
+
+---Returns the nearest point of a polyline
+-- @return integer index of the side it lies on
+-- @return float x
+-- @return float y
+local function getNearestPoint(points, x, y, height)
+    local nearest, index, nearestX, nearestY = math.huge, 1, points[1], points[2]
+    for i = 1, #points / 2 - 1 do
+        local x1, y1, x2, y2 = points[2 * i - 1], points[2 * i], points[2 * i + 1], points[2 * i + 2]
+        if math.min(y1, y2) <= y + height and math.max(y1, y2) >= y - height then
+            local dx, dy = x2 - x1, y2 - y1
+            local along = math.clamp(((x - x1) * dx + (y - y1) * dy) / (dx * dx + dy * dy), 0, 1)
+            local px, py = x1 + along * dx, y1 + along * dy
+            local distance = (px - x) ^ 2 + (py - y) ^ 2
+            if distance < nearest then
+                nearest, index, nearestX, nearestY = distance, i, px, py
+            end
+        end
+    end
+    return index, nearestX, nearestY
+end
+
+---Returns the panel's glass round its dial and blocks
+-- @param table panel its dial's glass and its blocks from the top
+-- @param float pxPerRef screen pixels of a reference px
+-- @return table loop x and y in turn, anticlockwise, reference px with y up
+function RMS_Hud.getPanelLoop(panel, pxPerRef)
+    local glass, blocks = panel.glass, panel.blocks
+    local gutter, join = RMS_HudLayout.blocks.gutter, RMS_HudLayout.blocks.join
+    local loop = {}
+    for i = 1, #glass.right do
+        loop[i] = glass.right[i]
+    end
+    if #blocks == 0 then
+        for i = 1, #glass.left do
+            loop[#loop + 1] = glass.left[i]
+        end
+        return loop
+    end
+
+    local dial = glass.left
+    -- the top runs on to the first block's corner
+    local upper, index = getBlockSide(blocks[1], pxPerRef), 2
+    loop[#loop + 1], loop[#loop + 2] = upper[3], upper[4]
+    for k, block in ipairs(blocks) do
+        local below = blocks[k + 1]
+        if below == nil and block.bottom - gutter <= -RMS_HudLayout.sizes.panel then
+            break
+        end
+        -- the join's centre: where both sides widened by its radius meet
+        local from = below ~= nil and below.top + gutter + join or block.bottom - gutter
+        local to = block.bottom - gutter - join
+        local first, last = #dial / 2, 1
+        if below == nil then
+            for i = 1, #dial / 2 do
+                local y = dial[2 * i]
+                if y <= from + join and y >= to - join then
+                    first, last = math.min(first, i), math.max(last, i)
+                end
+            end
+            first, last = math.max(first - 1, 1), math.min(last + 1, #dial / 2)
+        end
+        local function getLowerLeft(y)
+            if below ~= nil then
+                return getBlockLeft(below, gutter + join, y)
+            end
+            return getRunLeft(dial, first, last, y, join)
+        end
+        if getBlockLeft(block, gutter + join, to) < getLowerLeft(to) then
+            -- the circle rests on the block's foot
+            from = to
+        else
+            for _ = 1, 32 do
+                local middle = (from + to) * 0.5
+                if getBlockLeft(block, gutter + join, middle) < getLowerLeft(middle) then
+                    from = middle
+                else
+                    to = middle
+                end
+            end
+        end
+        local centreX = math.max(getBlockLeft(block, gutter + join, from), getLowerLeft(to))
+        local centreY = from
+
+        local lower = below ~= nil and getBlockSide(below, pxPerRef) or dial
+        -- each side touches the join's circle within its radius of the centre's height
+        local upperIndex, upperX, upperY = getNearestPoint(upper, centreX, centreY, join + 1)
+        local lowerIndex, lowerX, lowerY = getNearestPoint(lower, centreX, centreY, join + 1)
+        for i = index + 1, upperIndex do
+            loop[#loop + 1], loop[#loop + 2] = upper[2 * i - 1], upper[2 * i]
+        end
+        loop[#loop + 1], loop[#loop + 2] = upperX, upperY
+        local fromAngle = math.atan2(upperY - centreY, upperX - centreX)
+        local toAngle = math.atan2(lowerY - centreY, lowerX - centreX)
+        addArc(loop, centreX, centreY, join, fromAngle, fromAngle - (fromAngle - toAngle) % (2 * math.pi), pxPerRef)
+        upper, index = lower, lowerIndex
+    end
+    -- down the dial's glass to the foot, or the last block's corner on it
+    local last = upper == dial and #dial / 2 or #upper / 2 - 1
+    for i = index + 1, last do
+        loop[#loop + 1], loop[#loop + 2] = upper[2 * i - 1], upper[2 * i]
+    end
+    return loop
+end
+
+---Tells whether a joint of two strokes is clear
+local function isJointClear(ax, ay, jx, jy, bx, by)
+    local ux, uy, vx, vy = jx - ax, jy - ay, bx - jx, by - jy
+    local lengthA, lengthB = math.sqrt(ux * ux + uy * uy), math.sqrt(vx * vx + vy * vy)
+    if lengthA == 0 or lengthB == 0 then
+        return true
+    end
+    ux, uy, vx, vy = ux / lengthA, uy / lengthA, vx / lengthB, vy / lengthB
+    for row = math.floor(jy - 2), math.floor(jy + 2) do
+        for column = math.floor(jx - 2), math.floor(jx + 2) do
+            local qx, qy = column + 0.5 - jx, row + 0.5 - jy
+            local alongA, acrossA = qx * ux + qy * uy, math.abs(ux * qy - uy * qx)
+            local alongB, acrossB = qx * vx + qy * vy, math.abs(vx * qy - vy * qx)
+            local inA = alongA < 0 and alongA >= -lengthA and acrossA < 1.5
+            local inB = alongB >= 0 and alongB < lengthB and acrossB < 1.5
+            if inA and inB and acrossA < 1 and acrossB < 1 then
+                return false
+            end
+            if not inA and not inB and alongA >= 0 and alongB < 0 and math.min(acrossA, acrossB) < 1 then
+                return false
+            end
+        end
+    end
+    return true
+end
+
+---Tells whether the joint at a point of a loop is clear
+local function isJointClearAt(xs, ys, i, count)
+    local p, q = (i - 2) % count + 1, i % count + 1
+    return isJointClear(xs[p], ys[p], xs[i], ys[i], xs[q], ys[q])
+end
+
+---Tells whether a loop's joint and the slid ones are clear
+local function isLoopClearAt(xs, ys, index, count)
+    return isJointClearAt(xs, ys, index, count) and (index == 1 or isJointClearAt(xs, ys, index - 1, count))
+        and (index < count or isJointClearAt(xs, ys, 1, count))
+end
+
+---Returns the strokes of a 1 px outline round loops
+-- @param table loops anticlockwise loops of x and y in turn, reference px with y up
+-- @return table strokes their start, length and angle, screen space
+local function getOutlineStrokes(loops, centreX, centreY, toScreenX, toScreenY)
+    local outline, width, height = RMS_Hud.DASHBOARD.OUTLINE, g_screenWidth, g_screenHeight
+    local strokes = {}
+    for _, loop in ipairs(loops) do
+        local xs, ys, insideX, insideY = {}, {}, {}, {}
+        for i = 1, #loop / 2 do
+            local x, y = (centreX + loop[2 * i - 1] * toScreenX) * width, (centreY + loop[2 * i] * toScreenY) * height
+            local last = #xs
+            if last == 0 or math.sqrt((x - xs[last]) ^ 2 + (y - ys[last]) ^ 2) >= outline.MIN_STROKE then
+                xs[last + 1], ys[last + 1] = x, y
+            end
+        end
+        if math.sqrt((xs[#xs] - xs[1]) ^ 2 + (ys[#ys] - ys[1]) ^ 2) < outline.MIN_STROKE then
+            xs[#xs], ys[#ys] = nil, nil
+        end
+        local count = #xs
+        for i = 1, count do
+            local p, q = (i - 2) % count + 1, i % count + 1
+            local tx, ty = xs[q] - xs[p], ys[q] - ys[p]
+            local length = math.sqrt(tx * tx + ty * ty)
+            insideX[i], insideY[i] = xs[i] - ty / length * 0.5, ys[i] + tx / length * 0.5
+        end
+
+        local shiftX, shiftY, runX, runY = {}, {}, {}, {}
+        for i = 1, count do
+            shiftX[i], shiftY[i] = 0, 0
+        end
+        for i = 1, count do
+            local j = i % count + 1
+            local dx, dy = insideX[j] - insideX[i], insideY[j] - insideY[i]
+            if math.abs(dy) < 0.05 and math.abs(dx) >= outline.STRAIGHT then
+                local y = math.floor((insideY[i] + insideY[j]) * 0.5) + 0.5
+                shiftY[i], shiftY[j] = y - insideY[i], y - insideY[j]
+                runX[i], runY[i], runX[j], runY[j] = dx, 0, dx, 0
+            elseif math.abs(dx) < 0.05 and math.abs(dy) >= outline.STRAIGHT then
+                local x = math.floor((insideX[i] + insideX[j]) * 0.5) + 0.5
+                shiftX[i], shiftX[j] = x - insideX[i], x - insideX[j]
+                runX[i], runY[i], runX[j], runY[j] = 0, dy, 0, dy
+            end
+        end
+        for i = 1, count do
+            if runX[i] ~= nil then
+                for direction = -1, 1, 2 do
+                    local k, along = i, 0
+                    while true do
+                        local following = (k - 1 + direction) % count + 1
+                        along = along + math.sqrt((insideX[following] - insideX[k]) ^ 2 + (insideY[following] - insideY[k]) ^ 2)
+                        if runX[following] ~= nil or along >= outline.TAPER then
+                            break
+                        end
+                        local fade = 1 - along / outline.TAPER
+                        if math.abs(shiftX[i] * fade) > math.abs(shiftX[following]) then
+                            shiftX[following] = shiftX[i] * fade
+                        end
+                        if math.abs(shiftY[i] * fade) > math.abs(shiftY[following]) then
+                            shiftY[following] = shiftY[i] * fade
+                        end
+                        k = following
+                    end
+                end
+            end
+        end
+        local px, py = {}, {}
+        for i = 1, count do
+            px[i], py[i] = insideX[i] + shiftX[i], insideY[i] + shiftY[i]
+        end
+
+        for i = 1, count do
+            if not isLoopClearAt(px, py, i, count) then
+                local p, q = (i - 2) % count + 1, i % count + 1
+                local tx, ty = runX[i] or (px[q] - px[p]), runY[i] or (py[q] - py[p])
+                local length = math.sqrt(tx * tx + ty * ty)
+                tx, ty = tx / length * outline.NUDGE, ty / length * outline.NUDGE
+                local x, y = px[i], py[i]
+                for step = 1, outline.NUDGE_STEPS do
+                    px[i], py[i] = x + tx * step, y + ty * step
+                    if isLoopClearAt(px, py, i, count) then
+                        break
+                    end
+                    px[i], py[i] = x - tx * step, y - ty * step
+                    if isLoopClearAt(px, py, i, count) then
+                        break
+                    end
+                    px[i], py[i] = x, y
+                end
+            end
+        end
+
+        for i = 1, count do
+            local j = i % count + 1
+            local dx, dy = px[j] - px[i], py[j] - py[i]
+            strokes[#strokes + 1] = { x = px[i] / width, y = (py[i] - 1.5) / height,
+                length = math.sqrt(dx * dx + dy * dy) / width, angle = math.atan2(dy, dx) }
+        end
+    end
+    return strokes
+end
+
+---Adds an interval's coverage to a subpixel row
+local function addCoverage(events, edge, weight)
+    local column = math.floor(edge)
+    local fraction = edge - column
+    events[column] = (events[column] or 0) + (1 - fraction) * weight
+    events[column + 1] = (events[column + 1] or 0) + fraction * weight
+end
+
+---Rasterizes even-odd loops into pixel spans
+local function getGlassSpans(loops, centreX, centreY, toScreenX, toScreenY, cut)
+    local width, height = g_screenWidth, g_screenHeight
+    local subrows, crossings, coverage = 4, {}, {}
+    for _, loop in ipairs(loops) do
+        local px, py = {}, {}
+        for i = 1, #loop, 2 do
+            px[#px + 1] = (centreX + loop[i] * toScreenX) * width
+            py[#py + 1] = (centreY + loop[i + 1] * toScreenY) * height
+        end
+        for i, low in ipairs(py) do
+            local j = i % #py + 1
+            local high = py[j]
+            if low ~= high then
+                local from = math.max(0, math.ceil(math.min(low, high) * subrows - 0.5))
+                local to = math.min(height * subrows, math.ceil(math.max(low, high) * subrows - 0.5)) - 1
+                local slope = (px[j] - px[i]) / (high - low)
+                for sample = from, to do
+                    local xs = crossings[sample]
+                    if xs == nil then
+                        xs = {}
+                        crossings[sample] = xs
+                    end
+                    xs[#xs + 1] = px[i] + ((sample + 0.5) / subrows - low) * slope
+                end
+            end
+        end
+    end
+    for sample, xs in pairs(crossings) do
+        table.sort(xs)
+        local row = math.floor(sample / subrows)
+        local events = coverage[row]
+        if events == nil then
+            events = {}
+            coverage[row] = events
+        end
+        for i = 1, #xs - 1, 2 do
+            local left, right = math.clamp(xs[i], 0, width), math.clamp(xs[i + 1], 0, width)
+            if left < right then
+                addCoverage(events, left, 1 / subrows)
+                addCoverage(events, right, -1 / subrows)
+            end
+        end
+    end
+    local spans, previous = {}, {}
+    for row = 0, height - 1 do
+        local events = coverage[row]
+        local current = {}
+        if events ~= nil then
+            local columns = {}
+            for column, change in pairs(events) do
+                if math.abs(change) > 1e-8 then
+                    columns[#columns + 1] = column
+                end
+            end
+            if cut ~= nil and math.abs(events[cut] or 0) <= 1e-8 then
+                columns[#columns + 1] = cut
+            end
+            table.sort(columns)
+            local alpha = 0
+            for i = 1, #columns - 1 do
+                local left, right = columns[i], columns[i + 1]
+                alpha = alpha + (events[left] or 0)
+                local level = math.floor(math.clamp(alpha, 0, 1) * GLASS_COVERAGE_STEPS + 0.5)
+                if level > 0 then
+                    local key = (left * (width + 1) + right) * (GLASS_COVERAGE_STEPS + 1) + level
+                    local span = previous[key]
+                    if span == nil then
+                        span = { left = left / width, bottom = row / height, width = (right - left) / width,
+                            rows = 0, level = level }
+                        spans[#spans + 1] = span
+                    end
+                    span.rows = span.rows + 1
+                    current[key] = span
+                end
+            end
+        end
+        previous = current
+    end
+    return spans
+end
+
+---Returns a glass's drawing on this screen
+function RMS_Hud:getGlassDrawing(centreX, centreY, part, slot)
+    local built = self.glasses[slot]
+    if built == nil or built.x ~= centreX or built.y ~= centreY or built.part ~= part
+        or built.screenWidth ~= g_screenWidth or built.screenHeight ~= g_screenHeight then
+        local toScreenX, toScreenY = self:scalePixelToScreenWidth(1), self:scalePixelToScreenHeight(1)
+        built = { x = centreX, y = centreY, part = part, screenWidth = g_screenWidth, screenHeight = g_screenHeight }
+        if part.glass == nil then
+            local loops = part.outline or { getBlockLoop(part, toScreenY * g_screenHeight) }
+            built.left, built.bottom, built.width, built.height = self:getDashboardPieceBounds(getPieceBox(part.slice),
+                centreX, centreY, false)
+            built.strokes = getOutlineStrokes(loops, centreX, centreY, toScreenX, toScreenY)
+        else
+            local pieces = RMS_HudLayout.pieces
+            local left, bottom, width, height = self:getDashboardPieceBounds(getPieceBox(pieces.panelShade), centreX, centreY, false)
+            local uvs = g_overlayManager:getSliceInfoById(pieces.panelShade).uvs
+            local uScale, vScale = (uvs[5] - uvs[1]) / width, (uvs[4] - uvs[2]) / height
+            local cut = math.ceil(left * g_screenWidth)
+            local loops = { RMS_Hud.getPanelLoop(part, toScreenY * g_screenHeight) }
+            -- spans left of the shading share the panel's tone
+            built.tone, built.fills = g_overlayManager:getSliceInfoById(pieces.panelTone).uvs, {}
+            for _, span in ipairs(getGlassSpans(loops, centreX, centreY, toScreenX, toScreenY, cut)) do
+                span.height = span.rows / g_screenHeight
+                local fill = built.fills[span.level]
+                if fill == nil then
+                    fill = { tone = {}, shade = {} }
+                    built.fills[span.level] = fill
+                end
+                if span.left * g_screenWidth < cut - 0.5 then
+                    table.insert(fill.tone, span)
+                else
+                    local u0, v0 = uvs[1] + (span.left - left) * uScale, uvs[2] + (span.bottom - bottom) * vScale
+                    local u1, v1 = u0 + span.width * uScale, v0 + span.height * vScale
+                    span.uvs = { u0, v0, u0, v1, u1, v0, u1, v1 }
+                    table.insert(fill.shade, span)
+                end
+            end
+        end
+        self.glasses[slot] = built
+    end
+    return built
+end
+
+---Draws a glass and returns its outline
+function RMS_Hud:drawGlassFill(centreX, centreY, part, slot)
+    local built = self:getGlassDrawing(centreX, centreY, part, slot)
+    local glass = self.dashboard.glass
+    if built.fills == nil then
+        drawDashboardPieceAt(glass, part.slice, FIGURE_COLOR, built.left, built.bottom, built.width, built.height)
+        return built.strokes
+    end
+    glass:setSliceId(RMS_HudLayout.pieces.panelShade)
+    for level, fill in pairs(built.fills) do
+        glass:setColor(1, 1, 1, level / GLASS_COVERAGE_STEPS)
+        if #fill.tone > 0 then
+            glass:setUVs(built.tone)
+            for _, span in ipairs(fill.tone) do
+                renderOverlay(glass.overlayId, span.left, span.bottom, span.width, span.height)
+            end
+        end
+        for _, span in ipairs(fill.shade) do
+            glass:setUVs(span.uvs)
+            renderOverlay(glass.overlayId, span.left, span.bottom, span.width, span.height)
+        end
+    end
+    return built.strokes
+end
+
+local function drawGlassOutline(self, strokes)
+    if strokes == nil then
+        return
+    end
+    local id, rim = self.dashboard.stroke.overlayId, RMS_Hud.DASHBOARD.RIM
+    local height, pivot = 3 / g_screenHeight, 1.5 / g_screenHeight
+    setOverlayColor(id, rim[1], rim[2], rim[3], rim[4])
+    for _, stroke in ipairs(strokes) do
+        setOverlayRotation(id, stroke.angle, 0, pivot)
+        renderOverlay(id, stroke.x, stroke.y, stroke.length, height)
+    end
+end
+
+local ringCorners = {}
+
+---Caches the coverage of a one-pixel corner
+local function getRingCorner(index)
+    local pixels = ringCorners[index]
+    if pixels == nil then
+        local radius, samples = index * 0.5, 32
+        local centre = radius + 0.5
+        local size = math.ceil(centre)
+        pixels = {}
+        for column = 0, size - 1 do
+            for row = 0, size - 1 do
+                local covered = 0
+                for i = 0, samples - 1 do
+                    for j = 0, samples - 1 do
+                        local x, y = column + (i + 0.5) / samples, row + (j + 0.5) / samples
+                        local distance
+                        if x < centre and y < centre then
+                            distance = math.abs(math.sqrt((x - centre) ^ 2 + (y - centre) ^ 2) - radius)
+                        elseif y < centre then
+                            distance = math.abs(y - 0.5)
+                        else
+                            distance = math.abs(x - 0.5)
+                        end
+                        if distance <= 0.5 then
+                            covered = covered + 1
+                        end
+                    end
+                end
+                if covered > 0 then
+                    pixels[#pixels + 1] = { column, row, covered / (samples * samples) }
+                end
+            end
+        end
+        ringCorners[index] = pixels
+    end
+    return pixels
+end
+
+---Draws a one-pixel rounded outline
+-- @param float radius screen pixels
+-- @return integer left screen column
+-- @return integer bottom screen row
+-- @return integer right screen column
+-- @return integer top screen row
+function RMS_Hud:drawRoundOutline(left, bottom, right, top, radius, color)
+    local x0, x1 = math.floor(left + 0.5), math.floor(right - 0.5)
+    local y0, y1 = math.floor(bottom + 0.5), math.floor(top - 0.5)
+    local index = math.floor((radius - 0.5) * 2 + 0.5)
+    local columns, rows = x1 - x0 + 1, y1 - y0 + 1
+    index = math.clamp(index, 1, math.max(math.min(columns, rows) - 1, 1))
+    while index > 1 and 2 * math.ceil(index * 0.5 + 0.5) > math.min(columns, rows) do
+        index = index - 1
+    end
+    local size = math.ceil(index * 0.5 + 0.5)
+    local width, height = g_screenWidth, g_screenHeight
+    local r, g, b, opacity = color[1], color[2], color[3], color[4] or 1
+    local px, py = 1 / width, 1 / height
+    for _, pixel in ipairs(getRingCorner(index)) do
+        local xL, xR = (x0 + pixel[1]) / width, (x1 - pixel[1]) / width
+        local yB, yT = (y0 + pixel[2]) / height, (y1 - pixel[2]) / height
+        local alpha = opacity * pixel[3]
+        drawFilledRect(xL, yT, px, py, r, g, b, alpha)
+        drawFilledRect(xR, yT, px, py, r, g, b, alpha)
+        drawFilledRect(xL, yB, px, py, r, g, b, alpha)
+        drawFilledRect(xR, yB, px, py, r, g, b, alpha)
+    end
+    if columns > 2 * size then
+        drawFilledRect((x0 + size) / width, y1 / height, (columns - 2 * size) / width, 1 / height, color[1], color[2], color[3], color[4] or 1)
+        drawFilledRect((x0 + size) / width, y0 / height, (columns - 2 * size) / width, 1 / height, color[1], color[2], color[3], color[4] or 1)
+    end
+    if rows > 2 * size then
+        drawFilledRect(x0 / width, (y0 + size) / height, 1 / width, (rows - 2 * size) / height, color[1], color[2], color[3], color[4] or 1)
+        drawFilledRect(x1 / width, (y0 + size) / height, 1 / width, (rows - 2 * size) / height, color[1], color[2], color[3], color[4] or 1)
+    end
+    return x0, y0, x1, y1
+end
+
+---Draws the outline of a window or a screen
+-- @param table body its body's width and height, reference px
+-- @param table box its picture's box, reference px
+-- @return integer left column of the outline, screen pixels
+-- @return integer bottom row
+-- @return integer right column
+-- @return integer top row
+function RMS_Hud:drawBodyOutline(body, box, left, bottom, width, height)
+    local boxWidth, boxHeight = box[3] - box[1], box[4] - box[2]
+    local insetX = (boxWidth - body.width) * 0.5 / boxWidth * width
+    local insetY = (boxHeight - body.height) * 0.5 / boxHeight * height
+    return self:drawRoundOutline((left + insetX) * g_screenWidth, (bottom + insetY) * g_screenHeight, (left + width - insetX) * g_screenWidth,
+        (bottom + height - insetY) * g_screenHeight, RMS_HudLayout.bodies.corner * width * g_screenWidth / boxWidth,
+        RMS_Hud.DASHBOARD.RIM)
+end
+
+---Queues a dashboard lamp
+-- @param boolean isPlaced its middle kept off the pixel grid
+-- @param boolean hasGlow whether a white telltale lights up
+local function addLamp(lamps, picto, x, y, color, isPlaced, hasGlow)
+    local count = lamps.count + 1
+    local lamp = lamps[count]
+    if lamp == nil then
+        lamp = {}
+        lamps[count] = lamp
+    end
+    lamp.sliceId, lamp.x, lamp.y, lamp.color = RMS_HudLayout.pieces.pictos[picto], x, y, color
+    lamp.isPlaced, lamp.hasGlow = isPlaced, hasGlow
+    lamps.count = count
+end
+
+---Draws a dashboard glow
+function RMS_Hud:drawDashboardHalo(x, y, color, inkWidth)
+    local glow = RMS_Hud.DASHBOARD.LAMP_GLOW
+    local width = self:scalePixelToScreenWidth(glow.SIZE)
+    if inkWidth ~= nil then
+        width = math.max(width, inkWidth + width * 0.5)
+    end
+    local overlay = self.dashboard.glow
+    overlay:setSliceId(RMS_HudLayout.pieces.glow)
+    local alpha = color == RMS_Hud.COLOR_GAME_GREEN and glow.GREEN_ALPHA or glow.ALPHA
+    drawHalo(overlay, x, y, width, self:scalePixelToScreenHeight(glow.SIZE), color, alpha)
+end
+
+---Draws the queued lamps
+function RMS_Hud:drawDashboardLamps(lamps)
+    local colors = RMS_Breakdowns.COLORS
+    for index = 1, lamps.count do
+        local lamp = lamps[index]
+        lamp.left, lamp.bottom, lamp.width, lamp.height = self:getDashboardPieceBounds(getPieceBox(lamp.sliceId), lamp.x, lamp.y, true, lamp.isPlaced)
+        if lamp.color ~= colors.DEFAULT and (lamp.color ~= FIGURE_COLOR or lamp.hasGlow) then
+            local x, y = getLampCentre(lamp.sliceId, lamp.left, lamp.bottom, lamp.width, lamp.height)
+            self:drawDashboardHalo(x, y, lamp.color)
+        end
+    end
+    for index = 1, lamps.count do
+        local lamp = lamps[index]
+        drawDashboardPieceAt(self.dashboard.piece, lamp.sliceId, lamp.color, lamp.left, lamp.bottom, lamp.width, lamp.height)
+    end
+end
+
+---Draws a figure and its unit
+function RMS_Hud:drawFigure(x, middleY, value, unit, color, unitGap, hasGlow)
+    local sizes = RMS_HudLayout.sizes
+    local valueSize = self:scalePixelToScreenHeight(sizes.value)
+    local baselineY = snapScreenY(middleY - valueSize * RMS_Hud.FIGURES_MIDDLE)
+    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_BASELINE, true)
+    local left = snapScreenX(x)
+    if hasGlow then
+        local width = getTextWidth(valueSize, value)
+        local ink = RMS_HudLayout.driveTextCentres[value]
+        local centreX = left + width * (ink and ink[1] or 0.5)
+        local centreY = baselineY + valueSize * (ink and ink[2] or RMS_Hud.FIGURES_MIDDLE)
+        self:drawDashboardHalo(centreX, centreY, color, width)
+    end
+    setTextColor(color[1], color[2], color[3], 1)
+    renderText(left, baselineY, valueSize, value)
+    if unit ~= "" then
+        local unitColor = color == FIGURE_COLOR and RMS_Hud.DASHBOARD.LABEL or color
+        local unitX = x + getTextWidth(valueSize, value) + self:scalePixelToScreenWidth(unitGap)
+        setTextBold(false)
+        setTextColor(unitColor[1], unitColor[2], unitColor[3], 1)
+        renderText(snapScreenX(unitX), baselineY, self:scalePixelToScreenHeight(sizes.unit), unit)
+    end
+    setTextBold(false)
+end
+
+---Returns a figure's width with its unit
+function RMS_Hud:getFigureRoom(value, unit)
+    local sizes = RMS_HudLayout.sizes
+    setTextBold(true)
+    local width = getTextWidth(self:scalePixelToScreenHeight(sizes.value), value)
+    setTextBold(false)
+    if unit ~= "" then
+        width = width + self:scalePixelToScreenWidth(RMS_Hud.DASHBOARD.UNIT_GAP) + getTextWidth(self:scalePixelToScreenHeight(sizes.unit), unit)
+    end
+    return width
+end
+
+---Draws a symbol and its figure
+function RMS_Hud:drawSymbolFigure(anchorX, y, picto, color, value, unit, figureColor, isShown, lamps, isLeftAligned, hasGlow)
+    local sizes, ink = RMS_HudLayout.sizes, RMS_HudLayout.inks[picto]
+    local inkWidth = self:scalePixelToScreenWidth(ink[2] - ink[1] + sizes.textGap)
+    local left = anchorX
+    local pictoOffset = -ink[1]
+    if isLeftAligned then
+        pictoOffset = pictoOffset + RMS_Hud.DASHBOARD.READING_PICTO_OFFSET
+    else
+        left = left - (inkWidth + self:getFigureRoom(value, unit)) * 0.5
+    end
+    addLamp(lamps, picto, left + self:scalePixelToScreenWidth(pictoOffset), y, color, nil, hasGlow)
+    if isShown then
+        local hasModeGlow = picto == "frontWheelDrive" and color ~= RMS_Breakdowns.COLORS.DEFAULT and color ~= FIGURE_COLOR
+        self:drawFigure(left + inkWidth, y, value, unit, figureColor, RMS_Hud.DASHBOARD.UNIT_GAP, hasModeGlow)
+    end
+end
+
+
+---Draws the rules between the readings
+function RMS_Hud:drawReadingRules(posX, posY, hairlines)
+    local width = self:scalePixelToScreenWidth(RMS_HudLayout.sizes.readingRule)
+    for _, rule in ipairs(hairlines or {}) do
+        drawRule(posX + self:scalePixelToScreenWidth(rule[1]), posY + self:scalePixelToScreenHeight(rule[2]) - g_pixelSizeY * 0.5,
+            width, g_pixelSizeY, RMS_Hud.DASHBOARD.HAIRLINE)
+    end
+end
+
+---Returns the colour of a figure
+local function getFigureColor(lampColor)
+    if lampColor == nil or lampColor == RMS_Breakdowns.COLORS.DEFAULT then
+        return FIGURE_COLOR
+    end
+    return lampColor
+end
+
+---Returns the vehicle's cached dashboard
+function RMS_Hud:getVehicleDashboard(vehicle, spec)
+    local isRoad = RMS_Drivetrain.getIsRoadVehicleCategory(vehicle)
+    local isMachine = RMS_Drivetrain.getIsMachineCategory(vehicle)
+    local hasScreen = RMS_Hud.getHasScreen(vehicle)
+    local hasDrive = RMS_Drivetrain.getIsAvailable(vehicle)
+    local hasCenterDiff = hasDrive and RMS_Drivetrain.getHasCenterDifferential(vehicle)
+    local hasPark = RMS_Drivetrain.getIsParkBrakeManaged(vehicle)
+    local hasPto = hasScreen and RMS_Utils.getHasPtoDisplay(vehicle)
+    local isFitted = RealisticMechanicalSystems.getIsTelltaleFitted
+    local hasOil = isFitted(vehicle, "oil")
+    local data = self.vehicleDashboard
+    if data == nil or data.spec ~= spec or data.isRoad ~= isRoad or data.isMachine ~= isMachine
+        or data.hasScreen ~= hasScreen or data.hasDrive ~= hasDrive or data.hasCenterDiff ~= hasCenterDiff
+        or data.hasPark ~= hasPark or data.hasPto ~= hasPto or data.hasOil ~= hasOil
+        or data.year ~= spec.year or data.electric ~= spec.isElectricVehicle or data.diesel ~= spec.isDieselVehicle
+        or data.truck ~= spec.isTruck or data.filter ~= spec.hasParticulateFilter or data.fan ~= spec.hasReversibleFan then
+        local content = RMS_Hud.getDashboardContent(vehicle, isRoad)
+        local slots = { { id = spec.isElectricVehicle and "limitedPower" or "preheat", x = -RMS_Hud.ROW.PITCH },
+            { id = "warning" }, { id = spec.isElectricVehicle and "tractionBattery" or "oil", x = RMS_Hud.ROW.PITCH } }
+        local shown, dialLamps = {}, {}
+        for _, slot in ipairs(slots) do
+            if isFitted(vehicle, slot.id) then
+                local slice = RMS_Hud.getDialLampSlice(slot.id, isRoad)
+                local x, y, lift
+                if slot.x == nil then
+                    local ink, lamp = RMS_Hud.LAMP_INK[slice], RMS_Hud.LAMP
+                    local size = lamp.SIZE * (RMS_Hud.LAMP_SCALE[slice] or 1)
+                    local inkMiddle = (ink[3] + ink[2] * 0.5 - lamp.CELL * 0.5) * size / lamp.CELL
+                    x, y, lift = 0, self.serviceCentreY, -self:scalePixelToScreenHeight(inkMiddle)
+                else
+                    x, y = self:scalePixelToScreenWidth(slot.x), self.rowCenterY
+                    lift = self:scalePixelToScreenHeight(RMS_Hud.getRowLampLift(slice))
+                end
+                dialLamps[#dialLamps + 1] = { id = slot.id, icon = self.lampIcons[slice], slice = slice, x = x, y = y, lift = lift }
+                shown[slot.id] = true
+            end
+        end
+        for _, list in ipairs({ content.windows, content.readings }) do
+            for _, id in ipairs(list) do
+                shown[id] = true
+            end
+        end
+        shown.coolant = content.pod ~= nil
+        shown.brakes = shown.brakes or content.hasBrakes and content.drive ~= nil and content.drive.brakes ~= nil
+
+        local drive = content.drive
+        local windows = {}
+        if drive ~= nil then
+            if drive.diff ~= nil and hasDrive then
+                windows[#windows + 1] = { place = drive.diff, picto = "diffLock" }
+            end
+            if drive.brakes ~= nil and content.hasBrakes then
+                windows[#windows + 1] = { place = drive.brakes, picto = "brakes" }
+            end
+            if drive.park ~= nil and content.hasParkBrake then
+                windows[#windows + 1] = { place = drive.park, picto = "parkBrake" }
+            end
+        end
+        local step = 0
+        if #windows > 1 then
+            step = math.floor(self:scalePixelToScreenWidth(windows[1].place[1] - windows[2].place[1]) * g_screenWidth + 1e-6) / g_screenWidth
+        end
+        content.driveWindows, content.driveWindowStep = windows, step
+
+        data = { spec = spec, isRoad = isRoad, isMachine = isMachine, hasScreen = hasScreen, hasDrive = hasDrive,
+            hasCenterDiff = hasCenterDiff, hasPark = hasPark, hasPto = hasPto, hasOil = hasOil, year = spec.year,
+            electric = spec.isElectricVehicle, diesel = spec.isDieselVehicle, truck = spec.isTruck,
+            filter = spec.hasParticulateFilter, fan = spec.hasReversibleFan, content = content, shown = shown, dialLamps = dialLamps,
+            parts = { content.panel or false, content.dial or false, content.engine or false, content.driveGlass or false } }
+        self.vehicleDashboard = data
+    end
+    data.content.drivetrain = hasDrive and RMS_Drivetrain.getState(vehicle) or nil
+    return data
+end
+
+---Draws the dashboard
+function RMS_Hud:drawDashboard()
+    local vehicle, speedMeter = self.vehicle, g_currentMission.hud.speedMeter
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or spec.isExcludedVehicle then
+        return
+    end
+
+    local colors = RMS_Breakdowns.COLORS
+    local motorState = vehicle:getMotorState()
+    local isMotorOn = motorState == MotorState.ON
+    local dashboard = self:getVehicleDashboard(vehicle, spec)
+    local content, isRoadVehicle, isMachine = dashboard.content, dashboard.isRoad, dashboard.isMachine
+    local cvtAddonSpec = hasCVTAddon(vehicle) and vehicle.spec_CVTaddon or nil
+    local cvtFaultColor = colors.DEFAULT
+    if cvtAddonSpec ~= nil then
+        if cvtAddonSpec.forDBL_critdamage == 1 then
+            cvtFaultColor = colors.CRITICAL
+        elseif cvtAddonSpec.forDBL_warndamage == 1 or cvtAddonSpec.forDBL_highpressure == 1 then
+            cvtFaultColor = colors.WARNING
+        end
+    end
+    local isServiceOverdue = vehicle:getServiceLevel() < RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
+    local lampColors, isRoutine = RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultColor,
+        self.lampColors, self.routineLamps)
+
+    speedMeter.speedTextSize = self:scalePixelToScreenHeight(43)
+    local posX, posY = speedMeter.speedBg:getPosition()
+    posX, posY = posX + speedMeter.speedGaugeCenterOffsetX, posY + speedMeter.speedGaugeCenterOffsetY
+    local lamp = self:resolveLampColors(spec, lampColors, isRoutine, dashboard.shown, isMotorOn)
+    if content.hasParkBrake then
+        lamp.parkBrake = RMS_Drivetrain.getState(vehicle).parkBrake and colors.CRITICAL or colors.DEFAULT
+    end
+
+    local white = FIGURE_COLOR
+    for index, part in ipairs(dashboard.parts) do
+        if part then
+            local strokes = self:drawGlassFill(posX, posY, part, index)
+            if part == content.dial then
+                if content.pod ~= nil then
+                    self:drawPodBody(posX, posY, content.pod)
+                end
+                if content.hasScreen then
+                    self:drawPodBody(posX, posY, "power")
+                end
+            end
+            drawGlassOutline(self, strokes)
+        end
+    end
+
+    -- the gauges and the screen are powered from the ignition on
+    local isPowered = motorState ~= MotorState.OFF
+    local symbol = isPowered and white or colors.DEFAULT
+    local lamps = self.dashboardLamps
+    lamps.count = 0
+    self:drawWaterGauge(posX, posY, spec, isPowered)
+    if content.pod ~= nil then
+        local picto = RMS_Hud.getDashboardPicto("coolant", spec, isRoadVehicle, isMachine)
+        local value, unit = RMS_Hud.getWaterFigure(spec)
+        self:drawPod(posX, posY, content.pod, picto, lamp.coolant, value, unit, getFigureColor(lamp.coolant), isPowered, lamps)
+    end
+    if content.hasScreen then
+        local squares, figure, isWarning = self:updatePowerReading(vehicle, isMotorOn)
+        self:drawPowerGauge(posX, posY, squares, isWarning)
+        self:drawPod(posX, posY, "power", "enginePower", symbol, figure, "%", isWarning and colors.WARNING or white, isPowered, lamps)
+    end
+    self:drawEngineBlock(posX, posY, content, lamp, vehicle, spec, isRoadVehicle, isMachine, isPowered, lamps)
+    self:drawDriveBlock(posX, posY, content, lamp, vehicle, spec, isPowered, lamps)
+    self:drawDashboardLamps(lamps)
+    self:drawDialLamps(posX, posY, dashboard.dialLamps, lamp)
+
+    self:drawOdometer()
+end
+
+---Returns a pod's centre and half size on screen
+function RMS_Hud:getPodGeometry(posX, posY, podKey)
+    local pod = RMS_HudLayout.pods[podKey]
+    local x, y = posX + self:scalePixelToScreenWidth(pod.x), posY + self:scalePixelToScreenHeight(pod.y)
+    return x, y, self:scalePixelToScreenWidth(pod.width * 0.5), self:scalePixelToScreenHeight(pod.height * 0.5)
+end
+
+local ringEnds = {}
+
+---Returns the coverage of a pod ring's left end
+-- @param integer rows rows of the pod, even
+-- @return table pixels column, row and coverage of each pixel the ring touches
+local function getRingEnd(rows)
+    local pixels = ringEnds[rows]
+    if pixels == nil then
+        pixels = {}
+        local radius, centre, samples = (rows - 1) * 0.5, rows * 0.5, 32
+        for column = 0, rows / 2 - 1 do
+            for row = 0, rows - 1 do
+                -- only pixels within reach of the line
+                if math.abs(math.sqrt((column + 0.5 - centre) ^ 2 + (row + 0.5 - centre) ^ 2) - radius) < 1.25 then
+                    local covered = 0
+                    for i = 0, samples - 1 do
+                        for j = 0, samples - 1 do
+                            local x, y = column + (i + 0.5) / samples - centre, row + (j + 0.5) / samples - centre
+                            if math.abs(math.sqrt(x * x + y * y) - radius) <= 0.5 then
+                                covered = covered + 1
+                            end
+                        end
+                    end
+                    if covered > 0 then
+                        pixels[#pixels + 1] = { column, row, covered / (samples * samples) }
+                    end
+                end
+            end
+        end
+        ringEnds[rows] = pixels
+    end
+    return pixels
+end
+
+---Draws a pod
+function RMS_Hud:drawPodBody(posX, posY, podKey)
+    local x, y, halfWidth, halfHeight = self:getPodGeometry(posX, posY, podKey)
+    local left, right = (x - halfWidth) * g_screenWidth, (x + halfWidth) * g_screenWidth
+    local bottom, top = (y - halfHeight) * g_screenHeight, (y + halfHeight) * g_screenHeight
+    local x0, x1 = math.floor(left + 0.5), math.floor(right - 0.5)
+    local y0, y1 = math.floor(bottom + 0.5), math.floor(top - 0.5)
+    -- an even number of rows, each end a half circle about a pixel edge
+    if (y1 - y0) % 2 == 0 then
+        if math.abs(y1 + 1.5 - (top - 0.5)) < math.abs(y0 - 0.5 - (bottom + 0.5)) then
+            y1 = y1 + 1
+        else
+            y0 = y0 - 1
+        end
+    end
+    local columns, rows = x1 - x0 + 1, y1 - y0 + 1
+    local pixelX, pixelY = g_pixelSizeX, g_pixelSizeY
+
+    -- drawFilledRectRound scales its corner of 20 reference pixels
+    local _, corner = getNormalizedScreenValues(20, 20)
+    local glass = RMS_Hud.DASHBOARD.POD_GLASS
+    drawFilledRectRound(x0 * pixelX, y0 * pixelY, columns * pixelX, rows * pixelY, rows * pixelY / (2 * corner),
+        glass[1], glass[2], glass[3], glass[4])
+
+    local ring, half = RMS_Hud.COLOR_GAME_GREEN, rows / 2
+    drawFilledRect((x0 + half) * pixelX, y0 * pixelY, (columns - rows) * pixelX, pixelY, ring[1], ring[2], ring[3], 1)
+    drawFilledRect((x0 + half) * pixelX, y1 * pixelY, (columns - rows) * pixelX, pixelY, ring[1], ring[2], ring[3], 1)
+    for _, pixel in ipairs(getRingEnd(rows)) do
+        drawFilledRect((x0 + pixel[1]) * pixelX, (y0 + pixel[2]) * pixelY, pixelX, pixelY, ring[1], ring[2], ring[3], pixel[3])
+        drawFilledRect((x1 - pixel[1]) * pixelX, (y0 + pixel[2]) * pixelY, pixelX, pixelY, ring[1], ring[2], ring[3], pixel[3])
+    end
+end
+
+---Draws a pod's symbol and reading
+function RMS_Hud:drawPod(posX, posY, podKey, picto, color, value, unit, figureColor, isShown, lamps)
+    local x, y = self:getPodGeometry(posX, posY, podKey)
+    if podKey == "plain" then
+        addLamp(lamps, picto, x, y, color)
+        return
+    end
+    self:drawSymbolFigure(x, y, picto, color, value, unit, figureColor, isShown, lamps)
+end
+
+---Draws a gauge piece turned to its place
+function RMS_Hud:drawGaugeSegment(posX, posY, segment, color)
+    local id = self.dashboard.gauge.overlayId
+    setOverlayUVs(id, unpack(segment.uvs))
+    setOverlayColor(id, color[1], color[2], color[3], color[4])
+    setOverlayRotation(id, segment.angle, segment.width * 0.5, segment.height * 0.5)
+    renderOverlay(id, posX + segment.left, posY + segment.bottom, segment.width, segment.height)
+end
+
+---Draws a gauge's pieces
+-- @param table segments geometry and colours of the pieces
+-- @param integer lit the number of lit pieces
+function RMS_Hud:drawGaugeSegments(posX, posY, segments, lit, isWarning)
+    local dash = RMS_Hud.DASHBOARD
+    local halo, overlay = dash.HALO, self.dashboard.glow
+    overlay:setSliceId(RMS_HudLayout.pieces.glow)
+    for index = 1, lit do
+        local segment = segments[index]
+        local color = isWarning and segment.warning or segment.color
+        overlay:setDimension(segment.glowWidth, segment.glowHeight)
+        local x, y = posX + segment.glowX, posY + segment.glowY
+        overlay:setPosition(x - overlay.width * 0.5, y - overlay.height * 0.5)
+        overlay:setColor(color[1], color[2], color[3], index == lit and halo.LEAD_ALPHA or halo.ALPHA)
+        overlay:render()
+    end
+    for index, segment in ipairs(segments) do
+        local color = index <= lit and (isWarning and segment.warning or segment.color) or dash.SEGMENT_UNLIT
+        self:drawGaugeSegment(posX, posY, segment, color)
+    end
+end
+
+---Stores a gauge piece and its halo
+-- @param string sliceId the piece's picture
+-- @param float depth across the gauge, reference px
+function RMS_Hud:makeGaugeSegment(sliceId, angle, radius, depth, color)
+    local box = getPieceBox(sliceId)
+    local size = depth + 2 * RMS_Hud.DASHBOARD.HALO.MARGIN
+    local x, y = self:scalePixelToScreenWidth(radius * math.cos(angle)), self:scalePixelToScreenHeight(radius * math.sin(angle))
+    local width, height = self:scalePixelToScreenWidth(box[3] - box[1]), self:scalePixelToScreenHeight(box[4] - box[2])
+    return { glowWidth = self:scalePixelToScreenWidth(size), glowHeight = self:scalePixelToScreenHeight(size),
+        glowX = x, glowY = y, left = x - width * 0.5, bottom = y - height * 0.5, width = width, height = height,
+        angle = angle, color = color, uvs = g_overlayManager:getSliceInfoById(sliceId).uvs }
+end
+
+---Stores the water gauge pieces
+function RMS_Hud:buildWaterGauge(hot, cold)
+    local dash, colors = RMS_Hud.DASHBOARD, RMS_Breakdowns.COLORS
+    local gauge, scale = RMS_HudLayout.gauges.water, dash.WATER_SCALE
+    local radius, ribbonRadius = (gauge.arcIn + gauge.arcOut) * 0.5, (gauge.ribIn + gauge.ribOut) * 0.5
+    local segments = {}
+    for index = 0, gauge.count - 1 do
+        local t = (index + 0.5) / gauge.count
+        local angle = math.rad(gauge.footAngle + (gauge.topAngle - gauge.footAngle) * t)
+        local level = scale.LOW + t * (scale.HIGH - scale.LOW)
+        local zone = RMS_Hud.COLOR_GAME_GREEN
+        if level > hot then
+            zone = colors.CRITICAL
+        elseif cold ~= nil and level < cold then
+            zone = colors.COOL
+        end
+        local segment = self:makeGaugeSegment(gauge.piece, angle, radius, gauge.arcOut - gauge.arcIn,
+            zone == colors.CRITICAL and colors.CRITICAL or FIGURE_COLOR)
+        segment.ribbon = self:makeGaugeSegment(gauge.ribbon, angle, ribbonRadius, gauge.ribOut - gauge.ribIn, zone)
+        segments[index + 1] = segment
+    end
+    self.gaugeGeometry.water = { hot = hot, cold = cold, segments = segments }
+    return self.gaugeGeometry.water
+end
+
+---Draws the water gauge
+function RMS_Hud:drawWaterGauge(posX, posY, spec, isPowered)
+    local scale = RMS_Hud.DASHBOARD.WATER_SCALE
+    local hot = RMS_Thermal.getDriveValues(spec).TELLTALE.WARNING
+    local cold = not spec.isElectricVehicle and RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD or nil
+    local water = self.gaugeGeometry.water
+    if water == nil or water.hot ~= hot or water.cold ~= cold then
+        water = self:buildWaterGauge(hot, cold)
+    end
+    local temperature = tonumber(spec.engineTemperature) or scale.LOW
+    local share = isPowered and math.clamp((temperature - scale.LOW) / (scale.HIGH - scale.LOW), 0, 1) or 0
+    local lit = math.floor(share * #water.segments + 1e-9)
+    for _, segment in ipairs(water.segments) do
+        self:drawGaugeSegment(posX, posY, segment.ribbon, segment.ribbon.color)
+    end
+    self:drawGaugeSegments(posX, posY, water.segments, lit)
+end
+
+---Stores the power gauge pieces
+function RMS_Hud:buildPowerGauge()
+    local gauge, colors = RMS_HudLayout.gauges.power, RMS_Breakdowns.COLORS
+    local segments = {}
+    for index = 0, gauge.count - 1 do
+        local t = (index + 0.5) / gauge.count
+        local depth = gauge.thin + (gauge.thick - gauge.thin) * t
+        local angle = math.rad(gauge.footAngle + (gauge.topAngle - gauge.footAngle) * t)
+        local segment = self:makeGaugeSegment(gauge.pieces[index + 1], angle, gauge.inner + depth * 0.5, depth, FIGURE_COLOR)
+        segment.warning = t >= gauge.zone and colors.WARNING or nil
+        segments[index + 1] = segment
+    end
+    self.gaugeGeometry.power = { segments = segments }
+    return self.gaugeGeometry.power
+end
+
+---Draws the power gauge
+function RMS_Hud:drawPowerGauge(posX, posY, squares, isWarning)
+    local power = self.gaugeGeometry.power or self:buildPowerGauge()
+    self:drawGaugeSegments(posX, posY, power.segments, squares, isWarning)
+end
+
+---Draws the engine block
+function RMS_Hud:drawEngineBlock(posX, posY, content, lamp, vehicle, spec, isRoadVehicle, isMachine, isPowered, lamps)
+    local engine = content.engine
+    if engine == nil then
+        return
+    end
+    local window = RMS_HudLayout.pieces.window
+    local windowBox = getPieceBox(window)
+    local index = 0
+    for _, row in ipairs(engine.windows) do
+        -- a row's windows a whole-pixel step apart
+        local first, step = posX + self:scalePixelToScreenWidth(row[1][1]), 0
+        if #row > 1 then
+            step = math.floor(self:scalePixelToScreenWidth(row[1][1] - row[2][1]) * g_screenWidth + 0.5) / g_screenWidth
+        end
+        for column, place in ipairs(row) do
+            index = index + 1
+            local id = content.windows[index]
+            if id ~= nil then
+                local x, y = first - (column - 1) * step, posY + self:scalePixelToScreenHeight(place[2])
+                if not content.hasScreen then
+                    self:drawBodyOutline(RMS_HudLayout.bodies.window, windowBox,
+                        self:drawDashboardPiece(self.dashboard.piece, window, windowBox, x, y, FIGURE_COLOR, true))
+                end
+                addLamp(lamps, RMS_Hud.getDashboardPicto(id, spec, isRoadVehicle, isMachine), x, y, lamp[id])
+            end
+        end
+    end
+
+    for row, id in ipairs(content.readings) do
+        local rowY = engine.rows[row]
+        if rowY ~= nil then
+            local picto = RMS_Hud.getDashboardPicto(id, spec, isRoadVehicle, isMachine)
+            local value, unit = RMS_Hud.getReading(vehicle, spec, id)
+            self:drawSymbolFigure(posX + self:scalePixelToScreenWidth(engine.rowStarts[row]), posY + self:scalePixelToScreenHeight(rowY),
+                picto, lamp[id], value, unit, getFigureColor(lamp[id]), isPowered, lamps, true)
+        end
+    end
+
+    if isPowered and #content.readings > 1 then
+        self:drawReadingRules(posX, posY, engine.hairlines)
+    end
+end
+
+---Returns the front-wheel drive symbol's colour
+local function getFrontWheelDriveSymbolColor(state, vehicle, isPowered)
+    if not isPowered then
+        return RMS_Breakdowns.COLORS.DEFAULT
+    end
+    local color = RMS_Hud.getFrontWheelDriveColor(state, vehicle)
+    return color == RMS_Breakdowns.COLORS.DEFAULT and FIGURE_COLOR or color
+end
+
+---Draws the drivetrain block
+function RMS_Hud:drawDriveBlock(posX, posY, content, lamp, vehicle, spec, isPowered, lamps)
+    local drive = content.drive
+    if drive == nil then
+        return
+    end
+    local layout = RMS_HudLayout
+    local pieces = layout.pieces
+    local state = content.drivetrain
+    local colors = RMS_Breakdowns.COLORS
+    if drive.tile ~= nil and state ~= nil then
+        local color = getFrontWheelDriveSymbolColor(state, vehicle, isPowered)
+        local tile, slice = drive.tile, pieces.tiles.fwd
+        local x, y = posX + self:scalePixelToScreenWidth((tile[1] + tile[2]) * 0.5), posY + self:scalePixelToScreenHeight(tile[3])
+        self:drawBodyOutline(layout.bodies.fwd, getPieceBox(slice), self:drawDashboardPiece(self.dashboard.piece, slice, getPieceBox(slice),
+            x, y, FIGURE_COLOR, true))
+        self:drawSymbolFigure(x, y, "frontWheelDrive", color, RMS_Hud.getDriveModeText(state), "", getFigureColor(color), isPowered, lamps)
+    end
+
+    local windows, step = content.driveWindows, content.driveWindowStep
+    local windowBox = getPieceBox(pieces.window)
+    local rowBox = getPieceBox(pieces.pictos.brakes)
+    for index, window in ipairs(windows) do
+        local x = posX + self:scalePixelToScreenWidth(windows[1].place[1]) - (index - 1) * step
+        local y = posY + self:scalePixelToScreenHeight(window.place[2])
+        if content.hasScreen then
+            local left, bottom, width, height = self:getDashboardPieceBounds(rowBox, x, y, true)
+            x, y = left + width * 0.5, bottom + height * 0.5
+        else
+            local left, bottom, right, top = self:drawBodyOutline(layout.bodies.window, windowBox,
+                self:drawDashboardPiece(self.dashboard.piece, pieces.window, windowBox, x, y, FIGURE_COLOR, true))
+            x, y = (left + 1 + right) * 0.5 / g_screenWidth, (bottom + 1 + top) * 0.5 / g_screenHeight
+        end
+        local ink = layout.inks[window.picto]
+        local color = lamp[window.picto]
+        if window.picto == "diffLock" then
+            color = isPowered and RMS_Hud.getDiffLockColor(state, g_time or 0) or colors.DEFAULT
+        end
+        addLamp(lamps, window.picto, x - self:scalePixelToScreenWidth((ink[1] + ink[2]) * 0.5),
+            y - self:scalePixelToScreenHeight((ink[3] + ink[4]) * 0.5), color, true)
+    end
+
+    if drive.pto ~= nil then
+        local isTurning, rpm = RMS_Utils.getPtoDisplay(vehicle)
+        local color = isPowered and FIGURE_COLOR or colors.DEFAULT
+        if isPowered and isTurning then
+            color = RMS_Hud.COLOR_GAME_GREEN
+        end
+        local showRpm = isPowered and (rpm ~= nil or isTurning)
+        local value = showRpm and (rpm ~= nil and string.format("%.0f", rpm) or "-") or ""
+        local unit = isPowered and rpm ~= nil and g_i18n:getText("rms_hud_pto_rpm_unit") or ""
+        self:drawSymbolFigure(posX + self:scalePixelToScreenWidth(drive.pto[1]), posY + self:scalePixelToScreenHeight(drive.pto[2]),
+            "pto", color, value, unit,
+            FIGURE_COLOR, showRpm, lamps, true)
+    end
+    if drive.fwd ~= nil and state ~= nil then
+        local color = getFrontWheelDriveSymbolColor(state, vehicle, isPowered)
+        self:drawSymbolFigure(posX + self:scalePixelToScreenWidth(drive.fwd[1]), posY + self:scalePixelToScreenHeight(drive.fwd[2]),
+            "frontWheelDrive", color, RMS_Hud.getDriveModeText(state), "", getFigureColor(color), isPowered, lamps, true)
+    end
+    if drive.slip ~= nil then
+        local slip = math.clamp(tonumber(spec.wheelSlipIntensity) or 0, 0, 1)
+        local x = drive.slip[1] + RMS_Hud.DASHBOARD.SLIP_READING_OFFSET
+        self:drawSymbolFigure(posX + self:scalePixelToScreenWidth(x), posY + self:scalePixelToScreenHeight(drive.slip[2]),
+            "wheelSlip", isPowered and FIGURE_COLOR or colors.DEFAULT, string.format("%.0f", slip * 100), "%", FIGURE_COLOR,
+            isPowered, lamps, true)
+    end
+    if isPowered then
+        self:drawReadingRules(posX, posY, drive.hairlines)
+    end
+end
+
+---Draws the lamps of the dial
+function RMS_Hud:drawDialLamps(posX, posY, slots, lamp)
+    local colors = RMS_Breakdowns.COLORS
+    for _, slot in ipairs(slots) do
+        local icon, color = slot.icon, lamp[slot.id]
+        local x, y = posX + slot.x, posY + slot.y + slot.lift
+        icon:setPosition(snapScreenX(x - icon.width * 0.5), snapScreenY(y - icon.height * 0.5))
+        if color ~= colors.DEFAULT then
+            self:drawDialLampHalo(icon, slot.slice, color)
+        end
+    end
+    for _, slot in ipairs(slots) do
+        slot.icon:setColor(unpack(lamp[slot.id]))
+        slot.icon:render()
+    end
+end
+
+---Caches the odometer's text widths
+local function getOdometerLayout(self, size, unit)
+    local layout = self.odometerLayout
+    if layout == nil or layout.size ~= size or layout.unit ~= unit then
+        local widest, widestWidth = "0", getTextWidth(size, "0")
+        for digit = 1, 9 do
+            local text = tostring(digit)
+            local width = getTextWidth(size, text)
+            if width > widestWidth then
+                widest, widestWidth = text, width
+            end
+        end
+        layout = { size = size, unit = unit, valueWidth = getTextWidth(size, (("0000.0 " .. unit):gsub("%d", widest))),
+            ODO = getTextWidth(size, "ODO"), TRIP = getTextWidth(size, "TRIP"),
+            zeros = { getTextWidth(size, "0"), getTextWidth(size, "00"), getTextWidth(size, "000") } }
+        self.odometerLayout = layout
+    end
+    return layout
+end
+
+---Draws the odometer or the trip meter
 function RMS_Hud:drawOdometer()
     local speedMeter = g_currentMission.hud.speedMeter
     local kilometers = RMS_Utils.getOdometerKilometers(self.vehicle)
@@ -1141,26 +2332,17 @@ function RMS_Hud:drawOdometer()
         label = "TRIP"
         kilometers = math.max(kilometers - spec.tripStartKilometers, 0)
     end
-    -- Wrap displayed tenths only; preserve the lifetime reading.
-    local displayTenths = math.floor(kilometers * 10 + 0.5) % 100000
-    local value = string.format("%04d.%d km", math.floor(displayTenths / 10), displayTenths % 10)
+    -- the shown tenths wrap past 9999.9
+    local displayTenths = math.floor(g_i18n:getDistance(kilometers) * 10 + 0.5) % 100000
+    local unit = g_i18n:getMeasuringUnit()
+    local value = string.format("%04d.%d %s", math.floor(displayTenths / 10), displayTenths % 10, unit)
     local size = speedMeter:scalePixelToScreenHeight(10)
     local gap = speedMeter:scalePixelToScreenWidth(4)
     setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_BOTTOM, true)
 
-    -- Reserve maximum glyph widths to prevent digit shifts.
-    local widestDigit = "0"
-    for digit = 1, 9 do
-        local text = tostring(digit)
-        if getTextWidth(size, text) > getTextWidth(size, widestDigit) then
-            widestDigit = text
-        end
-    end
-    local layoutValue = value:gsub("%d", widestDigit)
-
-    local labelWidth = getTextWidth(size, label)
-    local valueWidth = getTextWidth(size, layoutValue)
-    local width = labelWidth + gap + valueWidth
+    local layout = getOdometerLayout(self, size, unit)
+    local labelWidth = layout[label]
+    local width = labelWidth + gap + layout.valueWidth
 
     local bgX, bgY = speedMeter.speedBg:getPosition()
     local x = bgX + speedMeter.speedGaugeCenterOffsetX - width * 0.5
@@ -1173,120 +2355,12 @@ function RMS_Hud:drawOdometer()
     if prefix ~= "" then
         setTextColor(unpack(HUD.COLOR.INACTIVE))
         renderText(valueX, y, size, prefix)
-        valueX = valueX + getTextWidth(size, prefix)
+        valueX = valueX + layout.zeros[#prefix]
     end
     setTextColor(1, 1, 1, 1)
     renderText(valueX, y, size, value:sub(#prefix + 1))
     setTextBold(false)
 end
-
----Draws a bubble, returning its symbol and value positions
-local function drawBubble(self, isHigh, posX, posY, inkHeight)
-    local bubbleX, bubbleY = RMS_Hud.getBubbleCentre(isHigh)
-    local centreX = posX + self:scalePixelToScreenWidth(bubbleX)
-    local centreY = posY + self:scalePixelToScreenHeight(bubbleY)
-    self.bubble:setPosition(snapScreenX(centreX - self.bubble.width * 0.5), snapScreenY(centreY - self.bubble.height * 0.5))
-    self.bubble:render()
-
-    local symbolY, valueY = RMS_Hud.getBubbleContent(inkHeight)
-    return centreY + self:scalePixelToScreenHeight(symbolY), centreY + self:scalePixelToScreenHeight(valueY), centreX
-end
-
----Draws the value of a bubble
-local function drawBubbleValue(self, centreX, valueY, text, color)
-    setTextStyle(RenderText.ALIGN_CENTER, RenderText.VERTICAL_ALIGN_MIDDLE, true)
-    setTextColor(color[1], color[2], color[3], color[4])
-    renderText(snapScreenX(centreX), snapScreenY(valueY), self.bubbleValueSize, text)
-end
-
----Draws the wheel slip in its bubble below the left of the dial
-function RMS_Hud:drawWheelSlipDisplay(spec, posX, posY)
-    local wheelSlip = math.clamp(tonumber(spec.wheelSlipIntensity) or 0, 0, 1)
-    local symbolY, valueY, centreX = drawBubble(self, false, posX, posY, RMS_Hud.WHEEL_SLIP_INK_HEIGHT)
-
-    local icon = self.wheelSlipHud.icon
-    icon:setPosition(snapScreenX(centreX - icon.width * 0.5), snapScreenY(symbolY - icon.height * 0.5))
-    icon:setVisible(true)
-    icon:setColor(1, 1, 1, 1)
-    icon:render()
-    drawBubbleValue(self, centreX, valueY, string.format("%.0f%%", wheelSlip * 100), {1, 1, 1, 1})
-end
-
----Returns the drive symbol and its colour
-function RMS_Hud.getDrivetrainDisplay(state, hasFrontAxleSwitch, time)
-    local colors = RMS_Breakdowns.COLORS
-    local windupStress = tonumber(state.windupStress) or 0
-    if state.diffLockEngaged then
-        local isBlinkOn = math.floor(time / 250) % 2 == 0
-        return "diffLock", (windupStress > RMS_Config.DRIVETRAIN.WINDUP_CRITICAL_THRESHOLD and isBlinkOn) and colors.CRITICAL or colors.WARNING
-    end
-    if not hasFrontAxleSwitch then
-        return "diffLock", colors.DEFAULT
-    end
-    local isDriving = state.driveMode == RMS_Drivetrain.MODE.FOUR_WD
-        or (state.driveMode == RMS_Drivetrain.MODE.AUTO and state.autoEngaged == true)
-    if not isDriving then
-        return "frontWheelDrive", colors.DEFAULT
-    end
-    local isWindingUp = state.windupActive == true and windupStress > RMS_Config.DRIVETRAIN.WINDUP_4WD_WARNING_THRESHOLD
-    return "frontWheelDrive", isWindingUp and colors.WARNING or RMS_Hud.COLOR_GAME_GREEN
-end
-
----Draws the drive mode in its bubble above the left of the dial
-function RMS_Hud:drawDrivetrainDisplay(vehicle, posX, posY)
-    if not RMS_Drivetrain.getIsAvailable(vehicle) then
-        return
-    end
-
-    local state = RMS_Drivetrain.getState(vehicle)
-    if state == nil then
-        return
-    end
-
-    local iconId, color = RMS_Hud.getDrivetrainDisplay(state, RMS_Drivetrain.getHasCenterDifferential(vehicle), g_time or 0)
-    local symbolY, valueY, centreX = drawBubble(self, true, posX, posY, RMS_Hud.DRIVE_INK_HEIGHT[iconId])
-    local overlay = self.drivetrainHud.icons[iconId].overlay
-    overlay:setPosition(snapScreenX(centreX - overlay.width * 0.5), snapScreenY(symbolY - overlay.height * 0.5))
-    overlay:setVisible(true)
-    overlay:setColor(color[1], color[2], color[3], color[4])
-    overlay:render()
-
-    local modeKey = "rms_hud_drive_2wd"
-    if state.driveMode == RMS_Drivetrain.MODE.AUTO then
-        modeKey = "rms_hud_drive_auto"
-    elseif state.driveMode == RMS_Drivetrain.MODE.FOUR_WD then
-        modeKey = "rms_hud_drive_4wd"
-    end
-    drawBubbleValue(self, centreX, valueY, g_i18n:getText(modeKey), color)
-end
-
----Draws the park brake indicator
-function RMS_Hud:drawParkBrakeDisplay(vehicle)
-    if self.parkBrakeHud == nil or self.parkBrakeHud.icon == nil then
-        return
-    end
-    if not RMS_Drivetrain.getIsParkBrakeManaged(vehicle) then
-        return
-    end
-
-    local sm = g_currentMission.hud.speedMeter
-    if sm == nil or sm.gearIcon == nil then
-        return
-    end
-
-    local gearIconX, gearIconY = sm.gearIcon:getPosition()
-    local gearIconHeight = sm.gearIcon.height or 0
-    local icon = self.parkBrakeHud.icon
-    icon:setPosition(gearIconX - self.parkBrakeHud.width - self.parkBrakeHud.gapX,
-        gearIconY + (gearIconHeight - (self.parkBrakeHud.height or 0)) * 0.5 + (self.parkBrakeHud.offsetY or 0))
-    icon:setVisible(true)
-
-    local colors = RMS_Breakdowns.COLORS
-    local color = RMS_Drivetrain.getState(vehicle).parkBrake and colors.CRITICAL or colors.DEFAULT
-    icon:setColor(color[1], color[2], color[3], color[4])
-    icon:render()
-end
-
 
 ---Returns the height of a telemetry card
 function RMS_Hud:getTelemetryCardHeight()
@@ -1315,33 +2389,6 @@ function RMS_Hud:drawTelemetryCards()
     self:drawFuelConsumption(self:drawLoadMass(cardRightX))
 end
 
----Samples the engine load and refreshes its average once a second
-function RMS_Hud:updateMotorLoadAverage(motorLoad)
-    local state = self.motorLoadAverage
-    local dt = tonumber(g_currentDt) or 0
-
-    state.current.value = state.current.value + motorLoad * dt
-    state.current.time = state.current.time + dt
-    state.timer = state.timer + dt
-
-    if state.timer >= RMS_Hud.CONSUMPTION_REFRESH_INTERVAL then
-        state.timer = 0
-        table.insert(state.buckets, 1, state.current)
-        while #state.buckets > RMS_Hud.MOTOR_LOAD_BUCKETS do
-            table.remove(state.buckets)
-        end
-        state.current = { value = 0, time = 0 }
-    end
-
-    local valueSum, timeSum = 0, 0
-    for _, bucket in ipairs(state.buckets) do
-        valueSum = valueSum + bucket.value
-        timeSum = timeSum + bucket.time
-    end
-
-    return timeSum > 0 and valueSum / timeSum or motorLoad
-end
-
 ---Draws a green separator one pixel thick, as many rows above as below
 local function drawCardSeparator(x, panelY, panelH, color)
     local panelRows = math.floor(panelH * g_screenHeight + 0.5)
@@ -1355,6 +2402,26 @@ end
 local function formatAverage(value)
     return value ~= nil and formatConsumptionValue(value) or "-"
 end
+
+---Writes a piece of a card's text
+-- @param boolean? hasSeparator a green separator before it
+local function setCardPiece(pieces, index, text, isBold, gap, hasSeparator)
+    local piece = pieces[index]
+    if piece == nil then
+        piece = {}
+        pieces[index] = piece
+    end
+    piece[1], piece[2], piece[3], piece[4] = text, isBold, gap, hasSeparator
+end
+
+---Drops the pieces of a card past a count
+local function trimCardPieces(pieces, count)
+    for index = #pieces, count + 1, -1 do
+        pieces[index] = nil
+    end
+end
+
+local MASS_LABELS = { "rms_hud_mass_tractor", "rms_hud_mass_towed", "rms_hud_mass_total" }
 
 ---Returns the gaps of the card texts, in screen width
 -- @return float label, unit, separator and between the averages
@@ -1436,17 +2503,23 @@ function RMS_Hud:drawFuelConsumption(cardRightX)
     local perHour = vehicle:getIsMotorStarted() and vehicle.spec_motorized.lastFuelUsageDisplay or 0
 
     local labelGap, unitGap, separatorGap, averageGap = self:getTelemetryGaps()
-    local pieces = { { formatConsumptionValue(perHour), true, 0 }, { perHourUnit, false, unitGap } }
+    local card = self.fuelConsumptionHud
+    card.pieces = card.pieces or {}
+    local pieces = card.pieces
+    setCardPiece(pieces, 1, formatConsumptionValue(perHour), true, 0)
+    setCardPiece(pieces, 2, perHourUnit, false, unitGap)
+    local count = 2
     if not spec.isExcludedVehicle then
-        pieces[#pieces + 1] = { g_i18n:getText("rms_hud_fuel_average"), false, separatorGap, true }
-        pieces[#pieces + 1] = { formatAverage(RMS_TripFuel.getAveragePerHour(spec)), true, labelGap }
-        pieces[#pieces + 1] = { perHourUnit, false, unitGap }
-        pieces[#pieces + 1] = { formatAverage(RMS_TripFuel.getAveragePerArea(spec)), true, averageGap }
-        pieces[#pieces + 1] = { perAreaUnit, false, unitGap }
+        setCardPiece(pieces, 3, g_i18n:getText("rms_hud_fuel_average"), false, separatorGap, true)
+        setCardPiece(pieces, 4, formatAverage(RMS_TripFuel.getAveragePerHour(spec)), true, labelGap)
+        setCardPiece(pieces, 5, perHourUnit, false, unitGap)
+        setCardPiece(pieces, 6, formatAverage(RMS_TripFuel.getAveragePerArea(spec)), true, averageGap)
+        setCardPiece(pieces, 7, perAreaUnit, false, unitGap)
+        count = 7
     end
+    trimCardPieces(pieces, count)
 
     local sliceId = isElectric and "gui.icon_electricCharge" or (isMethane and "gui.icon_methane" or "gui.icon_fuel")
-    local card = self.fuelConsumptionHud
     if card.sliceId ~= sliceId then
         card.icon:setSliceId(sliceId)
         card.sliceId = sliceId
@@ -1477,15 +2550,17 @@ function RMS_Hud:drawLoadMass(cardRightX)
 
     local labelGap, unitGap, separatorGap = self:getTelemetryGaps()
     local unit = g_i18n:getText("unit_tonsShort")
-    local pieces = {}
-    for index, part in ipairs({ { "rms_hud_mass_tractor", shownOwn }, { "rms_hud_mass_towed", shownTowed },
-        { "rms_hud_mass_total", shownOwn + shownTowed } }) do
-        pieces[#pieces + 1] = { g_i18n:getText(part[1]), false, index > 1 and separatorGap or 0, index > 1 }
-        pieces[#pieces + 1] = { formatValue(part[2], "%.1f"), true, labelGap }
-        pieces[#pieces + 1] = { unit, false, unitGap }
+    local card = self.loadMassHud
+    card.pieces = card.pieces or {}
+    local pieces = card.pieces
+    for index, labelKey in ipairs(MASS_LABELS) do
+        local mass = index == 1 and shownOwn or (index == 2 and shownTowed or shownOwn + shownTowed)
+        setCardPiece(pieces, index * 3 - 2, g_i18n:getText(labelKey), false, index > 1 and separatorGap or 0, index > 1)
+        setCardPiece(pieces, index * 3 - 1, formatValue(mass, "%.1f"), true, labelGap)
+        setCardPiece(pieces, index * 3, unit, false, unitGap)
     end
     local weightIcon = RMS_Hud.WEIGHT_ICON
-    return self:drawTelemetryCard(cardRightX, self.loadMassHud, weightIcon.CELL, weightIcon.INK, pieces)
+    return self:drawTelemetryCard(cardRightX, card, weightIcon.CELL, weightIcon.INK, pieces)
 end
 
 ---Returns the damage the game's bar shows for the selected machine
@@ -1515,24 +2590,32 @@ local function getShownDamage()
     return shownDamage
 end
 
----Returns how much wider an AdBlue machine's meter is: one game section
+---Returns how much wider a machine's meter is
+-- @return float extension both sections
+-- @return float adBlueExtension the AdBlue gauge's section
 function RMS_Hud.getSpeedMeterExtension(speedMeter, vehicle)
-    if RMS_AdBlue.getLevel(vehicle) == nil
-        or select(2, SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(vehicle)) == nil then
-        return 0
+    local section = math.floor(-speedMeter.fuelOffsetX * g_screenWidth + 0.5) / g_screenWidth
+    local adBlue = 0
+    if RMS_AdBlue.getLevel(vehicle) ~= nil and select(2, SpeedMeterDisplay.getVehicleFuelLevelAndCapacity(vehicle)) ~= nil then
+        adBlue = section
     end
-    return math.floor(-speedMeter.fuelOffsetX * g_screenWidth + 0.5) / g_screenWidth
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local power = 0
+    if spec ~= nil and not spec.isExcludedVehicle and RMS_Hud.getHasScreen(vehicle) then
+        power = section
+    end
+    return adBlue + power, adBlue
 end
 
 local WHITE = { 1, 1, 1, 1 }
 
 ---Draws the AdBlue gauge where the fuel stood, its lamp above
-local function drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, neighbourOffsetX)
+local function drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, adBlueExtension, neighbourOffsetX)
     local level = RMS_AdBlue.getLevel(vehicle)
     local config = RMS_Config.EXHAUST.ADBLUE
     -- halfway between the fuel, moved out, and the section that stayed
     local fuelX = posX + speedMeter.sectionOffsetX + speedMeter.fuelOffsetX
-    local x = fuelX + (extension + neighbourOffsetX) * 0.5
+    local x = fuelX + extension + (neighbourOffsetX - adBlueExtension) * 0.5
     local y = posY + speedMeter.sectionOffsetY + speedMeter.fuelOffsetY
 
     local bar, maxWidth = speedMeter.bar, speedMeter.barMaxScaleWidth
@@ -1560,22 +2643,17 @@ local function drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, neigh
     local lit = RMS_AdBlue.getLampColor(level, g_time)
     local centreX = x + speedMeter.fuelIconOffsetX + speedMeter.fuelIcon.width * 0.5
     local centreY = y + speedMeter.fuelIconOffsetY + speedMeter.fuelIcon.height * 0.5
+    icon:setPosition(snapScreenX(centreX - icon.width * 0.5), snapScreenY(centreY - icon.height * 0.5))
     if lit ~= nil then
-        local glow = hud.lampGlow
-        glow:setPosition(snapScreenX(centreX - glow.width * 0.5), snapScreenY(centreY - glow.height * 0.5))
-        glow:setColor(lit[1], lit[2], lit[3], RMS_Hud.GLOW.ALPHA)
-        glow:render()
+        hud:drawDialLampHalo(icon, "adBlue", lit)
     end
     local color = lit or WHITE
-    icon:setPosition(snapScreenX(centreX - icon.width * 0.5), snapScreenY(centreY - icon.height * 0.5))
     icon:setColor(color[1], color[2], color[3], color[4])
     icon:render()
 end
 
-local AI_LINE_OFFSETS = { "aiSeperatorOffsetX", "aiTextOffsetX", "aiIconOffsetX" }
-
----Draws the meter wider to the left: its end, fuel and AI line stay
-local function drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
+---Draws the meter wider to the left
+local function drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension, adBlueExtension)
     local gameX, posY = speedMeter:getPosition()
     local posX = gameX - extension
     speedMeter:setPosition(posX, posY)
@@ -1584,13 +2662,12 @@ local function drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
     local sectionOffsetX, neighbourOffsetX = speedMeter.sectionOffsetX, speedMeter[neighbourKey]
     local rightEnd = speedMeter.speedBgRight
     local ownRender, gameRender = rawget(rightEnd, "render"), rightEnd.render
-    local aiOffsets = {}
+    local aiSeparatorX, aiTextX, aiIconX = speedMeter.aiSeperatorOffsetX, speedMeter.aiTextOffsetX, speedMeter.aiIconOffsetX
     speedMeter.sectionOffsetX = sectionOffsetX + extension
-    speedMeter[neighbourKey] = neighbourOffsetX - extension
-    for _, key in ipairs(AI_LINE_OFFSETS) do
-        aiOffsets[key] = speedMeter[key]
-        speedMeter[key] = aiOffsets[key] + extension
-    end
+    speedMeter[neighbourKey] = neighbourOffsetX - adBlueExtension
+    speedMeter.aiSeperatorOffsetX = aiSeparatorX + extension
+    speedMeter.aiTextOffsetX = aiTextX + extension
+    speedMeter.aiIconOffsetX = aiIconX + extension
     -- a straight part of the sheet pushes the game's own end out
     rightEnd.render = function(gameEnd)
         local straight = RMS_Main.hud.meterStraight
@@ -1607,10 +2684,12 @@ local function drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
     rightEnd.render = ownRender
     speedMeter.sectionOffsetX = sectionOffsetX
     speedMeter[neighbourKey] = neighbourOffsetX
-    for key, offset in pairs(aiOffsets) do
-        speedMeter[key] = offset
+    speedMeter.aiSeperatorOffsetX = aiSeparatorX
+    speedMeter.aiTextOffsetX = aiTextX
+    speedMeter.aiIconOffsetX = aiIconX
+    if adBlueExtension > 0 then
+        drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, adBlueExtension, neighbourOffsetX)
     end
-    drawAdBlueGauge(speedMeter, vehicle, posX, posY, extension, neighbourOffsetX)
 end
 
 ---Draws the speed meter, its damage bar for the selected machine
@@ -1623,36 +2702,52 @@ function RMS_Hud.drawSpeedMeter(speedMeter, superFunc)
         damage = RMS_Hud.getSelectedDamage(vehicle)
     end
 
-    -- The game shows the worst damage; all report the shown one
-    local vehicles = damage ~= nil and vehicle.rootVehicle.childVehicles or {}
-    local getDamageAmounts = {}
-    shownDamage = damage or 0
-    for index, child in ipairs(vehicles) do
-        getDamageAmounts[index] = child.getDamageAmount
-        if child.getDamageAmount ~= nil then
-            child.getDamageAmount = getShownDamage
+    local extension, adBlueExtension = 0, 0
+    if isDrawn then
+        extension, adBlueExtension = RMS_Hud.getSpeedMeterExtension(speedMeter, vehicle)
+    end
+    local lift = RMS_Hud.getSpeedMeterLift(vehicle)
+    if damage == nil and extension <= 0 and lift == 0 then
+        return superFunc(speedMeter)
+    end
+
+    local gameX, gameY = speedMeter:getPosition()
+    speedMeter:setPosition(gameX, gameY + lift)
+    local getDamageAmounts = nil
+    if damage ~= nil then
+        -- every machine of the combination reports the selected one's damage
+        shownDamage = damage
+        getDamageAmounts = {}
+        for _, child in ipairs(vehicle.rootVehicle.childVehicles) do
+            if child.getDamageAmount ~= nil then
+                getDamageAmounts[child] = rawget(child, "getDamageAmount") or false
+                child.getDamageAmount = getShownDamage
+            end
         end
     end
 
-    local extension = isDrawn and RMS_Hud.getSpeedMeterExtension(speedMeter, vehicle) or 0
-    local gameX, gameY = speedMeter:getPosition()
-    speedMeter:setPosition(gameX, gameY + RMS_Hud.getSpeedMeterLift(vehicle))
     if extension > 0 then
-        drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension)
+        drawWiderSpeedMeter(speedMeter, superFunc, vehicle, extension, adBlueExtension)
     else
         superFunc(speedMeter)
     end
-    speedMeter:setPosition(gameX, gameY)
 
-    for index, child in ipairs(vehicles) do
-        child.getDamageAmount = getDamageAmounts[index]
+    if getDamageAmounts ~= nil then
+        for child, original in pairs(getDamageAmounts) do
+            child.getDamageAmount = original or nil
+        end
     end
+    speedMeter:setPosition(gameX, gameY)
 end
 
 ---Draws the fill levels risen with the meter
 function RMS_Hud.drawFillLevels(display, superFunc)
+    local lift = RMS_Hud.getSpeedMeterLift(display.vehicle)
+    if lift == 0 then
+        return superFunc(display)
+    end
     local gameX, gameY = display:getPosition()
-    display:setPosition(gameX, gameY + RMS_Hud.getSpeedMeterLift(display.vehicle))
+    display:setPosition(gameX, gameY + lift)
     superFunc(display)
     display:setPosition(gameX, gameY)
 end

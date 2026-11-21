@@ -12,6 +12,8 @@ RMS_WorkshopDialog.TAB = {
     RECORD = 4
 }
 
+RMS_WorkshopDialog.REFRESH_INTERVAL_MS = 5000
+
 local SHORTCUT_SERVICES = { "INSPECTION", "MAINTENANCE", "REPAIR", "OVERHAUL", "REFILL", "BODYWORK", "REMAP" }
 
 ---Resale value quoted here, the dealer paying its direct sale bonus
@@ -88,11 +90,17 @@ function RMS_WorkshopDialog:onClose()
     RMS_WorkshopDialog:superClass().onClose(self)
 end
 
----Refreshes the pages when the vehicle changes status, value or invoice
+---Refreshes the pages on a change of the vehicle
 function RMS_WorkshopDialog:update(dt)
     RMS_WorkshopDialog:superClass().update(self, dt)
-    if self.vehicle:getCurrentStatus() ~= self.observedStatus or getResaleValue(self) ~= self.observedResaleValue
-        or self.vehicle.spec_RealisticMechanicalSystems.pendingServiceInvoice ~= self.observedInvoice then
+    self.valueTimerMs = self.valueTimerMs - dt
+    local isValueDue = self.valueTimerMs <= 0
+    if isValueDue then
+        self.valueTimerMs = RMS_WorkshopDialog.REFRESH_INTERVAL_MS
+    end
+    if self.vehicle:getCurrentStatus() ~= self.observedStatus
+        or self.vehicle.spec_RealisticMechanicalSystems.pendingServiceInvoice ~= self.observedInvoice
+        or isValueDue and getResaleValue(self) ~= self.observedResaleValue then
         self:refresh()
     end
 end
@@ -103,6 +111,7 @@ function RMS_WorkshopDialog:refresh()
     local spec = vehicle.spec_RealisticMechanicalSystems
     self.observedStatus = vehicle:getCurrentStatus()
     self.observedResaleValue = getResaleValue(self)
+    self.valueTimerMs = RMS_WorkshopDialog.REFRESH_INTERVAL_MS
     -- a client may get the invoice of a started service after its status
     self.observedInvoice = spec.pendingServiceInvoice
 

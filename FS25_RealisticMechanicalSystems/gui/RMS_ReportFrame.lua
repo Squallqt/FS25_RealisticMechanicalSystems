@@ -78,6 +78,14 @@ RMS_ReportFrame.OVERHAUL_HOURS = 8000
 RMS_ReportFrame.SHEET_SCALE = { IDEAL = 99, HIGH = 90, MID = 70, LOW = 30 }
 local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 
+local function formatTenth(value)
+    return (string.format("%.1f", value):gsub("%.", g_i18n.decimalSeparator))
+end
+
+local function formatPercent(percent)
+    return formatTenth(percent) .. " %"
+end
+
 ---Returns the value an effect had in the report, nil without it
 local function getRecorded(activeEffects, effectId)
     local effect = activeEffects[effectId]
@@ -276,7 +284,7 @@ function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
     end
 
     addFigure("rms_report_system_condition_power", vehicle:getMotor().peakMotorPower * 1.36,
-        math.max(1 + (getRecorded(effects, "ENGINE_TORQUE_MODIFIER") or 0), 0), "hp", true, RMS_ReportFrame.POWER_MIN_PERCENT)
+        math.max(1 + (getRecorded(effects, "ENGINE_TORQUE_MODIFIER") or 0), 0), nil, true, RMS_ReportFrame.POWER_MIN_PERCENT)
     addShare("rms_report_system_condition_brakes", 1 + (getRecorded(effects, "BRAKE_FORCE_MODIFIER") or 0), true)
 
     local batteryChargeKey, batteryCapacityKey = "rms_report_vehicle_spec_battery_charge", "rms_report_vehicle_spec_battery_capacity"
@@ -550,7 +558,7 @@ function RMS_ReportFrame:renderSystemRows()
             nameElement:setText(g_i18n:getText(RMS_Utils.getSystemLabel(self.vehicle, data[1])))
 
             if self.isCompleteInspection then
-                valueElement:setText(string.format("%.1f %%", percent))
+                valueElement:setText(formatPercent(percent))
                 riskElement:setText(RMS_Utils.formatBreakdownRisk(riskTier))
                 if riskTier ~= nil then
                     riskElement:setTextColor(RMS_Utils.getValueColorInverted(riskTier, 1, 1, 2, 2, false))
@@ -592,7 +600,7 @@ function RMS_ReportFrame:renderSpecRows()
             elseif figure.isConsumption then
                 local percent = math.max(figure.ratio, 0) * 100
                 local limit = RMS_ReportFrame.CONSUMPTION_MAX_PERCENT
-                valueText = string.format("%.1f %%", percent)
+                valueText = formatPercent(percent)
                 valueElement:setTextColor(RMS_Utils.getValueColorInverted(percent, limit, limit, limit, limit, isComplete))
             else
                 local percent = math.clamp(figure.ratio, 0, 1) * 100
@@ -601,12 +609,14 @@ function RMS_ReportFrame:renderSpecRows()
                     local limit = figure.minPercent
                     steps = { IDEAL = limit, HIGH = limit, MID = limit, LOW = limit }
                 end
-                if figure.kind == "pair" then
-                    valueText = string.format("%.1f | %.1f %s", figure.current, figure.nominal, figure.unit)
+                if figure.kind == "pair" and figure.unit == nil then
+                    valueText = RMS_Utils.formatPower(figure.current) .. " | " .. RMS_Utils.formatPower(figure.nominal)
+                elseif figure.kind == "pair" then
+                    valueText = string.format("%s | %s %s", formatTenth(figure.current), formatTenth(figure.nominal), figure.unit)
                 elseif figure.kind == "text" then
                     valueText = g_i18n:getText(figure.textKey)
                 elseif isComplete or figure.isMeasured then
-                    valueText = string.format("%.1f %%", percent)
+                    valueText = formatPercent(percent)
                 else
                     valueText = RMS_Utils.getValueLabel(percent, steps.IDEAL, steps.HIGH, steps.MID, steps.LOW, unpack(stateTexts))
                 end

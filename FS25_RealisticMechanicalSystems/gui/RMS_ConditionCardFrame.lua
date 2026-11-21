@@ -5,7 +5,7 @@ RMS_ConditionCardFrame = {}
 
 local RMS_ConditionCardFrame_mt = Class(RMS_ConditionCardFrame, FrameElement)
 
-local LIST_HEIGHT = 180
+local LIST_HEIGHT = 175
 local LIST_FULL_HEIGHT = 200
 
 ---Creates the card

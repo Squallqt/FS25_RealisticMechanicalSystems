@@ -573,9 +573,9 @@ local function isHydraulicActuatorBreakdownApplicable(vehicle)
     return isHydraulicBreakdownApplicable(vehicle) and RMS_Utils.hasHydraulicControllableTargetCapability(vehicle)
 end
 
----Tells whether the machine carries a PTO output
+---Tells whether the PTO system wears
 local function isPtoBreakdownApplicable(vehicle)
-    return RMS_Utils.hasPtoOutputCapability(vehicle)
+    return RMS_Utils.getHasWearablePto(vehicle)
 end
 
 ---Tells whether an electric machine drives through a reducer
@@ -2769,6 +2769,9 @@ end
 
 ---Tells whether the header turns
 local function getIsHeaderTurning(vehicle)
+    if RMS_Utils.getIsSelfPropelledMower(vehicle) then
+        return vehicle:getIsMotorStarted() and vehicle:getIsTurnedOn()
+    end
     local drive = vehicle.spec_RealisticMechanicalSystems.headerDrive
     return drive ~= nil and drive.isTurning == true
 end
@@ -2841,7 +2844,8 @@ addHarvestOrgan("HEADER_DRIVE_BELT_WEAR", { part = parts.HEADER_DRIVE_BELT, isAp
 addHarvestOrgan("HEADER_SLIP_CLUTCH_WEAR", { part = parts.HEADER_SLIP_CLUTCH, isApplicable = isHeaderDriveOrgan, component = "FRICTION_CLUTCH",
     causes = { primary = { "hdef", "hdlf" }, secondary = {} }, symptoms = "drive", texts = "header_slip_clutch_wear",
     isCanProgress = getIsHeaderTurning, wearsByCausesOnly = true })
-addHarvestOrgan("HEADER_DRIVE_SHAFT_WEAR", { part = parts.HEADER_DRIVE_SHAFT, isApplicable = isHeaderDriveOrgan,
+addHarvestOrgan("HEADER_DRIVE_SHAFT_WEAR", { part = parts.HEADER_DRIVE_SHAFT,
+    isApplicable = function(vehicle) return RMS_Utils.getIsSelfPropelledMower(vehicle) or isHeaderDriveOrgan(vehicle) end,
     component = "PTO_OUTPUT_SHARED_BUDGET", causes = { primary = { "hdlf" }, secondary = {} }, symptoms = "driveline",
     texts = "header_drive_shaft_wear", progress = 1.2, isCanProgress = getIsHeaderTurning, wearsWhileDriven = getIsHeaderTurning })
 

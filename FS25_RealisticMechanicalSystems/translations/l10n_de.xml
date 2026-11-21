@@ -1,7 +1,7 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Fzg."/>
+        <text name="rms_hud_mass_tractor" text="Fahrzeug"/>
         <text name="rms_hud_mass_towed" text="Angehängt"/>
         <text name="rms_hud_mass_total" text="Gesamt"/>
         <text name="rms_hud_fuel_average" text="Ø"/>
@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="U/min"/>
         <text name="rms_drivetrain_mode_4x2" text="Hinterradantrieb (Vorderachse abgeschaltet)"/>
         <text name="rms_drivetrain_mode_4wd" text="Allrad (Vorderachse zugeschaltet)"/>
         <text name="rms_drivetrain_mode_auto" text="Allrad AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Verlauf der Tutorial-Hinweise zurücksetzen und alle Hinweise erneut anzeigen?"/>
         <text name="rms_drivetrainEnabled_label" text="Verwaltung von Allrad und Differentialsperren"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Legt fest, ob Vorderachse und Differentialsperren von Traktoren von Hand bedient werden. Die Option ersetzt die Differentialverwaltung von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere die Differentiale wieder in dessen Menü."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-Antriebsmodus erlauben"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Legt fest, ob der Wahlschalter AUTO anbietet: Die Vorderachse schaltet bei Radschlupf oder Arbeit unter Last zu und auf der Straße ab. Beim Deaktivieren wechseln in AUTO belassene Fahrzeuge zu Allrad."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Diese Einstellung erfordert die aktivierte Verwaltung von Allrad und Differentialsperren."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Feststellbremse"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Legt fest, ob betreute Fahrzeuge eine Feststellbremse haben: automatisch bei neueren Maschinen mit CVT- oder Powershift-Getriebe, per Taste bei den übrigen. Die Option ersetzt die Feststellbremse von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere seine Feststellbremse wieder in dessen Menü."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Wartungsprotokoll"/>
         <text name="rms_ws_label_last_maintenance" text="Letzte Wartung"/>
         <text name="rms_ws_task_inspection" text="Inspektion"/>
-        <text name="rms_ws_task_maintenance" text="Wartung"/>
         <text name="rms_ws_task_overhaul" text="Überholung"/>
         <text name="rms_ws_info_no_breakdowns" text="Kein festgestellter Schaden. Eine Inspektion oder eine Wartung stellt die fest, die die Maschine noch nicht zeigt."/>
         <text name="rms_ws_info_warning_unidentified" text="Warnleuchte an: Schaden festzustellen. Eine Inspektion oder eine Wartung stellt ihn fest, danach kann er repariert werden."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Prüfung"/>
         <text name="rms_fleet_location" text="Standort"/>
         <text name="rms_fleet_next_service" text="Nächste Wartung"/>
-        <text name="rms_fleet_remaining" text="%s h verbleibend"/>
-        <text name="rms_fleet_overdue" text="%s h überfällig"/>
         <text name="rms_fleet_overdue_label" text="Überfällig"/>
         <text name="rms_fleet_overdue_count" text="Überfällig: %d"/>
         <text name="rms_fleet_due_soon_label" text="Bald fällig"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Kautionserstattung"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Niedriger Flüssigkeitsstand"/>
-        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein verschlissener Motor verbraucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydrauliköl sinken nur durch ein Leck.&#10;&#10;Unter der Markierung benötigt die Maschine nur Nachfüllen und arbeitet weiterhin normal. Je tiefer der Stand sinkt, desto leichter saugt die Pumpe an Hängen Luft an: Die Öldruckleuchte flackert, und bei Getriebe oder Hydraulik heult die Pumpe und die Hydraulikbewegungen werden langsamer. Jede so gefahrene Minute schädigt die Kurbelwellenlager oder die Pumpe: Halte an und füll den Stand auf. Eine Maschine mit zu wenig Kühlmittel, Getriebeöl oder Hydrauliköl läuft außerdem heiß.&#10;&#10;Kauf im Shop einen Behälter mit einem kompatiblen Produkt, bring ihn zur Maschine und füll den Stand auf. Alle für diesen Kreislauf vorgesehenen Produkte haben dieselbe Wirkung; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet."/>
+        <text name="rms_tutorial_fluid_level_message" text="Eine Flüssigkeit dieser Maschine ist unter die Markierung ihrer Anzeige gefallen. Motoröl nimmt mit den Stunden ab, bei einem verschlissenen Motor schneller; die anderen Flüssigkeiten sinken nur durch ein Leck.&#10;&#10;Die Maschine arbeitet noch normal, doch je tiefer der Stand, desto leichter saugt ihre Pumpe am Hang Luft an: Jede Minute davon schädigt die Lager oder die Pumpe. Fehlt Kühlmittel, Getriebe- oder Hydrauliköl, wird ihr Kreislauf außerdem heiß.&#10;&#10;Fülle mit einem Behälter der für diesen Kreislauf vorgesehenen Flüssigkeit aus dem Shop nach: Jede andere Flüssigkeit verunreinigt ihn. Auch der Händler füllt nach."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Willkommen bei Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Hinweise deaktivieren"/>
         <text name="rms_tutorial_welcome_enable_button" text="Hinweise aktivieren"/>
@@ -995,9 +990,9 @@
         <text name="rms_tutorial_wheel_slip_title" text="Radschlupf"/>
         <text name="rms_tutorial_wheel_slip_message" text="Deine Räder drehen stark durch. Schlupf gehört zu den zerstörerischsten Faktoren für das Getriebe und rückt deinen nächsten Werkstattbesuch deutlich näher."/>
         <text name="rms_tutorial_service_due_soon_title" text="Wartung steht an"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s braucht bald Wartung. In der Werkstatt das empfohlene Paket wählen: Es deckt die fälligen Arbeiten ab. Betriebsstunden oder Kalenderzeit bestimmen den Termin, je nachdem, was zuerst erreicht wird, auch bei wenig Nutzung. Wartbarkeit beschreibt den Aufwand der Eingriffe; laufende Wartung ist weiterhin in der mobilen Werkstatt möglich."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s braucht bald Wartung. In der Werkstatt das empfohlene Paket wählen: Es deckt die fälligen Arbeiten ab. Betriebsstunden oder Kalenderzeit bestimmen den Termin, je nachdem, was zuerst erreicht wird, auch bei wenig Nutzung. Die Wartbarkeit zeigt, was dein Hof selbst reparieren kann; die Wartung ist weiterhin in der mobilen Werkstatt möglich."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Wartungsintervall überschritten"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s hat sein Wartungsintervall überschritten und braucht eine Wartung.&#10;&#10;Fahr so schnell wie möglich in eine Werkstatt und wähle „Wartung&quot;. Wenn du ein Fahrzeug mit überfälliger Wartung weiter einsetzt, steigt das Risiko mehrerer Schäden deutlich an."/>
+        <text name="rms_tutorial_service_interval_expired_message" text="%s hat sein Wartungsintervall überschritten und braucht eine Wartung.&#10;&#10;Fahr so schnell wie möglich in eine Werkstatt und wähle „Wartung“. Wenn du ein Fahrzeug mit überfälliger Wartung weiter einsetzt, steigt das Risiko mehrerer Schäden deutlich an."/>
         <text name="rms_tutorial_steering_title" text="Lenken im Stand"/>
         <text name="rms_tutorial_steering_message" text="Du solltest möglichst nicht im Stand lenken. Dabei werden Lenkgetriebe und Bauteile der Vorderachse stark belastet, was den Verschleiß des Fahrwerks erhöht.&#10;&#10;Fahr einfach ein wenig an, dann lassen sich die Räder deutlich leichter einschlagen."/>
         <text name="rms_tutorial_cooling_air_check_title" text="Kühlsystem und Luftfilter"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Überholung erforderlich"/>
         <text name="rms_tutorial_needs_overhaul_message" text="Dein %s zeigt sein Alter. Es wird Zeit, über einen Ersatz oder eine Überholung nachzudenken. Das ist ein langer und teurer Vorgang, aber der einzige Weg, der Maschine ihren ursprünglichen Zustand zurückzugeben.&#10;&#10;Die Lebensdauer wird in den Einstellungen des Mods festgelegt: Je höher sie ist, desto langsamer verschleißen deine Fahrzeuge."/>
         <text name="rms_tutorial_needs_preventive_title" text="Erhöhtes Schadensrisiko"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Bei Motor, Kraftstoffsystem oder Kühlsystem von %s besteht ein erhöhtes Ausfallrisiko.&#10;&#10;Wartung %s: Stellt die Ventile ein und prüft Einspritzdüsen und Thermostat, was dieses Risiko senkt."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Verschlissene Teile erhöhen das Ausfallrisiko von %s.&#10;&#10;Wartung %s: Sie stellt die Ventile ein und ersetzt bei einer Erntemaschine die verschlissenen Ernteteile, was dieses Risiko senkt."/>
         <text name="rms_tutorial_age_degradation_title" text="Altersbedingter Verschleiß"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS verlieren Fahrzeuge mit zunehmendem Alter nach und nach einen Teil ihrer ursprünglichen Leistung.&#10;&#10;Nach etwa einem Drittel der Lebensdauer verringert der altersbedingte Verschleiß wichtige Eigenschaften leicht, etwa Leistung oder Bremswirkung. Der Effekt verstärkt sich danach und wird gegen Ende der Lebensdauer deutlich sichtbar.&#10;&#10;Diese Alterung lässt sich in den Einstellungen des Mods abschalten."/>
+        <text name="rms_tutorial_age_degradation_message" text="In RMS verlieren Fahrzeuge mit zunehmendem Alter nach und nach einen Teil ihrer ursprünglichen Leistung.&#10;&#10;Nach etwa einem Drittel der Lebensdauer verringert der altersbedingte Verschleiß wichtige Eigenschaften leicht, etwa Leistung oder Bremswirkung. Der Effekt verstärkt sich danach und wird gegen Ende der Lebensdauer deutlich sichtbar.&#10;&#10;Ein neues Teil beseitigt seinen Verschleiß: Die Überholung ersetzt die verschlissenen Teile."/>
         <text name="rms_tutorial_poor_consumables_title" text="Minderwertige Verbrauchsmaterialien"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung einen defekten Filter erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Dieser Filter lässt Schmutz durch: Der Kreislauf, den er schützt, verschleißt bis zum Filterwechsel schneller. Eine neue Wartung wechselt ihn. Nur eine vollständige Inspektion benennt ihn."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Die vollständige Inspektion hat an %s einen defekten Filter gefunden, der bei einer Wartung eingebaut wurde. Das kommt bei den günstigeren Qualitäten vor.&#10;&#10;Dieser Filter lässt Schmutz durch: Der Kreislauf, den er schützt, verschleißt schneller, bis der Filter gewechselt wird. Eine weitere Wartung ersetzt ihn."/>
         <text name="rms_tutorial_poor_parts_title" text="Minderwertige Ersatzteile"/>
-        <text name="rms_tutorial_poor_parts_message" text="Dein %s hat bei einer Reparatur ein minderwertiges Ersatzteil erhalten. Der Schaden wird wahrscheinlich bald zurückkehren.&#10;&#10;Du kannst abwarten, bis er wiederkommt, oder eine vollständige Inspektion durchführen, die das betroffene Teil zuverlässig benennt."/>
+        <text name="rms_tutorial_poor_parts_message" text="Die vollständige Inspektion hat an %s ein defektes, in der Werkstatt eingebautes Teil gefunden: Es wird ausfallen. Das kommt bei den günstigeren Qualitäten vor.&#10;&#10;Du kannst es jetzt in der Werkstatt ersetzen lassen oder warten, bis es ausfällt."/>
         <text name="rms_tutorial_park_brake_title" text="Feststellbremse"/>
         <text name="rms_tutorial_park_brake_message" text="Die Feststellbremse ist angezogen. Sie greift von selbst, sobald du die Maschine im Stand verlässt, und löst sich, sobald du wieder Gas gibst. Sie greift auch, wenn du den Motor abstellst, oder nach 45 Sekunden im Stand.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Die Feststellbremse ist angezogen. Du ziehst und löst sie selbst mit ihrer eigenen Taste: Gibst du bei angezogener Bremse Gas, arbeitet die Maschine gegen sie an und ihre Bremsen verschleißen.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt: Verlässt du die Maschine, ohne sie anzuziehen, kann sie wegrollen."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Die Feststellbremse ist angezogen. Du ziehst und löst sie selbst mit ihrer eigenen Taste: Gibst du bei angezogener Bremse Gas, arbeitet die Maschine gegen sie an und die Feststellbremse verschleißt.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt: Verlässt du die Maschine, ohne sie anzuziehen, kann sie wegrollen."/>
         <text name="rms_tutorial_preheat_title" text="Diesel-Vorglühen"/>
         <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten leuchten kurz auf; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
         <text name="rms_tutorial_pto_engagement_title" text="Zapfwelle einkuppeln"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Leerlauf und Standzeit"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Der Verschleiß ist deutlich geringer, wenn die Maschine läuft, ohne zu arbeiten. Bei abgestelltem Motor wird er minimal, und er verschwindet ganz, wenn die Maschine unter einem Dach steht."/>
         <text name="rms_tutorial_idle_deposit_title" text="Zu langer Leerlauf"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Die Maschine stand zu lange im Leerlauf. Lange Leerlaufphasen verschwenden nicht nur Kraftstoff: Mit der Zeit begünstigen sie Ablagerungen im Kraftstoffsystem und schaden dem allgemeinen Zustand des Motors.&#10;&#10;Wird die Maschine gerade nicht gebraucht, stellst du den Motor besser ab."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Die Maschine stand zu lange im Leerlauf. Lange Leerlaufphasen verschwenden nicht nur Kraftstoff: Mit der Zeit begünstigen sie Ablagerungen im Kraftstoffsystem, das dadurch schneller verschleißt.&#10;&#10;Wird die Maschine gerade nicht gebraucht, stellst du den Motor besser ab."/>
         <text name="rms_tutorial_hot_weather_title" text="Heißes Wetter"/>
         <text name="rms_tutorial_hot_weather_message" text="Es ist heute sehr heiß. Bei diesem Wetter solltest du den Kühler sauber halten und den Motor nicht überlasten, sonst ist Überhitzung nur eine Frage der Zeit.&#10;&#10;Den Kühlerzustand prüfst du, indem du die Taste %s gedrückt hältst und die Maschine ansiehst, und mit dem Druckluftgebläse reinigst du ihn."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Schwerer Anhänger"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Schwieriger Start"/>
         <text name="rms_tutorial_hard_start_message" text="Der Motor von %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Schaden oder Anlasserverschleiß können die Ursache sein.&#10;&#10;Das Bordnetz wird beim Starten wegen der hohen Einschaltströme stark belastet."/>
         <text name="rms_tutorial_low_fuel_title" text="Wenig Kraftstoff"/>
-        <text name="rms_tutorial_low_fuel_message" text="Der Tank nähert sich der Reserve. Je weniger Kraftstoff übrig ist, desto stärker muss die Kraftstoffpumpe ansaugen, und vom Tankboden gelangen Wasser und Ablagerungen in den Filter, der schneller verstopft.&#10;&#10;Tanke am besten am Ende des Tages voll: In einem vollen Tank bildet sich weniger Kondenswasser."/>
+        <text name="rms_tutorial_low_fuel_message" text="Der Tank nähert sich der Reserve. Je weniger Kraftstoff übrig ist, desto stärker muss die Kraftstoffpumpe ansaugen, und vom Tankboden gelangen Wasser und Ablagerungen in den Filter, der schneller verstopft.&#10;&#10;Tanke so bald wie möglich."/>
         <text name="rms_tutorial_lugging_title" text="Untertouriger Betrieb"/>
         <text name="rms_tutorial_lugging_message" text="Der Motor und vor allem das Getriebe leiden im untertourigen Betrieb, also bei niedriger Drehzahl unter hoher Last. Das angehängte Gerät ist vielleicht zu schwer für die Maschine, oder bei einem Schaltgetriebe ist der gewählte Gang nicht der richtige."/>
         <text name="rms_tutorial_engine_overheat_title" text="Motor überhitzt"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Harter Schlag"/>
         <text name="rms_tutorial_terrain_impact_message" text="Das Fahrwerk hat gerade einen harten Schlag abbekommen. Ein Hindernis, das die Maschine abrupt stoppt oder stark abbremst, verschleißt das Fahrwerk sofort und bringt seinen nächsten Schaden näher, meist an Lenkung oder Radlagern.&#10;&#10;Fahr vor Hindernissen langsamer."/>
         <text name="rms_tutorial_cranking_title" text="Häufiges Starten"/>
-        <text name="rms_tutorial_cranking_message" text="Der Motor wird zu oft gestartet. Jeder Start schickt einen sehr hohen Strom durch das Bordnetz, was den Verschleiß von Kabelbaum, Anlasser und den übrigen elektrischen Bauteilen beschleunigt.&#10;&#10;Vermeide es, den Motor für kurze Pausen abzustellen."/>
+        <text name="rms_tutorial_cranking_message" text="Der Anlasser hat in kurzer Zeit viel gedreht. Über einige Sekunden insgesamt hinaus verschleißt jeder Start den Anlasser, die Batterie und den übrigen Startstromkreis.&#10;&#10;Stell den Motor bei kurzen Pausen nicht ab."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritischer Schaden"/>
-        <text name="rms_tutorial_critical_failure_message" text="Dein %s ist vollständig ausgefallen und kann sich nicht mehr aus eigener Kraft bewegen.&#10;&#10;Eine mobile Werkstatt erlaubt eine Behelfsreparatur, die ausreicht, damit die Maschine die Werkstatt selbst erreicht. Andernfalls muss sie anders geborgen werden."/>
+        <text name="rms_tutorial_critical_failure_message" text="Dein %s ist vollständig ausgefallen und kann sich nicht mehr aus eigener Kraft bewegen.&#10;&#10;Je nach Defekt kann eine mobile Werkstatt ihn vor Ort reparieren, zumindest provisorisch, sodass die Maschine aus eigener Kraft zur Werkstatt kommt. Sonst muss sie auf anderem Weg dorthin gebracht werden."/>
         <text name="rms_tutorial_cold_engine_title" text="Kalter Motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Wärme den Motor schonend auf, bevor du ihn stark belastest. Fahr mit mäßigem Gas und mittlerer Drehzahl, bis er seine Betriebstemperatur erreicht."/>
+        <text name="rms_tutorial_cold_engine_message" text="Der Motor ist kalt: Unter %s verschleißt er schneller, sobald er läuft, egal unter welcher Last, und umso mehr, je kälter er ist.&#10;&#10;Unter %s solltest du außerdem drei Viertel der Höchstdrehzahl nicht überschreiten: Das belastet das Kühlsystem."/>
         <text name="rms_tutorial_cold_oil_title" text="Kaltes Getriebeöl"/>
-        <text name="rms_tutorial_cold_oil_message" text="Getriebeöl und Hydrauliköl erwärmen sich deutlich langsamer als der Motor. Vermeide schwere Arbeiten, solange das Öl kalt ist; wärme es durch ruhiges Fahren und leichte Hydraulikarbeit allmählich auf."/>
+        <text name="rms_tutorial_cold_oil_message" text="Das Getriebeöl ist kalt: Unter %s verschleißt das Getriebe schneller, sobald der Motor läuft, egal unter welcher Last.&#10;&#10;Unter %s verschleißt das Hydrauliköl außerdem die Pumpe, wenn du die Hydraulik benutzt."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Getriebe überhitzt"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Das Getriebeöl beginnt zu überhitzen. Das kann von zu hoher Last, einem zugesetzten Kühler, sehr heißem Wetter oder einem Defekt der Getriebekühlung kommen.&#10;&#10;Getriebeöl erhitzt sich auf jeder Maschine, nicht nur bei einem CVT. Zu heißes Öl verschleißt das Getriebe und zerstört seine Dichtungen."/>
         <text name="rms_tutorial_overload_indicator_title" text="Überlastungswarnung"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Antriebsstrangbelastung"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Du lenkst auf griffigem Boden mit eingelegter Differentialsperre. In einer Kurve legen die kurveninneren und kurvenäußeren Räder unterschiedliche Strecken zurück, doch die Differentialsperre zwingt sie zur gleichen Drehzahl: Der Antriebsstrang wird belastet und der Getriebeverschleiß steigt. Löse die Sperre vor Kurvenfahrten."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Antriebsmodi und Differentialsperre"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb, Allrad oder AUTO, wobei die Vorderachse zugeschaltet wird, sobald die Räder durchdrehen.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb, Allrad oder AUTO. In AUTO bleibt die Vorderachse bei der Arbeit zugeschaltet: Über %s und in engen Kurven wird sie abgeschaltet, und sobald du bremst, wird sie wieder zugeschaltet.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, und schaltet die Vorderachse mit zu. In Kurven, beim Bremsen und über %s löst sie sich von selbst: Schalte sie wieder ein, wenn du sie brauchst."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb oder Allrad.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
+        <text name="rms_tutorial_diff_lock_title" text="Differentialsperre"/>
+        <text name="rms_tutorial_diff_lock_message" text="Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt. In Kurven, beim Bremsen und über %s löst sie sich von selbst: Schalte sie wieder ein, wenn du sie brauchst."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

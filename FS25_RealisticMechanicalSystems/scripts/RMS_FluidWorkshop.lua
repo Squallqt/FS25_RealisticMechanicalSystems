@@ -676,7 +676,6 @@ end
 local QUOTE_HEAD, QUOTE_HEAD_GAP, QUOTE_LINE, QUOTE_NOTE = 20, 7, 17, 16
 local QUOTE_INDENT, QUOTE_NOTE_X, QUOTE_BULLET_TEXT, QUOTE_AMOUNT, QUOTE_GAP = 12, 24, 37, 62, 6
 -- textColor of rms_workshopRecapQuoteName
-local COLOR_QUOTE_LINE = { 0.5028, 0.5028, 0.5028, 1 }
 
 ---Tells whether a quote line is drawn as a note: a bullet or a sentence
 local function getIsQuoteNote(line)
@@ -727,7 +726,7 @@ function RMS_FluidWorkshop.populateQuoteCell(cell, row, ux, width)
         note:setPosition(textX * ux, nil)
         note:setSize((width - textX) * ux, nil)
         -- a list reuses its cells: each colour is set each time
-        note:setTextColor(unpack(row.isCovered and green or row.isWarning and RMS_Breakdowns.COLORS.WARNING or COLOR_QUOTE_LINE))
+        note:setTextColor(unpack(row.isCovered and green or row.isWarning and RMS_Breakdowns.COLORS.WARNING or RMS_Utils.COLOR.QUOTE_LINE))
         note:setText(row.label or row.note)
         return
     end
@@ -739,8 +738,8 @@ function RMS_FluidWorkshop.populateQuoteCell(cell, row, ux, width)
     if row.isHead then
         amount:setTextColor(unpack(row.isLoss and RMS_Utils.COLOR.ALERT or row.isFree and green or RMS_Utils.COLOR.TEXT))
     else
-        name:setTextColor(unpack(row.isCovered and green or COLOR_QUOTE_LINE))
-        amount:setTextColor(unpack((row.isCovered or row.isFree) and green or COLOR_QUOTE_LINE))
+        name:setTextColor(unpack(row.isCovered and green or RMS_Utils.COLOR.QUOTE_LINE))
+        amount:setTextColor(unpack((row.isCovered or row.isFree) and green or RMS_Utils.COLOR.QUOTE_LINE))
     end
     local amountRoom = (row.isHead or row.price ~= nil or row.value ~= nil) and QUOTE_AMOUNT + QUOTE_GAP or 0
     name:setSize((width - nameX - amountRoom) * ux, nil)

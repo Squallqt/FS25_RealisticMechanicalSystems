@@ -412,8 +412,7 @@ function RMS_Thermal:updateTransmissionThermalModel(dt, spec, isMotorStarted, mo
         local temperature = getTemperature(spec.rawTransmissionTemperature, getTemperature(spec.transmissionTemperature, ambient))
         local nextTemperature, values = RMS_Thermal.advanceRole(self, oilRole, temperature,
             dt, ambientPrev or ambient, ambient, inputs, {
-                fluidKey = "transmissionOilLevel", thermostatHealth = spec.transmissionThermostatHealth,
-                stuckPosition = spec.transmissionThermostatStuckedPosition, hydraulicActivity = common and inputs.hydraulic or 0,
+                fluidKey = "transmissionOilLevel", hydraulicActivity = common and inputs.hydraulic or 0,
                 extraHeatRate = (sanitizeNumber(spec.extraTransmissionHeat, 0) + sanitizeNumber(spec.fluidTransmissionHeat, 0))
                     * RMS_Config.THERMAL.PROFILES[oilRole].faultHeatScale + (common and hydraulicFaultHeat or 0)
             })

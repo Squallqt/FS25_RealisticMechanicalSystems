@@ -1,7 +1,7 @@
 ﻿<l10n>
     <texts>
         <!-- HUD -->
-        <text name="rms_hud_mass_tractor" text="Veíc."/>
+        <text name="rms_hud_mass_tractor" text="Veículo"/>
         <text name="rms_hud_mass_towed" text="Atrelado"/>
         <text name="rms_hud_mass_total" text="Total"/>
         <text name="rms_hud_fuel_average" text="Méd."/>
@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="4x2"/>
         <text name="rms_hud_drive_4wd" text="4x4"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="4x2 (eixo dianteiro desacoplado)"/>
         <text name="rms_drivetrain_mode_4wd" text="4x4 (eixo dianteiro acoplado)"/>
         <text name="rms_drivetrain_mode_auto" text="4x4 AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Redefinir o histórico das dicas do tutorial e mostrar todas novamente?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestão do 4x4 e do bloqueio do diferencial"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Define se o eixo dianteiro e os bloqueios do diferencial dos tratores são controlados manualmente. Esta opção substitui a gestão de diferenciais do Enhanced Vehicle: para devolvê-la, desative a opção e reative os diferenciais no menu dele."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Permitir modo AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Define se o seletor oferece a posição AUTO, que acopla o eixo dianteiro quando as rodas patinam ou no trabalho sob carga e o desacopla na estrada. Desativada, faz os veículos deixados em AUTO voltarem para 4x4."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Esta configuração exige a ativação da gestão do 4x4 e do bloqueio do diferencial."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Freio de estacionamento"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Define se os veículos monitorados têm freio de estacionamento: automático nas máquinas recentes com transmissão CVT ou Powershift, por tecla nas demais. Esta opção substitui o freio de estacionamento do Enhanced Vehicle: para devolvê-lo, desative a opção e reative o freio de estacionamento no menu dele."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Registro de manutenção"/>
         <text name="rms_ws_label_last_maintenance" text="Última manutenção"/>
         <text name="rms_ws_task_inspection" text="Inspeção"/>
-        <text name="rms_ws_task_maintenance" text="Manutenção"/>
         <text name="rms_ws_task_overhaul" text="Revisão"/>
         <text name="rms_ws_info_no_breakdowns" text="Nenhuma avaria identificada. Uma inspeção ou uma manutenção identifica as que a máquina ainda não mostra."/>
         <text name="rms_ws_info_warning_unidentified" text="Luz de alerta acesa: avaria a identificar. Uma inspeção ou uma manutenção a identifica, e depois ela pode ser reparada."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Inspeção"/>
         <text name="rms_fleet_location" text="Localização"/>
         <text name="rms_fleet_next_service" text="Próxima manutenção"/>
-        <text name="rms_fleet_remaining" text="%s h restantes"/>
-        <text name="rms_fleet_overdue" text="%s h de atraso"/>
         <text name="rms_fleet_overdue_label" text="Atrasados"/>
         <text name="rms_fleet_overdue_count" text="Atrasados: %d"/>
         <text name="rms_fleet_due_soon_label" text="Em breve"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Caução devolvida"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Nível de fluido baixo"/>
-        <text name="rms_tutorial_fluid_level_message" text="Um dos fluidos desta máquina caiu abaixo da marca do seu medidor.&#10;&#10;O óleo do motor é consumido com as horas, e um motor cansado bebe muito mais. O líquido de arrefecimento, o óleo da transmissão e o óleo hidráulico só baixam por causa de um vazamento.&#10;&#10;Abaixo da marca, a máquina pede apenas uma reposição e continua trabalhando normalmente. Quanto mais o nível baixa, mais facilmente a bomba aspira ar em declives: a luz da pressão do óleo pisca e, do lado da transmissão ou do hidráulico, a bomba assobia e os movimentos hidráulicos ficam mais lentos. Cada minuto assim danifica as bronzinas do virabrequim ou a bomba: pare e complete o nível. Uma máquina com pouco líquido de arrefecimento, óleo da transmissão ou óleo hidráulico também aquece.&#10;&#10;Compre um recipiente de produto compatível na loja, leve-o até a máquina e complete o nível. Todos os produtos destinados a esse circuito têm o mesmo efeito; um fluido incorreto contamina apenas esse circuito. Na concessionária, os litros necessários são fornecidos e cobrados."/>
+        <text name="rms_tutorial_fluid_level_message" text="Um dos fluidos desta máquina está abaixo da marca do indicador. O óleo do motor baixa com as horas, mais rápido em um motor desgastado; os outros fluidos só baixam por vazamento.&#10;&#10;A máquina ainda trabalha normalmente, mas quanto mais o nível baixa, mais facilmente a bomba aspira ar em declive: cada minuto assim danifica os mancais ou a bomba. Com falta de líquido de arrefecimento, óleo de transmissão ou óleo hidráulico, o circuito também esquenta.&#10;&#10;Complete o nível com um recipiente do fluido previsto para esse circuito, comprado na loja: qualquer outro fluido o contamina. A concessionária também pode completar o nível."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Bem-vindo ao Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Desativar dicas"/>
         <text name="rms_tutorial_welcome_enable_button" text="Ativar dicas"/>
@@ -995,13 +990,13 @@
         <text name="rms_tutorial_wheel_slip_title" text="Patinagem das rodas"/>
         <text name="rms_tutorial_wheel_slip_message" text="Suas rodas estão patinando bastante. A patinagem é um dos fatores mais destrutivos para a transmissão e aproxima bastante sua próxima visita à oficina."/>
         <text name="rms_tutorial_service_due_soon_title" text="Manutenção em breve"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s precisará de manutenção em breve. Escolha o pacote recomendado na oficina: ele cobre os serviços devidos. Vale o primeiro limite atingido, de horas de funcionamento ou calendário, mesmo com pouco uso. A facilidade de manutenção resume a complexidade das intervenções; a manutenção de rotina continua disponível na oficina móvel."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s precisará de manutenção em breve. Escolha o pacote recomendado na oficina: ele cobre os serviços devidos. Vale o primeiro limite atingido, de horas de funcionamento ou calendário, mesmo com pouco uso. A facilidade de manutenção indica o que a sua fazenda conserta por conta própria; a manutenção continua disponível na oficina móvel."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Intervalo de manutenção vencido"/>
         <text name="rms_tutorial_service_interval_expired_message" text="%s ultrapassou seu intervalo de manutenção e precisa de manutenção.&#10;&#10;Vá a uma oficina o quanto antes e selecione &quot;Manutenção&quot;. Continuar operando um veículo com a manutenção atrasada aumenta muito o risco de avarias múltiplas."/>
         <text name="rms_tutorial_steering_title" text="Esterçando parado"/>
         <text name="rms_tutorial_steering_message" text="O ideal é não esterçar com a máquina parada. Isso coloca uma carga pesada sobre a caixa de direção e os componentes do eixo dianteiro, aumentando o desgaste do conjunto rodante.&#10;&#10;Basta começar a se mover um pouco, e as rodas vão virar com muito mais facilidade."/>
         <text name="rms_tutorial_cooling_air_check_title" text="Sistema de arrefecimento e filtro de ar"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="O radiador ou o filtro de ar está sujo. Segure a tecla %s enquanto olha para o veículo para identificar qual deles. Limpe-o com o soprador de ar comprimido. Se o filtro não puder mais ser limpo, a oficina o substitui a partir da revisão %s."/>
+        <text name="rms_tutorial_cooling_air_check_message" text="O radiador ou o filtro de ar está sujo. Segure a tecla %s enquanto olha para o veículo para identificar qual deles. Limpe-o com o soprador de ar comprimido. Se o filtro não puder mais ser limpo, a oficina o substitui a partir da manutenção %s."/>
         <text name="rms_tutorial_needs_lubrication_title" text="Lubrificação necessária"/>
         <text name="rms_tutorial_needs_lubrication_message" text="Seu %s tem graxeiras para engraxar.&#10;&#10;No RMS, cada máquina tem suas próprias graxeiras. Elas precisam de graxa novamente conforme os dias em que a máquina trabalha: a cada dia de trabalho, ou a cada poucos dias de trabalho para algumas delas. Engraxar com atraso acelera o desgaste do chassi.&#10;&#10;Compre uma pistola de graxa e cartuchos na loja. Com a pistola na mão, fique de frente para um cartucho para carregá-lo e depois mire na máquina: cada clique engraxa uma graxeira e manter o botão pressionado continua nas seguintes.&#10;&#10;Para ver as graxeiras pendentes, segure a tecla %s enquanto olha para o veículo."/>
         <text name="rms_tutorial_needs_repair_title" text="Avaria detectada"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Revisão necessária"/>
         <text name="rms_tutorial_needs_overhaul_message" text="O veículo %s está mostrando a idade. É hora de pensar em substituir o veículo ou fazer uma revisão. É um processo longo e caro, mas é o único meio de devolver à máquina o seu estado de origem.&#10;&#10;A vida útil é ajustada nas configurações do mod: quanto maior, mais devagar os veículos se desgastam."/>
         <text name="rms_tutorial_needs_preventive_title" text="Risco de avaria aumentado"/>
-        <text name="rms_tutorial_needs_preventive_message" text="O motor, o sistema de combustível ou o sistema de arrefecimento de %s apresenta maior risco de falha.&#10;&#10;Revisão %s: regula as válvulas e verifica os injetores e o termostato, o que reduz esse risco."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Peças desgastadas de %s aumentam o risco de pane.&#10;&#10;Manutenção %s: regula as válvulas e, em uma máquina de colheita, substitui as peças de colheita desgastadas, o que reduz esse risco."/>
         <text name="rms_tutorial_age_degradation_title" text="Degradação por idade"/>
-        <text name="rms_tutorial_age_degradation_message" text="No RMS, os veículos perdem gradualmente parte do seu desempenho original à medida que envelhecem.&#10;&#10;Depois de cerca de um terço da vida útil, a degradação por idade reduz levemente características importantes, como a potência ou a frenagem. O efeito se intensifica depois e fica bem visível no fim da vida.&#10;&#10;Essa degradação pode ser desativada nas configurações do mod."/>
+        <text name="rms_tutorial_age_degradation_message" text="No RMS, os veículos perdem gradualmente parte do seu desempenho original à medida que envelhecem.&#10;&#10;Depois de cerca de um terço da vida útil, a degradação por idade reduz levemente características importantes, como a potência ou a frenagem. O efeito se intensifica depois e fica bem visível no fim da vida.&#10;&#10;Uma peça nova elimina o seu desgaste: a revisão substitui as peças desgastadas."/>
         <text name="rms_tutorial_poor_consumables_title" text="Consumíveis de baixa qualidade"/>
-        <text name="rms_tutorial_poor_consumables_message" text="O seu %s recebeu um filtro defeituoso na última manutenção. Isso acontece com as qualidades mais baratas.&#10;&#10;Esse filtro deixa passar a sujeira: o circuito que ele protege se desgasta mais rápido até a troca do filtro. Uma nova manutenção o substitui. Somente uma inspeção completa o identifica."/>
+        <text name="rms_tutorial_poor_consumables_message" text="A inspeção completa encontrou um filtro defeituoso em %s, instalado durante uma manutenção. Isso acontece com as qualidades mais baratas.&#10;&#10;Esse filtro deixa passar impurezas: o circuito que ele protege se desgasta mais rápido até o filtro ser trocado. Uma nova manutenção o substitui."/>
         <text name="rms_tutorial_poor_parts_title" text="Peças de baixa qualidade"/>
-        <text name="rms_tutorial_poor_parts_message" text="O seu %s recebeu uma peça de baixa qualidade durante um reparo. A avaria provavelmente voltará em breve.&#10;&#10;Você pode esperar que ela volte ou fazer uma inspeção completa, que identifica a peça em questão com segurança."/>
+        <text name="rms_tutorial_poor_parts_message" text="A inspeção completa encontrou em %s uma peça defeituosa instalada na oficina: ela vai falhar. Isso acontece com as qualidades mais baratas.&#10;&#10;Você pode substituí-la agora na oficina ou esperar que ela falhe."/>
         <text name="rms_tutorial_park_brake_title" text="Freio de estacionamento"/>
         <text name="rms_tutorial_park_brake_message" text="O freio de estacionamento está acionado. Ele é acionado automaticamente assim que você sai da máquina parada e liberado quando volta a acelerar. Ele também é acionado quando você desliga o motor, ou após 45 segundos com a máquina parada.&#10;&#10;Em declive, é ele que impede a máquina de sair sozinha."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="O freio de estacionamento está acionado. Você o aciona e o libera com a tecla correspondente: se acelerar com o freio acionado, a máquina força contra ele e os freios se desgastam.&#10;&#10;Em declive, é ele que impede a máquina de sair sozinha: se você sair sem acioná-lo, ela pode descer sozinha."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="O freio de estacionamento está acionado. Você o aciona e o libera com a tecla correspondente: se acelerar com o freio acionado, a máquina força contra ele e o freio de estacionamento se desgasta.&#10;&#10;Em declive, é ele que impede a máquina de sair sozinha: se você sair sem acioná-lo, ela pode descer sozinha."/>
         <text name="rms_tutorial_preheat_title" text="Pré-aquecimento diesel"/>
         <text name="rms_tutorial_preheat_message" text="Com o motor diesel frio, um toque no comando de partida liga a ignição e inicia automaticamente o ciclo das velas. As luzes do painel executam o autoteste e, depois, a luz de pré-aquecimento permanece acesa até o motor estar pronto. Não repita o comando: o motor de partida é acionado automaticamente quando a luz se apaga."/>
         <text name="rms_tutorial_pto_engagement_title" text="Engate da TDP"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Marcha lenta e tempo parado"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="O desgaste é bem menor quando a máquina está ligada sem trabalhar. Com o motor desligado, ele se torna mínimo, e desaparece completamente se a máquina estiver guardada sob cobertura."/>
         <text name="rms_tutorial_idle_deposit_title" text="Marcha lenta prolongada"/>
-        <text name="rms_tutorial_idle_deposit_message" text="A máquina ficou tempo demais em marcha lenta. Longos períodos em marcha lenta não desperdiçam só combustível: com o tempo, favorecem depósitos no sistema de combustível e prejudicam o estado geral do motor.&#10;&#10;Se a máquina não é necessária no momento, é melhor desligar o motor."/>
+        <text name="rms_tutorial_idle_deposit_message" text="A máquina ficou tempo demais em marcha lenta. Longos períodos em marcha lenta não desperdiçam só combustível: com o tempo, favorecem depósitos no sistema de combustível, que se desgasta mais rápido.&#10;&#10;Se a máquina não é necessária no momento, é melhor desligar o motor."/>
         <text name="rms_tutorial_hot_weather_title" text="Tempo quente"/>
         <text name="rms_tutorial_hot_weather_message" text="Está realmente muito quente hoje. Em um clima assim, você precisa observar a limpeza do radiador com ainda mais atenção e evitar sobrecarregar o motor, caso contrário o superaquecimento é só uma questão de tempo.&#10;&#10;Lembre-se: você sempre pode verificar o estado do radiador segurando a tecla %s enquanto olha para a máquina, e também pode limpá-lo com o soprador de ar comprimido."/>
         <text name="rms_tutorial_heavy_trailer_title" text="Reboque pesado demais"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Partida difícil"/>
         <text name="rms_tutorial_hard_start_message" text="O motor do seu %s está difícil de ligar. Bateria fraca, frio intenso, avaria mecânica ou desgaste do motor de arranque podem ser a causa.&#10;&#10;O sistema elétrico sofre cargas elevadas na partida, por causa das correntes de pico."/>
         <text name="rms_tutorial_low_fuel_title" text="Pouco combustível"/>
-        <text name="rms_tutorial_low_fuel_message" text="O tanque está chegando à reserva. Quanto menos combustível resta, mais a bomba precisa forçar para aspirá-lo, e o fundo do tanque manda sua água e seus resíduos para o filtro, que entope mais rápido.&#10;&#10;Melhor abastecer no fim do dia: um tanque cheio forma menos condensação."/>
+        <text name="rms_tutorial_low_fuel_message" text="O tanque está chegando à reserva. Quanto menos combustível resta, mais a bomba precisa forçar para aspirá-lo, e o fundo do tanque manda sua água e seus resíduos para o filtro, que entope mais rápido.&#10;&#10;Abasteça o quanto antes."/>
         <text name="rms_tutorial_lugging_title" text="Motor forçando em baixa rotação"/>
         <text name="rms_tutorial_lugging_message" text="O motor, e principalmente a transmissão, sofrem em baixa rotação sob carga elevada. Talvez o implemento engatado seja pesado demais para a máquina, ou a relação escolhida seja inadequada se a caixa for manual."/>
         <text name="rms_tutorial_engine_overheat_title" text="Superaquecimento do motor"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Impacto forte"/>
         <text name="rms_tutorial_terrain_impact_message" text="O trem de rodagem acabou de sofrer um impacto forte. Um obstáculo que imobiliza a máquina de repente ou a desacelera bruscamente desgasta o chassi na hora e aproxima sua próxima falha, quase sempre na direção ou nos rolamentos.&#10;&#10;Reduza a velocidade antes dos obstáculos."/>
         <text name="rms_tutorial_cranking_title" text="Partidas frequentes"/>
-        <text name="rms_tutorial_cranking_message" text="O motor está sendo ligado com muita frequência. Cada partida envia uma corrente muito alta pelo sistema elétrico, o que acelera o desgaste do chicote, do motor de arranque e dos outros componentes elétricos.&#10;&#10;Evite desligar o motor em paradas curtas."/>
+        <text name="rms_tutorial_cranking_message" text="O motor de partida girou muito em pouco tempo. Passados alguns segundos no total, cada partida desgasta o motor de partida, a bateria e o resto do circuito de partida.&#10;&#10;Evite desligar o motor em pausas curtas."/>
         <text name="rms_tutorial_critical_failure_title" text="Avaria crítica"/>
-        <text name="rms_tutorial_critical_failure_message" text="O veículo %s está completamente imobilizado e não consegue mais se mover por conta própria.&#10;&#10;Uma oficina móvel permite um reparo provisório, suficiente para que a máquina chegue à oficina por conta própria. Caso contrário, será necessário resgatá-la de outra forma."/>
+        <text name="rms_tutorial_critical_failure_message" text="O veículo %s está completamente imobilizado e não consegue mais se mover por conta própria.&#10;&#10;Dependendo da pane, uma oficina móvel pode repará-la no local, pelo menos de forma provisória, o suficiente para a máquina chegar à oficina por conta própria. Caso contrário, será preciso levá-la de outro jeito."/>
         <text name="rms_tutorial_cold_engine_title" text="Motor frio"/>
-        <text name="rms_tutorial_cold_engine_message" text="Aqueça o motor gradualmente antes de submetê-lo a uma carga elevada. Use aceleração e rotação moderadas até atingir a temperatura de funcionamento."/>
+        <text name="rms_tutorial_cold_engine_message" text="O motor está frio: abaixo de %s ele se desgasta mais rápido assim que funciona, qualquer que seja a carga, e tanto mais quanto mais frio estiver.&#10;&#10;Abaixo de %s, evite também passar de três quartos da rotação máxima: o sistema de arrefecimento sofre com isso."/>
         <text name="rms_tutorial_cold_oil_title" text="Óleo da transmissão frio"/>
-        <text name="rms_tutorial_cold_oil_message" text="O óleo da transmissão e do sistema hidráulico aquece muito mais devagar que o motor. Evite trabalhos pesados enquanto o óleo estiver frio; aqueça-o gradualmente dirigindo com suavidade e usando pouco o sistema hidráulico."/>
+        <text name="rms_tutorial_cold_oil_message" text="O óleo do câmbio está frio: abaixo de %s o câmbio se desgasta mais rápido assim que o motor funciona, qualquer que seja a carga.&#10;&#10;Abaixo de %s, o óleo hidráulico também desgasta a bomba quando você usa o sistema hidráulico."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Superaquecimento da transmissão"/>
         <text name="rms_tutorial_transmission_overheat_message" text="O óleo da transmissão está começando a superaquecer. Isso pode vir de uma carga excessiva, de um radiador obstruído, de um tempo muito quente ou de um defeito no arrefecimento da transmissão.&#10;&#10;O óleo da transmissão esquenta em qualquer máquina, não só em uma CVT. Óleo quente demais desgasta a transmissão e destrói seus retentores."/>
         <text name="rms_tutorial_overload_indicator_title" text="Aviso de sobrecarga"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Tensão na transmissão"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Você está fazendo uma curva em solo aderente com o bloqueio do diferencial acionado. Na curva, as rodas internas e externas percorrem distâncias diferentes, mas o bloqueio as força a girar na mesma velocidade: a transmissão fica sob tensão e seu desgaste aumenta. Libere o bloqueio antes de virar."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Modos de tração e bloqueio"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Esta máquina permite escolher o modo de tração: 4x2, 4x4 ou AUTO, que acopla o eixo dianteiro assim que as rodas patinam.&#10;&#10;O bloqueio do diferencial busca aderência onde ela não existe mais, mas custa caro nas curvas em solo aderente: as rodas internas e externas não podem girar na mesma velocidade, e a transmissão suporta a tensão. Libere-o antes de virar."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Esta máquina permite escolher o modo de tração: 4x2, 4x4 ou AUTO. Em AUTO, o eixo dianteiro fica acoplado durante o trabalho: desacopla acima de %s e nas curvas fechadas, e volta a acoplar assim que você freia.&#10;&#10;O bloqueio do diferencial busca aderência onde ela não existe mais e acopla o eixo dianteiro junto. Ele se desativa sozinho nas curvas, ao frear e acima de %s: ative-o de novo quando precisar."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Esta máquina permite escolher o modo de tração: 4x2 ou 4x4.&#10;&#10;O bloqueio do diferencial busca aderência onde ela não existe mais, mas custa caro nas curvas em solo aderente: as rodas internas e externas não podem girar na mesma velocidade, e a transmissão suporta a tensão. Libere-o antes de virar."/>
+        <text name="rms_tutorial_diff_lock_title" text="Bloqueio do diferencial"/>
+        <text name="rms_tutorial_diff_lock_message" text="O bloqueio do diferencial busca aderência onde ela não existe mais. Ele se desativa sozinho nas curvas, ao frear e acima de %s: ative-o de novo quando precisar."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="O bloqueio do diferencial busca aderência onde ela não existe mais, mas custa caro nas curvas em solo aderente: as rodas internas e externas não podem girar na mesma velocidade, e a transmissão suporta a tensão. Libere-o antes de virar."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

@@ -1269,7 +1269,6 @@ local SPEC_VALUES = {
     TRANSMISSION_OIL_LEAK_RATE = { "transmissionOilLeakRate", 0, 0 },
     HYDRAULIC_FLUID_LEAK_RATE = { "hydraulicFluidLeakRate", 0, 0 },
     THERMOSTAT_HEALTH_MODIFIER = { "thermostatHealth", 1, 0.1 },
-    TRANSMISSION_THERMOSTAT_HEALTH_MODIFIER = { "transmissionThermostatHealth", 1, 0.1 },
     RADIATOR_HEALTH_MODIFIER = { "radiatorHealth", 1, 0.1 },
     FAN_CLUTCH_MODIFIER = { "fanClutchHealth", 1, 0.1 },
     BATTERY_HEALTH_MODIFIER = { "batteryHealth", 1, 0.0001 },
@@ -1299,17 +1298,6 @@ RMS_Breakdowns.EffectApplicators.PARK_BRAKE_DRAG_EFFECT = {
 RMS_Breakdowns.EffectApplicators.THERMOSTAT_STUCK_EFFECT = {
     apply = function(vehicle, effect) vehicle.spec_RealisticMechanicalSystems.thermostatStuckedPosition = effect.extraData.stuckPosition end,
     remove = function(vehicle) vehicle.spec_RealisticMechanicalSystems.thermostatStuckedPosition = nil end
-}
-
--- the transmission thermostat sticks where it stands when it fails
-RMS_Breakdowns.EffectApplicators.TRANSMISSION_THERMOSTAT_STUCK_EFFECT = {
-    apply = function(vehicle)
-        local spec = vehicle.spec_RealisticMechanicalSystems
-        if (spec.transmissionThermostatStuckedPosition or -1) < 0 then
-            spec.transmissionThermostatStuckedPosition = spec.transmissionThermostatState
-        end
-    end,
-    remove = function(vehicle) vehicle.spec_RealisticMechanicalSystems.transmissionThermostatStuckedPosition = nil end
 }
 
 ---Swings the idle around the stock one, a share of it over a period

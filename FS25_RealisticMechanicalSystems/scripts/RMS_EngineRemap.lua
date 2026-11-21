@@ -31,14 +31,14 @@ end
 ---Returns the weakest and strongest engines of the store item, power first
 local function getFamilyPower(vehicle)
     local items = getMotorItems(vehicle)
-    local low, high, lowItem, highItem = nil, nil, nil, nil
+    local low, high = nil, nil
     for _, item in ipairs(items or {}) do
         if item.isSelectable ~= false and item.power ~= nil then
-            if low == nil or item.power < low then low, lowItem = item.power, item end
-            if high == nil or item.power > high then high, highItem = item.power, item end
+            if low == nil or item.power < low then low = item.power end
+            if high == nil or item.power > high then high = item.power end
         end
     end
-    return low, high, lowItem, highItem
+    return low, high
 end
 
 ---Tells whether a remap applies to the machine
@@ -200,25 +200,8 @@ function RMS_EngineRemap.getCoveredParts(vehicle)
     return parts
 end
 
----Tells whether a factory or fitted part warranty still runs
-function RMS_EngineRemap.getIsWarrantyActive(vehicle)
-    if vehicle.spec_RealisticMechanicalSystems.warrantyVoided then
-        return false
-    end
-    return RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle) or #RMS_EngineRemap.getCoveredParts(vehicle) > 0
-end
-
----Returns the weakest and strongest engines and their gains, nil with one engine
-local function getRangeEnds(vehicle)
-    local _, _, lowItem, highItem = getFamilyPower(vehicle)
-    if lowItem == nil or lowItem == highItem then
-        return nil, nil
-    end
-    return { name = lowItem.name, gain = RMS_EngineRemap.LOW_GAIN }, { name = highItem.name, gain = RMS_EngineRemap.HIGH_GAIN }
-end
-
 ---Describes what the tuner offers the machine at this workshop
--- @return table offer refusal, option, peaks in hp and Nm, gain, range ends, price, hours, restore terms
+-- @return table offer refusal or terms of the remap
 function RMS_EngineRemap.getOffer(vehicle, workshopType)
     local isAllowed, refusal = RMS_EngineRemap.getAvailability(vehicle, workshopType)
     local offer = { eligible = refusal ~= "notEligible" and refusal ~= "leased", refusal = not isAllowed and refusal or nil,
@@ -226,26 +209,21 @@ function RMS_EngineRemap.getOffer(vehicle, workshopType)
     if not offer.eligible then
         return offer
     end
-    local items, index = getMotorItems(vehicle)
-    local item = items ~= nil and items[index] or nil
     local stockHp, stockTorque = RMS_EngineRemap.getStockPeaks(vehicle)
-    offer.engineName = item ~= nil and item.name or vehicle:getName()
-    offer.isDealer = RMS_EngineRemap.getIsRemapped(vehicle) and vehicle.spec_RealisticMechanicalSystems.remapByDealer == true
-        or not RMS_EngineRemap.getIsRemapped(vehicle) and RMS_EngineRemap.getIsDealer(workshopType)
-    local gainWorkshop = not RMS_EngineRemap.getIsRemapped(vehicle) and workshopType or nil
+    local isRemapped = RMS_EngineRemap.getIsRemapped(vehicle)
+    offer.isDealer = isRemapped and vehicle.spec_RealisticMechanicalSystems.remapByDealer == true
+        or not isRemapped and RMS_EngineRemap.getIsDealer(workshopType)
+    local gainWorkshop = not isRemapped and workshopType or nil
     offer.gain = RMS_EngineRemap.getGain(vehicle, gainWorkshop)
     offer.isBeyondBlock = RMS_EngineRemap.getIsBeyondBlock(vehicle, gainWorkshop)
     offer.stockHp, offer.stockTorque = stockHp, stockTorque
     offer.remapHp, offer.remapTorque = stockHp * (1 + offer.gain), stockTorque * (1 + offer.gain)
-    offer.lowEngine, offer.highEngine = getRangeEnds(vehicle)
-    offer.price = RMS_EngineRemap.getPrice(vehicle, offer.option)
-    offer.durationHours = RMS_EngineRemap.getDurationHours(offer.option)
     offer.freeRestoreUntil = RMS_EngineRemap.getFreeRestoreUntil(vehicle)
     offer.restorePrice = math.floor(RMS_Utils.getGamePrice(RMS_EngineRemap.RESTORE_PRICE) / 10 + 0.5) * 10
-    offer.warrantyActive = RMS_EngineRemap.getIsWarrantyActive(vehicle)
     offer.warrantyVoided = vehicle.spec_RealisticMechanicalSystems.warrantyVoided == true
     offer.factoryTerm = RealisticMechanicalSystems.getIsWithinWarrantyLimits(vehicle)
     offer.coveredParts = RMS_EngineRemap.getCoveredParts(vehicle)
+    offer.warrantyActive = not offer.warrantyVoided and (offer.factoryTerm or #offer.coveredParts > 0)
     return offer
 end
 

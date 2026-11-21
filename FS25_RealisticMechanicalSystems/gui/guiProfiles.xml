@@ -225,7 +225,7 @@
         <imageSliceId value="rms_LevelGauge.workOrderZone"/>
     </Profile>
     <Profile name="rms_fluidGaugeMark" extends="rms_fluidGaugeFill">
-        <imageColor value="1 1 1 1"/>
+        <imageColor value="$preset_colorWhite"/>
     </Profile>
     <Profile name="rms_inspectionObservationsLayout" extends="rms_workshopBlock">
         <flowDirection value="vertical"/>
@@ -1753,13 +1753,13 @@
     </Profile>
     <!-- Resets the expanded profile's bold -->
     <Profile name="rms_fleetSystemName" extends="rms_workshopSystemName">
-        <textSize value="13px"/>
+        <textSize value="14px"/>
         <textMinSize value="12px"/>
         <textBold value="false"/>
         <textSelectedColor value="$preset_fs25_colorMainLight"/>
     </Profile>
     <Profile name="rms_fleetSystemValue" extends="rms_workshopSystemValue">
-        <textSize value="13px"/>
+        <textSize value="14px"/>
     </Profile>
     <Profile name="rms_fleetSystemRating" extends="rms_fleetSystemValue">
         <textSize value="12px"/>
@@ -1830,7 +1830,7 @@
     </Profile>
     <Profile name="rms_diagPcFrame" extends="baseReference" with="anchorStretchingYStretchingX">
         <imageSliceId value="rms_DiagnosticPc.lid"/>
-        <imageColor value="1 1 1 1"/>
+        <imageColor value="$preset_colorWhite"/>
     </Profile>
     <Profile name="rms_diagScreen" extends="emptyPanel" with="anchorTopLeft">
         <position value="79.13px -140.05px"/>

@@ -11,6 +11,7 @@
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="Bakhjulstrekk (forakselen frakoblet)"/>
         <text name="rms_drivetrain_mode_4wd" text="Firehjulstrekk (forakselen tilkoblet)"/>
         <text name="rms_drivetrain_mode_auto" text="Firehjulstrekk AUTO"/>
@@ -86,9 +87,6 @@
         <text name="rms_tutorialResetConfirm_message" text="Tilbakestille historikken over opplæringstips og vise alle tipsene igjen?"/>
         <text name="rms_drivetrainEnabled_label" text="Styring av firehjulstrekk og differensialsperre"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Angir hvorvidt traktorers foraksel og differensialsperrer styres manuelt. Innstillingen erstatter differensialstyringen i Enhanced Vehicle: slå av innstillingen og slå differensialene på igjen i menyen der for å gi styringen tilbake."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Tillat AUTO-trekkmodus"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Angir hvorvidt velgeren tilbyr AUTO, som kobler inn forakselen ved hjulspinn eller arbeid under belastning og kobler den ut på veien. Når innstillingen slås av, går kjøretøy i AUTO tilbake til firehjulstrekk."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Denne innstillingen krever at styring av firehjulstrekk og differensialsperre er slått på."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeringsbrems"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Angir hvorvidt fulgte kjøretøy har parkeringsbrems: automatisk på nyere maskiner med CVT- eller Powershift-gir, med egen tast på de andre. Innstillingen erstatter parkeringsbremsen i Enhanced Vehicle: slå av innstillingen og slå parkeringsbremsen på igjen i menyen der for å gi den tilbake."/>
         <!-- Workshop -->
@@ -149,7 +147,6 @@
         <text name="rms_ws_label_maintenance_log" text="Vedlikeholdslogg"/>
         <text name="rms_ws_label_last_maintenance" text="Siste vedlikehold"/>
         <text name="rms_ws_task_inspection" text="Inspeksjon"/>
-        <text name="rms_ws_task_maintenance" text="Vedlikehold"/>
         <text name="rms_ws_task_overhaul" text="Overhaling"/>
         <text name="rms_ws_info_no_breakdowns" text="Ingen fastslåtte feil. En inspeksjon eller en service fastslår dem maskinen ennå ikke viser."/>
         <text name="rms_ws_info_warning_unidentified" text="Varsellampe tent: feil må fastslås. En inspeksjon eller en service fastslår den, deretter kan den repareres."/>
@@ -936,8 +933,6 @@
         <text name="rms_fleet_check" text="Kontroll"/>
         <text name="rms_fleet_location" text="Plassering"/>
         <text name="rms_fleet_next_service" text="Neste vedlikehold"/>
-        <text name="rms_fleet_remaining" text="%s t gjenstår"/>
-        <text name="rms_fleet_overdue" text="%s t forsinket"/>
         <text name="rms_fleet_overdue_label" text="Forsinket"/>
         <text name="rms_fleet_overdue_count" text="Forsinket: %d"/>
         <text name="rms_fleet_due_soon_label" text="Snart"/>
@@ -985,7 +980,7 @@
         <text name="rms_sell_dialog_deposit_refund" text="Tilbakebetalt depositum"/>
         <!-- Tutorial -->
         <text name="rms_tutorial_fluid_level_title" text="Lavt væskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
+        <text name="rms_tutorial_fluid_level_message" text="En av maskinens væsker er under merket på måleren. Motorolja synker med timene, raskere på en slitt motor; de andre væskene synker bare ved en lekkasje.&#10;&#10;Maskinen arbeider fortsatt normalt, men jo lavere nivået er, desto lettere suger pumpen luft i bakker: hvert minutt slik skader lagrene eller pumpen. Mangler det kjølevæske, transmisjonsolje eller hydraulikkolje, blir kretsen også varm.&#10;&#10;Fyll på med en beholder av væsken som er beregnet for kretsen, kjøpt i butikken: all annen væske forurenser den. Forhandleren kan også fylle på."/>
         <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
         <text name="rms_tutorial_welcome_disable_button" text="Slå av tipsene"/>
         <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsene"/>
@@ -995,7 +990,7 @@
         <text name="rms_tutorial_wheel_slip_title" text="Hjulspinn"/>
         <text name="rms_tutorial_wheel_slip_message" text="Hjulene dine spinner kraftig. Spinn er en av de mest ødeleggende faktorene for transmisjonen og flytter neste verkstedbesøk merkbart nærmere."/>
         <text name="rms_tutorial_service_due_soon_title" text="Vedlikehold i vente"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s trenger snart service. Velg anbefalt pakke på verkstedet: den dekker arbeidet som forfaller. Driftstimer eller kalendertid utløser service ved første grense, også ved lite bruk. Vedlikeholdsvennlighet viser inngrepenes kompleksitet; vanlig service er fortsatt mulig på mobilt verksted."/>
+        <text name="rms_tutorial_service_due_soon_message" text="%s trenger snart service. Velg anbefalt pakke på verkstedet: den dekker arbeidet som forfaller. Driftstimer eller kalendertid utløser service ved første grense, også ved lite bruk. Vedlikeholdsvennlighet viser hva gården din reparerer selv; service er fortsatt mulig på mobilt verksted."/>
         <text name="rms_tutorial_service_interval_expired_title" text="Vedlikeholdsintervall overskredet"/>
         <text name="rms_tutorial_service_interval_expired_message" text="Vedlikeholdsintervallet for %s er overskredet.&#10;&#10;Kjør til et verksted så snart som mulig, og velg «Vedlikehold». Fortsetter du å bruke et kjøretøy med overskredet vedlikehold, stiger faren for flere feil på én gang kraftig."/>
         <text name="rms_tutorial_steering_title" text="Styring i stillstand"/>
@@ -1009,16 +1004,16 @@
         <text name="rms_tutorial_needs_overhaul_title" text="Overhaling nødvendig"/>
         <text name="rms_tutorial_needs_overhaul_message" text="%s bærer tydelig preg av alderen sin. Det er på tide å vurdere en utskifting eller en overhaling. Det er en lang og dyr prosedyre, men det er den eneste måten å gi maskinen sin opprinnelige tilstand tilbake på.&#10;&#10;Levetiden stilles inn i modinnstillingene: jo høyere den er, desto langsommere slites kjøretøyene dine."/>
         <text name="rms_tutorial_needs_preventive_title" text="Økt fare for feil"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Motoren, drivstoffsystemet eller kjølesystemet på %s har økt risiko for feil.&#10;&#10;Service %s: justerer ventilene og kontrollerer dysene og termostaten, noe som senker den risikoen."/>
+        <text name="rms_tutorial_needs_preventive_message" text="Slitte deler på %s øker risikoen for havari.&#10;&#10;Service %s: justerer ventilene og skifter på en høstemaskin ut de slitte høstedelene, noe som senker risikoen."/>
         <text name="rms_tutorial_age_degradation_title" text="Aldersbetinget forringelse"/>
-        <text name="rms_tutorial_age_degradation_message" text="I RMS mister kjøretøy etter hvert en del av sin opprinnelige ytelse når de blir eldre.&#10;&#10;Etter omtrent en tredjedel av levetiden senker den aldersbetingede slitasjen enkelte viktige egenskaper litt, som effekt eller bremseevne. Virkningen forsterkes deretter og blir tydelig synlig sist i levetiden.&#10;&#10;Denne forringelsen kan slås av i modinnstillingene."/>
+        <text name="rms_tutorial_age_degradation_message" text="I RMS mister kjøretøy etter hvert en del av sin opprinnelige ytelse når de blir eldre.&#10;&#10;Etter omtrent en tredjedel av levetiden senker den aldersbetingede slitasjen enkelte viktige egenskaper litt, som effekt eller bremseevne. Virkningen forsterkes deretter og blir tydelig synlig sist i levetiden.&#10;&#10;En ny del fjerner slitasjen: en overhaling skifter ut de slitte delene."/>
         <text name="rms_tutorial_poor_consumables_title" text="Forbruksmateriell av dårlig kvalitet"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s fikk et defekt filter ved sitt siste vedlikehold. Det skjer med de billige kvalitetene.&#10;&#10;Filteret slipper gjennom smuss: kretsen det beskytter, slites raskere til filteret skiftes. Et nytt vedlikehold skifter det. Bare en fullstendig inspeksjon peker det ut."/>
+        <text name="rms_tutorial_poor_consumables_message" text="Den fullstendige inspeksjonen fant et defekt filter på %s, montert under en service. Det skjer med de billigere kvalitetene.&#10;&#10;Filteret slipper gjennom urenheter: kretsen det beskytter slites raskere til filteret byttes. En ny service skifter det ut."/>
         <text name="rms_tutorial_poor_parts_title" text="Deler av dårlig kvalitet"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s fikk en del av dårlig kvalitet ved en reparasjon. Feilen kommer sannsynligvis snart tilbake.&#10;&#10;Du kan vente på at den kommer igjen, eller kjøre en fullstendig inspeksjon, som pålitelig peker ut delen det gjelder."/>
+        <text name="rms_tutorial_poor_parts_message" text="Den fullstendige inspeksjonen fant en defekt del på %s, montert på verkstedet: den kommer til å svikte. Det skjer med de billigere kvalitetene.&#10;&#10;Du kan få den skiftet på verkstedet nå, eller vente til den svikter."/>
         <text name="rms_tutorial_park_brake_title" text="Parkeringsbrems"/>
         <text name="rms_tutorial_park_brake_message" text="Parkeringsbremsen er satt på. Den settes på av seg selv så snart du forlater den stillestående maskinen, og slippes så snart du gir gass igjen. Den settes også på når du slår av motoren, eller etter 45 sekunders stillstand.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbremsen er satt på. Det er du som setter den på og slipper den med dens egen tast: gir du gass med bremsen på, arbeider maskinen mot den, og bremsene slites.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv: forlater du maskinen uten å sette den på, kan den trille av gårde."/>
+        <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbremsen er satt på. Det er du som setter den på og slipper den med dens egen tast: gir du gass med bremsen på, arbeider maskinen mot den, og parkeringsbremsen slites.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv: forlater du maskinen uten å sette den på, kan den trille av gårde."/>
         <text name="rms_tutorial_preheat_title" text="Forvarming av dieselmotor"/>
         <text name="rms_tutorial_preheat_message" text="På en kald dieselmotor slår ett trykk på startknappen på tenningen og starter forvarmingen automatisk. Lampene i instrumentpanelet lyser kort opp, og deretter fortsetter forvarmingslampen å lyse til motoren er klar. Ikke gjenta kommandoen: startmotoren kobler inn av seg selv når lampen slukker."/>
         <text name="rms_tutorial_pto_engagement_title" text="Innkobling av kraftuttak"/>
@@ -1030,7 +1025,7 @@
         <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stillstand"/>
         <text name="rms_tutorial_idle_and_downtime_message" text="Slitasjen er langt lavere når maskinen går uten å arbeide. Med motoren av blir den minimal. Under tak forsvinner den helt."/>
         <text name="rms_tutorial_idle_deposit_title" text="Lengre tomgang"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Maskinen ser ut til å ha stått for lenge på tomgang. Lange perioder på tomgang sløser ikke bare med drivstoff: med tiden fremmer de også avleiringer i drivstoffsystemet og skader motorens allmenne tilstand.&#10;&#10;Trenger du ikke maskinen akkurat nå, er det bedre å slå av motoren."/>
+        <text name="rms_tutorial_idle_deposit_message" text="Maskinen ser ut til å ha stått for lenge på tomgang. Lange perioder på tomgang sløser ikke bare med drivstoff: med tiden fremmer de også avleiringer i drivstoffsystemet, som da slites raskere.&#10;&#10;Trenger du ikke maskinen akkurat nå, er det bedre å slå av motoren."/>
         <text name="rms_tutorial_hot_weather_title" text="Varmt vær"/>
         <text name="rms_tutorial_hot_weather_message" text="Det er svært varmt i dag. Hold øye med hvor ren kjøleren er i dette været, og unngå å overbelaste motoren, ellers er overoppheting bare et spørsmål om tid.&#10;&#10;Du kan se kjølerens tilstand: hold %s-tasten inne mens du ser på maskinen. Rensingen gjøres med trykkluftblåseren."/>
         <text name="rms_tutorial_heavy_trailer_title" text="For tung henger"/>
@@ -1038,7 +1033,7 @@
         <text name="rms_tutorial_hard_start_title" text="Vanskelig start"/>
         <text name="rms_tutorial_hard_start_message" text="Motoren i %s er vanskelig å starte. Et svakt batteri, frost, en mekanisk feil eller slitasje på startmotoren kan være årsaken.&#10;&#10;Det elektriske systemet belastes hardt under start på grunn av de høye startstrømmene."/>
         <text name="rms_tutorial_low_fuel_title" text="Drivstoffreserve"/>
-        <text name="rms_tutorial_low_fuel_message" text="Tanken nærmer seg reserven. Jo mindre drivstoff det er igjen, desto hardere må drivstoffpumpen arbeide for å suge det opp, og bunnen av tanken sender vann og bunnfall til filteret, som tettes raskere.&#10;&#10;Fyll heller tanken ved slutten av dagen: En full tank danner mindre kondens."/>
+        <text name="rms_tutorial_low_fuel_message" text="Tanken nærmer seg reserven. Jo mindre drivstoff det er igjen, desto hardere må drivstoffpumpen arbeide for å suge det opp, og bunnen av tanken sender vann og bunnfall til filteret, som tettes raskere.&#10;&#10;Fyll tanken så snart som mulig."/>
         <text name="rms_tutorial_lugging_title" text="Motor på for lavt turtall"/>
         <text name="rms_tutorial_lugging_message" text="Motoren, og særlig transmisjonen, lider på for lavt turtall, altså lave omdreininger under høy belastning. Det påhengte redskapet er kanskje for tungt for maskinen, eller det valgte giret er ikke det riktige hvis girkassen er manuell."/>
         <text name="rms_tutorial_engine_overheat_title" text="Motoren overopphetes"/>
@@ -1054,13 +1049,13 @@
         <text name="rms_tutorial_terrain_impact_title" text="Hardt slag"/>
         <text name="rms_tutorial_terrain_impact_message" text="Understellet har nettopp fått et hardt slag. En hindring som stanser maskinen brått eller bremser den kraftig, sliter på chassiset med en gang og bringer den neste skaden nærmere, oftest i styringen eller hjullagrene.&#10;&#10;Senk farten før hindringer."/>
         <text name="rms_tutorial_cranking_title" text="Hyppige starter"/>
-        <text name="rms_tutorial_cranking_message" text="Motoren startes for ofte. Hver start sender en svært høy strøm gjennom det elektriske systemet, noe som fremskynder slitasjen på ledninger, startmotor og de øvrige elektriske komponentene.&#10;&#10;Unngå å slå av motoren ved korte avbrudd."/>
+        <text name="rms_tutorial_cranking_message" text="Startmotoren har gått mye på kort tid. Utover noen få sekunder til sammen sliter hver start på startmotoren, batteriet og resten av startkretsen.&#10;&#10;Unngå å slå av motoren ved korte pauser."/>
         <text name="rms_tutorial_critical_failure_title" text="Kritisk feil"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s kan ikke lenger kjøre for egen maskin.&#10;&#10;Et mobilt verksted gjør en nødreparasjon mulig, nok til at maskinen selv kan nå frem til verkstedet. Ellers må den berges på annet vis."/>
+        <text name="rms_tutorial_critical_failure_message" text="%s kan ikke lenger kjøre for egen maskin.&#10;&#10;Avhengig av feilen kan et mobilt verksted reparere den på stedet, i det minste midlertidig, nok til at maskinen kommer seg til verkstedet ved egen kraft. Ellers må den fraktes dit på annen måte."/>
         <text name="rms_tutorial_cold_engine_title" text="Kald motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="La motoren komme opp i temperatur litt etter litt før du belaster den hardt. Bruk moderat gass og moderate omdreininger til den når driftstemperaturen sin."/>
+        <text name="rms_tutorial_cold_engine_message" text="Motoren er kald: under %s slites den raskere så snart den går, uansett belastning, og mer jo kaldere den er.&#10;&#10;Under %s bør du også holde turtallet under tre firedeler av maksimum: høyere turtall belaster kjølesystemet."/>
         <text name="rms_tutorial_cold_oil_title" text="Kald transmisjonsolje"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmisjons- og hydraulikkoljen blir varm langt langsommere enn motoren. Unngå tungt arbeid så lenge oljen er kald; varm den gradvis opp ved å kjøre rolig og bruke hydraulikken lett."/>
+        <text name="rms_tutorial_cold_oil_message" text="Girolja er kald: under %s slites girkassen raskere så snart motoren går, uansett belastning.&#10;&#10;Under %s sliter hydraulikkoljen også pumpen når du bruker hydraulikken."/>
         <text name="rms_tutorial_transmission_overheat_title" text="Transmisjonen overopphetes"/>
         <text name="rms_tutorial_transmission_overheat_message" text="Transmisjonsoljen begynner å overopphetes. Det kan skyldes for tung belastning, en tilsmusset kjøler, svært varmt vær eller en defekt i transmisjonens kjøling.&#10;&#10;Transmisjonsoljen blir varm på alle maskiner, ikke bare på en CVT. For varm olje sliter på girkassen og ødelegger pakningene dens."/>
         <text name="rms_tutorial_overload_indicator_title" text="Varsel om overbelastning"/>
@@ -1070,7 +1065,11 @@
         <text name="rms_tutorial_drivetrain_windup_title" text="Belastning i drivlinjen"/>
         <text name="rms_tutorial_drivetrain_windup_message" text="Du svinger på et underlag med godt feste med differensialsperren aktivert. I en sving kjører de indre og ytre hjulene ulike strekninger, men differensialsperren tvinger dem til å gå med samme hastighet: drivlinjen kommer under belastning, og slitasjen på den stiger. Deaktiver sperren før du svinger."/>
         <text name="rms_tutorial_drivetrain_modes_title" text="Trekkmodus og differensialsperre"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Denne maskinen lar deg velge trekket sitt: bakhjulstrekk, firehjulstrekk eller AUTO, som kobler til forakselen så snart hjulene spinner.&#10;&#10;Differensialsperren finner feste der det ikke er mer igjen, men den koster dyrt i sving på et underlag med godt feste: de indre og ytre hjulene kan ikke gå med samme hastighet, og det er drivlinjen som tar støyten. Deaktiver den før du svinger."/>
+        <text name="rms_tutorial_drivetrain_modes_message" text="Denne maskinen lar deg velge trekket sitt: bakhjulstrekk, firehjulstrekk eller AUTO. I AUTO forblir forakselen tilkoblet under arbeidet: den kobles fra over %s og i krappe svinger og kobles til igjen så snart du bremser.&#10;&#10;Differensialsperren finner feste der det ikke er mer igjen, og kobler samtidig til forakselen. Den deaktiveres av seg selv i svinger, når du bremser, og over %s: aktiver den igjen når du trenger den."/>
+        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Denne maskinen lar deg velge trekket sitt: bakhjulstrekk eller firehjulstrekk.&#10;&#10;Differensialsperren finner feste der det ikke er mer igjen, men den koster dyrt i sving på et underlag med godt feste: de indre og ytre hjulene kan ikke gå med samme hastighet, og det er drivlinjen som tar støyten. Deaktiver den før du svinger."/>
+        <text name="rms_tutorial_diff_lock_title" text="Differensialsperre"/>
+        <text name="rms_tutorial_diff_lock_message" text="Differensialsperren finner feste der det ikke er mer igjen. Den deaktiveres av seg selv i svinger, når du bremser, og over %s: aktiver den igjen når du trenger den."/>
+        <text name="rms_tutorial_diff_lock_manual_message" text="Differensialsperren finner feste der det ikke er mer igjen, men den koster dyrt i sving på et underlag med godt feste: de indre og ytre hjulene kan ikke gå med samme hastighet, og det er drivlinjen som tar støyten. Deaktiver den før du svinger."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

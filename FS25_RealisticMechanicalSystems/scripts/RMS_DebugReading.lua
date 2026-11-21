@@ -965,7 +965,8 @@ local function readDrive(vehicle, spec, groups)
     local drive = spec.drivetrain
     local modes = {[RMS_Drivetrain.MODE.TWO_WD] = "2WD", [RMS_Drivetrain.MODE.FOUR_WD] = "4WD", [RMS_Drivetrain.MODE.AUTO] = "auto"}
     if RMS_Drivetrain.getIsAvailable(vehicle) then
-        table.insert(rows, itemsRow("Drive train", {item("mode", modes[drive.driveMode]), item("4WD", RMS_Drivetrain.getIsFrontAxleDriven(vehicle) and "engaged" or "off"),
+        local mode = RMS_Drivetrain.getHasCenterDifferential(vehicle) and modes[drive.driveMode] or "no selector"
+        table.insert(rows, itemsRow("Drive train", {item("mode", mode), item("4WD", RMS_Drivetrain.getIsFrontAxleDriven(vehicle) and "engaged" or "off"),
             item("diff lock", drive.diffLockEngaged and "on" or "off"), item("windup", pct(drive.windupStress or 0))}))
     else
         table.insert(rows, itemsRow("Drive train", {item("", RMS_Config.DRIVETRAIN.ENABLED and "permanent drive, left to the game"
@@ -1008,7 +1009,7 @@ end
 ---Reads the harvest, header drive, PTO, attached tools, trip and worker
 local function readWorkRows(vehicle, spec, groups)
     local rows = {}
-    if spec.systems.harvest.enabled then
+    if spec.systems.harvest.enabled and not RMS_Utils.getIsSelfPropelledMower(vehicle) then
         local state = spec.harvestState or {}
         local effect = spec.activeEffects.HARVEST_GRAIN_LOSS
         local loss = math.clamp(effect ~= nil and effect.value or 0, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS)
@@ -1049,10 +1050,16 @@ local function readWorkRows(vehicle, spec, groups)
         table.insert(items, item("slips past", string.format("work %s", pct(C.SLIP_EFFORT))))
         table.insert(rows, itemsRow("Header drive", items))
     end
-    if spec.systems.pto.enabled ~= false then
-        table.insert(rows, itemsRow("PTO", {item("state", spec.isPtoActive and "on" or "off"), item("speed", string.format("%.0f rpm", spec.ptoRpm)),
-            item("power", string.format("%.0f kW", spec.ptoPower)), item("used", pct(spec.ptoUtilization)),
-            item("engagements", tostring(spec.ptoEngagementCount))}))
+    if RMS_Utils.getHasDashboardScreen(vehicle) and RMS_Utils.getHasPtoDisplay(vehicle) then
+        local isTurning, rpm = RMS_Utils.getPtoDisplay(vehicle)
+        local items = {item("state", isTurning and "on" or "off")}
+        table.insert(items, item("speed", rpm ~= nil and string.format("%.0f rpm", rpm) or "-"))
+        if spec.systems.pto.enabled ~= false then
+            table.insert(items, item("power", string.format("%.0f kW", spec.ptoPower)))
+            table.insert(items, item("used", pct(spec.ptoUtilization)))
+            table.insert(items, item("engagements", tostring(spec.ptoEngagementCount)))
+        end
+        table.insert(rows, itemsRow("PTO", items))
     end
     local attached = {}
     for _, name in ipairs(collectToolNames(vehicle, {})) do

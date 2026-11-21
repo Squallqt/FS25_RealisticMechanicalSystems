@@ -35,7 +35,6 @@ local URGENCY = RMS_InGameMenuFrame.URGENCY
 local SORT_TEXT_KEYS = {"rms_fleet_sort_deadline", "rms_fleet_sort_name", "rms_fleet_sort_hours"}
 local TRACKED_SORTS = {SORT.DEADLINE, SORT.NAME, SORT.HOURS}
 local UNTRACKED_SORTS = {SORT.NAME, SORT.HOURS}
-local COLOR_SOON = {1.0, 0.55, 0.0, 1.0}
 local COLOR_LATE_TRACK = {0.102, 0.0103, 0.0103, 1.0}
 local GREASING_STATE = {
     done = { value = "rms_grease_hud_done", banner = "rms_fleet_greasing_done" },
@@ -61,15 +60,25 @@ local function getUrgencyColor(urgency)
     if urgency == URGENCY.OVERDUE then
         return RMS_Utils.COLOR.ALERT
     elseif urgency == URGENCY.SOON then
-        return COLOR_SOON
+        return RMS_Breakdowns.COLORS.WARNING
     end
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
----Formats the hours left before a service, or how far past it
-local function formatDeadline(remaining)
-    local key = remaining < 0 and "rms_fleet_overdue" or "rms_fleet_remaining"
-    return string.format(g_i18n:getText(key), g_i18n:formatNumber(math.abs(remaining), 1))
+---Formats a service's progress through its interval
+local function formatServiceProgress(schedule)
+    local values = {}
+    if schedule.interval < math.huge then
+        values[#values + 1] = g_i18n:formatNumber(schedule.used, 1) .. " / " .. RMS_Utils.formatHours(schedule.interval)
+    end
+    if schedule.months ~= nil then
+        values[#values + 1] = g_i18n:formatNumber(schedule.months - schedule.remainingMonths, 0) .. " / "
+            .. RMS_Utils.formatMonths(schedule.months)
+    end
+    if #values == 2 then
+        return string.format(g_i18n:getText("rms_service_either"), values[1], values[2])
+    end
+    return values[1] or ""
 end
 
 ---Returns what every logged service of the machine cost
@@ -109,7 +118,7 @@ local function getGreasingColor(state)
     if state == "late" then
         return RMS_Utils.COLOR.ALERT
     elseif state == "due" then
-        return COLOR_SOON
+        return RMS_Breakdowns.COLORS.WARNING
     end
     return RMS_Utils.COLOR.HIGHLIGHT
 end
@@ -227,12 +236,12 @@ local function buildRow(vehicle, isTracked)
         elseif row.schedule ~= nil and row.schedule.progress >= RMS_InGameMenuFrame.DUE_SOON_RATIO then
             row.urgency = URGENCY.SOON
         end
-        if row.schedule ~= nil and row.schedule.calendarDue then
+        if row.schedule == nil then
+            row.status = ""
+        elseif row.schedule.calendarDue then
             row.status = g_i18n:getText("rms_service_calendar_due")
-        elseif row.remaining >= 0 and row.schedule ~= nil and row.schedule.months ~= nil then
-            row.status = RMS_Utils.formatServiceDeadline(row.schedule)
         else
-            row.status = formatDeadline(row.remaining)
+            row.status = formatServiceProgress(row.schedule)
         end
     end
 
@@ -401,6 +410,8 @@ function RMS_InGameMenuFrame:onFrameOpen()
 
     self.isFrameOpen = true
     self.refreshTimerMs = RMS_InGameMenuFrame.REFRESH_INTERVAL_MS
+    g_messageCenter:subscribe(MessageType.VEHICLE_ADDED, self.onFleetChanged, self)
+    g_messageCenter:subscribe(MessageType.VEHICLE_REMOVED, self.onFleetChanged, self)
     self:updateSubCategoryPages(self.subCategoryState)
     self:updateScreenEdgeSliders()
 end
@@ -408,8 +419,15 @@ end
 ---Called on frame close, applying the changed settings
 function RMS_InGameMenuFrame:onFrameClose()
     self.isFrameOpen = false
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_ADDED, self)
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_REMOVED, self)
     RMS_SettingsPage.applyChanges()
     RMS_InGameMenuFrame:superClass().onFrameClose(self)
+end
+
+---Reloads the rows on the next update
+function RMS_InGameMenuFrame:onFleetChanged()
+    self.refreshTimerMs = 0
 end
 
 ---Called on update, reloading the rows on their interval
@@ -468,7 +486,7 @@ end
 ---Writes the three counters of the fleet
 function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
     local counts = {overdue, soon, servicing}
-    local colors = {RMS_Utils.COLOR.ALERT, COLOR_SOON, RMS_Utils.COLOR.HIGHLIGHT}
+    local colors = {RMS_Utils.COLOR.ALERT, RMS_Breakdowns.COLORS.WARNING, RMS_Utils.COLOR.HIGHLIGHT}
 
     for index, element in ipairs(self.pulseValues) do
         element:setText(tostring(counts[index]))
@@ -779,7 +797,7 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index,
         noteElement:setTextColor(unpack(RMS_Utils.COLOR.ALERT))
     elseif category.soon > 0 then
         noteElement:setText(string.format(g_i18n:getText("rms_fleet_due_soon_count"), category.soon))
-        noteElement:setTextColor(unpack(COLOR_SOON))
+        noteElement:setTextColor(unpack(RMS_Breakdowns.COLORS.WARNING))
     end
     cell:getAttribute("texts"):invalidateLayout()
 end
@@ -1263,7 +1281,7 @@ function RMS_InGameMenuFrame:onTryEnterVehicle()
     end
 end
 
----Returns a leased RMS vehicle through the mod dialog, sells anything else
+---Sells or returns the selected machine through the shop
 function RMS_InGameMenuFrame:onSellSelectedVehicle()
     local vehicle = self:getSelectedVehicle()
     if vehicle == nil then
@@ -1277,21 +1295,7 @@ function RMS_InGameMenuFrame:onSellSelectedVehicle()
         return
     end
 
-    if isTracked and vehicle.propertyState == VehiclePropertyState.LEASED then
-        RMS_SellItemDialog.show(vehicle, self.onRMSSellDialogCallback, self, vehicle)
-        return
-    end
-
     g_shopController:sell(storeItem, vehicle)
-end
-
----Sends the vehicle return once the player confirmed it
-function RMS_InGameMenuFrame:onRMSSellDialogCallback(yes, vehicle)
-    if not yes or vehicle.isDeleted or vehicle.propertyState ~= VehiclePropertyState.LEASED or vehicle:isUnderService() then
-        return
-    end
-
-    g_client:getServerConnection():sendEvent(SellVehicleEvent.new(vehicle, 1, true))
 end
 
 ---Opens the maintenance log of the displayed machine
@@ -1301,7 +1305,7 @@ function RMS_InGameMenuFrame:onShowMaintenanceLog()
         return
     end
 
-    if #row.vehicle.spec_RealisticMechanicalSystems.maintenanceLog > 1 then
+    if #RMS_Utils.getVisibleLogEntries(row.vehicle) > 0 then
         RMS_WorkshopDialog.show(row.vehicle)
     else
         InfoDialog.show(g_i18n:getText("rms_ws_no_log_empty_message"))

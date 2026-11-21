@@ -12,6 +12,15 @@ function RMS_Chart.createOverlays()
     RMS_Chart.disc = g_overlayManager:createOverlay("gui.whiteCircleFilled", 0, 0, 0, 0)
 end
 
+---Deletes the stroke overlays
+function RMS_Chart.deleteOverlays()
+    if RMS_Chart.line ~= nil then
+        RMS_Chart.line:delete()
+        RMS_Chart.disc:delete()
+        RMS_Chart.line, RMS_Chart.disc = nil, nil
+    end
+end
+
 ---Draws a straight stroke between two screen points
 function RMS_Chart.drawLine(x1, y1, x2, y2, thickness, color)
     local overlay = RMS_Chart.line

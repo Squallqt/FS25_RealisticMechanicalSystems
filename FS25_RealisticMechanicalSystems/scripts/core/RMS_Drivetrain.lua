@@ -29,6 +29,7 @@ local LOCKED_MAX_TORQUE_RATIO = 0.9
 local LOCKED_TORQUE_GAIN = 2 -- share/s per relative speed gap
 local LOCKED_GAP_CAP = 0.25
 local LOCKED_MIN_SPEED = 0.1389 -- m/s
+local DIRECTION_CHANGE_SPEED = 0.0003 -- m/ms, below which a pedal changes direction
 local TRACK_STEER_INPUT_EPSILON = 0.001
 local AXLE_RATIO_MIN_SPEED = 0.05
 local AXLE_RATIO_MAX = 99
@@ -39,26 +40,6 @@ local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
 ---Returns the drivetrain settings
 local function getConfig()
     return RMS_Config.DRIVETRAIN
-end
-
----Returns the share of motor torque sent to the driveline
-function RMS_Drivetrain.getDrivelineLoad(vehicle)
-    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    if motor == nil
-            or motor.getMotorAppliedTorque == nil
-            or motor.getMotorExternalTorque == nil
-            or motor.getMotorAvailableTorque == nil then
-        return 0
-    end
-
-    local availableTorque = sanitizeNumber(motor:getMotorAvailableTorque(), 0, 0)
-    if availableTorque <= 0.0001 then
-        return 0
-    end
-
-    local appliedTorque = sanitizeNumber(motor:getMotorAppliedTorque(), 0, 0)
-    local externalTorque = sanitizeNumber(motor:getMotorExternalTorque(), 0, 0)
-    return math.clamp((appliedTorque - externalTorque) / availableTorque, 0, 1)
 end
 
 ---Asks the other drivetrain mod to switch off the functions RMS drives
@@ -240,6 +221,12 @@ local function getIsTwinTrack(vehicle)
     return true
 end
 
+---Tells whether the machine steers by its articulated frame
+local function getIsRigidAllWheelDrive(vehicle)
+    local articulatedAxis = vehicle.spec_articulatedAxis
+    return articulatedAxis ~= nil and articulatedAxis.componentJoint ~= nil
+end
+
 ---Returns the center, primary axle and lockable differentials of a vehicle
 function RMS_Drivetrain.buildLayout(vehicle)
     local spec_motorized = vehicle.spec_motorized
@@ -249,9 +236,11 @@ function RMS_Drivetrain.buildLayout(vehicle)
     end
 
     local isTwinTrack = getIsTwinTrack(vehicle)
+    local isRigidAllWheelDrive = not isTwinTrack and getIsRigidAllWheelDrive(vehicle)
     local layout = {
         differentialCount = #differentials,
         isTwinTrack = isTwinTrack,
+        isRigidAllWheelDrive = isRigidAllWheelDrive,
         isPermanentAllWheelDrive = false,
         originals = {},
         centerIdx0 = nil,
@@ -297,7 +286,7 @@ function RMS_Drivetrain.buildLayout(vehicle)
         end
     end
 
-    if isTwinTrack then
+    if isTwinTrack or isRigidAllWheelDrive then
         layout.centerIdx0 = nil
     end
 
@@ -393,7 +382,8 @@ function RMS_Drivetrain.initSpec(vehicle)
         _parkWarningCooldown = 0,
         _parkStandstillMs = 0,
         _parkWasAIActive = false,
-        _parkGamePedal = 1
+        _parkGamePedal = 1,
+        isDriverBraking = false
     }
 end
 
@@ -450,6 +440,60 @@ local function ensureLayout(vehicle, state)
     return state.layout ~= nil
 end
 
+---Tells whether electronics run the front axle and diff lock
+function RMS_Drivetrain.getHasDriveManagement(vehicle)
+    local C = getConfig()
+    return vehicle.spec_RealisticMechanicalSystems.year >= C.DRIVE_MANAGEMENT_MIN_YEAR
+        and RMS_Drivetrain.getIsInCategories(vehicle, C.DRIVE_MANAGEMENT_CATEGORIES)
+end
+
+---Tells whether the drive mode selector offers AUTO
+function RMS_Drivetrain.getHasAutoMode(vehicle)
+    return RMS_Drivetrain.getHasCenterDifferential(vehicle) and RMS_Drivetrain.getHasDriveManagement(vehicle)
+end
+
+---Keeps whether the driver brakes
+function RMS_Drivetrain.onVehiclePhysicsUpdate(vehicle, brakePedal, automaticBrake, currentSpeed)
+    local state = RMS_Drivetrain.getState(vehicle)
+    if state ~= nil then
+        state.isDriverBraking = not automaticBrake and math.abs(brakePedal) > 0
+            and math.abs(currentSpeed) > DIRECTION_CHANGE_SPEED
+    end
+end
+
+---Tells whether the driver brakes the machine
+local function getIsDriverBraking(vehicle)
+    return RMS_Drivetrain.getState(vehicle).isDriverBraking == true
+end
+
+---Returns the steering angle of the machine, in radians
+local function getSteeringAngle(vehicle)
+    local steerState = vehicle.spec_RealisticMechanicalSystems.chassisSteerState
+    return sanitizeNumber(steerState ~= nil and steerState.angleMagnitude or 0, 0, 0)
+end
+
+---Returns the machine's full steering lock, in radians
+local function getSteeringLock(vehicle)
+    local lock = 0
+    for _, wheel in ipairs(vehicle.spec_wheels ~= nil and vehicle.spec_wheels.wheels or {}) do
+        if RMS_Drivetrain.getIsWheelSteerable(wheel) then
+            lock = math.max(lock, math.abs(tonumber(wheel.physics.rotMax) or 0), math.abs(tonumber(wheel.physics.rotMin) or 0))
+        end
+    end
+    local articulatedAxis = vehicle.spec_articulatedAxis
+    if articulatedAxis ~= nil and articulatedAxis.componentJoint ~= nil then
+        lock = math.max(lock, math.abs(tonumber(articulatedAxis.rotMax) or 0), math.abs(tonumber(articulatedAxis.rotMin) or 0))
+    end
+    return lock
+end
+
+---Returns the steering angle past which a function releases
+local function getSteeringLimit(vehicle, degrees)
+    local limit = math.rad(degrees)
+    local lock = getSteeringLock(vehicle) - math.rad(getConfig().STEERING_LOCK_MARGIN)
+    return lock > 0 and math.min(limit, lock) or limit
+end
+
 ---Tells whether the front axle is driven, the faults counted
 local function getEffectiveFourWheelDrive(vehicle, state)
     if state.layout == nil or state.layout.centerIdx0 == nil then
@@ -460,6 +504,9 @@ local function getEffectiveFourWheelDrive(vehicle, state)
         return true
     elseif effects.FOUR_WD_ENGAGE_FAILURE ~= nil then
         return false
+    end
+    if state.diffLockEngaged and RMS_Drivetrain.getHasDriveManagement(vehicle) then
+        return true
     end
     if state.driveMode == RMS_Drivetrain.MODE.FOUR_WD then
         return true
@@ -1001,9 +1048,6 @@ function RMS_Drivetrain.setDrivetrainState(vehicle, driveMode, diffLockRequested
         diffLockRequested = false
     else
         driveMode = math.clamp(math.floor(tonumber(driveMode) or state.driveMode), 0, 2)
-        if not getConfig().ALLOW_AUTO_MODE and driveMode == RMS_Drivetrain.MODE.AUTO then
-            driveMode = RMS_Drivetrain.MODE.FOUR_WD
-        end
         diffLockRequested = diffLockRequested == true
     end
     if parkBrake == nil then parkBrake = state.parkBrake end
@@ -1043,7 +1087,7 @@ function RMS_Drivetrain.setParkBrake(vehicle, engaged, noEventSend)
     RMS_Drivetrain.setDrivetrainState(vehicle, state.driveMode, state.diffLockRequested, engaged, noEventSend)
 end
 
----Steps to the next drive mode, skipping the automatic one when it is disabled
+---Steps to the next drive mode
 function RMS_Drivetrain.cycleDriveMode(vehicle)
     local state = RMS_Drivetrain.getState(vehicle)
     if state == nil or not state.hasCenterDiff then return end
@@ -1052,7 +1096,7 @@ function RMS_Drivetrain.cycleDriveMode(vehicle)
     if state.driveMode == RMS_Drivetrain.MODE.TWO_WD then
         nextMode = RMS_Drivetrain.MODE.FOUR_WD
     elseif state.driveMode == RMS_Drivetrain.MODE.FOUR_WD then
-        nextMode = getConfig().ALLOW_AUTO_MODE and RMS_Drivetrain.MODE.AUTO or RMS_Drivetrain.MODE.TWO_WD
+        nextMode = RMS_Drivetrain.getHasAutoMode(vehicle) and RMS_Drivetrain.MODE.AUTO or RMS_Drivetrain.MODE.TWO_WD
     else
         nextMode = RMS_Drivetrain.MODE.TWO_WD
     end
@@ -1081,56 +1125,56 @@ function RMS_Drivetrain.toggleParkBrake(vehicle)
     RMS_Drivetrain.setParkBrake(vehicle, not state.parkBrake)
 end
 
----Engages or releases the automatic 4WD on slip and load
-local function updateAutoMode(vehicle, state, spec, dt)
-    if state.driveMode ~= RMS_Drivetrain.MODE.AUTO then return end
+---Engages or releases the front axle in AUTO
+local function updateAutoMode(vehicle, state, dt)
+    if state.driveMode ~= RMS_Drivetrain.MODE.AUTO or not RMS_Drivetrain.getHasAutoMode(vehicle) then return end
 
     local C = getConfig()
     local speed = sanitizeNumber(vehicle:getLastSpeed(), 0, 0, 1000)
-    local slip = sanitizeNumber(spec.wheelSlipIntensity, 0, 0, 3)
-    local motorLoad = sanitizeNumber(spec.dynamicMotorLoad or 0, 0, 0, 1.5)
+    local wantsEngage = getIsDriverBraking(vehicle)
+        or (speed <= C.AUTO_DISENGAGE_SPEED and getSteeringAngle(vehicle) <= getSteeringLimit(vehicle, C.AUTO_DISENGAGE_STEER_ANGLE))
 
-    local wantsEngage = slip > C.AUTO_ENGAGE_SLIP_THRESHOLD
-        or (speed < C.AUTO_ENGAGE_SPEED and motorLoad > C.AUTO_ENGAGE_LOAD_THRESHOLD)
-
-    if state.autoEngaged then
-        local wantsRelease = speed > C.AUTO_DISENGAGE_SPEED and slip < 0.05
-        if wantsRelease then
-            state._autoConditionTimer = state._autoConditionTimer + dt
-            if state._autoConditionTimer >= C.AUTO_HYSTERESIS_MS then
-                state.autoEngaged = false
-                state._autoConditionTimer = 0
-            end
-        else
-            state._autoConditionTimer = 0
-        end
-    else
-        if wantsEngage then
-            state.autoEngaged = true
+    if wantsEngage then
+        state.autoEngaged = true
+        state._autoConditionTimer = 0
+    elseif state.autoEngaged then
+        state._autoConditionTimer = state._autoConditionTimer + dt
+        if state._autoConditionTimer >= C.AUTO_HYSTERESIS_MS then
+            state.autoEngaged = false
             state._autoConditionTimer = 0
         end
     end
 end
 
----Engages or releases the diff lock by its request and the speed
+---Tells whether the diff lock may hold
+local function getCanHoldDiffLock(vehicle)
+    local C = getConfig()
+    local speed = sanitizeNumber(vehicle:getLastSpeed(), 0, 0, 1000)
+    if not RMS_Drivetrain.getHasDriveManagement(vehicle) then
+        return speed <= DIFF_LOCK_RELEASE_KMH
+    end
+    return speed <= C.DIFF_LOCK_RELEASE_SPEED
+        and getSteeringAngle(vehicle) <= getSteeringLimit(vehicle, C.DIFF_LOCK_RELEASE_STEER_ANGLE)
+        and not getIsDriverBraking(vehicle)
+end
+
+---Engages or releases the diff lock
 local function updateDiffLockState(vehicle, state)
     local effects = vehicle.spec_RealisticMechanicalSystems.activeEffects
     if effects.DIFF_LOCK_STUCK_ENGAGED ~= nil or effects.DIFF_LOCK_ENGAGE_FAILURE ~= nil then
         state.diffLockEngaged = effects.DIFF_LOCK_STUCK_ENGAGED ~= nil
         return
     end
-    local speed = sanitizeNumber(vehicle:getLastSpeed(), 0, 0, 1000)
 
     if state.diffLockRequested then
+        local canHold = getCanHoldDiffLock(vehicle)
         if state.diffLockEngaged then
-            if speed > DIFF_LOCK_RELEASE_KMH then
+            if not canHold then
                 state.diffLockEngaged = false
                 RMS_Drivetrain.setDrivetrainState(vehicle, state.driveMode, false, state.parkBrake, false)
             end
-        else
-            if speed <= DIFF_LOCK_RELEASE_KMH then
-                state.diffLockEngaged = true
-            end
+        elseif canHold then
+            state.diffLockEngaged = true
         end
     else
         state.diffLockEngaged = false
@@ -1153,6 +1197,7 @@ end
 local function updateWindupModel(vehicle, state, spec, dt)
     local C = getConfig()
     local fourWheelDrive = state.layout ~= nil and state.layout.centerIdx0 ~= nil and getEffectiveFourWheelDrive(vehicle, state)
+        and (state.driveMode ~= RMS_Drivetrain.MODE.AUTO or spec.activeEffects.FOUR_WD_STUCK_ENGAGED ~= nil)
     local windupFactor = 0
 
     if state.diffLockEngaged then
@@ -1236,29 +1281,16 @@ local function updateLocalNotifications(vehicle, state, dt)
         and not vehicle:getIsAIActive()
     if not isControlled then
         state._lastNotifiedMode = state.driveMode
-        state._lastNotifiedAutoEngaged = state.autoEngaged
         state._lastNotifiedLock = state.diffLockEngaged
         return
     end
 
-    local driveModeChanged = state._lastNotifiedMode ~= state.driveMode
-    if driveModeChanged then
+    if state._lastNotifiedMode ~= state.driveMode then
         if state._lastNotifiedMode ~= nil then
             local modeText = g_i18n:getText(RMS_Drivetrain.MODE_L10N[state.driveMode] or "rms_drivetrain_mode_4wd")
             g_currentMission.hud:addSideNotification({1, 1, 1, 1}, string.format(g_i18n:getText("rms_drivetrain_notify_mode"), modeText))
         end
         state._lastNotifiedMode = state.driveMode
-    end
-
-    if driveModeChanged or state.driveMode ~= RMS_Drivetrain.MODE.AUTO then
-        state._lastNotifiedAutoEngaged = state.autoEngaged
-    elseif state._lastNotifiedAutoEngaged ~= state.autoEngaged then
-        if state._lastNotifiedAutoEngaged ~= nil then
-            local modeKey = state.autoEngaged and "rms_drivetrain_mode_4wd" or "rms_drivetrain_mode_4x2"
-            local modeText = g_i18n:getText(modeKey)
-            g_currentMission.hud:addSideNotification({1, 1, 1, 1}, string.format(g_i18n:getText("rms_drivetrain_notify_mode"), modeText))
-        end
-        state._lastNotifiedAutoEngaged = state.autoEngaged
     end
 
     if state._lastNotifiedLock ~= state.diffLockEngaged then
@@ -1398,10 +1430,6 @@ local function updateManagedGraph(vehicle, state, spec, dt)
         return
     end
 
-    if state.driveMode == RMS_Drivetrain.MODE.AUTO and not getConfig().ALLOW_AUTO_MODE then
-        RMS_Drivetrain.setDrivetrainState(vehicle, RMS_Drivetrain.MODE.FOUR_WD, state.diffLockRequested, state.parkBrake, false)
-    end
-
     local isAddedToPhysics = vehicle.isAddedToPhysics == true
     local physicsRestored = isAddedToPhysics and not state._wasAddedToPhysics
     state._wasAddedToPhysics = isAddedToPhysics
@@ -1411,7 +1439,7 @@ local function updateManagedGraph(vehicle, state, spec, dt)
     local prevWindupActive = state.windupActive
     local prevWindupQuantized = math.floor(sanitizeNumber(state.windupStress, 0, 0, 1) * 255 + 0.5)
 
-    updateAutoMode(vehicle, state, spec, dt)
+    updateAutoMode(vehicle, state, dt)
     updateDiffLockState(vehicle, state)
     updateWindupModel(vehicle, state, spec, dt)
     RMS_Drivetrain.applyState(vehicle, physicsRestored)

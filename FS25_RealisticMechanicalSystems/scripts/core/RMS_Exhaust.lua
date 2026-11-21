@@ -2428,12 +2428,6 @@ local function getConvectionRise(state, lineTemperature)
     return math.max(lineTemperature - state.ambientC, 0) * RMS_Config.EXHAUST.HEAT.CONVECTION_SHARE
 end
 
----Tells whether the air a stopped line heats shimmers in sight
-local function getIsConvectionShown(state, lineTemperature)
-    return getIsHeatInSight(state)
-        and RMS_Exhaust.getHeatDeflection(getConvectionRise(state, lineTemperature), state.ambientC) > RMS_Config.EXHAUST.HEAT.MIN_DEFLECTION
-end
-
 ---Tells whether a stopped machine shimmers in sight of the camera
 function RMS_Exhaust.getIsStoppedHeatInSight(vehicle)
     local state = vehicle.spec_RealisticMechanicalSystems.exhaustSmoke
@@ -2442,25 +2436,30 @@ function RMS_Exhaust.getIsStoppedHeatInSight(vehicle)
     end
 
     state.cameraX, state.cameraY, state.cameraZ = getWorldTranslation(getCamera())
+    if not getIsHeatInSight(state) then
+        return false
+    end
+
     local worldTime = RMS_Thermal.getWorldTimeMS()
     local stoppedDt = 0
     if worldTime ~= nil and state.lineWorldTime ~= nil then
         stoppedDt = math.max(worldTime - state.lineWorldTime, 0)
     end
 
-    return getIsConvectionShown(state, RMS_Exhaust.calculateLineTemperature({
+    local lineTemperature = RMS_Exhaust.calculateLineTemperature({
         currentTemperature = state.gasTemperature,
         ambientTemperature = state.ambientC,
         isMotorStarted = false,
         stoppedDt = stoppedDt
-    }))
+    })
+    return RMS_Exhaust.getHeatDeflection(getConvectionRise(state, lineTemperature), state.ambientC) > RMS_Config.EXHAUST.HEAT.MIN_DEFLECTION
 end
 
 ---Emits the air the line of a stopped engine heats, rising from the outlet
 local function emitConvection(vehicle, state, dt)
     local deltaT = getConvectionRise(state, state.gasTemperature)
     state.heatDeflection = RMS_Exhaust.getHeatDeflection(deltaT, state.ambientC)
-    if not getIsConvectionShown(state, state.gasTemperature) then
+    if not (state.heatDeflection > RMS_Config.EXHAUST.HEAT.MIN_DEFLECTION and getIsHeatInSight(state)) then
         return false
     end
 

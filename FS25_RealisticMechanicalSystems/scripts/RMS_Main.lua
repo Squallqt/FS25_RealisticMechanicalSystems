@@ -146,6 +146,7 @@ source(g_currentModDirectory .. "scripts/RMS_DebugReading.lua")
 source(g_currentModDirectory .. "scripts/RMS_DebugWindow.lua")
 source(g_currentModDirectory .. "scripts/RMS_Leasing.lua")
 source(g_currentModDirectory .. "scripts/RMS_Tutorial.lua")
+source(g_currentModDirectory .. "scripts/RMS_HudLayout.lua")
 source(g_currentModDirectory .. "scripts/RMS_Hud.lua")
 source(g_currentModDirectory .. "scripts/RMS_PlayerInput.lua")
 source(g_currentModDirectory .. "events/RMS_VehicleChangeStatusEvent.lua")
@@ -280,23 +281,15 @@ function RMS_Main:onStartMission()
 end
 
 
----Refreshes the native trigger cards when an RMS dealer payment changes
-function RMS_Main.refreshWorkshopResalePrices(screen, dt)
-    screen.rmsResaleRefreshTimer = (screen.rmsResaleRefreshTimer or 0) + dt
-    if screen.rmsResaleRefreshTimer < 250 then
-        return
-    end
-    screen.rmsResaleRefreshTimer = 0
-    screen.rmsResaleValues = screen.rmsResaleValues or setmetatable({}, {__mode = "k"})
-    for _, vehicle in ipairs(screen.vehicles or {}) do
-        local spec = vehicle.spec_RealisticMechanicalSystems
-        if spec ~= nil and not spec.isExcludedVehicle then
-            local value = RMS_Utils.getResaleValue(vehicle, true)
-            if screen.rmsResaleValues[vehicle] ~= value then
-                screen.rmsResaleValues[vehicle] = value
-                screen.needsListReload = true
-            end
-        end
+---Watches the resale payments of the workshop list
+function RMS_Main.subscribeWorkshopResale(screen)
+    g_messageCenter:subscribe(MessageType.RMS_VEHICLE_RESALE_CHANGED, RMS_Main.onWorkshopResaleChanged, screen)
+end
+
+---Reloads the workshop list on a payment change
+function RMS_Main.onWorkshopResaleChanged(screen, vehicle)
+    if table.hasElement(screen.vehicles, vehicle) then
+        screen.needsListReload = true
     end
 end
 
@@ -334,63 +327,22 @@ function RMS_Main.hookRepairButton(screenInstance, vehicle)
 end
 
 
----Returns the game's repaint button, found by its callback, nil when it is not unique
-function RMS_Main.findNativeRepaintButton(screenInstance)
-    if screenInstance.rmsNativeRepaintButton ~= nil then
-        return screenInstance.rmsNativeRepaintButton
-    end
-
-    local callbacks = {}
-    for name, callback in pairs(WorkshopScreen) do
-        if type(name) == "string" and string.find(string.lower(name), "repaint", 1, true)
-            and type(callback) == "function" then
-            callbacks[callback] = true
-        end
-    end
-
-    local button = nil
-    for _, element in ipairs(screenInstance:getDescendants()) do
-        if element.target == screenInstance and callbacks[element.onClickCallback] then
-            if button ~= nil then
-                return nil
-            end
-            button = element
-        end
-    end
-
-    if button ~= nil then
-        screenInstance.rmsNativeRepaintButton = button
-        screenInstance.rmsOriginalRepaintCallback = button.onClickCallback
-    end
-    return button
-end
-
-
 ---Redirects the game's repaint button to the bodywork dialog on a machine RMS manages
 function RMS_Main.hookRepaintButton(screenInstance, vehicle)
-    local button = RMS_Main.findNativeRepaintButton(screenInstance)
-    if button == nil then
-        if vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
-            and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
-            and not screenInstance.rmsRepaintHookWarningShown then
-            Logging.warning("RMS: Native workshop repaint callback could not be identified; RMS repaint is blocked on this screen")
-            screenInstance.rmsRepaintHookWarningShown = true
-        end
+    local button = screenInstance.repaintButton
+    if screenInstance.rmsOriginalRepaintCallback == nil and button.onClickCallback ~= nil then
+        screenInstance.rmsOriginalRepaintCallback = button.onClickCallback
+    end
+    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
+    if spec == nil or spec.isExcludedVehicle or RealisticMechanicalSystems.isMissionVehicle(vehicle) then
+        button.onClickCallback = screenInstance.rmsOriginalRepaintCallback
         return
     end
-
-    local isRmsVehicle = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems ~= nil
-        and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
-        and not RealisticMechanicalSystems.isMissionVehicle(vehicle)
-    if isRmsVehicle then
-        button.onClickCallback = function()
-            RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance), RealisticMechanicalSystems.STATUS.BODYWORK)
-        end
-        button:setText(g_i18n:getText("button_repaint"))
-        button:setDisabled(screenInstance.isMobileWorkshop == true)
-    else
-        button.onClickCallback = screenInstance.rmsOriginalRepaintCallback
+    button.onClickCallback = function()
+        RMS_WorkshopDialog.show(screenInstance.vehicle, RMS_Main.getWorkshopType(screenInstance), RealisticMechanicalSystems.STATUS.BODYWORK)
     end
+    button:setText(g_i18n:getText("button_repaint"))
+    button:setDisabled(screenInstance.isMobileWorkshop == true)
 end
 
 
@@ -755,7 +707,7 @@ FSBaseMission.sendInitialClientState = Utils.appendedFunction(FSBaseMission.send
         RMS_TutorialStateEvent.sendToClient(connection)
     end
 end)
-WorkshopScreen.update = Utils.appendedFunction(WorkshopScreen.update, RMS_Main.refreshWorkshopResalePrices)
+WorkshopScreen.onOpen = Utils.appendedFunction(WorkshopScreen.onOpen, RMS_Main.subscribeWorkshopResale)
 LoadTrigger.update = Utils.overwrittenFunction(LoadTrigger.update, function(trigger, superFunc, dt)
     RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
 end)
@@ -898,7 +850,7 @@ end
 ---Steps a tracked machine, its weather and shelter on the meta interval
 function RMS_Main:stepVehicle(vehicle)
     local step = RMS_Config.CORE_UPDATE_DELAY
-    vehicle:rmsUpdate(step, self.isWorkshopOpen)
+    vehicle:rmsUpdate(step)
 
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.metaUpdateTimer = spec.metaUpdateTimer + step
@@ -1003,6 +955,7 @@ function RMS_Main:deleteMap()
     g_messageCenter:unsubscribe(MessageType.PERIOD_CHANGED, self)
     g_messageCenter:unsubscribe(MessageType.DAY_CHANGED, self)
     g_messageCenter:unsubscribe(MessageType.HOUR_CHANGED, self)
+    RMS_Gui.deleteScreens()
     RMS_Gui.unloadResources()
     RMS_Config._loaded = nil
     RMS_Config.resetTutorialStateSession()

@@ -255,6 +255,155 @@ function RMS_Utils.hasPtoOutputCapability(vehicle)
     return next(ptoSpec.outputPowerTakeOffs) ~= nil
 end
 
+local GRAIN_HEADER_DRIVE_RPM = 490
+local FORAGE_HEADER_DRIVE_RPM = { maize = 400, direct = 750, pickup = 595 }
+local ptoDisplayProfiles = setmetatable({}, { __mode = "k" })
+
+---Tells whether the vehicle drives its mowers
+function RMS_Utils.getIsSelfPropelledMower(vehicle)
+    return vehicle.typeName == "selfPropelledMower"
+end
+
+---Tells whether the PTO system wears
+function RMS_Utils.getHasWearablePto(vehicle)
+    return RMS_Utils.hasPtoOutputCapability(vehicle) and not RMS_Utils.getIsSelfPropelledMower(vehicle)
+        and (vehicle.spec_combine == nil or RMS_Drivetrain.getHarvestKind(vehicle) == nil)
+end
+
+---Returns the nominal speed of a forage header
+local function getForageHeaderDriveRpm(cutter)
+    local workArea = cutter.spec_workArea
+    for _, area in ipairs(workArea ~= nil and workArea.workAreas or {}) do
+        if area.functionName == "processPickupCutterArea" then
+            return FORAGE_HEADER_DRIVE_RPM.pickup
+        end
+    end
+    local spec = cutter.spec_cutter
+    if spec.fruitTypeIndices ~= nil then
+        local maize = g_fruitTypeManager:getFruitTypeByName("MAIZE")
+        if maize ~= nil and table.hasElement(spec.fruitTypeIndices, maize.index) then
+            return FORAGE_HEADER_DRIVE_RPM.maize
+        end
+        if spec.allowsForageGrowthState then
+            return FORAGE_HEADER_DRIVE_RPM.direct
+        end
+    end
+    return nil
+end
+
+---Returns the fixed properties of the PTO display
+local function getPtoDisplayProfile(vehicle)
+    local profile = ptoDisplayProfiles[vehicle]
+    if profile == nil then
+        local kind = vehicle.spec_combine ~= nil and RMS_Drivetrain.getHarvestKind(vehicle) or nil
+        profile = { kind = kind, mower = RMS_Utils.getIsSelfPropelledMower(vehicle) }
+        if kind == "grain" then
+            profile.headerRpm = vehicle.spec_cutter == nil and GRAIN_HEADER_DRIVE_RPM or nil
+        elseif vehicle.spec_cutter ~= nil then
+            profile.headerRpm = getForageHeaderDriveRpm(vehicle)
+        end
+        ptoDisplayProfiles[vehicle] = profile
+    end
+    return profile
+end
+
+---Tells whether the dashboard has a screen
+function RMS_Utils.getHasDashboardScreen(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    return spec ~= nil and (spec.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(vehicle))
+end
+
+---Returns the attached combine module that drives a header
+local function getAttachedCombineDrive(vehicle)
+    local joints = vehicle.spec_attacherJoints
+    if joints ~= nil then
+        for _, implement in ipairs(joints.attachedImplements or {}) do
+            local object = implement.object
+            if object ~= nil and object.spec_combine ~= nil and object.spec_motorized == nil
+                and RMS_Utils.hasPtoOutputCapability(object) then
+                return object
+            end
+        end
+    end
+    return nil
+end
+
+---Tells whether the vehicle shows a PTO reading
+function RMS_Utils.getHasPtoDisplay(vehicle)
+    local profile = getPtoDisplayProfile(vehicle)
+    return profile.kind == "grain" or profile.kind == "forage" or profile.mower or RMS_Utils.hasPtoOutputCapability(vehicle)
+        or getAttachedCombineDrive(vehicle) ~= nil
+end
+
+---Returns the reading of the connected PTO chain
+local function getConnectedPtoDisplay(vehicle, profile)
+    local active, rpm = false, nil
+    local outputs = vehicle.spec_powerTakeOffs ~= nil and vehicle.spec_powerTakeOffs.outputPowerTakeOffs or nil
+    for _, output in ipairs(outputs or {}) do
+        local tool = output.connectedVehicle
+        if tool ~= nil and output.connectedInput ~= nil then
+            if profile.front == nil then
+                profile.front = RMS_Utils.getFrontPtoOutput(vehicle, true) or false
+            end
+            local rating, family = RMS_Greasing.getImplementPtoRating(tool, output == profile.front)
+            local isTurning = output.isActive == true
+            if family == "ptoPassThrough" then
+                isTurning, rating = getConnectedPtoDisplay(tool, getPtoDisplayProfile(tool))
+            elseif tool.getIsPowerTakeOffActive ~= nil then
+                isTurning = tool.isActive and tool:getIsPowerTakeOffActive()
+            end
+            if isTurning then
+                active = true
+                if rating ~= nil then
+                    rpm = math.max(rpm or 0, rating)
+                end
+            end
+        end
+    end
+    return active, not active and 0 or rpm
+end
+
+---Returns the running state and the nominal tool speed
+-- @return boolean active the shaft is turning
+-- @return float? rpm nil when no rating is available
+function RMS_Utils.getPtoDisplay(vehicle)
+    local profile = getPtoDisplayProfile(vehicle)
+    local isHeader = profile.kind == "grain" or profile.kind == "forage"
+    local nominal = profile.headerRpm
+    local isMotorStarted = vehicle.getIsMotorStarted ~= nil and vehicle:getIsMotorStarted()
+    if profile.mower or profile.kind == "grain" and vehicle.spec_cutter ~= nil then
+        local active = isMotorStarted and vehicle:getIsTurnedOn()
+        return active, not active and 0 or nominal
+    end
+    if isHeader then
+        local active, rpm = false, nil
+        for cutter in pairs(vehicle.spec_combine.attachedCutters or {}) do
+            local rating = nominal
+            if profile.kind == "forage" then
+                rating = getPtoDisplayProfile(cutter).headerRpm
+            end
+            if isMotorStarted and cutter.getIsTurnedOn ~= nil and cutter:getIsTurnedOn() then
+                active = true
+                if rating ~= nil then
+                    rpm = math.max(rpm or 0, rating)
+                end
+            end
+        end
+        if active then
+            return true, rpm
+        end
+        return false, 0
+    end
+    if not isMotorStarted then
+        return false, 0
+    end
+    local module = getAttachedCombineDrive(vehicle)
+    if module ~= nil then
+        return getConnectedPtoDisplay(module, getPtoDisplayProfile(module))
+    end
+    return getConnectedPtoDisplay(vehicle, profile)
+end
+
 ---Tells whether an attacher joint lifts hydraulically
 function RMS_Utils.getIsHydraulicLiftJoint(jointDesc)
     if type(jointDesc) ~= "table" then
@@ -530,9 +679,9 @@ function RMS_Utils.getIsLoaderMovingTool(tool)
 end
 
 ---Returns the PTO output of the front hitches, nil without one
-function RMS_Utils.getFrontPtoOutput(vehicle)
+function RMS_Utils.getFrontPtoOutput(vehicle, includeSingle)
     local outputs = vehicle.getOutputPowerTakeOffs ~= nil and vehicle:getOutputPowerTakeOffs() or nil
-    if outputs == nil or #outputs < 2 then
+    if outputs == nil or #outputs == 0 or #outputs < 2 and not includeSingle then
         return nil
     end
 
@@ -1500,13 +1649,13 @@ function RMS_Utils.getOdometerKilometers(vehicle)
     return kilometers
 end
 
----Returns an odometer reading, not recorded without one
+---Returns an odometer reading in the game's unit
 function RMS_Utils.formatOdometerKilometers(kilometers)
     kilometers = tonumber(kilometers)
     if kilometers == nil or kilometers ~= kilometers or kilometers < 0 or kilometers == math.huge then
         return g_i18n:getText("rms_odometer_not_recorded")
     end
-    return g_i18n:formatNumber(kilometers, 1) .. " km"
+    return g_i18n:formatNumber(g_i18n:getDistance(kilometers), 1) .. " " .. g_i18n:getMeasuringUnit()
 end
 
 
@@ -1715,6 +1864,9 @@ RMS_Utils.COLOR = {
     TEXT = {0.89627, 0.92158, 0.81485, 1.0},
     HIGHLIGHT = {0.22323, 0.40724, 0.00368, 1.0},
     TEXT_DIM = {0.5, 0.5, 0.5, 1.0},
+    QUOTE_LINE = {0.5028, 0.5028, 0.5028, 1.0},
+    DISABLED = {0.3, 0.3, 0.3, 1.0},
+    MAIN_DARK = {0.00439, 0.00478, 0.00368, 1.0},
     ALERT = {0.88, 0.18, 0.18, 1.0},
     RING_TRACK = {0.04374, 0.04374, 0.04374, 1.0},
     STAGE = {
