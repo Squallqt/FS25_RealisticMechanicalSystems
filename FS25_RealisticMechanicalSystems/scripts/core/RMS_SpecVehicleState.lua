@@ -846,12 +846,10 @@ local function updatePtoState(vehicle)
     local newEngagementCount = RMS_Utils.getPtoEngagementTransitionCount(ptoData.activeLinks, previousActiveLinks)
     if newEngagementCount > 0 then
         spec.ptoEngagementCount = (tonumber(spec.ptoEngagementCount) or 0) + newEngagementCount
-        spec.ptoEngagementSequence = (tonumber(spec.ptoEngagementSequence) or 0) + newEngagementCount
         local rpmShare = vehicle:getIsAIActive() and 0 or spec.ptoLastRpmShare
         local damage, isShock = RMS_Utils.getPtoEngagementDamage(vehicle, ptoData.engagementTorques, previousActiveLinks, rpmShare)
         spec.ptoEngagementDamage = (tonumber(spec.ptoEngagementDamage) or 0) + damage
         if isShock then
-            spec.ptoShockSequence = (tonumber(spec.ptoShockSequence) or 0) + 1
             spec.isPtoEngagementShock = true
         end
     end
@@ -890,7 +888,6 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
         updateStarterState(self)
         updateWheelSlip(self)
         updateChassisVibState(self, delayTwo)
-        RMS_Steering.updateTutorialTimers(self, delayTwo)
         updateChassisSteeringState(self, delayTwo)
         updateChassisBrakingState(self)
     end

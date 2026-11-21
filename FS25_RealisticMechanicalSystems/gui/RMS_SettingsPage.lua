@@ -22,9 +22,8 @@ local function hasWorkshopHours(values)
 end
 
 local SETTINGS = {
-    { row = "rmsTutorialMode", key = "tutorialMode", field = "TUTORIAL_MODE", isPersonal = true },
     { row = "rmsWarningMessages", key = "enableWarningMessages", group = "CORE", field = "ENABLE_WARNING_MESSAGES" },
-    { row = "rmsDebugWindow", key = "debugWindow", isPersonal = true, isAdminOnly = true },
+    { row = "rmsDebugWindow", key = "debugWindow", isPersonal = true },
     { row = "rmsDebugLog", key = "debugLog", field = "DEBUG" },
     { row = "rmsServiceWear", key = "baseServiceWear", group = "CORE", field = "BASE_SERVICE_WEAR", intervalWear = 0.5,
         hours = listHours({ { 1, 20, 1 }, { 22, 50, 2 }, { 55, 100, 5 }, { 200, 1000, 100 } }) },
@@ -102,15 +101,13 @@ local function updateRowLocks(page)
     local isAdmin = getIsAdmin()
     local pending = RMS_SettingsPage.pending
     for option, setting in pairs(page.rmsSettings) do
-        if not setting.isPersonal or setting.isAdminOnly then
-            local reason
-            if not isAdmin then
-                reason = "rms_settings_admin_required"
-            elseif setting.isNeeded ~= nil and not setting.isNeeded(pending) then
-                reason = setting.lockReason
-            end
-            setRowLock(option, reason)
+        local reason
+        if not isAdmin then
+            reason = "rms_settings_admin_required"
+        elseif setting.isNeeded ~= nil and not setting.isNeeded(pending) then
+            reason = setting.lockReason
         end
+        setRowLock(option, reason)
     end
 end
 
@@ -213,9 +210,6 @@ function RMS_SettingsPage.applyChanges()
         end
     end
 
-    if changed.tutorialMode then
-        RMS_Config.syncTutorialState()
-    end
     if changed.debugWindow then
         RMS_DebugWindow.setOpen(pending.debugWindow, true)
     end
@@ -251,20 +245,6 @@ function RMS_InGameMenuFrame:onClickRmsOption(state, option)
         updateServiceTooltip(self)
     end
     updateRowLocks(self)
-end
-
----Asks to confirm clearing the seen tutorial messages
-function RMS_InGameMenuFrame:onClickRmsResetTutorialTips()
-    YesNoDialog.show(self.onYesNoResetTutorialTips, self, g_i18n:getText("rms_tutorialResetConfirm_message"),
-        g_i18n:getText("rms_tutorialResetConfirm_title"))
-end
-
----Clears the seen tutorial messages once confirmed
-function RMS_InGameMenuFrame:onYesNoResetTutorialTips(yes)
-    if yes then
-        RMS_Config.resetTutorialMessages()
-        RMS_Config.syncTutorialState()
-    end
 end
 
 ---Called on click on a padlock, which only shows the reason

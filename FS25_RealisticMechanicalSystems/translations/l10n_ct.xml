@@ -29,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s：%s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="進行作業前檢查"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="確定"/>
         <text name="input_RMS_TOGGLE_4WD" text="驅動模式"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="差速鎖"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="駐車煞車"/>
@@ -78,13 +77,6 @@
         <text name="rms_vehicleLifespan_tooltip" text="設定機具狀況降至0%所需的運作小時數；越接近此時數，機具越不可靠，價值也越低。變更自此刻起生效：機具保持目前狀況，僅重新計算價值。"/>
         <text name="rms_exhaustSmokeEnabled_label" text="排氣煙霧"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="設定排氣煙霧是否隨發動機實際狀態變化：缺氣時為黑色，燒機油時為藍色，燃油未燃燒就排出時為白色，負荷增大時更濃。舊機器的煙霧遠多於現代機器。"/>
-        <text name="rms_tutorialMode_label" text="教學模式"/>
-        <text name="rms_tutorialMode_tooltip" text="設定是否在遊戲中顯示教學提示。"/>
-        <text name="rms_tutorialResetTips_label" text="重設提示"/>
-        <text name="rms_tutorialResetTips_text" text="重設"/>
-        <text name="rms_tutorialResetTips_tooltip" text="重設教學提示記錄：所有提示都會重新顯示。"/>
-        <text name="rms_tutorialResetConfirm_title" text="重設教學提示？"/>
-        <text name="rms_tutorialResetConfirm_message" text="是否重設教學提示紀錄並再次顯示所有提示？"/>
         <text name="rms_drivetrainEnabled_label" text="四輪驅動與差速鎖管理"/>
         <text name="rms_drivetrainEnabled_tooltip" text="設定是否手動控制拖拉機的驅動前軸和差速鎖。此選項取代Enhanced Vehicle的差速器控制；如需交還，關閉此選項，再在其選單中重新啟用差速器。"/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="駐車煞車"/>
@@ -612,6 +604,23 @@
         <text name="rms_report_wear_harvest_rice" text="收穫水稻"/>
         <text name="rms_report_wear_harvest_wet" text="作物過濕"/>
         <text name="rms_report_wear_header_starts" text="割台啟動次數"/>
+        <text name="rms_report_wear_service_overdue" text="保養間隔已超期"/>
+        <text name="rms_report_wear_engine_overload" text="發動機過載"/>
+        <text name="rms_report_wear_cold_engine" text="發動機溫度低"/>
+        <text name="rms_report_wear_fluid_level" text="油液液位過低"/>
+        <text name="rms_report_wear_engine_overheat" text="發動機過熱"/>
+        <text name="rms_report_wear_lugging" text="發動機低轉速重負荷"/>
+        <text name="rms_report_wear_wheel_slip" text="車輪打滑"/>
+        <text name="rms_report_wear_drivetrain_windup" text="傳動系統應力"/>
+        <text name="rms_report_wear_cold_oil" text="變速箱油溫低"/>
+        <text name="rms_report_wear_transmission_overheat" text="變速箱過熱"/>
+        <text name="rms_report_wear_wet_weather" text="濕度高的天氣"/>
+        <text name="rms_report_wear_cranking" text="頻繁啟動"/>
+        <text name="rms_report_wear_steering" text="原地轉向"/>
+        <text name="rms_report_wear_park_brake" text="駐車煞車"/>
+        <text name="rms_report_wear_low_fuel" text="燃油餘量低"/>
+        <text name="rms_report_wear_idle_deposit" text="長時間空轉"/>
+        <text name="rms_report_wear_pto_engagement" text="動力輸出軸接合"/>
         <text name="rms_report_component_title" text="零組件"/>
         <text name="rms_report_system_condition_transmission" text="變速箱"/>
         <text name="rms_report_system_condition_power" text="目前功率"/>
@@ -978,98 +987,8 @@
         <text name="rms_sell_dialog_repair_penalty" text="修理"/>
         <text name="rms_sell_dialog_washing_penalty" text="清洗"/>
         <text name="rms_sell_dialog_deposit_refund" text="押金退還"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="油液液位過低"/>
-        <text name="rms_tutorial_fluid_level_message" text="這台機器的某種液體已低於其液位表的標記。機油會隨運轉小時數減少，磨損的發動機減少得更快；其他液體只會因外流而減少。&#10;&#10;機器仍能正常工作，但液位越低，油泵在坡道上越容易吸入空氣：每這樣運轉一分鐘都會損傷軸瓦或油泵。冷卻液、變速箱油或液壓油不足時，回路溫度也會升高。&#10;&#10;請用在商店購買的、該回路專用液體的容器補充：任何其他液體都會污染該回路。經銷商也可以補充。"/>
-        <text name="rms_tutorial_welcome_dialog_title" text="歡迎使用Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="停用提示"/>
-        <text name="rms_tutorial_welcome_enable_button" text="啟用提示"/>
-        <text name="rms_tutorial_welcome_message" text="此模組全面重製了遊戲中的機具損壞與保養系統。改動很多，因此教學提示會不時出現，幫助更快理解新機制、避免常見錯誤並防止機器發生故障。&#10;&#10;如果需要，現在可以停用教學提示。以後仍可在模組設定的Realistic Mechanical Systems部分重新啟用。"/>
-        <text name="rms_tutorial_wet_weather_title" text="濕度高的天氣"/>
-        <text name="rms_tutorial_wet_weather_message" text="濕氣會損壞線束和電氣設備。機器停在室外並遭遇雨、雪或冰雹時，電氣系統的磨損會略微增加。"/>
-        <text name="rms_tutorial_wheel_slip_title" text="車輪打滑"/>
-        <text name="rms_tutorial_wheel_slip_message" text="車輪正在嚴重打滑。打滑是對變速箱破壞最大的因素之一，會明顯提前下次前往維修廠的時間。"/>
-        <text name="rms_tutorial_service_due_soon_title" text="即將需要保養"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s即將需要保養。請在車間選擇推薦套餐，它包括到期作業。運轉小時數或日曆期限先到者觸發保養，即使車輛很少使用也一樣。保養便利性表示您的農場能自行修理哪些項目；保養仍可在移動車間進行。"/>
-        <text name="rms_tutorial_service_interval_expired_title" text="保養間隔已超期"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s的保養間隔已超期。&#10;&#10;請盡快前往維修廠並選擇「保養」。繼續使用保養逾期的機具會大幅增加同時發生多個故障的風險。"/>
-        <text name="rms_tutorial_steering_title" text="原地轉向"/>
-        <text name="rms_tutorial_steering_message" text="應避免原地轉向。這會給轉向機構和前軸零組件施加很大負載，增加行走裝置的磨損。&#10;&#10;請先稍微向前移動再轉向，車輪會更容易轉動。"/>
-        <text name="rms_tutorial_cooling_air_check_title" text="冷卻系統與空氣濾清器"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="散熱器或空氣濾清器已堵塞。看向機具時按住%s鍵，確認是哪個部件。使用壓縮空氣吹風機清潔。如果濾清器無法繼續吹掃清潔，維修廠從%s保養起將其更換。"/>
-        <text name="rms_tutorial_needs_lubrication_title" text="需要加注黃油"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s有黃油嘴需要加注黃油。&#10;&#10;在RMS中，每台機具都有各自的黃油嘴。每個作業日需要再次加注，其中一些則每隔幾個作業日加注一次。加注延誤會加快底盤磨損。&#10;&#10;在商店購買黃油加注器和黃油筒。手持加注器，站在油筒前進行裝填，再對準機具：每次點擊為一個黃油嘴加注，按住滑鼠按鈕可繼續為後續黃油嘴加注。&#10;&#10;要查看剩餘待加注黃油嘴，看向機具時按住%s鍵。"/>
-        <text name="rms_tutorial_needs_repair_title" text="檢測到故障"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s出現了問題，其中一個零組件可能已經失效。&#10;&#10;請前往維修廠：檢查，或到期的保養，可以確認故障。不要拖延：故障可能繼續加重，修理費用也會隨之增加。&#10;&#10;故障確認後，請在維修廠進行修理。"/>
-        <text name="rms_tutorial_needs_overhaul_title" text="需要大修"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s已經顯現老化跡象。現在應考慮更換或大修。這項作業耗時久、費用高，但只有這樣才能使機器恢復原有狀況。&#10;&#10;機具使用期限可在模組設定中調整：數值越高，機具磨損越慢。"/>
-        <text name="rms_tutorial_needs_preventive_title" text="故障風險升高"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s的磨損零件正在提高故障風險。&#10;&#10;%s保養：調整氣門，並在收穫機上更換磨損的收穫部件，從而降低這一風險。"/>
-        <text name="rms_tutorial_age_degradation_title" text="老化導致的退化"/>
-        <text name="rms_tutorial_age_degradation_message" text="在RMS中，機具會隨使用年限增加而逐漸失去一部分原有性能。&#10;&#10;達到約三分之一使用期限後，老化磨損會略微降低功率和煞車等重要特性。此影響隨後會不斷加劇，並在使用期限末期變得十分明顯。&#10;&#10;換上新零件即可消除磨損：大修會更換磨損的零件。"/>
-        <text name="rms_tutorial_poor_consumables_title" text="低品質耗材"/>
-        <text name="rms_tutorial_poor_consumables_message" text="全面檢查在%s上發現了一個保養時裝上的劣質濾清器。較便宜的品質會出現這種情況。&#10;&#10;該濾清器會讓雜質通過：在更換濾清器之前，它保護的回路會加速磨損。下一次保養會將其更換。"/>
-        <text name="rms_tutorial_poor_parts_title" text="低品質零組件"/>
-        <text name="rms_tutorial_poor_parts_message" text="全面檢查在%s上發現了一個在車間裝上的劣質零件：它將會出現故障。較便宜的品質會出現這種情況。&#10;&#10;您可以現在就去車間更換，或等到它出現故障。"/>
-        <text name="rms_tutorial_park_brake_title" text="駐車煞車"/>
-        <text name="rms_tutorial_park_brake_message" text="駐車煞車已經啟用。離開靜止的機器時，它會自動啟用；再次踩下油門時則會自動解除。關閉發動機時，或靜止滿45秒後，它也會自動啟用。&#10;&#10;在坡道上，駐車煞車可以防止機器自行滑動。"/>
-        <text name="rms_tutorial_park_brake_manual_message" text="駐車煞車已經啟用。需要使用專用按鍵自行啟用和解除：煞車啟用時踩下油門，機器會頂著煞車行駛，駐車煞車會磨損。&#10;&#10;在坡道上，駐車煞車可以防止機器自行滑動：未啟用駐車煞車就離開機器，機器可能會自行滑動。"/>
-        <text name="rms_tutorial_preheat_title" text="柴油機預熱"/>
-        <text name="rms_tutorial_preheat_message" text="柴油發動機處於冷機狀態時，按一次啟動控制即可打開點火開關，並自動開始預熱塞循環。儀表板指示燈會短暫亮起，隨後預熱燈保持點亮，直到發動機準備就緒。不要重複操作：預熱燈關閉後，啟動機會自動接合。"/>
-        <text name="rms_tutorial_pto_engagement_title" text="動力輸出軸接合"/>
-        <text name="rms_tutorial_pto_engagement_message" text="請在空轉時接合動力輸出軸，然後再提高轉速：高轉速接合會衝擊整個傳動系統，機具越重衝擊越大。每次接合也會磨損其離合器。"/>
-        <text name="rms_tutorial_header_engagement_title" text="割台接合"/>
-        <text name="rms_tutorial_header_engagement_message" text="請在空轉時接合割台，然後再提高轉速：高轉速啟動會使其安全離合器打滑，磨損快得多。"/>
-        <text name="rms_tutorial_header_stored_title" text="長期停放的割台"/>
-        <text name="rms_tutorial_header_stored_message" text="這台割台已超過兩週未運轉：其安全離合器已鏽死，不再起保護作用。收穫前請給割台加注黃油，否則一次堵塞就可能折斷其傳動軸。"/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="空轉與停用"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="機器運作但不作業時，磨損會低得多。發動機關閉後，磨損降至最低；存放在遮蔽物下時，磨損會完全停止。"/>
-        <text name="rms_tutorial_idle_deposit_title" text="長時間空轉"/>
-        <text name="rms_tutorial_idle_deposit_message" text="機器似乎已經空轉過久。長時間空轉不僅浪費燃油，久而久之還會使燃油系統形成沉積物，加速其磨損。&#10;&#10;如果目前不需要使用機器，最好關閉發動機。"/>
-        <text name="rms_tutorial_hot_weather_title" text="高溫天氣"/>
-        <text name="rms_tutorial_hot_weather_message" text="今天氣溫很高。在這種天氣下，請留意散熱器是否清潔，並避免發動機過載，否則過熱只是時間問題。&#10;&#10;可以檢查散熱器狀況：看向機器時按住%s鍵。請使用壓縮空氣吹氣器清潔。"/>
-        <text name="rms_tutorial_heavy_trailer_title" text="拖車過重"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="牽引負載對這輛機具而言較重。可以繼續行駛，但每次煞車時煞車磨損都會加快。&#10;&#10;RMS採用兩個參考值：拖拉機牽引超過自重4.5倍的負載，卡車每噸車組總重量不足6馬力。負載越重，煞車磨損越快。"/>
-        <text name="rms_tutorial_hard_start_title" text="啟動困難"/>
-        <text name="rms_tutorial_hard_start_message" text="%s的發動機難以啟動。電池電量低、極低溫、機械故障或啟動機磨損都可能是原因。&#10;&#10;啟動時的高啟動電流會使電氣系統承受很大負載。"/>
-        <text name="rms_tutorial_low_fuel_title" text="燃油餘量低"/>
-        <text name="rms_tutorial_low_fuel_message" text="油箱接近備用油量。剩餘燃油越少，燃油泵吸取燃油時負擔越重，油箱底部的水分和沉積物也會被送入濾清器，使其更快堵塞。&#10;&#10;請盡快加油。"/>
-        <text name="rms_tutorial_lugging_title" text="發動機低轉速重負荷"/>
-        <text name="rms_tutorial_lugging_message" text="發動機，尤其是變速箱，在低轉速重負荷下會受到損害。所連接的農具可能對機器而言過重；如果使用手動變速箱，也可能是目前擋位不合適。"/>
-        <text name="rms_tutorial_engine_overheat_title" text="發動機過熱"/>
-        <text name="rms_tutorial_engine_overheat_message" text="發動機開始過熱。原因可能有一個或多個：發動機負載過大、散熱器堵塞、氣溫高，或機具冷卻系統存在故障。&#10;&#10;請保持警覺：過熱是對機器破壞最大的因素之一。它不僅損害發動機，還會使冷卻系統達到極限，而發動機艙內的熱量會加快線束和電氣零組件退化。"/>
-        <text name="rms_tutorial_engine_overload_title" text="發動機過載"/>
-        <text name="rms_tutorial_engine_overload_message" text="發動機正承受很大應力。目前任務可能對這台機器而言過重，需要功率更大的機具；也可能只需減速即可降低負載。&#10;&#10;無論是哪種情況，這種應力都會明顯增加磨損。"/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="判斷排氣煙霧"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="這台機器排出的煙霧不是裝飾，其顏色就是檢測資訊。&#10;&#10;黑煙表示發動機獲得的燃油多於空氣，原因可能是排氣增壓器升速前突然加速、發動機低轉速重負荷、過載、空氣濾清器堵塞、排氣增壓器老化或噴油系統磨損。藍煙表示磨損的發動機正在燃燒自身機油。白煙表示燃油未經燃燒便被排出。&#10;&#10;煙霧還會隨發動機負荷增大。舊機器冒出的煙遠多於新機器，這是正常現象。"/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT過熱"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT變速箱開始過熱。原因可能是負載過大、散熱器堵塞、氣溫很高，或變速箱冷卻回路存在故障。犁過重或拖車超載也足以導致過熱。&#10;&#10;請保持警覺：過熱是對CVT變速箱破壞最大的因素之一。"/>
-        <text name="rms_tutorial_chassis_vibration_title" text="底盤承受應力"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="在崎嶇地面高速行駛會迅速磨損%s的行走機構。這些衝擊還會損壞線束及其連接器，並在升起重型機具時損壞液壓系統。&#10;&#10;請在不平整地面上減速。"/>
-        <text name="rms_tutorial_terrain_impact_title" text="劇烈衝擊"/>
-        <text name="rms_tutorial_terrain_impact_message" text="行走機構剛剛受到劇烈衝擊。撞上使機器突然停下或急速減速的障礙物，會當場損傷底盤，並使下一次故障提前到來，多數發生在轉向或軸承上。&#10;&#10;請在障礙物前減速。"/>
-        <text name="rms_tutorial_cranking_title" text="頻繁啟動"/>
-        <text name="rms_tutorial_cranking_message" text="起動機在短時間內運轉過多。累計超過幾秒後，每次起動都會磨損起動機、電池和起動電路的其他部件。&#10;&#10;短暫停頓時請避免關閉發動機。"/>
-        <text name="rms_tutorial_critical_failure_title" text="極重度故障"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s已經無法依靠自身動力移動。&#10;&#10;視故障而定，移動車間可在現場進行修理，至少是臨時修理，足以讓機器自行開到車間。否則就需要用其他方式把它運過去。"/>
-        <text name="rms_tutorial_cold_engine_title" text="發動機溫度低"/>
-        <text name="rms_tutorial_cold_engine_message" text="發動機溫度過低：低於%s時，只要運轉就會加速磨損，與負荷無關，溫度越低磨損越嚴重。&#10;&#10;低於%s時，也請不要超過最高轉速的四分之三：這會損傷冷卻系統。"/>
-        <text name="rms_tutorial_cold_oil_title" text="變速箱油溫低"/>
-        <text name="rms_tutorial_cold_oil_message" text="變速箱油溫度過低：低於%s時，只要發動機運轉，變速箱就會加速磨損，與負荷無關。&#10;&#10;液壓油低於%s時，使用液壓系統也會磨損液壓泵。"/>
-        <text name="rms_tutorial_transmission_overheat_title" text="變速箱過熱"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="變速箱油開始過熱。原因可能是負載過大、散熱器堵塞、氣溫很高，或變速箱冷卻系統存在故障。&#10;&#10;所有機器的變速箱油都會升溫，並非只有CVT如此。油溫過高會磨損變速箱並損壞其密封件。"/>
-        <text name="rms_tutorial_overload_indicator_title" text="過載警告"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s正承受很大負載。儀表板上剛剛亮起的指示燈就是相關警告。&#10;&#10;機器的功率可能不足以完成目前任務。請嘗試降低負載：使用巡航控制限制速度，或稍微鬆開油門，不要始終以全功率行駛。"/>
-        <text name="rms_tutorial_battery_low_title" text="電池電量低"/>
-        <text name="rms_tutorial_battery_low_message" text="這台機器的電池即將完全放電。長時間停放、極低溫或電氣系統故障都可能導致這種情況。&#10;&#10;電量較低時，啟動會先變得困難，隨後完全無法啟動。此時可以使用跨接電線，從另一輛機具啟動發動機。長時間停放前，或電池自行放電時，請步行到機器前，用電池總開關將其斷開。"/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="傳動系統應力"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="差速鎖保持鎖定時，正在高附著力地面轉彎。轉彎時，內外側車輪行駛的距離不同，但差速鎖強制它們以相同速度旋轉，因此傳動系統承受應力，變速箱磨損加快。請在轉彎前解除差速鎖。"/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="驅動模式與差速鎖"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="這台機器可選擇兩輪驅動、四輪驅動或自動模式。自動模式下，作業時前軸保持接合；車速超過%s或急轉彎時前軸斷開，一踩煞車便重新接合。&#10;&#10;差速鎖能在失去附著力時獲得牽引力，並同時接合前軸。轉彎、煞車或車速超過%s時，差速鎖會自動解除；需要時請重新接合。"/>
-        <text name="rms_tutorial_drivetrain_modes_manual_message" text="這台機器可選擇兩輪驅動或四輪驅動。&#10;&#10;差速鎖能在失去附著力時獲得牽引力，但在高附著力地面轉彎會付出很大代價：內外側車輪無法以相同速度旋轉，傳動系統會承受全部應力。請在轉彎前解除差速鎖。"/>
-        <text name="rms_tutorial_diff_lock_title" text="差速鎖"/>
-        <text name="rms_tutorial_diff_lock_message" text="差速鎖能在失去附著力時獲得牽引力。轉彎、煞車或車速超過%s時，差速鎖會自動解除；需要時請重新接合。"/>
-        <text name="rms_tutorial_diff_lock_manual_message" text="差速鎖能在失去附著力時獲得牽引力，但在高附著力地面轉彎會付出很大代價：內外側車輪無法以相同速度旋轉，傳動系統會承受全部應力。請在轉彎前解除差速鎖。"/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="在Realistic Mechanical Systems中，機器會像真實機器一樣磨損和故障。只需遵守三條規則，就能避免故障接連不斷：&#10;&#10;1. 按時保養。遊戲選單中的機械儀表板會顯示每台機器的下次保養。&#10;2. 每天做好機器準備。在機器附近長按%s，即可檢查油液液位、散熱器、空氣濾清器和打黃油情況。請用壓縮空氣吹氣器清潔散熱器和空氣濾清器，並用黃油加注器為機器打黃油。農具和拖車也需要打黃油：機械儀表板會列出需要打黃油的設備。壓縮空氣吹氣器、黃油加注器和黃油筒可在商店的保養類別中購買。&#10;3. 愛護機器：過載、過熱、發動機冷車作業和車輪打滑都會造成磨損。&#10;&#10;如果覺得遊戲太難，請在機械儀表板的RMS設定分頁中延長機具使用期限和保養間隔。"/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

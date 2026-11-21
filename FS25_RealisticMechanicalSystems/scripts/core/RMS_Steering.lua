@@ -270,20 +270,6 @@ local function applyImpact(vehicle, speedLoss)
     vehicle:applyInstantDamageToSystem(RealisticMechanicalSystems.SYSTEMS.CHASSIS, damage, "terrainImpactFactor", "impact")
     spec.terrainImpacts.count = spec.terrainImpacts.count + 1
     spec.terrainImpacts.lastSpeedLoss = speedLoss
-    spec.terrainImpactTutorialTimer = C.TERRAIN_IMPACT_TUTORIAL_MS
-end
-
----Times the shaking and impact tutorial tips
-function RMS_Steering.updateTutorialTimers(vehicle, dt)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
-
-    if spec.chassisVibState.isWearing then
-        spec.vibrationTutorialTimer = math.min(spec.vibrationTutorialTimer + dt, C.VIB_TUTORIAL_MS)
-    else
-        spec.vibrationTutorialTimer = math.max(spec.vibrationTutorialTimer - dt, 0)
-    end
-    spec.terrainImpactTutorialTimer = math.max(spec.terrainImpactTutorialTimer - dt, 0)
 end
 
 ---Reads an impact off a speed loss beyond what the tyres can take

@@ -81,28 +81,6 @@ local function readResalePrice(vehicle, streamId)
     end
 end
 
----Writes the PTO and header event counters
-local function writePtoWearState(spec, streamId)
-    for _, name in ipairs({ "ptoEngagementSequence", "ptoShockSequence", "headerShockSequence", "headerSeizedSequence" }) do
-        streamWriteInt32(streamId, math.floor(RealisticMechanicalSystems.sanitizeNumber(spec[name], 0, 0)))
-    end
-    streamWriteBool(streamId, spec.isHeaderSlipping == true)
-end
-
----Reads the PTO and header event counters, the tutorial taking them as seen on join
-local function readPtoWearState(spec, streamId, initializeTutorial)
-    for _, name in ipairs({ "ptoEngagementSequence", "ptoShockSequence", "headerShockSequence", "headerSeizedSequence" }) do
-        spec[name] = math.floor(RealisticMechanicalSystems.sanitizeNumber(streamReadInt32(streamId), 0, 0))
-    end
-    spec.isHeaderSlipping = streamReadBool(streamId)
-    if initializeTutorial then
-        spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
-        spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
-        spec.headerTutorialObservedShockSequence = spec.headerShockSequence
-        spec.headerTutorialObservedSeizedSequence = spec.headerSeizedSequence
-    end
-end
-
 ---Writes the hydraulic and traction battery temperatures, each when the machine has one
 local function writeOptionalThermalState(vehicle, streamId)
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -313,7 +291,7 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
 
     -- [Group 7] Wear
     writeWearState(spec, streamId)
-    writePtoWearState(spec, streamId)
+    streamWriteBool(streamId, spec.isHeaderSlipping == true)
 
     -- [Group 8] Breakdowns
     streamWriteString(streamId, RMS_Utils.serializeBreakdowns(spec.activeBreakdowns or {}))
@@ -414,7 +392,7 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
 
     -- [Group 7] Wear
     readWearState(spec, streamId)
-    readPtoWearState(spec, streamId, true)
+    spec.isHeaderSlipping = streamReadBool(streamId)
 
     -- [Group 8] Breakdowns
     spec.activeBreakdowns = RMS_Utils.deserializeBreakdowns(streamReadString(streamId))
@@ -521,7 +499,7 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
         -- [7] Wear
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.WEAR) ~= 0) then
             writeWearState(spec, streamId)
-            writePtoWearState(spec, streamId)
+            streamWriteBool(streamId, spec.isHeaderSlipping == true)
         end
 
         -- [8] Breakdowns
@@ -537,34 +515,12 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.pendingProgressElapsedTime, 0, 0))
         end
 
-        -- [11] Drivetrain
+        -- [10] Drivetrain
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.DRIVETRAIN) ~= 0) then
             RMS_Drivetrain.writeStreamState(self, streamId)
         end
 
-        -- [10] Tutorial data
-        if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA) ~= 0) then
-            local fuelState = spec.fuelState
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(fuelState.idleTimer, 0, 0, 600))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(fuelState.level, 0, 0, 1))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.luggingTutorialTimer, 0, 0, 5000))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.wheelSlipTutorialTimer, 0, 0, 3000))
-            local brakeState = spec.chassisBrakeState
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(brakeState.hpTrailerMassRatio, 1000, 0, 10000))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(brakeState.trailerMass, 0, 0))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(brakeState.hpGrossMassRatio, 1000, 0, 10000))
-            local steerState = spec.chassisSteerState
-            streamWriteBool(streamId, steerState.groundContact > 0)
-            streamWriteBool(streamId, steerState.isMoving == true)
-            local chassisConfig = RMS_Config.CORE.CHASSIS_FACTOR_DATA
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.vibrationTutorialTimer, 0, 0, chassisConfig.VIB_TUTORIAL_MS))
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.terrainImpactTutorialTimer, 0, 0, chassisConfig.TERRAIN_IMPACT_TUTORIAL_MS))
-            streamWriteBool(streamId, spec.isCranking == true)
-            local elecSys = spec.systems ~= nil and spec.systems.electrical or nil
-            streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(elecSys ~= nil and elecSys.crankingTimer or 0, 0, 0, 10000))
-        end
-
-        -- [13] Resale price
+        -- [11] Resale price
         if streamWriteBool(streamId, bit32.band(pending, RealisticMechanicalSystems.SYNC_GROUP.RESALE) ~= 0) then
             writeResalePrice(streamId, spec.networkResaleValue or RMS_Utils.getMarketValue(self))
         end
@@ -652,7 +608,7 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
         -- [7] Wear
         if streamReadBool(streamId) then
             readWearState(spec, streamId)
-            readPtoWearState(spec, streamId, false)
+            spec.isHeaderSlipping = streamReadBool(streamId)
         end
 
         -- [8] Breakdowns
@@ -670,37 +626,12 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             spec.pendingProgressElapsedTime = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
         end
 
-        -- [11] Drivetrain
+        -- [10] Drivetrain
         if streamReadBool(streamId) then
             RMS_Drivetrain.readStreamState(self, streamId)
         end
 
-        -- [10] Tutorial data
-        if streamReadBool(streamId) then
-            local fuelState = spec.fuelState
-            fuelState.idleTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 600)
-            fuelState.level     = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 1)
-            spec.luggingTutorialTimer   = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 5000)
-            spec.wheelSlipTutorialTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 3000)
-            local brakeState = spec.chassisBrakeState
-            brakeState.hpTrailerMassRatio = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1000, 0, 10000)
-            brakeState.trailerMass = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0)
-            brakeState.hpGrossMassRatio = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 1000, 0, 10000)
-            local steerState = spec.chassisSteerState
-            steerState.groundContact = streamReadBool(streamId) and 1 or 0
-            steerState.isMoving      = streamReadBool(streamId)
-            local chassisConfig = RMS_Config.CORE.CHASSIS_FACTOR_DATA
-            spec.vibrationTutorialTimer     = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, chassisConfig.VIB_TUTORIAL_MS)
-            spec.terrainImpactTutorialTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, chassisConfig.TERRAIN_IMPACT_TUTORIAL_MS)
-            spec.isCranking          = streamReadBool(streamId)
-            local elecSys = spec.systems ~= nil and spec.systems.electrical or nil
-            local crankingTimer = RealisticMechanicalSystems.sanitizeNumber(streamReadFloat32(streamId), 0, 0, 10000)
-            if elecSys ~= nil then
-                elecSys.crankingTimer = crankingTimer
-            end
-        end
-
-        -- [13] Resale price
+        -- [11] Resale price
         if streamReadBool(streamId) then
             readResalePrice(self, streamId)
         end

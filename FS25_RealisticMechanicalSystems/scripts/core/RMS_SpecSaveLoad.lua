@@ -357,7 +357,6 @@ function RealisticMechanicalSystems:saveToXMLFile(xmlFile, key, usedModNames)
         xmlFile:setValue(key .. "#pickupAirTime", RMS_Utils.serializeNumericMap(spec.pickupAirTime))
         xmlFile:setValue(key .. "#factorStats", RMS_Utils.serializeNumericMap(flattenFactorStats(spec.factorStats)))
         xmlFile:setValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount or 0)
-        xmlFile:setValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence or 0)
         if spec.headerDrive ~= nil then
             xmlFile:setValue(key .. "#headerStartCount", spec.headerDrive.starts)
         end
@@ -569,10 +568,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.wheelSlipIntensity = 0
     self.spec_RealisticMechanicalSystems._wheelSlipPreviousSample = 0
     self.spec_RealisticMechanicalSystems._wheelSlipOlderSample = 0
-    self.spec_RealisticMechanicalSystems.wheelSlipTutorialTimer = 0
-    self.spec_RealisticMechanicalSystems.luggingTutorialTimer = 0
-    self.spec_RealisticMechanicalSystems.vibrationTutorialTimer = 0
-    self.spec_RealisticMechanicalSystems.terrainImpactTutorialTimer = 0
     self.spec_RealisticMechanicalSystems.avgTireGroundFrictionCoeff = 0
     self.spec_RealisticMechanicalSystems.avgGroundSurfaceFactor = 0
     self.spec_RealisticMechanicalSystems.isImplementLifted = false
@@ -592,7 +587,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.ptoPower = 0
     self.spec_RealisticMechanicalSystems.ptoUtilization = 0
     self.spec_RealisticMechanicalSystems.ptoEngagementCount = 0
-    self.spec_RealisticMechanicalSystems.ptoEngagementSequence = 0
     self.spec_RealisticMechanicalSystems.ptoEngagementDamage = 0
     self.spec_RealisticMechanicalSystems.isPtoEngagementShock = false
     self.spec_RealisticMechanicalSystems.ptoLastRpmShare = 0
@@ -601,15 +595,8 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.frontPtoShaftAngle = 0
     self.spec_RealisticMechanicalSystems.frontPtoShaftLimit = RMS_Config.CORE.DIRECT_FAILURES.PTO_SHAFT_ANGLE.limit
     self.spec_RealisticMechanicalSystems.ptoShaftWear = 0
-    self.spec_RealisticMechanicalSystems.ptoShockSequence = 0
-    self.spec_RealisticMechanicalSystems.ptoTutorialObservedShockSequence = 0
-    self.spec_RealisticMechanicalSystems.headerShockSequence = 0
-    self.spec_RealisticMechanicalSystems.headerSeizedSequence = 0
     self.spec_RealisticMechanicalSystems.isHeaderSlipping = false
-    self.spec_RealisticMechanicalSystems.headerTutorialObservedShockSequence = 0
-    self.spec_RealisticMechanicalSystems.headerTutorialObservedSeizedSequence = 0
     self.spec_RealisticMechanicalSystems.ptoPreviousActiveLinks = {}
-    self.spec_RealisticMechanicalSystems.ptoTutorialObservedSequence = 0
     self.spec_RealisticMechanicalSystems.chassisVibState = {
         prevSuspension = {},
         smoothed = 0,
@@ -808,7 +795,6 @@ local function loadSavedState(self, xmlFile, key, vehicleKey, currentOperatingTi
         1.0
     )
     spec.ptoEngagementCount = math.floor(math.max(xmlFile:getValue(key .. "#ptoEngagementCount", spec.ptoEngagementCount) or 0, 0))
-    spec.ptoEngagementSequence = math.floor(math.max(xmlFile:getValue(key .. "#ptoEngagementSequence", spec.ptoEngagementSequence) or 0, 0))
     spec.loadedHeaderStarts = math.floor(math.max(xmlFile:getValue(key .. "#headerStartCount", 0) or 0, 0))
     spec.serviceOptionOne = xmlFile:getValue(key .. "#serviceOptionOne", spec.serviceOptionOne)
     spec.serviceOptionTwo = xmlFile:getValue(key .. "#serviceOptionTwo", spec.serviceOptionTwo)
@@ -1035,10 +1021,6 @@ function RealisticMechanicalSystems:onPostLoad(savegame)
     resetIsMovingRecursive(self, {})
 
     RealisticMechanicalSystems.storeSyncBaseline(self)
-    spec.ptoTutorialObservedSequence = spec.ptoEngagementSequence
-    spec.ptoTutorialObservedShockSequence = spec.ptoShockSequence
-    spec.headerTutorialObservedShockSequence = spec.headerShockSequence
-    spec.headerTutorialObservedSeizedSequence = spec.headerSeizedSequence
 
     RMS_Electrical.initializeVehicle(self)
 

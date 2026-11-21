@@ -85,7 +85,6 @@ Changelog 1.0.0.0-beta.3:
 - Added warranty refusal for header drive faults after late greasing or a seized slip clutch
 - Added the sounds of the header belt squealing, slip clutch slipping and driveline breaking
 - Added wear and greasing to the driveshafts of self-propelled mowers
-- Added tutorial tips on engaging a header and on a header left standing
 - Added the average fuel consumption per hour and per hectare to the HUD
 - Added the hours run since the last service, out of its interval, to the dashboard screen
 - Added the gearbox oil temperature to the dashboard screen of combustion machines other than cars
@@ -101,6 +100,8 @@ Changelog 1.0.0.0-beta.3:
 - Changed the differential lock of tractors from 1993 to engage the front axle with it
 - Changed articulated machines to drive all their wheels at all times
 - Removed the Allow AUTO Drive Mode setting
+- Removed the tutorial tips, their settings and their close key
+- Changed the welcome window to the three rules for playing without constant breakdowns
 - Changed the engine load of machines with a controller or an electric drive to a power gauge
 - Changed the front axle, differential lock and wheel slip display of the dashboard
 - Changed the service deadline of the fleet page to hours and months run out of the interval
@@ -118,7 +119,7 @@ Changelog 1.0.0.0-beta.3:
 - Debug window: the detailed log has a setting of its own
 - Improved the HUD weight card with a weight icon
 - Adjusted the volume, range and cabin muffling of the RMS sounds
-- Improved texts and translations of tutorial tips, engine oil message and workshop messages
+- Improved texts and translations of the engine oil message and workshop messages
 - Improved the performance of workshop menus, exhaust effects and resale price updates
 - Removed PTO shaft wear on mounted implements raised with the PTO turning
 - Added the production years of the Tony 10900 TTR and Faresin Leader PF 2.26
@@ -136,11 +137,6 @@ Changelog 1.0.0.0-beta.3:
 - Fixed the trolley charger stopping its charge while the machine is in the workshop
 - Fixed tools put away on the trolley returning to Hand Tools after a dedicated server restart
 - Fixed the trolley charger and diagnostic tool not reaching long machines
-- Fixed RMS messages covering the vehicle name and the game's prompts at the bottom of the screen
-- Fixed the heavy trailer tutorial tip naming the transmission instead of the brakes
-- Fixed tutorial tips losing their paragraph breaks
-- Fixed the defective filter and part tips showing before an inspection found them
-- Fixed wrong tutorial tips on ageing, cold, fuel, starting, breakdowns, servicing and the hand brake
 - Fixed sold or returned machines staying on the fleet page for a few seconds
 
 Changelog 1.0.0.0-beta.2:
@@ -444,7 +440,6 @@ Changelog 1.0.0.0-beta.3:
 - Garantieablehnung für Störungen des Vorsatzantriebs nach verspäteter Schmierung oder festgerostener Rutschkupplung hinzugefügt
 - Geräusche des quietschenden Riemens, der rutschenden Rutschkupplung und der brechenden Gelenkwelle des Vorsatzes hinzugefügt
 - Verschleiß und Schmierung der Gelenkwellen selbstfahrender Mäher hinzugefügt
-- Tutorial-Tipps zum Einkuppeln des Vorsatzes und zu einem abgestellten Vorsatz hinzugefügt
 - Durchschnittsverbrauch je Stunde und je Hektar im HUD hinzugefügt
 - Betriebsstunden seit der letzten Wartung im Verhältnis zum Intervall auf dem Bildschirm des Armaturenbretts hinzugefügt
 - Getriebeöltemperatur auf dem Bildschirm des Armaturenbretts von Verbrennungsmaschinen außer Autos hinzugefügt
@@ -460,6 +455,8 @@ Changelog 1.0.0.0-beta.3:
 - Differentialsperre von Traktoren ab Baujahr 1993 geändert: Sie schaltet die Vorderachse mit zu
 - Knickgelenkte Maschinen geändert: Sie fahren immer mit Allrad
 - Einstellung „AUTO-Antriebsmodus erlauben“ entfernt
+- Tutorial-Tipps, ihre Einstellungen und ihre Schließen-Taste entfernt
+- Begrüßungsfenster geändert: die drei Regeln für ein Spiel ohne ständige Pannen
 - Motorlast von Maschinen mit Steuergerät oder Elektroantrieb geändert: eine Leistungsanzeige
 - Anzeige von Vorderachse, Differentialsperre und Radschlupf im Armaturenbrett geändert
 - Wartungsfrist der Fuhrpark-Seite geändert: die abgelaufenen Stunden und Monate im Verhältnis zum Intervall
@@ -477,7 +474,7 @@ Changelog 1.0.0.0-beta.3:
 - Debug-Fenster: Das detaillierte Protokoll hat eine eigene Einstellung
 - Gewichtskarte im HUD verbessert: ein Gewichtssymbol
 - Lautstärke, Reichweite und Dämpfung in der Kabine der RMS-Sounds angepasst
-- Texte und Übersetzungen der Tutorial-Tipps, der Motorölmeldung und der Werkstattmeldungen verbessert
+- Texte und Übersetzungen der Motorölmeldung und der Werkstattmeldungen verbessert
 - Performance der Werkstattmenüs, der Abgaseffekte und der Aktualisierung von Verkaufspreisen verbessert
 - Verschleiß der Gelenkwelle von Anbaugeräten entfernt, die mit laufender Zapfwelle angehoben werden
 - Baujahre von Tony 10900 TTR und Faresin Leader PF 2.26 hinzugefügt
@@ -495,11 +492,6 @@ Changelog 1.0.0.0-beta.3:
 - Ladegerät des Batteriewagens behoben, das die Ladung beendete, solange die Maschine in der Werkstatt stand
 - Auf dem Wagen abgelegte Werkzeuge behoben, die nach einem Neustart des dedizierten Servers ins Menü Werkzeuge zurückkehrten
 - Ladegerät und Diagnosegerät des Batteriewagens behoben, die lange Maschinen nicht erreichten
-- RMS-Meldungen behoben, die den Maschinennamen und die Hinweise des Spiels am unteren Bildschirmrand verdeckten
-- Tutorial-Tipp zum schweren Anhänger behoben, der das Getriebe statt der Bremsen nannte
-- Tutorial-Tipps behoben, die ihre Absätze verloren
-- Tipps zu defektem Filter und Teil behoben, die erschienen, bevor eine Inspektion sie fand
-- Fehlerhafte Tutorial-Tipps zu Alter, Kälte, Kraftstoff, Starten, Pannen, Wartung und Handbremse behoben
 - Verkaufte oder zurückgegebene Maschinen behoben, die noch einige Sekunden auf der Fuhrpark-Seite blieben
 
 Changelog 1.0.0.0-beta.2:
@@ -803,7 +795,6 @@ Changelog 1.0.0.0-beta.3 :
 - Ajout du refus de garantie des pannes de l'entraînement de la coupe après un graissage en retard ou un limiteur grippé
 - Ajout des sons de la courroie de la coupe qui crisse, du limiteur de couple qui glisse et de l'arbre qui casse
 - Ajout de l'usure et du graissage des cardans des faucheuses automotrices
-- Ajout de conseils de tutoriel sur l'embrayage de la coupe et sur une coupe remisée
 - Ajout de la consommation moyenne par heure et par hectare au HUD
 - Ajout des heures écoulées depuis le dernier entretien, sur son intervalle, à l'écran du tableau de bord
 - Ajout de la température d'huile de boîte à l'écran du tableau de bord des machines thermiques, hors voitures
@@ -819,6 +810,8 @@ Changelog 1.0.0.0-beta.3 :
 - Modification du blocage de différentiel des tracteurs de 1993 et après : il embraye le pont avant avec lui
 - Modification des machines articulées : elles entraînent toutes leurs roues en permanence
 - Suppression du réglage « Autoriser le mode AUTO »
+- Suppression des conseils du tutoriel, de leurs réglages et de leur touche de fermeture
+- Modification de la fenêtre d'accueil : les trois règles pour jouer sans pannes à répétition
 - Modification de la charge moteur des machines à calculateur ou à motorisation électrique : une jauge de puissance
 - Modification de l'affichage du pont avant, du blocage de différentiel et du patinage au tableau de bord
 - Modification de l'échéance d'entretien de la page du parc : les heures et les mois écoulés sur l'intervalle
@@ -836,7 +829,7 @@ Changelog 1.0.0.0-beta.3 :
 - Fenêtre de débogage : le journal détaillé a son propre réglage
 - Amélioration de la carte de poids du HUD : une icône de poids
 - Ajustement du volume, de la portée et de l'atténuation en cabine des sons de RMS
-- Amélioration des textes et des traductions des conseils de tutoriel, du message d'huile moteur et des messages d'atelier
+- Amélioration des textes et des traductions du message d'huile moteur et des messages d'atelier
 - Amélioration des performances des menus d'atelier, des effets d'échappement et de l'actualisation des prix de revente
 - Suppression de l'usure du cardan des outils portés relevés, prise de force tournante
 - Ajout des années de production du Tony 10900 TTR et du Faresin Leader PF 2.26
@@ -854,11 +847,6 @@ Changelog 1.0.0.0-beta.3 :
 - Correction du chargeur du chariot qui arrêtait la charge pendant que la machine était à l'atelier
 - Correction des outils rangés sur le chariot qui revenaient dans les Outils manuels après un redémarrage du serveur dédié
 - Correction du chargeur et de la valise de diagnostic du chariot qui n'atteignaient pas les longues machines
-- Correction des messages de RMS qui couvraient le nom de la machine et les indications du jeu en bas de l'écran
-- Correction du conseil de tutoriel sur la remorque lourde qui citait la transmission au lieu des freins
-- Correction des conseils du tutoriel qui perdaient leurs paragraphes
-- Correction des conseils sur le filtre et la pièce défectueux qui s'affichaient avant qu'une inspection les trouve
-- Correction des conseils du tutoriel erronés sur l'âge, le froid, le carburant, le démarrage, les pannes, l'entretien et le frein à main
 - Correction des machines vendues ou rendues qui restaient quelques secondes sur la page du parc
 
 Changelog 1.0.0.0-beta.2 :
@@ -1160,7 +1148,6 @@ Changelog 0.10.0.0 :
     </extraSourceFiles>
     <actions>
         <action name="RMS_FIELD_INSPECTION" axisType="HALF" displayCategory="PLAYER_INTERACTIVE"/>
-        <action name="RMS_CLOSE_NOTIFICATION" displayCategory="PLAYER_INTERACTIVE"/>
         <action name="RMS_TOGGLE_4WD" displayCategory="VEHICLE"/>
         <action name="RMS_TOGGLE_DIFFLOCK" displayCategory="VEHICLE"/>
         <action name="RMS_TOGGLE_PARKBRAKE" displayCategory="VEHICLE"/>
@@ -1173,10 +1160,6 @@ Changelog 0.10.0.0 :
     <inputBinding>
         <actionBinding action="RMS_FIELD_INSPECTION">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_r"/>
-        </actionBinding>
-        <actionBinding action="RMS_CLOSE_NOTIFICATION">
-            <binding device="KB_MOUSE_DEFAULT" input="MOUSE_BUTTON_LEFT"/>
-            <binding device="0_XINPUT_GAMEPAD" input="BUTTON_1"/>
         </actionBinding>
         <actionBinding action="RMS_TOGGLE_4WD">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lalt KEY_1"/>

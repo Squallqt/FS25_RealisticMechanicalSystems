@@ -303,19 +303,6 @@
             <GuiElement profile="rms_menuSettingsContainer" id="settingsPage">
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">
                     <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsTutorialMode" onClick="onClickRmsOption" useYesNoTexts="true">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialMode_tooltip"/>
-                        </BinaryOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialMode_label"/>
-                    </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer">
-                        <Button profile="rms_settingsButton" id="rmsTutorialResetTips" text="$l10n_rms_tutorialResetTips_text" onClick="onClickRmsResetTutorialTips">
-                            <ThreePartBitmap profile="rms_settingsButtonBg"/>
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialResetTips_tooltip"/>
-                        </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialResetTips_label"/>
-                    </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer">
                         <BinaryOption profile="fs25_settingsBinaryOption" id="rmsWarningMessages" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_warningMessages_tooltip"/>
                         </BinaryOption>

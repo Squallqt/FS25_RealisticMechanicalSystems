@@ -457,7 +457,6 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Added warranty refusal for header drive faults after late greasing or a seized slip clutch
 - Added the sounds of the header belt squealing, slip clutch slipping and driveline breaking
 - Added wear and greasing to the driveshafts of self-propelled mowers
-- Added tutorial tips on engaging a header and on a header left standing
 - Added the average fuel consumption per hour and per hectare to the HUD
 - Added the hours run since the last service, out of its interval, to the dashboard screen
 - Added the gearbox oil temperature to the dashboard screen of combustion machines other than cars
@@ -479,6 +478,8 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Changed the differential lock of tractors from 1993 to engage the front axle with it
 - Changed articulated machines to drive all their wheels at all times
 - Removed the Allow AUTO Drive Mode setting
+- Removed the tutorial tips, their settings and their close key
+- Changed the welcome window to the three rules for playing without constant breakdowns
 - Changed the engine load of machines with a controller or an electric drive to a power gauge
 - Changed the front axle, differential lock and wheel slip display of the dashboard
 - Changed the service deadline of the fleet page to hours and months run out of the interval
@@ -496,7 +497,7 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Debug window: the detailed log has a setting of its own
 - Improved the HUD weight card with a weight icon
 - Adjusted the volume, range and cabin muffling of the RMS sounds
-- Improved texts and translations of tutorial tips, engine oil message and workshop messages
+- Improved texts and translations of the engine oil message and workshop messages
 - Improved the performance of workshop menus, exhaust effects and resale price updates
 - Removed PTO shaft wear on mounted implements raised with the PTO turning
 - Added the production years of the Tony 10900 TTR and Faresin Leader PF 2.26
@@ -517,11 +518,6 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed the trolley charger stopping its charge while the machine is in the workshop
 - Fixed tools put away on the trolley returning to Hand Tools after a dedicated server restart
 - Fixed the trolley charger and diagnostic tool not reaching long machines
-- Fixed RMS messages covering the vehicle name and the game's prompts at the bottom of the screen
-- Fixed the heavy trailer tutorial tip naming the transmission instead of the brakes
-- Fixed tutorial tips losing their paragraph breaks
-- Fixed the defective filter and part tips showing before an inspection found them
-- Fixed wrong tutorial tips on ageing, cold, fuel, starting, breakdowns, servicing and the hand brake
 - Fixed sold or returned machines staying on the fleet page for a few seconds
 
 ### v1.0.0.0-beta.2

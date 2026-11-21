@@ -153,7 +153,6 @@ function RMS_Hud:new()
     self.shownMasses = {}
 
     self.notification = nil
-    self.closeText = g_i18n:getText("button_ok")
 
     self.inspectionProgress = {
         ratio = nil,
@@ -166,7 +165,6 @@ end
 
 ---Deletes the overlays of the HUD
 function RMS_Hud:delete()
-    self:setNotificationInputActive(false)
     self.fuelConsumptionHud.icon:delete()
     self.fuelConsumptionHud.icon = nil
     self.loadMassHud.icon:delete()
@@ -185,8 +183,6 @@ function RMS_Hud:delete()
         icon:delete()
     end
     self.lampIcons = nil
-    self.closeGlyph:delete()
-    self.closeGlyph = nil
 
     RMS_Hud:superClass().delete(self)
 end
@@ -255,9 +251,7 @@ local hasCVTAddon = RMS_Utils.hasCVTAddon
 
 ---Draws the whole HUD for the current frame
 function RMS_Hud:draw()
-    local isHudVisible = g_currentMission.hud.isVisible
-    self:setNotificationInputActive(isHudVisible and not g_gui:getIsGuiVisible() and self:hasClosableNotification())
-    if not isHudVisible then
+    if not g_currentMission.hud.isVisible then
         return
     end
 
@@ -275,10 +269,9 @@ function RMS_Hud:draw()
 end
 
 ---Shows a notification on the shared HUD instance
--- @param float? durationMs display time, 0 or less until the player closes it
-function RMS_Hud.showNotification(text, durationMs, title, playSound)
+function RMS_Hud.showNotification(text, title, playSound)
     if RMS_Main.hud ~= nil then
-        RMS_Main.hud:setNotification(text, durationMs, title, playSound)
+        RMS_Main.hud:setNotification(text, title, playSound)
     end
 end
 
@@ -297,7 +290,7 @@ function RMS_Hud.showInspectionMessage(text, durationMs)
 end
 
 ---Shows a notification in place of the one on screen
-function RMS_Hud:setNotification(text, durationMs, title, playSound)
+function RMS_Hud:setNotification(text, title, playSound)
     text = squeezeLines(text)
     if text == "" then
         self.notification = nil
@@ -308,48 +301,10 @@ function RMS_Hud:setNotification(text, durationMs, title, playSound)
         title = title ~= "" and utf8ToUpper(title) or nil
     end
 
-    durationMs = durationMs or RMS_Hud.NOTIFICATION_DURATION_MS
-    local isPersistent = durationMs <= 0
-    self.notification = { text = text, title = title, isPersistent = isPersistent,
-        endTime = not isPersistent and g_time + durationMs or nil }
+    self.notification = { text = text, title = title, endTime = g_time + RMS_Hud.NOTIFICATION_DURATION_MS }
 
     if playSound then
         RMS_SoundManager.playSample(RMS_Main.samples.notification2D)
-    end
-end
-
----Tells whether a notification the player closes is on screen
-function RMS_Hud:hasClosableNotification()
-    local notification = self.notification
-    return notification ~= nil and notification.isPersistent
-end
-
----Binds the close key while a closable notification is shown
-function RMS_Hud:setNotificationInputActive(isActive)
-    local inputBinding = g_inputBinding
-    local contextName = isActive and inputBinding:getContextName() or nil
-
-    if self.closeEventId ~= nil and self.closeEventContext ~= contextName then
-        inputBinding:beginActionEventsModification(self.closeEventContext)
-        inputBinding:removeActionEvent(self.closeEventId)
-        inputBinding:endActionEventsModification()
-        self.closeEventId, self.closeEventContext = nil, nil
-    end
-
-    if contextName ~= nil and self.closeEventId == nil then
-        inputBinding:beginActionEventsModification(contextName)
-        local _, eventId = inputBinding:registerActionEvent(InputAction.RMS_CLOSE_NOTIFICATION, self, self.onCloseNotification,
-            false, true, false, true, nil, false)
-        inputBinding:setActionEventTextVisibility(eventId, false)
-        inputBinding:endActionEventsModification()
-        self.closeEventId, self.closeEventContext = eventId, contextName
-    end
-end
-
----Closes the notification the player closes
-function RMS_Hud:onCloseNotification()
-    if self:hasClosableNotification() then
-        self.notification = nil
     end
 end
 
@@ -405,7 +360,7 @@ end
 ---Tells whether a notification is on screen
 function RMS_Hud:getIsNotificationShown()
     local notification = self.notification
-    return notification ~= nil and (notification.endTime == nil or g_time < notification.endTime)
+    return notification ~= nil and g_time < notification.endTime
 end
 
 ---Returns the widest notification
@@ -433,7 +388,7 @@ function RMS_Hud:getNotificationBottom()
     return math.max(bottom, bandY + height + self.messagePaddingY)
 end
 
----Draws the notification: title, line, text, line and close key
+---Draws the notification: title, line, text and line
 function RMS_Hud:drawNotification()
     local notification = self.notification
     if notification == nil then
@@ -457,10 +412,7 @@ function RMS_Hud:drawNotification()
     if title ~= nil then
         setTextBold(true)
         titleHeight = getTextHeight(self.messageTitleSize, title)
-        height = height + titleHeight + 2 * self.messageTitleGap + self.messageCloseGap + 2 * g_pixelSizeY
-        if notification.isPersistent then
-            height = height + self.messageCloseHeight
-        end
+        height = height + titleHeight + 2 * self.messageTitleGap + self.messageBottomGap + 2 * g_pixelSizeY
     end
 
     local posX = 0.5 - width * 0.5
@@ -476,7 +428,7 @@ function RMS_Hud:drawNotification()
         textY = textY - titleHeight - self.messageTitleGap - g_pixelSizeY * 0.5
         drawRule(lineStart, textY - g_pixelSizeY * 0.5, lineEnd - lineStart, g_pixelSizeY, green)
         textY = textY - g_pixelSizeY * 0.5 - self.messageTitleGap
-        local lineY = textY - textHeight - self.messageCloseGap - g_pixelSizeY * 0.5
+        local lineY = textY - textHeight - self.messageBottomGap - g_pixelSizeY * 0.5
         drawRule(lineStart, lineY - g_pixelSizeY * 0.5, lineEnd - lineStart, g_pixelSizeY, green)
     end
 
@@ -484,29 +436,6 @@ function RMS_Hud:drawNotification()
     setTextColor(1, 1, 1, 1)
     renderText(0.5, textY, self.messageTextSize, notification.text)
     setTextWrapWidth(0)
-    if title ~= nil and notification.isPersistent then
-        self:drawCloseControl(posY + paddingY)
-    end
-end
-
----Draws the close key and its OK, centred on the panel
-function RMS_Hud:drawCloseControl(bottomY)
-    local inputMode = g_inputBinding:getInputHelpMode()
-    if inputMode ~= self.closeGlyphInputMode then
-        self.closeGlyph:setAction(InputAction.RMS_CLOSE_NOTIFICATION, nil, nil, true)
-        self.closeGlyphInputMode = inputMode
-    end
-
-    local keyWidth, textSize = self.closeGlyph:getGlyphWidth(), self.messageTextSize
-    local keyX = 0.5 - (keyWidth + self.closeTextGap + getTextWidth(textSize, self.closeText)) * 0.5
-    local keyY = bottomY + (self.messageCloseHeight - self.closeGlyphHeight) * 0.5
-    self.closeGlyph:setPosition(keyX, keyY)
-    self.closeGlyph:draw()
-
-    setTextStyle(RenderText.ALIGN_LEFT, RenderText.VERTICAL_ALIGN_MIDDLE, true)
-    setTextColor(1, 1, 1, 0.95)
-    renderText(keyX + keyWidth + self.closeTextGap - self.closeTextShiftX,
-        keyY + self.closeGlyphHeight * 0.5 + self.closeTextShiftY, textSize, self.closeText)
 end
 
 ---Sizes the icon of a card, in a square of px reference pixels
@@ -561,20 +490,7 @@ function RMS_Hud:storeScaledValues()
     self.messageTitleSize = self:scalePixelToScreenHeight(19)
     self.messageTextSize = self:scalePixelToScreenHeight(17)
     self.messageTitleGap = self:scalePixelToScreenHeight(10)
-    self.messageCloseGap = self:scalePixelToScreenHeight(15)
-    self.messageCloseHeight = self:scalePixelToScreenHeight(30)
-    self.closeTextGap, self.closeTextShiftY = self:scalePixelValuesToScreenVector(6, 2)
-    self.closeTextShiftX = self:scalePixelToScreenWidth(4)
-
-    local glyphWidth, glyphHeight = self:scalePixelValuesToScreenVector(26, 26)
-    if self.closeGlyph ~= nil then
-        self.closeGlyph:delete()
-    end
-    self.closeGlyph = InputGlyphElement.new(g_inputDisplayManager, glyphWidth, glyphHeight)
-    self.closeGlyph:setKeyboardGlyphColor(RMS_Hud.COLOR_GAME_GREEN, {0, 0, 0, 0.8})
-    self.closeGlyph:setButtonGlyphColor(RMS_Hud.COLOR_GAME_GREEN)
-    self.closeGlyphHeight = glyphHeight
-    self.closeGlyphInputMode = nil
+    self.messageBottomGap = self:scalePixelToScreenHeight(15)
 end
 
 ---Tells whether a full particulate filter waits for its regeneration

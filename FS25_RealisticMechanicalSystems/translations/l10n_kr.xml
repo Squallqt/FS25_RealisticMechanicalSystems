@@ -29,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="차량 점검"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="확인"/>
         <text name="input_RMS_TOGGLE_4WD" text="구동 모드"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="차동 잠금"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="주차 브레이크"/>
@@ -78,13 +77,6 @@
         <text name="rms_vehicleLifespan_tooltip" text="차량 상태가 0%에 도달하는 작동 시간을 설정합니다. 이 시간에 가까워질수록 작동 안정성과 가치가 떨어집니다. 변경은 그 시점부터 적용되며 차량 상태는 유지되고 가치만 다시 계산됩니다."/>
         <text name="rms_exhaustSmokeEnabled_label" text="배기 연기"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="배기 연기가 실제 엔진 상태를 따를지 설정합니다. 공기가 부족하면 검은색, 오일이 타면 파란색, 연료가 타지 않고 나오면 흰색이며 부하가 걸리면 더 진해집니다. 오래된 기계는 최신 기계보다 훨씬 많은 연기를 냅니다."/>
-        <text name="rms_tutorialMode_label" text="튜토리얼 모드"/>
-        <text name="rms_tutorialMode_tooltip" text="게임 중 튜토리얼 도움말을 표시할지 설정합니다."/>
-        <text name="rms_tutorialResetTips_label" text="팁 초기화"/>
-        <text name="rms_tutorialResetTips_text" text="팁 초기화"/>
-        <text name="rms_tutorialResetTips_tooltip" text="튜토리얼 도움말 기록을 초기화하여 모든 도움말을 다시 표시합니다."/>
-        <text name="rms_tutorialResetConfirm_title" text="튜토리얼 팁을 초기화할까요?"/>
-        <text name="rms_tutorialResetConfirm_message" text="튜토리얼 팁 기록을 초기화하고 모든 팁을 다시 표시할까요?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD / 차동 잠금 관리"/>
         <text name="rms_drivetrainEnabled_tooltip" text="트랙터의 전륜축과 차동 잠금을 수동으로 조작할지 설정합니다. 이 옵션은 Enhanced Vehicle의 차동 제어를 대체합니다. 제어를 돌려주려면 이 옵션을 끈 뒤 해당 모드의 메뉴에서 차동 기능을 다시 켜십시오."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="주차 브레이크"/>
@@ -612,6 +604,23 @@
         <text name="rms_report_wear_harvest_rice" text="벼 수확"/>
         <text name="rms_report_wear_harvest_wet" text="습한 작물"/>
         <text name="rms_report_wear_header_starts" text="헤더 시동 횟수"/>
+        <text name="rms_report_wear_service_overdue" text="정비 주기 초과"/>
+        <text name="rms_report_wear_engine_overload" text="엔진 과부하"/>
+        <text name="rms_report_wear_cold_engine" text="차가운 엔진"/>
+        <text name="rms_report_wear_fluid_level" text="낮은 유체 수준"/>
+        <text name="rms_report_wear_engine_overheat" text="엔진 과열"/>
+        <text name="rms_report_wear_lugging" text="저회전 고부하 운전"/>
+        <text name="rms_report_wear_wheel_slip" text="휠 슬립"/>
+        <text name="rms_report_wear_drivetrain_windup" text="구동계 응력"/>
+        <text name="rms_report_wear_cold_oil" text="차가운 변속기 오일"/>
+        <text name="rms_report_wear_transmission_overheat" text="변속기 과열"/>
+        <text name="rms_report_wear_wet_weather" text="습한 날씨"/>
+        <text name="rms_report_wear_cranking" text="빈번한 시동"/>
+        <text name="rms_report_wear_steering" text="정지 상태 조향"/>
+        <text name="rms_report_wear_park_brake" text="주차 브레이크"/>
+        <text name="rms_report_wear_low_fuel" text="연료 부족"/>
+        <text name="rms_report_wear_idle_deposit" text="장시간 공회전"/>
+        <text name="rms_report_wear_pto_engagement" text="PTO 연결"/>
         <text name="rms_report_component_title" text="부품"/>
         <text name="rms_report_system_condition_transmission" text="변속기"/>
         <text name="rms_report_system_condition_power" text="현재 출력"/>
@@ -978,98 +987,8 @@
         <text name="rms_sell_dialog_repair_penalty" text="수리"/>
         <text name="rms_sell_dialog_washing_penalty" text="세척"/>
         <text name="rms_sell_dialog_deposit_refund" text="보증금 반환"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="낮은 유체 수준"/>
-        <text name="rms_tutorial_fluid_level_message" text="이 기계의 액체 중 하나가 게이지 표시선 아래로 내려갔습니다. 엔진 오일은 가동 시간에 따라 줄어들며 마모된 엔진일수록 더 빨리 줄어듭니다. 다른 액체는 누출될 때만 줄어듭니다.&#10;&#10;기계는 아직 정상적으로 작업하지만, 수위가 낮을수록 경사에서 펌프가 공기를 더 쉽게 빨아들이며, 그런 1분마다 베어링이나 펌프가 손상됩니다. 열 교환액, 변속기 오일, 유압유가 부족하면 그 계통도 뜨거워집니다.&#10;&#10;상점에서 구매한, 해당 계통용 액체 용기로 보충하세요. 다른 액체를 넣으면 계통이 오염됩니다. 대리점에서도 보충할 수 있습니다."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems에 오신 것을 환영합니다"/>
-        <text name="rms_tutorial_welcome_disable_button" text="팁 끄기"/>
-        <text name="rms_tutorial_welcome_enable_button" text="팁 켜기"/>
-        <text name="rms_tutorial_welcome_message" text="이 모드는 게임의 차량 손상 및 정비 시스템을 완전히 새롭게 바꿉니다. 변경 사항이 많기 때문에 튜토리얼 팁이 수시로 표시됩니다. 이 팁들은 새로운 메커니즘을 더 빨리 이해하고, 흔한 실수를 피하며, 기계가 고장 나지 않도록 도와줍니다.&#10;&#10;원하시면 지금 바로 튜토리얼 팁을 끌 수 있습니다. 이후에는 모드 설정의 Realistic Mechanical Systems 항목에서 언제든 다시 활성화할 수 있습니다."/>
-        <text name="rms_tutorial_wet_weather_title" text="습한 날씨"/>
-        <text name="rms_tutorial_wet_weather_message" text="습기는 배선과 전기 장비에 좋지 않습니다. 비, 눈, 우박이 내릴 때 차량이 야외에 있으면 전기 시스템의 마모가 약간 더 빨라집니다."/>
-        <text name="rms_tutorial_wheel_slip_title" text="휠 슬립"/>
-        <text name="rms_tutorial_wheel_slip_message" text="바퀴가 심하게 미끄러지고 있습니다. 휠 슬립은 변속기를 가장 많이 손상시키는 요인 중 하나이며 다음 정비소 방문 시점을 크게 앞당깁니다."/>
-        <text name="rms_tutorial_service_due_soon_title" text="정비 예정"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s 차량은 곧 정비가 필요합니다. 정비소에서 권장 항목을 선택하면 기한이 된 작업을 모두 수행합니다. 가동 시간과 달력 기한 중 먼저 도달한 기준이 적용되므로 적게 사용해도 정비가 필요합니다. 정비 편의성은 내 농장에서 직접 수리할 수 있는 범위를 나타냅니다. 정비는 이동식 정비소에서도 가능합니다."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="정비 주기 초과"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s의 정비 주기가 지났습니다.&#10;&#10;가능한 한 빨리 정비소로 가서 &quot;정비&quot;를 선택하십시오. 정비가 늦어진 차량을 계속 운행하면 여러 고장이 발생할 위험이 크게 높아집니다."/>
-        <text name="rms_tutorial_steering_title" text="정지 상태 조향"/>
-        <text name="rms_tutorial_steering_message" text="정지 상태에서는 가급적 조향하지 않는 것이 좋습니다. 이때 조향기어와 앞차축 부품에 큰 부담이 걸리며, 그 결과 하부 주행계의 마모가 증가합니다.&#10;&#10;조금만 움직이기 시작해도 바퀴는 훨씬 쉽게 돌아갑니다."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="열 제거 및 에어 필터"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="라디에이터 또는 에어 필터가 막혔습니다. 차량을 바라보며 %s 키를 길게 눌러 어느 쪽인지 확인하십시오. 압축 공기 블로어로 청소하십시오. 필터를 더 이상 불어내어 청소할 수 없다면 정비소가 %s 정비부터 교체합니다."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="그리스 주입 필요"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s 차량에 그리스 주입이 필요한 주입구가 있습니다.&#10;&#10;RMS에서 각 기계에는 고유한 그리스 주입구가 있습니다. 작업한 날마다 다시 주입해야 하며, 일부는 작업한 날 며칠마다 주입해야 합니다. 주입이 늦어지면 섀시 마모가 빨라집니다.&#10;&#10;상점에서 그리스 건과 카트리지를 구입하십시오. 건을 손에 들고 카트리지 앞에 서서 장착한 다음 기계를 조준하십시오. 클릭할 때마다 주입구 하나에 그리스를 주입하며, 버튼을 누르고 있으면 다음 주입구로 이어집니다.&#10;&#10;남은 주입구를 보려면 차량을 바라보며 %s 키를 길게 누르십시오."/>
-        <text name="rms_tutorial_needs_repair_title" text="고장 감지"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s 차량에 문제가 있습니다. 부품 하나가 고장 났을 수 있습니다.&#10;&#10;정비소로 가십시오. 점검, 또는 시기가 된 정비로 고장을 확인합니다. 미루면 고장이 계속 악화되고 수리 비용도 증가할 수 있습니다.&#10;&#10;고장이 확인되면 정비소에서 수리하십시오."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="오버홀 필요"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s 차량에서 노후화가 나타납니다. 교체나 오버홀을 고려할 때입니다. 시간과 비용이 많이 드는 작업이지만 기계를 원래 상태로 되돌릴 수 있는 유일한 방법입니다.&#10;&#10;차량 수명은 모드 설정에서 조정할 수 있으며 값이 클수록 차량이 더 천천히 마모됩니다."/>
-        <text name="rms_tutorial_needs_preventive_title" text="고장 위험 증가"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s의 마모된 부품이 고장 위험을 높이고 있습니다.&#10;&#10;%s 정비: 밸브를 조정하고, 수확기에서는 마모된 수확 부품을 교체하여 이 위험을 줄입니다."/>
-        <text name="rms_tutorial_age_degradation_title" text="노후 성능 저하"/>
-        <text name="rms_tutorial_age_degradation_message" text="RMS에서는 차량이 오래될수록 원래 성능의 일부를 서서히 잃습니다.&#10;&#10;차량 수명의 약 3분의 1이 지나면 노후 마모가 출력이나 제동 성능 같은 일부 중요한 특성을 조금씩 낮추기 시작합니다. 이후 이 효과는 더 강해지며, 수명 말기에 특히 확연하게 나타납니다.&#10;&#10;새 부품으로 바꾸면 마모가 사라집니다. 오버홀은 마모된 부품을 교체합니다."/>
-        <text name="rms_tutorial_poor_consumables_title" text="저품질 소모품"/>
-        <text name="rms_tutorial_poor_consumables_message" text="종합 점검에서 %s에 정비 중 장착된 불량 필터가 발견되었습니다. 저렴한 품질에서 생길 수 있습니다.&#10;&#10;이 필터는 불순물을 통과시켜, 필터를 교체할 때까지 보호하는 계통이 더 빨리 마모됩니다. 다음 정비에서 교체됩니다."/>
-        <text name="rms_tutorial_poor_parts_title" text="저품질 부품"/>
-        <text name="rms_tutorial_poor_parts_message" text="종합 점검에서 %s에 정비소에서 장착된 불량 부품이 발견되었습니다. 이 부품은 고장 납니다. 저렴한 품질에서 생길 수 있습니다.&#10;&#10;지금 정비소에서 교체하거나 고장 날 때까지 기다릴 수 있습니다."/>
-        <text name="rms_tutorial_park_brake_title" text="주차 브레이크"/>
-        <text name="rms_tutorial_park_brake_message" text="주차 브레이크가 걸려 있습니다. 정차 상태에서 장비를 떠나면 자동으로 걸리고, 다시 가속하면 풀립니다. 엔진을 끄거나 정차한 채 45초가 지나도 걸립니다.&#10;&#10;경사면에서는 장비가 저절로 굴러가는 것을 막아 줍니다."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="주차 브레이크가 걸려 있습니다. 전용 키로 직접 걸고 직접 해제합니다. 브레이크를 건 채 가속하면 기계는 브레이크를 거슬러 움직이고 주차 브레이크가 마모됩니다.&#10;&#10;경사에서는 기계가 저절로 굴러가는 것을 막아 줍니다. 브레이크를 걸지 않고 기계에서 내리면 기계가 굴러갈 수 있습니다."/>
-        <text name="rms_tutorial_preheat_title" text="디젤 예열"/>
-        <text name="rms_tutorial_preheat_message" text="차가운 디젤 엔진에서는 시동 조작을 한 번 누르면 점화가 켜지고 예열 플러그 사이클이 자동으로 시작됩니다. 계기판 경고등이 자체 점검을 수행한 뒤 엔진이 준비될 때까지 예열등이 켜져 있습니다. 조작을 반복하지 마십시오. 예열등이 꺼지면 스타터가 자동으로 작동합니다."/>
-        <text name="rms_tutorial_pto_engagement_title" text="PTO 연결"/>
-        <text name="rms_tutorial_pto_engagement_message" text="PTO는 공회전 상태에서 연결한 뒤 회전수를 올리세요. 높은 회전수에서 연결하면 구동계 전체에 충격이 가해지며, 작업기가 무거울수록 더 커집니다. 연결할 때마다 클러치도 마모됩니다."/>
-        <text name="rms_tutorial_header_engagement_title" text="헤더 연결"/>
-        <text name="rms_tutorial_header_engagement_message" text="헤더는 공회전 상태에서 연결한 뒤 회전수를 올리세요. 높은 회전수에서 시동하면 슬립 클러치가 미끄러져 훨씬 빨리 마모됩니다."/>
-        <text name="rms_tutorial_header_stored_title" text="장기 보관된 헤더"/>
-        <text name="rms_tutorial_header_stored_message" text="이 헤더는 2주 넘게 돌지 않았습니다. 슬립 클러치가 녹으로 고착되어 더 이상 헤더를 보호하지 못합니다. 수확 전에 헤더에 그리스를 주입하세요. 그렇지 않으면 막힘으로 구동축이 부러질 수 있습니다."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="공회전 및 비가동"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="기계가 작업하지 않고 가동 중일 때는 마모가 훨씬 적습니다. 엔진을 끄면 마모가 최소화되고 지붕 아래에 보관하면 완전히 사라집니다."/>
-        <text name="rms_tutorial_idle_deposit_title" text="장시간 공회전"/>
-        <text name="rms_tutorial_idle_deposit_message" text="차량이 너무 오래 공회전한 것 같습니다. 긴 공회전은 단지 연료만 낭비하는 것이 아닙니다. 시간이 지나면 연료 계통에 침전물이 쌓여 연료 계통이 더 빨리 마모됩니다.&#10;&#10;지금 차량이 필요하지 않다면 엔진을 끄는 것이 좋습니다."/>
-        <text name="rms_tutorial_hot_weather_title" text="더운 날씨"/>
-        <text name="rms_tutorial_hot_weather_message" text="오늘은 기온이 매우 높습니다. 이런 날씨에는 라디에이터 청결 상태를 확인하고 엔진 과부하를 피해야 합니다. 그렇지 않으면 과열은 시간문제입니다.&#10;&#10;차량을 바라보며 %s 키를 길게 눌러 점검으로 라디에이터 상태를 확인할 수 있고, 에어 블로워로 청소도 할 수 있습니다."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="너무 무거운 트레일러"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="견인 하중이 이 차량에 비해 무겁습니다. 계속 주행할 수는 있지만 제동할 때마다 브레이크가 더 빨리 마모됩니다.&#10;&#10;RMS는 두 가지 기준을 사용합니다. 트랙터는 자체 중량의 4.5배를 넘게 견인할 때, 트럭은 총 조합 중량 톤당 6마력 미만일 때입니다. 하중이 무거울수록 브레이크가 더 빨리 마모됩니다."/>
-        <text name="rms_tutorial_hard_start_title" text="시동 어려움"/>
-        <text name="rms_tutorial_hard_start_message" text="%s 차량의 엔진 시동이 어렵습니다. 약한 배터리, 서리, 기계적 고장 또는 스타터 마모가 원인일 수 있습니다.&#10;&#10;시동 시 높은 돌입 전류로 인해 전기 시스템에 큰 부하가 걸립니다."/>
-        <text name="rms_tutorial_low_fuel_title" text="연료 부족"/>
-        <text name="rms_tutorial_low_fuel_message" text="연료 탱크가 예비 수준에 가까워지고 있습니다. 남은 연료가 적을수록 연료 펌프가 연료를 끌어올리기 위해 더 힘들게 작동하고, 탱크 바닥의 물과 침전물이 필터로 넘어가 필터가 더 빨리 막히게 됩니다.&#10;&#10;가능한 한 빨리 연료를 보충하세요."/>
-        <text name="rms_tutorial_lugging_title" text="저회전 고부하 운전"/>
-        <text name="rms_tutorial_lugging_message" text="엔진, 특히 변속기는 저회전에서 높은 부하로 운행되는 것을 좋아하지 않습니다. 차량에 너무 무거운 장비를 연결했거나, 수동 변속기라면 단순히 기어 선택이 좋지 않을 수도 있습니다."/>
-        <text name="rms_tutorial_engine_overheat_title" text="엔진 과열"/>
-        <text name="rms_tutorial_engine_overheat_message" text="엔진이 과열되기 시작했습니다. 엔진의 높은 부하, 막힌 라디에이터, 더운 날씨 또는 차량 열 제거 시스템의 고장이 원인일 수 있습니다.&#10;&#10;주의하십시오. 과열은 기계를 가장 많이 손상시키는 요인 중 하나입니다. 엔진뿐 아니라 열 제거 시스템도 한계까지 작동하며 엔진실의 열은 배선과 전기 부품의 열화를 가속합니다."/>
-        <text name="rms_tutorial_engine_overload_title" text="엔진 과부하"/>
-        <text name="rms_tutorial_engine_overload_message" text="엔진이 매우 큰 응력을 받고 있습니다. 작업이 이 기계에 너무 무거워 더 강력한 차량이 필요할 수도 있고 속도를 줄이는 것만으로 부하가 감소할 수도 있습니다.&#10;&#10;어느 경우든 이러한 응력에서는 마모가 확연히 증가합니다."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="배기 연기 읽기"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="이 기계에서 나오는 연기는 장식이 아니며 색상으로 상태를 진단할 수 있습니다.&#10;&#10;검은 연기는 엔진에 공기보다 연료가 더 많이 공급된다는 뜻입니다. 터보차저가 회전 속도에 도달하기 전의 급가속, 저회전 고부하, 과부하, 막힌 에어 필터, 노후한 터보차저 또는 마모된 분사 장치가 원인입니다. 파란 연기는 노후한 엔진이 자체 오일을 연소한다는 뜻이며 흰 연기는 연료가 연소되지 않은 채 배출된다는 뜻입니다.&#10;&#10;연기 기둥은 엔진의 작업량에 따라서도 커집니다. 오래된 기계는 최신 기계보다 훨씬 많은 연기를 내며 이는 정상입니다."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT 과열"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT 변속기가 과열되기 시작했습니다. 과도한 부하, 막힌 라디에이터, 매우 더운 날씨 또는 변속기 열 제거 회로의 고장이 원인일 수 있습니다. 너무 무거운 쟁기나 과적된 트레일러만으로도 과열될 수 있습니다.&#10;&#10;주의하십시오. 과열은 CVT 변속기를 가장 많이 손상시키는 요인 중 하나입니다."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="섀시 부하"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="거친 지형을 빠르게 달리면 %s 차량의 주행 장치가 빠르게 마모됩니다. 이러한 충격은 배선과 연결 단자도 손상시키고, 무거운 작업기를 들어 올린 상태에서는 유압 시스템도 손상시킵니다.&#10;&#10;고르지 않은 지면에서는 속도를 줄이십시오."/>
-        <text name="rms_tutorial_terrain_impact_title" text="강한 충격"/>
-        <text name="rms_tutorial_terrain_impact_message" text="주행 장치가 방금 강한 충격을 받았습니다. 기계를 갑자기 멈추거나 급격히 감속시키는 장애물에 충돌하면 섀시가 즉시 손상되고 다음 고장이 앞당겨집니다. 대개 조향 장치나 베어링입니다.&#10;&#10;장애물 앞에서는 속도를 줄이십시오."/>
-        <text name="rms_tutorial_cranking_title" text="빈번한 시동"/>
-        <text name="rms_tutorial_cranking_message" text="짧은 시간에 시동 모터가 많이 돌았습니다. 합계 몇 초를 넘기면 시동할 때마다 시동 모터, 배터리와 나머지 시동 회로가 마모됩니다.&#10;&#10;잠깐 멈출 때는 엔진을 끄지 마세요."/>
-        <text name="rms_tutorial_critical_failure_title" text="치명적 고장"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s 차량은 완전히 고장 나서 더 이상 스스로 움직일 수 없습니다.&#10;&#10;고장에 따라 이동식 정비소가 현장에서 적어도 임시로 수리하여, 차량이 스스로 정비소까지 갈 수 있게 할 수 있습니다. 그렇지 않으면 다른 방법으로 옮겨야 합니다."/>
-        <text name="rms_tutorial_cold_engine_title" text="차가운 엔진"/>
-        <text name="rms_tutorial_cold_engine_message" text="엔진이 차갑습니다. %s 미만에서는 부하와 관계없이 돌아가기만 해도 더 빨리 마모되며, 차가울수록 더 많이 마모됩니다.&#10;&#10;%s 미만에서는 최대 회전수의 4분의 3을 넘기지 마세요. 열 제거 시스템에 부담이 됩니다."/>
-        <text name="rms_tutorial_cold_oil_title" text="차가운 변속기 오일"/>
-        <text name="rms_tutorial_cold_oil_message" text="변속기 오일이 차갑습니다. %s 미만에서는 부하와 관계없이 엔진이 돌아가기만 해도 변속기가 더 빨리 마모됩니다.&#10;&#10;유압유도 %s 미만에서는 유압을 사용할 때 펌프를 마모시킵니다."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="변속기 과열"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="변속기 오일이 과열되기 시작했습니다. 과도한 부하, 막힌 라디에이터, 매우 더운 날씨 또는 변속기 열 제거 계통의 고장이 원인일 수 있습니다.&#10;&#10;변속기 오일은 CVT뿐 아니라 모든 기계에서 뜨거워집니다. 너무 뜨거운 오일은 변속기를 마모시키고 씰을 파괴합니다."/>
-        <text name="rms_tutorial_overload_indicator_title" text="과부하 경고"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s에 큰 부하가 걸리고 있습니다. 방금 계기판에 켜진 경고등이 이를 알립니다.&#10;&#10;현재 작업에 필요한 출력이 이 기계에 부족할 수 있습니다. 크루즈 컨트롤로 속도를 제한하거나 최대 출력으로 주행하는 대신 가속을 조금 줄여 부하를 낮추십시오."/>
-        <text name="rms_tutorial_battery_low_title" text="배터리 약함"/>
-        <text name="rms_tutorial_battery_low_message" text="이 차량의 배터리가 거의 완전히 방전되었습니다. 장기간 방치, 심한 추위, 전기 시스템 이상 등이 원인일 수 있습니다.&#10;&#10;충전량이 낮으면 시동이 어려워지고, 이어서 아예 걸리지 않게 됩니다. 이 경우 점프 케이블을 사용해 다른 차량에서 시동을 걸 수 있습니다. 장기간 세워 두기 전이나 배터리가 저절로 방전될 때는 차량 앞에서 도보로 배터리 차단 스위치를 사용해 차단하십시오."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="구동계 응력"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="차동 잠금을 체결한 채 접지력이 높은 노면에서 조향하고 있습니다. 곡선에서는 안쪽과 바깥쪽 바퀴가 서로 다른 거리를 이동하지만 차동 잠금은 같은 속도로 회전하도록 강제합니다. 구동계에 응력이 발생하고 변속기 마모가 증가합니다. 조향하기 전에 잠금을 해제하십시오."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="구동 방식과 차동 잠금"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="이 기계에서는 구동 방식을 2WD, 4WD 또는 AUTO로 선택할 수 있습니다. AUTO에서는 작업 중 전륜축이 결합된 상태로 유지되며, %s를 넘거나 급하게 선회하면 분리되고 브레이크를 밟는 즉시 다시 결합됩니다.&#10;&#10;차동 잠금은 접지력이 부족할 때 접지력을 확보하고 전륜축도 함께 결합합니다. 선회할 때, 제동할 때, %s를 넘을 때 저절로 해제됩니다. 필요할 때 다시 작동시키십시오."/>
-        <text name="rms_tutorial_drivetrain_modes_manual_message" text="이 기계에서는 구동 방식을 2WD 또는 4WD로 선택할 수 있습니다.&#10;&#10;차동 잠금은 접지력이 부족할 때 접지력을 확보하지만 접지력이 높은 노면에서 조향하면 구동계에 큰 부담을 줍니다. 안쪽과 바깥쪽 바퀴가 같은 속도로 회전할 수 없기 때문입니다. 조향하기 전에 잠금을 해제하십시오."/>
-        <text name="rms_tutorial_diff_lock_title" text="차동 잠금"/>
-        <text name="rms_tutorial_diff_lock_message" text="차동 잠금은 접지력이 부족할 때 접지력을 확보합니다. 선회할 때, 제동할 때, %s를 넘을 때 저절로 해제됩니다. 필요할 때 다시 작동시키십시오."/>
-        <text name="rms_tutorial_diff_lock_manual_message" text="차동 잠금은 접지력이 부족할 때 접지력을 확보하지만 접지력이 높은 노면에서 조향하면 구동계에 큰 부담을 줍니다. 안쪽과 바깥쪽 바퀴가 같은 속도로 회전할 수 없기 때문입니다. 조향하기 전에 잠금을 해제하십시오."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Realistic Mechanical Systems에서는 기계가 실제처럼 마모되고 고장 납니다. 다음 세 가지 규칙만 지키면 고장이 계속되지 않게 플레이할 수 있습니다.&#10;&#10;1. 정비를 제때 하십시오. 게임 메뉴의 기계 대시보드에서 각 기계의 다음 정비를 확인할 수 있습니다.&#10;2. 매일 기계를 준비하십시오. 기계 근처에서 %s 키를 길게 누르면 유체 잔량, 라디에이터, 에어 필터, 그리스 주입을 점검할 수 있습니다. 라디에이터와 에어 필터는 에어 블로워로 청소하고, 기계에는 그리스 건으로 그리스를 주입하십시오. 장비와 트레일러에도 그리스 주입이 필요합니다. 기계 대시보드에 그리스 주입이 필요한 장비가 표시됩니다. 에어 블로워, 그리스 건, 그리스 카트리지는 상점의 정비 카테고리에 있습니다.&#10;3. 기계를 소중히 다루십시오. 과부하, 과열, 엔진이 차가운 상태에서의 작업, 바퀴 미끄러짐은 기계를 마모시킵니다.&#10;&#10;게임이 너무 어렵다면 기계 대시보드의 RMS 설정 탭에서 차량 수명과 정비 간격을 늘리십시오."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

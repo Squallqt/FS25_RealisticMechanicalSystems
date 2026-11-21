@@ -7,10 +7,8 @@ RMS_Config = {
     CONFIG_VERSION = 1,
 
     DEBUG = false,
-    TUTORIAL_MODE = true,
 
     ON_UPDATE_DELAY = 100,
-    TUTORIAL_UPDATE_DELAY = 1000, 
 
     UPDATE_VEHICLE_STATE_DELAY_ONE = 50,
     UPDATE_VEHICLE_STATE_DELAY_TWO = 200,
@@ -201,8 +199,6 @@ RMS_Config = {
             TERRAIN_IMPACT_MIN_SPEED_LOSS = 10.0,
             TERRAIN_IMPACT_DAMAGE_PER_KMH = 0.001,
             TERRAIN_IMPACT_MAX_DAMAGE = 0.05,
-            VIB_TUTORIAL_MS = 3000,
-            TERRAIN_IMPACT_TUTORIAL_MS = 5000,
             BRAKE_MASS_FACTOR_MULTIPLIER = 4.5,
             BRAKE_MASS_SPEED_THRESHOLD = 2.0,
             BRAKE_PEDAL_THRESHOLD = 0.15,
@@ -210,7 +206,6 @@ RMS_Config = {
             HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT = 6,
             HEAVY_TRAILER_TRUCK_MASS_RATIO_THRESHOLD = 6.0,
             HEAVY_TRAILER_TRUCK_MASS_RATIO_FULL_EFFECT = 3.0,
-            HEAVY_TRAILER_TUTORIAL_MARGIN = 0.8,
         },
 
         FUEL_FACTOR_DATA = {
@@ -1115,7 +1110,6 @@ RMS_Config = {
         WINDUP_RELEASE_RATE = 0.25,
         WINDUP_GEAR_EXPONENT = 4,
         WINDUP_INSTANT_DAMAGE = 0.03,
-        WINDUP_TUTORIAL_THRESHOLD = 0.05,
         WINDUP_4WD_WARNING_THRESHOLD = 0.05,
         WINDUP_WARNING_THRESHOLD = 0.22,
         WINDUP_CRITICAL_THRESHOLD = 0.44,
@@ -1702,189 +1696,12 @@ RMS_Config = {
     }
 }
 
--- tips of the tutorial, in the order their flags are saved and sent
-RMS_Config.TUTORIAL_MESSAGE_IDS = {
-    "AGE_DEGRADATION", "BATTERY_LOW", "CHASSIS_VIBRATION", "COLD_ENGINE", "COLD_OIL", "CRANKING", "CRITICAL_FAILURE",
-    "CVT_OVERHEAT", "DRIVETRAIN_MODES", "DRIVETRAIN_WINDUP", "ENGINE_OVERHEAT", "ENGINE_OVERLOAD", "EXHAUST_SMOKE",
-    "FLUID_LEVEL", "HARD_START", "HEADER_ENGAGEMENT", "HEADER_STORED", "HEAVY_TRAILER", "HOT_WEATHER",
-    "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL", "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE",
-    "NEEDS_REPAIR", "OVERLOAD_INDICATOR", "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT",
-    "PTO_ENGAGEMENT", "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
-    "TRANSMISSION_OVERHEAT", "WET_WEATHER", "WHEEL_SLIP"
-}
-
--- seen flag of each tip, none seen yet
-RMS_Config.TUTORIAL_MESSAGES = {}
-for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-    RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-end
-
----Clears every seen flag of the tutorial messages
-function RMS_Config.resetTutorialMessages()
-    for messageId, _ in pairs(RMS_Config.TUTORIAL_MESSAGES) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-    end
-end
-
-RMS_Config.TUTORIAL_PLAYER_STATES = {}
-RMS_Config.TUTORIAL_STATE_LOADED = false
-RMS_Config.TUTORIAL_LOCAL_USER_ID = nil
-
----Builds a normalized tutorial state from its three parts
-function RMS_Config.createTutorialState(tutorialMode, welcomeMessageSeen, messages)
-    local state = {
-        tutorialMode = tutorialMode ~= false,
-        welcomeMessageSeen = welcomeMessageSeen == true,
-        messages = {}
-    }
-
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        state.messages[messageId] = messages ~= nil and messages[messageId] == true or false
-    end
-
-    return state
-end
-
----Snapshots the current tutorial state
-function RMS_Config.captureTutorialState()
-    return RMS_Config.createTutorialState(
-        RMS_Config.TUTORIAL_MODE,
-        RMS_Config.WELCOME_MESSAGE_SEEN,
-        RMS_Config.TUTORIAL_MESSAGES
-    )
-end
-
----Writes a tutorial state into the configuration
-function RMS_Config.applyTutorialState(state)
-    local normalized = RMS_Config.createTutorialState(
-        state ~= nil and state.tutorialMode or nil,
-        state ~= nil and state.welcomeMessageSeen or nil,
-        state ~= nil and state.messages or nil
-    )
-
-    RMS_Config.TUTORIAL_MODE = normalized.tutorialMode
-    RMS_Config.WELCOME_MESSAGE_SEEN = normalized.welcomeMessageSeen
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = normalized.messages[messageId]
-    end
-    RMS_Config.TUTORIAL_STATE_LOADED = true
-end
-
----Resets the tutorial state of the local player
-function RMS_Config.resetLocalTutorialState()
-    RMS_Config.TUTORIAL_MODE = true
-    RMS_Config.WELCOME_MESSAGE_SEEN = false
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-    end
-    RMS_Config.TUTORIAL_STATE_LOADED = false
-    RMS_Config.TUTORIAL_LOCAL_USER_ID = nil
-end
-
----Clears the tutorial states of every player for a new session
-function RMS_Config.resetTutorialStateSession()
-    RMS_Config.TUTORIAL_PLAYER_STATES = {}
-    RMS_Config.resetLocalTutorialState()
-end
-
----Returns the tutorial state stored for a player
-function RMS_Config.getTutorialPlayerState(uniqueUserId)
-    if uniqueUserId == nil or uniqueUserId == "" then return nil end
-
-    uniqueUserId = tostring(uniqueUserId)
-    local state = RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId]
-    if state == nil then
-        state = RMS_Config.createTutorialState()
-        RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId] = state
-    end
-    return RMS_Config.createTutorialState(state.tutorialMode, state.welcomeMessageSeen, state.messages)
-end
-
----Stores the tutorial state of a player
-function RMS_Config.setTutorialPlayerState(uniqueUserId, state)
-    if uniqueUserId == nil or uniqueUserId == "" or state == nil then return end
-    RMS_Config.TUTORIAL_PLAYER_STATES[tostring(uniqueUserId)] = RMS_Config.createTutorialState(
-        state.tutorialMode,
-        state.welcomeMessageSeen,
-        state.messages
-    )
-end
-
----Creates the tutorial state of the local player on first use
-function RMS_Config.ensureLocalTutorialState()
-    if RMS_Config.TUTORIAL_STATE_LOADED then return true end
-    if g_server == nil or g_localPlayer == nil then return false end
-
-    local uniqueUserId = g_localPlayer:getUniqueId()
-    local state = RMS_Config.getTutorialPlayerState(uniqueUserId)
-    if state == nil then return false end
-
-    RMS_Config.TUTORIAL_LOCAL_USER_ID = uniqueUserId
-    RMS_Config.applyTutorialState(state)
-    return true
-end
-
----Replicates the tutorial state between the server and the client
-function RMS_Config.syncTutorialState()
-    if not RMS_Config.TUTORIAL_STATE_LOADED and not RMS_Config.ensureLocalTutorialState() then return end
-
-    local state = RMS_Config.captureTutorialState()
-    if g_server ~= nil then
-        RMS_Config.setTutorialPlayerState(RMS_Config.TUTORIAL_LOCAL_USER_ID, state)
-    else
-        RMS_TutorialStateEvent.sendToServer(state)
-    end
-end
-
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 
 ---Prints a settings file message while debugging
 local function logSettingsDebug(text, ...)
     if RMS_Config.DEBUG then
         print("[RMS_CFG] " .. string.format(text, ...))
-    end
-end
-
----Writes the tutorial state of every player
-local function saveTutorialPlayerStates(xmlFile, root)
-    local userIds = {}
-    for uniqueUserId, _ in pairs(RMS_Config.TUTORIAL_PLAYER_STATES) do
-        table.insert(userIds, uniqueUserId)
-    end
-    table.sort(userIds)
-
-    for index, uniqueUserId in ipairs(userIds) do
-        local state = RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId]
-        local key = string.format("%s.tutorialPlayers.player(%d)", root, index - 1)
-        setXMLString(xmlFile, key .. "#uniqueUserId", uniqueUserId)
-        setXMLBool(xmlFile, key .. ".tutorialMode", state.tutorialMode)
-        setXMLBool(xmlFile, key .. ".welcomeMessageSeen", state.welcomeMessageSeen)
-        for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-            setXMLBool(xmlFile, key .. ".messages." .. messageId, state.messages[messageId] == true)
-        end
-    end
-end
-
----Reads the tutorial state of every player
-local function loadTutorialPlayerStates(xmlFile, root)
-    RMS_Config.TUTORIAL_PLAYER_STATES = {}
-    local index = 0
-
-    while true do
-        local key = string.format("%s.tutorialPlayers.player(%d)", root, index)
-        local uniqueUserId = getXMLString(xmlFile, key .. "#uniqueUserId")
-        if uniqueUserId == nil then break end
-
-        local messages = {}
-        for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-            messages[messageId] = getXMLBool(xmlFile, key .. ".messages." .. messageId) == true
-        end
-        RMS_Config.setTutorialPlayerState(uniqueUserId, {
-            tutorialMode = getXMLBool(xmlFile, key .. ".tutorialMode"),
-            welcomeMessageSeen = getXMLBool(xmlFile, key .. ".welcomeMessageSeen"),
-            messages = messages
-        })
-        index = index + 1
     end
 end
 
@@ -1915,8 +1732,8 @@ function RMS_Config.getSettingTable(setting)
     return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
 end
 
----Writes the settings file, with the tutorial states if asked
-local function writeConfigFile(xmlFileName, includeTutorialStates)
+---Writes the settings file
+local function writeConfigFile(xmlFileName)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
     if xmlFile == nil or xmlFile == 0 then
         logSettingsDebug("SAVE ERROR - createXMLFile returned %s", tostring(xmlFile))
@@ -1935,19 +1752,14 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
         end
     end
 
-    if includeTutorialStates then
-        if RMS_Config.TUTORIAL_STATE_LOADED and RMS_Config.TUTORIAL_LOCAL_USER_ID ~= nil then
-            RMS_Config.setTutorialPlayerState(RMS_Config.TUTORIAL_LOCAL_USER_ID, RMS_Config.captureTutorialState())
-        end
-        saveTutorialPlayerStates(xmlFile, root)
-    end
+    RMS_Welcome.saveToXMLFile(xmlFile, root .. ".welcome")
 
     saveXMLFile(xmlFile)
     delete(xmlFile)
     return true
 end
 
----Writes every adjustable setting to the savegame file
+---Writes the savegame settings file
 function RMS_Config.saveToXMLFile()
     if not g_currentMission:getIsServer() then
         return false
@@ -1958,12 +1770,12 @@ function RMS_Config.saveToXMLFile()
         savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex)
     end
 
-    local savegameWritten = writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile, true)
+    local savegameWritten = writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile)
 
     return savegameWritten
 end
 
----Reads every adjustable setting from the savegame settings file
+---Reads the savegame settings file
 function RMS_Config.loadFromXMLFile()
     if RMS_Config._loaded then
         return
@@ -2001,7 +1813,7 @@ function RMS_Config.loadFromXMLFile()
     end
 
     if g_currentMission:getIsServer() then
-        loadTutorialPlayerStates(xmlFile, root)
+        RMS_Welcome.loadFromXMLFile(xmlFile, root .. ".welcome")
     end
 
     RMS_Config.applyLoadedVersion()

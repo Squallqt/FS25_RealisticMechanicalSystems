@@ -118,7 +118,6 @@ function RMS_Consumables:cleanRadiatorAndAirFilter(dt)
     local cleared = RMS_Config.FIELD_CARE.CLEANING_SPEED / 1000 * dt
     spec.radiatorClogging = math.max(spec.radiatorClogging - cleared, 0)
     spec.airFilterClogging = math.max(spec.airFilterClogging - cleared, spec.airFilterResidue)
-    RMS_Config.TUTORIAL_MESSAGES.RAD_OR_FILTER_CLOGGED = true
 
     if self.isServer then
         RealisticMechanicalSystems.raiseRMSDirty(self, RealisticMechanicalSystems.SYNC_GROUP.FIELDCARE)

@@ -41,9 +41,8 @@ RealisticMechanicalSystems = {
         WEAR = 64,
         BREAKDOWNS = 128,
         SERVICE_PROGRESS = 256,
-        TUTORIAL_DATA = 512,
-        DRIVETRAIN = 1024,
-        RESALE = 2048
+        DRIVETRAIN = 512,
+        RESALE = 1024
     },
 
     -- a harvester carries the harvest system in place of the PTO
@@ -383,7 +382,7 @@ local function refreshExclusionState(spec)
 end
 RealisticMechanicalSystems.refreshExclusionState = refreshExclusionState
 
-RealisticMechanicalSystems.SYNC_GROUP_ALL = 4095
+RealisticMechanicalSystems.SYNC_GROUP_ALL = 2047
 
 ---Flags one or more sync groups dirty on the vehicle
 function RealisticMechanicalSystems.raiseRMSDirty(vehicle, groupBits)
@@ -396,18 +395,6 @@ function RealisticMechanicalSystems.raiseRMSDirty(vehicle, groupBits)
         spec.rmsPendingByConnection[connection] = bit32.bor(mask, groupBits)
     end
 
-    vehicle:raiseDirtyFlags(spec.rmsDirtyFlag)
-end
-
----Flags one or more sync groups dirty for a single connection
-function RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, groupBits, connection)
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local mask = spec.rmsPendingByConnection[connection]
-    if mask == nil then
-        return
-    end
-
-    spec.rmsPendingByConnection[connection] = bit32.bor(mask, groupBits)
     vehicle:raiseDirtyFlags(spec.rmsDirtyFlag)
 end
 
@@ -605,26 +592,6 @@ local function haveSystemsMoved(last, current)
     return last.count ~= current.count
 end
 
----Returns the connection of the driver keeping the tips on, nil otherwise
-local function getTutorialSyncConnection(vehicle)
-    local connection = vehicle:getOwnerConnection()
-    if connection == nil then
-        return nil
-    end
-
-    local uniqueUserId = g_currentMission.userManager:getUniqueUserIdByConnection(connection)
-    if uniqueUserId == nil then
-        return nil
-    end
-
-    local state = RMS_Config.TUTORIAL_PLAYER_STATES[tostring(uniqueUserId)]
-    if state ~= nil and not state.tutorialMode then
-        return nil
-    end
-
-    return connection
-end
-
 -- sync groups in update order, each with the values it watches
 local syncGroups = nil
 
@@ -683,30 +650,12 @@ local function getSyncGroups()
             watch("serviceLevel", 0.001), watch("transmissionServiceLevel", 0.001), watch("coolantServiceLevel", 0.001),
             watch("hydraulicServiceLevel", 0.001), mapText("serviceCalendar"), mapText("partWarranty"), mapText("usedPartWarranty"),
             watch("warrantyPlan"), watch("warrantyVoided"), watch("remapMotor"), watch("remapAge"), watch("remapByDealer"), watch("conditionLevel", 0.001),
-            watch("ptoEngagementSequence"), watch("ptoShockSequence"), watch("headerShockSequence"), watch("headerSeizedSequence"),
             watch("isHeaderSlipping"),
             { read = readSystemsSync, hasMoved = haveSystemsMoved } } },
         { group = GROUP.BREAKDOWNS, watches = {
             watch(function(_, spec) return serializeBreakdownsForDirtyCheck(spec.activeBreakdowns) end), mapText("preventiveParts") } },
         { group = GROUP.SERVICE_PROGRESS, watches = {
-            watch("pendingProgressElapsedTime", 500.0), watch("pendingProgressStepIndex"), watch("pendingProgressTotalTime", 500.0) } },
-        -- Sent to the driver alone, their connection first
-        { group = GROUP.TUTORIAL_DATA, watches = {
-            watch(function(vehicle) return getTutorialSyncConnection(vehicle) end),
-            watch(function(_, spec) return tonumber(spec.fuelState.idleTimer) or 0 end, 1.0),
-            watch(function(_, spec) return tonumber(spec.fuelState.level) or 0 end, 0.01),
-            watchNumber("luggingTutorialTimer", 0, 100.0), watchNumber("wheelSlipTutorialTimer", 0, 100.0),
-            watch(function(_, spec) return tonumber(spec.chassisBrakeState.hpTrailerMassRatio) or 1000 end, 0.1),
-            watch(function(_, spec) return tonumber(spec.chassisBrakeState.trailerMass) or 0 end, 0.01),
-            watch(function(_, spec) return tonumber(spec.chassisBrakeState.hpGrossMassRatio) or 1000 end, 0.1),
-            watch(function(_, spec) return spec.isCranking == true end),
-            watch(function(_, spec) return spec.chassisSteerState.groundContact > 0 end),
-            watch(function(_, spec) return spec.chassisSteerState.isMoving == true end),
-            watch("vibrationTutorialTimer", 100.0), watch("terrainImpactTutorialTimer", 100.0),
-            watch(function(_, spec)
-                local electrical = spec.systems ~= nil and spec.systems.electrical or nil
-                return electrical ~= nil and (tonumber(electrical.crankingTimer) or 0) or 0
-            end, 100.0) } }
+            watch("pendingProgressElapsedTime", 500.0), watch("pendingProgressStepIndex"), watch("pendingProgressTotalTime", 500.0) } }
     }
     for _, entry in ipairs(syncGroups) do
         syncGroupsByBit[entry.group] = entry
@@ -714,12 +663,11 @@ local function getSyncGroups()
     return syncGroups
 end
 
----Reads the values a sync group watches, from a first one on
--- @param integer? first first value read, 1 when nil
-local function readSyncGroup(vehicle, spec, entry, first)
+---Reads the values a sync group watches
+local function readSyncGroup(vehicle, spec, entry)
     local values = {}
-    for index = first or 1, #entry.watches do
-        values[index] = entry.watches[index].read(vehicle, spec)
+    for index, watched in ipairs(entry.watches) do
+        values[index] = watched.read(vehicle, spec)
     end
     return values
 end
@@ -735,8 +683,7 @@ local function hasWatchMoved(watched, last, current)
 end
 
 ---Raises a sync group when one of its values moved since it was sent
--- @param table? connection the one connection to send to, every one when nil
-local function markGroupDirty(vehicle, spec, group, connection)
+local function markGroupDirty(vehicle, spec, group)
     if not canRaiseDirtyFlag(vehicle, spec) then
         return false
     end
@@ -750,33 +697,12 @@ local function markGroupDirty(vehicle, spec, group, connection)
     local values = readSyncGroup(vehicle, spec, entry)
     for index, watched in ipairs(entry.watches) do
         if hasWatchMoved(watched, last[index], values[index]) then
-            if connection ~= nil then
-                RealisticMechanicalSystems.raiseRMSDirtyForConnection(vehicle, group, connection)
-            else
-                RealisticMechanicalSystems.raiseRMSDirty(vehicle, group)
-            end
+            RealisticMechanicalSystems.raiseRMSDirty(vehicle, group)
             sent[group] = values
             return true
         end
     end
     return false
-end
-
----Raises the tutorial data for the driver, while they keep the tips on
-local function markTutorialDataDirty(vehicle, spec)
-    if not canRaiseDirtyFlag(vehicle, spec) then
-        return false
-    end
-    local GROUP = RealisticMechanicalSystems.SYNC_GROUP
-    local connection = getTutorialSyncConnection(vehicle)
-    if connection == nil then
-        local last = ensureTable(spec, "rmsLastSync")[GROUP.TUTORIAL_DATA]
-        if last ~= nil then
-            last[1] = nil
-        end
-        return false
-    end
-    return markGroupDirty(vehicle, spec, GROUP.TUTORIAL_DATA, connection)
 end
 
 ---Raises every sync group whose values moved
@@ -788,13 +714,8 @@ function RealisticMechanicalSystems.markSyncGroupsDirty(vehicle, spec)
         RMS_Thermal.getEngineTemperature(vehicle)
         return
     end
-    local TUTORIAL = RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA
     for _, entry in ipairs(getSyncGroups()) do
-        if entry.group == TUTORIAL then
-            markTutorialDataDirty(vehicle, spec)
-        else
-            markGroupDirty(vehicle, spec, entry.group)
-        end
+        markGroupDirty(vehicle, spec, entry.group)
     end
 end
 
@@ -802,9 +723,8 @@ end
 function RealisticMechanicalSystems.storeSyncBaseline(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local sent = ensureTable(spec, "rmsLastSync")
-    local TUTORIAL = RealisticMechanicalSystems.SYNC_GROUP.TUTORIAL_DATA
     for _, entry in ipairs(getSyncGroups()) do
-        sent[entry.group] = readSyncGroup(vehicle, spec, entry, entry.group == TUTORIAL and 2 or 1)
+        sent[entry.group] = readSyncGroup(vehicle, spec, entry)
     end
 end
 
@@ -909,7 +829,6 @@ local SAVEGAME_ATTRIBUTES = {
     { "tripWorkFuelLitres", "FLOAT", "Fuel burnt with an implement at work since the reset (l)" },
     { "tripWorkedHectares", "FLOAT", "Ground worked since the trip meter reset (ha)" },
     { "ptoEngagementCount", "INT", "PTO engagement count" },
-    { "ptoEngagementSequence", "INT", "PTO engagement cycle sequence" },
     { "headerStartCount", "INT", "Header starts" }
 }
 

@@ -29,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Jármű ellenőrzése"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Hajtásmód"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differenciálzár"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Rögzítőfék"/>
@@ -78,13 +77,6 @@
         <text name="rms_vehicleLifespan_tooltip" text="Meghatározza az üzemórákat, amelyek után a jármű állapota eléri a 0%-ot; ehhez közeledve megbízhatósága és értéke is csökken. A változás a továbbiakra érvényes: a járművek megőrzik állapotukat, csak az értékük számolódik újra."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kipufogófüst"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Meghatározza, hogy a kipufogófüst kövesse-e a motor valós állapotát: levegőhiánynál fekete, olajégetésnél kék, elégetlen üzemanyagnál fehér, terhelés alatt sűrűbb. A régi gépek sokkal jobban füstölnek a moderneknél."/>
-        <text name="rms_tutorialMode_label" text="Oktató mód"/>
-        <text name="rms_tutorialMode_tooltip" text="Meghatározza, hogy játék közben megjelenjenek-e az oktatótippek."/>
-        <text name="rms_tutorialResetTips_label" text="Tippek visszaállítása"/>
-        <text name="rms_tutorialResetTips_text" text="Visszaállítás"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Alaphelyzetbe állítja az oktatótippek előzményeit: mindegyik újra megjelenik."/>
-        <text name="rms_tutorialResetConfirm_title" text="Oktató tippek visszaállítása?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Visszaállítod az oktató tippek előzményeit, és újra megjeleníted az összes tippet?"/>
         <text name="rms_drivetrainEnabled_label" text="Összkerékhajtás és differenciálzár kezelése"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Meghatározza, hogy kézzel vezérelhetők-e a traktorok első hídjai és differenciálzárai. Az opció átveszi az Enhanced Vehicle differenciálkezelését: visszaadáshoz kapcsold ki az opciót, majd a menüjében kapcsold vissza a differenciálokat."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rögzítőfék"/>
@@ -612,6 +604,23 @@
         <text name="rms_report_wear_harvest_rice" text="Rizsbetakarítás"/>
         <text name="rms_report_wear_harvest_wet" text="Nedves termény"/>
         <text name="rms_report_wear_header_starts" text="A vágóasztal indításai"/>
+        <text name="rms_report_wear_service_overdue" text="Lejárt karbantartási intervallum"/>
+        <text name="rms_report_wear_engine_overload" text="Motor túlterhelése"/>
+        <text name="rms_report_wear_cold_engine" text="Hideg motor"/>
+        <text name="rms_report_wear_fluid_level" text="Alacsony folyadékszint"/>
+        <text name="rms_report_wear_engine_overheat" text="Motor túlmelegedése"/>
+        <text name="rms_report_wear_lugging" text="Motor erőltetése alacsony fordulaton"/>
+        <text name="rms_report_wear_wheel_slip" text="Kerékcsúszás"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Hajtáslánc-terhelés"/>
+        <text name="rms_report_wear_cold_oil" text="Hideg váltóolaj"/>
+        <text name="rms_report_wear_transmission_overheat" text="Váltó túlmelegedése"/>
+        <text name="rms_report_wear_wet_weather" text="Nedves időjárás"/>
+        <text name="rms_report_wear_cranking" text="Gyakori indítózás"/>
+        <text name="rms_report_wear_steering" text="Kormányzás álló helyzetben"/>
+        <text name="rms_report_wear_park_brake" text="Rögzítőfék"/>
+        <text name="rms_report_wear_low_fuel" text="Kevés üzemanyag"/>
+        <text name="rms_report_wear_idle_deposit" text="Hosszan tartó alapjárat"/>
+        <text name="rms_report_wear_pto_engagement" text="A TLT bekapcsolása"/>
         <text name="rms_report_component_title" text="Alkatrész"/>
         <text name="rms_report_system_condition_transmission" text="Váltó"/>
         <text name="rms_report_system_condition_power" text="Aktuális teljesítmény"/>
@@ -978,98 +987,8 @@
         <text name="rms_sell_dialog_repair_penalty" text="Javítás"/>
         <text name="rms_sell_dialog_washing_penalty" text="Mosás"/>
         <text name="rms_sell_dialog_deposit_refund" text="Visszakapott kaució"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Alacsony folyadékszint"/>
-        <text name="rms_tutorial_fluid_level_message" text="A gép egyik folyadéka a mérője jelölése alá csökkent. A motorolaj az üzemórákkal fogy, kopott motorban gyorsabban; a többi folyadék csak szivárgás miatt csökken.&#10;&#10;A gép még normálisan dolgozik, de minél alacsonyabb a szint, annál könnyebben szív levegőt a szivattyúja lejtőn: minden ilyen perc károsítja a csapágyakat vagy a szivattyút. Ha hűtőfolyadék, hajtóműolaj vagy hidraulikaolaj hiányzik, a kör is melegszik.&#10;&#10;Töltsd fel a körhöz előírt folyadék boltban vásárolt tartályával: bármely más folyadék beszennyezi. A kereskedő is feltöltheti."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Üdvözöl a Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Tippek kikapcsolása"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Tippek bekapcsolása"/>
-        <text name="rms_tutorial_welcome_message" text="Ez a mod teljesen átdolgozza a játék járműsérülési és karbantartási rendszerét. Sok változás van, ezért időnként oktató tippek jelennek meg. Ezek segítenek gyorsabban megérteni az új mechanikákat, elkerülni a gyakori hibákat, és megóvni a gépeidet a meghibásodástól.&#10;&#10;Ha szeretnéd, most azonnal kikapcsolhatod az oktató tippeket. Később bármikor újra bekapcsolhatod őket a mod beállításaiban, a Realistic Mechanical Systems szekció alatt."/>
-        <text name="rms_tutorial_wet_weather_title" text="Nedves időjárás"/>
-        <text name="rms_tutorial_wet_weather_message" text="A nedvesség rosszat tesz a kábelezésnek és az elektromos berendezéseknek. Az elektromos rendszer kopása kissé megnő esőben, hóban vagy jégesőben, ha a gép a szabadban áll."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Kerékcsúszás"/>
-        <text name="rms_tutorial_wheel_slip_message" text="A kerekeid erősen csúsznak. A kerékcsúszás az egyik legpusztítóbb tényező a váltó számára, és jelentősen közelebb hozza a következő műhelylátogatást."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Közelgő karbantartás"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s hamarosan karbantartást igényel. Válassza a műhely ajánlott csomagját: lefedi az esedékes munkákat. Az első elért üzemóra- vagy naptári határ dönt, kevés használat esetén is. A karbantarthatóság megmutatja, mit javít meg saját maga a gazdasága; a karbantartás továbbra is elvégezhető mobil műhelyben."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Lejárt karbantartási intervallum"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s karbantartási intervalluma lejárt.&#10;&#10;Menj mielőbb egy műhelybe, és válaszd a „Karbantartás” eljárást. A lejárt karbantartási intervallumú jármű további használata jelentősen növeli több meghibásodás kockázatát."/>
-        <text name="rms_tutorial_steering_title" text="Kormányzás álló helyzetben"/>
-        <text name="rms_tutorial_steering_message" text="A legjobb, ha álló helyzetben nem kormányzol. Ez erősen terheli a kormányművet és az első tengely alkatrészeit, ami növeli a futómű kopását.&#10;&#10;Indulj el legalább egy kicsit, és a kerekek sokkal könnyebben fordulnak majd."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Hűtés és légszűrő"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="A hűtő vagy a légszűrő eltömődött. Nézz a járműre, és tartsd lenyomva a %s billentyűt, hogy megtudd, melyik. Tisztítsd meg sűrített levegős fúvóval. Ha a szűrő már nem fújható tisztára, a műhely a(z) %s karbantartástól kezdve cseréli."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Kenés szükséges"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s zsírzószemei kenésre várnak.&#10;&#10;Az RMS-ben minden gépnek saját zsírzószemei vannak. A gép munkanapjai szerint igényelnek újra kenést: minden munkanapon, vagy néhány munkanaponta némelyik. A késedelmes zsírzás gyorsítja az alváz kopását.&#10;&#10;Vásárolj zsírzópisztolyt és patronokat a boltban. A pisztollyal a kézben állj egy patron elé a betöltéshez, majd célozz a gépre: minden kattintás egy zsírzószemet ken meg, a gomb nyomva tartásával pedig folytatódik a következőn.&#10;&#10;A hátralévő zsírzószemek megtekintéséhez nézz a járműre, és tartsd nyomva a következő billentyűt: %s."/>
-        <text name="rms_tutorial_needs_repair_title" text="Meghibásodás észlelve"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s problémát jelez. Lehet, hogy az egyik alkatrésze meghibásodott.&#10;&#10;Látogass el egy műhelybe: egy átvizsgálás, vagy a karbantartás, ha esedékes, azonosítja a meghibásodást. Ne halogasd: a meghibásodás tovább súlyosbodhat, és vele együtt a javítás költsége is nő.&#10;&#10;Ha a meghibásodás azonosítva van, javíttasd meg a műhelyben."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Nagyjavítás szükséges"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s már érezteti a korát. Itt az ideje elgondolkodni a cserén vagy egy nagyjavításon. Ez egy hosszú és költséges művelet, de ez az egyetlen mód, hogy a gép visszanyerje eredeti állapotát.&#10;&#10;Az élettartam a mod beállításaiban módosítható: minél magasabb, annál lassabban kopnak a járműveid."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Emelkedett meghibásodási kockázat"/>
-        <text name="rms_tutorial_needs_preventive_message" text="A(z) %s kopott alkatrészei növelik a meghibásodás kockázatát.&#10;&#10;%s karbantartás: beállítja a szelepeket, betakarítógépen pedig kicseréli a kopott betakarító alkatrészeket, ami csökkenti ezt a kockázatot."/>
-        <text name="rms_tutorial_age_degradation_title" text="Életkor miatti állapotromlás"/>
-        <text name="rms_tutorial_age_degradation_message" text="Az RMS-ben a járművek fokozatosan veszítenek eredeti teljesítményükből, ahogy öregednek.&#10;&#10;A jármű élettartamának nagyjából egyharmada után az életkor miatti kopás elkezdi enyhén csökkenteni néhány fontos jellemzőt, például a teljesítményt vagy a fékezést. A hatás ezután erősödik, és az élettartam vége felé jól láthatóvá válik.&#10;&#10;Az új alkatrész megszünteti a kopást: a nagyjavítás kicseréli a kopott alkatrészeket."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Gyenge minőségű fogyóanyagok"/>
-        <text name="rms_tutorial_poor_consumables_message" text="A teljes átvizsgálás hibás szűrőt talált a(z) %s gépen, amelyet egy karbantartás során szereltek be. Ez az olcsóbb minőségeknél fordul elő.&#10;&#10;Ez a szűrő átengedi a szennyeződéseket: az általa védett kör gyorsabban kopik, amíg a szűrőt ki nem cserélik. Egy újabb karbantartás kicseréli."/>
-        <text name="rms_tutorial_poor_parts_title" text="Gyenge minőségű alkatrészek"/>
-        <text name="rms_tutorial_poor_parts_message" text="A teljes átvizsgálás hibás, műhelyben beszerelt alkatrészt talált a(z) %s gépen: meg fog hibásodni. Ez az olcsóbb minőségeknél fordul elő.&#10;&#10;Most kicseréltetheted a műhelyben, vagy megvárhatod, amíg meghibásodik."/>
-        <text name="rms_tutorial_park_brake_title" text="Rögzítőfék"/>
-        <text name="rms_tutorial_park_brake_message" text="A rögzítőfék be van húzva. Magától behúz, amint álló helyzetben elhagyod a gépet, és kienged, amint újra gázt adsz. Akkor is behúz, amikor leállítod a motort, vagy 45 másodperc állás után.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="A rögzítőfék be van húzva. Te húzod be és oldod ki, a saját billentyűddel: ha behúzott fékkel adsz gázt, a gép a fék ellen dolgozik, és a rögzítőfék kopik.&#10;&#10;Lejtőn ez akadályozza meg, hogy a gép magától elguruljon: ha behúzás nélkül hagyod el a gépet, elgurulhat."/>
-        <text name="rms_tutorial_preheat_title" text="Dízel előizzítás"/>
-        <text name="rms_tutorial_preheat_message" text="Hideg dízelmotornál az indításvezérlő egyszeri megnyomása bekapcsolja a gyújtást, és automatikusan elindítja az izzítási ciklust. A műszerfal visszajelzői rövid időre felgyulladnak, majd az előizzítás jelzőfénye addig világít, amíg a motor készen nem áll. Ne ismételd meg a parancsot: az önindító a jelzőfény kialvásakor automatikusan bekapcsol."/>
-        <text name="rms_tutorial_pto_engagement_title" text="A TLT bekapcsolása"/>
-        <text name="rms_tutorial_pto_engagement_message" text="A TLT-t alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton bekapcsolva lökést kap az egész hajtáslánc, nehéz munkagéppel még inkább. Minden bekapcsolás a tengelykapcsolóját is koptatja."/>
-        <text name="rms_tutorial_header_engagement_title" text="A vágóasztal bekapcsolása"/>
-        <text name="rms_tutorial_header_engagement_message" text="A vágóasztalt alapjáraton kapcsold be, és csak utána emeld a fordulatszámot: magas fordulaton indítva csúszik a nyomatékhatárolója, amely így sokkal gyorsabban kopik."/>
-        <text name="rms_tutorial_header_stored_title" text="Leállított vágóasztal"/>
-        <text name="rms_tutorial_header_stored_message" text="Ez a vágóasztal több mint két hete nem forgott: a nyomatékhatárolója beragadt, és már nem védi. Betakarítás előtt zsírozd meg a vágóasztalt, különben egy dugulás eltörheti a kardántengelyét."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Alapjárat és állásidő"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="A kopás sokkal alacsonyabb, amikor a gép jár, de nem végez aktív munkát. Amikor a motor le van állítva, a kopás minimálisra csökken, és ha a gép fedett helyen áll, teljesen megszűnik."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Hosszan tartó alapjárat"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Úgy tűnik, a gép túl sokáig járt alapjáraton. A hosszú alapjárati idő nemcsak üzemanyagpazarlás: idővel lerakódásokat okoz az üzemanyagrendszerben, amely így gyorsabban kopik.&#10;&#10;Ha most nincs szükség a gépre, jobb leállítani a motort."/>
-        <text name="rms_tutorial_hot_weather_title" text="Forró időjárás"/>
-        <text name="rms_tutorial_hot_weather_message" text="Ma nagyon meleg van. Ilyen időben figyelj a hűtő tisztaságára, és kerüld a motor túlterhelését, különben a túlmelegedés csak idő kérdése.&#10;&#10;A hűtő állapotát bármikor ellenőrizheted, ha a gépre nézve nyomva tartod az %s billentyűt. A hűtőt a légfúvóval tisztíthatod meg."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Túl nehéz pótkocsi"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="A vontatott teher nehéz ehhez a járműhöz. Tovább haladhatsz, de a fékek minden fékezéskor gyorsabban kopnak.&#10;&#10;Az RMS két viszonyítási értéket használ: a saját tömegének több mint 4,5-szeresét vontató traktort, illetve azt a teherautót, amelynél a járműszerelvény össztömegének minden tonnájára 6 LE-nél kevesebb jut. Minél nehezebb a teher, annál gyorsabban kopnak a fékek."/>
-        <text name="rms_tutorial_hard_start_title" text="Nehéz indítás"/>
-        <text name="rms_tutorial_hard_start_message" text="A következő jármű motorja nehezen indul: %s. Ezt okozhatja alacsony akkumulátortöltöttség, fagyos hőmérséklet, mechanikai hiba vagy az önindító kopása.&#10;&#10;Indítás közben az elektromos rendszer nagy terhelést kap a magas indulóáramok miatt."/>
-        <text name="rms_tutorial_low_fuel_title" text="Kevés üzemanyag"/>
-        <text name="rms_tutorial_low_fuel_message" text="A tartály közelít a tartalékszinthez. Minél kevesebb üzemanyag marad, annál nagyobb erővel kell szívnia az üzemanyag-szivattyúnak, és a tartály aljáról víz és üledék kerül a szűrőbe, amely így gyorsabban eltömődik.&#10;&#10;Tankolj mielőbb."/>
-        <text name="rms_tutorial_lugging_title" text="Motor erőltetése alacsony fordulaton"/>
-        <text name="rms_tutorial_lugging_message" text="A motor, és különösen a váltó, megsínyli az alacsony fordulaton történő erőltetést, vagyis az alacsony fordulatszámot nagy motorterhelés mellett. Lehet, hogy túl nehéz eszközt csatlakoztattál a géphez, vagy kézi váltónál egyszerűen rossz fokozatot választottál."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Motor túlmelegedése"/>
-        <text name="rms_tutorial_engine_overheat_message" text="A motor kezd túlmelegedni. Ennek egy vagy több oka is lehet: a motor nagy terhelés alatt van, a hűtő eltömődött, forró az időjárás, vagy hiba van a jármű hűtőrendszerében.&#10;&#10;Légy résen: a túlmelegedés az egyik legpusztítóbb tényező bármilyen gépnél. Nemcsak a motort károsítja: a hűtőrendszert is a határára kényszeríti, és a motortér hője felgyorsítja a kábelezés és az elektromos alkatrészek öregedését."/>
-        <text name="rms_tutorial_engine_overload_title" text="Motor túlterhelése"/>
-        <text name="rms_tutorial_engine_overload_message" text="A motor hatalmas igénybevétel alatt van. Lehet, hogy az elvégzendő munka egyszerűen túl sok ennek a gépnek, és érdemes erősebb gépet használni. Vagy az is elég lehet, ha lassítasz és csökkented a motor terhelését.&#10;&#10;Mindenesetre tartsd észben, hogy ilyen terhelés mellett a kopás érezhetően megnő."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="A füst értelmezése"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="A gépből távozó füst nem díszlet: a színe diagnózis.&#10;&#10;A fekete füst azt jelzi, hogy a motor több üzemanyagot kap, mint levegőt: erős gyorsítás, mielőtt a turbófeltöltő felpörgött, alacsony fordulaton erőlködő motor, túlterhelés, eltömődött légszűrő, fáradt turbófeltöltő vagy kopott befecskendezés. A kék füst azt jelzi, hogy a fáradt motor a saját olaját égeti. A fehér füst azt jelzi, hogy az üzemanyag elégetlenül távozik.&#10;&#10;A füstcsóva a motor által végzett munkával együtt nő. A régebbi gépek sokkal jobban füstölnek, mint az újabbak, és ez normális."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT túlmelegedés"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="A CVT kezd túlmelegedni. Ennek egy vagy több oka is lehet: a váltó túlzott terhelés alatt van, a hűtő eltömődött, nagyon meleg az idő, vagy hiba van a váltó hűtőrendszerében. Például lehet, hogy túl nehéz ekét húzol, vagy túlterhelt pótkocsit vontatsz.&#10;&#10;Légy résen: a túlmelegedés az egyik legpusztítóbb dolog, ami egy CVT váltóval történhet."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Alváz terhelés alatt"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Az egyenetlen terepen való gyors haladás gyorsan elkoptatja a következő jármű futóművét: %s. A rázkódás a kábelezést és a csatlakozóit is károsítja, valamint a hidraulikát, ha nehéz munkagép van kiemelve.&#10;&#10;Lassíts egyenetlen talajon."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Erős ütés"/>
-        <text name="rms_tutorial_terrain_impact_message" text="A futómű éppen erős ütést kapott. Az az akadály, amely hirtelen megállítja vagy erősen lefékezi a gépet, azonnal koptatja az alvázat, és közelebb hozza a következő meghibásodását, leggyakrabban a kormányzásét vagy a csapágyakét.&#10;&#10;Lassíts az akadályok előtt."/>
-        <text name="rms_tutorial_cranking_title" text="Gyakori indítózás"/>
-        <text name="rms_tutorial_cranking_message" text="Az önindító rövid idő alatt sokat forgott. Néhány másodpercnyi összesített idő felett minden indítás koptatja az önindítót, az akkumulátort és az indítókör többi részét.&#10;&#10;Rövid szünetekre ne állítsd le a motort."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritikus meghibásodás"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s saját erejéből már nem tud mozogni.&#10;&#10;A hibától függően egy mobil műhely a helyszínen megjavíthatja, legalább ideiglenesen, annyira, hogy a gép saját erejéből eljusson a műhelyig. Ellenkező esetben más módon kell odaszállítani."/>
-        <text name="rms_tutorial_cold_engine_title" text="Hideg motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="A motor hideg: %s alatt gyorsabban kopik, amint jár, a terheléstől függetlenül, és minél hidegebb, annál jobban.&#10;&#10;%s alatt a maximális fordulatszám háromnegyedét se lépd túl: ez megterheli a hűtőrendszert."/>
-        <text name="rms_tutorial_cold_oil_title" text="Hideg váltóolaj"/>
-        <text name="rms_tutorial_cold_oil_message" text="A váltóolaj hideg: %s alatt a váltó gyorsabban kopik, amint jár a motor, a terheléstől függetlenül.&#10;&#10;%s alatt a hidraulikaolaj a szivattyút is koptatja, amikor a hidraulikát használod."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Váltó túlmelegedése"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="A váltóolaj kezd túlmelegedni. Eredhet túl nagy terhelésből, eltömődött hűtőből, nagyon meleg időből, vagy a váltóhűtés hibájából.&#10;&#10;A váltóolaj minden gépen melegszik, nem csak CVT esetén. A túl forró olaj koptatja a váltót és tönkreteszi a tömítéseit."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Túlterhelési figyelmeztetés"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s nagy terhelés alatt van. Ezt jelzi a műszerfalon most felgyulladt figyelmeztető lámpa.&#10;&#10;Lehet, hogy a gépnek nincs elég ereje az aktuális feladathoz. Próbáld csökkenteni a terhelést: korlátozd a sebességet tempomattal, vagy vegyél vissza a gázból ahelyett, hogy teljes erőn dolgoztatod."/>
-        <text name="rms_tutorial_battery_low_title" text="Gyenge akkumulátor"/>
-        <text name="rms_tutorial_battery_low_message" text="Ennek a gépnek az akkumulátora mindjárt teljesen lemerül. Ez hosszú állásidő, erős hideg vagy az elektromos rendszer hibái miatt is előfordulhat.&#10;&#10;Alacsony töltöttségnél az indítás nehézzé, majd lehetetlenné válik. Ekkor indítókábellel egy másik járműről is beindíthatod a motort. Hosszú állás előtt, vagy ha az akkumulátor magától lemerül, válaszd le az akkumulátor-főkapcsolóval, gyalog a gép előtt."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Hajtáslánc-terhelés"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Tapadós talajon kanyarodsz bekapcsolt differenciálzárral. Kanyarban a belső és külső kerekek eltérő utat tesznek meg, de a differenciálzár azonos fordulatszámra kényszeríti őket: a hajtáslánc terhelés alá kerül, és fokozódik a váltó kopása. Oldd ki a zárat, mielőtt kanyarodsz."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Hajtásmódok és differenciálzár"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Ez a gép lehetővé teszi a hajtásmód kiválasztását: hátsókerék-hajtás, összkerékhajtás vagy AUTO. AUTO módban az első híd munka közben bekapcsolva marad: %s felett és éles kanyarban kikapcsol, majd amint fékezel, újra bekapcsol.&#10;&#10;A differenciálzár ott biztosít tapadást, ahol már nincs, és vele együtt az első hidat is bekapcsolja. Kanyarban, fékezéskor és %s felett magától kiold: kapcsold be újra, amikor szükséged van rá."/>
-        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Ez a gép lehetővé teszi a hajtásmód kiválasztását: hátsókerék-hajtás vagy összkerékhajtás.&#10;&#10;A differenciálzár ott biztosít tapadást, ahol már nincs, de tapadós talajon kanyarodáskor nagy árat fizettet érte: a belső és külső kerekek nem foroghatnak azonos sebességgel, és a terhelést a hajtáslánc viseli. Kanyarodás előtt oldd ki."/>
-        <text name="rms_tutorial_diff_lock_title" text="Differenciálzár"/>
-        <text name="rms_tutorial_diff_lock_message" text="A differenciálzár ott biztosít tapadást, ahol már nincs. Kanyarban, fékezéskor és %s felett magától kiold: kapcsold be újra, amikor szükséged van rá."/>
-        <text name="rms_tutorial_diff_lock_manual_message" text="A differenciálzár ott biztosít tapadást, ahol már nincs, de tapadós talajon kanyarodáskor nagy árat fizettet érte: a belső és külső kerekek nem foroghatnak azonos sebességgel, és a terhelést a hajtáslánc viseli. Kanyarodás előtt oldd ki."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="A Realistic Mechanical Systems modban a gépeid úgy kopnak és hibásodnak meg, mint a valódiak. Három szabály elég ahhoz, hogy folytonos meghibásodások nélkül játssz:&#10;&#10;1. Végezd el időben a karbantartást. A játék menüjében a Gépészeti áttekintés mutatja minden gép következő karbantartását.&#10;2. Készítsd fel a gépeidet minden nap. Egy gép mellett tartsd lenyomva a(z) %s gombot az ellenőrzéshez: folyadékszintek, hűtő, légszűrő, zsírzás. A hűtőt és a légszűrőt tisztítsd meg a légfúvóval, a gépeket pedig zsírozd le a zsírzópisztollyal. Az eszközeidet és pótkocsijaidat is zsírozni kell: a Gépészeti áttekintés felsorolja az esedékeseket. A légfúvó, a zsírzópisztoly és a zsírpatronok a boltban, a Karbantartás kategóriában találhatók.&#10;3. Kíméld a gépeidet: a túlterhelés, a túlmelegedés, a hideg motorral végzett munka és a kerékcsúszás koptatja őket.&#10;&#10;Ha túl nehéz a játék, növeld a Jármű élettartama és a Karbantartások távolsága beállítást a Gépészeti áttekintés RMS BEÁLLÍTÁSOK lapján."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>

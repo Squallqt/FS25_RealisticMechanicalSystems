@@ -510,23 +510,17 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
     finishWear(self, dt, systemKey, wear, { dynamicMotorLoad = spec.dynamicMotorLoad, engineTemperature = temperature })
 end
 
----Moves a tutorial timer up while its cause runs, down otherwise
-local function moveTutorialTimer(spec, key, isOn, dt, ceiling)
-    spec[key] = isOn and math.min(spec[key] + dt, ceiling) or math.max(spec[key] - dt, 0)
-end
-
 local TRANSMISSION_CAUSES = { "expiredServiceFactor", "pullOverloadFactor", "filterBypassFactor",
     "transmissionFilterBypassFactor", "luggingFactor", "wheelSlipFactor", "drivetrainWindupFactor",
     "coldTransFactor", "hotTransFactor" }
 
 ---Adds the wear of the driven work of the transmission
-local function addTransmissionWork(vehicle, wear, driveLoad, transTemp, dt)
+local function addTransmissionWork(vehicle, wear, driveLoad, transTemp)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
     local motorLoad, speed = vehicle:getMotorLoadPercentage(), vehicle:getLastSpeed()
 
     addTorqueWear(vehicle, wear, driveLoad, C, "pullOverloadFactor")
-    moveTutorialTimer(spec, "luggingTutorialTimer", wear.factors.luggingFactor > 0, dt, 5000)
 
     local isSlipping = not RMS_Drivetrain.getIsTurning(vehicle) and spec.wheelSlipIntensity > C.WHEEL_SLIP_THRESHOLD and speed < 20
         and motorLoad > 0.5 and (speed > 0.5 or not vehicle:getIsAIActive())
@@ -534,7 +528,6 @@ local function addTransmissionWork(vehicle, wear, driveLoad, transTemp, dt)
         local slip = RMS_Utils.calculateQuadraticMultiplier(spec.wheelSlipIntensity, C.WHEEL_SLIP_THRESHOLD, false)
         addCause(wear, "wheelSlipFactor", math.max(slip * C.WHEEL_SLIP_MULTIPLIER * (spec.avgTireGroundFrictionCoeff ^ 2) * motorLoad, 0))
     end
-    moveTutorialTimer(spec, "wheelSlipTutorialTimer", isSlipping, dt, 3000)
 
     local windup = RMS_Drivetrain.getWindupWearFactor(vehicle)
     if windup > 0 then
@@ -578,7 +571,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
             wear.rate = wear.rate * C.TRANSMISSION_IDLING_MULTIPLIER
         end
     elseif isRunning then
-        addTransmissionWork(self, wear, driveLoad, transTemp, dt)
+        addTransmissionWork(self, wear, driveLoad, transTemp)
     else
         wearStopped(wear, self)
     end
@@ -906,11 +899,7 @@ local function startHeader(vehicle, spec, drive, systemKey)
     drive.starts, drive.lastStartShare, drive.lastStartJ, drive.startSlipMs = drive.starts + 1, speedShare, 0, 0
     local aboveIdle = (rpm - motor.minRpm) / math.max(motor.maxRpm - motor.minRpm, 1)
     local isHigh = not isAI and aboveIdle > C.IDLE_START_SHARE
-    if isHigh then
-        spec.headerShockSequence = spec.headerShockSequence + 1
-    end
     if RMS_Greasing.getIsLimiterSeized(drive.header) then
-        spec.headerSeizedSequence = spec.headerSeizedSequence + 1
         return
     end
     local share = getPartCauseShare(spec, systemKey, "HEADER_SLIP_CLUTCH_WEAR", "hdef")

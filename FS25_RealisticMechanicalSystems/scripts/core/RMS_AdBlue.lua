@@ -148,7 +148,7 @@ function RMS_AdBlue.updateMessages(vehicle)
     end
     spec.adBlueShownStage = stage
     if key ~= nil then
-        RMS_Hud.showNotification(g_i18n:getText(key), nil, g_i18n:getText("rms_adblue_title"), true)
+        RMS_Hud.showNotification(g_i18n:getText(key), g_i18n:getText("rms_adblue_title"), true)
     end
 end
 

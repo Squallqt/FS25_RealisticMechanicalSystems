@@ -29,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Periksa kendaraan"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Mode penggerak"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Pengunci diferensial"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Rem parkir"/>
@@ -78,13 +77,6 @@
         <text name="rms_vehicleLifespan_tooltip" text="Mengatur jam operasi hingga kondisi kendaraan mencapai 0%; makin mendekati batas ini, makin rendah keandalan dan nilainya. Perubahan berlaku sejak saat itu: kondisi kendaraan tetap, hanya nilainya yang dihitung ulang."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Asap Knalpot"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Mengatur apakah asap knalpot mengikuti kondisi mesin sebenarnya: hitam saat kekurangan udara, biru saat membakar oli, putih saat bahan bakar keluar tanpa terbakar, lebih pekat saat terbebani. Mesin tua jauh lebih berasap daripada mesin modern."/>
-        <text name="rms_tutorialMode_label" text="Mode Tutorial"/>
-        <text name="rms_tutorialMode_tooltip" text="Mengatur apakah tips tutorial ditampilkan selama permainan."/>
-        <text name="rms_tutorialResetTips_label" text="Reset Kiat"/>
-        <text name="rms_tutorialResetTips_text" text="Reset"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Mereset riwayat tips tutorial: semua tips akan ditampilkan lagi."/>
-        <text name="rms_tutorialResetConfirm_title" text="Reset Kiat Tutorial?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Reset riwayat kiat tutorial dan tampilkan semua kiat lagi?"/>
         <text name="rms_drivetrainEnabled_label" text="Pengelolaan 4WD dan Pengunci Diferensial"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Mengatur apakah gandar depan dan pengunci diferensial traktor dikendalikan manual. Opsi ini menggantikan kontrol diferensial Enhanced Vehicle: untuk mengembalikannya, matikan opsi ini lalu aktifkan kembali diferensial di menunya."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Rem Parkir"/>
@@ -612,6 +604,23 @@
         <text name="rms_report_wear_harvest_rice" text="Panen padi"/>
         <text name="rms_report_wear_harvest_wet" text="Tanaman lembap"/>
         <text name="rms_report_wear_header_starts" text="Penyalaan Pemotong"/>
+        <text name="rms_report_wear_service_overdue" text="Interval Perawatan Terlampaui"/>
+        <text name="rms_report_wear_engine_overload" text="Beban Berlebih pada Mesin"/>
+        <text name="rms_report_wear_cold_engine" text="Mesin Dingin"/>
+        <text name="rms_report_wear_fluid_level" text="Ketinggian Fluida Rendah"/>
+        <text name="rms_report_wear_engine_overheat" text="Panas Berlebih pada Mesin"/>
+        <text name="rms_report_wear_lugging" text="Mesin Terbebani pada Putaran Rendah"/>
+        <text name="rms_report_wear_wheel_slip" text="Roda Selip"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Tegangan Sistem Penggerak"/>
+        <text name="rms_report_wear_cold_oil" text="Oli Transmisi Dingin"/>
+        <text name="rms_report_wear_transmission_overheat" text="Panas Berlebih pada Transmisi"/>
+        <text name="rms_report_wear_wet_weather" text="Cuaca Basah"/>
+        <text name="rms_report_wear_cranking" text="Penyalaan Terlalu Sering"/>
+        <text name="rms_report_wear_steering" text="Memutar Kemudi saat Berhenti"/>
+        <text name="rms_report_wear_park_brake" text="Rem Parkir"/>
+        <text name="rms_report_wear_low_fuel" text="Cadangan Bahan Bakar"/>
+        <text name="rms_report_wear_idle_deposit" text="Langsam Berkepanjangan"/>
+        <text name="rms_report_wear_pto_engagement" text="Pengaktifan PTO"/>
         <text name="rms_report_component_title" text="Komponen"/>
         <text name="rms_report_system_condition_transmission" text="Transmisi"/>
         <text name="rms_report_system_condition_power" text="Daya Saat Ini"/>
@@ -978,98 +987,8 @@
         <text name="rms_sell_dialog_repair_penalty" text="Perbaikan"/>
         <text name="rms_sell_dialog_washing_penalty" text="Pencucian"/>
         <text name="rms_sell_dialog_deposit_refund" text="Pengembalian deposit"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Ketinggian Fluida Rendah"/>
-        <text name="rms_tutorial_fluid_level_message" text="Salah satu cairan mesin ini berada di bawah tanda pada pengukurnya. Oli mesin berkurang seiring jam kerja, lebih cepat pada mesin yang aus; cairan lain hanya berkurang karena kebocoran.&#10;&#10;Mesin masih bekerja normal, tetapi makin rendah levelnya, makin mudah pompanya menyedot udara di lereng: setiap menit seperti itu merusak bantalan atau pompa. Jika kekurangan cairan pendingin, oli transmisi, atau oli hidraulik, sirkuitnya juga menjadi panas.&#10;&#10;Isi ulang dengan wadah cairan yang ditujukan untuk sirkuit itu, dibeli di toko: cairan lain apa pun akan mencemarinya. Dealer juga dapat mengisi ulang."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Selamat Datang di Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Nonaktifkan kiat"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Aktifkan kiat"/>
-        <text name="rms_tutorial_welcome_message" text="Mod ini sepenuhnya merombak sistem kerusakan dan perawatan kendaraan dalam permainan. Karena ada banyak perubahan, kiat tutorial akan muncul dari waktu ke waktu. Kiat tersebut membantumu memahami mekanisme baru dengan lebih cepat, menghindari kesalahan umum, dan mencegah mesinmu mengalami kerusakan.&#10;&#10;Jika ingin, kamu dapat menonaktifkan kiat tutorial sekarang. Kamu selalu dapat mengaktifkannya kembali nanti dalam pengaturan mod, di bagian Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Cuaca Basah"/>
-        <text name="rms_tutorial_wet_weather_message" text="Kelembapan merusak kabel dan peralatan listrik. Keausan sistem kelistrikan sedikit meningkat saat hujan, salju, atau hujan es pada mesin yang dibiarkan di luar."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Roda Selip"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Rodamu mengalami selip berat. Selip merupakan salah satu faktor yang paling merusak transmisi dan membuatmu harus kembali ke bengkel jauh lebih cepat."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Perawatan Segera Diperlukan"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s akan segera membutuhkan perawatan. Pilih paket yang disarankan di bengkel: paket ini mencakup pekerjaan yang jatuh tempo. Batas jam operasi atau kalender yang tercapai lebih dahulu berlaku, meski jarang digunakan. Kemudahan perawatan menunjukkan apa yang dapat diperbaiki sendiri oleh peternakan Anda; perawatan tetap dapat dilakukan di bengkel bergerak."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Interval Perawatan Terlampaui"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Interval perawatan %s telah terlampaui.&#10;&#10;Kunjungi bengkel sesegera mungkin dan pilih &quot;Perawatan&quot;. Terus menggunakan kendaraan yang perawatannya terlambat sangat meningkatkan risiko terjadinya beberapa kerusakan."/>
-        <text name="rms_tutorial_steering_title" text="Memutar Kemudi saat Berhenti"/>
-        <text name="rms_tutorial_steering_message" text="Sebaiknya jangan memutar kemudi saat berhenti. Hal ini memberikan beban berat pada mekanisme kemudi dan komponen gandar depan sehingga meningkatkan keausan sistem gerak.&#10;&#10;Majukan kendaraan sedikit sebelum berbelok: roda akan berputar jauh lebih mudah."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Pendinginan dan Filter Udara"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Radiator atau filter udara tersumbat. Tahan tombol %s sambil melihat kendaraan untuk mengetahui yang mana. Bersihkan dengan peniup udara bertekanan. Jika filter tidak dapat dibersihkan lagi, bengkel menggantinya mulai dari servis %s."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Pelumasan Diperlukan"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s milikmu memiliki nipel gemuk yang perlu dilumasi.&#10;&#10;Dalam RMS, setiap mesin memiliki nipel gemuk sendiri. Nipel perlu dilumasi lagi menurut hari mesin dipakai: setiap hari dipakai, atau setiap beberapa hari dipakai untuk sebagian di antaranya. Pelumasan yang terlambat mempercepat keausan sasis.&#10;&#10;Beli Pistol Gemuk dan kartrid di toko. Pegang pistol dan berdirilah di depan kartrid untuk memasangnya, lalu bidik mesin: setiap klik melumasi satu nipel, dan menahan tombol akan melanjutkan ke nipel berikutnya.&#10;&#10;Untuk melihat nipel yang tersisa, tahan tombol %s sambil melihat kendaraan."/>
-        <text name="rms_tutorial_needs_repair_title" text="Kerusakan Terdeteksi"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s milikmu mengalami masalah. Salah satu suku cadangnya mungkin gagal.&#10;&#10;Bawa kendaraan ke bengkel: inspeksi, atau perawatan jika sudah waktunya, mengidentifikasi kerusakan. Jangan menunda: kerusakan dapat terus memburuk dan biaya perbaikan ikut meningkat.&#10;&#10;Setelah kerusakan teridentifikasi, lakukan perbaikan di bengkel."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Rekondisi Diperlukan"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s milikmu menunjukkan tanda penuaan. Sudah waktunya mempertimbangkan penggantian atau rekondisi. Prosedur ini lama dan mahal, tetapi merupakan satu-satunya cara mengembalikan mesin ke kondisi aslinya.&#10;&#10;Masa pakai kendaraan diatur dalam pengaturan mod: semakin tinggi nilainya, semakin lambat kendaraanmu mengalami keausan."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Risiko Kerusakan Meningkat"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Suku cadang yang aus pada %s meningkatkan risiko kerusakan.&#10;&#10;Servis %s: menyetel katup dan, pada mesin panen, mengganti suku cadang panen yang aus, sehingga risiko itu berkurang."/>
-        <text name="rms_tutorial_age_degradation_title" text="Penurunan Kondisi akibat Usia"/>
-        <text name="rms_tutorial_age_degradation_message" text="Dalam RMS, kendaraan secara bertahap kehilangan sebagian kinerja aslinya seiring bertambahnya usia.&#10;&#10;Setelah sekitar sepertiga masa pakainya, keausan akibat usia sedikit mengurangi karakteristik penting seperti daya atau pengereman. Efeknya kemudian menguat dan terlihat jelas menjelang akhir masa pakai.&#10;&#10;Suku cadang baru menghilangkan keausannya: rekondisi mengganti suku cadang yang aus."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Bahan Habis Pakai Berkualitas Buruk"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Inspeksi lengkap menemukan filter cacat pada %s, yang dipasang saat perawatan. Hal ini terjadi pada kualitas yang lebih murah.&#10;&#10;Filter ini meloloskan kotoran: sirkuit yang dilindunginya lebih cepat aus sampai filter diganti. Perawatan berikutnya akan menggantinya."/>
-        <text name="rms_tutorial_poor_parts_title" text="Suku Cadang Berkualitas Buruk"/>
-        <text name="rms_tutorial_poor_parts_message" text="Inspeksi lengkap menemukan suku cadang cacat pada %s yang dipasang di bengkel: suku cadang itu akan rusak. Hal ini terjadi pada kualitas yang lebih murah.&#10;&#10;Anda dapat menggantinya sekarang di bengkel, atau menunggu sampai rusak."/>
-        <text name="rms_tutorial_park_brake_title" text="Rem Parkir"/>
-        <text name="rms_tutorial_park_brake_message" text="Rem parkir diaktifkan. Rem ini aktif dengan sendirinya ketika kamu meninggalkan mesin yang berhenti dan terlepas segera setelah kamu kembali menekan pedal gas. Rem ini juga aktif ketika kamu mematikan mesin, atau setelah 45 detik berhenti.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Rem parkir diaktifkan. Kamu sendiri yang mengaktifkan dan melepaskannya dengan tombol tersendiri: jika kamu menekan pedal gas saat rem aktif, mesin bekerja melawan rem dan rem parkirnya menjadi aus.&#10;&#10;Di lereng, rem inilah yang mencegah mesin bergerak sendiri: jika kamu meninggalkan mesin tanpa mengaktifkannya, mesin bisa meluncur."/>
-        <text name="rms_tutorial_preheat_title" text="Pemanasan Awal Diesel"/>
-        <text name="rms_tutorial_preheat_message" text="Pada mesin diesel yang dingin, satu kali menekan kontrol starter akan menyalakan kontak dan memulai siklus busi pijar secara otomatis. Lampu dasbor menyala sebentar, lalu lampu pemanasan awal tetap menyala hingga mesin siap. Jangan ulangi perintah: starter aktif secara otomatis ketika lampu padam."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Pengaktifan PTO"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Aktifkan PTO saat mesin langsam, lalu naikkan putaran mesin: mengaktifkannya pada putaran tinggi menghentak seluruh sistem penggerak, terlebih dengan alat yang berat. Setiap pengaktifan juga mengikis koplingnya."/>
-        <text name="rms_tutorial_header_engagement_title" text="Pengaktifan Pemotong"/>
-        <text name="rms_tutorial_header_engagement_message" text="Aktifkan pemotong saat mesin langsam, lalu naikkan putaran: jika dinyalakan pada putaran tinggi, kopling selipnya selip dan jauh lebih cepat aus."/>
-        <text name="rms_tutorial_header_stored_title" text="Pemotong yang Lama Disimpan"/>
-        <text name="rms_tutorial_header_stored_message" text="Pemotong ini tidak berputar selama lebih dari dua minggu: kopling selipnya macet karena karat dan tidak lagi melindunginya. Lumasi pemotong sebelum panen, atau penyumbatan dapat mematahkan poros kardannya."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Langsam dan Masa Tidak Digunakan"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Keausan jauh lebih rendah ketika mesin menyala tanpa bekerja. Saat mesin dimatikan, keausan menjadi minimal. Di bawah naungan, keausan hilang sepenuhnya."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Langsam Berkepanjangan"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Mesin telah terlalu lama menyala dalam keadaan langsam. Periode langsam yang panjang tidak hanya membuang bahan bakar: seiring waktu, hal itu juga mendorong terbentuknya endapan dalam sistem bahan bakar, sehingga sistem itu lebih cepat aus.&#10;&#10;Jika mesin tidak diperlukan saat ini, sebaiknya matikan mesin."/>
-        <text name="rms_tutorial_hot_weather_title" text="Cuaca Panas"/>
-        <text name="rms_tutorial_hot_weather_message" text="Hari ini sangat panas. Dalam cuaca seperti ini, perhatikan kebersihan radiator dan hindari beban berlebih pada mesin, atau panas berlebih pasti akan terjadi.&#10;&#10;Kamu dapat memeriksa kondisi radiator: tahan tombol %s sambil melihat mesin. Pembersihan dilakukan dengan Peniup Udara Bertekanan."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Trailer Terlalu Berat"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Beban yang ditarik berat untuk kendaraan ini. Kamu dapat terus berkendara, tetapi rem lebih cepat aus setiap kali kamu mengerem.&#10;&#10;RMS menggunakan dua acuan: traktor yang menarik lebih dari 4,5 kali bobotnya sendiri, dan truk dengan kurang dari 6 HP per ton bobot kombinasi bruto. Makin berat bebannya, makin cepat rem aus."/>
-        <text name="rms_tutorial_hard_start_title" text="Mesin Sulit Dinyalakan"/>
-        <text name="rms_tutorial_hard_start_message" text="Mesin %s milikmu sulit dinyalakan. Baterai lemah, suhu beku, kerusakan mekanis, atau keausan starter dapat menjadi penyebabnya.&#10;&#10;Sistem kelistrikan menerima beban berat selama penyalaan akibat arus masuk awal yang tinggi."/>
-        <text name="rms_tutorial_low_fuel_title" text="Cadangan Bahan Bakar"/>
-        <text name="rms_tutorial_low_fuel_message" text="Tangki mendekati tingkat cadangan. Semakin sedikit bahan bakar yang tersisa, semakin berat kerja pompa bahan bakar untuk mengisapnya, dan dasar tangki mengirim air serta endapannya ke filter sehingga filter lebih cepat tersumbat.&#10;&#10;Segera isi bahan bakar."/>
-        <text name="rms_tutorial_lugging_title" text="Mesin Terbebani pada Putaran Rendah"/>
-        <text name="rms_tutorial_lugging_message" text="Mesin, dan terutama transmisi, menderita ketika terbebani pada putaran rendah, yaitu saat putaran mesin rendah dengan beban berat. Implemen yang terpasang mungkin terlalu berat untuk mesin, atau gigi yang dipilih tidak tepat jika transmisinya manual."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Panas Berlebih pada Mesin"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Mesin mulai mengalami panas berlebih. Hal ini dapat terjadi karena satu atau beberapa penyebab: mesin dibebani berat, radiator tersumbat, cuaca panas, atau sistem pendingin kendaraan mengalami gangguan.&#10;&#10;Tetap waspada: panas berlebih merupakan salah satu faktor yang paling merusak mesin. Dampaknya tidak hanya pada mesin: sistem pendingin bekerja pada batasnya, dan panas di ruang mesin mempercepat penurunan kondisi kabel serta komponen listrik."/>
-        <text name="rms_tutorial_engine_overload_title" text="Beban Berlebih pada Mesin"/>
-        <text name="rms_tutorial_engine_overload_message" text="Mesin mengalami tegangan yang sangat tinggi. Tugas ini mungkin terlalu berat untuk mesin tersebut dan memerlukan kendaraan yang lebih bertenaga, atau cukup kurangi kecepatan untuk mengurangi beban.&#10;&#10;Dalam semua kondisi, keausan meningkat dengan jelas akibat tegangan ini."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Membaca Asap"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Asap yang keluar dari mesin ini bukan sekadar hiasan: warnanya menunjukkan kondisi mesin.&#10;&#10;Asap hitam menunjukkan bahwa mesin menerima lebih banyak bahan bakar daripada udara: akselerasi mendadak sebelum turbocharger mencapai putaran, mesin terbebani pada putaran rendah, beban berlebih, filter udara tersumbat, turbocharger aus, atau injeksi aus. Asap biru menunjukkan mesin aus yang membakar olinya sendiri. Asap putih menunjukkan bahan bakar keluar tanpa terbakar.&#10;&#10;Kepulan juga membesar sesuai kerja yang dilakukan mesin. Mesin lama berasap jauh lebih banyak daripada mesin baru, dan itu normal."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="Panas Berlebih pada CVT"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="Transmisi CVT mulai mengalami panas berlebih. Penyebabnya dapat berupa beban berlebihan, radiator tersumbat, cuaca sangat panas, atau gangguan pada sirkuit pendingin transmisi. Bajak yang terlalu berat atau trailer yang kelebihan muatan sudah cukup untuk memicunya.&#10;&#10;Tetap waspada: panas berlebih merupakan salah satu faktor yang paling merusak transmisi CVT."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Sasis Mengalami Tegangan"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Mengemudi cepat di medan kasar mempercepat keausan kaki-kaki %s milikmu. Guncangan ini juga merusak kabel beserta konektornya, serta sistem hidraulis saat alat berat sedang terangkat.&#10;&#10;Kurangi kecepatan di permukaan yang tidak rata."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Benturan Keras"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Kaki-kaki baru saja terkena benturan keras. Rintangan yang menghentikan kendaraan seketika atau memperlambatnya secara tiba-tiba langsung mengikis sasis dan mendekatkan kerusakan berikutnya, paling sering pada kemudi atau bantalan.&#10;&#10;Kurangi kecepatan sebelum rintangan."/>
-        <text name="rms_tutorial_cranking_title" text="Penyalaan Terlalu Sering"/>
-        <text name="rms_tutorial_cranking_message" text="Motor starter sudah banyak berputar dalam waktu singkat. Lewat dari beberapa detik secara total, setiap penyalaan mengauskan motor starter, aki, dan bagian lain sirkuit starter.&#10;&#10;Hindari mematikan mesin untuk jeda singkat."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kerusakan Kritis"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s milikmu tidak lagi dapat bergerak dengan tenaganya sendiri.&#10;&#10;Tergantung kerusakannya, bengkel bergerak dapat memperbaikinya di tempat, setidaknya untuk sementara, cukup agar mesin dapat mencapai bengkel dengan tenaganya sendiri. Jika tidak, mesin harus dibawa ke sana dengan cara lain."/>
-        <text name="rms_tutorial_cold_engine_title" text="Mesin Dingin"/>
-        <text name="rms_tutorial_cold_engine_message" text="Mesin masih dingin: di bawah %s mesin aus lebih cepat begitu menyala, berapa pun bebannya, dan makin dingin makin cepat aus.&#10;&#10;Di bawah %s, jangan juga melebihi tiga perempat putaran maksimum: sistem pendingin ikut terbebani."/>
-        <text name="rms_tutorial_cold_oil_title" text="Oli Transmisi Dingin"/>
-        <text name="rms_tutorial_cold_oil_message" text="Oli transmisi masih dingin: di bawah %s transmisi aus lebih cepat begitu mesin menyala, berapa pun bebannya.&#10;&#10;Di bawah %s, oli hidraulik juga mengauskan pompa saat Anda menggunakan hidraulik."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Panas Berlebih pada Transmisi"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Oli transmisi mulai mengalami panas berlebih. Penyebabnya dapat berupa beban yang terlalu berat, radiator tersumbat, cuaca sangat panas, atau gangguan pada sistem pendingin transmisi.&#10;&#10;Oli transmisi memanas pada setiap mesin, bukan hanya CVT. Oli yang terlalu panas mempercepat keausan transmisi dan merusak sealnya."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Peringatan Beban Berlebih"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s menerima beban berat. Indikator peringatan yang baru menyala di dasbor menunjukkan kondisi tersebut.&#10;&#10;Mesin mungkin tidak memiliki cukup daya untuk tugas saat ini. Coba kurangi beban: batasi kecepatan dengan kontrol jelajah, atau kurangi tekanan pada pedal gas alih-alih bekerja dengan daya penuh."/>
-        <text name="rms_tutorial_battery_low_title" text="Baterai Lemah"/>
-        <text name="rms_tutorial_battery_low_message" text="Baterai mesin ini hampir habis sepenuhnya. Hal ini terjadi setelah lama tidak digunakan, dalam suhu yang sangat dingin, atau akibat gangguan pada sistem kelistrikan.&#10;&#10;Saat daya rendah, penyalaan menjadi sulit lalu mustahil. Kamu dapat menyalakan mesin dari kendaraan lain menggunakan kabel starter. Sebelum lama tidak digunakan, atau jika baterai habis dengan sendirinya, putuskan baterai dengan sakelar pemutus baterai, dengan berjalan kaki di depan mesin."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Tegangan Sistem Penggerak"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Kamu berbelok di permukaan dengan daya cengkeram tinggi saat pengunci diferensial aktif. Roda bagian dalam dan luar menempuh jarak berbeda di tikungan, tetapi pengunci diferensial memaksanya berputar pada kecepatan yang sama: sistem penggerak mengalami tegangan dan keausan transmisi meningkat. Nonaktifkan pengunci diferensial sebelum berbelok."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Mode Sistem Penggerak dan Pengunci Diferensial"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Mesin ini memungkinkanmu memilih sistem penggeraknya: 2WD, 4WD, atau OTOMATIS. Dalam mode OTOMATIS, gandar depan tetap aktif selama bekerja: gandar depan nonaktif di atas %s dan di tikungan tajam, lalu aktif kembali begitu kamu mengerem.&#10;&#10;Pengunci diferensial mendapatkan daya cengkeram saat cengkeraman hilang dan sekaligus mengaktifkan gandar depan. Pengunci ini lepas dengan sendirinya di tikungan, saat mengerem, dan di atas %s: aktifkan kembali saat kamu membutuhkannya."/>
-        <text name="rms_tutorial_drivetrain_modes_manual_message" text="Mesin ini memungkinkanmu memilih sistem penggeraknya: 2WD atau 4WD.&#10;&#10;Pengunci diferensial mendapatkan daya cengkeram saat cengkeraman hilang, tetapi sangat membebani sistem ketika berbelok di permukaan dengan daya cengkeram tinggi: roda bagian dalam dan luar tidak dapat berputar pada kecepatan yang sama sehingga sistem penggerak menerima tegangan. Nonaktifkan sebelum berbelok."/>
-        <text name="rms_tutorial_diff_lock_title" text="Pengunci Diferensial"/>
-        <text name="rms_tutorial_diff_lock_message" text="Pengunci diferensial mendapatkan daya cengkeram saat cengkeraman hilang. Pengunci ini lepas dengan sendirinya di tikungan, saat mengerem, dan di atas %s: aktifkan kembali saat kamu membutuhkannya."/>
-        <text name="rms_tutorial_diff_lock_manual_message" text="Pengunci diferensial mendapatkan daya cengkeram saat cengkeraman hilang, tetapi sangat membebani sistem ketika berbelok di permukaan dengan daya cengkeram tinggi: roda bagian dalam dan luar tidak dapat berputar pada kecepatan yang sama sehingga sistem penggerak menerima tegangan. Nonaktifkan sebelum berbelok."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Dengan Realistic Mechanical Systems, mesinmu aus dan rusak seperti mesin sungguhan. Tiga aturan sudah cukup untuk bermain tanpa kerusakan terus-menerus:&#10;&#10;1. Lakukan perawatan tepat waktu. Dasbor Mekanis di menu permainan menampilkan perawatan berikutnya untuk setiap mesin.&#10;2. Siapkan mesinmu setiap hari. Tahan %s di dekat mesin untuk memeriksanya: level cairan, radiator, filter udara, pelumasan. Bersihkan radiator dan filter udaranya dengan peniup udara bertekanan, lalu lumasi mesin dengan pistol gemuk. Implemen dan trailermu juga perlu dilumasi: Dasbor Mekanis menampilkan yang sudah waktunya. Peniup udara bertekanan, pistol gemuk, dan kartrid gemuk ada di toko, kategori Perawatan.&#10;3. Rawat mesinmu: kelebihan beban, panas berlebih, bekerja saat mesin masih dingin, dan selip roda membuatnya aus.&#10;&#10;Jika permainan terasa terlalu sulit, tingkatkan Masa Pakai Kendaraan dan Jarak antarperawatan di tab PENGATURAN RMS pada Dasbor Mekanis."/>
 
         <!-- Mobile battery charger -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
