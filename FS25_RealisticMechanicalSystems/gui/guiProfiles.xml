@@ -4,7 +4,6 @@
         <imageSliceId value="rms_MenuIcon.menuIcon"/>
     </Profile>
 
-    <!-- Shared dialog backgrounds and blockers -->
     <Profile name="rms_dialogScreenBlocker" extends="baseReference" with="anchorStretchingYStretchingX pivotTopCenter">
         <size value="100% 100%"/>
         <color value="$preset_fs25_colorMainDark"/>
@@ -18,14 +17,12 @@
         <size value="880px 571px"/>
     </Profile>
 
-    <!-- Shared text and separators -->
     <Profile name="rms_textHeaderGrey" extends="fs25_textDefault">
         <textBold value="true"/>
         <textSize value="20px"/>
         <textColor value="$preset_colorDisabled"/>
         <textAlignment value="center"/>
     </Profile>
-    <!-- Shared workshop, report and log tables -->
     <Profile name="rms_tableList" extends="emptyPanel" with="anchorStretchingYLeft pivotTopLeft"/>
     <Profile name="rms_tableRowCellLeft" extends="baseReference" with="anchorStretchingYLeft">
         <textBold value="false"/>
@@ -34,7 +31,6 @@
         <textColor value="$preset_fs25_colorMainLight"/>
         <textDisabledColor value="$preset_colorDisabled"/>
     </Profile>
-    <!-- Pre-shift inspection dialog -->
     <Profile name="rms_inspectionHeaderLayout" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="horizontal"/>
         <alignmentX value="center"/>
@@ -255,7 +251,6 @@
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
 
-    <!-- Workshop specific -->
     <Profile name="rms_workshopDialogBg" extends="fs25_dialogBg">
         <size value="1550px 884px"/>
         <position value="0px -83px"/>
@@ -304,7 +299,6 @@
         <elementSpacing value="14px"/>
         <autoValidateLayout value="true"/>
     </Profile>
-    <!-- Full inspection report -->
     <Profile name="rms_workshopReportFlow" extends="rms_workshopPageFlow">
         <elementSpacing value="12px"/>
     </Profile>
@@ -428,7 +422,6 @@
         <textScrollOnFocusOnly value="false"/>
     </Profile>
 
-    <!-- Cards -->
     <Profile name="rms_workshopBlock" extends="emptyPanel" with="anchorTopLeft"/>
     <Profile name="rms_workshopCardVehicle" extends="rms_workshopBlock">
         <size value="381px 566px"/>
@@ -466,16 +459,13 @@
     <Profile name="rms_workshopBand" extends="rms_workshopBlock">
         <size value="1473px 84px"/>
     </Profile>
-    <!-- Surfaces, pills and section headings -->
     <Profile name="rms_workshopSurfaceStrong" extends="rms_inspectionCardSurface" with="anchorStretchingYStretchingX"/>
-    <!-- Pill closed on the value after it -->
     <Profile name="rms_workshopValuePill" extends="rms_inspectionValuePill">
         <rmsPillAnchor value="right"/>
     </Profile>
     <Profile name="rms_workshopValuePillCentered" extends="rms_workshopValuePill">
         <rmsPillAnchor value="center"/>
     </Profile>
-    <!-- Row of the vehicle card -->
     <Profile name="rms_workshopVehicleRow" extends="rms_workshopBlock">
         <size value="341px 44px"/>
     </Profile>
@@ -509,7 +499,6 @@
         <position value="215px -8px"/>
         <size value="102px 28px"/>
     </Profile>
-    <!-- Row of the diagnostic reading -->
     <Profile name="rms_workshopReadingRow" extends="rms_workshopBlock">
         <size value="272px 44px"/>
     </Profile>
@@ -525,7 +514,6 @@
         <position value="164px -8px"/>
         <size value="88px 28px"/>
     </Profile>
-    <!-- Row of the service card -->
     <Profile name="rms_workshopServiceRow" extends="rms_workshopBlock">
         <size value="241px 40px"/>
     </Profile>
@@ -610,7 +598,6 @@
         <textMinSize value="11px"/>
         <textMaxNumLines value="2"/>
     </Profile>
-    <!-- Condition ring value and its outdated mark -->
     <Profile name="rms_ringValueStack" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <fillDirectionY value="topToBottom"/>
@@ -662,14 +649,12 @@
     <Profile name="rms_workshopAlertTitle" extends="rms_workshopValue">
         <textMinSize value="15px"/>
     </Profile>
-    <!-- Fixed size: CJK never wraps in resize -->
     <Profile name="rms_workshopAlertText" extends="rms_workshopDetail">
         <textSize value="13px"/>
         <textMaxNumLines value="6"/>
         <textLayoutMode value="truncate"/>
         <textVerticalAlignment value="top"/>
     </Profile>
-    <!-- Icons -->
     <Profile name="rms_workshopIcon" extends="baseReference" with="anchorTopLeft">
         <size value="36px 36px"/>
         <imageColor value="$preset_fs25_colorMainHighlight"/>
@@ -728,7 +713,6 @@
     <Profile name="rms_workshopGaugeFill" extends="rms_fluidGaugeFill">
         <imageColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
-    <!-- System rows -->
     <Profile name="rms_workshopSystemName" extends="rms_inspectionRowTitle">
         <textSize value="12px"/>
         <textMinSize value="10px"/>
@@ -779,7 +763,6 @@
         <textAutoWidth value="true"/>
         <textMaxWidth value="1350px"/>
     </Profile>
-    <!-- Intervention rows -->
     <Profile name="rms_workshopAction" extends="emptyPanel" with="anchorTopLeft">
         <size value="310px 50px"/>
         <textSize value="17px"/>
@@ -812,7 +795,6 @@
     <Profile name="rms_workshopActionBgRefused" extends="rms_workshopActionBg">
         <colorSelected value="$preset_fs25_colorGrey"/>
     </Profile>
-    <!-- Engine remap -->
     <Profile name="rms_remapTileValue" extends="rms_workshopRecapAmount">
         <textSize value="26px"/>
         <textMinSize value="16px"/>
@@ -850,7 +832,6 @@
     <Profile name="rms_remapNote" extends="rms_workshopDetail">
         <textSize value="14px"/>
     </Profile>
-    <!-- Stacks and lists -->
     <Profile name="rms_workshopStack" extends="emptyPanel" with="anchorTopLeft">
         <flowDirection value="vertical"/>
         <alignmentX value="left"/>
@@ -869,7 +850,6 @@
         <size value="619px 486px"/>
         <elementSpacing value="10px"/>
     </Profile>
-    <!-- Maintenance levels -->
     <Profile name="rms_workshopLevelColumn" extends="emptyPanel" with="anchorTopLeft">
         <size value="125px 428px"/>
     </Profile>
@@ -938,7 +918,6 @@
     <Profile name="rms_workshopLevelFrequency" extends="rms_workshopLevelDuration">
         <textSize value="12px"/>
     </Profile>
-    <!-- Maintenance cells -->
     <Profile name="rms_workshopLevelCellDone" extends="rms_workshopLevelPrice">
         <textSize value="14px"/>
         <textMinSize value="10px"/>
@@ -995,7 +974,6 @@
         <textLineHeightScale value="1.1"/>
         <textColor value="0.5028 0.5028 0.5028 1"/>
     </Profile>
-    <!-- Part quality cards -->
     <Profile name="rms_workshopQualityCard" extends="emptyPanel" with="anchorTopLeft">
         <size value="148px 112px"/>
     </Profile>
@@ -1036,7 +1014,6 @@
     <Profile name="rms_workshopPackedList" extends="rms_workshopTableList">
         <listItemSpacing value="0px"/>
     </Profile>
-    <!-- Estimate rows -->
     <Profile name="rms_workshopRecapQuoteHeadRow" extends="rms_inspectionRow">
         <height value="20px"/>
     </Profile>
@@ -1103,7 +1080,6 @@
         <textLayoutMode value="overflow"/>
         <textAutoHeight value="true"/>
     </Profile>
-    <!-- Partial overhaul systems -->
     <Profile name="rms_workshopSystemCard" extends="emptyPanel" with="anchorTopLeft">
         <size value="148px 48px"/>
     </Profile>
@@ -1250,7 +1226,6 @@
         <imageSelectedColor value="$preset_fs25_colorMainDark"/>
     </Profile>
 
-    <!-- Call to action -->
     <Profile name="rms_workshopPrimaryButton" extends="emptyPanel" with="anchorTopLeft">
         <size value="440px 50px"/>
         <textSize value="17px"/>
@@ -1291,7 +1266,6 @@
         <imageSliceId value="rms_Hud.maintenance"/>
     </Profile>
 
-    <!-- Maintenance log specific -->
     <Profile name="rms_logPageFlow" extends="rms_workshopPageFlow">
         <size value="1473px 664px"/>
         <elementSpacing value="12px"/>
@@ -1472,7 +1446,6 @@
         <textColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
 
-    <!-- Lease return dialog -->
     <Profile name="rms_sellDialogTitle" extends="rms_inspectionDialogTitle">
         <textMaxWidth value="710px"/>
         <textLayoutMode value="overflow"/>
@@ -1502,7 +1475,6 @@
         <textUpperCase value="true"/>
     </Profile>
 
-    <!-- In-game menu: settings page -->
     <Profile name="rms_menuTableContainer" extends="emptyPanel" with="anchorTopStretchingX">
         <size value="1550px 510px"/>
         <position value="-10px 0px"/>
@@ -1536,7 +1508,6 @@
         <endImagePressedColor value="$preset_fs25_colorMainHighlight"/>
     </Profile>
 
-    <!-- Fleet page -->
     <Profile name="rms_fleetMainTabs" extends="fs25_subCategorySelectorTabbedBox" with="anchorTopCenter">
         <size value="1473px 57px"/>
         <position value="0px 0px"/>
@@ -1553,7 +1524,6 @@
         <position value="0px 0px"/>
         <elementSpacing value="12px"/>
     </Profile>
-    <!-- Fleet pulse band -->
     <Profile name="rms_fleetPulseRow" extends="rms_workshopStatusGroup">
         <elementSpacing value="10px"/>
     </Profile>
@@ -1568,11 +1538,9 @@
         <textMaxWidth value="80px"/>
     </Profile>
     <Profile name="rms_fleetPulseDivider" extends="rms_workshopRule" with="anchorMiddleCenter"/>
-    <!-- Value pills -->
     <Profile name="rms_fleetPillOnCard" extends="rms_workshopValuePill">
         <color value="$preset_colorBlack50"/>
     </Profile>
-    <!-- Navigator lists -->
     <Profile name="rms_fleetSortSelector" extends="fs25_multiTextOption" with="anchorTopLeft">
         <defaultProfileBgRound value="rms_fleetSortBg"/>
         <defaultProfileText value="rms_fleetSortText"/>
@@ -1626,7 +1594,6 @@
         <textMaxNumLines value="1"/>
         <textSelectedColor value="$preset_fs25_colorMainDark"/>
     </Profile>
-    <!-- Card action -->
     <Profile name="rms_fleetCardButton" extends="rms_workshopAction">
         <textSize value="14px"/>
         <textMinSize value="11px"/>
@@ -1648,7 +1615,6 @@
         <imageSliceId value="gui.arrow_round"/>
         <imageRotation value="180"/>
     </Profile>
-    <!-- Identity card -->
     <Profile name="rms_fleetModel" extends="rms_workshopVehicleModel">
         <textMinSize value="16px"/>
         <textMaxNumLines value="1"/>
@@ -1698,7 +1664,6 @@
         <textMinSize value="12px"/>
         <textAlignment value="center"/>
     </Profile>
-    <!-- Dossier -->
     <Profile name="rms_fleetUrgencyAccent" extends="rms_inspectionVerdictAccent" with="anchorTopLeft"/>
     <Profile name="rms_fleetBannerTitle" extends="rms_workshopValue">
         <textSize value="19px"/>
@@ -1717,7 +1682,6 @@
         <textMaxNumLines value="1"/>
         <textAlignment value="center"/>
     </Profile>
-    <!-- Resets the expanded profile's bold -->
     <Profile name="rms_fleetSystemName" extends="rms_workshopSystemName">
         <textSize value="14px"/>
         <textMinSize value="12px"/>
@@ -1734,7 +1698,6 @@
     <Profile name="rms_fleetSystemNameOpen" extends="rms_fleetSystemName">
         <textColor value="$preset_fs25_colorMainLight"/>
     </Profile>
-    <!-- Condition list -->
     <Profile name="rms_fleetStateRow" extends="rms_inspectionRow">
         <imageSelectedColor value="$preset_colorTransparent"/>
         <imageHighlightedColor value="$preset_colorTransparent"/>
@@ -1786,7 +1749,6 @@
         <textAlignment value="center"/>
     </Profile>
     <Profile name="rms_fleetStateFootRule" extends="rms_workshopSectionLine" with="anchorTopLeft"/>
-    <!-- Diagnostic PC -->
     <Profile name="rms_diagScreenBg" extends="baseReference" with="anchorStretchingYStretchingX">
         <size value="100% 100%"/>
         <imageColor value="1.0000 1.0000 1.0000 1"/>
@@ -2103,7 +2065,6 @@
         <textSize value="13.19px"/>
         <textBold value="true"/>
     </Profile>
-    <!-- Detail fields -->
     <Profile name="rms_diagFieldLabel" extends="rms_diagText">
         <size value="168.56px 17.59px"/>
         <textBold value="true"/>

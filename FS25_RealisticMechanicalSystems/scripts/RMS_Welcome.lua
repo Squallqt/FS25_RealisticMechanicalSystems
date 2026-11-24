@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Welcome window
+---Welcome window, shown once to each player
 RMS_Welcome = {}
 
 ---Forgets every player
@@ -10,16 +10,21 @@ function RMS_Welcome.reset()
 end
 
 ---Tells whether a player saw the welcome
+-- @param string uniqueUserId unique user id of the player
+-- @return boolean isSeen true once the player saw it
 function RMS_Welcome.getIsSeen(uniqueUserId)
     return RMS_Welcome.seenUserIds[uniqueUserId] == true
 end
 
 ---Remembers that a player saw the welcome
+-- @param string uniqueUserId unique user id of the player
 function RMS_Welcome.setSeen(uniqueUserId)
     RMS_Welcome.seenUserIds[uniqueUserId] = true
 end
 
 ---Writes the players who saw the welcome
+-- @param integer xmlFile savegame file
+-- @param string key key of the welcome
 function RMS_Welcome.saveToXMLFile(xmlFile, key)
     local userIds = {}
     for uniqueUserId, _ in pairs(RMS_Welcome.seenUserIds) do
@@ -33,6 +38,8 @@ function RMS_Welcome.saveToXMLFile(xmlFile, key)
 end
 
 ---Reads the players who saw the welcome
+-- @param integer xmlFile savegame file
+-- @param string key key of the welcome
 function RMS_Welcome.loadFromXMLFile(xmlFile, key)
     local index = 0
     while true do
@@ -45,7 +52,7 @@ function RMS_Welcome.loadFromXMLFile(xmlFile, key)
     end
 end
 
----Update
+---Shows the welcome to the local player who has not seen it
 -- @param float dt time since last call in ms
 function RMS_Welcome:update(dt)
     if g_localPlayer == nil or g_gui:getIsGuiVisible() or g_currentMission.hud:getIsFading() then

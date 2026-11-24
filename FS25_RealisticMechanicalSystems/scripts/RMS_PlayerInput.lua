@@ -11,11 +11,15 @@ local state = { machine = nil, inspected = nil, held = nil, heldTime = 0, isHold
 local inspectionEventId, isolatorEventId
 
 ---Tells whether the player stands on foot with empty hands
+-- @param table player player
+-- @return boolean isFree true on foot with empty hands
 local function getIsFreeOnFoot(player)
     return player.isControlled and not player:getIsInVehicle() and not player:getAreHandsHoldingObject() and not player:getIsHoldingHandTool()
 end
 
 ---Returns the tracked machine the player faces and may use, nil without one
+-- @param table player player
+-- @return table? machine machine faced
 local function getFacedMachine(player)
     local node = player.targeter:getClosestTargetedNodeFromType(PlayerInputComponent)
     local machine = node ~= nil and g_currentMission:getNodeObject(node) or nil
@@ -32,13 +36,12 @@ local function forgetHold()
 end
 
 ---Ends the inspection on foot, opening its result when it is complete
+-- @param boolean isComplete true when the inspection is complete
+-- @param string? reasonKey l10n key of the cancel message
 local function endInspection(isComplete, reasonKey)
     local machine = state.inspected
-    local inspection = machine.spec_RealisticMechanicalSystems.fieldInspection
     state.inspected = nil
     RMS_FieldInspectionEvent.send(machine, false)
-    inspection.isActive = false
-    inspection.elapsedTime = isComplete and inspection.duration or 0
     RMS_Hud.showInspectionProgress(nil)
     if isComplete then
         RMS_InspectionDialog.show(machine)
@@ -48,16 +51,18 @@ local function endInspection(isComplete, reasonKey)
 end
 
 ---Runs the inspection on foot while the player stays at the machine
+-- @param table player player
+-- @param float dt time since the last frame (ms)
 local function followInspection(player, dt)
     local machine = state.inspected
     local inspection = machine.spec_RealisticMechanicalSystems.fieldInspection
-    if not inspection.isActive or not player.isControlled then
+    if not player.isControlled then
         endInspection(false)
     elseif not getIsFreeOnFoot(player) or getFacedMachine(player) ~= machine then
         endInspection(false, "rms_field_inspection_cancelled")
     else
         inspection.elapsedTime = math.min(inspection.elapsedTime + dt, inspection.duration)
-        RMS_Hud.showInspectionProgress(inspection.elapsedTime / math.max(inspection.duration, 1))
+        RMS_Hud.showInspectionProgress(inspection.elapsedTime / inspection.duration)
         if inspection.elapsedTime >= inspection.duration then
             endInspection(true)
         end
@@ -65,6 +70,9 @@ local function followInspection(player, dt)
 end
 
 ---A short press is the game's activate, a long one the inspection
+-- @param table inputComponent input component of the player
+-- @param string actionName input action
+-- @param float inputValue input value
 local function onInspectionInput(inputComponent, actionName, inputValue)
     if inputValue == 0 then
         local isShortPress = not state.isKeyConsumed and state.held ~= nil and not state.isHoldDone
@@ -100,7 +108,7 @@ end
 ---Opens or closes the battery isolator of the machine faced
 local function onIsolatorInput()
     local machine = state.machine
-    if machine == nil or not RMS_Electrical.getHasBatteryIsolator(machine) then
+    if not RMS_Electrical.getHasBatteryIsolator(machine) then
         return
     end
 
@@ -113,8 +121,9 @@ local function onIsolatorInput()
 end
 
 ---Offers the battery isolator of the machine faced
+-- @param table? machine machine faced
 local function showIsolatorAction(machine)
-    local hasIsolator = machine ~= nil and RMS_Electrical.getHasBatteryIsolator(machine)
+    local hasIsolator = machine ~= nil
     g_inputBinding:setActionEventActive(isolatorEventId, hasIsolator)
     if hasIsolator then
         g_inputBinding:setActionEventText(isolatorEventId,
@@ -123,11 +132,14 @@ local function showIsolatorAction(machine)
 end
 
 ---Follows the machine faced, the held key and the running inspection
+-- @param table inputComponent input component of the player
+-- @param function superFunc original function
+-- @param float dt time since the last frame (ms)
 local function update(inputComponent, superFunc, dt)
     superFunc(inputComponent, dt)
 
     local player = inputComponent.player
-    if not player.isOwner or g_inputBinding:getContextName() ~= PlayerInputComponent.INPUT_CONTEXT_NAME or inspectionEventId == nil then
+    if g_inputBinding:getContextName() ~= PlayerInputComponent.INPUT_CONTEXT_NAME then
         return
     end
 
@@ -155,11 +167,8 @@ local function update(inputComponent, superFunc, dt)
 end
 
 ---Registers the inspection and the isolator keys of the player on foot
+-- @param table inputComponent input component of the player
 local function registerActionEvents(inputComponent)
-    if not inputComponent.player.isOwner then
-        return
-    end
-
     local _
     g_inputBinding:beginActionEventsModification(PlayerInputComponent.INPUT_CONTEXT_NAME)
     _, inspectionEventId = g_inputBinding:registerActionEvent(InputAction.RMS_FIELD_INSPECTION, inputComponent, onInspectionInput,
@@ -174,6 +183,10 @@ local function registerActionEvents(inputComponent)
 end
 
 ---Hides the hands of the player during an inspection
+-- @param table hands hands of the player
+-- @param function superFunc original function
+-- @param any ... arguments of the game's draw
+-- @return any ... what the game's draw returns
 local function drawHands(hands, superFunc, ...)
     if state.inspected == nil then
         return superFunc(hands, ...)

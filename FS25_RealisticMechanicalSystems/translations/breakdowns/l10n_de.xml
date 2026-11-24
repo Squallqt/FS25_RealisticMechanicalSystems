@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Dauerhaft"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Leistungsreduzierung"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Außer Betrieb"/>
         <text name="rms_breakdowns_severity_minor" text="Geringfügig"/>
         <text name="rms_breakdowns_severity_moderate" text="Mäßig"/>
         <text name="rms_breakdowns_severity_major" text="Schwerwiegend"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Überhitzungsschutz: Leistung reduziert"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Der Überhitzungsschutz verstärkt sich. Der Motor liefert nur noch die halbe Leistung."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Überhitzungsschutz: Leistung halbiert"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Der Überhitzungsschutz ist am Maximum. Es bleibt nur ein Bruchteil der Motorleistung."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Überhitzungsschutz: Leistung stark reduziert"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Der Motor wurde abgeschaltet, um Schäden zu vermeiden. Lass ihn abkühlen, bevor du neu startest."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Überhitzungsschutz: Motor abgestellt"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Leichte Fehlfunktion der Ölpumpe. Der Öldruck ist reduziert, das Motordrehmoment sinkt leicht, die Motortemperatur steigt und mechanisches Klopfen kann auftreten."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mäßige Fehlfunktion der Ölpumpe. Der Öldruck ist unzureichend, das Motordrehmoment deutlich reduziert, die Motortemperatur erhöht und mechanisches Klopfen klar hörbar."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Schwere Fehlfunktion der Ölpumpe. Der Öldruck ist kritisch niedrig, das Motordrehmoment stark reduziert, Motorüberhitzung wahrscheinlich, mechanisches Klopfen stark ausgeprägt und der Motor kann absterben."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritischer Ausfall der Ölpumpe. Die Ölzirkulation reicht für einen sicheren Motorbetrieb nicht mehr aus und ein Start oder weiterer Betrieb ist nicht möglich."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Der Motor hat sich festgefressen und kann sich nicht mehr drehen."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor abgewürgt"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Leichte ECU-Fehlfunktion. Die Motorleistung ist leicht reduziert."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mäßige ECU-Fehlfunktion. Spürbarer Leistungsverlust und erhöhter Kraftstoffverbrauch."/>

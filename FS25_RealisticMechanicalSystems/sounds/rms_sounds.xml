@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <sounds>
-    <!-- Engine start, by machine family -->
+    <!-- Engine start -->
     <starterCarIntro file="sounds/starterCarIntro.ogg" linkNode="0>" priority="VERY_HIGH" innerRadius="3.0" outerRadius="60" volumeScale="2.41" >
         <volume indoor="0.75" outdoor="1.00" />
         <lowpassGain indoor="0.35" outdoor="1.0" />
@@ -84,7 +84,7 @@
         <lowpassGain indoor="0.50" outdoor="1.00" />
         <randomization minVolume="-0.01" maxVolume="0.1" minPitch="0" maxPitch="0.2" isInside="true" isOutside="true" />
     </batteryClicking>
-    <!-- Glow relay and contactors -->
+    <!-- Relays and contactors -->
     <preheatRelay file="sounds/preheatRelay.ogg" linkNode="0>" innerRadius="2.0" outerRadius="30.0" isLocalSound="true" supportsReverb="false" volumeScale="1.66" >
         <volume indoor="0.3" outdoor="0.15" />
         <lowpassGain indoor="1.00" outdoor="0.50" />
@@ -121,14 +121,14 @@
         <randomization minVolume="-0.2" maxVolume="0.1" minPitch="-0.1" maxPitch="0.4" isInside="true" isOutside="false" />
         <randomization minVolume="-0.1" maxVolume="0.1" minPitch="-0.1" maxPitch="0.1" isInside="false" isOutside="true" />
     </powershiftClunk>
-    <!-- Dry brakes -->
+    <!-- Brakes -->
     <brakes file="sounds/brakes_1.ogg" linkNode="0>" innerRadius="7.0" outerRadius="70.0" fadeOut="0.03" volumeScale="0.43" >
         <sourceRandomization file="sounds/brakes_2.ogg" />
         <sourceRandomization file="sounds/brakes_3.ogg" />
         <volume indoor="0.2" outdoor="0.8" />
         <lowpassGain indoor="0.5" outdoor="1.0" />
     </brakes>
-    <!-- Park brake, hand lever -->
+    <!-- Hand park brake -->
     <parkBrakeLeverApply file="sounds/parkBrakeLeverApply.ogg" linkNode="0>" innerRadius="2.0" outerRadius="30.0" isLocalSound="true" supportsReverb="false" volumeScale="0.99" >
         <volume indoor="0.3" outdoor="0.15" />
         <lowpassGain indoor="1.00" outdoor="0.50" />
@@ -137,7 +137,7 @@
         <volume indoor="0.3" outdoor="0.15" />
         <lowpassGain indoor="1.00" outdoor="0.50" />
     </parkBrakeLeverRelease>
-    <!-- Automatic air park brake -->
+    <!-- Automatic park brake -->
     <parkBrakeAutoApply file="sounds/parkBrakeAutoApply.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" volumeScale="1.48" >
         <volume indoor="0.25" outdoor="1.00" />
         <lowpassGain indoor="0.50" outdoor="1.0" />
@@ -146,7 +146,7 @@
         <volume indoor="0.25" outdoor="1.00" />
         <lowpassGain indoor="0.50" outdoor="1.0" />
     </parkBrakeAutoRelease>
-    <!-- Automatic park brake switch -->
+    <!-- Park brake switch -->
     <parkBrakeSwitchOn file="$data/sounds/vehicles/switch/vehSwitchPress_01.ogg" linkNode="0>" innerRadius="2.0" outerRadius="30.0" isLocalSound="true" supportsReverb="false" >
         <volume indoor="0.3" outdoor="0.15" />
         <lowpassGain indoor="1.00" outdoor="0.50" />
@@ -163,7 +163,7 @@
         <lowpassGain indoor="1.00" outdoor="0.50" />
         <pitch indoor="1.00" outdoor="1.00" />
     </fanReversalSwitch>
-    <!-- Park brake, truck air valve -->
+    <!-- Truck park brake -->
     <parkBrakeTruckApply file="$data/sounds/vehicles/brake/vehTruckBrakeAirRelease_BgMN01.ogg" linkNode="0>" innerRadius="5.0" outerRadius="40.0" >
         <volume indoor="0.25" outdoor="1.00" />
         <lowpassGain indoor="0.50" outdoor="1.0" />
@@ -172,7 +172,7 @@
         <volume indoor="0.25" outdoor="1.00" />
         <lowpassGain indoor="0.50" outdoor="1.0" />
     </parkBrakeTruckRelease>
-    <!-- Mechanical loops -->
+    <!-- Machine noises -->
     <engineKnocking file="sounds/engineKnocking.ogg" linkNode="0>" innerRadius="1.0" outerRadius="30.0" fadeOut="0.2" volumeScale="1.47" >
         <volume indoor="0.50" outdoor="1.70" />
         <lowpassGain indoor="0.50" outdoor="1.00" />
@@ -225,8 +225,10 @@
         <randomization minVolume="-0.01" maxVolume="0.1" minPitch="-0.1" maxPitch="0.1" isInside="true" isOutside="true" />
     </headerShaftBreak>
     <waterPumpBearing file="sounds/waterPumpBearing.ogg" linkNode="0>" innerRadius="5.0" outerRadius="60.0" fadeOut="0.1" volumeScale="1.62" >
-        <volume indoor="0.45" outdoor="1.00" />
-        <lowpassGain indoor="0.50" outdoor="1.00" />
+        <volume indoor="0.30" outdoor="1.00" />
+        <lowpassGain indoor="0.4" outdoor="1.00" />
+        <lowpassCutoffFrequency indoor="100" outdoor="15000" />
+        <lowpassResonance indoor="0" outdoor="0" />
     </waterPumpBearing>
     <gearWhineNoise file="sounds/gearWhineNoise.ogg" linkNode="0>" innerRadius="7.0" outerRadius="70.0" priority="HIGH" volumeScale="3.80" >
         <volume indoor="0.5" outdoor="1.5" />
@@ -323,7 +325,7 @@
     <electricMotorBearing file="sounds/electricMotorBearing.ogg" linkNode="0>" innerRadius="7.0" outerRadius="70.0" priority="HIGH" volumeScale="3.77" >
         <volume indoor="0.5" outdoor="1.5" />
     </electricMotorBearing>
-    <!-- Hydraulic hose burst -->
+    <!-- Sudden failures -->
     <hoseBurst file="sounds/hoseBurst.ogg" linkNode="0>" innerRadius="1.0" outerRadius="30.0" volumeScale="1.47" >
         <volume indoor="1.00" outdoor="6.00" />
         <lowpassGain indoor="0.50" outdoor="1.00" />
@@ -375,7 +377,7 @@
         <lowpassGain indoor="0.50" outdoor="1.00" />
         <randomization minVolume="-0.01" maxVolume="0.1" isInside="true" isOutside="true" />
     </batteryIsolator>
-    <!-- Field inspection -->
+    <!-- Inspection and notifications -->
     <inspection file="sounds/inspection.ogg" linkNode="0>" innerRadius="1.0" outerRadius="30.0" volumeScale="0.48" >
         <volume indoor="0.1" outdoor="1.0" />
         <lowpassGain indoor="0.50" outdoor="1.00" />

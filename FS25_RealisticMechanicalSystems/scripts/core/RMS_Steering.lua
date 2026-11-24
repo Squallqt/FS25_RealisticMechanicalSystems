@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Wheel and articulation steering faults.
+---Wheel and articulation steering faults, and terrain impacts
 RMS_Steering = {}
 
 local DEG = math.pi / 180
@@ -11,6 +11,11 @@ local STANDSTILL_KMH = 0.5
 local TARGET_EFFECTS = { "STEERING_STATIC_BIAS_EFFECT", "STEERING_WHEEL_FREE_EFFECT", "BRAKE_PULL_EFFECT" }
 
 ---Returns the play and pull in rad of the steering faults, and whether a wheel steers freely
+-- @param table vehicle vehicle
+-- @param table spec RMS specialization of the vehicle
+-- @return float play play (rad)
+-- @return float pull pull (rad)
+-- @return boolean isFree true when a wheel steers freely
 local function getFaults(vehicle, spec)
     local effects = spec.activeEffects
     local play = effects.STEERING_PLAY_EFFECT
@@ -24,11 +29,15 @@ local function getFaults(vehicle, spec)
 end
 
 ---Returns 1 for a wheel on the right of the machine, -1 on the left
+-- @param table wheel wheel
+-- @return integer side 1 or -1
 local function getWheelSide(wheel)
     return wheel.physics.positionX >= 0 and 1 or -1
 end
 
 ---Returns the wheels that steer
+-- @param table vehicle vehicle
+-- @return table wheels steered wheels
 local function getSteeredWheels(vehicle)
     local steered = {}
     for _, wheel in ipairs(vehicle.spec_wheels.wheels) do
@@ -40,6 +49,8 @@ local function getSteeredWheels(vehicle)
 end
 
 ---Picks once the steered wheel a one-sided fault acts on
+-- @param table vehicle vehicle
+-- @param table state steering fault state
 local function resolveTarget(vehicle, state)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local breakdown = nil
@@ -69,6 +80,7 @@ local function resolveTarget(vehicle, state)
 end
 
 ---Hooks the per wheel steering call of the game while a fault is active
+-- @param table vehicle vehicle
 function RMS_Steering.refreshFaults(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local effects = spec.activeEffects
@@ -94,6 +106,10 @@ function RMS_Steering.refreshFaults(vehicle)
 end
 
 ---Returns the play state of a wheel or an axis, created at its command
+-- @param table state steering fault state
+-- @param table part wheel or articulated axis
+-- @param float command angle the game asks (rad)
+-- @return table partState play state
 local function getPartState(state, part, command)
     local partState = state.parts[part]
     if partState == nil then
@@ -104,6 +120,9 @@ local function getPartState(state, part, command)
 end
 
 ---Returns the share of its travel a wheel stroked since the last frame
+-- @param table state steering fault state
+-- @param table wheel wheel
+-- @return float stroke share of the travel, -1 to 1
 local function readSuspensionStroke(state, wheel)
     local physics = wheel.physics
     local length = physics.netInfo.suspensionLength
@@ -113,6 +132,13 @@ local function readSuspensionStroke(state, wheel)
 end
 
 ---Moves a steering part inside its play, kicked by the wheel and recentred at speed
+-- @param table partState play state
+-- @param float command angle the game asks (rad)
+-- @param float kick stroke of the suspension, -1 to 1
+-- @param float play play (rad)
+-- @param float speed speed (km/h)
+-- @param float dt time since the last frame (ms)
+-- @return float offset offset in the play (rad)
 local function updatePlay(partState, command, kick, play, speed, dt)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     local speedShare = math.min(speed / C.STEER_PLAY_FULL_SPEED, 1)
@@ -126,6 +152,9 @@ local function updatePlay(partState, command, kick, play, speed, dt)
 end
 
 ---Returns the shimmy a worn steering adds around its peak speed
+-- @param float play play (rad)
+-- @param float speed speed (km/h)
+-- @return float shimmy angle added (rad)
 local function getShimmy(play, speed)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     if play < C.STEER_SHIMMY_MIN_PLAY * DEG then
@@ -142,12 +171,23 @@ local function getShimmy(play, speed)
 end
 
 ---Returns the share of the fault kept near a steering stop
+-- @param float command angle the game asks (rad)
+-- @param float rotMin lowest angle (rad)
+-- @param float rotMax highest angle (rad)
+-- @return float share share kept, 0 to 1
 local function getStopShare(command, rotMin, rotMax)
     local margin = math.min(rotMax - command, command - rotMin)
     return math.clamp(margin / (RMS_Config.CORE.CHASSIS_FACTOR_DATA.STEER_STOP_BLEND * DEG), 0, 1)
 end
 
 ---Returns the angle of a wheel trailing freely, fluttering at speed
+-- @param table vehicle vehicle
+-- @param table wheel wheel
+-- @param table partState play state
+-- @param float command angle the game asks (rad)
+-- @param float speed speed (km/h)
+-- @param float dt time since the last frame (ms)
+-- @return float angle angle of the wheel (rad)
 local function getFreeWheelAngle(vehicle, wheel, partState, command, speed, dt)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     local physics = wheel.physics
@@ -164,6 +204,12 @@ local function getFreeWheelAngle(vehicle, wheel, partState, command, speed, dt)
 end
 
 ---Applies the steering faults to the angle the game computed for a wheel
+-- @param table vehicle vehicle
+-- @param function superFunc original function
+-- @param table wheel wheel
+-- @param float dt time since the last frame (ms)
+-- @param float steeringAngle angle asked (rad)
+-- @return float angle angle of the wheel (rad)
 function RMS_Steering.updateSteeringAngle(vehicle, superFunc, wheel, dt, steeringAngle)
     steeringAngle = superFunc(vehicle, wheel, dt, steeringAngle)
 
@@ -199,11 +245,20 @@ function RMS_Steering.updateSteeringAngle(vehicle, superFunc, wheel, dt, steerin
 end
 
 ---Returns the articulation angle untouched for types without their own hook
+-- @param table vehicle vehicle
+-- @param float steeringAngle articulation angle (rad)
+-- @param float dt time since the last frame (ms)
+-- @return float angle articulation angle (rad)
 function RMS_Steering.passArticulatedAxisRotation(vehicle, steeringAngle, dt)
     return steeringAngle
 end
 
 ---Applies the steering faults to the articulation angle
+-- @param table vehicle vehicle
+-- @param function superFunc original function
+-- @param float steeringAngle articulation angle asked (rad)
+-- @param float dt time since the last frame (ms)
+-- @return float angle articulation angle (rad)
 function RMS_Steering.updateArticulatedAxisRotation(vehicle, superFunc, steeringAngle, dt)
     steeringAngle = superFunc(vehicle, steeringAngle, dt)
 
@@ -239,6 +294,8 @@ function RMS_Steering.updateArticulatedAxisRotation(vehicle, superFunc, steering
 end
 
 ---Returns the deceleration the tyres can give, in km/h per s
+-- @param table vehicle vehicle
+-- @return float limit deceleration (km/h per s)
 local function getGripLimit(vehicle)
     local grip = 0
     for _, wheel in ipairs(vehicle.spec_wheels.wheels) do
@@ -248,6 +305,8 @@ local function getGripLimit(vehicle)
 end
 
 ---Tells whether a player holds the machine in hand
+-- @param table vehicle vehicle
+-- @return boolean isHeld true when a player holds it
 local function getIsHeldByPlayer(vehicle)
     for _, player in pairs(g_currentMission.playerSystem.players) do
         local hands = player.hands
@@ -262,6 +321,8 @@ local function getIsHeldByPlayer(vehicle)
 end
 
 ---Wears the chassis by the speed an impact took
+-- @param table vehicle vehicle
+-- @param float speedLoss speed lost (km/h)
 local function applyImpact(vehicle, speedLoss)
     local C = RMS_Config.CORE.CHASSIS_FACTOR_DATA
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -273,6 +334,8 @@ local function applyImpact(vehicle, speedLoss)
 end
 
 ---Reads an impact off a speed loss beyond what the tyres can take
+-- @param table vehicle vehicle
+-- @param float dt time of the step (ms)
 function RMS_Steering.updateTerrainImpacts(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if not spec.systems.chassis.enabled then

@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="영구적"/>
         <text name="rms_breakdowns_severity_reduce_power" text="출력 저하"/>
-        <text name="rms_breakdowns_severity_shutdown" text="작동 중지"/>
         <text name="rms_breakdowns_severity_minor" text="경미함"/>
         <text name="rms_breakdowns_severity_moderate" text="보통"/>
         <text name="rms_breakdowns_severity_major" text="심각함"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="과열 보호: 출력 제한"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="과열 보호가 강화됩니다. 엔진 출력이 절반으로 줄었습니다."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="과열 보호: 출력 절반으로 제한"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="과열 보호가 최대로 작동 중입니다. 엔진 출력의 극히 일부만 남았습니다."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="과열 보호: 출력 대폭 제한"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="손상을 막기 위해 엔진이 정지되었습니다. 다시 시동을 걸기 전에 식히십시오."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="과열 보호: 엔진 정지"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="오일 펌프가 약간 오작동합니다. 오일 압력이 낮아지고 토크가 약간 감소하며 엔진 온도가 올라가고 노킹이 발생할 수 있습니다."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="오일 펌프가 중간 정도로 오작동합니다. 오일 압력이 부족하고 엔진 토크가 확연히 감소하며 엔진 온도가 상승하고 기계적 노킹음이 명확히 들립니다."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="오일 펌프가 심하게 오작동합니다. 오일 압력이 임계 수준으로 낮고 엔진 토크가 크게 떨어지며 과열 가능성이 높고 심한 기계적 노킹과 엔진 정지가 발생할 수 있습니다."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="오일 펌프에 임계 고장이 발생했습니다. 엔진을 안전하게 작동하기에는 오일 순환이 부족하여 시동하거나 계속 운행할 수 없습니다."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="엔진이 고착되어 더 이상 회전할 수 없습니다."/>
         <text name="rms_breakdowns_engine_stalled_message" text="엔진 정지됨"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU가 약간 오작동합니다. 엔진 출력이 약간 감소합니다."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU가 중간 정도로 오작동합니다. 확연한 출력 손실과 연료 소비 증가가 발생합니다."/>

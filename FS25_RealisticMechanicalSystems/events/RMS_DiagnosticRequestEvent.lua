@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Diagnostic PC commands and server replies
+---Event carrying a diagnostic PC command and the server's reply
 RMS_DiagnosticRequestEvent = {}
 local RMS_DiagnosticRequestEvent_mt = Class(RMS_DiagnosticRequestEvent, Event)
 InitEventClass(RMS_DiagnosticRequestEvent, "RMS_DiagnosticRequestEvent")
@@ -14,11 +14,17 @@ local SHARED_ERRORS = {
 }
 
 ---Create instance of Event class
+-- @return table self instance of class event
 function RMS_DiagnosticRequestEvent.emptyNew()
     return Event.new(RMS_DiagnosticRequestEvent_mt)
 end
 
 ---Create new instance of event
+-- @param table tool diagnostic trolley
+-- @param table? target machine to plug into, nil for the other actions and in a reply
+-- @param integer action RMS_DiagnosticTool.ACTION
+-- @param string? result reply of the server, "ok" or an error code
+-- @return table self instance of event
 function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     local self = RMS_DiagnosticRequestEvent.emptyNew()
     self.tool = tool
@@ -28,7 +34,8 @@ function RMS_DiagnosticRequestEvent.new(tool, target, action, result)
     return self
 end
 
----Writes event data to a stream.
+---Writes event data to a stream
+-- @param integer streamId stream id
 function RMS_DiagnosticRequestEvent:writeStream(streamId)
     NetworkUtil.writeNodeObject(streamId, self.tool)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -36,7 +43,9 @@ function RMS_DiagnosticRequestEvent:writeStream(streamId)
     streamWriteString(streamId, self.result)
 end
 
----Reads event data from a stream.
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
     self.tool = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -46,6 +55,7 @@ function RMS_DiagnosticRequestEvent:readStream(streamId, connection)
 end
 
 ---Runs the command on the server and answers, or shows the refusal on the client
+-- @param Connection connection connection the event comes from
 function RMS_DiagnosticRequestEvent:run(connection)
     if connection:getIsServer() then
         if self.result ~= "" and self.result ~= "ok" then
@@ -56,11 +66,8 @@ function RMS_DiagnosticRequestEvent:run(connection)
     local action = RMS_DiagnosticTool.ACTION
     local requester = RMS_FluidTransfer.getRequesterContext(connection)
     local result = "unavailable"
-    if self.tool ~= nil and self.tool.isServer
-        and self.tool[RMS_DiagnosticTool.SPEC_TABLE_NAME] ~= nil
-        and self.tool.rootNode ~= nil and entityExists(self.tool.rootNode)
-        and requester ~= nil and requester.player ~= nil
-        and requester.player.rootNode ~= nil and entityExists(requester.player.rootNode) then
+    if self.tool ~= nil and entityExists(self.tool.rootNode)
+        and requester ~= nil and entityExists(requester.player.rootNode) then
         local player = requester.player
         local cx, cy, cz = getWorldTranslation(self.tool.rootNode)
         local px, py, pz = getWorldTranslation(player.rootNode)
@@ -87,8 +94,9 @@ function RMS_DiagnosticRequestEvent:run(connection)
 end
 
 ---Sends a command of the PC to the server
+-- @param table tool diagnostic trolley
+-- @param table? target machine to plug into
+-- @param integer action RMS_DiagnosticTool.ACTION
 function RMS_DiagnosticRequestEvent.send(tool, target, action)
-    if g_client ~= nil then
-        g_client:getServerConnection():sendEvent(RMS_DiagnosticRequestEvent.new(tool, target, action))
-    end
+    g_client:getServerConnection():sendEvent(RMS_DiagnosticRequestEvent.new(tool, target, action))
 end

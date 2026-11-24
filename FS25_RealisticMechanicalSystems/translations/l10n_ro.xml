@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Vehicul"/>
         <text name="rms_hud_mass_towed" text="Remorcat"/>
         <text name="rms_hud_mass_total" text="Total"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Descriere"/>
         <text name="rms_log_button_show_report" text="Afișează raportul"/>
         <text name="rms_log_empty" text="Jurnalul este încă gol"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Protecție termică: limitarea puterii dezactivată"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Nivel AdBlue scăzut: alimentați cu AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Rezervorul de AdBlue este gol: puterea motorului mult redusă. Alimentați cu AdBlue."/>
         <text name="rms_adblue_restored_message" text="AdBlue alimentat: puterea motorului restabilită."/>
         <text name="rms_breakdown_at_progress_message" text="în curs"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Atenție! Motor rece: se uzează până se încălzește."/>
         <text name="rms_spec_overheat_engine_message" text="Atenție! Motorul se supraîncălzește."/>
         <text name="rms_spec_overheat_transmission_message" text="Atenție! Transmisia se supraîncălzește."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Resoftare motor"/>
         <text name="rms_spec_state_overdue" text="Restant"/>
         <text name="rms_spec_state_optimal" text="Optim"/>
-        <text name="rms_spec_state_broken" text="Defect"/>
         <text name="rms_spec_state_bad" text="Slabă"/>
         <text name="rms_spec_state_excellent" text="Excelentă"/>
         <text name="rms_spec_state_good" text="Bună"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Supraîncălzirea transmisiei"/>
         <text name="rms_report_wear_wet_weather" text="Vreme umedă"/>
         <text name="rms_report_wear_cranking" text="Porniri frecvente"/>
+        <text name="rms_report_wear_starter_heat" text="Supraîncălzirea demarorului"/>
         <text name="rms_report_wear_steering" text="Virare pe loc"/>
         <text name="rms_report_wear_park_brake" text="Frână de parcare"/>
         <text name="rms_report_wear_low_fuel" text="Rezervă de combustibil"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Raport limitat"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmitere neregulată a forței"/>
         <text name="rms_report_transmission_failed" text="Defectă"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Pistol de gresat"/>
         <text name="rms_grease_gun_no_vehicle" text="Niciun vehicul în raza de lubrifiere"/>
         <text name="rms_grease_gun_function" text="Unge gresoarele utilajelor. Se încarcă cu un cartuș de vaselină."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Ușor scăzut"/>
         <text name="rms_inspection_status_slightly_dirty" text="Ușor colmatat"/>
         <text name="rms_inspection_status_grease_due" text="De uns"/>
-        <text name="rms_inspection_status_slight_moisture" text="Ușoară umezeală"/>
-        <text name="rms_inspection_status_seepage" text="Infiltrație"/>
-        <text name="rms_inspection_status_severe_leak" text="Scurgere gravă"/>
         <text name="rms_inspection_status_low" text="Scăzut"/>
         <text name="rms_inspection_status_very_low" text="Foarte scăzut"/>
         <text name="rms_inspection_status_critically_low" text="Completare urgentă"/>
         <text name="rms_inspection_status_critically_clogged" text="Complet colmatat"/>
         <text name="rms_inspection_status_dirty" text="Colmatat"/>
         <text name="rms_inspection_status_grease_late" text="În întârziere"/>
-        <text name="rms_inspection_status_active_leak" text="Scurgere activă"/>
         <text name="rms_inspection_status_heavily_clogged" text="Puternic colmatat"/>
         <text name="rms_inspection_status_not_required" text="Nu este necesar"/>
         <text name="rms_inspection_status_change_overdue" text="Schimb depășit"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Cu Realistic Mechanical Systems, utilajele tale se uzează și se defectează ca cele reale. Trei reguli sunt de ajuns ca să joci fără defecțiuni repetate:&#10;&#10;1. Fă întreținerea la timp. Pagina Panou mecanic din meniul jocului arată următoarea întreținere a fiecărui utilaj.&#10;2. Pregătește-ți utilajele în fiecare zi. Ține apăsat %s lângă un utilaj ca să-l verifici: niveluri, radiator, filtru de aer, gresare. Curăță radiatorul și filtrul de aer cu suflanta cu aer comprimat și gresează utilajele cu pistolul de gresat. Echipamentele atașate și remorcile tale trebuie și ele gresate: pagina Panou mecanic le arată pe cele scadente. Suflanta, pistolul de gresat și cartușele de vaselină se găsesc în magazin, la categoria Întreținere.&#10;3. Cruță-ți utilajele: suprasarcina, supraîncălzirea, lucrul cu motorul rece și patinarea roților le uzează.&#10;&#10;Dacă jocul ți se pare prea greu, mărește Durata de viață a vehiculului și Distanța dintre întrețineri în fila SETĂRI RMS a paginii Panou mecanic."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Încărcător Telwin pe cărucior, 150 A la 12 V, 80 A la 24 V. Conectează-l lângă vehicul pentru a-i reîncărca bateria la curentul acceptat sau pentru asistență la pornire (START, 200 A la 12 V). Încărcarea urmează viteza timpului din joc."/>
         <text name="rms_diagnostic_configuration" text="Echipament de diagnoză"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Nivelul lichidului de răcire"/>
         <text name="rms_diagnostic_spn_1639" text="Turația ventilatorului"/>
         <text name="rms_diagnostic_spn_168" text="Tensiunea bateriei"/>
-        <text name="rms_diagnostic_spn_677" text="Releul demarorului"/>
+        <text name="rms_diagnostic_spn_676" text="Releul de preîncălzire"/>
         <text name="rms_diagnostic_spn_167" text="Tensiunea circuitului de încărcare"/>
         <text name="rms_diagnostic_spn_157" text="Presiunea din rampa de injecție"/>
         <text name="rms_diagnostic_spn_1761" text="Nivelul rezervorului de AdBlue"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Asistență la pornire (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Reîncarcă bateria"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Decuplează bateria"/>
         <text name="rms_battery_isolator_restore" text="Recuplează bateria"/>
         <text name="rms_battery_isolator_open" text="Baterie decuplată. Recupleaz-o de la întrerupătorul general, pe jos, în fața vehiculului."/>

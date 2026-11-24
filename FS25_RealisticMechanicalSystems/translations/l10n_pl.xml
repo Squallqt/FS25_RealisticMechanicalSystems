@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Pojazd"/>
         <text name="rms_hud_mass_towed" text="Osprzęt"/>
         <text name="rms_hud_mass_total" text="Razem"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Opis"/>
         <text name="rms_log_button_show_report" text="Wyświetl raport"/>
         <text name="rms_log_empty" text="Brak wpisów w dzienniku"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Ochrona termiczna: ograniczenie mocy zniesione"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Niski poziom AdBlue: uzupełnij AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Zbiornik AdBlue pusty: moc silnika mocno ograniczona. Uzupełnij AdBlue."/>
         <text name="rms_adblue_restored_message" text="AdBlue uzupełniony: moc silnika przywrócona."/>
         <text name="rms_breakdown_at_progress_message" text="w toku"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Uwaga! Silnik jest zimny: zużywa się, dopóki się nie rozgrzeje."/>
         <text name="rms_spec_overheat_engine_message" text="Uwaga! Przegrzanie silnika."/>
         <text name="rms_spec_overheat_transmission_message" text="Uwaga! Przegrzanie skrzyni biegów."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Chiptuning silnika"/>
         <text name="rms_spec_state_overdue" text="Zaległy"/>
         <text name="rms_spec_state_optimal" text="Optymalny"/>
-        <text name="rms_spec_state_broken" text="Niesprawny"/>
         <text name="rms_spec_state_bad" text="Zły"/>
         <text name="rms_spec_state_excellent" text="Doskonały"/>
         <text name="rms_spec_state_good" text="Dobry"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Przegrzewanie skrzyni"/>
         <text name="rms_report_wear_wet_weather" text="Wilgotna pogoda"/>
         <text name="rms_report_wear_cranking" text="Częste rozruchy"/>
+        <text name="rms_report_wear_starter_heat" text="Przegrzewanie rozrusznika"/>
         <text name="rms_report_wear_steering" text="Skręcanie na postoju"/>
         <text name="rms_report_wear_park_brake" text="Hamulec postojowy"/>
         <text name="rms_report_wear_low_fuel" text="Mało paliwa"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Ograniczony zakres przełożeń"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Nieregularne przenoszenie napędu"/>
         <text name="rms_report_transmission_failed" text="Uszkodzona"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Ręczna smarownica"/>
         <text name="rms_grease_gun_no_vehicle" text="Nie wykryto pojazdu w strefie smarowania"/>
         <text name="rms_grease_gun_function" text="Smaruje smarowniczki maszyn. Napełniana wkładem ze smarem."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Lekko niski"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lekko zapchany"/>
         <text name="rms_inspection_status_grease_due" text="Do smarowania"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lekka wilgoć"/>
-        <text name="rms_inspection_status_seepage" text="Powolny wyciek"/>
-        <text name="rms_inspection_status_severe_leak" text="Silny wyciek"/>
         <text name="rms_inspection_status_low" text="Niski"/>
         <text name="rms_inspection_status_very_low" text="Bardzo niski"/>
         <text name="rms_inspection_status_critically_low" text="Pilne uzupełnienie"/>
         <text name="rms_inspection_status_critically_clogged" text="Całkowicie zapchany"/>
         <text name="rms_inspection_status_dirty" text="Zapchany"/>
         <text name="rms_inspection_status_grease_late" text="Po terminie"/>
-        <text name="rms_inspection_status_active_leak" text="Trwający wyciek"/>
         <text name="rms_inspection_status_heavily_clogged" text="Mocno zapchany"/>
         <text name="rms_inspection_status_not_required" text="Niewymagane"/>
         <text name="rms_inspection_status_change_overdue" text="Wymiana opóźniona"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Z Realistic Mechanical Systems Twoje maszyny zużywają się i psują jak prawdziwe. Wystarczą trzy zasady, by grać bez ciągłych awarii:&#10;&#10;1. Wykonuj obsługę na czas. Panel mechaniczny w menu gry pokazuje najbliższą obsługę każdej maszyny.&#10;2. Codziennie przygotowuj maszyny. Przytrzymaj %s przy maszynie, aby ją skontrolować: poziomy płynów, chłodnica, filtr powietrza, smarowanie. Czyść chłodnicę i filtr powietrza dmuchawą sprężonego powietrza, a maszyny smaruj ręczną smarownicą. Twoje narzędzia i przyczepy też trzeba smarować: Panel mechaniczny pokazuje te, na które przyszła pora. Dmuchawa, smarownica i wkłady ze smarem są w sklepie, w kategorii Obsługa techniczna.&#10;3. Oszczędzaj maszyny: przeciążenie, przegrzanie, praca na zimnym silniku i poślizg kół je zużywają.&#10;&#10;Jeśli gra wydaje Ci się zbyt trudna, zwiększ Okres eksploatacji pojazdu i Odstęp między przeglądami w zakładce USTAWIENIA RMS Panelu mechanicznego."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Ładowarka Telwin na wózku, 150 A przy 12 V, 80 A przy 24 V. Podłącz ją blisko pojazdu, aby doładować akumulator prądem, który może przyjąć, lub wspomóc rozruch (START, 200 A przy 12 V). Ładowanie przebiega zgodnie z prędkością czasu w grze."/>
         <text name="rms_diagnostic_configuration" text="Urządzenie diagnostyczne"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Poziom płynu chłodzącego"/>
         <text name="rms_diagnostic_spn_1639" text="Prędkość wentylatora"/>
         <text name="rms_diagnostic_spn_168" text="Napięcie akumulatora"/>
-        <text name="rms_diagnostic_spn_677" text="Przekaźnik rozrusznika"/>
+        <text name="rms_diagnostic_spn_676" text="Przekaźnik świec żarowych"/>
         <text name="rms_diagnostic_spn_167" text="Napięcie ładowania"/>
         <text name="rms_diagnostic_spn_157" text="Ciśnienie w listwie wtryskowej"/>
         <text name="rms_diagnostic_spn_1761" text="Poziom w zbiorniku AdBlue"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Wspomaganie rozruchu (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Doładuj akumulator"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Odłącz akumulator"/>
         <text name="rms_battery_isolator_restore" text="Podłącz akumulator"/>
         <text name="rms_battery_isolator_open" text="Akumulator odłączony. Podłącz go odłącznikiem akumulatora, pieszo przed pojazdem."/>

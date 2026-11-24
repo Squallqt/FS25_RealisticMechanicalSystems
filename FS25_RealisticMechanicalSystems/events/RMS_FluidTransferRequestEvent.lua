@@ -1,31 +1,41 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Client request to start or cancel a physical fluid transfer
+---Event asking the server to start or cancel a fluid transfer, and carrying its refusal
 RMS_FluidTransferRequestEvent = {}
 local RMS_FluidTransferRequestEvent_mt = Class(RMS_FluidTransferRequestEvent, Event)
 
 InitEventClass(RMS_FluidTransferRequestEvent, "RMS_FluidTransferRequestEvent")
 
 ---Create instance of Event class
+-- @return table self instance of class event
 function RMS_FluidTransferRequestEvent.emptyNew()
     return Event.new(RMS_FluidTransferRequestEvent_mt)
 end
 
 ---Create new instance of event
--- @param integer? index place poured from (the drum of a pallet), the first by default
+-- @param table container fluid container poured from
+-- @param table? target machine filled, nil to cancel and in a reply
+-- @param string? circuit circuit of the machine filled
+-- @param boolean incompatibleConfirmed true once the player accepted an incompatible fluid
+-- @param boolean cancel true to cancel the transfer in progress
+-- @param string? result RMS_FluidTransfer.RESULT of a refusal, in a reply
+-- @param integer index place poured from (the drum of a pallet)
+-- @return table self instance of event
 function RMS_FluidTransferRequestEvent.new(container, target, circuit, incompatibleConfirmed, cancel, result, index)
     local self = RMS_FluidTransferRequestEvent.emptyNew()
     self.container = container
     self.target = target
     self.circuit = circuit
-    self.incompatibleConfirmed = incompatibleConfirmed == true
-    self.cancel = cancel == true
+    self.incompatibleConfirmed = incompatibleConfirmed
+    self.cancel = cancel
     self.result = result or ""
-    self.index = index or 1
+    self.index = index
     return self
 end
 
----Writes event data to a stream.
+---Writes event data to a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event goes to
 function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.container)
     NetworkUtil.writeNodeObject(streamId, self.target)
@@ -36,7 +46,9 @@ function RMS_FluidTransferRequestEvent:writeStream(streamId, connection)
     streamWriteUInt8(streamId, self.index)
 end
 
----Reads event data from a stream.
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
     self.container = NetworkUtil.readNodeObject(streamId)
     self.target = NetworkUtil.readNodeObject(streamId)
@@ -49,6 +61,7 @@ function RMS_FluidTransferRequestEvent:readStream(streamId, connection)
 end
 
 ---Starts or cancels the transfer on the server, or shows the refusal on the client
+-- @param Connection connection connection the event comes from
 function RMS_FluidTransferRequestEvent:run(connection)
     if connection:getIsServer() then
         local textKey = self.container ~= nil and RMS_FluidTransfer.getRefusalTextKey(self.container, self.result) or nil
@@ -57,8 +70,7 @@ function RMS_FluidTransferRequestEvent:run(connection)
         end
         return
     end
-    local containerSpec = self.container ~= nil and self.container[RMS_FluidContainer.SPEC_TABLE_NAME] or nil
-    local slot = containerSpec ~= nil and containerSpec.slots ~= nil and containerSpec.slots[self.index] or nil
+    local slot = self.container ~= nil and self.container[RMS_FluidContainer.SPEC_TABLE_NAME].slots[self.index] or nil
     if slot == nil then
         return
     end
@@ -93,16 +105,20 @@ function RMS_FluidTransferRequestEvent:run(connection)
 end
 
 ---Sends a transfer request from a client to the server
+-- @param table container fluid container poured from
+-- @param table? target machine filled, nil to cancel
+-- @param string? circuit circuit of the machine filled
+-- @param boolean incompatibleConfirmed true once the player accepted an incompatible fluid
+-- @param boolean cancel true to cancel the transfer in progress
+-- @param integer index place poured from
 function RMS_FluidTransferRequestEvent.send(container, target, circuit, incompatibleConfirmed, cancel, index)
-    if g_client ~= nil then
-        g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(
-            container,
-            target,
-            circuit,
-            incompatibleConfirmed,
-            cancel,
-            nil,
-            index
-        ))
-    end
+    g_client:getServerConnection():sendEvent(RMS_FluidTransferRequestEvent.new(
+        container,
+        target,
+        circuit,
+        incompatibleConfirmed,
+        cancel,
+        nil,
+        index
+    ))
 end

@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Power loss"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Out of service"/>
         <text name="rms_breakdowns_severity_minor" text="Minor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderate"/>
         <text name="rms_breakdowns_severity_major" text="Major"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overheat protection: power reduced"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overheat protection is tightening. The engine delivers only half its power."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overheat protection: power halved"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overheat protection is at its maximum. Only a fraction of engine power remains."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overheat protection: power heavily reduced"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="The engine has been shut down to prevent damage. Let it cool before restarting."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overheat protection: engine shut down"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Light oil pump malfunction. Oil pressure is reduced, engine torque drops slightly, engine temperature rises and mechanical knocking may appear."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderate oil pump malfunction. Oil pressure is insufficient, engine torque is noticeably reduced, engine temperature is increased, and mechanical knocking is clearly audible."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Severe oil pump malfunction. Oil pressure is critically low, engine torque is heavily reduced, engine overheating is likely, mechanical knocking is severe, and engine stalls may occur."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Critical oil pump failure. Oil circulation is insufficient for safe engine operation and engine start or further operation is not possible."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="The engine has jammed and can no longer turn."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Engine stalled"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Light ECU malfunction. Slightly reduced engine power."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderate ECU malfunction. Noticeable power loss and increased fuel consumption."/>

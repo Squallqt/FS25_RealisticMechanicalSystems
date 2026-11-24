@@ -26,7 +26,7 @@
         <ThreePartBitmap profile="rms_fleetMainSeparator"/>
         <MultiTextOption profile="rms_fleetMainPaging" id="subCategoryPaging" onClick="updateSubCategoryPages" />
 
-        <!-- Fleet and running interventions -->
+        <!-- Fleet page -->
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="fleetPage">
             <BoxLayout profile="rms_fleetPageFlow">
                 <!-- Fleet pulse -->
@@ -182,7 +182,7 @@
                         </Button>
                     </GuiElement>
 
-                    <!-- Dossier of a tracked machine -->
+                    <!-- Machine dossier -->
                     <GuiElement profile="rms_workshopBlock" id="dossierColumn" size="669px 626px">
                         <GuiElement profile="rms_workshopBlock" size="669px 64px">
                             <RoundCorner profile="rms_inspectionSurface" />
@@ -199,7 +199,7 @@
 
                         <GuiElement profile="rms_workshopBlock" position="0px -76px" size="328px 550px">
                             <FrameReference ref="RMS_ConditionCardFrame" id="conditionCard" />
-                            <!-- Greasing of an implement -->
+                            <!-- Implement greasing -->
                             <GuiElement profile="rms_fillParent" id="greasingCard" visible="false">
                                 <RoundCorner profile="rms_workshopSurfaceStrong" />
                                 <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
@@ -228,7 +228,7 @@
                             </GuiElement>
                         </GuiElement>
 
-                        <!-- Wear of an implement -->
+                        <!-- Implement wear -->
                         <GuiElement profile="rms_workshopBlock" id="wearCard" position="340px -76px" size="329px 550px" visible="false">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
@@ -256,7 +256,7 @@
                             </GuiElement>
                         </GuiElement>
 
-                        <!-- Next maintenance, or the running intervention -->
+                        <!-- Maintenance or intervention -->
                         <GuiElement profile="rms_workshopBlock" id="serviceCard" position="340px -76px" size="329px 550px">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">

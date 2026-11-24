@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Vĩnh viễn"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Mất công suất"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Ngừng hoạt động"/>
         <text name="rms_breakdowns_severity_minor" text="Nhẹ"/>
         <text name="rms_breakdowns_severity_moderate" text="Trung bình"/>
         <text name="rms_breakdowns_severity_major" text="Nặng"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Bảo vệ quá nhiệt: công suất giảm"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Mức bảo vệ quá nhiệt tăng lên. Động cơ chỉ còn cung cấp một nửa công suất."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Bảo vệ quá nhiệt: công suất giảm một nửa"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Bảo vệ quá nhiệt đã đạt mức tối đa. Chỉ còn lại một phần công suất động cơ."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Bảo vệ quá nhiệt: công suất giảm mạnh"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Động cơ đã tắt để tránh hư hại. Hãy để động cơ nguội trước khi khởi động lại."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Bảo vệ quá nhiệt: động cơ đã tắt"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Bơm dầu gặp trục trặc nhẹ. Áp suất dầu giảm, mô-men xoắn động cơ giảm nhẹ, nhiệt độ động cơ tăng và có thể xuất hiện tiếng gõ cơ khí."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Bơm dầu gặp trục trặc ở mức trung bình. Áp suất dầu không đủ, mô-men xoắn động cơ giảm rõ rệt, nhiệt độ động cơ tăng và có thể nghe rõ tiếng gõ cơ khí."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Bơm dầu gặp trục trặc nặng. Áp suất dầu thấp nghiêm trọng, mô-men xoắn động cơ giảm mạnh, động cơ có thể quá nhiệt, tiếng gõ cơ khí rất lớn và có thể chết máy."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Bơm dầu hư hỏng nghiêm trọng. Dầu không đủ lưu thông để động cơ hoạt động an toàn, nên không thể khởi động hoặc tiếp tục vận hành."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Động cơ đã bó kẹt và không thể quay nữa."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Động cơ chết máy"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU gặp trục trặc nhẹ. Công suất động cơ giảm nhẹ."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU gặp trục trặc ở mức trung bình. Công suất giảm rõ rệt và mức tiêu thụ nhiên liệu tăng."/>

@@ -38,7 +38,7 @@
         tankPrints="objects/fluids/products/totalEnergiesAdBlue/tankLabel.i3d"/>
     <fillUnit><fillUnitConfigurations>
             <fillUnitConfiguration>
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="1000" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="1000"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>

@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Техника"/>
         <text name="rms_hud_mass_towed" text="Прицеп"/>
         <text name="rms_hud_mass_total" text="Всего"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Описание"/>
         <text name="rms_log_button_show_report" text="Показать отчёт"/>
         <text name="rms_log_empty" text="В журнале нет записей"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Тепловая защита: ограничение мощности снято"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Низкий уровень AdBlue: заправьте AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Бак AdBlue пуст: мощность двигателя сильно снижена. Заправьте AdBlue."/>
         <text name="rms_adblue_restored_message" text="AdBlue заправлен: мощность двигателя восстановлена."/>
         <text name="rms_breakdown_at_progress_message" text="в процессе"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Внимание! Двигатель холодный: он изнашивается, пока не прогреется."/>
         <text name="rms_spec_overheat_engine_message" text="Внимание! Перегрев двигателя."/>
         <text name="rms_spec_overheat_transmission_message" text="Внимание! Перегрев трансмиссии."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Чип-тюнинг двигателя"/>
         <text name="rms_spec_state_overdue" text="Просрочено"/>
         <text name="rms_spec_state_optimal" text="Оптимальное"/>
-        <text name="rms_spec_state_broken" text="Неисправно"/>
         <text name="rms_spec_state_bad" text="Плохое"/>
         <text name="rms_spec_state_excellent" text="Отличное"/>
         <text name="rms_spec_state_good" text="Хорошее"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Перегрев трансмиссии"/>
         <text name="rms_report_wear_wet_weather" text="Сырая погода"/>
         <text name="rms_report_wear_cranking" text="Частый запуск"/>
+        <text name="rms_report_wear_starter_heat" text="Перегрев стартера"/>
         <text name="rms_report_wear_steering" text="Руление на месте"/>
         <text name="rms_report_wear_park_brake" text="Стояночный тормоз"/>
         <text name="rms_report_wear_low_fuel" text="Мало топлива"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Передаточное отношение ограничено"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Неравномерная передача тяги"/>
         <text name="rms_report_transmission_failed" text="Неисправна"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Смазочный шприц"/>
         <text name="rms_grease_gun_no_vehicle" text="Нет техники в зоне смазки"/>
         <text name="rms_grease_gun_function" text="Смазывает пресс-маслёнки машин. Заправляется картриджем со смазкой."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Незначительно снижен"/>
         <text name="rms_inspection_status_slightly_dirty" text="Слегка забит"/>
         <text name="rms_inspection_status_grease_due" text="Пора смазать"/>
-        <text name="rms_inspection_status_slight_moisture" text="Незначительная влажность"/>
-        <text name="rms_inspection_status_seepage" text="Подтекание"/>
-        <text name="rms_inspection_status_severe_leak" text="Сильная утечка"/>
         <text name="rms_inspection_status_low" text="Снижен"/>
         <text name="rms_inspection_status_very_low" text="Сильно снижен"/>
         <text name="rms_inspection_status_critically_low" text="Срочный долив"/>
         <text name="rms_inspection_status_critically_clogged" text="Полностью забит"/>
         <text name="rms_inspection_status_dirty" text="Забит"/>
         <text name="rms_inspection_status_grease_late" text="Просрочено"/>
-        <text name="rms_inspection_status_active_leak" text="Активная утечка"/>
         <text name="rms_inspection_status_heavily_clogged" text="Сильно забит"/>
         <text name="rms_inspection_status_not_required" text="Не требуется"/>
         <text name="rms_inspection_status_change_overdue" text="Замена просрочена"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="С Realistic Mechanical Systems ваша техника изнашивается и ломается, как настоящая. Чтобы играть без постоянных поломок, достаточно трёх правил:&#10;&#10;1. Проводите обслуживание вовремя. Панель состояния техники в меню игры показывает следующее обслуживание каждой машины.&#10;2. Готовьте технику каждый день. Удерживайте %s рядом с машиной, чтобы проверить её: уровни жидкостей, радиатор, воздушный фильтр, смазка. Очищайте радиатор и воздушный фильтр воздуходувкой и смазывайте машины смазочным шприцем. Орудия и прицепы тоже нужно смазывать: Панель состояния техники показывает те, которым пора. Воздуходувка, смазочный шприц и картриджи со смазкой продаются в магазине, в категории Техобслуживание.&#10;3. Берегите технику: перегрузка, перегрев, работа на холодном двигателе и пробуксовка колёс её изнашивают.&#10;&#10;Если игра кажется слишком сложной, увеличьте Ресурс техники и Периодичность обслуживания на вкладке НАСТРОЙКИ RMS Панели состояния техники."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Зарядное устройство Telwin на тележке, 150 А при 12 В, 80 А при 24 В. Подключите его рядом с машиной, чтобы зарядить аккумулятор допустимым для него током или помочь при запуске (START, 200 А при 12 В). Зарядка следует скорости игрового времени."/>
         <text name="rms_diagnostic_configuration" text="Диагностическое оборудование"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Уровень охлаждающей жидкости"/>
         <text name="rms_diagnostic_spn_1639" text="Частота вращения вентилятора"/>
         <text name="rms_diagnostic_spn_168" text="Напряжение аккумулятора"/>
-        <text name="rms_diagnostic_spn_677" text="Реле стартера"/>
+        <text name="rms_diagnostic_spn_676" text="Реле свечей накаливания"/>
         <text name="rms_diagnostic_spn_167" text="Напряжение зарядки"/>
         <text name="rms_diagnostic_spn_157" text="Давление в топливной рампе"/>
         <text name="rms_diagnostic_spn_1761" text="Уровень в баке AdBlue"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Помощь при запуске (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Зарядить аккумулятор"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Отключить массу"/>
         <text name="rms_battery_isolator_restore" text="Включить массу"/>
         <text name="rms_battery_isolator_open" text="Масса отключена. Включите её выключателем массы, стоя перед машиной."/>

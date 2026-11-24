@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanen"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Kehilangan daya"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Tidak dapat digunakan"/>
         <text name="rms_breakdowns_severity_minor" text="Ringan"/>
         <text name="rms_breakdowns_severity_moderate" text="Sedang"/>
         <text name="rms_breakdowns_severity_major" text="Berat"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Perlindungan panas berlebih: daya dikurangi"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Perlindungan panas berlebih diperketat. Mesin hanya menghasilkan separuh dayanya."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Perlindungan panas berlebih: daya dikurangi separuh"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Perlindungan panas berlebih berada pada tingkat maksimum. Hanya sebagian kecil daya mesin yang tersisa."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Perlindungan panas berlebih: daya sangat dikurangi"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Mesin dimatikan untuk mencegah kerusakan. Biarkan mesin mendingin sebelum dinyalakan kembali."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Perlindungan panas berlebih: mesin dimatikan"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Gangguan ringan pada pompa oli. Tekanan oli berkurang, torsi mesin sedikit menurun, suhu mesin meningkat, dan ketukan mekanis dapat muncul."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Gangguan sedang pada pompa oli. Tekanan oli tidak memadai, torsi mesin jelas menurun, suhu mesin meningkat, dan ketukan mekanis terdengar jelas."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Gangguan berat pada pompa oli. Tekanan oli sangat rendah, torsi mesin turun drastis, panas berlebih mungkin terjadi, ketukan mekanis sangat kuat, dan mesin dapat mati."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kegagalan kritis pompa oli. Sirkulasi oli tidak memadai untuk mengoperasikan mesin dengan aman sehingga mesin tidak dapat dinyalakan atau dioperasikan lebih lanjut."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Mesin macet dan tidak dapat lagi berputar."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Mesin mati"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Gangguan ringan pada ECU. Daya mesin sedikit berkurang."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Gangguan sedang pada ECU. Kehilangan daya terasa jelas dan konsumsi bahan bakar meningkat."/>

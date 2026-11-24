@@ -1,7 +1,7 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Vehicle consumables and field inspection.
-RMS_Consumables = RMS_Consumables or {}
+---Vehicle consumables and field inspection
+RMS_Consumables = {}
 
 local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 local OIL_SMOKE_OF_WORN_ENGINE
@@ -12,6 +12,8 @@ for _, symptom in ipairs(RMS_Config.CORE.WORN_PART_SYMPTOMS) do
 end
 
 ---Plays the inspection sound while a player inspects the machine
+-- @param table vehicle vehicle
+-- @param table spec RMS specialization of the vehicle
 local function updateFieldInspectionSoundActive(vehicle, spec)
     local isActive = next(spec.fieldInspectionActivePlayers) ~= nil
     if spec.fieldInspectionSoundActive ~= isActive then
@@ -22,11 +24,9 @@ local function updateFieldInspectionSoundActive(vehicle, spec)
 end
 
 ---Registers a player as inspecting this vehicle
+-- @param table player player
+-- @param boolean isActive true while the player inspects it
 function RMS_Consumables:setFieldInspectionPlayerActive(player, isActive)
-    if not self.isServer or player == nil then
-        return
-    end
-
     local spec = self.spec_RealisticMechanicalSystems
     if isActive then
         spec.fieldInspectionActivePlayers[player] = g_time + RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION
@@ -53,7 +53,7 @@ function RMS_Consumables:updateFieldInspectionSound()
         updateFieldInspectionSoundActive(self, spec)
     end
 
-    if self.isClient and spec.samples ~= nil then
+    if self.isClient then
         RMS_SoundManager.setSamplePlaying(spec.samples.inspection, not spec.isExcludedVehicle and spec.fieldInspectionSoundActive)
     end
 end
@@ -63,6 +63,11 @@ local RADIATOR_DUST = { field = 2, road = 0.5, dust = 1, debris = 2, wetnessPowe
 local AIR_FILTER_DUST = { field = 2, road = 1, dust = 2, debris = 1, wetnessPower = 1, cloggingPerHour = 0.35 / 16 }
 
 ---Returns the dust the machine takes in, and whether it raises dust itself
+-- @param table machine vehicle
+-- @param table spec RMS specialization of the vehicle
+-- @param table weights weights of the ground, the dust and the debris
+-- @return float rate dust taken in
+-- @return boolean raisesDust true when it raises dust itself
 local function getDustRate(machine, spec, weights)
     local isOnField = machine:getIsOnField()
     local raisesDust = isOnField and spec.isImplementLowered and machine:getLastSpeed() > 0.1
@@ -72,6 +77,8 @@ local function getDustRate(machine, spec, weights)
 end
 
 ---Blocks the radiator with the dust of the ground the machine drives on
+-- @param float dt time of the step (ms)
+-- @param boolean canAccumulate true while dust can settle
 function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec.isVehicleNeedBlowOut then
@@ -79,9 +86,8 @@ function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
         return
     end
 
-    spec.radiatorClogging = math.clamp(spec.radiatorClogging, 0, 1)
     spec.radiatorCloggingRate = 0
-    if canAccumulate == false then
+    if not canAccumulate then
         return
     end
 
@@ -94,6 +100,7 @@ function RMS_Consumables:updateRadiatorClogging(dt, canAccumulate)
 end
 
 ---Loads the air filter, part of the dust embedding past any blow out
+-- @param float dt time of the step (ms)
 function RMS_Consumables:updateAirFilterClogging(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not spec.isVehicleNeedBlowOut or spec.isElectricVehicle then
@@ -113,6 +120,7 @@ function RMS_Consumables:updateAirFilterClogging(dt)
 end
 
 ---Blows the radiator clean and the air filter down to its embedded dust
+-- @param float dt time of the blow (ms)
 function RMS_Consumables:cleanRadiatorAndAirFilter(dt)
     local spec = self.spec_RealisticMechanicalSystems
     local cleared = RMS_Config.FIELD_CARE.CLEANING_SPEED / 1000 * dt
@@ -125,16 +133,22 @@ function RMS_Consumables:cleanRadiatorAndAirFilter(dt)
 end
 
 ---Tells whether a blow out can no longer clear the air filter
+-- @param table spec RMS specialization of the vehicle
+-- @return boolean isWornOut true when it can no longer
 function RMS_Consumables.getIsAirFilterWornOut(spec)
     return spec.airFilterResidue >= RMS_Config.FIELD_CARE.AIR_FILTER_REPLACEMENT_RESIDUE
 end
 
 ---Returns the loose dust of the air filter, the share a blow out removes
+-- @param table spec RMS specialization of the vehicle
+-- @return float dust loose dust
 function RMS_Consumables.getAirFilterLooseDust(spec)
-    return math.max(spec.airFilterClogging - spec.airFilterResidue, 0)
+    return spec.airFilterClogging - spec.airFilterResidue
 end
 
 ---Rates the blow out the air filter is due for
+-- @param table spec RMS specialization of the vehicle
+-- @return integer stage 0 to 3
 function RMS_Consumables.getAirFilterBlowOutStage(spec)
     if RMS_Consumables.getAirFilterLooseDust(spec) <= 0.15 then
         return 0
@@ -197,6 +211,9 @@ RMS_Consumables.FILTERS = {
 }
 
 ---Tells whether a service changes a filter now rather than at the next
+-- @param table vehicle vehicle
+-- @param table filter tracked filter
+-- @return boolean isDue true when it changes it now
 function RMS_Consumables.getIsFilterDue(vehicle, filter)
     if filter.hours == nil then
         return true
@@ -206,6 +223,8 @@ function RMS_Consumables.getIsFilterDue(vehicle, filter)
 end
 
 ---Returns the tracked filter a breakdown shows
+-- @param string breakdownId breakdown
+-- @return table? filter tracked filter
 function RMS_Consumables.getFilterOfBreakdown(breakdownId)
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
         if filter.breakdownId == breakdownId then
@@ -216,12 +235,17 @@ function RMS_Consumables.getFilterOfBreakdown(breakdownId)
 end
 
 ---Tells whether a machine carries a filter
+-- @param table vehicle vehicle
+-- @param table filter tracked filter
+-- @return boolean hasFilter true when it carries it
 function RMS_Consumables.getHasFilter(vehicle, filter)
     return vehicle.spec_RealisticMechanicalSystems.systems[filter.systemKey].enabled
         and RMS_Breakdowns.BreakdownRegistry[filter.breakdownId].isApplicable(vehicle)
 end
 
 ---Returns the stage of its breakdown a filter's clogging has reached
+-- @param float clogging clogging, 0 to 1
+-- @return integer stage stage, 0 for none
 function RMS_Consumables.getFilterStage(clogging)
     local stage = 0
     for index, threshold in ipairs(RMS_Config.FIELD_CARE.FILTER_STAGE_THRESHOLDS) do
@@ -233,6 +257,7 @@ function RMS_Consumables.getFilterStage(clogging)
 end
 
 ---Clogs the fuel and hydraulic filters over the engine hours
+-- @param float operatingDt operating time of the step (ms)
 function RMS_Consumables:updateFilterClogging(operatingDt)
     local spec = self.spec_RealisticMechanicalSystems
     local intervals = operatingDt / (60 * 60 * 1000) / self:getServiceReferenceInterval()
@@ -247,6 +272,7 @@ function RMS_Consumables:updateFilterClogging(operatingDt)
 end
 
 ---Shows each filter's clogging as its breakdown at the stage reached
+-- @param table vehicle vehicle
 function RMS_Consumables.syncFilterBreakdowns(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
@@ -275,6 +301,10 @@ function RMS_Consumables.syncFilterBreakdowns(vehicle)
 end
 
 ---Tells whether a maintenance changes a filter: one of its level, and due
+-- @param table vehicle vehicle
+-- @param table filter tracked filter
+-- @param string? maintenanceType maintenance level, nil for any
+-- @return boolean isChanged true when it changes it
 local function getIsChangedBy(vehicle, filter, maintenanceType)
     return maintenanceType == nil or (filter.maintenanceType == nil
         or RealisticMechanicalSystems.MAINTENANCE_TYPES[filter.maintenanceType] == maintenanceType)
@@ -282,11 +312,13 @@ local function getIsChangedBy(vehicle, filter, maintenanceType)
 end
 
 ---Returns the defective filter a poor maintenance fitted, nil when none
+-- @param table vehicle vehicle
+-- @return table? filter tracked filter
 function RMS_Consumables.getDefectiveFilter(vehicle)
     local breakdown = vehicle.spec_RealisticMechanicalSystems.activeBreakdowns[POOR_CONSUMABLES]
     if breakdown ~= nil then
         for _, filter in ipairs(RMS_Consumables.FILTERS) do
-            if filter.defectBranch ~= nil and filter.defectBranch == breakdown.branch then
+            if filter.defectBranch == breakdown.branch then
                 return filter
             end
         end
@@ -295,6 +327,9 @@ function RMS_Consumables.getDefectiveFilter(vehicle)
 end
 
 ---Returns the filters a service changes that can be defective
+-- @param table vehicle vehicle
+-- @param string? maintenanceType maintenance level
+-- @return table filters tracked filters
 function RMS_Consumables.getDefectiveFilterCandidates(vehicle, maintenanceType)
     local filters = {}
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
@@ -307,6 +342,8 @@ function RMS_Consumables.getDefectiveFilterCandidates(vehicle, maintenanceType)
 end
 
 ---Fits one defective filter with a bypass among those a service changed
+-- @param table vehicle vehicle
+-- @param string? maintenanceType maintenance level
 function RMS_Consumables.addDefectiveFilter(vehicle, maintenanceType)
     local filters = RMS_Consumables.getDefectiveFilterCandidates(vehicle, maintenanceType)
     if #filters > 0 then
@@ -315,7 +352,9 @@ function RMS_Consumables.addDefectiveFilter(vehicle, maintenanceType)
 end
 
 ---Renews the filters a service changes, or the one of a breakdown
+-- @param table vehicle vehicle
 -- @param string? breakdownId breakdown of the one filter replaced, every filter when nil
+-- @param string? maintenanceType maintenance level
 function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     for _, filter in ipairs(RMS_Consumables.FILTERS) do
@@ -330,23 +369,25 @@ function RMS_Consumables.renewFilters(vehicle, breakdownId, maintenanceType)
 end
 
 ---Returns the engine oil the machine burns, worn engines more
+-- @param table vehicle vehicle
 -- @return float rate share of the sump per hour
 function RMS_Consumables.getEngineOilBurnRate(vehicle)
     local C = RMS_Config.FLUIDS
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local interval = math.max(tonumber(vehicle:getServiceReferenceInterval()) or 0, 0.001)
+    local interval = vehicle:getServiceReferenceInterval()
     local oilSmoke = spec.activeEffects.EXHAUST_OIL ~= nil and spec.activeEffects.EXHAUST_OIL.value or 0
     local worn = math.min(oilSmoke / OIL_SMOKE_OF_WORN_ENGINE, 1)
-    local load = math.clamp(tonumber(spec.dynamicMotorLoad) or 0.5, 0, 1)
+    local load = math.min(spec.dynamicMotorLoad, 1)
     local loadFactor = (1 - C.ENGINE_OIL_LOAD_SHARE * 0.5) + C.ENGINE_OIL_LOAD_SHARE * load
     return (C.ENGINE_OIL_CONSUMPTION_PER_INTERVAL / interval) * (1 + C.ENGINE_OIL_WEAR_CONSUMPTION * worn ^ 2) * loadFactor
 end
 
 ---Consumes engine oil and drains any leaking fluid over the operating time
+-- @param float operatingDt operating time of the step (ms)
 function RMS_Consumables:updateFluidLevels(operatingDt)
     local spec = self.spec_RealisticMechanicalSystems
-    local hours = (tonumber(operatingDt) or 0) / (60 * 60 * 1000)
-    if hours <= 0 or spec.systems == nil then
+    local hours = operatingDt / (60 * 60 * 1000)
+    if hours <= 0 then
         return
     end
 
@@ -356,81 +397,23 @@ function RMS_Consumables:updateFluidLevels(operatingDt)
     end
 
     if spec.systems.cooling.enabled then
-        local lost = RMS_Fluids.removeLiters(self, "coolant", (tonumber(spec.coolantLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "coolant"))
+        local lost = RMS_Fluids.removeLiters(self, "coolant", spec.coolantLeakRate * hours * RMS_Fluids.getCapacity(self, "coolant"))
         RMS_Fluids.recordLeakLoss(self, "coolant", lost)
     end
 
     if spec.systems.transmission.enabled then
-        local lost = RMS_Fluids.removeLiters(self, "transmissionOil", (tonumber(spec.transmissionOilLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "transmissionOil"))
+        local lost = RMS_Fluids.removeLiters(self, "transmissionOil", spec.transmissionOilLeakRate * hours * RMS_Fluids.getCapacity(self, "transmissionOil"))
         RMS_Fluids.recordLeakLoss(self, "transmissionOil", lost)
     end
 
     if spec.systems.hydraulics.enabled then
-        local lost = RMS_Fluids.removeLiters(self, "hydraulicFluid", (tonumber(spec.hydraulicFluidLeakRate) or 0) * hours * RMS_Fluids.getCapacity(self, "hydraulicFluid"))
+        local lost = RMS_Fluids.removeLiters(self, "hydraulicFluid", spec.hydraulicFluidLeakRate * hours * RMS_Fluids.getCapacity(self, "hydraulicFluid"))
         RMS_Fluids.recordLeakLoss(self, "hydraulicFluid", lost)
     end
 end
 
----Returns how much fluid the machine is missing, in whole charges
-function RMS_Consumables:getMissingFluidShare()
-    local spec = self.spec_RealisticMechanicalSystems
-    local missing = 0
-
-    for _, circuit in ipairs(RMS_Fluids.getSumpCircuits(self)) do
-        local systemData = spec.systems ~= nil and spec.systems[RMS_Fluids.CIRCUITS[circuit].systemKey] or nil
-        if systemData ~= nil and systemData.enabled ~= false then
-            missing = missing + (1 - RMS_Fluids.getLevel(self, circuit))
-        end
-    end
-
-    return missing
-end
-
----Fills back the fluids nothing leaks any more
-function RMS_Consumables:topUpRepairedLeaks(breakdownIds)
-    RMS_Fluids.restoreRepairedLeakLosses(self, breakdownIds or self.spec_RealisticMechanicalSystems.pendingSelectedBreakdowns or {})
-end
-
----Fills every fluid the machine carries back up
-function RMS_Consumables:refillVehicleFluids()
-    for _, circuit in ipairs(RMS_Fluids.CIRCUIT_ORDER) do
-        if RMS_Fluids.getCapacity(self, circuit) > 0 then
-            RMS_Fluids.replaceCircuit(self, circuit)
-        end
-    end
-end
-
----Returns a physical circuit capacity in liters
-function RMS_Consumables:getFluidCapacity(circuit)
-    return RMS_Fluids.getCapacity(self, circuit)
-end
-
----Returns the physical quantity currently in a circuit
-function RMS_Consumables:getFluidLiters(circuit)
-    return RMS_Fluids.getLiters(self, circuit)
-end
-
----Returns the physical quantity missing from a circuit
-function RMS_Consumables:getMissingFluidLiters(circuit)
-    return RMS_Fluids.getMissingLiters(self, circuit)
-end
-
----Returns mixture compatibility for a circuit
-function RMS_Consumables:getFluidCompatibility(circuit)
-    return RMS_Fluids.getCompatibility(self, circuit)
-end
-
----Adds a catalogue product to a circuit
-function RMS_Consumables:addFluidLiters(circuit, liters, productKey)
-    return RMS_Fluids.addLiters(self, circuit, liters, productKey)
-end
-
----Replaces a circuit with compatible fluid
-function RMS_Consumables:replaceFluidCircuit(circuit)
-    RMS_Fluids.replaceCircuit(self, circuit)
-end
-
 ---Starts a field inspection, engine stopped and out of any service
+-- @return boolean isStarted true once started
 function RMS_Consumables:startFieldVisualInspectionProcess()
     local spec = self.spec_RealisticMechanicalSystems
     if spec.isExcludedVehicle then
@@ -438,11 +421,10 @@ function RMS_Consumables:startFieldVisualInspectionProcess()
     elseif self:getIsMotorStarted() then
         g_currentMission:showBlinkingWarning(g_i18n:getText("rms_field_inspection_engine_must_be_stopped"), 2200)
         return false
-    elseif spec.fieldInspection.isActive or self:getCurrentStatus() ~= RealisticMechanicalSystems.STATUS.READY then
+    elseif self:getCurrentStatus() ~= RealisticMechanicalSystems.STATUS.READY then
         return false
     end
 
-    spec.fieldInspection.isActive = true
     spec.fieldInspection.elapsedTime = 0
     spec.fieldInspection.duration = RMS_Config.FIELD_CARE.VISUAL_INSPECTION_DURATION
     RMS_FieldInspectionEvent.send(self, true)

@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Trvalé"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Snížený výkon"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Vyřazení z provozu"/>
         <text name="rms_breakdowns_severity_minor" text="Drobná"/>
         <text name="rms_breakdowns_severity_moderate" text="Střední"/>
         <text name="rms_breakdowns_severity_major" text="Vážná"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ochrana proti přehřátí: výkon snížen"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ochrana proti přehřátí sílí. Motor dodává jen polovinu výkonu."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ochrana proti přehřátí: výkon snížen na polovinu"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ochrana proti přehřátí je na maximu. Zbývá jen zlomek výkonu motoru."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ochrana proti přehřátí: výkon výrazně snížen"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motor byl vypnut, aby se zabránilo poškození. Nech ho vychladnout, než ho znovu nastartuješ."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ochrana proti přehřátí: motor vypnut"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lehká porucha olejového čerpadla. Tlak oleje je snížený, točivý moment motoru mírně klesá, teplota motoru stoupá a může se objevit mechanické klepání."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Střední porucha olejového čerpadla. Tlak oleje je nedostatečný, točivý moment motoru je znatelně snížen, teplota motoru je zvýšená a mechanické klepání je jasně slyšitelné."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Silná porucha olejového čerpadla. Tlak oleje je kriticky nízký, točivý moment motoru je silně snížen, hrozí přehřátí motoru, mechanické klepání je silné a motor může zhasínat."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritické selhání olejového čerpadla. Cirkulace oleje nestačí k bezpečnému chodu motoru a jeho spuštění ani další provoz nejsou možné."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motor se zadřel a již se nemůže otáčet."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor zhasl"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lehká porucha ECU. Výkon motoru je mírně snížen."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Střední porucha ECU. Znatelná ztráta výkonu a zvýšená spotřeba paliva."/>

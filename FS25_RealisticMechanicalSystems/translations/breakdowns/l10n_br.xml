@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanente"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Perda de potência"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Desligamento"/>
         <text name="rms_breakdowns_severity_minor" text="Menor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderada"/>
         <text name="rms_breakdowns_severity_major" text="Maior"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Proteção contra superaquecimento: potência reduzida"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="A proteção contra superaquecimento se intensifica. O motor entrega apenas metade da potência."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Proteção contra superaquecimento: potência reduzida à metade"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="A proteção contra superaquecimento está no máximo. Resta apenas uma fração da potência do motor."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Proteção contra superaquecimento: potência bastante reduzida"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="O motor foi desligado para evitar danos. Deixe-o esfriar antes de religar."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Proteção contra superaquecimento: motor desligado"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Mau funcionamento leve da bomba de óleo. A pressão do óleo é reduzida, o torque do motor cai levemente, a temperatura do motor sobe e batidas mecânicas podem aparecer."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mau funcionamento moderado da bomba de óleo. A pressão do óleo é insuficiente, o torque do motor diminui notavelmente, a temperatura do motor aumenta e as batidas mecânicas são claramente audíveis."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Mau funcionamento severo da bomba de óleo. A pressão do óleo é crítica, o torque do motor cai drasticamente, o superaquecimento é provável, as batidas mecânicas são severas e o motor pode apagar."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Falha crítica da bomba de óleo. A circulação de óleo é insuficiente para a operação segura do motor e qualquer partida ou operação adicional é impossível."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="O motor travou e não pode mais girar."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor apagou"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Mau funcionamento leve da ECU. Potência do motor levemente reduzida."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mau funcionamento moderado da ECU. Perda notável de potência e aumento do consumo de combustível."/>

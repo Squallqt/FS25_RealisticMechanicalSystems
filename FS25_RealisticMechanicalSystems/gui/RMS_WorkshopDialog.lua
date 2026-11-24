@@ -17,25 +17,27 @@ RMS_WorkshopDialog.REFRESH_INTERVAL_MS = 5000
 local SHORTCUT_SERVICES = { "INSPECTION", "MAINTENANCE", "REPAIR", "OVERHAUL", "REFILL", "BODYWORK", "REMAP" }
 
 ---Resale value quoted here, the dealer paying its direct sale bonus
+-- @param table self workshop dialog
+-- @return float? value resale value, nil when the machine is not owned
 local function getResaleValue(self)
     return RMS_Utils.getResaleValue(self.vehicle, self.workshopType == RealisticMechanicalSystems.WORKSHOP.DEALER)
 end
 
 ---Creates the dialog
+-- @return table self instance of the dialog
 function RMS_WorkshopDialog.new()
-    local self = MessageDialog.new(nil, RMS_WorkshopDialog_mt)
-    self.currentTab = RMS_WorkshopDialog.TAB.SUMMARY
-    return self
+    return MessageDialog.new(nil, RMS_WorkshopDialog_mt)
 end
 
 ---Opens the workshop on a vehicle
+-- @param table vehicle vehicle
 -- @param string? workshopType workshop the vehicle stands in, nil for its record only
+-- @param string? serviceType service to open on the interventions page
 function RMS_WorkshopDialog.show(vehicle, workshopType, serviceType)
     local self = RMS_WorkshopDialog.INSTANCE
     self.vehicle = vehicle
     self.workshopType = workshopType
     self.sellingPoint = workshopType ~= nil and g_workshopScreen.owner or nil
-    self.observedStatus = nil
     for _, page in ipairs(self.pages) do
         page:setVehicle(vehicle, workshopType)
     end
@@ -84,15 +86,14 @@ function RMS_WorkshopDialog:onClose()
     for _, page in ipairs(self.pages) do
         page:setVehicle(nil, nil)
     end
-    self.vehicle = nil
-    self.sellingPoint = nil
     g_currentMission:showMoneyChange(MoneyType.VEHICLE_RUNNING_COSTS)
     g_currentMission:showMoneyChange(MoneyType.SHOP_VEHICLE_BUY)
     g_currentMission:showMoneyChange(MoneyType.SHOP_VEHICLE_SELL)
     RMS_WorkshopDialog:superClass().onClose(self)
 end
 
----Refreshes the pages on a change of the vehicle
+---Refreshes the pages on a change of the status, the invoice or the resale value
+-- @param float dt time since the last frame (ms)
 function RMS_WorkshopDialog:update(dt)
     RMS_WorkshopDialog:superClass().update(self, dt)
     self.valueTimerMs = self.valueTimerMs - dt
@@ -108,6 +109,8 @@ function RMS_WorkshopDialog:update(dt)
 end
 
 ---Updates the order which received a server stock reply
+-- @param integer requestId id of the stock check
+-- @param table shortages liters missing by circuit
 function RMS_WorkshopDialog:onStockQuote(requestId, shortages)
     self.pages[RMS_WorkshopDialog.TAB.INTERVENTIONS]:onStockQuote(requestId, shortages)
 end
@@ -130,7 +133,7 @@ function RMS_WorkshopDialog:refresh()
     local statusText = g_i18n:getText(isOpen and "rms_ws_status_open" or "rms_ws_status_closed")
     if isUnderService then
         statusText = string.format(g_i18n:getText("rms_ws_status_in_progress_format"), RMS_Utils.formatServiceState(spec.currentState),
-            RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(nil, nil, nil)))
+            RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime()))
     end
     if not isRecord then
         statusText = statusText .. " · " .. g_i18n:getText(self.workshopType)
@@ -156,6 +159,7 @@ function RMS_WorkshopDialog:refresh()
 end
 
 ---Shows a page and links the focus over it
+-- @param integer tabIndex RMS_WorkshopDialog.TAB
 function RMS_WorkshopDialog:setTab(tabIndex)
     self.currentTab = tabIndex
     for index, page in ipairs(self.pages) do
@@ -202,6 +206,7 @@ function RMS_WorkshopDialog:updateFocusLinks()
 end
 
 ---Shows the page of a clicked tab
+-- @param table button tab clicked
 function RMS_WorkshopDialog:onClickTab(button)
     for index, tab in ipairs(self.tabs) do
         if tab == button then
@@ -216,6 +221,7 @@ function RMS_WorkshopDialog:onTabPagingChanged()
 end
 
 ---Opens the intervention of a shortcut
+-- @param table button shortcut clicked
 function RMS_WorkshopDialog:onClickShortcut(button)
     for index, shortcut in ipairs(self.shortcuts) do
         if shortcut == button then
@@ -225,6 +231,7 @@ function RMS_WorkshopDialog:onClickShortcut(button)
 end
 
 ---Opens an intervention on the interventions page
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
 function RMS_WorkshopDialog:selectService(serviceType)
     self.pages[RMS_WorkshopDialog.TAB.INTERVENTIONS]:selectService(serviceType)
     self.currentTab = RMS_WorkshopDialog.TAB.INTERVENTIONS
@@ -239,6 +246,7 @@ function RMS_WorkshopDialog:onClickCancelService()
 end
 
 ---Cancels the running service once the player confirmed it
+-- @param boolean yes true when the player confirmed
 function RMS_WorkshopDialog:onCancelServiceConfirm(yes)
     if not yes then
         return

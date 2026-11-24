@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="永久"/>
         <text name="rms_breakdowns_severity_reduce_power" text="功率損失"/>
-        <text name="rms_breakdowns_severity_shutdown" text="停止運作"/>
         <text name="rms_breakdowns_severity_minor" text="輕微"/>
         <text name="rms_breakdowns_severity_moderate" text="中等"/>
         <text name="rms_breakdowns_severity_major" text="嚴重"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="過熱保護：功率降低"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="過熱保護進一步加強。發動機只能輸出一半功率。"/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="過熱保護：功率減半"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="過熱保護已達到最大強度。發動機只剩一小部分功率。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="過熱保護：功率大幅降低"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="為防止損壞，發動機已關閉。請等待發動機冷卻後再重新啟動。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="過熱保護：發動機已關閉"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="機油泵發生輕微故障。機油壓力降低，發動機扭矩略有下降，發動機溫度升高，並可能出現機械撞擊聲。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="機油泵發生中度故障。機油壓力不足，發動機扭矩明顯下降，發動機溫度升高，並能清楚聽到機械撞擊聲。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="機油泵發生嚴重故障。機油壓力降至不安全水準，發動機扭矩大幅下降，很可能過熱，機械撞擊嚴重，並可能停止運轉。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="機油泵發生極重度失效。機油循環不足以保證發動機安全運作，無法啟動或繼續運作。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="發動機已抱死，無法繼續轉動。"/>
         <text name="rms_breakdowns_engine_stalled_message" text="發動機停止運轉"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU發生輕微故障。發動機功率略有降低。"/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU發生中度故障。功率明顯下降，燃油消耗增加。"/>

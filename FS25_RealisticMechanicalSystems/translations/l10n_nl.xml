@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Voertuig"/>
         <text name="rms_hud_mass_towed" text="Gekoppeld"/>
         <text name="rms_hud_mass_total" text="Totaal"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Beschrijving"/>
         <text name="rms_log_button_show_report" text="Rapport weergeven"/>
         <text name="rms_log_empty" text="Logboek is nog leeg"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Thermische beveiliging: vermogensbegrenzing opgeheven"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="AdBlue-niveau laag: vul AdBlue bij."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="AdBlue-tank leeg: motorvermogen sterk verlaagd. Vul AdBlue bij."/>
         <text name="rms_adblue_restored_message" text="AdBlue bijgevuld: motorvermogen hersteld."/>
         <text name="rms_breakdown_at_progress_message" text="loopt"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Waarschuwing! Motor koud: hij slijt tot hij warmgedraaid is."/>
         <text name="rms_spec_overheat_engine_message" text="Waarschuwing! Motor oververhit."/>
         <text name="rms_spec_overheat_transmission_message" text="Waarschuwing! Transmissie oververhit."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motortuning"/>
         <text name="rms_spec_state_overdue" text="Achterstallig"/>
         <text name="rms_spec_state_optimal" text="Optimaal"/>
-        <text name="rms_spec_state_broken" text="Buiten werking"/>
         <text name="rms_spec_state_bad" text="Slecht"/>
         <text name="rms_spec_state_excellent" text="Uitstekend"/>
         <text name="rms_spec_state_good" text="Goed"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Transmissie oververhit"/>
         <text name="rms_report_wear_wet_weather" text="Nat weer"/>
         <text name="rms_report_wear_cranking" text="Veelvuldig starten"/>
+        <text name="rms_report_wear_starter_heat" text="Startmotor oververhit"/>
         <text name="rms_report_wear_steering" text="Sturen bij stilstand"/>
         <text name="rms_report_wear_park_brake" text="Parkeerrem"/>
         <text name="rms_report_wear_low_fuel" text="Brandstofreserve"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Overbrengingsverhouding beperkt"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Onregelmatige krachtoverdracht"/>
         <text name="rms_report_transmission_failed" text="Uitgevallen"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Vetspuit"/>
         <text name="rms_grease_gun_no_vehicle" text="Geen voertuig binnen smeerbereik"/>
         <text name="rms_grease_gun_function" text="Smeert de smeernippels van machines. Wordt geladen met een vetpatroon."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Iets te laag"/>
         <text name="rms_inspection_status_slightly_dirty" text="Licht vervuild"/>
         <text name="rms_inspection_status_grease_due" text="Smeren nodig"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lichte vochtigheid"/>
-        <text name="rms_inspection_status_seepage" text="Doorsijpeling"/>
-        <text name="rms_inspection_status_severe_leak" text="Ernstige lekkage"/>
         <text name="rms_inspection_status_low" text="Laag"/>
         <text name="rms_inspection_status_very_low" text="Zeer laag"/>
         <text name="rms_inspection_status_critically_low" text="Dringend bijvullen"/>
         <text name="rms_inspection_status_critically_clogged" text="Volledig verstopt"/>
         <text name="rms_inspection_status_dirty" text="Vervuild"/>
         <text name="rms_inspection_status_grease_late" text="Te laat"/>
-        <text name="rms_inspection_status_active_leak" text="Actieve lekkage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Sterk vervuild"/>
         <text name="rms_inspection_status_not_required" text="Niet vereist"/>
         <text name="rms_inspection_status_change_overdue" text="Verversen achterstallig"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Met Realistic Mechanical Systems slijten je machines en gaan ze kapot zoals echte. Drie regels zijn genoeg om te spelen zonder voortdurende storingen:&#10;&#10;1. Doe het onderhoud op tijd. Het Mechanisch dashboard in het spelmenu toont het volgende onderhoud van elke machine.&#10;2. Bereid je machines elke dag voor. Houd %s ingedrukt bij een machine om hem te controleren: vloeistofniveaus, radiateur, luchtfilter, smeren. Reinig de radiateur en het luchtfilter met de persluchtblazer en smeer de machines met de vetspuit. Ook je werktuigen en aanhangers moeten gesmeerd worden: het Mechanisch dashboard toont welke aan de beurt zijn. Persluchtblazer, vetspuit en vetpatronen vind je in de winkel, categorie Onderhoud.&#10;3. Spaar je machines: overbelasting, oververhitting, werken met een koude motor en wielslip verslijten ze.&#10;&#10;Vind je het spel te moeilijk, verhoog dan de Levensduur voertuig en de Onderhoudsafstand op het tabblad RMS-INSTELLINGEN van het Mechanisch dashboard."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin-lader op een wagen, 150 A bij 12 V, 80 A bij 24 V. Sluit hem bij het voertuig aan om de accu op te laden met de stroom die deze aankan of om starthulp te geven (START, 200 A bij 12 V). Het opladen volgt de tijdsnelheid van het spel."/>
         <text name="rms_diagnostic_configuration" text="Diagnoseapparatuur"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Koelvloeistofniveau"/>
         <text name="rms_diagnostic_spn_1639" text="Ventilatortoerental"/>
         <text name="rms_diagnostic_spn_168" text="Accuspanning"/>
-        <text name="rms_diagnostic_spn_677" text="Startrelais"/>
+        <text name="rms_diagnostic_spn_676" text="Gloeirelais"/>
         <text name="rms_diagnostic_spn_167" text="Laadspanning"/>
         <text name="rms_diagnostic_spn_157" text="Raildruk"/>
         <text name="rms_diagnostic_spn_1761" text="AdBlue-tankniveau"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starthulp (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Accu opladen"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Accu uitschakelen"/>
         <text name="rms_battery_isolator_restore" text="Accu inschakelen"/>
         <text name="rms_battery_isolator_open" text="Accu uitgeschakeld. Schakel hem weer in met de accuschakelaar, te voet voor het voertuig."/>

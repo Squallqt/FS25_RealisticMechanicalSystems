@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Araç"/>
         <text name="rms_hud_mass_towed" text="Bağlı"/>
         <text name="rms_hud_mass_total" text="Toplam"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Açıklama"/>
         <text name="rms_log_button_show_report" text="Raporu Göster"/>
         <text name="rms_log_empty" text="Henüz kayıt yok"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Isıl koruma: güç sınırlaması kaldırıldı"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="AdBlue seviyesi düşük: AdBlue doldurun."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="AdBlue tankı boş: motor gücü büyük ölçüde düşürüldü. AdBlue doldurun."/>
         <text name="rms_adblue_restored_message" text="AdBlue dolduruldu: motor gücü geri geldi."/>
         <text name="rms_breakdown_at_progress_message" text="devam ediyor"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk: ısınana kadar aşınır."/>
         <text name="rms_spec_overheat_engine_message" text="Uyarı! Motor aşırı ısınmış."/>
         <text name="rms_spec_overheat_transmission_message" text="Uyarı! Şanzıman aşırı ısınıyor."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motor Yazılımı"/>
         <text name="rms_spec_state_overdue" text="Vadesi Geçmiş"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Arızalı"/>
         <text name="rms_spec_state_bad" text="Kötü"/>
         <text name="rms_spec_state_excellent" text="Mükemmel"/>
         <text name="rms_spec_state_good" text="İyi"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Şanzımanın Aşırı Isınması"/>
         <text name="rms_report_wear_wet_weather" text="Nemli Hava"/>
         <text name="rms_report_wear_cranking" text="Sık Marş Verme"/>
+        <text name="rms_report_wear_starter_heat" text="Marş Motorunun Aşırı Isınması"/>
         <text name="rms_report_wear_steering" text="Dururken Direksiyon Kullanımı"/>
         <text name="rms_report_wear_park_brake" text="El Freni"/>
         <text name="rms_report_wear_low_fuel" text="Yakıt Rezervi"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Sınırlı oran aralığı"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Düzensiz Güç Aktarımı"/>
         <text name="rms_report_transmission_failed" text="Arızalı"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Gres Tabancası"/>
         <text name="rms_grease_gun_no_vehicle" text="Gresleme menzilinde araç yok"/>
         <text name="rms_grease_gun_function" text="Makinelerin gresörlüklerini gresler. Gres kartuşuyla doldurulur."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Hafif Düşük"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hafif Kirli"/>
         <text name="rms_inspection_status_grease_due" text="Gresleme Gerekli"/>
-        <text name="rms_inspection_status_slight_moisture" text="Hafif Nem"/>
-        <text name="rms_inspection_status_seepage" text="Sızıntı"/>
-        <text name="rms_inspection_status_severe_leak" text="Yoğun Sızıntı"/>
         <text name="rms_inspection_status_low" text="Düşük"/>
         <text name="rms_inspection_status_very_low" text="Çok Düşük"/>
         <text name="rms_inspection_status_critically_low" text="Acil Tamamlama"/>
         <text name="rms_inspection_status_critically_clogged" text="Tamamen Tıkalı"/>
         <text name="rms_inspection_status_dirty" text="Kirli"/>
         <text name="rms_inspection_status_grease_late" text="Gecikmiş"/>
-        <text name="rms_inspection_status_active_leak" text="Aktif Sızıntı"/>
         <text name="rms_inspection_status_heavily_clogged" text="Çok Kirli"/>
         <text name="rms_inspection_status_not_required" text="Gerekli Değil"/>
         <text name="rms_inspection_status_change_overdue" text="Değişim Gecikti"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Realistic Mechanical Systems ile makinelerin gerçekleri gibi aşınır ve arızalanır. Sık sık arıza yaşamadan oynamak için üç kural yeterli:&#10;&#10;1. Bakımı zamanında yap. Oyun menüsündeki Mekanik gösterge paneli, her makinenin bir sonraki bakımını gösterir.&#10;2. Makinelerini her gün hazırla. Kontrol etmek için bir makinenin yanında %s tuşunu basılı tut: sıvı seviyeleri, radyatör, hava filtresi, gresleme. Radyatörü ve hava filtresini hava üfleyiciyle temizle, makineleri gres tabancasıyla gresle. Ekipmanların ve römorkların da greslenmeli: Mekanik gösterge paneli zamanı gelenleri listeler. Hava üfleyici, gres tabancası ve gres kartuşları mağazada, Bakım kategorisinde.&#10;3. Makinelerine iyi bak: aşırı yük, aşırı ısınma, soğuk motorla çalışma ve patinaj onları aşındırır.&#10;&#10;Oyun sana fazla zor geliyorsa Mekanik gösterge panelinin RMS AYARLARI sekmesinden Aracın Kullanım Ömrü ve Bakımlar arası süre ayarlarını artır."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Tekerlekli Telwin şarj cihazı, 12 V’ta 150 A, 24 V’ta 80 A. Aküyü kabul ettiği akımla şarj etmek veya marş desteği sağlamak için aracın yakınına bağla (START, 12 V’ta 200 A). Şarj, oyunun zaman hızını izler."/>
         <text name="rms_diagnostic_configuration" text="Teşhis Cihazı"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Soğutma Sıvısı Seviyesi"/>
         <text name="rms_diagnostic_spn_1639" text="Fan Devri"/>
         <text name="rms_diagnostic_spn_168" text="Akü Gerilimi"/>
-        <text name="rms_diagnostic_spn_677" text="Marş Rölesi"/>
+        <text name="rms_diagnostic_spn_676" text="Kızdırma Rölesi"/>
         <text name="rms_diagnostic_spn_167" text="Şarj Gerilimi"/>
         <text name="rms_diagnostic_spn_157" text="Enjeksiyon Rampası Basıncı"/>
         <text name="rms_diagnostic_spn_1761" text="AdBlue Tankı Seviyesi"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Marş desteği (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Aküyü şarj et"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Aküyü devreden çıkar"/>
         <text name="rms_battery_isolator_restore" text="Aküyü devreye al"/>
         <text name="rms_battery_isolator_open" text="Akü devre dışı. Aracın önünde, yaya olarak akü şalterinden yeniden devreye al."/>

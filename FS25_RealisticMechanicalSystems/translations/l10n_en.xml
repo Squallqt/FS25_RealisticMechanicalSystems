@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Vehicle"/>
         <text name="rms_hud_mass_towed" text="Attached"/>
         <text name="rms_hud_mass_total" text="Total"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Description"/>
         <text name="rms_log_button_show_report" text="Show report"/>
         <text name="rms_log_empty" text="Log is still empty"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Thermal protection: power limit cleared"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="AdBlue level low: refill AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="AdBlue tank empty: engine power greatly reduced. Refill AdBlue."/>
         <text name="rms_adblue_restored_message" text="AdBlue refilled: engine power restored."/>
         <text name="rms_breakdown_at_progress_message" text="in progress"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Warning! Engine cold: it wears until it has warmed up."/>
         <text name="rms_spec_overheat_engine_message" text="Warning! Engine overheating."/>
         <text name="rms_spec_overheat_transmission_message" text="Warning! Transmission overheating."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Engine Remapping"/>
         <text name="rms_spec_state_overdue" text="Overdue"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Broken"/>
         <text name="rms_spec_state_bad" text="Bad"/>
         <text name="rms_spec_state_excellent" text="Excellent"/>
         <text name="rms_spec_state_good" text="Good"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Transmission Overheating"/>
         <text name="rms_report_wear_wet_weather" text="Wet Weather"/>
         <text name="rms_report_wear_cranking" text="Frequent Starting"/>
+        <text name="rms_report_wear_starter_heat" text="Starter Overheating"/>
         <text name="rms_report_wear_steering" text="Steering While Stationary"/>
         <text name="rms_report_wear_park_brake" text="Parking Brake"/>
         <text name="rms_report_wear_low_fuel" text="Low Fuel"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Ratio Reduced"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Irregular Drive Transfer"/>
         <text name="rms_report_transmission_failed" text="Failed"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Grease Gun"/>
         <text name="rms_grease_gun_no_vehicle" text="No vehicle in lubrication range"/>
         <text name="rms_grease_gun_function" text="Greases the grease points of machines. Loads with a grease cartridge."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Slightly Low"/>
         <text name="rms_inspection_status_slightly_dirty" text="Slightly Clogged"/>
         <text name="rms_inspection_status_grease_due" text="Greasing Due"/>
-        <text name="rms_inspection_status_slight_moisture" text="Light Moisture"/>
-        <text name="rms_inspection_status_seepage" text="Seepage"/>
-        <text name="rms_inspection_status_severe_leak" text="Severe Leak"/>
         <text name="rms_inspection_status_low" text="Low"/>
         <text name="rms_inspection_status_very_low" text="Very Low"/>
         <text name="rms_inspection_status_critically_low" text="Urgent Top-Up"/>
         <text name="rms_inspection_status_critically_clogged" text="Fully Obstructed"/>
         <text name="rms_inspection_status_dirty" text="Clogged"/>
         <text name="rms_inspection_status_grease_late" text="Overdue"/>
-        <text name="rms_inspection_status_active_leak" text="Active Leak"/>
         <text name="rms_inspection_status_heavily_clogged" text="Heavily Clogged"/>
         <text name="rms_inspection_status_not_required" text="Not Required"/>
         <text name="rms_inspection_status_change_overdue" text="Change Overdue"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="With Realistic Mechanical Systems, your machines wear out and break down like real ones. Three rules are enough to play without constant breakdowns:&#10;&#10;1. Service on time. The Mechanical Dashboard, in the game menu, shows the next service of each machine.&#10;2. Prepare your machines every day. Hold %s near a machine to check it: fluid levels, radiator, air filter, greasing. Clean their radiator and air filter with the Air Blower, and grease them with the Grease Gun. Your implements and trailers need greasing too: the Mechanical Dashboard lists the ones due. The Air Blower, the Grease Gun and grease cartridges are in the shop, Maintenance category.&#10;3. Go easy on your machines: overloading, overheating, working with a cold engine and wheel slip wear them out.&#10;&#10;If the game feels too hard, increase the Vehicle Lifespan and the Maintenance spacing in the RMS SETTINGS tab of the Mechanical Dashboard."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin charger on a trolley, 150 A at 12 V, 80 A at 24 V. Connect it near the vehicle to charge its battery at the current it accepts, or for starting aid (START, 200 A at 12 V). Charging follows the game's time speed."/>
         <text name="rms_diagnostic_configuration" text="Diagnostic Tool"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Engine coolant level"/>
         <text name="rms_diagnostic_spn_1639" text="Fan speed"/>
         <text name="rms_diagnostic_spn_168" text="Battery voltage"/>
-        <text name="rms_diagnostic_spn_677" text="Starter relay"/>
+        <text name="rms_diagnostic_spn_676" text="Preheat relay"/>
         <text name="rms_diagnostic_spn_167" text="Charging system voltage"/>
         <text name="rms_diagnostic_spn_157" text="Injection rail pressure"/>
         <text name="rms_diagnostic_spn_1761" text="AdBlue tank level"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starting aid (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Charge the battery"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Disconnect the battery"/>
         <text name="rms_battery_isolator_restore" text="Reconnect the battery"/>
         <text name="rms_battery_isolator_open" text="Battery disconnected. Reconnect it at the battery disconnect switch, on foot in front of the vehicle."/>

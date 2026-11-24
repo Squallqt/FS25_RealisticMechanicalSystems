@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Pysyvä"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Tehon alennus"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Pois käytöstä"/>
         <text name="rms_breakdowns_severity_minor" text="Lievä"/>
         <text name="rms_breakdowns_severity_moderate" text="Kohtalainen"/>
         <text name="rms_breakdowns_severity_major" text="Vakava"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ylikuumenemissuoja: teho alennettu"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ylikuumenemissuoja tehostuu. Moottori tuottaa enää puolet tehostaan."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ylikuumenemissuoja: teho alennettu puoleen"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ylikuumenemissuoja on maksimissaan. Moottorin tehosta on jäljellä enää murto-osa."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ylikuumenemissuoja: teho voimakkaasti alennettu"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Moottori on sammutettu vaurioiden estämiseksi. Anna sen jäähtyä ennen uudelleenkäynnistystä."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ylikuumenemissuoja: moottori sammutettu"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lievä öljypumpun toimintahäiriö. Öljynpaine on alentunut, moottorin vääntömomentti on hieman alentunut, moottorin lämpötila on kohonnut ja mekaaninen kopina saattaa esiintyä."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Kohtalainen öljypumpun toimintahäiriö. Öljynpaine on riittämätön, moottorin vääntömomentti on havaittavasti alentunut, moottorin lämpötila on noussut ja mekaaninen kopina on selvästi kuultavissa."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Vakava öljypumpun toimintahäiriö. Öljynpaine on kriittisen alhainen, moottorin vääntömomentti on voimakkaasti alentunut, moottorin ylikuumeneminen on todennäköistä, mekaaninen kopina on voimakasta ja moottorin sammuminen on mahdollista."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Öljypumpussa on kriittinen vika. Öljyn kierto ei riitä moottorin turvalliseen käyttöön, eikä moottoria voi enää käynnistää tai käyttää."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Moottori on juuttunut eikä voi enää pyöriä."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Moottori sammunut"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU:n lievä toimintahäiriö. Moottorin teho on hieman alentunut."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Kohtalainen ECU:n toimintahäiriö. Teho laskee selvästi ja polttoaineen kulutus kasvaa."/>

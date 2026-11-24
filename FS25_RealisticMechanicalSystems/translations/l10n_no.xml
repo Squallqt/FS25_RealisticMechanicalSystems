@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Egenvekt"/>
         <text name="rms_hud_mass_towed" text="Slepevekt"/>
         <text name="rms_hud_mass_total" text="Totalt"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Beskrivelse"/>
         <text name="rms_log_button_show_report" text="Vis rapport"/>
         <text name="rms_log_empty" text="Loggen er fortsatt tom"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Termisk vern: effektbegrensningen opphevet"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Lavt AdBlue-nivå: fyll på AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="AdBlue-tanken er tom: motoreffekten er kraftig redusert. Fyll på AdBlue."/>
         <text name="rms_adblue_restored_message" text="AdBlue fylt på: motoreffekten er gjenopprettet."/>
         <text name="rms_breakdown_at_progress_message" text="pågår"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Advarsel! Motoren er kald: den slites til den er varm."/>
         <text name="rms_spec_overheat_engine_message" text="Advarsel! Motoren overopphetes."/>
         <text name="rms_spec_overheat_transmission_message" text="Advarsel! Transmisjonen overopphetes."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motoroptimalisering"/>
         <text name="rms_spec_state_overdue" text="Overskredet"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Havarert"/>
         <text name="rms_spec_state_bad" text="Dårlig"/>
         <text name="rms_spec_state_excellent" text="Utmerket"/>
         <text name="rms_spec_state_good" text="God"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Transmisjonen overopphetes"/>
         <text name="rms_report_wear_wet_weather" text="Fuktig vær"/>
         <text name="rms_report_wear_cranking" text="Hyppige starter"/>
+        <text name="rms_report_wear_starter_heat" text="Startmotoren overopphetes"/>
         <text name="rms_report_wear_steering" text="Styring i stillstand"/>
         <text name="rms_report_wear_park_brake" text="Parkeringsbrems"/>
         <text name="rms_report_wear_low_fuel" text="Drivstoffreserve"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Begrenset utveksling"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Uregelmessig kraftoverføring"/>
         <text name="rms_report_transmission_failed" text="Sviktet"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
         <text name="rms_grease_gun_no_vehicle" text="Ingen kjøretøy innen smøreavstand"/>
         <text name="rms_grease_gun_function" text="Smører maskinenes smørenipler. Fylles med en fettpatron."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Litt for lavt"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lett tilsmusset"/>
         <text name="rms_inspection_status_grease_due" text="Må smøres"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lett fukt"/>
-        <text name="rms_inspection_status_seepage" text="Siving"/>
-        <text name="rms_inspection_status_severe_leak" text="Kraftig lekkasje"/>
         <text name="rms_inspection_status_low" text="Lavt"/>
         <text name="rms_inspection_status_very_low" text="Svært lavt"/>
         <text name="rms_inspection_status_critically_low" text="Påfylling haster"/>
         <text name="rms_inspection_status_critically_clogged" text="Helt tettet igjen"/>
         <text name="rms_inspection_status_dirty" text="Tilsmusset"/>
         <text name="rms_inspection_status_grease_late" text="Forsinket"/>
-        <text name="rms_inspection_status_active_leak" text="Aktiv lekkasje"/>
         <text name="rms_inspection_status_heavily_clogged" text="Kraftig tilsmusset"/>
         <text name="rms_inspection_status_not_required" text="Ikke påkrevd"/>
         <text name="rms_inspection_status_change_overdue" text="Skift overskredet"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Med Realistic Mechanical Systems slites maskinene dine og bryter sammen som ekte maskiner. Tre regler er nok til å spille uten stadige havarier:&#10;&#10;1. Utfør service i tide. Mekanisk oversikt i spillmenyen viser neste service for hver maskin.&#10;2. Gjør maskinene dine klare hver dag. Hold %s inne ved en maskin for å kontrollere den: væskenivåer, kjøler, luftfilter, smøring. Rens kjøler og luftfilter med trykkluftblåseren, og smør maskinene med fettpressen. Redskapene og hengerne dine må også smøres: Mekanisk oversikt viser dem som står for tur. Trykkluftblåser, fettpresse og fettpatroner finnes i butikken under kategorien Vedlikehold.&#10;3. Skån maskinene dine: overbelastning, overoppheting, arbeid med kald motor og hjulspinn sliter på dem.&#10;&#10;Hvis spillet føles for vanskelig, øk Kjøretøyets levetid og Avstand mellom service under fanen RMS-INNSTILLINGER i Mekanisk oversikt."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin-lader på vogn, 150 A ved 12 V, 80 A ved 24 V. Koble den til nær kjøretøyet for å lade batteriet med strømmen det kan ta imot, eller for å gi starthjelp (START, 200 A ved 12 V). Ladingen følger spillets tidshastighet."/>
         <text name="rms_diagnostic_configuration" text="Diagnoseutstyr"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Kjølevæskenivå"/>
         <text name="rms_diagnostic_spn_1639" text="Viftehastighet"/>
         <text name="rms_diagnostic_spn_168" text="Batterispenning"/>
-        <text name="rms_diagnostic_spn_677" text="Startrelé"/>
+        <text name="rms_diagnostic_spn_676" text="Gløderelé"/>
         <text name="rms_diagnostic_spn_167" text="Ladespenning"/>
         <text name="rms_diagnostic_spn_157" text="Common rail-trykk"/>
         <text name="rms_diagnostic_spn_1761" text="AdBlue-tanknivå"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starthjelp (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Lad batteriet"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Koble fra batteriet"/>
         <text name="rms_battery_isolator_restore" text="Koble til batteriet igjen"/>
         <text name="rms_battery_isolator_open" text="Batteriet er frakoblet. Koble det til igjen med hovedstrømbryteren, til fots foran kjøretøyet."/>

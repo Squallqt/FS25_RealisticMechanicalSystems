@@ -35,7 +35,7 @@
         drumPrints="objects/fluids/products/totalEnergiesAdBlue/drumLabel.i3d"/>
     <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
             <fillUnitConfiguration name="10 L" price="0" isDefault="true">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="10" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="10"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
@@ -45,7 +45,7 @@
                 <objectChange node="adBlueContainer_component1" massActive="0.585" centerOfMassActive="0 0.133 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="208 L" price="131">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="208" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="208"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
@@ -59,7 +59,7 @@
                 <objectChange node="adBlueContainer_component1" massActive="33.85"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="2 × 208 L" price="275">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="208" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="208"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>

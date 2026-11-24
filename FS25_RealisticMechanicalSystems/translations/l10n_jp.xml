@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="車両"/>
         <text name="rms_hud_mass_towed" text="連結"/>
         <text name="rms_hud_mass_total" text="合計"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="説明"/>
         <text name="rms_log_button_show_report" text="報告書を表示"/>
         <text name="rms_log_empty" text="履歴はまだありません"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="過熱保護：出力制限が解除されました"/>
         <text name="rms_adblue_title" text="尿素水"/>
         <text name="rms_adblue_low_message" text="尿素水の残量が少なくなっています：尿素水を補給してください。"/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="尿素水タンクが空です：エンジン出力が大きく低下しています。尿素水を補給してください。"/>
         <text name="rms_adblue_restored_message" text="尿素水を補給しました：エンジン出力が回復しました。"/>
         <text name="rms_breakdown_at_progress_message" text="進行中"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="警告！エンジンが冷えています。温まるまで摩耗が進みます。"/>
         <text name="rms_spec_overheat_engine_message" text="警告！エンジンが過熱しています。"/>
         <text name="rms_spec_overheat_transmission_message" text="警告！ミッションが過熱しています。"/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="エンジン書き換え"/>
         <text name="rms_spec_state_overdue" text="期限超過"/>
         <text name="rms_spec_state_optimal" text="最適"/>
-        <text name="rms_spec_state_broken" text="故障"/>
         <text name="rms_spec_state_bad" text="不良"/>
         <text name="rms_spec_state_excellent" text="非常に良好"/>
         <text name="rms_spec_state_good" text="良好"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="ミッション過熱"/>
         <text name="rms_report_wear_wet_weather" text="多湿な天候"/>
         <text name="rms_report_wear_cranking" text="頻繁な始動"/>
+        <text name="rms_report_wear_starter_heat" text="スターター過熱"/>
         <text name="rms_report_wear_steering" text="停止状態での操舵"/>
         <text name="rms_report_wear_park_brake" text="駐車ブレーキ"/>
         <text name="rms_report_wear_low_fuel" text="燃料残量低下"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="変速比制限"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="駆動力の伝達が不安定"/>
         <text name="rms_report_transmission_failed" text="故障"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="グリースガン"/>
         <text name="rms_grease_gun_no_vehicle" text="グリース補給範囲内に車両がありません"/>
         <text name="rms_grease_gun_function" text="機械のグリースニップルにグリースを注入します。グリースカートリッジを装着して使用します。"/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="やや低い"/>
         <text name="rms_inspection_status_slightly_dirty" text="軽度の目詰まり"/>
         <text name="rms_inspection_status_grease_due" text="グリース補給時期"/>
-        <text name="rms_inspection_status_slight_moisture" text="わずかな湿り"/>
-        <text name="rms_inspection_status_seepage" text="にじみ"/>
-        <text name="rms_inspection_status_severe_leak" text="大量もれ"/>
         <text name="rms_inspection_status_low" text="低い"/>
         <text name="rms_inspection_status_very_low" text="非常に低い"/>
         <text name="rms_inspection_status_critically_low" text="至急補給"/>
         <text name="rms_inspection_status_critically_clogged" text="完全な目詰まり"/>
         <text name="rms_inspection_status_dirty" text="目詰まり"/>
         <text name="rms_inspection_status_grease_late" text="期限超過"/>
-        <text name="rms_inspection_status_active_leak" text="もれ発生中"/>
         <text name="rms_inspection_status_heavily_clogged" text="重度の目詰まり"/>
         <text name="rms_inspection_status_not_required" text="不要"/>
         <text name="rms_inspection_status_change_overdue" text="交換期限超過"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Realistic Mechanical Systemsでは、機械は本物と同じように摩耗し、故障します。次の3つのルールを守れば、故障続きにならずにプレイできます。&#10;&#10;1. 整備は時間どおりに行ってください。ゲームメニューの機械ダッシュボードに、各機械の次の整備が表示されます。&#10;2. 毎日、機械を準備してください。機械の近くで%sを長押しすると、液量、ラジエーター、エアフィルター、グリースを点検できます。ラジエーターとエアフィルターはエアブロワーで清掃し、機械にはグリースガンでグリースを注入してください。作業機とトレーラーにもグリースが必要です。機械ダッシュボードに、グリースが必要なものが表示されます。エアブロワー、グリースガン、グリースカートリッジは、ショップのメンテナンスカテゴリーにあります。&#10;3. 機械を大切に扱ってください。過負荷、オーバーヒート、エンジンが冷えたままの作業、ホイールスリップは摩耗の原因になります。&#10;&#10;難しすぎると感じたら、機械ダッシュボードのRMS設定タブで、車両耐用期間と整備の間隔を長くしてください。"/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="台車式Telwin充電器。12 Vで150 A、24 Vで80 A。車両の近くで接続し、バッテリーが受け入れられる電流で充電するか、始動を補助します（START、12 Vで200 A）。充電はゲーム内の時間速度に従います。"/>
         <text name="rms_diagnostic_configuration" text="スキャンツール"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="冷却水量"/>
         <text name="rms_diagnostic_spn_1639" text="ファン回転数"/>
         <text name="rms_diagnostic_spn_168" text="バッテリー電圧"/>
-        <text name="rms_diagnostic_spn_677" text="スターターリレー"/>
+        <text name="rms_diagnostic_spn_676" text="予熱リレー"/>
         <text name="rms_diagnostic_spn_167" text="充電電圧"/>
         <text name="rms_diagnostic_spn_157" text="コモンレール圧"/>
         <text name="rms_diagnostic_spn_1761" text="尿素水タンク残量"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="エンジン始動補助 (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="バッテリーを充電する"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="バッテリーを遮断"/>
         <text name="rms_battery_isolator_restore" text="バッテリーを接続"/>
         <text name="rms_battery_isolator_open" text="バッテリーが遮断されています。車両の前に降りて、バッテリー遮断スイッチで接続してください。"/>

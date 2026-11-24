@@ -3,6 +3,8 @@
 ---AI worker easing off under overload, stopped when it cannot move
 
 ---Returns the eased pace of a working helper, nil without one
+-- @param table vehicle vehicle
+-- @return float? speed eased pace (km/h)
 local function getAiWorkerSpeedLimit(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec ~= nil and vehicle:getIsAIActive() then
@@ -12,6 +14,7 @@ local function getAiWorkerSpeedLimit(vehicle)
 end
 
 ---Eases the helper off under overload and gives its pace back after
+-- @param float dt time of the step (ms)
 function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
     if not self.isServer then return end
     local spec = self.spec_RealisticMechanicalSystems
@@ -43,6 +46,7 @@ function RealisticMechanicalSystems:updateAiWorkerSpeed(dt)
 end
 
 ---Stops a helper pushing on the spot once the native recoveries had time
+-- @param float dt time of the step (ms)
 function RealisticMechanicalSystems:updateAiWorkerBlocked(dt)
     if not self.isServer then return end
     local spec = self.spec_RealisticMechanicalSystems
@@ -64,8 +68,7 @@ function RealisticMechanicalSystems:updateAiWorkerBlocked(dt)
     end
 
     -- accelerator asked by the helper, before the gearbox
-    local motor = self:getMotor()
-    if self:getIsMotorStarted() and motor ~= nil and (tonumber(motor.lastAcceleratorPedal) or 0) ~= 0 then
+    if self:getIsMotorStarted() and self:getMotor().lastAcceleratorPedal ~= 0 then
         spec.aiWorkerBlockedMs = spec.aiWorkerBlockedMs + dt
         if spec.aiWorkerBlockedMs >= C.BLOCKED_SECONDS * 1000 and self.stopCurrentAIJob ~= nil then
             spec.aiWorkerBlockedMs, spec.aiWorkerBlockedAt = 0, nil
@@ -75,6 +78,7 @@ function RealisticMechanicalSystems:updateAiWorkerBlocked(dt)
 end
 
 ---Holds the helper under its eased pace, the player's cruise speed untouched
+-- @param function superFunc original function
 -- @return float speed cruise control speed in km/h
 function RealisticMechanicalSystems:getCruiseControlSpeed(superFunc)
     local speed = superFunc(self)
@@ -85,7 +89,7 @@ function RealisticMechanicalSystems:getCruiseControlSpeed(superFunc)
     return speed
 end
 
--- Native navigation and AutoDrive also limit the motor directly.
+-- Native navigation and AutoDrive also limit the motor directly
 VehicleMotor.setSpeedLimit = Utils.overwrittenFunction(VehicleMotor.setSpeedLimit, function(self, superFunc, limit)
     local speedLimit = getAiWorkerSpeedLimit(self.vehicle)
     if speedLimit ~= nil then

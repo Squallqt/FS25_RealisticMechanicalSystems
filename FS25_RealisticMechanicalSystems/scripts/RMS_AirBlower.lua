@@ -11,12 +11,16 @@ RMS_AirBlower.DISTANCE_STEP = 0.05
 RMS_AirBlower.MIN_DUST_DISTANCE = 0.1
 
 ---Tells whether the local player carries the blower
+-- @param table blower air blower
+-- @return boolean isCarried true when the local player carries it
 local function getIsLocallyCarried(blower)
     local player = blower:getCarryingPlayer()
     return player ~= nil and player.isOwner
 end
 
 ---Returns the text key answering a blow at a machine, nil while there is dust to clear
+-- @param table machineSpec RMS specialization of the machine
+-- @return string? textKey l10n key of the answer
 local function getAnswerKey(machineSpec)
     if not machineSpec.isVehicleNeedBlowOut then
         return "rms_air_blower_cleaning_not_require"
@@ -29,12 +33,16 @@ local function getAnswerKey(machineSpec)
 end
 
 ---Shows the answer of a blow at a machine
+-- @param table machine machine
+-- @param string textKey l10n key of the answer
 local function showAnswer(machine, textKey)
     local hours = textKey == "rms_air_blower_filter_requires_maintenance" and RMS_Utils.formatAirFilterServiceHours(machine) or nil
     g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), machine:getFullName(), hours), RMS_AirBlower.WARNING_DURATION)
 end
 
 ---Moves the dust to the machine blown at
+-- @param table spec blower specialization
+-- @param float distance distance to the machine (m)
 local function placeDust(spec, distance)
     local reach = math.max(distance, RMS_AirBlower.MIN_DUST_DISTANCE)
     setTranslation(spec.dustRoot, spec.dustBase[1] + spec.dustDirection[1] * reach, spec.dustBase[2] + spec.dustDirection[2] * reach,
@@ -42,6 +50,7 @@ local function placeDust(spec, distance)
 end
 
 ---Stops the dust and brings it back to the nozzle
+-- @param table spec blower specialization
 local function stopDust(spec)
     if spec.dust ~= nil then
         ParticleUtil.setEmittingState(spec.dust, false)
@@ -50,12 +59,17 @@ local function stopDust(spec)
 end
 
 ---Stops the blow and air resistance sounds
+-- @param table spec blower specialization
 local function stopSounds(spec)
     RMS_SoundManager.setSamplePlaying(spec.blowSample, false)
     RMS_SoundManager.setSamplePlaying(spec.resistanceSample, false)
 end
 
 ---Sends the blowing state to the other players once it changed
+-- @param table blower air blower
+-- @param boolean isBlowing true while the blower blows
+-- @param table? target machine blown at
+-- @param float distance distance to the machine (m)
 local function share(blower, isBlowing, target, distance)
     local spec = blower[specName]
     if isBlowing == spec.sentBlowing and target == spec.sentTarget
@@ -67,16 +81,20 @@ local function share(blower, isBlowing, target, distance)
 end
 
 ---Checks if all prerequisite specializations are loaded
+-- @param table specializations specializations
+-- @return boolean hasPrerequisite true if all prerequisite specializations are loaded
 function RMS_AirBlower.prerequisitesPresent(specializations)
     return true
 end
 
 ---Registers the functions of the blower
+-- @param table handToolType hand tool type
 function RMS_AirBlower.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "setRMSAirBlowerState", RMS_AirBlower.setRMSAirBlowerState)
 end
 
 ---Registers the event listeners of the blower
+-- @param table handToolType hand tool type
 function RMS_AirBlower.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "onWriteStream", "onReadStream", "onHeldStart", "onHeldEnd",
         "onRegisterActionEvents" }) do
@@ -85,6 +103,8 @@ function RMS_AirBlower.registerEventListeners(handToolType)
 end
 
 ---Called on loading
+-- @param table xmlFile file of the hand tool
+-- @param string baseDirectory directory of the hand tool
 function RMS_AirBlower:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     spec.raycastNode = I3DUtil.indexToObject(self.components, "raycastNode", self.i3dMappings)
@@ -120,6 +140,8 @@ function RMS_AirBlower:onDelete()
 end
 
 ---Called on server side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_AirBlower:onWriteStream(streamId, connection)
     local spec = self[specName]
     streamWriteBool(streamId, spec.isBlowing)
@@ -128,6 +150,8 @@ function RMS_AirBlower:onWriteStream(streamId, connection)
 end
 
 ---Called on client side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_AirBlower:onReadStream(streamId, connection)
     local isBlowing = streamReadBool(streamId)
     local target = NetworkUtil.readNodeObject(streamId)
@@ -135,10 +159,13 @@ function RMS_AirBlower:onReadStream(streamId, connection)
 end
 
 ---Keeps whether a player blows with the blower and at which machine
+-- @param boolean isBlowing true while the blower blows
+-- @param table? target machine blown at
+-- @param float distance distance to the machine (m)
 function RMS_AirBlower:setRMSAirBlowerState(isBlowing, target, distance)
     local spec = self[specName]
     spec.isBlowing = isBlowing
-    spec.target = target ~= nil and target:getRootVehicle() or nil
+    spec.target = target
     spec.distance = distance
 end
 
@@ -154,6 +181,8 @@ function RMS_AirBlower:onRegisterActionEvents()
 end
 
 ---Blows while the key is held, saying so when no machine is in reach
+-- @param string actionName input action
+-- @param float inputValue input value
 function RMS_AirBlower:onAction(actionName, inputValue)
     local spec = self[specName]
     spec.isActionDown = inputValue > 0
@@ -187,6 +216,7 @@ function RMS_AirBlower:onHeldEnd()
 end
 
 ---Blows the dust out of the machine in reach, for every player
+-- @param float dt time since the last frame (ms)
 function RMS_AirBlower:onUpdate(dt)
     local spec = self[specName]
     local isLocal = getIsLocallyCarried(self)

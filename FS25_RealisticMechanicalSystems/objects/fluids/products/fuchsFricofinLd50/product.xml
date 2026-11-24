@@ -38,7 +38,7 @@
         drumLabelDiffuse="objects/fluids/products/fuchsFricofinLd50/drum_label_diffuse.png"/>
     <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
             <fillUnitConfiguration name="5 L" price="0" isDefault="true">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_FUCHS_FRICOFIN_LD50" capacity="5" startFillType="RMS_FUCHS_FRICOFIN_LD50" startFillLevel="5"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
@@ -48,7 +48,7 @@
                 <objectChange node="fluidContainer_component1" massActive="0.25" centerOfMassActive="0 0.1166 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="20 L" price="47">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_FUCHS_FRICOFIN_LD50" capacity="20" startFillType="RMS_FUCHS_FRICOFIN_LD50" startFillLevel="20"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
@@ -58,7 +58,7 @@
                 <objectChange node="fluidContainer_component1" massActive="1.2" centerOfMassActive="0 0.21 0"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="205 L" price="579">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_FUCHS_FRICOFIN_LD50" capacity="205" startFillType="RMS_FUCHS_FRICOFIN_LD50" startFillLevel="205"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
@@ -72,7 +72,7 @@
                 <objectChange node="fluidContainer_component1" massActive="43"/>
             </fillUnitConfiguration>
             <fillUnitConfiguration name="2 × 205 L" price="1180">
-                <fillUnits>
+                <fillUnits removeVehicleIfEmpty="true">
                     <fillUnit fillTypes="RMS_FUCHS_FRICOFIN_LD50" capacity="205" startFillType="RMS_FUCHS_FRICOFIN_LD50" startFillLevel="205"
                         unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
                         synchronizeFullFillLevel="true" ignoreFillLimit="true"/>

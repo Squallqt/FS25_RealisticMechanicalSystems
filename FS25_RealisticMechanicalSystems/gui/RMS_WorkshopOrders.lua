@@ -11,6 +11,8 @@ local LEVEL_FLUIDS = {
 }
 
 ---Returns a cell maker giving the same text to every choice
+-- @param string key l10n key of the text
+-- @return function getCell cell maker
 local function every(key)
     return function()
         return g_i18n:getText(key), 2
@@ -18,6 +20,9 @@ local function every(key)
 end
 
 ---Returns the cell of a share: its percentage and its level
+-- @param float value share, 0 to 1
+-- @return string text text of the cell
+-- @return integer level level of the cell, 0 to 2
 local function shareCell(value)
     if value <= 0 then
         return "-", 0
@@ -26,6 +31,9 @@ local function shareCell(value)
 end
 
 ---Returns the text naming an oil circuit, the common sump by its own name
+-- @param table vehicle vehicle
+-- @param string circuit fluid circuit
+-- @return string? text name of the circuit, nil for a circuit without a level row
 local function getOilName(vehicle, circuit)
     if circuit == "transmissionOil" and RMS_Fluids.getSumpCircuit(vehicle, "hydraulicFluid") == "transmissionOil" then
         return g_i18n:getText("rms_fluid_hud_transmissionHydraulic")
@@ -38,6 +46,9 @@ local function getOilName(vehicle, circuit)
 end
 
 ---Returns the service interval of the clock changing a circuit
+-- @param table vehicle vehicle
+-- @param string circuit fluid circuit
+-- @return string text interval, empty without a clock
 local function getIntervalText(vehicle, circuit)
     for _, clock in ipairs(vehicle:getServiceClocks()) do
         if RMS_Utils.getKeyByValue(clock.circuits, circuit) ~= nil then
@@ -50,6 +61,10 @@ local function getIntervalText(vehicle, circuit)
 end
 
 ---Returns how often a maintenance level comes against the lightest one
+-- @param table vehicle vehicle
+-- @param string level maintenance level
+-- @param string lightest lightest maintenance level
+-- @return string text frequency
 local function getFrequencyText(vehicle, level, lightest)
     local interval = vehicle:getMaintenanceLevelInterval(level)
     local ratio = interval / vehicle:getMaintenanceLevelInterval(lightest)
@@ -63,6 +78,9 @@ local function getFrequencyText(vehicle, level, lightest)
 end
 
 ---Returns the text keys of the filters a maintenance changes, nil without any
+-- @param table vehicle vehicle
+-- @return string? detailKey l10n key of the filters changed
+-- @return string? newKey l10n key of the cell
 local function getFiltersKeys(vehicle)
     local hasEngine = not vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local hasHydraulic = RMS_Consumables.getHasFilter(vehicle, RMS_Consumables.getFilterOfBreakdown("HYDRAULIC_FILTER_CLOGGING"))
@@ -82,6 +100,8 @@ local function getFiltersKeys(vehicle)
 end
 
 ---Returns the maintenance level changing the AdBlue filter, nil without one
+-- @param table vehicle vehicle
+-- @return string? level maintenance level
 local function getAdBlueFilterLevel(vehicle)
     local filter = RMS_Consumables.getFilterOfBreakdown("ADBLUE_FILTER_CLOGGING")
     if RMS_Consumables.getHasFilter(vehicle, filter) then
@@ -91,6 +111,9 @@ local function getAdBlueFilterLevel(vehicle)
 end
 
 ---Names each filter a maintenance level fits the machine
+-- @param table vehicle vehicle
+-- @param string level maintenance level
+-- @return table names names of the filters
 function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local names = {}
@@ -114,10 +137,16 @@ function RMS_WorkshopOrders.getFittedFilters(vehicle, level)
 end
 
 ---Returns the table rows of the inspection order
+-- @param table vehicle vehicle
+-- @return table rows rows of the order table
 local function getInspectionRows(vehicle)
     local R = RealisticMechanicalSystems
+    ---Tells whether an inspection gives a report, and a complete one
+    -- @param string inspectionType inspection level
+    -- @return boolean hasReport true when it gives a report
+    -- @return boolean isComplete true when the report is complete
     local function report(inspectionType)
-        local entry = { type = R.STATUS.INSPECTION, optionOne = inspectionType }
+        local entry = { type = R.STATUS.INSPECTION, optionOne = inspectionType, isCompleted = true }
         local hasReport = R.getIsLogEntryHasReport(entry)
         return hasReport, hasReport and R.getIsCompleteReport(entry)
     end
@@ -154,6 +183,9 @@ local function getInspectionRows(vehicle)
 end
 
 ---Returns the table rows of the maintenance order
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @return table rows rows of the order table
 local function getLevelRows(vehicle, workshopType)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local R = RealisticMechanicalSystems
@@ -209,6 +241,9 @@ local function getLevelRows(vehicle, workshopType)
 end
 
 ---Counts the parts a thorough repair adds to the standard one
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @return integer count number of parts added
 function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
     local R, count = RealisticMechanicalSystems, 0
     for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.HIGH, R.PART_TYPES.OEM, workshopType)) do
@@ -218,6 +253,9 @@ function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
 end
 
 ---Returns the table rows of the repair order
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @return table rows rows of the order table
 local function getRepairRows(vehicle, workshopType)
     local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
     local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
@@ -228,6 +266,9 @@ local function getRepairRows(vehicle, workshopType)
             running = running + (breakdown.isActive and 1 or 0)
         end
     end
+    ---Returns a cell maker: the text for every method but the lightest
+    -- @param string key l10n key of the text
+    -- @return function getCell cell maker
     local function replaces(key)
         return function(method)
             if method == REPAIR.LOW then
@@ -270,6 +311,9 @@ local function getRepairRows(vehicle, workshopType)
 end
 
 ---Returns the table rows of the overhaul order
+-- @param table vehicle vehicle
+-- @param string? system system of a partial overhaul
+-- @return table rows rows of the order table
 local function getOverhaulRows(vehicle, system)
     local OVERHAUL = RealisticMechanicalSystems.OVERHAUL_TYPES
     local targets = RMS_Config.MAINTENANCE.OVERHAUL_CONDITION_TARGETS
@@ -324,6 +368,8 @@ local function getOverhaulRows(vehicle, system)
 end
 
 ---Tells whether a full repaint offers other colors
+-- @param table vehicle vehicle
+-- @return boolean hasColors true when other colors are offered
 function RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
     for _, zone in ipairs(RMS_Bodywork.getColorZones(vehicle)) do
         if #RMS_Bodywork.getColorChoices(vehicle, zone, {}) > 0 or RMS_Bodywork.getCustomColorChoice(vehicle, zone, {}) ~= nil then
@@ -334,6 +380,8 @@ function RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
 end
 
 ---Returns the table rows of the paint order
+-- @param table vehicle vehicle
+-- @return table rows rows of the order table
 local function getBodyworkRows(vehicle)
     local dealer = g_i18n:getText(RealisticMechanicalSystems.WORKSHOP.DEALER)
     local hasColors = RMS_WorkshopOrders.getHasBodyworkColors(vehicle)
@@ -363,7 +411,10 @@ local function getBodyworkRows(vehicle)
     }
 end
 
----Returns the months the first fitted-part cover of a repair runs
+---Returns the months left on the soonest fitted-part cover of a repair
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @return float months months left, math.huge without a fitted-part cover
 function RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
     local R, left = RealisticMechanicalSystems, math.huge
     for _, line in ipairs(vehicle:getRepairPriceLines(R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM, workshopType)) do
@@ -375,6 +426,9 @@ function RMS_WorkshopOrders.getPartWarrantyMonthsLeft(vehicle, workshopType)
 end
 
 ---Returns the warranty corner of the repair order
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @return table corner label, name and reason of the corner
 local function getWarrantyCorner(vehicle, workshopType)
     local R = RealisticMechanicalSystems
     local isCovered, status = vehicle:isWarrantyRepairCovered(workshopType)
@@ -516,6 +570,11 @@ RMS_WorkshopOrders.ORDERS = {
 }
 
 ---Tells who pays a job for the farm, the warranty or the lease
+-- @param table vehicle vehicle
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
+-- @param string? optionOne first option of the service
+-- @param string? optionTwo second option of the service
+-- @param string workshopType workshop
 -- @return string? coverKey "warranty" or "lease", nil when the farm pays
 function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionTwo, workshopType)
     if serviceType == STATUS.REPAIR and vehicle:isWarrantyRepairCovered(workshopType) then
@@ -527,6 +586,13 @@ function RMS_WorkshopOrders.getCoverKey(vehicle, serviceType, optionOne, optionT
 end
 
 ---Starts an order on the server, or asks the server from a client
+-- @param table vehicle vehicle
+-- @param string workshopType workshop
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
+-- @param string? optionOne first option of the service
+-- @param string? optionTwo second option of the service
+-- @param table? sellingPoint selling point of the workshop
+-- @return boolean isSent true when the order started or was sent
 function RMS_WorkshopOrders.start(vehicle, workshopType, serviceType, optionOne, optionTwo, sellingPoint)
     local price = RMS_FluidWorkshop.getTransactionPrice(vehicle, serviceType, workshopType, optionOne, optionTwo)
     if price == nil then

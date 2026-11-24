@@ -1,8 +1,7 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Vehicle diagnostic screen.
+---Screen of the diagnostic PC: connection page and scan page
 RMS_DiagnosticScreen = {}
-RMS_DiagnosticScreen.INSTANCE = nil
 RMS_DiagnosticScreen.PAGE = { CONNECTION = 1, SCAN = 2 }
 
 local RMS_DiagnosticScreen_mt = Class(RMS_DiagnosticScreen, MessageDialog)
@@ -20,6 +19,8 @@ local MACHINE_STATE_COLORS = { ok = COLOR.OK, plugged = COLOR.OK, moving = COLOR
 local shownTexts = setmetatable({}, { __mode = "k" })
 
 ---Sets a text only when it changes; every setText lays it out again
+-- @param table element text element
+-- @param string text text
 local function setText(element, text)
     if shownTexts[element] ~= text then
         shownTexts[element] = text
@@ -28,17 +29,13 @@ local function setText(element, text)
 end
 
 ---Create instance of RMS_DiagnosticScreen
-function RMS_DiagnosticScreen.new(target, customMt)
-    local self = MessageDialog.new(target, customMt or RMS_DiagnosticScreen_mt)
-    self.tool = nil
-    self.page = PAGE.CONNECTION
-    self.machines = {}
-    self.rows = {}
-    self.refreshTimer = 0
-    return self
+-- @return table self instance of the screen
+function RMS_DiagnosticScreen.new()
+    return MessageDialog.new(nil, RMS_DiagnosticScreen_mt)
 end
 
 ---Opens the PC of a trolley, on the scan page when it is plugged
+-- @param table tool diagnostic trolley
 function RMS_DiagnosticScreen.show(tool)
     local screen = RMS_DiagnosticScreen.INSTANCE
     screen.tool = tool
@@ -47,6 +44,8 @@ function RMS_DiagnosticScreen.show(tool)
 end
 
 ---Returns the category, brand and name of a machine as a path
+-- @param table vehicle vehicle
+-- @return string path path of the machine
 local function getMachinePath(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local parts = {}
@@ -65,6 +64,8 @@ local function getMachinePath(vehicle)
 end
 
 ---Returns the farm machines in reach of the trolley, nearest first
+-- @param table tool diagnostic trolley
+-- @return table machines vehicle, distance and reason of each machine
 local function getMachines(tool)
     local target = RMS_DiagnosticTool.getTarget(tool)
     local machines = {}
@@ -85,6 +86,8 @@ local function getMachines(tool)
 end
 
 ---Returns the parameter and failure mode of a code, as a sentence
+-- @param table entry fault entry of the code
+-- @return string text sentence
 local function getCodeText(entry)
     if entry.spn == nil then
         return g_i18n:getText("rms_diagnostic_uncoded")
@@ -93,6 +96,12 @@ local function getCodeText(entry)
 end
 
 ---Returns the controller and code rows of the scan, and how many controllers answered
+-- @param table tool diagnostic trolley
+-- @param table target machine plugged into
+-- @param table controllers controllers of the machine
+-- @return table rows rows of the code list
+-- @return integer answered number of controllers that answered
+-- @return integer total number of controllers
 local function getScanRows(tool, target, controllers)
     local spec = tool[RMS_DiagnosticTool.SPEC_TABLE_NAME]
     local SCAN = RMS_DiagnosticTool.SCAN
@@ -120,6 +129,8 @@ local function getScanRows(tool, target, controllers)
 end
 
 ---Returns a text that changes when the rows of a list change
+-- @param table rows rows of a list
+-- @return string signature signature of the rows
 local function getRowsSignature(rows)
     local parts = {}
     for _, row in ipairs(rows) do
@@ -131,10 +142,15 @@ local function getRowsSignature(rows)
 end
 
 ---Returns the detail fields of a code and the note under them
+-- @param table target machine plugged into
+-- @param table entry fault entry of the code
+-- @param boolean isLicenceValid true while the licence runs
+-- @return table fields label and value of each field
+-- @return string? note note under the fields, nil for none
 local function getDetailFields(target, entry, isLicenceValid)
     local fields = {}
     local definition = RMS_Breakdowns.BreakdownRegistry[entry.breakdownId]
-    local systemName = definition ~= nil and g_i18n:getText(RMS_Utils.getSystemLabel(target, entry.system or definition.system)) or ""
+    local systemName = g_i18n:getText(RMS_Utils.getSystemLabel(target, definition.system))
     if entry.spn == nil then
         table.insert(fields, { g_i18n:getText("rms_diagnostic_system_label"), systemName })
         return fields, g_i18n:getText("rms_diagnostic_note_uncoded")
@@ -192,6 +208,7 @@ function RMS_DiagnosticScreen:updateDetail()
 end
 
 ---Writes the scan page: state, voltage, codes and buttons
+-- @param table target machine plugged into
 function RMS_DiagnosticScreen:refreshScanPage(target)
     local spec = self.tool[RMS_DiagnosticTool.SPEC_TABLE_NAME]
     local SCAN = RMS_DiagnosticTool.SCAN
@@ -321,11 +338,9 @@ function RMS_DiagnosticScreen:updateFocusLinks()
 end
 
 ---Closes the screen once the trolley is gone, refreshes it on its interval
+-- @param float dt time since the last frame (ms)
 function RMS_DiagnosticScreen:update(dt)
     RMS_DiagnosticScreen:superClass().update(self, dt)
-    if self.tool == nil then
-        return
-    end
     if not RMS_BatteryCharger.getIsAlive(self.tool) then
         self:close()
         return
@@ -338,11 +353,18 @@ function RMS_DiagnosticScreen:update(dt)
 end
 
 ---Returns the number of rows of a list
+-- @param table list machine list or code list
+-- @param integer section section
+-- @return integer count number of rows
 function RMS_DiagnosticScreen:getNumberOfItemsInSection(list, section)
     return list == self.machineList and #self.machines or #self.rows
 end
 
----Tells the code list which template a row takes
+---Template of a row of a list
+-- @param table list machine list or code list
+-- @param integer section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_DiagnosticScreen:getCellTypeForItemInSection(list, section, index)
     if list == self.machineList then
         return "machineRow"
@@ -352,6 +374,10 @@ function RMS_DiagnosticScreen:getCellTypeForItemInSection(list, section, index)
 end
 
 ---Fills one row of a list
+-- @param table list machine list or code list
+-- @param integer section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_DiagnosticScreen:populateCellForItemInSection(list, section, index, cell)
     if list == self.machineList then
         local machine = self.machines[index]
@@ -382,6 +408,9 @@ function RMS_DiagnosticScreen:populateCellForItemInSection(list, section, index,
 end
 
 ---Shows the detail of the selected code, or refreshes the machine list
+-- @param table list list whose selection changed
+-- @param integer section section
+-- @param integer index row selected
 function RMS_DiagnosticScreen:onListSelectionChanged(list, section, index)
     if list == self.codeList then
         self:updateDetail()
@@ -390,7 +419,10 @@ function RMS_DiagnosticScreen:onListSelectionChanged(list, section, index)
     end
 end
 
----Selects a machine to plug into
+---Refreshes the screen at once on a click on a machine
+-- @param table list machine list
+-- @param integer section section
+-- @param integer index row clicked
 function RMS_DiagnosticScreen:onClickMachine(list, section, index)
     self.refreshTimer = 0
 end
@@ -438,8 +470,12 @@ function RMS_DiagnosticScreen:onClickBack()
 end
 
 ---Closes the PC on back
+-- @param string action input action
+-- @param float value input value
+-- @param boolean eventUsed true when the event was used already
+-- @return boolean eventUsed true when the event is used
 function RMS_DiagnosticScreen:inputEvent(action, value, eventUsed)
-    if action == InputAction.MENU_BACK and not eventUsed then
+    if action == InputAction.MENU_BACK then
         self:close()
         return true
     end
@@ -467,12 +503,10 @@ function RMS_DiagnosticScreen:onOpen()
 end
 
 ---Blurs the game behind the PC
+-- @return float x left of the area (screen)
+-- @return float y bottom of the area (screen)
+-- @return float width width of the area (screen)
+-- @return float height height of the area (screen)
 function RMS_DiagnosticScreen:getBlurArea()
     return 0, 0, 1, 1
-end
-
----Releases the trolley
-function RMS_DiagnosticScreen:onClose()
-    self.tool = nil
-    RMS_DiagnosticScreen:superClass().onClose(self)
 end

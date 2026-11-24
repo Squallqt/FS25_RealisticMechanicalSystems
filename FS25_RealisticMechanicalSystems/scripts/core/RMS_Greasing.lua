@@ -4,11 +4,15 @@
 RMS_Greasing = {}
 
 ---Returns the specialization holding the greasing
+-- @param table vehicle machine or implement
+-- @return table spec specialization holding the greasing
 function RMS_Greasing.getSpec(vehicle)
     return vehicle.spec_RealisticMechanicalSystems or vehicle.spec_rmsImplementGreasing
 end
 
 ---Returns what an interval counts: worked days, months or bales
+-- @param table tier greasing interval
+-- @return string unit "day", "months" or "bales"
 function RMS_Greasing.getUnit(tier)
     if tier.months ~= nil then
         return "months"
@@ -19,6 +23,8 @@ function RMS_Greasing.getUnit(tier)
 end
 
 ---Returns an interval in its unit, its hours in worked days
+-- @param table tier greasing interval
+-- @return integer interval length in its unit
 function RMS_Greasing.getInterval(tier)
     local unit = RMS_Greasing.getUnit(tier)
     if unit ~= "day" then
@@ -30,6 +36,8 @@ function RMS_Greasing.getInterval(tier)
 end
 
 ---Tells whether a joint type hitches a towed implement
+-- @param integer jointType AttacherJoints joint type
+-- @return boolean isTowing true for a towing joint
 local function getIsTowingJoint(jointType)
     return jointType == AttacherJoints.JOINTTYPE_TRAILER or jointType == AttacherJoints.JOINTTYPE_TRAILERLOW
         or jointType == AttacherJoints.JOINTTYPE_TRAILERSADDLED or jointType == AttacherJoints.JOINTTYPE_TRAILERCAR
@@ -38,13 +46,14 @@ local function getIsTowingJoint(jointType)
 end
 
 ---Returns the wheels of a towed chassis
+-- @param table vehicle implement
 -- @return integer wheels of its own chassis, 0 when mounted, hooked or set on a carrier
 local function getChassisWheels(vehicle)
     local wheels, attachable = vehicle.spec_wheels, vehicle.spec_attachable
     if wheels == nil or #wheels.wheels < 2 or attachable == nil then
         return 0
     end
-    for _, joint in ipairs(attachable.inputAttacherJoints or {}) do
+    for _, joint in ipairs(attachable.inputAttacherJoints) do
         if getIsTowingJoint(joint.jointType) then
             return #wheels.wheels
         end
@@ -53,6 +62,8 @@ local function getChassisWheels(vehicle)
 end
 
 ---Tells whether a moving tool swings or is pushed by its own ram
+-- @param table tool moving tool
+-- @return boolean isArm true for an arm
 local function getIsArm(tool)
     if tool.rotSpeed ~= nil or tool.rotMax ~= nil then
         return true
@@ -66,6 +77,7 @@ local function getIsArm(tool)
 end
 
 ---Returns the arms the cylinders move
+-- @param table vehicle implement
 -- @return integer arms a cylinder moves, sliding tines not
 local function getArmCount(vehicle)
     local count = 0
@@ -78,6 +90,8 @@ local function getArmCount(vehicle)
 end
 
 ---Returns the working width of the fitted configuration, 0 when unknown
+-- @param table vehicle implement
+-- @return float width width (m)
 local function getWorkingWidth(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     if storeItem == nil then
@@ -92,14 +106,16 @@ local function getWorkingWidth(vehicle)
 end
 
 ---Tells whether a trailer tips to the left and the right as well as to the rear
+-- @param table vehicle trailer
+-- @return boolean isThreeWay true for a three-way tipper
 local function getIsThreeWayTipper(vehicle)
     local trailer = vehicle.spec_trailer
-    if trailer == nil or g_i18n == nil then
+    if trailer == nil then
         return false
     end
     local left, right = g_i18n:getText("info_tipSideLeft"), g_i18n:getText("info_tipSideRight")
     local hasLeft, hasRight = false, false
-    for _, tipSide in ipairs(trailer.tipSides or {}) do
+    for _, tipSide in ipairs(trailer.tipSides) do
         hasLeft = hasLeft or tipSide.name == left
         hasRight = hasRight or tipSide.name == right
     end
@@ -107,13 +123,16 @@ local function getIsThreeWayTipper(vehicle)
 end
 
 ---Tells whether a baler presses small square bales
+-- @param table vehicle baler
+-- @return boolean isSmall true for small square bales
 local function getIsSmallBaler(vehicle)
     local baler = vehicle.spec_baler
-    local baleType = baler ~= nil and baler.baleTypes ~= nil and baler.baleTypes[1] or nil
+    local baleType = baler ~= nil and baler.baleTypes[1] or nil
     return baleType ~= nil and not baleType.isRoundBale and baleType.width <= RMS_Config.GREASING.SMALL_BALE_WIDTH
 end
 
 ---Returns the build of a rake from its file
+-- @param table vehicle rake
 -- @return string? build rotors, belts or wheels, nil once closed
 -- @return integer count the rotors its file declares
 local function getRakeBuild(vehicle)
@@ -155,6 +174,8 @@ local PTO_RATINGS = {
 local ptoRatings = setmetatable({}, { __mode = "k" })
 
 ---Tells whether the implement produces pellets
+-- @param table vehicle implement
+-- @return boolean isPelletHarvester true when it does
 local function getIsPelletHarvester(vehicle)
     for _, unit in ipairs(vehicle.spec_fillUnit ~= nil and vehicle.spec_fillUnit.fillUnits or {}) do
         if unit.supportedFillTypes[FillType.STRAW_PELLETS] and unit.supportedFillTypes[FillType.HAY_PELLETS] then
@@ -165,8 +186,10 @@ local function getIsPelletHarvester(vehicle)
 end
 
 ---Tells whether the implement cuts beet at discharge
+-- @param table vehicle implement
+-- @return boolean isBeetChopper true when it does
 local function getIsBeetChopper(vehicle)
-    for _, node in ipairs(vehicle.spec_dischargeable.dischargeNodes or {}) do
+    for _, node in ipairs(vehicle.spec_dischargeable.dischargeNodes) do
         if node.fillTypeConverter ~= nil and node.fillTypeConverter[FillType.SUGARBEET] ~= nil then
             return true
         end
@@ -175,13 +198,16 @@ local function getIsBeetChopper(vehicle)
 end
 
 ---Returns the rating and the implement family
+-- @param table vehicle implement
+-- @return integer? rpm PTO rating, 540 or 1000, nil when it takes none
+-- @return string family implement family
 local function resolvePtoRating(vehicle)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     if vehicle.spec_baler ~= nil then
         if vehicle.spec_baleWrapper ~= nil or vehicle.typeName == "cuttingBaler" then
             return 1000, vehicle.spec_baleWrapper ~= nil and "balerWrapper" or "cuttingBaler"
         end
-        local baleTypes = vehicle.spec_baler.baleTypes or {}
+        local baleTypes = vehicle.spec_baler.baleTypes
         if baleTypes[1] == nil then
             return nil, "baler"
         end
@@ -262,6 +288,10 @@ local function resolvePtoRating(vehicle)
 end
 
 ---Returns the cached rating for each hitch
+-- @param table vehicle implement
+-- @param boolean? isFront true for the front hitch
+-- @return integer? rpm PTO rating, 540 or 1000
+-- @return string family implement family
 function RMS_Greasing.getImplementPtoRating(vehicle, isFront)
     local rating = ptoRatings[vehicle]
     if rating == nil then
@@ -276,6 +306,9 @@ function RMS_Greasing.getImplementPtoRating(vehicle, isFront)
 end
 
 ---Returns the family a category entry gives the implement
+-- @param table vehicle implement
+-- @param any entry family, or a choice read from the machine
+-- @return string|boolean? family greasing family, false or nil for none
 local function resolveFamily(vehicle, entry)
     if type(entry) ~= "table" then
         return entry
@@ -305,6 +338,7 @@ local function resolveFamily(vehicle, entry)
 end
 
 ---Returns the rotors of a rake
+-- @param table vehicle rake
 -- @return integer rotors of a rake, by its width when its file is closed
 local function getRakeRotors(vehicle)
     local _, rotors = getRakeBuild(vehicle)
@@ -316,6 +350,10 @@ local function getRakeRotors(vehicle)
 end
 
 ---Returns the points an interval of the family gives the implement
+-- @param table vehicle implement
+-- @param table tier interval of the family
+-- @param integer wheels wheels of its chassis
+-- @param integer arms arms its cylinders move
 -- @return integer points of the organs the implement carries
 local function getOrganPoints(vehicle, tier, wheels, arms)
     if tier.organ == "chassis" and wheels == 0 or tier.organ == "tandem" and wheels < 4 then
@@ -345,6 +383,8 @@ local function getOrganPoints(vehicle, tier, wheels, arms)
 end
 
 ---Returns the greasing family of an implement, by its organs when its category gives none
+-- @param table vehicle implement
+-- @return string|boolean? family greasing family, false or nil for none
 local function getImplementFamily(vehicle)
     local C = RMS_Config.GREASING
     local powerConsumer = vehicle.spec_powerConsumer
@@ -376,6 +416,8 @@ local function getImplementFamily(vehicle)
 end
 
 ---Adds an interval, joined to one of the same unit and length
+-- @param table tiers intervals
+-- @param table tier interval to add
 local function addTier(tiers, tier)
     for index, other in ipairs(tiers) do
         if not other.isDriveline and not tier.isDriveline and RMS_Greasing.getUnit(other) == RMS_Greasing.getUnit(tier)
@@ -388,6 +430,8 @@ local function addTier(tiers, tier)
 end
 
 ---Returns the intervals of an implement, its cardan joined, false without points
+-- @param table vehicle implement
+-- @return table|boolean tiers intervals, false without points
 local function getImplementTiers(vehicle)
     local C = RMS_Config.GREASING
     local family = getImplementFamily(vehicle)
@@ -419,6 +463,8 @@ local function getImplementTiers(vehicle)
 end
 
 ---Returns the greasing intervals, nil without grease points
+-- @param table vehicle machine or implement
+-- @return table? tiers intervals
 function RMS_Greasing.getTiers(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     if spec.greasingTiers == nil then
@@ -435,6 +481,8 @@ function RMS_Greasing.getTiers(vehicle)
 end
 
 ---Returns the greasing state, reset when the intervals changed
+-- @param table vehicle machine or implement
+-- @return table state due, elapsed and late of each interval, and the worked day
 local function getState(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     local tiers = RMS_Greasing.getTiers(vehicle)
@@ -448,9 +496,14 @@ local function getState(vehicle)
 end
 
 ---Returns the share of joints run dry since the due date
+-- @param float lateShare delay as a share of the interval
+-- @return float share share of joints run dry
 local function getDryShare(lateShare)
     local shape = math.log(math.log(0.9) / math.log(0.99)) / math.log(RMS_Config.GREASING.GREASE_L10_INTERVALS)
     local scale = (-math.log(0.99)) ^ (-1 / shape)
+    ---Returns the share of joints dry after a number of intervals
+    -- @param float intervals intervals run
+    -- @return float share share dry
     local function dry(intervals)
         return 1 - math.exp(-(intervals / scale) ^ shape)
     end
@@ -458,6 +511,7 @@ local function getDryShare(lateShare)
 end
 
 ---Updates the wear factor, the due points and the lubrication level
+-- @param table vehicle machine or implement
 -- @param boolean? isCounted true once a day, month or bale counted, or a service
 local function refresh(vehicle, isCounted)
     local spec = RMS_Greasing.getSpec(vehicle)
@@ -487,6 +541,7 @@ local function refresh(vehicle, isCounted)
 end
 
 ---Sets up the greasing state once the machine's category is known
+-- @param table vehicle machine or implement
 function RMS_Greasing.initialize(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     spec.isVehicleNeedLubricate = RMS_Greasing.getTiers(vehicle) ~= nil
@@ -494,11 +549,15 @@ function RMS_Greasing.initialize(vehicle)
 end
 
 ---Returns how many times faster a late greased vehicle wears
+-- @param table vehicle machine or implement
+-- @return float factor wear factor
 function RMS_Greasing.getWearFactor(vehicle)
     return RMS_Greasing.getSpec(vehicle).greasingWearFactor or 1
 end
 
 ---Returns done, due on the day points fall due, late once delayed
+-- @param table vehicle machine or implement
+-- @return string status "done", "due" or "late"
 function RMS_Greasing.getStatus(vehicle)
     local spec = RMS_Greasing.getSpec(vehicle)
     if (spec.greasingDuePoints or 0) == 0 then
@@ -508,7 +567,9 @@ function RMS_Greasing.getStatus(vehicle)
 end
 
 ---Counts a unit: delay on due intervals, run on the others
+-- @param table vehicle machine or implement
 -- @param string unit day, months or bales
+-- @param float amount amount counted
 local function advance(vehicle, unit, amount)
     local tiers = RMS_Greasing.getTiers(vehicle)
     if tiers == nil or amount <= 0 then
@@ -535,6 +596,7 @@ local function advance(vehicle, unit, amount)
 end
 
 ---Marks the day worked, telling the clients once a day
+-- @param table vehicle machine or implement
 -- @param float operatingDt running time since last call in ms
 function RMS_Greasing.update(vehicle, operatingDt)
     if RMS_Greasing.getTiers(vehicle) ~= nil and operatingDt > 0 and not getState(vehicle).workedToday then
@@ -544,11 +606,15 @@ function RMS_Greasing.update(vehicle, operatingDt)
 end
 
 ---Returns true once the vehicle has worked that day
+-- @param table vehicle machine or implement
+-- @return boolean isWorked true once worked
 function RMS_Greasing.getIsWorkedToday(vehicle)
     return getState(vehicle).workedToday
 end
 
 ---Returns true while the vehicle itself works, idle not
+-- @param table vehicle machine or implement
+-- @return boolean isWorking true while it works
 function RMS_Greasing.getIsWorking(vehicle)
     local implementSpec = vehicle.spec_rmsImplementGreasing
     if vehicle:doCheckSpeedLimit() or implementSpec ~= nil and implementSpec.isFeeding
@@ -567,11 +633,15 @@ function RMS_Greasing.getIsWorking(vehicle)
 end
 
 ---Tells whether an implement rolls behind, a raised tool not
+-- @param table child implement
+-- @return boolean isTowed true when towed
 local function getIsTowed(child)
     return getIsTowingJoint(child:getActiveInputAttacherJoint().jointType)
 end
 
 ---Tells whether the machine or what follows it works, a header trailer on the road not
+-- @param table vehicle machine
+-- @return boolean isWorking true while it works
 local function getIsMachineWorking(vehicle)
     local isTowing = false
     for _, child in ipairs(vehicle:getChildVehicles()) do
@@ -584,6 +654,7 @@ local function getIsMachineWorking(vehicle)
 end
 
 ---Marks the day worked while the machine or what follows it works
+-- @param table vehicle machine
 -- @param float operatingDt running time since last call in ms
 function RMS_Greasing.updateMachine(vehicle, operatingDt)
     if operatingDt > 0 and RMS_Greasing.getTiers(vehicle) ~= nil and not getState(vehicle).workedToday and getIsMachineWorking(vehicle) then
@@ -592,16 +663,19 @@ function RMS_Greasing.updateMachine(vehicle, operatingDt)
 end
 
 ---Counts a month of the calendar against the monthly intervals
+-- @param table vehicle machine or implement
 function RMS_Greasing.onPeriodChanged(vehicle)
     advance(vehicle, "months", 1)
 end
 
 ---Counts a bale wrapped against the intervals in bales
+-- @param table vehicle wrapper
 function RMS_Greasing.onBaleWrapped(vehicle)
     advance(vehicle, "bales", 1)
 end
 
 ---Returns the interval greasing the driveline of a header
+-- @param table vehicle header
 -- @return integer? index the interval greasing the driveline of a header
 local function getDrivelineTier(vehicle)
     for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
@@ -613,13 +687,14 @@ local function getDrivelineTier(vehicle)
 end
 
 ---Returns the game hour
--- @return number hour of play since the first day
+-- @return float hour of play since the first day
 local function getGameHour()
     local environment = g_currentMission.environment
     return environment.currentMonotonicDay * 24 + environment.dayTime / 3600000
 end
 
 ---Notes the hour a header turned, its slip clutch kept free
+-- @param table header header
 function RMS_Greasing.onHeaderTurned(header)
     local spec = RMS_Greasing.getSpec(header)
     if spec ~= nil then
@@ -628,18 +703,23 @@ function RMS_Greasing.onHeaderTurned(header)
 end
 
 ---Tells whether a header stood long enough to seize its slip clutch
+-- @param table header header
+-- @return boolean isSeized true once seized
 function RMS_Greasing.getIsLimiterSeized(header)
     local spec = RMS_Greasing.getSpec(header)
     return spec ~= nil and spec.isLimiterSeized == true
 end
 
 ---Returns how many times faster a header wears for its greasing
+-- @param table header header
+-- @return float factor wear factor
 function RMS_Greasing.getHeaderWearFactor(header)
     local spec = RMS_Greasing.getSpec(header)
     return spec ~= nil and spec.greasingWearFactor or 1
 end
 
 ---Seizes the slip clutch of a header left standing, its driveline due
+-- @param table vehicle implement
 function RMS_Greasing.onHourChanged(vehicle)
     local spec, index = RMS_Greasing.getSpec(vehicle), getDrivelineTier(vehicle)
     if index == nil or spec.isLimiterSeized or spec.headerTurnedHour == nil then
@@ -656,6 +736,7 @@ function RMS_Greasing.onHourChanged(vehicle)
 end
 
 ---Frees the slip clutch once the driveline is greased
+-- @param table vehicle header
 local function releaseLimiter(vehicle)
     local spec, index = RMS_Greasing.getSpec(vehicle), getDrivelineTier(vehicle)
     if spec.isLimiterSeized and index ~= nil and getState(vehicle).due[index] == 0 then
@@ -665,6 +746,7 @@ local function releaseLimiter(vehicle)
 end
 
 ---Counts a worked day against the intervals in days, idle days not
+-- @param table vehicle machine or implement
 function RMS_Greasing.onDayChanged(vehicle)
     local state = getState(vehicle)
     if state.workedToday then
@@ -674,6 +756,7 @@ function RMS_Greasing.onDayChanged(vehicle)
 end
 
 ---Greases the due point of the latest interval
+-- @param table vehicle machine or implement
 -- @return boolean greased false when no point is due
 function RMS_Greasing.greasePoint(vehicle)
     local state, tiers, latest, latestShare = getState(vehicle), RMS_Greasing.getTiers(vehicle) or {}, nil, -1
@@ -697,6 +780,7 @@ function RMS_Greasing.greasePoint(vehicle)
 end
 
 ---Greases every point, as a workshop service does
+-- @param table vehicle machine or implement
 function RMS_Greasing.greaseAll(vehicle)
     local state = getState(vehicle)
     for index in ipairs(state.due) do
@@ -707,6 +791,7 @@ function RMS_Greasing.greaseAll(vehicle)
 end
 
 ---Leaves a share of each interval before its points fall due
+-- @param table vehicle machine or implement
 -- @param float share 1 just greased, 0 every point due now
 function RMS_Greasing.setIntervalLeft(vehicle, share)
     local state = getState(vehicle)
@@ -718,6 +803,8 @@ function RMS_Greasing.setIntervalLeft(vehicle, share)
 end
 
 ---Returns each interval: points, unit, length, due, run and delay
+-- @param table vehicle machine or implement
+-- @return table states state of each interval
 function RMS_Greasing.getTierStates(vehicle)
     local state, states = getState(vehicle), {}
     for index, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
@@ -731,6 +818,8 @@ end
 local UNIT_RANK = { day = 1, months = 2, bales = 3 }
 
 ---Returns the intervals with the latest due, the next and the shortest
+-- @param table vehicle machine or implement
+-- @return table greasing intervals, totals and state of the greasing
 function RMS_Greasing.read(vehicle)
     local greasing = { tiers = RMS_Greasing.getTierStates(vehicle), total = RMS_Greasing.getTotalPoints(vehicle),
         due = RMS_Greasing.getDuePoints(vehicle), state = RMS_Greasing.getStatus(vehicle) }
@@ -752,6 +841,8 @@ function RMS_Greasing.read(vehicle)
 end
 
 ---Returns all the grease points of a machine, every interval together
+-- @param table vehicle machine or implement
+-- @return integer total grease points
 function RMS_Greasing.getTotalPoints(vehicle)
     local total = 0
     for _, tier in ipairs(RMS_Greasing.getTiers(vehicle) or {}) do
@@ -761,11 +852,15 @@ function RMS_Greasing.getTotalPoints(vehicle)
 end
 
 ---Returns the grease points still to grease
+-- @param table vehicle machine or implement
+-- @return integer due grease points due
 function RMS_Greasing.getDuePoints(vehicle)
     return RMS_Greasing.getSpec(vehicle).greasingDuePoints or 0
 end
 
 ---Writes "due:elapsed:late" per interval, then the worked day
+-- @param table vehicle machine or implement
+-- @return string serialized greasing state
 function RMS_Greasing.serialize(vehicle)
     local state, parts = getState(vehicle), {}
     for index in ipairs(state.due) do
@@ -776,6 +871,8 @@ function RMS_Greasing.serialize(vehicle)
 end
 
 ---Reads a saved state, kept only when it matches the machine's intervals
+-- @param table vehicle machine or implement
+-- @param string? text serialized greasing state
 function RMS_Greasing.deserialize(vehicle, text)
     local state, tiers, parts = getState(vehicle), RMS_Greasing.getTiers(vehicle) or {}, {}
     for part in string.gmatch(text or "", "%S+") do

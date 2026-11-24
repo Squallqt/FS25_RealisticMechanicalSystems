@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Production years by store item key.
+---Production years by store item key
 RMS_ProductionYearData = {
     -- base game
     ["$data/vehicles/agco/series8000/series8000.xml"] = 1998,

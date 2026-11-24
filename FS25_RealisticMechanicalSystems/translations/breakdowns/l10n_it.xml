@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanente"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Potenza ridotta"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Fuori servizio"/>
         <text name="rms_breakdowns_severity_minor" text="Lieve"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderato"/>
         <text name="rms_breakdowns_severity_major" text="Grave"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protezione anti-surriscaldamento: potenza ridotta"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protezione anti-surriscaldamento si intensifica. Il motore eroga solo metà della sua potenza."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protezione anti-surriscaldamento: potenza dimezzata"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protezione anti-surriscaldamento è al massimo. Resta solo una frazione della potenza del motore."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protezione anti-surriscaldamento: potenza fortemente ridotta"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Il motore è stato spento per evitare danni. Lascialo raffreddare prima di riavviarlo."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protezione anti-surriscaldamento: motore spento"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Malfunzionamento lieve della pompa dell'olio. La pressione dell'olio è ridotta, la coppia motore cala leggermente, la temperatura motore aumenta e possono comparire battiti meccanici."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Malfunzionamento moderato della pompa dell'olio. La pressione dell'olio è insufficiente, la coppia motore diminuisce sensibilmente, la temperatura aumenta e i battiti meccanici sono chiaramente udibili."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Grave malfunzionamento della pompa dell'olio. La pressione dell'olio è critica, la coppia motore cala fortemente, il surriscaldamento è probabile, i battiti meccanici sono forti e possono verificarsi stalli."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Guasto critico della pompa dell'olio. La circolazione dell'olio non è sufficiente per il funzionamento in sicurezza e l'avviamento o il proseguimento del lavoro non sono possibili."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Il motore si è bloccato e non può più girare."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motore in stallo"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Malfunzionamento lieve dell'ECU. Potenza del motore leggermente ridotta."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Malfunzionamento moderato dell'ECU. Perdita di potenza evidente e aumento del consumo di carburante."/>

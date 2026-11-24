@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Xe"/>
         <text name="rms_hud_mass_towed" text="Tải kéo"/>
         <text name="rms_hud_mass_total" text="Tổng"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Mô tả"/>
         <text name="rms_log_button_show_report" text="Hiển thị báo cáo"/>
         <text name="rms_log_empty" text="Nhật ký hiện vẫn trống"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Bảo vệ nhiệt: đã gỡ giới hạn công suất"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Mức AdBlue thấp: hãy châm thêm AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Bình AdBlue đã cạn: công suất động cơ bị giảm mạnh. Hãy châm thêm AdBlue."/>
         <text name="rms_adblue_restored_message" text="Đã châm AdBlue: công suất động cơ được khôi phục."/>
         <text name="rms_breakdown_at_progress_message" text="đang thực hiện"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Cảnh báo! Động cơ nguội: sẽ hao mòn cho đến khi nóng lên."/>
         <text name="rms_spec_overheat_engine_message" text="Cảnh báo! Động cơ quá nhiệt."/>
         <text name="rms_spec_overheat_transmission_message" text="Cảnh báo! Hộp số quá nhiệt."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Tinh chỉnh động cơ"/>
         <text name="rms_spec_state_overdue" text="Quá hạn"/>
         <text name="rms_spec_state_optimal" text="Tối ưu"/>
-        <text name="rms_spec_state_broken" text="Bị hỏng"/>
         <text name="rms_spec_state_bad" text="Kém"/>
         <text name="rms_spec_state_excellent" text="Xuất sắc"/>
         <text name="rms_spec_state_good" text="Tốt"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Hộp số quá nhiệt"/>
         <text name="rms_report_wear_wet_weather" text="Thời tiết ẩm ướt"/>
         <text name="rms_report_wear_cranking" text="Khởi động thường xuyên"/>
+        <text name="rms_report_wear_starter_heat" text="Máy khởi động quá nhiệt"/>
         <text name="rms_report_wear_steering" text="Đánh lái khi đứng yên"/>
         <text name="rms_report_wear_park_brake" text="Phanh đỗ"/>
         <text name="rms_report_wear_low_fuel" text="Nhiên liệu dự trữ"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Tỷ số truyền bị giới hạn"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Truyền lực thất thường"/>
         <text name="rms_report_transmission_failed" text="Hư hỏng"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Súng bơm mỡ"/>
         <text name="rms_grease_gun_no_vehicle" text="Không có xe nào trong tầm bơm mỡ"/>
         <text name="rms_grease_gun_function" text="Bơm mỡ vào các đầu bơm mỡ của máy. Nạp bằng hộp mỡ."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Hơi thấp"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hơi tắc"/>
         <text name="rms_inspection_status_grease_due" text="Cần bơm mỡ"/>
-        <text name="rms_inspection_status_slight_moisture" text="Ẩm nhẹ"/>
-        <text name="rms_inspection_status_seepage" text="Rịn dầu"/>
-        <text name="rms_inspection_status_severe_leak" text="Rò rỉ nặng"/>
         <text name="rms_inspection_status_low" text="Thấp"/>
         <text name="rms_inspection_status_very_low" text="Rất thấp"/>
         <text name="rms_inspection_status_critically_low" text="Cần bổ sung gấp"/>
         <text name="rms_inspection_status_critically_clogged" text="Nghẹt hoàn toàn"/>
         <text name="rms_inspection_status_dirty" text="Tắc"/>
         <text name="rms_inspection_status_grease_late" text="Quá hạn"/>
-        <text name="rms_inspection_status_active_leak" text="Đang rò rỉ"/>
         <text name="rms_inspection_status_heavily_clogged" text="Tắc nặng"/>
         <text name="rms_inspection_status_not_required" text="Không cần"/>
         <text name="rms_inspection_status_change_overdue" text="Quá hạn thay"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Với Realistic Mechanical Systems, máy móc của bạn hao mòn và hỏng hóc như máy thật. Chỉ cần ba quy tắc để chơi mà không hỏng liên tục:&#10;&#10;1. Bảo dưỡng đúng hạn. Bảng theo dõi máy móc trong menu trò chơi hiển thị lần bảo dưỡng tiếp theo của từng máy.&#10;2. Chuẩn bị máy mỗi ngày. Giữ %s gần một máy để kiểm tra: mức chất lỏng, két tản nhiệt, bộ lọc không khí, bơm mỡ. Hãy vệ sinh két tản nhiệt và bộ lọc không khí bằng máy thổi khí nén, và bơm mỡ cho máy bằng súng bơm mỡ. Nông cụ và rơ-moóc của bạn cũng cần bơm mỡ: Bảng theo dõi máy móc liệt kê những thứ đến hạn. Máy thổi khí nén, súng bơm mỡ và hộp mỡ có trong cửa hàng, mục Bảo dưỡng.&#10;3. Giữ gìn máy móc: quá tải, quá nhiệt, làm việc khi động cơ còn nguội và trượt bánh đều làm máy hao mòn.&#10;&#10;Nếu trò chơi quá khó, hãy tăng Tuổi thọ xe và Khoảng cách bảo dưỡng trong thẻ CÀI ĐẶT RMS của Bảng theo dõi máy móc."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Bộ sạc Telwin trên xe đẩy, 150 A ở 12 V, 80 A ở 24 V. Kết nối gần xe để sạc lại ắc quy với dòng điện mà ắc quy tiếp nhận hoặc hỗ trợ khởi động (START, 200 A ở 12 V). Quá trình sạc tuân theo tốc độ thời gian trong trò chơi."/>
         <text name="rms_diagnostic_configuration" text="Thiết bị chẩn đoán"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Mức nước làm mát"/>
         <text name="rms_diagnostic_spn_1639" text="Tốc độ quạt"/>
         <text name="rms_diagnostic_spn_168" text="Điện áp ắc quy"/>
-        <text name="rms_diagnostic_spn_677" text="Rơ le bộ đề"/>
+        <text name="rms_diagnostic_spn_676" text="Rơ le sấy"/>
         <text name="rms_diagnostic_spn_167" text="Điện áp sạc"/>
         <text name="rms_diagnostic_spn_157" text="Áp suất ống phân phối nhiên liệu"/>
         <text name="rms_diagnostic_spn_1761" text="Mức bình AdBlue"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Hỗ trợ khởi động (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Sạc lại ắc quy"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Ngắt ắc quy"/>
         <text name="rms_battery_isolator_restore" text="Nối lại ắc quy"/>
         <text name="rms_battery_isolator_open" text="Ắc quy đã ngắt. Hãy nối lại bằng công tắc ngắt ắc quy khi đứng trước xe."/>

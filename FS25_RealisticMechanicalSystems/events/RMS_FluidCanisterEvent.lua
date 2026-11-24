@@ -1,19 +1,22 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Client request to take a fluid can in hand, or to set down the one carried
+---Event asking the server to take a fluid can in hand, or to set down the one carried
 RMS_FluidCanisterEvent = {}
 local RMS_FluidCanisterEvent_mt = Class(RMS_FluidCanisterEvent, Event)
 
 InitEventClass(RMS_FluidCanisterEvent, "RMS_FluidCanisterEvent")
 
 ---Create instance of Event class
+-- @return table self instance of class event
 function RMS_FluidCanisterEvent.emptyNew()
     return Event.new(RMS_FluidCanisterEvent_mt)
 end
 
 ---Create new instance of event
+-- @param table object can or drum to take, or the can carried to set down
 -- @param table? pose world position and heading the can is set down at, nil to take
 -- @param integer? index drum of a pallet whose nozzle is taken, the first by default
+-- @return table self instance of event
 function RMS_FluidCanisterEvent.new(object, pose, index)
     local self = RMS_FluidCanisterEvent.emptyNew()
     self.object = object
@@ -22,7 +25,9 @@ function RMS_FluidCanisterEvent.new(object, pose, index)
     return self
 end
 
----Writes event data to a stream.
+---Writes event data to a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event goes to
 function RMS_FluidCanisterEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.object)
     streamWriteUInt8(streamId, self.index)
@@ -33,7 +38,9 @@ function RMS_FluidCanisterEvent:writeStream(streamId, connection)
     end
 end
 
----Reads event data from a stream.
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_FluidCanisterEvent:readStream(streamId, connection)
     self.object = NetworkUtil.readNodeObject(streamId)
     self.index = streamReadUInt8(streamId)
@@ -47,8 +54,9 @@ function RMS_FluidCanisterEvent:readStream(streamId, connection)
 end
 
 ---Takes or sets down the can on the server for the requesting player
+-- @param Connection connection connection the event comes from
 function RMS_FluidCanisterEvent:run(connection)
-    if connection:getIsServer() or self.object == nil then
+    if self.object == nil then
         return
     end
 
@@ -65,6 +73,9 @@ function RMS_FluidCanisterEvent:run(connection)
 end
 
 ---Asks the server to take a can in hand or set it down
+-- @param table object can or drum to take, or the can carried to set down
+-- @param table? pose world position and heading the can is set down at, nil to take
+-- @param integer? index drum of a pallet whose nozzle is taken
 function RMS_FluidCanisterEvent.send(object, pose, index)
     g_client:getServerConnection():sendEvent(RMS_FluidCanisterEvent.new(object, pose, index))
 end

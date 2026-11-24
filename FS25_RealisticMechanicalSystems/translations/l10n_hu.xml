@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Jármű"/>
         <text name="rms_hud_mass_towed" text="Csatolt"/>
         <text name="rms_hud_mass_total" text="Össz."/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Leírás"/>
         <text name="rms_log_button_show_report" text="Jelentés megnyitása"/>
         <text name="rms_log_empty" text="A napló üres"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Hővédelem: a teljesítménykorlátozás megszűnt"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Alacsony AdBlue-szint: töltsön utána AdBlue-t."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Az AdBlue-tartály üres: a motor teljesítménye erősen csökkentve. Töltsön utána AdBlue-t."/>
         <text name="rms_adblue_restored_message" text="AdBlue feltöltve: a motor teljesítménye helyreállt."/>
         <text name="rms_breakdown_at_progress_message" text="folyamatban"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="A motor hideg! Amíg fel nem melegszik, kopik."/>
         <text name="rms_spec_overheat_engine_message" text="Figyelem! A motor túlmelegszik."/>
         <text name="rms_spec_overheat_transmission_message" text="Figyelem! A váltó túlmelegszik."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motoroptimalizálás"/>
         <text name="rms_spec_state_overdue" text="Lejárt"/>
         <text name="rms_spec_state_optimal" text="Optimális"/>
-        <text name="rms_spec_state_broken" text="Meghibásodott"/>
         <text name="rms_spec_state_bad" text="Rossz"/>
         <text name="rms_spec_state_excellent" text="Kiváló"/>
         <text name="rms_spec_state_good" text="Jó"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Váltó túlmelegedése"/>
         <text name="rms_report_wear_wet_weather" text="Nedves időjárás"/>
         <text name="rms_report_wear_cranking" text="Gyakori indítózás"/>
+        <text name="rms_report_wear_starter_heat" text="Önindító túlmelegedése"/>
         <text name="rms_report_wear_steering" text="Kormányzás álló helyzetben"/>
         <text name="rms_report_wear_park_brake" text="Rögzítőfék"/>
         <text name="rms_report_wear_low_fuel" text="Kevés üzemanyag"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Áttétel korlátozva"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Egyenetlen erőátvitel"/>
         <text name="rms_report_transmission_failed" text="Meghibásodott"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Zsírzópisztoly"/>
         <text name="rms_grease_gun_no_vehicle" text="Nincs jármű kenési hatótávban"/>
         <text name="rms_grease_gun_function" text="Megkeni a gépek zsírzószemeit. Zsírpatronnal tölthető fel."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Kissé alacsony"/>
         <text name="rms_inspection_status_slightly_dirty" text="Kissé eltömődött"/>
         <text name="rms_inspection_status_grease_due" text="Zsírzás esedékes"/>
-        <text name="rms_inspection_status_slight_moisture" text="Enyhe nedvesség"/>
-        <text name="rms_inspection_status_seepage" text="Szivárgásnyom"/>
-        <text name="rms_inspection_status_severe_leak" text="Jelentős szivárgás"/>
         <text name="rms_inspection_status_low" text="Alacsony"/>
         <text name="rms_inspection_status_very_low" text="Nagyon alacsony"/>
         <text name="rms_inspection_status_critically_low" text="Sürgős utántöltés"/>
         <text name="rms_inspection_status_critically_clogged" text="Teljesen eltömődött"/>
         <text name="rms_inspection_status_dirty" text="Eltömődött"/>
         <text name="rms_inspection_status_grease_late" text="Késésben"/>
-        <text name="rms_inspection_status_active_leak" text="Aktív szivárgás"/>
         <text name="rms_inspection_status_heavily_clogged" text="Erősen eltömődött"/>
         <text name="rms_inspection_status_not_required" text="Nem szükséges"/>
         <text name="rms_inspection_status_change_overdue" text="Csere késésben"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="A Realistic Mechanical Systems modban a gépeid úgy kopnak és hibásodnak meg, mint a valódiak. Három szabály elég ahhoz, hogy folytonos meghibásodások nélkül játssz:&#10;&#10;1. Végezd el időben a karbantartást. A játék menüjében a Gépészeti áttekintés mutatja minden gép következő karbantartását.&#10;2. Készítsd fel a gépeidet minden nap. Egy gép mellett tartsd lenyomva a(z) %s gombot az ellenőrzéshez: folyadékszintek, hűtő, légszűrő, zsírzás. A hűtőt és a légszűrőt tisztítsd meg a légfúvóval, a gépeket pedig zsírozd le a zsírzópisztollyal. Az eszközeidet és pótkocsijaidat is zsírozni kell: a Gépészeti áttekintés felsorolja az esedékeseket. A légfúvó, a zsírzópisztoly és a zsírpatronok a boltban, a Karbantartás kategóriában találhatók.&#10;3. Kíméld a gépeidet: a túlterhelés, a túlmelegedés, a hideg motorral végzett munka és a kerékcsúszás koptatja őket.&#10;&#10;Ha túl nehéz a játék, növeld a Jármű élettartama és a Karbantartások távolsága beállítást a Gépészeti áttekintés RMS BEÁLLÍTÁSOK lapján."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Kocsira szerelt Telwin töltő, 150 A 12 V-on, 80 A 24 V-on. Csatlakoztasd a jármű közelében az akkumulátor által fogadott árammal történő töltéshez vagy indítássegítéshez (START, 200 A 12 V-on). A töltés a játék idősebességét követi."/>
         <text name="rms_diagnostic_configuration" text="Diagnosztikai eszköz"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Hűtőfolyadék szintje"/>
         <text name="rms_diagnostic_spn_1639" text="Ventilátor fordulatszáma"/>
         <text name="rms_diagnostic_spn_168" text="Akkumulátorfeszültség"/>
-        <text name="rms_diagnostic_spn_677" text="Indítórelé"/>
+        <text name="rms_diagnostic_spn_676" text="Izzítórelé"/>
         <text name="rms_diagnostic_spn_167" text="Töltőfeszültség"/>
         <text name="rms_diagnostic_spn_157" text="Rail nyomás"/>
         <text name="rms_diagnostic_spn_1761" text="AdBlue-tartály szintje"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Indítássegítés (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Akkumulátor feltöltése"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Akku leválasztása"/>
         <text name="rms_battery_isolator_restore" text="Akku visszakapcsolása"/>
         <text name="rms_battery_isolator_open" text="Az akkumulátor le van választva. Kapcsold vissza az akkumulátor-főkapcsolóval, gyalog a jármű előtt."/>

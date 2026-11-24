@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Effektförlust"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Ur drift"/>
         <text name="rms_breakdowns_severity_minor" text="Mindre"/>
         <text name="rms_breakdowns_severity_moderate" text="Måttlig"/>
         <text name="rms_breakdowns_severity_major" text="Allvarlig"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Överhettningsskydd: minskad effekt"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Överhettningsskyddet griper in hårdare. Motorn levererar bara halva sin effekt."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Överhettningsskydd: halverad effekt"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Överhettningsskyddet är på sin högsta nivå. Bara en bråkdel av motoreffekten återstår."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Överhettningsskydd: kraftigt minskad effekt"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motorn har stängts av för att undvika skador. Låt den svalna innan du startar igen."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Överhettningsskydd: motorn avstängd"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lätt funktionsfel i oljepumpen. Oljetrycket är lägre, motormomentet sjunker något, motortemperaturen stiger, och mekaniska knackningar kan uppstå."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Måttligt funktionsfel i oljepumpen. Oljetrycket är otillräckligt, motormomentet sjunker tydligt, motortemperaturen stiger, och de mekaniska knackningarna hörs klart."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Allvarligt funktionsfel i oljepumpen. Oljetrycket är kritiskt, motormomentet faller kraftigt, överhettning är sannolik, knackningarna är våldsamma, och motorn kan stanna."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritiskt haveri i oljepumpen. Oljecirkulationen räcker inte för säker drift av motorn, och varken start eller fortsatt drift är möjlig."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motorn har skurit och kan inte längre gå runt."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motorn stannade"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lätt funktionsfel i ECU:n. Motoreffekten är något minskad."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Måttligt funktionsfel i ECU:n. Märkbar effektförlust och ökad bränsleförbrukning."/>

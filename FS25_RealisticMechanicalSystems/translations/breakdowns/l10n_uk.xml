@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Постійна"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Зниження потужності"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Зупинка техніки"/>
         <text name="rms_breakdowns_severity_minor" text="Незначна"/>
         <text name="rms_breakdowns_severity_moderate" text="Помірна"/>
         <text name="rms_breakdowns_severity_major" text="Серйозна"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Захист від перегріву: потужність знижена"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Захист від перегріву посилюється. Двигун видає лише половину потужності."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Захист від перегріву: потужність знижена вдвічі"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Захист від перегріву працює на максимумі. Від потужності двигуна залишилася лише незначна частина."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Захист від перегріву: потужність сильно знижена"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Двигун зупинено, щоб уникнути пошкоджень. Дайте йому охолонути перед повторним запуском."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Захист від перегріву: двигун вимкнено"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Легка несправність оливного насоса. Тиск оливи знижений, крутний момент двигуна трохи падає, температура двигуна зростає, а також може з’явитися механічний стукіт."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Помірна несправність оливного насоса. Тиск оливи недостатній, крутний момент двигуна помітно знижується, температура двигуна зростає, а механічний стукіт чітко чутно."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Сильна несправність оливного насоса. Тиск оливи критично низький, крутний момент двигуна різко падає, імовірний перегрів, механічний стукіт стає сильним, а двигун може глухнути."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Критична відмова оливного насоса. Циркуляції оливи недостатньо для безпечної роботи двигуна, тому будь-який запуск або подальша робота неможливі."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Двигун заклинив і більше не може обертатися."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Двигун заглох"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Легка несправність ЕБУ. Потужність двигуна трохи знижена."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Помірна несправність ЕБУ. Помітна втрата потужності та підвищена витрата палива."/>

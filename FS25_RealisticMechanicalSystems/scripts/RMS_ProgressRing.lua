@@ -25,18 +25,25 @@ function RMS_ProgressRing.deleteOverlays()
 end
 
 ---Draws the segments of a ring around a centre, the first share of them lit
+-- @param float centerX centre x (screen)
+-- @param float centerY centre y (screen)
+-- @param float width width of the ring box (screen)
+-- @param float height height of the ring box (screen)
+-- @param float ratio share lit, 0 to 1
+-- @param table arcColor rgba color of the lit segments
+-- @param table trackColor rgba color of the other segments
 function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColor, trackColor)
     local overlay = RMS_ProgressRing.segment
     local segmentWidth, segmentHeight = width * RMS_ProgressRing.SEGMENT_WIDTH, height * RMS_ProgressRing.SEGMENT_HEIGHT
     local radiusX, radiusY = width * RMS_ProgressRing.RADIUS, height * RMS_ProgressRing.RADIUS
     local count = RMS_ProgressRing.SEGMENTS
-    local lit = math.floor(math.clamp(ratio, 0, 1) * count + 1e-6)
+    local lit = math.floor(ratio * count + 1e-6)
 
     overlay:setDimension(segmentWidth, segmentHeight)
     for index = 0, count - 1 do
         local angle = (index + 0.5) * 2 * math.pi / count
         local color = index < lit and arcColor or trackColor
-        overlay:setColor(color[1], color[2], color[3], color[4] or 1)
+        overlay:setColor(color[1], color[2], color[3], color[4])
         overlay:setPosition(centerX + math.sin(angle) * radiusX - segmentWidth * 0.5, centerY + math.cos(angle) * radiusY - segmentHeight * 0.5)
         -- overlays turn counter-clockwise
         overlay:setRotation(-angle, segmentWidth * 0.5, segmentHeight * 0.5)
@@ -45,6 +52,10 @@ function RMS_ProgressRing.render(centerX, centerY, width, height, ratio, arcColo
 end
 
 ---Draws a ring as high as a GUI area, centred in it
+-- @param table area GUI element of the area
+-- @param float ratio share lit, 0 to 1
+-- @param table? arcColor rgba color of the lit segments
+-- @param table? trackColor rgba color of the other segments
 function RMS_ProgressRing.renderInArea(area, ratio, arcColor, trackColor)
     local height = area.absSize[2]
     RMS_ProgressRing.render(area.absPosition[1] + area.absSize[1] * 0.5, area.absPosition[2] + height * 0.5,

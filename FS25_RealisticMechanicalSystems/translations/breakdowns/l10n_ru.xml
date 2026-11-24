@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Постоянная"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Снижение мощности"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Остановка техники"/>
         <text name="rms_breakdowns_severity_minor" text="Незначительная"/>
         <text name="rms_breakdowns_severity_moderate" text="Умеренная"/>
         <text name="rms_breakdowns_severity_major" text="Серьёзная"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Защита от перегрева: мощность снижена"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Защита от перегрева усиливается. Двигатель выдаёт лишь половину мощности."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Защита от перегрева: мощность снижена вдвое"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Защита от перегрева работает на максимуме. Осталась лишь малая часть мощности двигателя."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Защита от перегрева: мощность сильно снижена"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Двигатель заглушен, чтобы избежать повреждений. Дайте ему остыть перед повторным запуском."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Защита от перегрева: двигатель заглушен"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Лёгкая неисправность масляного насоса. Давление масла снижено, крутящий момент двигателя немного уменьшен, температура двигателя повышена, возможен механический стук."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Умеренная неисправность масляного насоса. Давление масла недостаточно, крутящий момент заметно снижен, температура двигателя повышена, механический стук отчётливо слышен."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Сильная неисправность масляного насоса. Давление масла критически низкое, крутящий момент сильно снижен, вероятен перегрев, механический стук выражен, двигатель может глохнуть."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Критический отказ масляного насоса. Циркуляция масла недостаточна для безопасной работы двигателя, запуск или дальнейшая эксплуатация невозможны."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Двигатель заклинило, коленчатый вал не вращается."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Двигатель заглох"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Лёгкая неисправность ЭБУ. Мощность двигателя слегка снижена."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Умеренная неисправность ЭБУ. Заметная потеря мощности и повышенный расход топлива."/>

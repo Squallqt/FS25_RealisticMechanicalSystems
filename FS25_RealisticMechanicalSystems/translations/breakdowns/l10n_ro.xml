@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Pierdere de putere"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Scos din funcțiune"/>
         <text name="rms_breakdowns_severity_minor" text="Minor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
         <text name="rms_breakdowns_severity_major" text="Major"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protecție la supraîncălzire: putere redusă"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Protecția la supraîncălzire se intensifică. Motorul mai furnizează doar jumătate din putere."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protecție la supraîncălzire: putere redusă la jumătate"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Protecția la supraîncălzire este la nivel maxim. A mai rămas doar o fracțiune din puterea motorului."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protecție la supraîncălzire: putere mult redusă"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motorul a fost oprit pentru a preveni deteriorarea. Lasă-l să se răcească înainte de a-l reporni."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protecție la supraîncălzire: motor oprit"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Defecțiune ușoară a pompei de ulei. Presiunea uleiului este redusă, cuplul motor scade ușor, temperatura motorului crește și pot apărea bătăi mecanice."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Defecțiune moderată a pompei de ulei. Presiunea uleiului este insuficientă, cuplul motor scade vizibil, temperatura motorului crește, iar bătăile mecanice sunt clar audibile."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Defecțiune gravă a pompei de ulei. Presiunea uleiului este critică, cuplul motor scade puternic, supraîncălzirea este probabilă, bătăile mecanice sunt puternice și motorul se poate opri."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Defecțiune critică a pompei de ulei. Circulația uleiului este insuficientă pentru funcționarea motorului în siguranță, iar pornirea sau continuarea funcționării este imposibilă."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motorul s-a gripat și nu se mai poate roti."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor oprit"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Defecțiune ușoară a ECU. Puterea motorului este ușor redusă."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Defecțiune moderată a ECU. Pierdere vizibilă de putere și consum crescut de combustibil."/>

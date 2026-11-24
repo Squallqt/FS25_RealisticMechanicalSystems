@@ -9,15 +9,19 @@ RMS_AdBlue.STAGE = { NORMAL = 0, LOW = 1, VERY_LOW = 2, EMPTY = 3 }
 local STAGE = RMS_AdBlue.STAGE
 
 ---Returns the AdBlue tank of a machine RMS follows, nil without one
+-- @param table vehicle vehicle
+-- @return integer? fillUnitIndex fill unit of the tank
 function RMS_AdBlue.getTank(vehicle)
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil or spec.isExcludedVehicle or vehicle.spec_motorized == nil then
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    if spec == nil or spec.isExcludedVehicle then
         return nil
     end
     return vehicle:getConsumerFillUnitIndex(FillType.DEF)
 end
 
 ---Returns the share of the AdBlue tank left, nil without one
+-- @param table vehicle vehicle
+-- @return float? level level, 0 to 1
 function RMS_AdBlue.getLevel(vehicle)
     local tank = RMS_AdBlue.getTank(vehicle)
     local capacity = tank ~= nil and vehicle:getFillUnitCapacity(tank) or 0
@@ -28,6 +32,8 @@ function RMS_AdBlue.getLevel(vehicle)
 end
 
 ---Returns the stage of a tank level, nil without a tank
+-- @param float? level level, 0 to 1
+-- @return integer? stage RMS_AdBlue.STAGE
 function RMS_AdBlue.getStage(level)
     if level == nil then
         return nil
@@ -44,14 +50,17 @@ function RMS_AdBlue.getStage(level)
 end
 
 ---Tells whether a low tank derates the engine, from Stage IV on
+-- @param table vehicle vehicle
+-- @return boolean hasInducement true when it derates
 function RMS_AdBlue.getHasInducement(vehicle)
     local year = vehicle.spec_RealisticMechanicalSystems.year
-    local motor = vehicle:getMotor()
-    local power = motor ~= nil and motor.peakMotorPower or 0
+    local power = vehicle:getMotor().peakMotorPower
     return RMS_Exhaust.getIsStageIV(year, power) or RMS_Exhaust.getIsStageV(year, power)
 end
 
 ---Returns the inducement the tank calls for: nil, "LOW" or "SEVERE"
+-- @param table vehicle vehicle
+-- @return string? inducement "LOW" or "SEVERE", nil for none
 function RMS_AdBlue.getInducement(vehicle)
     local stage = RMS_AdBlue.getStage(RMS_AdBlue.getLevel(vehicle))
     if stage == nil or stage < STAGE.VERY_LOW or not RMS_AdBlue.getHasInducement(vehicle) then
@@ -61,13 +70,17 @@ function RMS_AdBlue.getInducement(vehicle)
 end
 
 ---Returns the AdBlue a litre of diesel takes, by the brand
+-- @param table vehicle vehicle
+-- @return float ratio litres of AdBlue per litre of diesel
 function RMS_AdBlue.getRatio(vehicle)
     local config = RMS_Config.EXHAUST.ADBLUE
-    local brand = g_brandManager:getBrandByIndex(vehicle:getBrand())
-    return brand ~= nil and config.BRAND_RATIOS[brand.name] or config.DEFAULT_RATIO
+    return config.BRAND_RATIOS[g_brandManager:getBrandByIndex(vehicle:getBrand()).name] or config.DEFAULT_RATIO
 end
 
 ---Returns the AdBlue and diesel consumers of a machine RMS follows
+-- @param table vehicle vehicle
+-- @return table? adBlue AdBlue consumer, nil when RMS leaves them to the game
+-- @return table? diesel diesel consumer
 function RMS_AdBlue.getConsumers(vehicle)
     if RMS_AdBlue.getTank(vehicle) == nil then
         return nil
@@ -75,13 +88,15 @@ function RMS_AdBlue.getConsumers(vehicle)
     local consumers = vehicle.spec_motorized.consumersByFillType
     local adBlue, diesel = consumers[FillType.DEF], consumers[FillType.DIESEL]
     -- the game's update burns its permanent consumers alone
-    if adBlue == nil or diesel == nil or not (adBlue.permanentConsumption and diesel.permanentConsumption) then
+    if diesel == nil or not (adBlue.permanentConsumption and diesel.permanentConsumption) then
         return nil
     end
     return adBlue, diesel
 end
 
----Bills a worker who buys his fuel the AdBlue the game burnt for him
+---Bills the AdBlue the game burnt for a helper who buys the fuel
+-- @param table vehicle vehicle
+-- @param table consumer AdBlue consumer
 -- @param float pending litres the consumer held before the update
 function RMS_AdBlue.chargeWorker(vehicle, consumer, pending)
     if not vehicle.isServer or consumer.fillLevelToChange >= pending or not vehicle:getIsAIActive()
@@ -96,9 +111,12 @@ function RMS_AdBlue.chargeWorker(vehicle, consumer, pending)
 end
 
 ---Runs a motor check without the AdBlue tank: empty, it derates
+-- @param table vehicle vehicle
+-- @param function func motor check
+-- @return any result what the check returns
 function RMS_AdBlue.callWithoutTank(vehicle, func)
     local tank = RMS_AdBlue.getTank(vehicle)
-    local propellants = vehicle.spec_motorized ~= nil and vehicle.spec_motorized.propellantFillUnitIndices or nil
+    local propellants = vehicle.spec_motorized.propellantFillUnitIndices
     local position = nil
     for index, fillUnitIndex in ipairs(tank ~= nil and propellants or {}) do
         if fillUnitIndex == tank then
@@ -131,6 +149,7 @@ local MESSAGES = {
 }
 
 ---Tells the driver what the tank calls for, then as it worsens
+-- @param table vehicle vehicle
 function RMS_AdBlue.updateMessages(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local stage = RMS_AdBlue.getStage(RMS_AdBlue.getLevel(vehicle))
@@ -148,11 +167,14 @@ function RMS_AdBlue.updateMessages(vehicle)
     end
     spec.adBlueShownStage = stage
     if key ~= nil then
-        RMS_Hud.showNotification(g_i18n:getText(key), g_i18n:getText("rms_adblue_title"), true)
+        RMS_Hud.showNotification(g_i18n:getText(key), g_i18n:getText("rms_adblue_title"))
     end
 end
 
 ---Returns the colour of the AdBlue lamp this frame, nil while unlit
+-- @param float? level level, 0 to 1
+-- @param float time time of the blink (ms)
+-- @return table? color rgba color
 function RMS_AdBlue.getLampColor(level, time)
     local stage = RMS_AdBlue.getStage(level)
     if stage == nil or stage == STAGE.NORMAL then
@@ -169,6 +191,9 @@ function RMS_AdBlue.getLampColor(level, time)
 end
 
 ---Adds the low tank code of the engine controller to a reading
+-- @param table target machine
+-- @param table codes fault entries of the reading
+-- @param table stored fault entries by code
 function RMS_AdBlue.addFaultCode(target, codes, stored)
     local stage = RMS_AdBlue.getStage(RMS_AdBlue.getLevel(target))
     if stage == nil or stage == STAGE.NORMAL then

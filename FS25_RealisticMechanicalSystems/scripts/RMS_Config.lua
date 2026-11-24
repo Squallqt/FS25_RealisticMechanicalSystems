@@ -2,7 +2,7 @@
 
 local LAMP_LIFE_FACTOR = 2
 
----RMS configuration.
+---Configuration of the mod: tuned values and the settings the savegame keeps
 RMS_Config = {
     CONFIG_VERSION = 1,
 
@@ -127,10 +127,8 @@ RMS_Config = {
             MAX_GRAIN_LOSS = 0.15,
             KINDS = {
                 HARVESTERS = "grain", RICEHARVESTERS = "grain", FORAGEHARVESTERS = "forage",
-                BEETHARVESTERS = "beet", BEETVEHICLES = "beet", POTATOHARVESTING = "potato", POTATOVEHICLES = "potato",
-                COTTONHARVESTERS = "cotton", COTTONVEHICLES = "cotton",
-                SUGARCANEHARVESTERS = "sugarcane", SUGARCANEVEHICLES = "sugarcane",
-                GRAPEHARVESTERS = "grape", GRAPEVEHICLES = "grape", OLIVEHARVESTERS = "grape", OLIVEVEHICLES = "grape",
+                BEETHARVESTERS = "beet", POTATOHARVESTING = "potato", COTTONHARVESTERS = "cotton",
+                SUGARCANEHARVESTERS = "sugarcane", GRAPEHARVESTERS = "grape", OLIVEHARVESTERS = "grape",
                 VEGETABLEHARVESTERS = "vegetable", GREENBEANHARVESTERS = "vegetable", PEAHARVESTERS = "vegetable",
                 SPINACHHARVESTERS = "vegetable"
             }
@@ -221,7 +219,6 @@ RMS_Config = {
             HIGH_PRESSURE_FACTOR_THRESHOLD = 0.8,
         },
 
-        -- limit fails the part, release rearms it: heat in deg C, angles in deg, cranking in s
         DIRECT_FAILURES = {
             ENGINE_HEAT = { limit = 115, release = 105 },
             TRANSMISSION_HEAT = { limit = 105, release = 95 },
@@ -229,7 +226,6 @@ RMS_Config = {
             PTO_SHAFT_ANGLE = { limit = 35, release = 25 },
             PTO_SHAFT_ANGLE_TURNING = { limit = 45, release = 25 },
             PTO_SHAFT_ANGLE_WIDE = { limit = 80, release = 25 },
-            STARTER_CRANKING = { limit = 30, release = 0, rest = 120 },
         },
 
         REPEAT_BREAKDOWN_TIME = 1.3 * 3600000,
@@ -472,7 +468,6 @@ RMS_Config = {
             DCDC_CONVERTER_FAILURE = {hours = 1.5, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             ONBOARD_CHARGER_FAILURE = {hours = 1.5, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             HV_INSULATION_LOSS = {hours = 4.3, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
-            ENGINE_JAM = {hours = 20, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             TURBOCHARGER_MALFUNCTION = {hours = 4.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             OIL_PUMP_MALFUNCTION = {hours = 2, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             PISTONS = { hours = 27, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK" },
@@ -914,7 +909,6 @@ RMS_Config = {
             IMP_FERTILIZER_TRAILED = { { points = 17 }, { points = 1, organ = "chassis" }, { points = 3, hours = 60 } },
             IMP_MANURE_SPREADER = { { points = 8 }, { points = 10, hours = 50 }, { points = 6, months = 1, organ = "tandem" },
                 { points = 4, months = 3, organ = "chassis", perWheel = 1 }, { points = 2, months = 6, organ = "chassis" } },
-            IMP_FERTILIZER_MOUNTED = {},
             IMP_SPRAYER_TRAILED = { { points = 2, hours = 50 }, { points = 7, hours = 100 } },
             IMP_SPRAYER_MOUNTED = { { points = 2, hours = 100 } },
             IMP_SLURRY_BAR = { { points = 7, hours = 50 } },
@@ -933,7 +927,6 @@ RMS_Config = {
             IMP_LOADER_TOOL = { { points = 6, perArm = 3 } },
             IMP_BLADE = { { points = 7 } },
             IMP_AUGER = { { points = 9 } },
-            IMP_DRIVEN = {},
         },
         CARDAN = { { points = 2, isDriveline = true }, { points = 2, hours = 40, isDriveline = true } },
         CARDAN_INCLUDED = { IMP_BEET_HARVESTER = true, IMP_CUTTER = true, IMP_CUTTER_DOUBLE_KNIFE = true, IMP_WINDROWER_HEADER = true },
@@ -948,13 +941,10 @@ RMS_Config = {
             FORKLIFTS = "FORKLIFT",
             HARVESTERS = "COMBINE",
             FORAGEHARVESTERS = "FORAGE_HARVESTER",
-            MOWERVEHICLES = "WINDROWER",
             COMBINEWINDROWER = "WINDROWER",
             SUGARCANEHARVESTERS = "SUGARCANE_HARVESTER",
-            SUGARCANEVEHICLES = "SUGARCANE_HARVESTER",
             FORESTRYFORWARDERS = "FORWARDER",
             GRAPEHARVESTERS = "GRAPE_HARVESTER",
-            GRAPEVEHICLES = "GRAPE_HARVESTER",
             OLIVEHARVESTERS = "GRAPE_HARVESTER",
             BEETHARVESTERS = "BEET_HARVESTER",
             BEETLOADING = "BEET_LOADER",
@@ -1065,8 +1055,6 @@ RMS_Config = {
     },
 
     FLUIDS = {
-        CAPACITY_OVERRIDES = {},
-
         ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.15 / 1.45,
         ENGINE_OIL_WEAR_CONSUMPTION = 13.5,
         ENGINE_OIL_LOAD_SHARE = 1.5,
@@ -1402,6 +1390,7 @@ RMS_Config = {
 
     PREHEAT = {
         LAMP_TEST_DURATION_MS = 1000,
+        FAULT_FLASH_DURATION_MS = 60000,
         START_ASSIST_TEMPERATURE_C = 5,
         ACTIVATION_TEMPERATURE_C = 25,
         -- {engine deg C, wait in ms}
@@ -1472,6 +1461,9 @@ RMS_Config = {
             REAR_WORK_LIGHTS_FAILURE = 2015, BEACON_LIGHTS_FAILURE = 2017, TURN_LIGHTS_FAILURE = 2016 },
         -- {deg C, A per kW of starter}
         STARTER_CURRENT_CURVE = { { -20, 165 }, { 0, 145 } },
+        STARTER_HEAT_LIMIT_S = { Car = 10, Tractor4 = 30, Tractor6 = 30, Heavy = 30 },
+        STARTER_REST_PER_CRANK = 4,
+        STARTER_PERMISSIBLE_RISE_K = 105,
         GLOW_PLUG_A = 12,
         -- {up to hp, glow plugs}
         GLOW_PLUGS_BY_POWER = { { 130, 4 }, { math.huge, 6 } },
@@ -1537,7 +1529,7 @@ RMS_Config = {
             FAN_CLUTCH_FAILURE = { ecu = "ENGINE", spn = 1639, warning = 1, critical = 1, fanDrive = "ELECTRONIC" },
             BATTERY_SULFATION = { ecu = "ENGINE", spn = 168, warning = 1, critical = 1 },
             POWER_CABLE_CONNECTION_FAILURE = { ecu = "ENGINE", spn = 168, warning = 2, critical = 2 },
-            STARTER_RELAY_FAILURE = { ecu = "ENGINE", spn = 677, warning = 5, critical = 5 },
+            PREHEAT_RELAY_FAILURE = { ecu = "ENGINE", spn = 676, warning = 5, critical = 5 },
             ALTERNATOR = { ecu = "DASHBOARD", spn = 167, warning = 18, critical = 1 },
             TRANSMISSION_PUMP_MALFUNCTION = { ecu = "TRANSMISSION", spn = 127, warning = 18, critical = 1 },
             HYDROSTATIC_UNIT_MALFUNCTION = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
@@ -1567,8 +1559,6 @@ RMS_Config = {
             TRACTION_BATTERY_CELL_FAULT = { ecu = "TRACTION_BATTERY", spn = 5923, warning = 18, critical = 1 },
             HV_CONTACTOR_FAILURE = { ecu = "TRACTION_BATTERY", spn = 8091, warning = 7, critical = 7 },
             ENGINE_THERMAL_PROTECTION = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0 },
-            OVERHEAT_PROTECTION = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0,
-                electric = { ecu = "INVERTER", spn = 9059 } },
             VOLTAGE_SAG = { ecu = "ENGINE", spn = 168, warning = 1, critical = 1 },
             POWERSHIFT_CLUTCH_FAILURE = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
             POWERSHIFT_REVERSER_FAILURE = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
@@ -1651,9 +1641,6 @@ RMS_Config = {
         FORD = 1.1,
         RENAULT = 1.1,
         INTERNATIONALHARVESTER = 1.1,
-        LANDROVER = 1.0,
-        NEXAT = 1.0,
-        ZETOR = 1.0,
         FIAT = 1.1,
         LANDINI = 1.1,
         SAME = 1.1,
@@ -1664,16 +1651,11 @@ RMS_Config = {
         PTZKIROWEC = 1.1,
         MTZ = 1.1,
         SKODA = 1.1,
-        GAZ = 1.0,
-        MAZ = 1.0,
         BUEHRER = 1.1,
         LTZ = 1.1,
         PORSCHEDIESEL = 1.1,
         OLIVER = 1.1,
         ALLISCHALMERS = 1.1,
-        LIZARD = 1.0,
-        GIANTS = 1.0,
-        NONE = 1.0,
     },
 
     SERVICE_REFERENCE_HOURS = 500,
@@ -1699,6 +1681,8 @@ RMS_Config = {
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 
 ---Prints a settings file message while debugging
+-- @param string text format of the message
+-- @param any ... values of the format
 local function logSettingsDebug(text, ...)
     if RMS_Config.DEBUG then
         print("[RMS_CFG] " .. string.format(text, ...))
@@ -1728,16 +1712,19 @@ RMS_Config.SHARED_SETTINGS = {
 }
 
 ---Returns the table of the configuration holding a setting
+-- @param table setting entry of RMS_Config.SHARED_SETTINGS
+-- @return table table table holding the setting
 function RMS_Config.getSettingTable(setting)
     return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
 end
 
 ---Writes the settings file
+-- @param string xmlFileName path of the file
 local function writeConfigFile(xmlFileName)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
-    if xmlFile == nil or xmlFile == 0 then
-        logSettingsDebug("SAVE ERROR - createXMLFile returned %s", tostring(xmlFile))
-        return false
+    if xmlFile == 0 then
+        logSettingsDebug("SAVE ERROR - createXMLFile failed")
+        return
     end
 
     local root = "realisticMechanicalSystems"
@@ -1756,13 +1743,12 @@ local function writeConfigFile(xmlFileName)
 
     saveXMLFile(xmlFile)
     delete(xmlFile)
-    return true
 end
 
----Writes the savegame settings file
+---Writes the savegame settings file, on the server
 function RMS_Config.saveToXMLFile()
     if not g_currentMission:getIsServer() then
-        return false
+        return
     end
 
     local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory
@@ -1770,17 +1756,11 @@ function RMS_Config.saveToXMLFile()
         savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex)
     end
 
-    local savegameWritten = writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile)
-
-    return savegameWritten
+    writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile)
 end
 
 ---Reads the savegame settings file
 function RMS_Config.loadFromXMLFile()
-    if RMS_Config._loaded then
-        return
-    end
-
     local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory
     if savegameFolderPath == nil then
         savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex)
@@ -1792,8 +1772,8 @@ function RMS_Config.loadFromXMLFile()
     end
 
     local xmlFile = loadXMLFile("realisticMechanicalSystems", xmlFileName)
-    if xmlFile == nil or xmlFile == 0 then
-        logSettingsDebug("LOAD ERROR - loadXMLFile returned %s", tostring(xmlFile))
+    if xmlFile == 0 then
+        logSettingsDebug("LOAD ERROR - loadXMLFile failed")
         return
     end
 
@@ -1818,12 +1798,11 @@ function RMS_Config.loadFromXMLFile()
 
     RMS_Config.applyLoadedVersion()
     delete(xmlFile)
-    RMS_Config._loaded = true
 end
 
 ---Compares a loaded settings file with the current configuration format
 function RMS_Config.applyLoadedVersion()
-    local loadedVersion = tonumber(RMS_Config.loadedConfigVersion) or 0
+    local loadedVersion = RMS_Config.loadedConfigVersion
     local currentVersion = RMS_Config.CONFIG_VERSION
     if loadedVersion > currentVersion then
         Logging.warning("RMS: settings file version %d is newer than supported %d", loadedVersion, currentVersion)

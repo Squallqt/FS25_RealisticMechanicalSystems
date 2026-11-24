@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="载具"/>
         <text name="rms_hud_mass_towed" text="牵引"/>
         <text name="rms_hud_mass_total" text="总计"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="说明"/>
         <text name="rms_log_button_show_report" text="显示报告"/>
         <text name="rms_log_empty" text="记录仍为空"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="过热保护：功率限制已解除"/>
         <text name="rms_adblue_title" text="车用尿素"/>
         <text name="rms_adblue_low_message" text="车用尿素液位低：请加注车用尿素。"/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="车用尿素罐已空：发动机功率大幅降低。请加注车用尿素。"/>
         <text name="rms_adblue_restored_message" text="车用尿素已加注：发动机功率已恢复。"/>
         <text name="rms_breakdown_at_progress_message" text="进行中"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="警告！发动机温度低，升温前会持续磨损。"/>
         <text name="rms_spec_overheat_engine_message" text="警告！发动机过热。"/>
         <text name="rms_spec_overheat_transmission_message" text="警告！变速箱过热。"/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="发动机刷写"/>
         <text name="rms_spec_state_overdue" text="逾期"/>
         <text name="rms_spec_state_optimal" text="最佳"/>
-        <text name="rms_spec_state_broken" text="故障"/>
         <text name="rms_spec_state_bad" text="差"/>
         <text name="rms_spec_state_excellent" text="极佳"/>
         <text name="rms_spec_state_good" text="良好"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="变速箱过热"/>
         <text name="rms_report_wear_wet_weather" text="湿度高的天气"/>
         <text name="rms_report_wear_cranking" text="频繁启动"/>
+        <text name="rms_report_wear_starter_heat" text="起动机过热"/>
         <text name="rms_report_wear_steering" text="原地转向"/>
         <text name="rms_report_wear_park_brake" text="停车制动"/>
         <text name="rms_report_wear_low_fuel" text="燃油余量低"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="传动比受限"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="动力传送不稳定"/>
         <text name="rms_report_transmission_failed" text="失效"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="黄油加注器"/>
         <text name="rms_grease_gun_no_vehicle" text="润滑范围内没有载具"/>
         <text name="rms_grease_gun_function" text="为机器的黄油嘴加注黄油。使用黄油筒装填。"/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="略低"/>
         <text name="rms_inspection_status_slightly_dirty" text="轻微堵塞"/>
         <text name="rms_inspection_status_grease_due" text="需要打黄油"/>
-        <text name="rms_inspection_status_slight_moisture" text="轻微湿润"/>
-        <text name="rms_inspection_status_seepage" text="慢速外流"/>
-        <text name="rms_inspection_status_severe_leak" text="严重外流"/>
         <text name="rms_inspection_status_low" text="低"/>
         <text name="rms_inspection_status_very_low" text="很低"/>
         <text name="rms_inspection_status_critically_low" text="急需补充"/>
         <text name="rms_inspection_status_critically_clogged" text="完全堵塞"/>
         <text name="rms_inspection_status_dirty" text="堵塞"/>
         <text name="rms_inspection_status_grease_late" text="已逾期"/>
-        <text name="rms_inspection_status_active_leak" text="正在外流"/>
         <text name="rms_inspection_status_heavily_clogged" text="严重堵塞"/>
         <text name="rms_inspection_status_not_required" text="不需要"/>
         <text name="rms_inspection_status_change_overdue" text="更换逾期"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="在Realistic Mechanical Systems中，机器会像真实机器一样磨损和故障。只需遵守三条规则，就能避免故障接连不断：&#10;&#10;1. 按时保养。游戏菜单中的机械仪表板会显示每台机器的下次保养。&#10;2. 每天做好机器准备。在机器附近长按%s，即可检查油液液位、散热器、空气滤清器和打黄油情况。请用压缩空气吹尘器清洁散热器和空气滤清器，并用黄油加注器为机器打黄油。农具和挂车也需要打黄油：机械仪表板会列出需要打黄油的设备。压缩空气吹尘器、黄油加注器和黄油筒可在商店的保养类别中购买。&#10;3. 爱护机器：过载、过热、发动机冷车作业和车轮打滑都会造成磨损。&#10;&#10;如果觉得游戏太难，请在机械仪表板的RMS设置选项卡中延长载具使用期限和保养间隔。"/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="推车式Telwin充电器，12 V时为150 A，24 V时为80 A。在载具附近连接，可按电池能接受的电流充电，或提供启动辅助（START，12 V时为200 A）。充电随游戏时间流速进行。"/>
         <text name="rms_diagnostic_configuration" text="检测设备"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="冷却液液位"/>
         <text name="rms_diagnostic_spn_1639" text="风扇转速"/>
         <text name="rms_diagnostic_spn_168" text="电池电压"/>
-        <text name="rms_diagnostic_spn_677" text="启动机继电器"/>
+        <text name="rms_diagnostic_spn_676" text="预热继电器"/>
         <text name="rms_diagnostic_spn_167" text="充电电压"/>
         <text name="rms_diagnostic_spn_157" text="共轨压力"/>
         <text name="rms_diagnostic_spn_1761" text="车用尿素罐液位"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="启动辅助 (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="为电池充电"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="断开电池"/>
         <text name="rms_battery_isolator_restore" text="接通电池"/>
         <text name="rms_battery_isolator_open" text="电池已断开。请步行到载具前，用电池总开关重新接通。"/>

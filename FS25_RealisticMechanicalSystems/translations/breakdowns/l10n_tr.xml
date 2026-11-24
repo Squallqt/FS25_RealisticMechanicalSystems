@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Kalıcı"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Güç Kaybı"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Hizmet Dışı"/>
         <text name="rms_breakdowns_severity_minor" text="Hafif"/>
         <text name="rms_breakdowns_severity_moderate" text="Orta"/>
         <text name="rms_breakdowns_severity_major" text="Ciddi"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Aşırı ısınma koruması: güç azaltıldı"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Aşırı ısınma koruması güçleniyor. Motor artık gücünün yalnızca yarısını veriyor."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Aşırı ısınma koruması: güç yarıya düşürüldü"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Aşırı ısınma koruması maksimum seviyede. Motor gücünün yalnızca küçük bir kısmı kalmıştır."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Aşırı ısınma koruması: güç ciddi ölçüde azaltıldı"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Hasarı önlemek için motor durduruldu. Yeniden çalıştırmadan önce soğumasını bekle."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Aşırı ısınma koruması: motor kapatıldı"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Yağ pompasında hafif arıza. Yağ basıncı düşer, motor torku hafifçe azalır, motor sıcaklığı yükselir ve mekanik vuruntu hissedilebilir."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Orta derecede yağ pompası arızası. Yağ basıncı yetersiz, motor torkunda belirgin bir düşüş var, motor sıcaklığı yükselmiş ve mekanik vuruntu sesi açıkça duyuluyor."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ciddi yağ pompası arızası. Yağ basıncı kritik derecede düşük, motor torku önemli ölçüde azalmış, motorun aşırı ısınması muhtemel, mekanik vuruntu şiddetli ve motorun durması söz konusu olabilir."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritik yağ pompası arızası. Yağ dolaşımı motorun güvenli çalışması için yetersiz; motoru çalıştırmak veya çalıştırmaya devam etmek mümkün değil."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motor sıkıştı ve artık dönemiyor."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor durdu"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU’da hafif arıza. Motor gücü biraz azaldı."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU’da orta derecede arıza. Belirgin güç kaybı ve artan yakıt tüketimi."/>

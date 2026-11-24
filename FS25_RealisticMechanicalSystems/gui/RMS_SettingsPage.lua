@@ -4,6 +4,8 @@
 RMS_SettingsPage = {}
 
 ---Lists the hours of ranges given as {first, last, step}
+-- @param table ranges ranges of hours
+-- @return table hours hours in order
 local function listHours(ranges)
     local hours = {}
     for _, range in ipairs(ranges) do
@@ -17,6 +19,8 @@ end
 local CLOCK_HOURS = listHours({ { 0, 23, 1 } })
 
 ---Tells whether a workshop type still keeps opening hours
+-- @param table values setting values by key
+-- @return boolean hasHours true while a workshop type keeps opening hours
 local function hasWorkshopHours(values)
     return not (values.dealerAlwaysAvailable and values.mobileAlwaysAvailable and values.ownAlwaysAvailable)
 end
@@ -49,6 +53,7 @@ local SETTINGS = {
 }
 
 ---Returns the current value of every setting by its key
+-- @return table values setting values by key
 local function readSettings()
     local values = { debugWindow = RMS_DebugWindow.getIsOpen() }
     for _, setting in ipairs(SETTINGS) do
@@ -60,12 +65,18 @@ local function readSettings()
 end
 
 ---Returns the setting value of a step of a row
+-- @param table setting setting of the row
+-- @param integer state step of the row
+-- @return float value setting value
 local function getStepValue(setting, state)
     local hours = setting.hours[state]
     return setting.intervalWear ~= nil and setting.intervalWear / hours or hours
 end
 
 ---Returns the step of a row nearest to a setting value
+-- @param table setting setting of the row
+-- @param float value setting value
+-- @return integer state step of the row
 local function getClosestState(setting, value)
     local closest, distance = 1, math.huge
     for state in ipairs(setting.hours) do
@@ -78,12 +89,14 @@ local function getClosestState(setting, value)
 end
 
 ---Tells whether the local player may change the shared settings
+-- @return boolean isAdmin true when the player may change them
 local function getIsAdmin()
     local mission = g_currentMission
-    return not mission.missionDynamicInfo.isMultiplayer or mission:getIsServer() or mission.isMasterUser
+    return mission:getIsServer() or mission.isMasterUser
 end
 
 ---Locks a row behind its padlock, or unlocks it
+-- @param table option option element of the row
 -- @param string? reason l10n key of the reason, nil to unlock
 local function setRowLock(option, reason)
     local row = option.parent
@@ -97,6 +110,7 @@ local function setRowLock(option, reason)
 end
 
 ---Locks the rows the player may not change, or that depend on another
+-- @param table page settings frame
 local function updateRowLocks(page)
     local isAdmin = getIsAdmin()
     local pending = RMS_SettingsPage.pending
@@ -112,6 +126,7 @@ local function updateRowLocks(page)
 end
 
 ---Writes the oil change hours of each era in the service wear tooltip
+-- @param table page settings frame
 local function updateServiceTooltip(page)
     local option = page.rmsServiceWear
     local hours = page.rmsSettings[option].intervalWear / RMS_SettingsPage.pending.baseServiceWear
@@ -125,6 +140,8 @@ local function updateServiceTooltip(page)
 end
 
 ---Keeps the opening hour before the closing one, moving the other
+-- @param table page settings frame
+-- @param string pickedKey key of the hour the player changed
 local function keepWorkshopHoursOrdered(page, pickedKey)
     local pending = RMS_SettingsPage.pending
     if pending.openHour < pending.closeHour then
@@ -144,6 +161,7 @@ local function keepWorkshopHoursOrdered(page, pickedKey)
 end
 
 ---Binds the rows of the layout to their settings, once with the frame
+-- @param table page settings frame
 function RMS_SettingsPage.initializeControls(page)
     page.rmsSettings = {}
     for _, setting in ipairs(SETTINGS) do
@@ -160,6 +178,7 @@ function RMS_SettingsPage.initializeControls(page)
 end
 
 ---Shows the settings tab, opening an editing session
+-- @param table page settings frame
 function RMS_SettingsPage.show(page)
     if RMS_SettingsPage.pending == nil then
         RMS_SettingsPage.saved = readSettings()
@@ -230,6 +249,8 @@ end
 
 
 ---Stores the value given to a row
+-- @param integer state state of the option
+-- @param table option option element of the row
 function RMS_InGameMenuFrame:onClickRmsOption(state, option)
     local setting = self.rmsSettings[option]
     local pending = RMS_SettingsPage.pending
@@ -252,6 +273,7 @@ function RMS_InGameMenuFrame:onClickLockedIcon()
 end
 
 ---Keeps the focused padlock in view
+-- @param table icon padlock focused
 function RMS_InGameMenuFrame:onFocusLockedIcon(icon)
     self.settingsLayout:scrollToMakeElementVisible(icon)
 end

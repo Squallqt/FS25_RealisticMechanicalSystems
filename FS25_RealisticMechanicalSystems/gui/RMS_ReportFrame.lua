@@ -27,6 +27,7 @@ local WEAR_CAUSE_TEXTS = {
     hcf = "rms_report_wear_engine_overheat",
     lf = "rms_report_wear_lugging",
     pof = "rms_report_wear_pull_overload",
+    htf = "rms_report_wear_pull_overload",
     wsf = "rms_report_wear_wheel_slip",
     dwf = "rms_report_wear_drivetrain_windup",
     ctf = "rms_report_wear_cold_oil",
@@ -41,6 +42,7 @@ local WEAR_CAUSE_TEXTS = {
     wef = "rms_report_wear_wet_weather",
     ltf = "rms_report_wear_lights",
     crf = "rms_report_wear_cranking",
+    shf = "rms_report_wear_starter_heat",
     slf = "rms_report_wear_steering",
     bmf = "rms_report_wear_braking",
     pbf = "rms_report_wear_park_brake",
@@ -65,7 +67,6 @@ local WEAR_CAUSE_TEXTS = {
     hdef = "rms_report_wear_header_starts",
     hdlf = "rms_report_wear_lubrication"
 }
-RMS_ReportFrame.WEAR_CAUSE_TEXTS = WEAR_CAUSE_TEXTS
 RMS_ReportFrame.SERVICE_NOTICE_HOURS = 100
 RMS_ReportFrame.POWER_MIN_PERCENT = 90
 RMS_ReportFrame.HYDRAULIC_FLOW_MIN_PERCENT = 85
@@ -78,15 +79,24 @@ RMS_ReportFrame.OVERHAUL_HOURS = 8000
 RMS_ReportFrame.SHEET_SCALE = { IDEAL = 99, HIGH = 90, MID = 70, LOW = 30 }
 local POOR_CONSUMABLES = "MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES"
 
+---Formats a number with one decimal and the decimal separator of the language
+-- @param float value value
+-- @return string text formatted value
 local function formatTenth(value)
     return (string.format("%.1f", value):gsub("%.", g_i18n.decimalSeparator))
 end
 
+---Formats a percentage with one decimal
+-- @param float percent percentage
+-- @return string text formatted percentage
 local function formatPercent(percent)
     return formatTenth(percent) .. " %"
 end
 
 ---Returns the value an effect had in the report, nil without it
+-- @param table activeEffects effects recorded in the report
+-- @param string effectId effect
+-- @return float? value value of the effect
 local function getRecorded(activeEffects, effectId)
     local effect = activeEffects[effectId]
     if type(effect) == "table" then
@@ -96,22 +106,28 @@ local function getRecorded(activeEffects, effectId)
 end
 
 ---Returns the share of its health an effect left, between 0 and 1
+-- @param table activeEffects effects recorded in the report
+-- @param string effectId effect
+-- @return float health share of health, 0 to 1
 local function getHealth(activeEffects, effectId)
     return math.clamp(1 + (getRecorded(activeEffects, effectId) or 0), 0, 1)
 end
 
 ---Returns the text naming a system of the vehicle
+-- @param table vehicle vehicle
+-- @param string systemKey key of the system
+-- @return string text name of the system
 local function getSystemName(vehicle, systemKey)
     return g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, RMS_Utils.getSystemNameByKey(RealisticMechanicalSystems.SYSTEMS, systemKey)))
 end
 
----Level once the shortest hourly clock has its notice hours left
+---Returns the service level at which the shortest hourly clock has its notice hours left
+-- @param table vehicle vehicle
+-- @return float level service level
 local function getServiceNoticeLevel(vehicle)
     local hours = math.huge
     for _, clock in ipairs(vehicle:getServiceClocks()) do
-        if clock.intervalFactor ~= nil then
-            hours = math.min(hours, clock.intervalFactor * RMS_Config.SERVICE_REFERENCE_HOURS)
-        end
+        hours = math.min(hours, clock.intervalFactor * RMS_Config.SERVICE_REFERENCE_HOURS)
     end
     local expired = RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
     local base = vehicle.spec_RealisticMechanicalSystems.baseServiceLevel
@@ -119,6 +135,8 @@ local function getServiceNoticeLevel(vehicle)
 end
 
 ---Joins part names in alphabetical order
+-- @param table names set of names
+-- @return string text names joined
 local function joinNames(names)
     local list = {}
     for name in pairs(names) do
@@ -129,6 +147,9 @@ local function joinNames(names)
 end
 
 ---Returns the text key and the share of the gearbox state in the report
+-- @param table activeEffects effects recorded in the report
+-- @return string textKey l10n key of the state
+-- @return float share share of the state
 local function readGearbox(activeEffects)
     local failed = "rms_report_transmission_failed"
     local value = getRecorded(activeEffects, "TRANSMISSION_SLIP_EFFECT")
@@ -163,8 +184,16 @@ local function readGearbox(activeEffects)
 end
 
 ---Writes the advice of a report, in the order the player acts on it
+-- @param table vehicle vehicle
+-- @param table conditionData condition data of the report
+-- @param table findings findings of the breakdowns
+-- @param boolean isComplete true for a complete report
+-- @return table advice lines of advice
 function RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, isComplete)
     local advice = {}
+    ---Adds a line of advice
+    -- @param string key l10n key of the line
+    -- @param any ... values of the format of the line
     local function advise(key, ...)
         local text = g_i18n:getText(key)
         if select("#", ...) > 0 then
@@ -239,6 +268,7 @@ function RMS_ReportFrame.getRecommendations(vehicle, conditionData, findings, is
 end
 
 ---Creates the frame
+-- @return table self instance of the frame
 function RMS_ReportFrame.new()
     return FrameElement.new(nil, RMS_ReportFrame_mt)
 end
@@ -260,6 +290,8 @@ function RMS_ReportFrame:initialize()
 end
 
 ---Writes the report of a log entry
+-- @param table vehicle vehicle
+-- @param table entry log entry
 function RMS_ReportFrame:setReport(vehicle, entry)
     self.vehicle = vehicle
     self.lastReport = entry
@@ -269,16 +301,31 @@ function RMS_ReportFrame:setReport(vehicle, entry)
 end
 
 ---Builds the technical sheet against the factory figures
+-- @param table vehicle vehicle
+-- @param table conditionData condition data of the report
+-- @return table rows rows of the sheet
 function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local effects, rating = conditionData.activeEffects, spec.electricalRating
     local isElectric = spec.isElectricVehicle
     local rows = {}
 
+    ---Adds a row of a figure against its factory value
+    -- @param string key l10n key of the row
+    -- @param float nominal factory value
+    -- @param float share share of the factory value left
+    -- @param string? unit unit, nil for a power
+    -- @param boolean isPublic true when every report reads it
+    -- @param float? minPercent percentage under which the figure is out of tolerance
     local function addFigure(key, nominal, share, unit, isPublic, minPercent)
         table.insert(rows, { key = key, kind = "pair", current = nominal * share, nominal = nominal, ratio = share, unit = unit,
             isPublic = isPublic, minPercent = minPercent })
     end
+    ---Adds a row of a share
+    -- @param string key l10n key of the row
+    -- @param float share share
+    -- @param boolean? isPublic true when every report reads it
+    -- @param float? minPercent percentage under which the share is out of tolerance
     local function addShare(key, share, isPublic, minPercent)
         table.insert(rows, { key = key, kind = "ratio", ratio = share, isPublic = isPublic, minPercent = minPercent })
     end
@@ -295,7 +342,7 @@ function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
         batteryChargeKey = "rms_report_vehicle_spec_battery_24v_charge"
         batteryCapacityKey = "rms_report_vehicle_spec_battery_24v_capacity"
     end
-    table.insert(rows, { key = batteryChargeKey, kind = "ratio", ratio = math.clamp(conditionData.batterySoc, 0, 1), isPublic = true,
+    table.insert(rows, { key = batteryChargeKey, kind = "ratio", ratio = conditionData.batterySoc, isPublic = true,
         isMeasured = true, scale = RMS_ReportFrame.BATTERY_CHARGE_SCALE })
 
     local gearboxText, gearboxShare = readGearbox(effects)
@@ -326,6 +373,8 @@ function RMS_ReportFrame.buildVehicleSpecs(vehicle, conditionData)
 end
 
 ---Lists the breakdowns found, worst first, with what the advice reads
+-- @return table findings findings the advice reads
+-- @return integer shownCount number of breakdowns shown
 function RMS_ReportFrame:collectBreakdowns()
     local breakdowns = self.lastReport.conditionData.activeBreakdowns
     local findings = { activeCount = 0, poorParts = {}, quickFixParts = {}, hasPoorConsumables = false }
@@ -336,7 +385,7 @@ function RMS_ReportFrame:collectBreakdowns()
         table.insert(ids, id)
     end
     table.sort(ids, function(a, b)
-        local stageA, stageB = breakdowns[a].stage or 0, breakdowns[b].stage or 0
+        local stageA, stageB = breakdowns[a].stage, breakdowns[b].stage
         if stageA == stageB then
             return a < b
         end
@@ -347,23 +396,20 @@ function RMS_ReportFrame:collectBreakdowns()
     for _, id in ipairs(ids) do
         local breakdown, definition = breakdowns[id], RMS_Breakdowns.BreakdownRegistry[id]
         findings.hasPoorConsumables = findings.hasPoorConsumables or id == POOR_CONSUMABLES
-        if breakdown.isVisible and definition ~= nil and definition.isSelectable then
+        if breakdown.isVisible and definition.isSelectable then
             shownCount = shownCount + 1
-            local stage = breakdown.stage or 1
-            if definition.stages[stage] ~= nil then
-                local partName = RMS_Utils.getBreakdownPartName(id, self.vehicle)
-                local isActive = breakdown.isActive ~= false
-                if isActive then
-                    findings.activeCount = findings.activeCount + 1
-                elseif breakdown.source == sources.POOR_PARTS then
-                    findings.poorParts[partName] = true
-                elseif breakdown.source == sources.QUICK_FIX then
-                    findings.quickFixParts[partName] = true
-                end
-                local severityText, descriptionText = RMS_Utils.getBreakdownTexts(self.vehicle, id, breakdown)
-                table.insert(self.breakdownsData, { title = partName, severity = severityText, text = descriptionText, stage = stage,
-                    isActive = isActive })
+            local partName = RMS_Utils.getBreakdownPartName(id, self.vehicle)
+            local isActive = breakdown.isActive
+            if isActive then
+                findings.activeCount = findings.activeCount + 1
+            elseif breakdown.source == sources.POOR_PARTS then
+                findings.poorParts[partName] = true
+            elseif breakdown.source == sources.QUICK_FIX then
+                findings.quickFixParts[partName] = true
             end
+            local severityText, descriptionText = RMS_Utils.getBreakdownTexts(self.vehicle, id, breakdown)
+            table.insert(self.breakdownsData, { title = partName, severity = severityText, text = descriptionText, stage = breakdown.stage,
+                isActive = isActive })
         end
     end
     return findings, shownCount
@@ -384,7 +430,7 @@ function RMS_ReportFrame:updateScreen()
         string.format("%s (%s)", g_i18n:getText(entry.type),
             RMS_Utils.formatServiceOption(vehicle, entry.type, entry.optionOne)),
         g_i18n:getText(entry.location),
-        string.format("%d %s", conditionData.age or 0, g_i18n:getText("rms_ws_age_unit")),
+        string.format("%d %s", conditionData.age, g_i18n:getText("rms_ws_age_unit")),
         RMS_Utils.formatHours(math.floor(conditionData.operatingHours * 10) / 10),
         "ODO " .. RMS_Utils.formatOdometerKilometers(conditionData.odometerKilometers)
     }, " · "), nil, nil, true)
@@ -447,12 +493,16 @@ function RMS_ReportFrame:updateScreen()
     RMS_Utils.fitValuePills(self)
 end
 
----The lists of detected breakdowns and of recommendations
+---Columns of rows the focus moves over: the breakdown list and the recommendation list
+-- @return table columns columns of rows of elements
 function RMS_ReportFrame:getFocusColumns()
     return { { { self.breakdownsTable } }, { { self.recommendationsTable } } }
 end
 
 ---Returns the row count of a note list
+-- @param table list breakdown list or recommendation list
+-- @param integer section section
+-- @return integer count number of rows
 function RMS_ReportFrame:getNumberOfItemsInSection(list, section)
     if list == self.recommendationsTable then
         return #self.recommendationsData
@@ -461,6 +511,10 @@ function RMS_ReportFrame:getNumberOfItemsInSection(list, section)
 end
 
 ---Fills one note cell of a list
+-- @param table list breakdown list or recommendation list
+-- @param integer section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_ReportFrame:populateCellForItemInSection(list, section, index, cell)
     if list == self.recommendationsTable then
         self:populateRecommendationsCell(index, cell)
@@ -476,12 +530,17 @@ function RMS_ReportFrame:renderAssessmentRows()
         local isAvailable = data[1] ~= "rms_report_breakdown_risk_title" or self.isCompleteInspection
         local valueText = isAvailable and data[2] or g_i18n:getText("rms_report_state_not_available")
         row:getDescendantByName("label"):setTextColor(unpack(isAvailable and RMS_Utils.COLOR.TEXT or RMS_Utils.COLOR.TEXT_DIM))
-        row:getDescendantByName("value"):setTextColor(unpack(isAvailable and (data[3] or RMS_Utils.COLOR.TEXT) or RMS_Utils.COLOR.TEXT_DIM))
+        row:getDescendantByName("value"):setTextColor(unpack(isAvailable and data[3] or RMS_Utils.COLOR.TEXT_DIM))
         RMS_Utils.writeRow(row, g_i18n:getText(data[1]), valueText)
     end
 end
 
 ---Returns the colour of an extra wear in percent
+-- @param float percent extra wear (%)
+-- @return float r red
+-- @return float g green
+-- @return float b blue
+-- @return float a alpha
 local function getWearColor(percent)
     return RMS_Utils.getValueColorInverted(percent, WEAR_NORMAL_PERCENT, WEAR_NORMAL_PERCENT, WEAR_HIGH_PERCENT, 100, false)
 end
@@ -518,7 +577,7 @@ function RMS_ReportFrame:renderWear()
     if percent < WEAR_NORMAL_PERCENT then
         self.wearValue:setText(g_i18n:getText("rms_report_wear_normal"))
     else
-        -- Round before the native integer formatter truncates.
+        -- Round before the native integer formatter truncates
         self.wearValue:setText(string.format(g_i18n:getText("rms_report_wear_percent"), g_i18n:formatNumber(MathUtil.round(percent), 0)))
     end
     self.wearValue:setTextColor(getWearColor(percent))
@@ -631,6 +690,7 @@ function RMS_ReportFrame:renderSpecRows()
 end
 
 ---Adds the worn parts of a complete report under the breakdowns
+-- @return integer count number of worn parts added
 function RMS_ReportFrame:addWornPartRows()
     local color = { RMS_Utils.getValueColorInverted(3, 1, 1, 2, 3, false) }
     local entries = RMS_Utils.getWornPartEntries(self.vehicle, self.lastReport.conditionData, RMS_Utils.WORN_PARTS_SHOWN)
@@ -641,31 +701,35 @@ function RMS_ReportFrame:addWornPartRows()
 end
 
 ---Fills one detected breakdown or worn part
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_ReportFrame:populateBreakdownsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
-    local data = self.breakdownsData[index] or {}
+    local data = self.breakdownsData[index]
     local stageColor = data.color or (data.isActive == false and RMS_Utils.COLOR.TEXT_DIM or RMS_Utils.COLOR.STAGE[data.stage or 1])
     local severityElement = cell:getAttribute("reportBreakdownsSeverity")
-    local hasSeverity = (data.severity or "") ~= ""
-    local description = data.text or ""
+    local hasSeverity = data.severity ~= ""
+    local description = data.text
     local isEmptyState = not hasSeverity and description == ""
 
     local titleElement = cell:getAttribute("reportBreakdownsTitle")
     local emptyTitleElement = cell:getAttribute("reportBreakdownsEmptyTitle")
     local textElement = cell:getAttribute("reportBreakdownsText")
 
-    cell:getAttribute("reportBreakdownsIcon"):setImageColor(nil, unpack(stageColor or RMS_Utils.COLOR.TEXT))
+    cell:getAttribute("reportBreakdownsIcon"):setImageColor(nil, unpack(stageColor))
     titleElement:setVisible(not isEmptyState)
-    titleElement:setText(data.title or "")
+    titleElement:setText(data.title)
     emptyTitleElement:setVisible(isEmptyState)
-    emptyTitleElement:setText(data.title or "")
+    emptyTitleElement:setText(data.title)
     severityElement:setVisible(hasSeverity)
-    severityElement:setText(data.severity or "")
-    severityElement:setTextColor(unpack(stageColor or RMS_Utils.COLOR.TEXT))
+    severityElement:setText(data.severity)
+    severityElement:setTextColor(unpack(stageColor))
     textElement:setText(description)
 end
 
 ---Fills one recommendation with its prebuilt line
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_ReportFrame:populateRecommendationsCell(index, cell)
     RMS_Utils.applyScrollSpeed(cell)
     cell:getAttribute("reportRecRow"):setText(self.recommendationsData[index])

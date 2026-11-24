@@ -22,6 +22,12 @@ function RMS_Chart.deleteOverlays()
 end
 
 ---Draws a straight stroke between two screen points
+-- @param float x1 start x (screen)
+-- @param float y1 start y (screen)
+-- @param float x2 end x (screen)
+-- @param float y2 end y (screen)
+-- @param float thickness thickness in screen pixels
+-- @param table color rgba color
 function RMS_Chart.drawLine(x1, y1, x2, y2, thickness, color)
     local overlay = RMS_Chart.line
     local dx, dy = (x2 - x1) * g_screenWidth, (y2 - y1) * g_screenHeight
@@ -35,6 +41,10 @@ function RMS_Chart.drawLine(x1, y1, x2, y2, thickness, color)
 end
 
 ---Draws a curve through screen points, solid or in dashes, bends rounded
+-- @param table xs x of each point (screen)
+-- @param table ys y of each point (screen)
+-- @param float thickness thickness in screen pixels
+-- @param table color rgba color
 -- @param float? dash dash length in screen pixels, solid when nil
 function RMS_Chart.drawCurve(xs, ys, thickness, color, dash)
     local travelled, wasDrawn = 0, false
@@ -54,6 +64,10 @@ function RMS_Chart.drawCurve(xs, ys, thickness, color, dash)
 end
 
 ---Draws a disc centred on a screen point
+-- @param float x centre x (screen)
+-- @param float y centre y (screen)
+-- @param float diameter diameter in screen pixels
+-- @param table color rgba color
 function RMS_Chart.drawDisc(x, y, diameter, color)
     local overlay = RMS_Chart.disc
     local width, height = diameter / g_screenWidth, diameter / g_screenHeight

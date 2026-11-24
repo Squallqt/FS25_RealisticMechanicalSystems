@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="恒久"/>
         <text name="rms_breakdowns_severity_reduce_power" text="出力低下"/>
-        <text name="rms_breakdowns_severity_shutdown" text="運転不能"/>
         <text name="rms_breakdowns_severity_minor" text="軽度"/>
         <text name="rms_breakdowns_severity_moderate" text="中度"/>
         <text name="rms_breakdowns_severity_major" text="重度"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="過熱保護：出力低下"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="過熱保護が強化されています。エンジン出力は半分に制限されています。"/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="過熱保護：出力半減"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="過熱保護が最大まで作動しています。エンジン出力はごく一部しか残っていません。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="過熱保護：出力大幅低下"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="損傷を防ぐためエンジンが停止しました。冷えるまで待ってから再始動してください。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="過熱保護：エンジン停止"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="オイルポンプに軽度の不具合が発生しています。油圧が低下し、エンジントルクがわずかに減少して、エンジン温度が上昇し、機械的なノッキングが発生することがあります。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="オイルポンプに中度の不具合が発生しています。油圧が不足し、エンジントルクが明らかに低下して、エンジン温度が上昇し、機械的なノッキングがはっきり聞こえます。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="オイルポンプに重度の不具合が発生しています。油圧がきけんな水準まで低下し、エンジントルクが大幅に減少して、過熱や激しいノッキング、エンジン停止が発生するおそれがあります。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="オイルポンプに重大な不具合が発生しています。安全なエンジン運転に必要なオイル循環を確保できず、始動も運転継続もできません。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="エンジンが焼き付き、回転できません。"/>
         <text name="rms_breakdowns_engine_stalled_message" text="エンスト"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECUに軽度の不具合が発生しています。エンジン出力がわずかに低下します。"/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECUに中度の不具合が発生しています。明らかな出力低下と燃料消費量の増加が生じます。"/>

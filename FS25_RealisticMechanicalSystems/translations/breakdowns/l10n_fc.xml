@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Perte de puissance"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Mise hors service"/>
         <text name="rms_breakdowns_severity_minor" text="Mineur"/>
         <text name="rms_breakdowns_severity_moderate" text="Modéré"/>
         <text name="rms_breakdowns_severity_major" text="Majeur"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protection anti-surchauffe : puissance réduite"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protection anti-surchauffe se renforce. Le moteur ne délivre plus que la moitié de sa puissance."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protection anti-surchauffe : puissance réduite de moitié"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protection anti-surchauffe est à son maximum. Il ne reste qu'une fraction de la puissance moteur."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protection anti-surchauffe : puissance fortement réduite"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Le moteur a été coupé pour éviter des dommages. Laissez-le refroidir avant de redémarrer."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protection anti-surchauffe : moteur coupé"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Dysfonctionnement léger de la pompe à huile. La pression d'huile est réduite, le couple moteur baisse légèrement, la température moteur augmente et des cognements mécaniques peuvent apparaître."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Dysfonctionnement modéré de la pompe à huile. La pression d'huile est insuffisante, le couple moteur diminue nettement, la température moteur augmente et les cognements mécaniques sont clairement audibles."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Dysfonctionnement sévère de la pompe à huile. La pression d'huile est critique, le couple moteur chute fortement, une surchauffe est probable, les cognements mécaniques sont sévères et des calages peuvent se produire."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Défaillance critique de la pompe à huile. La circulation d'huile est insuffisante pour un fonctionnement sûr du moteur et tout démarrage ou fonctionnement supplémentaire est impossible."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Le moteur s'est bloqué et ne peut plus tourner."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Moteur calé"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Dysfonctionnement léger de l'ECU. Puissance moteur légèrement réduite."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Dysfonctionnement modéré de l'ECU. Perte de puissance notable et augmentation de la consommation de carburant."/>

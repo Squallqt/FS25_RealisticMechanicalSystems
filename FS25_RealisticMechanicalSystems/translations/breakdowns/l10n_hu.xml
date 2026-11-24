@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Állandó"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Teljesítményvesztés"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Üzemképtelen"/>
         <text name="rms_breakdowns_severity_minor" text="Kisebb"/>
         <text name="rms_breakdowns_severity_moderate" text="Közepes"/>
         <text name="rms_breakdowns_severity_major" text="Súlyos"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Túlmelegedés elleni védelem: teljesítmény csökkentve"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="A túlmelegedés elleni védelem erősödik. A motor már csak a teljesítménye felét adja le."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Túlmelegedés elleni védelem: teljesítmény felére csökkentve"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="A túlmelegedés elleni védelem a maximumon van. Csak a motorteljesítmény töredéke marad."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Túlmelegedés elleni védelem: teljesítmény erősen csökkentve"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="A motor leállt a károsodás elkerülése érdekében. Hagyd lehűlni újraindítás előtt."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Túlmelegedés elleni védelem: motor leállítva"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Enyhe meghibásodás az olajszivattyúban. Az olajnyomás csökkent, a motor nyomatéka enyhén visszaesett, a motor hőmérséklete magasabb, és mechanikus kopogás is hallható lehet."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Közepes meghibásodás az olajszivattyúban. Az olajnyomás elégtelen, a motor nyomatéka érezhetően csökkent, a motor hőmérséklete magasabb, és a mechanikus kopogás jól hallható."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Súlyos meghibásodás az olajszivattyúban. Az olajnyomás kritikusan alacsony, a motor nyomatéka erősen csökkent, túlmelegedés valószínű, a mechanikus kopogás erős, és motorleállás is előfordulhat."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritikus hiba az olajszivattyúban. Az olajkeringés nem elegendő a biztonságos motorüzemhez, a motor indítása vagy további működtetése nem lehetséges."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="A motor megszorult, és már nem tud forogni."/>
         <text name="rms_breakdowns_engine_stalled_message" text="A motor lefulladt"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Enyhe meghibásodás az ECU-ban. A motorteljesítmény enyhén csökkent."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Közepes meghibásodás az ECU-ban. Érezhető teljesítményvesztés és megnövekedett üzemanyag-fogyasztás."/>

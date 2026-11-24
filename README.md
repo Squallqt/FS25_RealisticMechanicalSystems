@@ -46,7 +46,7 @@ Normal wear depends on system activity. Hydraulics, PTO and harvesting parts wea
 | **Transmission** | Drive torque beyond the engine's rating, the wear growing with its fourth power; low RPM above `80%` load; wheel slip above `12%` under `20 km/h` above half load, out of turns; driveline windup; oil colder than `10C`; oil hotter than `93C`, its life halved every `10C` |
 | **Hydraulics** | Pump running whenever the engine runs; a load on its way up, raised by the linkage, a loader or forks, in proportion to its weight: the implement, the bucket and what it holds, a bale or a pallet; a load held raised costs nothing more; an implement bouncing on the linkage over rough ground, in proportion to its weight and in full from a third of the machine's own; hydraulic movements; cold oil below `30C`; hot oil above `90C`; fluid level under `50%` |
 | **Cooling** | Thermostat past `95%` open while the engine is more than `3C` over its target; engine above `100C`, its life halved every `10C`; cold shock below `50C` past three quarters of the engine's top revs |
-| **Electrical** | Lights on; rain, snow, or hail on an outdoor vehicle; starter cranking; engine above `95C`; shaking harder than a field crossed at `20 km/h`, a quarter as hard as on the chassis |
+| **Electrical** | Lights on; rain, snow, or hail on an outdoor vehicle; starter cranking; a starter heated past what its winding takes, its life halved every `10C`; engine above `95C`; shaking harder than a field crossed at `20 km/h`, a quarter as hard as on the chassis |
 | **Chassis** | Poor lubrication on machines that require greasing; shaking harder than a field crossed at `20 km/h`, rising with the cube of its strength up to that of `50 km/h`, the same on a field as on a track; a collision that stops the machine dead or takes `10 km/h` or more off it at once, faster than its tyres could ever slow it, which costs `1%` of Condition per `10 km/h` lost, up to `5%`; turning the steering under `4 km/h`, counted by how far the wheels are turned and scaled by the grip of the ground and the load the steered axle really carries, wheels held turned costing nothing; braking above `2 km/h` while towing |
 | **Fuel** | Fuel below `20%`, aggravated by load; fuel colder than `20C` above `50%` load; idling past `60` seconds; fuel consumption above `80%` of the configured maximum |
 | **PTO** | Active drive; PTO load above `60%`, reaching its full factor at `90%`, then overload up to `120%`; the shaft of a towed implement bent in a turn, each joint wearing with its angle and the torque it carries; a towed implement turns on the wide-angle joint at the tractor, a straight shaft wears nothing more; a mounted implement works with its shaft aligned and turns unloaded once raised, so raising it with the PTO turning wears and breaks nothing; a front shaft bent too far damages the front PTO clutch, never the rear output shaft; every engagement wears the clutch, and engaging above idle shocks the driveline, harder with a bigger implement; sprayers and spreaders are spared engagement wear |
@@ -96,7 +96,7 @@ Leaving a diesel idling also leaves its mark. Past a long idle under `30%` load,
 | ECU Malfunction | Non-electric, known `2000+` year or AdBlue | Engine cannot be controlled and will not start |
 | Corroded Wiring | `2000+` with lights | Lights dead, engine start impossible |
 | Battery Sulfation | All | Cranking too weak to start reliably |
-| Glow Plug Failure | Diesel | No start when preheating is required |
+| Glow Plug Failure | Diesel | No start below `5 C` |
 | Alternator Regulator Failure | All non-electric | No charging, battery reserve only |
 | Turbocharger Wear | Engines from `56 kW` (`75 hp`) | Half the engine torque lost; stalling can occur |
 | Oil Pump Malfunction | All non-electric | Oil circulation lost, running and starting unsafe |
@@ -258,7 +258,8 @@ Every machine has the battery, the alternator and the starter of its size and it
 - **Lights left on with the engine stopped** flatten the battery in three to six hours of game time, sooner on a machine loaded with work lamps. Beacons and turn signals draw on it too, halogen ones far more than LEDs.
 - **The cold keeps part of the charge out of reach.** A battery needs about 12 % to start at `10 C`, 25 % at `0 C`, 40 % at `-10 C` and more than half at `-18 C`. The charge comes back as the weather warms.
 - **The starter no longer rolls dice.** The same situation always takes the same time. It turns slower, with a lower sound, when the voltage drops: cold, a battery running empty or aged, corroded wiring. A cold engine drags it too, its oil thick: on a full battery it turns about `250 rpm` on a mild engine and `150 rpm` at `-19 C`. A diesel needs about `100 rpm` to fire; slower, the starter turns without the engine catching. Insisting drains the battery; when it can no longer turn the engine, the machine says **Battery too weak**.
-- **One press starts every engine.** The starter turns on its own until the engine catches; an engine colder than `-10 C` or a fault that makes starting hard keeps it turning longer. A car starter turns `10 s` at most and a tractor or heavy machine starter `30 s`, as their owner's manuals allow. If the engine has not caught, press again: the cranking already done counts. A press while the starter turns stops it and switches the ignition off. With the game's automatic start, the game waits the rest the manuals ask before it tries again, `20 s` for a car and `2 min` for the others.
+- **One press starts every engine.** The starter turns on its own until the engine catches or you press again; an engine colder than `-10 C` or a fault that makes starting hard keeps it turning longer. If the engine has not caught, press again: the cranking already done counts. A press while the starter turns stops it and switches the ignition off. A dead starter only clicks: the start fails as soon as it should turn. With the game's automatic start, the game starts the engine for you; after a failed start, it waits for your press.
+- **A starter cranked too long overheats.** It heats as it turns, faster in the cold, and cools at rest. On a mild day, `30 s` of cranking from cold bring it to the most its winding takes, and `2 min` of rest cool it down again (`10 s` and `40 s` for a car). Past that, its wear doubles every `10 C`: an overheated starter fails sooner, weaker at each stage until it no longer turns. Cranking again before it has cooled heats it further.
 - **Each kind of machine has its starter.** On a hard start a car, a tractor up to 150 hp, a larger tractor and a heavy machine such as a truck or a harvester each crank with their own starter, slower as the battery and the cold slow it. Once the engine catches, the machine starts on its own engine sound.
 - **A failed alternator** leaves the machine running on its battery: two to three hours at night with every light on, four and a half to six and a half by day, while the voltmeter reads the battery instead of `14 V`.
 - **Workers switch their lights off** when they stop their engine to wait, and light them again as they leave. Your own lights stay as you set them.
@@ -303,7 +304,7 @@ On foot near a trolley carrying the tool, look at the laptop: the action becomes
 
 The reading is free and goes to the maintenance log of the machine. With the tool plugged into the machine, the mobile and personal workshops run Standard and Complete inspections on machines with a controller, read the fault codes during a maintenance and repair the electronics; without it they refuse that work and say to connect it. A machine without a controller has nothing for the tool to read: both workshops run every inspection on it and repair its wiring without the tool, and their inspection table says the wiring is checked with a multimeter. A mobile workshop still refuses heavy dismantling, high voltage and overhauls.
 
-Diesel preheating starts automatically below `25 C`. It remains short in mild weather and lengthens progressively as the engine gets colder. At `5 C` and above, failed glow plugs can make the start rough but do not block it solely because of preheating; below that point, their condition becomes start-critical.
+Diesel preheating starts automatically below `25 C`. It remains short in mild weather and lengthens progressively as the engine gets colder. At `5 C` and above, failing glow plugs do not affect the start; below that, they lengthen it, and once they have failed completely the engine no longer starts. They light no lamp: a slow cold start, white smoke and an uneven cold idle give them away. A failed preheat relay flashes the preheat lamp for a minute after the ignition is switched on.
 
 ## Electric Vehicles
 
@@ -374,7 +375,7 @@ Click a view to show it; a view longer than the screen, or the machine sheet bes
 
 ## Console Commands
 
-For testing and debugging. Unless noted, a command acts on the vehicle you sit in, which RMS must track. On a server the commands run on the server: only an admin can use them, and the answer comes back to that admin's console. `rms_exhaustOverride` only changes what your own screen shows.
+For testing and debugging. Unless noted, a command acts on the vehicle you sit in, which RMS must track. On a server the commands run on the server: only an admin can use them, and the answer comes back to that admin's console.
 
 | Command | Description |
 | --- | --- |
@@ -383,63 +384,9 @@ For testing and debugging. Unless noted, a command acts on the vehicle you sit i
 | `rms_removeBreakdown [id]` | Removes one breakdown, or all of them without an ID; removing a filter breakdown fits a new filter |
 | `rms_advanceBreakdown [id] [stage\|reverse]` | Advances one breakdown, selects an existing stage or steps back; without an ID, advances all where possible |
 | `rms_setCondition <0.0-1.0>` | Sets Condition on every enabled system, every part worn alike |
-| `rms_setSystemCondition <system> <0.0-1.0>` | Sets Condition on one system, its parts worn alike |
 | `rms_setPartWear <id> <wear>` | Sets the wear of one part of the vehicle, named by its breakdown ID: `1.0` is a whole machine life, more is allowed. Prints the risk of the part against that of a new one; the next draw starts from the wear set. An unknown ID lists the parts of the vehicle |
 | `rms_setService [0.0-1.0] [engine\|transmission\|hydraulic\|coolant]` | Sets how much of its hours a service clock has left: `1.0` just serviced, `0` used up. Sets the four clocks without a clock name; defaults to `1.0`. The dates of the last services do not change |
-| `rms_setPaintWear <0.0-1.0>` | Sets the paint wear a Repainting order repairs |
 | `rms_setGreasing <0.0-1.0>` | Sets how much of each greasing interval is left on the machine and the implements attached to it: `1.0` just greased, `0` every grease point due at once |
-| `rms_setDirtAmount <0.0-1.0>` | Sets the dirt level |
-| `rms_setFuelLevel <value>` | Sets fuel or electric traction charge: values from `0` to `1` are fractions, values above `1` to `100` are percentages |
-| `rms_reinitializeVehicle` | Seeds the vehicle again as a used machine of its hours, as when RMS first met it: each part worn by those hours and the care of its previous owner (`careful`, `regular` or `neglected`, by default the one its repair need tells), the parts that failed replaced, service clocks where the owner left them, and a neglectful owner's breakdowns since his last service; unavailable during a workshop procedure |
-| `rms_reinitializeFluidCapacities` | Recomputes physical fluid capacities for the current vehicle, keeping its litres |
-| `rms_resetFactorStats` | Restarts the wear statistics: the wear shares of the debug window and the wear block of inspection reports read them. Also restarts the collision, PTO engagement and header start counts |
-| `rms_getServiceState` | Prints workshop and service state: procedure, timers, options, service clocks and dates, queues |
-| `rms_showServiceLog [index]` | Prints the service log, or one entry in detail using its integer index |
-| `rms_getDebugVehicleInfo [1]` | Prints how RMS reads the vehicle: brand, type, category, electrical circuit and transmission; lists its specializations when given `1` |
-| `rms_exhaustOverride <opacity\|-> [flow\|-] [vapour\|-] [gas °C\|-]` | Overrides exhaust rendering locally for all machines: smoke opacity, gas flow, vapour and gas temperature; `-` keeps each engine's value and `off` clears the override |
-| `rms_setSpecVar <path> <value>` | Sets one value of the vehicle's RMS state, see the paths below; displayed oil temperatures, the Condition of the vehicle and of each system, circuit voltage and the grease level, which follows the grease points due (`rms_setGreasing`), are calculated and cannot be set |
-| `rms_printSpecVar <path>` | Prints a value of the vehicle's RMS state, or a whole table when the path names one |
-
-### Useful paths for `rms_setSpecVar`
-
-| Path | Value |
-| --- | --- |
-| `batterySoc` | Battery charge, from `0` to `1` |
-| `engineOilLevel`, `coolantLevel`, `transmissionOilLevel`, `hydraulicFluidLevel` | Fluid level as a share of the circuit's capacity, from `0` to `1`; with a common sump the hydraulic oil follows `transmissionOilLevel` |
-| `radiatorClogging`, `airFilterClogging`, `fuelFilterClogging`, `hydraulicFilterClogging` | Clogging, from `0` to `1` |
-| `serviceCalendar.engine`, `.transmission`, `.hydraulic`, `.coolant` | Age of the machine, in months, at the last service of that clock; a low value on an old machine makes the service due by date |
-| `activeBreakdowns.<ID>.isVisible` | `true` identifies a breakdown as an inspection would, `false` hides it again |
-| `rawEngineTemperature`, `rawTransmissionTemperature`, `rawHydraulicTemperature` | Temperatures in °C, see the temperature test commands |
-
-### Valid system names for RMS console commands
-
-Commands that take a system argument accept these names, case-insensitive:
-
-- `engine`
-- `transmission`
-- `hydraulics`
-- `cooling`
-- `electrical`
-- `chassis`
-- `fuel`
-- `pto`
-- `harvest`, on a self-propelled harvester
-
-This applies to commands such as `rms_setSystemCondition`.
-
-Examples: `rms_setSystemCondition engine 0.75`, `rms_setPartWear OIL_PUMP_MALFUNCTION 0.9`.
-
-### Temperature test commands
-
-The thermal model remains automatic. Console forcing changes the current physical state for testing; normal heating and cooling continue afterwards.
-
-```text
-rms_setSpecVar rawEngineTemperature 90
-rms_setSpecVar rawTransmissionTemperature 90
-rms_printSpecVar rawTransmissionTemperature
-```
-
-Engine temperature writes use the shared native motor state. Transmission oil uses `rawTransmissionTemperature`; the dashboard value `transmissionTemperature` is smoothed and cannot be written directly. For a separate hydraulic oil circuit, use `rawHydraulicTemperature`. With a common sump, transmission and hydraulic oil share the transmission temperature.
 
 ## Changelog
 
@@ -452,21 +399,17 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Added warning messages when AdBlue runs low or empty
 - Added power loss on Stage IV and V engines when AdBlue runs low
 - Added AdBlue drums and tanks to the drum pump
-- Added the AdBlue tank level code to the diagnostic tool
+- Added the AdBlue tank level and preheat relay fault codes to the diagnostic tool
 - Added wear and breakdowns to the header drive of combines and forage harvesters
 - Added warranty refusal for header drive faults after late greasing or a seized slip clutch
 - Added the sounds of the header belt squealing, slip clutch slipping and driveline breaking
 - Added wear and greasing to the driveshafts of self-propelled mowers
 - Added the average fuel consumption per hour and per hectare to the HUD
-- Added the hours run since the last service, out of its interval, to the dashboard screen
-- Added the gearbox oil temperature to the dashboard screen of combustion machines other than cars
-- Added the rated speed of the PTO or header drive to the dashboard
+- Added the hours since the last service, gearbox oil temperature and rated PTO speed to the dashboard
 
 #### New Shop Items
 
-- Added TotalEnergies AdBlue 10 L can
-- Added TotalEnergies AdBlue 208 L drum, alone or two to a pallet
-- Added TotalEnergies AdBlue 1,000 L tank
+- Added TotalEnergies AdBlue 10 L can, 208 L drum, alone or two to a pallet, and 1,000 L tank
 
 #### Changes
 
@@ -480,27 +423,25 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Removed the Allow AUTO Drive Mode setting
 - Removed the tutorial tips, their settings and their close key
 - Changed the welcome window to the three rules for playing without constant breakdowns
-- Changed the engine load of machines with a controller or an electric drive to a power gauge
-- Changed the front axle, differential lock and wheel slip display of the dashboard
-- Changed the service deadline of the fleet page to hours and months run out of the interval
-- Changed ease of maintenance to show what your farm repairs on its own
+- Improved the power gauge, dashboard driveline display, fleet page deadline and ease of maintenance
 - Changed workshop jobs to take their own time, whatever the gearbox
 - Changed the high-voltage repairs and overhauls of electric vehicles to the dealer only
 - Changed jerricans to 20 L instead of 25 L
 - Changed drums to 200 L (Motorex), 205 L (FUCHS) and 208 L (Motul)
 - Added drums sold two to a pallet
-- Improved Motorex, Motul and FUCHS cans, jerricans and drums with their brand colours and labels
-- Changed the vehicle fill display of oils and coolants to show the product name and a fluid icon
-- Improved the info box of containers on foot with the brand and product as title
+- Improved the look of cans and drums, the fill display, the container info box and HUD weight card
 - Adjusted the grease points of implements to follow how each one is built
-- Debug window: three views, Overview, Parts and Machine, browsed with the mouse
-- Debug window: the detailed log has a setting of its own
-- Improved the HUD weight card with a weight icon
+- Debug window: three views browsed with the mouse, and a setting of its own for the detailed log
+- Removed the development console commands except those for breakdowns, wear, services and greasing
 - Adjusted the volume, range and cabin muffling of the RMS sounds
 - Improved texts and translations of the engine oil message and workshop messages
 - Improved the performance of workshop menus, exhaust effects and resale price updates
 - Removed PTO shaft wear on mounted implements raised with the PTO turning
 - Added the production years of the Tony 10900 TTR and Faresin Leader PF 2.26
+- Changed failing glow plugs to no longer light the preheat lamp
+- Changed a failed preheat relay to flash the preheat lamp for a minute after ignition
+- Removed the engine lamp and fault code of a failed starter relay
+- Changed the starter to wear out when overheated instead of stopping and breaking at 30 s
 
 #### Fixes
 
@@ -508,6 +449,7 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
 - Fixed the estimate of a running procedure on multiplayer servers
 - Fixed workshop orders overlooking fluids already in the workshop area
+- Fixed empty fluid containers staying behind when emptied by another mod or the console
 - Fixed the Condition card showing replaced parts as failed or worn
 - Fixed the recommended maintenance leaving the transmission oil due after an engine oil change
 - Fixed grain headers asking for the daily greasing of a PTO shaft
@@ -519,6 +461,11 @@ Engine temperature writes use the shared native motor state. Transmission oil us
 - Fixed tools put away on the trolley returning to Hand Tools after a dedicated server restart
 - Fixed the trolley charger and diagnostic tool not reaching long machines
 - Fixed sold or returned machines staying on the fleet page for a few seconds
+- Fixed the workshop not refilling the fluid lost by a leaking radiator, head gasket, pump or cylinder
+- Fixed inspections sometimes missing failing glow plugs
+- Fixed preheating drawing battery current with a failed relay or dead glow plugs
+- Fixed a refused engine remap showing a general message instead of its reason
+- Fixed metallic and matte paints shown as glossy in the workshop colour picker
 
 ### v1.0.0.0-beta.2
 

@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Dashboard layout baked with its atlas.
+---Dashboard layout baked with its atlas
 RMS_HudLayout = {
     engine = {
         ["screen:0:1"] = {
@@ -4239,23 +4239,11 @@ RMS_HudLayout = {
         pto = { -7.9167, 8.1806, -6.0694, 6.8611 }
     },
     sizes = {
-        picto = 19,
-        drivePicto = 22.8,
-        window = 22,
         value = 11,
         unit = 8,
-        tileInset = 3.5,
         textGap = 3,
-        podInset = 7,
-        pad = 5,
-        readingInset = 16.5,
         readingRule = 58.5,
         panel = 116
-    },
-    groups = {
-        pto = 64.99,
-        fwd = 57.6598,
-        slip = 51.126
     },
     left = -252.1944,
     slices = {
@@ -4753,11 +4741,9 @@ RMS_HudLayout = {
         ["rms_Hud.picto_pto"] = { 0.5015, 0.5649 },
         ["rms_Hud.adBlue"] = { 0.5341, 0.406 },
         ["rms_Hud.limitedPower"] = { 0.5054, 0.5161 },
-        ["rms_Hud.maintenance"] = { 0.4915, 0.4914 },
         ["rms_Hud.oilCan"] = { 0.4745, 0.5038 },
         ["rms_Hud.oilPressure"] = { 0.5006, 0.4755 },
         ["rms_Hud.preheat"] = { 0.5001, 0.5442 },
-        ["rms_Hud.reliability"] = { 0.501, 0.4976 },
         ["rms_Hud.tractionBattery"] = { 0.5034, 0.5052 },
         ["rms_Hud.warning"] = { 0.5005, 0.404 }
     }

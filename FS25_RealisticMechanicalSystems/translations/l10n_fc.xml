@@ -1,6 +1,6 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Véhicule"/>
         <text name="rms_hud_mass_towed" text="Attelé"/>
         <text name="rms_hud_mass_total" text="Total"/>
@@ -201,7 +201,7 @@
         <text name="rms_log_description" text="Description"/>
         <text name="rms_log_button_show_report" text="Afficher le rapport"/>
         <text name="rms_log_empty" text="Journal vide pour le moment"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Protection thermique : limitation de puissance levée"/>
         <text name="rms_adblue_title" text="AdBlue"/>
         <text name="rms_adblue_low_message" text="Niveau d'AdBlue bas : faites le plein d'AdBlue."/>
@@ -211,7 +211,7 @@
         <text name="rms_adblue_empty_derate_message" text="Réservoir d'AdBlue vide : puissance du moteur fortement réduite. Faites le plein d'AdBlue."/>
         <text name="rms_adblue_restored_message" text="Plein d'AdBlue fait : puissance du moteur rétablie."/>
         <text name="rms_breakdown_at_progress_message" text="en cours"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Attention ! Moteur froid : il s'use tant qu'il n'a pas chauffé."/>
         <text name="rms_spec_overheat_engine_message" text="Attention ! Surchauffe du moteur."/>
         <text name="rms_spec_overheat_transmission_message" text="Attention ! Surchauffe de la transmission."/>
@@ -276,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Reprogrammation moteur"/>
         <text name="rms_spec_state_overdue" text="En retard"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="En panne"/>
         <text name="rms_spec_state_bad" text="Mauvais"/>
         <text name="rms_spec_state_excellent" text="Excellent"/>
         <text name="rms_spec_state_good" text="Bon"/>
@@ -616,6 +615,7 @@
         <text name="rms_report_wear_transmission_overheat" text="Surchauffe de la transmission"/>
         <text name="rms_report_wear_wet_weather" text="Temps humide"/>
         <text name="rms_report_wear_cranking" text="Démarrages fréquents"/>
+        <text name="rms_report_wear_starter_heat" text="Surchauffe du démarreur"/>
         <text name="rms_report_wear_steering" text="Braquage à l'arrêt"/>
         <text name="rms_report_wear_park_brake" text="Frein de stationnement"/>
         <text name="rms_report_wear_low_fuel" text="Réserve de carburant"/>
@@ -637,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rapport réduit"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Transmission irrégulière"/>
         <text name="rms_report_transmission_failed" text="Défaillante"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Pistolet à graisse"/>
         <text name="rms_grease_gun_no_vehicle" text="Aucun véhicule à portée de graissage"/>
         <text name="rms_grease_gun_function" text="Graisse les graisseurs des machines. Se charge avec une cartouche de graisse."/>
@@ -768,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Légèrement bas"/>
         <text name="rms_inspection_status_slightly_dirty" text="Légèrement encrassé"/>
         <text name="rms_inspection_status_grease_due" text="À graisser"/>
-        <text name="rms_inspection_status_slight_moisture" text="Légère humidité"/>
-        <text name="rms_inspection_status_seepage" text="Suintement"/>
-        <text name="rms_inspection_status_severe_leak" text="Fuite importante"/>
         <text name="rms_inspection_status_low" text="Bas"/>
         <text name="rms_inspection_status_very_low" text="Très bas"/>
         <text name="rms_inspection_status_critically_low" text="Appoint urgent"/>
         <text name="rms_inspection_status_critically_clogged" text="Totalement colmaté"/>
         <text name="rms_inspection_status_dirty" text="Encrassé"/>
         <text name="rms_inspection_status_grease_late" text="En retard"/>
-        <text name="rms_inspection_status_active_leak" text="Fuite active"/>
         <text name="rms_inspection_status_heavily_clogged" text="Fortement encrassé"/>
         <text name="rms_inspection_status_not_required" text="Non requis"/>
         <text name="rms_inspection_status_change_overdue" text="Vidange dépassée"/>
@@ -990,7 +986,7 @@
         <!-- Welcome -->
         <text name="rms_welcome_message" text="Avec Realistic Mechanical Systems, vos machines s'usent et tombent en panne comme les vraies. Trois règles suffisent pour jouer sans pannes à répétition :&#10;&#10;1. Faites l'entretien à l'heure. Le Tableau de bord mécanique, dans le menu du jeu, montre le prochain entretien de chaque machine.&#10;2. Préparez vos machines chaque jour. Maintenez %s près d'une machine pour la contrôler : niveaux, radiateur, filtre à air, graissage. Nettoyez leur radiateur et leur filtre à air au souffleur d'air comprimé, graissez-les au pistolet à graisse. Vos outils et remorques se graissent aussi : le Tableau de bord mécanique liste ceux qui sont à graisser. Souffleur, pistolet et cartouches de graisse sont au magasin, catégorie Entretien.&#10;3. Ménagez vos machines : la surcharge, la surchauffe, le travail moteur froid et le patinage les usent.&#10;&#10;Si la partie vous paraît trop dure, allongez la durée de vie du véhicule et l'espacement des entretiens dans l'onglet PARAMÈTRES RMS du Tableau de bord mécanique."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Chargeur Telwin sur chariot, 150 A en 12 V, 80 A en 24 V. Branchez-le près du véhicule pour recharger sa batterie au courant qu'elle accepte, ou pour l'aide au démarrage (START, 200 A en 12 V). La recharge suit la vitesse du temps de la partie."/>
         <text name="rms_diagnostic_configuration" text="Valise de diagnostic"/>
@@ -1073,7 +1069,7 @@
         <text name="rms_diagnostic_spn_111" text="Niveau du liquide de refroidissement"/>
         <text name="rms_diagnostic_spn_1639" text="Vitesse du ventilateur"/>
         <text name="rms_diagnostic_spn_168" text="Tension de la batterie"/>
-        <text name="rms_diagnostic_spn_677" text="Relais de démarreur"/>
+        <text name="rms_diagnostic_spn_676" text="Relais de préchauffage"/>
         <text name="rms_diagnostic_spn_167" text="Tension du circuit de charge"/>
         <text name="rms_diagnostic_spn_157" text="Pression de la rampe d'injection"/>
         <text name="rms_diagnostic_spn_1761" text="Niveau du réservoir d'AdBlue"/>
@@ -1173,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Aide au démarrage (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Recharger la batterie"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Couper la batterie"/>
         <text name="rms_battery_isolator_restore" text="Rétablir la batterie"/>
         <text name="rms_battery_isolator_open" text="Batterie coupée. Rétablissez-la au coupe-batterie, à pied devant le véhicule."/>

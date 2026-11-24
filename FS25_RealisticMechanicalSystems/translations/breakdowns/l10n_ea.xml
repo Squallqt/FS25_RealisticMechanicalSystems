@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanente"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Pérdida de potencia"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Fuera de servicio"/>
         <text name="rms_breakdowns_severity_minor" text="Menor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderada"/>
         <text name="rms_breakdowns_severity_major" text="Grave"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protección contra sobrecalentamiento: potencia reducida"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protección contra sobrecalentamiento se refuerza. El motor solo entrega la mitad de su potencia."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protección contra sobrecalentamiento: potencia reducida a la mitad"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protección contra sobrecalentamiento está al máximo. Solo queda una fracción de la potencia del motor."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protección contra sobrecalentamiento: potencia muy reducida"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="El motor se ha apagado para evitar daños. Déjalo enfriar antes de volver a arrancarlo."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protección contra sobrecalentamiento: motor apagado"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Mal funcionamiento leve de la bomba de aceite. La presión de aceite se reduce, el par del motor disminuye ligeramente, la temperatura del motor aumenta y puede aparecer golpeteo mecánico."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mal funcionamiento moderado de la bomba de aceite. La presión de aceite es insuficiente, el par del motor se reduce notablemente, la temperatura del motor aumenta y se escucha claramente un golpeteo mecánico."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Mal funcionamiento severo de la bomba de aceite. La presión de aceite es críticamente baja, el par del motor está muy reducido, es probable que el motor se sobrecaliente, el golpeteo mecánico es severo y pueden ocurrir caladas."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Fallo crítico de la bomba de aceite. La circulación de aceite es insuficiente para un funcionamiento seguro del motor, y arrancar o seguir trabajando ya no es posible."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="El motor se ha bloqueado y ya no puede girar."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor calado"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Mal funcionamiento leve de la ECU. Potencia del motor ligeramente reducida."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mal funcionamiento moderado de la ECU. Pérdida notable de potencia y mayor consumo de combustible."/>

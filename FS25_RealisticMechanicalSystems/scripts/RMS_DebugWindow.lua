@@ -1,10 +1,8 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Vehicle debug window.
+---Debug window of a vehicle, drawn over the game
 RMS_DebugWindow = {}
 
-RMS_DebugWindow.VIEW = {OVERVIEW = 1, PARTS = 2, MACHINE = 3}
-local VIEW = RMS_DebugWindow.VIEW
 local VIEW_NAMES = {"Overview", "Parts", "Machine"}
 
 local REFRESH_MS = 500
@@ -25,6 +23,9 @@ local MIN_VIEWPORT = 340
 local CAP_HALF = 25 / 35 / 2
 
 ---Returns the linear colour of an sRGB hex code
+-- @param string hex sRGB hex code
+-- @param float? alpha alpha
+-- @return table color rgba color
 local function srgb(hex, alpha)
     local color = {}
     for index = 1, 3 do
@@ -64,7 +65,7 @@ local CAUSE_COLORS = {srgb("4fb4dc"), srgb("b48ae8"), srgb("45c79c"), srgb("e384
 local LAMP_COLORS = {COLOR.red, COLOR.orange, COLOR.blue, COLOR.label}
 
 RMS_DebugWindow.isOpen = false
-RMS_DebugWindow.view = VIEW.OVERVIEW
+RMS_DebugWindow.view = 1 -- index of VIEW_NAMES, the overview first
 RMS_DebugWindow.scroll = {0, 0, 0}
 RMS_DebugWindow.sideScroll = 0
 RMS_DebugWindow.vehicle = nil
@@ -88,31 +89,45 @@ local function setScreen()
 end
 
 ---Returns a layout x on the screen
+-- @param float x x (layout pixels)
+-- @return float x x (screen)
 local function screenX(x)
     return (L.left + x * L.unit) / g_screenWidth
 end
 
 ---Returns a layout y on the screen
+-- @param float y y (layout pixels)
+-- @return float y y (screen)
 local function screenY(y)
     return 1 - y * L.unit / g_screenHeight
 end
 
 ---Returns a screen x in the layout
+-- @param float posX x (screen)
+-- @return float x x (layout pixels)
 local function toRefX(posX)
     return (posX * g_screenWidth - L.left) / L.unit
 end
 
 ---Returns a screen y in the layout
+-- @param float posY y (screen)
+-- @return float y y (layout pixels)
 local function toRefY(posY)
     return (1 - posY) * g_screenHeight / L.unit
 end
 
 ---Returns a text size on the screen
+-- @param float px text size (layout pixels)
+-- @return float size text size (screen)
 local function textSize(px)
     return px * L.unit / g_screenHeight
 end
 
 ---Returns the width of a text in the layout
+-- @param string text text
+-- @param float px text size (layout pixels)
+-- @param boolean? bold true for bold
+-- @return float width width (layout pixels)
 local function measure(text, px, bold)
     setTextBold(bold == true)
     local width = getTextWidth(textSize(px), text) * g_screenWidth / L.unit
@@ -121,11 +136,19 @@ local function measure(text, px, bold)
 end
 
 ---Returns a corner radius in the engine's unit, 20 px of a 1080p screen
+-- @param float radius radius (layout pixels)
+-- @return float corner radius in the engine's unit
 local function corner(radius)
     return radius * L.unit * 1080 / g_screenHeight / 20
 end
 
 ---Draws a rectangle, cut to the scrolled area while one is set
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
+-- @param table color rgba color
+-- @param float? radius corner radius (layout pixels)
 local function rect(x, y, w, h, color, radius)
     if L.isMeasuring or w <= 0 or h <= 0 then
         return
@@ -146,7 +169,13 @@ local function rect(x, y, w, h, color, radius)
 end
 
 ---Writes a text centred on y, only whole inside a scrolled area
+-- @param float x x (layout pixels)
+-- @param float y y of the centre (layout pixels)
+-- @param string text text
+-- @param float px text size (layout pixels)
+-- @param table color rgba color
 -- @param table? options bold, align (RenderText), box: width it must hold within
+-- @return float? width width of the text (layout pixels), nil when nothing is written
 local function label(x, y, text, px, color, options)
     if L.isMeasuring or text == nil or text == "" then
         return
@@ -170,11 +199,19 @@ local function label(x, y, text, px, color, options)
 end
 
 ---Adds an area the mouse can hit
+-- @param string kind kind of the area
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
+-- @param any value value the area carries
 local function hit(kind, x, y, w, h, value)
     table.insert(L.hits, {kind = kind, x = x, y = y, w = w, h = h, value = value})
 end
 
 ---Returns the items of a text joined by the separator
+-- @param string text text
+-- @return table items items
 local function splitItems(text)
     local items, start = {}, 1
     while true do
@@ -189,6 +226,11 @@ local function splitItems(text)
 end
 
 ---Returns the lines items take in a width, broken between two items only
+-- @param table items items
+-- @param float w width (layout pixels)
+-- @param float px text size (layout pixels)
+-- @param boolean? bold true for bold
+-- @return table lines lines
 local function wrapItems(items, w, px, bold)
     local lines, line = {}, nil
     for _, entry in ipairs(items) do
@@ -205,6 +247,11 @@ local function wrapItems(items, w, px, bold)
 end
 
 ---Returns the lines words take in a width, a longer word cut between letters
+-- @param string text text
+-- @param float w width (layout pixels)
+-- @param float px text size (layout pixels)
+-- @param boolean? bold true for bold
+-- @return table lines lines
 local function wrapWords(text, w, px, bold)
     local lines, line = {}, nil
     for word in text:gmatch("%S+") do
@@ -231,17 +278,28 @@ local function wrapWords(text, w, px, bold)
 end
 
 ---Returns a share as a whole percentage
+-- @param float value share, 0 to 1
+-- @return string text percentage
 local function pct(value)
     return string.format("%d %%", math.floor(value * 100 + 0.5))
 end
 
 ---Returns a rate of wear in % of life per hour, to three figures
+-- @param float rate rate of wear (% of life per hour)
+-- @return string text rate
 local function perHour(rate)
     local format = rate < 9.995 and "%.2f %%/h" or rate < 99.95 and "%.1f %%/h" or "%.0f %%/h"
     return string.format(format, rate)
 end
 
 ---Draws a bar, its share filled, with a tick when one is given
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
+-- @param float share share filled, 0 to 1
+-- @param table color rgba color of the fill
+-- @param float? tick share the tick stands at
 local function bar(x, y, w, h, share, color, tick)
     rect(x, y, w, h, COLOR.track, h / 2)
     if share > 0 then
@@ -253,16 +311,30 @@ local function bar(x, y, w, h, share, color, tick)
 end
 
 ---Draws a card
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
+-- @param table? color rgba color
 local function card(x, y, w, h, color)
     rect(x, y, w, h, color or COLOR.card, 10)
 end
 
 ---Draws a line one pixel high
+-- @param float x left (layout pixels)
+-- @param float y y (layout pixels)
+-- @param float w width (layout pixels)
+-- @param table? color rgba color
 local function hairline(x, y, w, color)
     rect(x, y, w, 1, color or COLOR.line)
 end
 
 ---Draws the title of a group, its note on the right
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param string text title
+-- @param string? note note
 local function title(x, y, w, text, note)
     rect(x, y + 3, 4, 18, HUD.COLOR.ACTIVE, 2)
     local width = label(x + 14, y + 12, text:upper(), 16, HUD.COLOR.ACTIVE, {bold = true}) or measure(text:upper(), 16, true)
@@ -274,11 +346,19 @@ end
 local CHIP_H, CHIP_ROW = 22, 28
 
 ---Returns the width of a chip
+-- @param table entry chip
+-- @param float px text size (layout pixels)
+-- @return float width width (layout pixels)
 local function chipWidth(entry, px)
     return measure(entry.text, px, entry.bold) + 16 + (entry.dot and 14 or 0)
 end
 
 ---Draws a chip, returning its width
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param table entry chip
+-- @param float px text size (layout pixels)
+-- @return float width width (layout pixels)
 local function chip(x, y, entry, px)
     local w = chipWidth(entry, px)
     local color = entry.color
@@ -292,7 +372,11 @@ local function chip(x, y, entry, px)
 end
 
 ---Lays chips on lines of a width
--- @return float height used
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param table entries chips
+-- @return float height height used
 local function chips(x, y, w, entries)
     local cx, cy = x, y
     for _, entry in ipairs(entries) do
@@ -312,16 +396,22 @@ end
 local RISK_TIERS = {{"low", COLOR.ok}, {"moderate", COLOR.yellow}, {"high", COLOR.red}}
 
 ---Returns the name and colour of a risk tier
+-- @param float risk risk ratio
+-- @return table tier name and colour
 local function getRiskTier(risk)
     return RISK_TIERS[RMS_Utils.getBreakdownRiskTier(risk)]
 end
 
 ---Returns the colour of a failing or worn part, nil for the others
+-- @param table part part of the reading
+-- @return table? color rgba color
 local function partColor(part)
     return part.stage > 0 and COLOR.red or part.isWorn and COLOR.orange or nil
 end
 
 ---Returns the chance a part fails in the horizon
+-- @param table part part of the reading
+-- @return string text chance
 local function chanceText(part)
     if part.stage > 0 then
         return "failing"
@@ -331,6 +421,8 @@ local function chanceText(part)
 end
 
 ---Runs a part of the layout without drawing it, for its height
+-- @param function draw part of the layout, returning its height
+-- @return float height height (layout pixels)
 local function measureHeight(draw)
     local wasMeasuring = L.isMeasuring
     L.isMeasuring = true
@@ -341,7 +433,13 @@ end
 
 ---Draws a scroll bar and returns where it stands
 -- @param string kind hit kind of its track
--- @return table top, viewport, height, thumbY, thumbH, maxScroll
+-- @param float trackX x of the track (layout pixels)
+-- @param float top top of the track (layout pixels)
+-- @param float viewport height shown (layout pixels)
+-- @param float height height of the content (layout pixels)
+-- @param float scroll scroll (layout pixels)
+-- @param boolean isMouse true while the window holds the mouse
+-- @return table state top, viewport, height, thumbY, thumbH, maxScroll
 local function scrollBar(kind, trackX, top, viewport, height, scroll, isMouse)
     local maxScroll = height - viewport
     local thumbH = math.max(viewport * viewport / height, 40)
@@ -355,7 +453,11 @@ local function scrollBar(kind, trackX, top, viewport, height, scroll, isMouse)
 end
 
 ---Draws the sheet of the machine from y
--- @return float height used
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @return float height height used
 local function drawSheet(reading, x, y, w)
     local top = y
     if reading == nil then
@@ -403,6 +505,8 @@ local function drawSheet(reading, x, y, w)
 end
 
 ---Draws the sheet of the machine and the views
+-- @param table reading reading
+-- @param boolean isMouse true while the window holds the mouse
 local function drawSidebar(reading, isMouse)
     local window = RMS_DebugWindow
     local x, w = SIDE.x + 24, SIDE.w - 48
@@ -468,7 +572,11 @@ end
 local TILE_H, TILES_PER_ROW = 192, 8
 
 ---Draws a tile per system, eight to a row, two even rows past eight
--- @return float height used
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @return float height height used
 local function drawTiles(reading, x, y, w)
     local count = #reading.systems
     local perRow = count <= TILES_PER_ROW and count or math.ceil(count / 2)
@@ -509,6 +617,12 @@ end
 local EMPTY_COLUMN_H = 300
 
 ---Draws the wear under way beyond the normal rate
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height of the column (layout pixels)
+-- @return float height height used
 local function drawWearNow(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -532,7 +646,7 @@ local function drawWearNow(reading, x, y, w, h)
         for _, cause in ipairs(group.causes) do
             label(ix + 118, cy, cause.label, 15, COLOR.text, {box = 178})
             label(ix + 302, cy, cause.measure, 14, COLOR.label, {box = 174})
-            bar(ix + 482, cy - 3, 48, 6, cause.rate / (normal[group.system] or 1), COLOR.yellow)
+            bar(ix + 482, cy - 3, 48, 6, cause.rate / normal[group.system], COLOR.yellow)
             label(ix + iw, cy, "+" .. perHour(cause.rate), 15, COLOR.text, {bold = true, align = RenderText.ALIGN_RIGHT, box = 72})
             cy = cy + 26
         end
@@ -541,6 +655,12 @@ local function drawWearNow(reading, x, y, w, h)
 end
 
 ---Draws the workshop work under way
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height of the column (layout pixels)
+-- @return float height height used
 local function drawWork(reading, x, y, w, h)
     local work = reading.work
     local ix, iw = x + 16, w - 32
@@ -589,6 +709,12 @@ end
 local FAULT_PITCH_MAX, FAULT_PITCH_MIN = 22, 18
 
 ---Draws a fault, returning its height
+-- @param table fault fault of the reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float pitch line pitch (layout pixels)
+-- @return float height height used
 local function drawFault(fault, x, y, w, pitch)
     local color = fault.isSeen and COLOR.red or COLOR.orange
     local px, pw = x + 14, w - 14
@@ -620,6 +746,12 @@ local function drawFault(fault, x, y, w, pitch)
 end
 
 ---Draws the faults, their pitch shrunk to fit
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height of the column (layout pixels)
+-- @return float height height used
 local function drawFaults(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -630,6 +762,8 @@ local function drawFaults(reading, x, y, w, h)
         return EMPTY_COLUMN_H
     end
     local pitch = FAULT_PITCH_MAX
+    ---Returns the height of the faults at the pitch tried
+    -- @return float height height (layout pixels)
     local function getRowsHeight()
         local rowsH = 0
         for _, fault in ipairs(reading.faults) do
@@ -651,12 +785,21 @@ local function drawFaults(reading, x, y, w, h)
 end
 
 ---Draws the lamps, codes and effects
+-- @param table reading reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height of the column (layout pixels)
+-- @return float height height used
 local function drawDashboard(reading, x, y, w, h)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
     title(ix, y + 14, iw, "Dashboard and codes")
     local alerts = reading.alerts
     local cy = y + 62
+    ---Writes the name of a section of the card, its note on the right
+    -- @param string name name of the section
+    -- @param string? note note
     local function section(name, note)
         label(ix, cy, name, 13, COLOR.dim, {bold = true})
         if note ~= nil then
@@ -664,6 +807,8 @@ local function drawDashboard(reading, x, y, w, h)
         end
         cy = cy + 26
     end
+    ---Lays the chips of a section, or says there is none
+    -- @param table entries chips
     local function list(entries)
         if #entries == 0 then
             label(ix, cy, "none", 15, COLOR.dim)
@@ -697,6 +842,9 @@ local function drawDashboard(reading, x, y, w, h)
 end
 
 ---Draws the overview: tiles, then three columns
+-- @param table reading reading
+-- @param table area area of the view (layout pixels)
+-- @return float height height used
 local function drawOverview(reading, area)
     local y = area.y + drawTiles(reading, area.x, area.y, area.w) + GAP
     local h = area.bottom - y
@@ -719,6 +867,9 @@ local PART_GRID = {{{"Engine", "Electric motor"}, {"Transmission"}, {"Fuel", "Tr
     {{"Cooling"}, {"Hydraulics"}, {"Electrical"}, {"PTO", "Harvest"}}}
 
 ---Returns the system of a reading by one of its names
+-- @param table reading reading
+-- @param table names names of the system
+-- @return table? system system, nil when not found
 local function findSystem(reading, names)
     for _, system in ipairs(reading.systems) do
         for _, name in ipairs(names) do
@@ -731,11 +882,15 @@ local function findSystem(reading, names)
 end
 
 ---Returns the colour of a wear cause, normal wear grey
+-- @param integer cause index of the cause in the system shares
+-- @return table color rgba color
 local function getCauseColor(cause)
     return cause == 1 and COLOR.normal or CAUSE_COLORS[(cause - 2) % #CAUSE_COLORS + 1]
 end
 
 ---Returns the legend entries of a system card
+-- @param table system system of the reading
+-- @return table entries legend entries
 local function getLegend(system)
     local isShown = {}
     for _, part in ipairs(system.parts) do
@@ -756,6 +911,9 @@ local function getLegend(system)
 end
 
 ---Returns the rows the legend of a system card takes
+-- @param table system system of the reading
+-- @param float w width (layout pixels)
+-- @return integer rows number of rows
 local function getLegendRows(system, w)
     local rows, cx = 1, 0
     for _, entry in ipairs(getLegend(system)) do
@@ -769,6 +927,13 @@ local function getLegendRows(system, w)
 end
 
 ---Draws the card of a system and its parts
+-- @param table system system of the reading
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
+-- @param float pitch line pitch of the parts (layout pixels)
+-- @param float headH height of the head (layout pixels)
 local function drawPartCard(system, x, y, w, h, pitch, headH)
     local ix, iw = x + 16, w - 32
     card(x, y, w, h)
@@ -843,12 +1008,23 @@ end
 local LEGEND_H = 30
 
 ---Draws a legend text, returning its width
+-- @param float x left (layout pixels)
+-- @param float y y (layout pixels)
+-- @param string text text
+-- @param table color rgba color
+-- @param boolean? bold true for bold
+-- @return float width width (layout pixels)
 local function legendText(x, y, text, color, bold)
     label(x, y, text, 14, color, {bold = bold})
     return measure(text, 14, bold)
 end
 
 ---Draws the card of a system the machine has not, keeping its place
+-- @param string name name of the system
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @param float h height (layout pixels)
 local function drawAbsentCard(name, x, y, w, h)
     card(x, y, w, h)
     label(x + 16, y + 24, name, 20, COLOR.dim, {bold = true})
@@ -856,6 +1032,9 @@ local function drawAbsentCard(name, x, y, w, h)
 end
 
 ---Draws the legend of the parts view
+-- @param table reading reading
+-- @param table area area of the view (layout pixels)
+-- @param float y top (layout pixels)
 local function drawPartsLegend(reading, area, y)
     local ly = y + LEGEND_H / 2
     local lx = area.x
@@ -883,6 +1062,9 @@ end
 local PITCH_MIN, PITCH_MAX = 21, 26
 
 ---Draws the parts view, a card per system
+-- @param table reading reading
+-- @param table area area of the view (layout pixels)
+-- @return float height height used
 local function drawParts(reading, area)
     local colW = (area.w - 3 * GAP) / 4
     local grid, placed = {}, {}
@@ -941,12 +1123,18 @@ local ROW = RMS_DebugReading.ROW
 local LABEL_W, LINE = 100, 20
 
 ---Returns the width of an item, its label and value
+-- @param table entry item
+-- @return float width width (layout pixels)
 local function itemWidth(entry)
     return (entry.label ~= "" and measure(entry.label, 15) + 8 or 0) + measure(entry.value, 15, true)
 end
 
 ---Draws a row of the machine view
--- @return float height
+-- @param table row row of the machine view
+-- @param float x left (layout pixels)
+-- @param float y top (layout pixels)
+-- @param float w width (layout pixels)
+-- @return float height height used
 local function drawRow(row, x, y, w)
     local vx, vw = x + LABEL_W, w - LABEL_W
     label(x, y + LINE / 2, row.label, 15, COLOR.text, {bold = true, box = LABEL_W - 8})
@@ -1019,10 +1207,17 @@ local COLUMNS = 5
 local GROUP_TITLE, ROW_GAP, GROUP_GAP = 36, 6, 20
 
 ---Draws the machine view in five columns
+-- @param table reading reading
+-- @param table area area of the view (layout pixels)
+-- @return float height height used
 local function drawMachine(reading, area)
     local gap = 18
     local colW = (area.w - (COLUMNS - 1) * gap) / COLUMNS
     local iw = colW - 32
+    ---Lays a column of groups, drawn or measured, returning its height
+    -- @param integer index column
+    -- @param boolean isDrawn true to draw it
+    -- @return float height height used
     local function column(index, isDrawn)
         local x = area.x + (index - 1) * (colW + gap) + 16
         local y = area.y + 14
@@ -1055,11 +1250,12 @@ local function drawMachine(reading, area)
 end
 
 ---Returns the top of the game's fill levels, a box each above its speed meter
+-- @return float top top (layout pixels), math.huge without them
 local function getFillLevelsTop()
     local hud = g_currentMission.hud
-    local display = hud ~= nil and hud.fillLevelsDisplay or nil
+    local display = hud.fillLevelsDisplay
     local vehicle = RMS_DebugWindow.vehicle
-    if display == nil or vehicle == nil or vehicle.getFillLevelInformation == nil or display.bgScale == nil then
+    if vehicle == nil then
         return math.huge
     end
     local seen, count = {}, 0
@@ -1073,15 +1269,16 @@ local function getFillLevelsTop()
         return math.huge
     end
     local _, baseY = display:getPosition()
-    if hud.speedMeter ~= nil and hud.speedMeter:getVisible() then
-        baseY = baseY + (display.offsetY or 0)
+    if hud.speedMeter:getVisible() then
+        baseY = baseY + display.offsetY
     end
-    return toRefY(baseY + count * (display.bgScale.height + (display.boxOffsetY or 0)))
+    return toRefY(baseY + count * (display.bgScale.height + display.boxOffsetY))
 end
 
 local VIEW_DRAW = {drawOverview, drawParts, drawMachine}
 
 ---Lays out the window for a reading, the views scrolled as kept
+-- @param table reading reading
 -- @param boolean isMouse the window holds the mouse
 -- @return table commands to draw each frame
 function RMS_DebugWindow.layout(reading, isMouse)
@@ -1115,6 +1312,7 @@ function RMS_DebugWindow.layout(reading, isMouse)
 end
 
 ---Draws the commands of the layout
+-- @param table commands commands of the layout
 local function render(commands)
     setTextVerticalAlignment(RenderText.VERTICAL_ALIGN_BASELINE)
     for _, command in ipairs(commands) do
@@ -1140,6 +1338,8 @@ local function render(commands)
 end
 
 ---Returns the reading of a machine, asked of the server on a client
+-- @param table vehicle vehicle
+-- @return table? reading reading, nil until the server answers
 local function getReading(vehicle)
     if vehicle.isServer then
         return RMS_DebugReading.read(vehicle)
@@ -1153,11 +1353,13 @@ local function getReading(vehicle)
 end
 
 ---Tells whether the window holds the mouse
+-- @return boolean isMouse true while it holds the mouse
 function RMS_DebugWindow.getIsMouse()
     return RMS_DebugScreen.INSTANCE ~= nil and RMS_DebugScreen.INSTANCE.isOpen == true
 end
 
 ---Tells whether the window stays open
+-- @return boolean isOpen true while it stays open
 function RMS_DebugWindow.getIsOpen()
     return RMS_DebugWindow.isOpen
 end
@@ -1179,6 +1381,7 @@ function RMS_DebugWindow.releaseMouse()
 end
 
 ---Opens or closes the window of this player
+-- @param boolean isOpen true to open it
 -- @param boolean? withMouse the window takes the mouse as it opens
 function RMS_DebugWindow.setOpen(isOpen, withMouse)
     local window = RMS_DebugWindow
@@ -1208,9 +1411,10 @@ PlayerInputComponent.registerGlobalPlayerActionEvents = Utils.appendedFunction(P
     onRegisterGlobalPlayerActionEvents)
 
 ---Hides the help box of the game under the window, then gives it back
+-- @param boolean isHidden true to hide it
 local function setHelpHidden(isHidden)
     local hud = g_currentMission.hud
-    if hud.inputHelp == nil or isHidden == (RMS_DebugWindow.helpWasVisible ~= nil) then
+    if isHidden == (RMS_DebugWindow.helpWasVisible ~= nil) then
         return
     end
     if isHidden then
@@ -1223,12 +1427,16 @@ local function setHelpHidden(isHidden)
 end
 
 ---Tells whether the window shows over a machine
+-- @param table? vehicle vehicle
+-- @return boolean isShown true when it shows
 local function getIsShown(vehicle)
     local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
     return RMS_DebugWindow.isOpen and g_currentMission.isMasterUser and spec ~= nil and not spec.isExcludedVehicle
 end
 
 ---Reads the machine on its interval and lays the window out again
+-- @param table vehicle vehicle
+-- @param boolean isMouse true while the window holds the mouse
 local function refresh(vehicle, isMouse)
     local window = RMS_DebugWindow
     if vehicle ~= window.vehicle or g_time >= window.refreshTime then
@@ -1256,6 +1464,7 @@ function RMS_DebugWindow.update()
 end
 
 ---Draws the window from the HUD, while the player drives
+-- @param table? vehicle vehicle driven
 function RMS_DebugWindow.draw(vehicle)
     local isShown = getIsShown(vehicle)
     setHelpHidden(isShown)
@@ -1268,7 +1477,7 @@ end
 
 ---Draws the window from its screen, while it holds the mouse
 function RMS_DebugWindow.drawMouse()
-    local vehicle = RMS_Main.hud ~= nil and RMS_Main.hud.vehicle or nil
+    local vehicle = RMS_Main.hud.vehicle
     if not getIsShown(vehicle) then
         RMS_DebugWindow.releaseMouse()
         return
@@ -1278,6 +1487,9 @@ function RMS_DebugWindow.drawMouse()
 end
 
 ---Returns the area the mouse hits, nil without one
+-- @param float x x (layout pixels)
+-- @param float y y (layout pixels)
+-- @return table? area area hit
 local function findHit(x, y)
     for _, area in ipairs(RMS_DebugWindow.hits) do
         if x >= area.x and x <= area.x + area.w and y >= area.y and y <= area.y + area.h then
@@ -1293,12 +1505,16 @@ local function relayout()
 end
 
 ---Returns the scroll state of a track
+-- @param string kind hit kind of the track
+-- @return table? state scroll state
 local function getScrollState(kind)
     local window = RMS_DebugWindow
     return kind == "sideTrack" and window.sideState or window.scrollState
 end
 
 ---Scrolls the sheet or the view a track belongs to
+-- @param string kind hit kind of the track
+-- @param float value scroll (layout pixels)
 local function scrollTo(kind, value)
     local window = RMS_DebugWindow
     value = math.min(math.max(value, 0), getScrollState(kind).maxScroll)
@@ -1311,6 +1527,7 @@ local function scrollTo(kind, value)
 end
 
 ---Scrolls by the thumb dragged to a y
+-- @param float y y of the mouse (layout pixels)
 local function dragTo(y)
     local window = RMS_DebugWindow
     local state = getScrollState(window.dragTarget)
@@ -1322,6 +1539,11 @@ local function dragTo(y)
 end
 
 ---Handles the mouse while the window holds it
+-- @param float posX mouse x (screen)
+-- @param float posY mouse y (screen)
+-- @param boolean isDown true when a button went down
+-- @param boolean isUp true when a button went up
+-- @param integer button mouse button
 function RMS_DebugWindow.onMouseEvent(posX, posY, isDown, isUp, button)
     local window = RMS_DebugWindow
     if L.unit == nil then

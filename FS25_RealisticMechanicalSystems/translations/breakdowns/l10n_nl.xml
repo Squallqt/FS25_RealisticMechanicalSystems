@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Vermogensverlies"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Buiten dienst"/>
         <text name="rms_breakdowns_severity_minor" text="Licht"/>
         <text name="rms_breakdowns_severity_moderate" text="Matig"/>
         <text name="rms_breakdowns_severity_major" text="Ernstig"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Oververhittingsbeveiliging: vermogen verlaagd"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="De oververhittingsbeveiliging grijpt sterker in. De motor levert nog maar de helft van zijn vermogen."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Oververhittingsbeveiliging: vermogen gehalveerd"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="De oververhittingsbeveiliging grijpt maximaal in. Slechts een fractie van het motorvermogen blijft over."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Oververhittingsbeveiliging: vermogen sterk verlaagd"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="De motor is uitgeschakeld om schade te voorkomen. Laat hem afkoelen voordat je opnieuw start."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Oververhittingsbeveiliging: motor uitgeschakeld"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lichte storing van de oliepomp. De oliedruk is verminderd, het motorkoppel daalt licht, de motortemperatuur stijgt en er kunnen mechanische klopgeluiden ontstaan."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Matige storing van de oliepomp. De oliedruk is onvoldoende, het motorkoppel daalt duidelijk, de motortemperatuur stijgt en mechanisch kloppen is goed hoorbaar."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ernstige storing van de oliepomp. De oliedruk is kritiek laag, het motorkoppel daalt sterk, oververhitting is waarschijnlijk, het mechanische kloppen is ernstig en de motor kan afslaan."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritieke uitval van de oliepomp. De oliecirculatie is onvoldoende voor veilig gebruik van de motor en starten of verder gebruik is onmogelijk."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="De motor is vastgelopen en kan niet meer draaien."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor afgeslagen"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lichte ECU-storing. Het motorvermogen is licht verminderd."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Matige ECU-storing. Duidelijk vermogensverlies en hoger brandstofverbruik."/>

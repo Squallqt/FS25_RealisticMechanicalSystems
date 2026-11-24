@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Effekttap"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Ute av drift"/>
         <text name="rms_breakdowns_severity_minor" text="Mindre"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
         <text name="rms_breakdowns_severity_major" text="Alvorlig"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overopphetingsvern: redusert effekt"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overopphetingsvernet griper hardere inn. Motoren leverer bare halvparten av effekten sin."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overopphetingsvern: halvert effekt"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overopphetingsvernet er på sitt høyeste. Det er bare en brøkdel av motoreffekten igjen."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overopphetingsvern: sterkt redusert effekt"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motoren er stanset for å unngå skader. La den kjøle seg ned før du starter igjen."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overopphetingsvern: motoren stanset"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lett feilfunksjon i oljepumpen. Oljetrykket er lavere, motormomentet faller litt, motortemperaturen stiger, og det kan oppstå mekaniske bankelyder."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderat feilfunksjon i oljepumpen. Oljetrykket er utilstrekkelig, motormomentet faller tydelig, motortemperaturen stiger, og de mekaniske bankelydene er klart hørbare."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Alvorlig feilfunksjon i oljepumpen. Oljetrykket er kritisk, motormomentet faller kraftig, overoppheting er sannsynlig, bankelydene er voldsomme, og motoren kan stoppe."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritisk svikt i oljepumpen. Oljesirkulasjonen er utilstrekkelig til sikker drift av motoren, og verken start eller videre drift er mulig."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motoren har satt seg fast og kan ikke lenger gå rundt."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motoren stoppet"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lett feilfunksjon i ECU-en. Motoreffekten er litt redusert."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderat feilfunksjon i ECU-en. Merkbart effekttap og økt drivstofforbruk."/>

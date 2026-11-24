@@ -49,7 +49,6 @@ local COVER_TEXTS = {
 local FLAT_RATE_NAMED = { [STATUS.BODYWORK] = true, [STATUS.REMAP] = true }
 -- the slider lane stays kept: rows never change width
 local QUOTE_WIDTH, QUOTE_LIST, QUOTE_ROW_WIDTH = 372, 166, 334
--- $preset_colorDisabled and $preset_fs25_colorMainDark
 
 -- remap chart, in reference pixels of its area
 local CHART_WIDTH, CHART_HEIGHT = 647, 278
@@ -75,6 +74,9 @@ local LEGEND = {
 }
 
 ---Fault state of a machine with no identified fault
+-- @param table vehicle vehicle
+-- @return string text fault state
+-- @return boolean isWarning true while a warning has no identified fault
 function RMS_WorkshopInterventionsFrame.getFaultStateText(vehicle)
     if RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle) then
         return g_i18n:getText("rms_ws_info_warning_unidentified"), true
@@ -83,6 +85,11 @@ function RMS_WorkshopInterventionsFrame.getFaultStateText(vehicle)
 end
 
 ---Says why an intervention has nothing to do here
+-- @param table vehicle vehicle
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
+-- @param string workshopType workshop
+-- @return string? text reason, nil when the intervention has work to do
+-- @return boolean isWarning true when the reason is a warning
 function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType)
     if serviceType == STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
         and #RealisticMechanicalSystems.getPreventiveParts(vehicle) == 0 then
@@ -108,6 +115,10 @@ function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType,
 end
 
 ---Tells whether the workshop never does an intervention, its card greyed
+-- @param table vehicle vehicle
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
+-- @param string workshopType workshop
+-- @return boolean isRefused true when the workshop never does it
 function RMS_WorkshopInterventionsFrame.getIsRefusedHere(vehicle, serviceType, workshopType)
     if serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL or serviceType == STATUS.REMAP then
         return false
@@ -117,7 +128,8 @@ end
 
 local cloneTemplate = RMS_Utils.cloneTemplate
 
----Each layout of the cells hooks a block's first focusable to scroll
+---Gives an element back the focus callback a scrolling layout replaced, so focusing it does not scroll
+-- @param table element focusable element of the order
 local function keepInPlaceOnFocus(element)
     if element.scrollingFocusEnter_orig ~= nil then
         element.onFocusEnter = element.scrollingFocusEnter_orig
@@ -127,12 +139,17 @@ end
 local formatPower = RMS_Utils.formatPower
 
 ---Formats a torque in Nm
+-- @param float nm torque (Nm)
+-- @return string text formatted torque
 local function formatTorque(nm)
     return string.format(g_i18n:getText("rms_remap_torque_format"), g_i18n:formatNumber(MathUtil.round(nm), 0))
 end
 
 ---Formats the duration of a service, instant when the settings make it so
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
 -- @param float duration duration in hours
+-- @param function format formatter of a duration
+-- @return string text formatted duration
 local function formatServiceDuration(serviceType, duration, format)
     if duration > 0 and RealisticMechanicalSystems.getIsServiceInstant(serviceType) then
         return g_i18n:getText("rms_option_menu_duration_instant")
@@ -141,7 +158,9 @@ local function formatServiceDuration(serviceType, duration, format)
 end
 
 ---Writes a price, or who pays it when the farm does not
+-- @param float? price price, nil when unknown
 -- @param string? coverKey "warranty" or "lease"
+-- @return string text formatted price
 local function formatPrice(price, coverKey)
     if price == nil then
         return g_i18n:getText("rms_fluid_service_price_unavailable")
@@ -152,6 +171,10 @@ local function formatPrice(price, coverKey)
 end
 
 ---Returns the quote group of the warranty a remap takes or a restore leaves lost
+-- @param table vehicle vehicle
+-- @param table offer remap offer
+-- @param boolean isRestore true for a restore
+-- @return table group label, value and lines of the group
 local function getLostWarranty(vehicle, offer, isRestore)
     local lines = {}
     if offer.factoryTerm then
@@ -178,11 +201,10 @@ local function getLostWarranty(vehicle, offer, isRestore)
 end
 
 ---Creates the page
+-- @return table self instance of the page
 function RMS_WorkshopInterventionsFrame.new()
-    local self = RMS_WorkshopPage.new(nil, RMS_WorkshopInterventionsFrame_mt)
-    self.quoteLines = {}
+    local self = RMS_WorkshopPage.new(RMS_WorkshopInterventionsFrame_mt)
     self.colorRows = {}
-    self.choices = {}
     return self
 end
 
@@ -193,6 +215,7 @@ function RMS_WorkshopInterventionsFrame:delete()
 end
 
 ---Builds the table, the cards and the rows from their templates
+-- @param table dialog workshop dialog
 function RMS_WorkshopInterventionsFrame:initialize(dialog)
     RMS_WorkshopInterventionsFrame:superClass().initialize(self, dialog)
     self.unitX, self.unitY = self.optionTable.size[1] / TABLE_WIDTH, self.optionTable.size[2] / TABLE_HEIGHT
@@ -278,6 +301,8 @@ function RMS_WorkshopInterventionsFrame:buildRemapLegend()
 end
 
 ---Opens on no order when the vehicle changes
+-- @param table vehicle vehicle
+-- @param string? workshopType workshop, nil for the record alone
 function RMS_WorkshopInterventionsFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopInterventionsFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.serviceType, self.refusedService = nil, nil
@@ -285,6 +310,7 @@ function RMS_WorkshopInterventionsFrame:setVehicle(vehicle, workshopType)
 end
 
 ---Opens an intervention, or says why it has nothing to do here
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
 function RMS_WorkshopInterventionsFrame:selectService(serviceType)
     local vehicle, workshopType = self.vehicle, self.workshopType
     self.serviceType, self.refusedService = nil, nil
@@ -308,6 +334,8 @@ function RMS_WorkshopInterventionsFrame:selectService(serviceType)
 end
 
 ---Returns the method and quality the open order imposes, if any
+-- @return string? choice method imposed
+-- @return string? quality part quality imposed
 function RMS_WorkshopInterventionsFrame:getImposed()
     local order = RMS_WorkshopOrders.ORDERS[self.serviceType]
     if order ~= nil and order.getImposed ~= nil then
@@ -316,11 +344,16 @@ function RMS_WorkshopInterventionsFrame:getImposed()
 end
 
 ---Whether a choice of the open order is a quick fix, which fits no part
+-- @param table frame interventions page
+-- @param string? choice choice of the order
+-- @return boolean isQuickFix true for a quick fix
 local function getIsQuickFix(frame, choice)
     return frame.serviceType == STATUS.REPAIR and choice == RealisticMechanicalSystems.REPAIR_TYPES.LOW
 end
 
 ---Second option a choice of the open order sends
+-- @param string? choice choice of the order
+-- @return string? optionTwo second option
 function RMS_WorkshopInterventionsFrame:getOptionTwo(choice)
     if self.serviceType == STATUS.OVERHAUL then
         return choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL and self.optionTwo or "NONE"
@@ -335,6 +368,7 @@ function RMS_WorkshopInterventionsFrame:getOptionTwo(choice)
 end
 
 ---Writes the choices, the order and the recap
+-- @param table state state of the workshop dialog
 function RMS_WorkshopInterventionsFrame:refresh(state)
     self.state = state
     self.statusBar:setStatus(state)
@@ -529,6 +563,7 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
 end
 
 ---Centers the note of the table, its icon before its text
+-- @param string text text of the note
 function RMS_WorkshopInterventionsFrame:updateNote(text)
     local ux, width = self.unitX, self.tableWidth
     self.noteBlock:setSize(width * ux, nil)
@@ -538,6 +573,7 @@ function RMS_WorkshopInterventionsFrame:updateNote(text)
 end
 
 ---Lays the table out and writes each row and column
+-- @param table order order of RMS_WorkshopOrders.ORDERS
 function RMS_WorkshopInterventionsFrame:updateTable(order)
     local vehicle, choices = self.vehicle, self.choices
     local ux, uy = self.unitX, self.unitY
@@ -636,6 +672,7 @@ function RMS_WorkshopInterventionsFrame:updateTable(order)
 end
 
 ---Writes the systems of a partial overhaul, or the part qualities
+-- @param table order order of RMS_WorkshopOrders.ORDERS
 function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     local vehicle = self.vehicle
     local isPartial = self.serviceType == STATUS.OVERHAUL and self.choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
@@ -664,6 +701,9 @@ function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
 end
 
 ---Returns the card of a part quality: origin, warranty, wear and factory warranty kept or lost
+-- @param table frame interventions page
+-- @param string quality part quality
+-- @return table? info card, nil without a used part offered
 local function getQualityPartInfo(frame, quality)
     local R, vehicle, workshopType = RealisticMechanicalSystems, frame.vehicle, frame.workshopType
     local OEM = R.PART_TYPES.OEM
@@ -716,6 +756,9 @@ local FILTER_DEFECT_KEYS = {
 }
 
 ---Returns the card of a filter quality: how often a filter of it is defective
+-- @param table frame interventions page
+-- @param string quality part quality
+-- @return table? info card, nil without a filter that can be defective
 local function getQualityFilterInfo(frame, quality)
     if #RMS_Consumables.getDefectiveFilterCandidates(frame.vehicle, frame.choice) == 0 then
         return nil
@@ -816,7 +859,7 @@ function RMS_WorkshopInterventionsFrame:updateRefill()
     self.refillRowsBox:setVisible(isRefill and hasRequirements)
     for index, row in ipairs(self.refillRows) do
         local circuit = RMS_Fluids.CIRCUIT_ORDER[index]
-        local liters = math.max(litersByCircuit[circuit] or 0, 0)
+        local liters = litersByCircuit[circuit] or 0
         row:setVisible(liters > RMS_Fluids.EPSILON)
         if liters > RMS_Fluids.EPSILON then
             local capacity, current = RMS_Fluids.getCapacity(vehicle, circuit), RMS_Fluids.getLiters(vehicle, circuit)
@@ -825,13 +868,16 @@ function RMS_WorkshopInterventionsFrame:updateRefill()
                 RMS_FluidWorkshop.formatLiters(current), RMS_FluidWorkshop.formatLiters(capacity), unit))
             row:getDescendantByName("amount"):setText(string.format("+ %s %s", RMS_FluidWorkshop.formatLiters(liters), unit))
             RMS_Utils.setLevelGauge(row:getDescendantByName("gauge"), row:getDescendantByName("under"), row.gaugeWidth,
-                capacity > RMS_Fluids.EPSILON and math.clamp(current / capacity, 0, 1) or 0)
+                math.clamp(current / capacity, 0, 1))
         end
     end
     self.refillRowsBox:invalidateLayout()
 end
 
 ---Writes one color zone of a repaint
+-- @param string zone color configuration
+-- @param table row row of the zone
+-- @return boolean hasChoices true when the zone offers a color
 function RMS_WorkshopInterventionsFrame:updateColorRow(zone, row)
     local vehicle, selection = self.vehicle, self.bodyworkColors[zone]
     local choices = RMS_Bodywork.getColorChoices(vehicle, zone, self.bodyworkColors)
@@ -902,6 +948,8 @@ function RMS_WorkshopInterventionsFrame:updateColors()
 end
 
 ---Options of the open order, as the recap names them
+-- @param string? optionTwo second option
+-- @return string text options
 function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
     local vehicle, serviceType = self.vehicle, self.serviceType
     if serviceType == STATUS.REFILL then
@@ -920,6 +968,11 @@ function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
 end
 
 ---Quote of a service from its bill; a flat rate describes its work
+-- @param string serviceType RealisticMechanicalSystems.STATUS of the service
+-- @param string? choice first option of the service
+-- @param string? optionTwo second option of the service
+-- @param table? invoice bill of the service
+-- @param string? workshopType workshop
 -- @return table groups label, price and lines of each group
 function RMS_WorkshopInterventionsFrame:getServiceQuote(serviceType, choice, optionTwo, invoice, workshopType)
     local vehicle = self.vehicle
@@ -929,15 +982,15 @@ function RMS_WorkshopInterventionsFrame:getServiceQuote(serviceType, choice, opt
     end
     local option = RMS_Utils.formatServiceOption(vehicle, serviceType, choice, workshopType)
     local label = FLAT_RATE_NAMED[serviceType] and option or string.format("%s · %s", RMS_Utils.formatServiceState(serviceType), option)
-    local group = { label = label, price = tonumber(invoice[1].price) or 0, lines = {} }
+    local group = { label = label, price = invoice[1].price, lines = {} }
     local hours = RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, choice, optionTwo, workshopType)
     if hours > 0 then
         table.insert(group.lines, { kind = "sub", label = RMS_FluidWorkshop.formatLabour(hours) })
     end
     local order = RMS_WorkshopOrders.ORDERS[serviceType]
-    for _, row in ipairs(order ~= nil and order.getRows ~= nil and order.getRows(vehicle, workshopType, optionTwo) or {}) do
+    for _, row in ipairs(order.getRows ~= nil and order.getRows(vehicle, workshopType, optionTwo) or {}) do
         local text, level = row.getCell(choice)
-        if level ~= nil and level > 0 then
+        if level > 0 then
             table.insert(group.lines, { kind = "bullet", label = string.format("%s · %s", row.name ~= nil and g_i18n:getText(row.name)
                 or row.text, text) })
         end
@@ -954,7 +1007,10 @@ function RMS_WorkshopInterventionsFrame:requestStock()
         self.dialog.sellingPoint, quote.requestId)
 end
 
----Returns nil while the server checks the stock for these choices
+---Returns the shortages of the open order, nil while the server checks the stock
+-- @param string? optionTwo second option
+-- @param table requirements fluid requirements of the order
+-- @return table? shortages liters missing by circuit
 function RMS_WorkshopInterventionsFrame:getQuoteShortages(optionTwo, requirements)
     local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
     local sellingPoint = self.dialog.sellingPoint
@@ -976,6 +1032,8 @@ function RMS_WorkshopInterventionsFrame:getQuoteShortages(optionTwo, requirement
 end
 
 ---Applies a reply only to the order that asked for it
+-- @param integer requestId id of the stock check
+-- @param table shortages liters missing by circuit
 function RMS_WorkshopInterventionsFrame:onStockQuote(requestId, shortages)
     local quote = self.stockQuote
     if quote == nil or requestId ~= quote.requestId or self.serviceType ~= quote.serviceType or self.state.isUnderService then
@@ -998,6 +1056,10 @@ function RMS_WorkshopInterventionsFrame:onStockQuote(requestId, shortages)
 end
 
 ---Lines of the quote of the open order, gathered by group
+-- @param string? optionTwo second option
+-- @param string? coverKey "warranty" or "lease"
+-- @param table? requirements fluid requirements of the order
+-- @return table groups label, price and lines of each group
 function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey, requirements)
     local vehicle, serviceType, workshopType = self.vehicle, self.serviceType, self.workshopType
     local invoice = RMS_FluidWorkshop.getTransactionInvoice(vehicle, serviceType, workshopType, self.choice, optionTwo)
@@ -1029,6 +1091,7 @@ function RMS_WorkshopInterventionsFrame:getQuote(optionTwo, coverKey, requiremen
 end
 
 ---Writes the recap: type, options, vehicle, price, time, quote
+-- @param table recap texts and quote of the recap
 function RMS_WorkshopInterventionsFrame:writeRecap(recap)
     self.recapType:setText(recap.type)
     self.recapOptions:setText(recap.options or "-")
@@ -1062,16 +1125,25 @@ function RMS_WorkshopInterventionsFrame:writeRecap(recap)
 end
 
 ---Rows of the quote
+-- @return integer count number of rows
 function RMS_WorkshopInterventionsFrame:getNumberOfItemsInSection()
     return #self.quoteLines
 end
 
 ---Template of a row of the quote
+-- @param table _list quote list
+-- @param integer _section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_WorkshopInterventionsFrame:getCellTypeForItemInSection(_list, _section, index)
     return RMS_FluidWorkshop.getQuoteCellType(self.quoteLines[index])
 end
 
 ---Writes a row of the quote
+-- @param table _list quote list
+-- @param integer _section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_WorkshopInterventionsFrame:populateCellForItemInSection(_list, _section, index, cell)
     RMS_FluidWorkshop.populateQuoteCell(cell, self.quoteLines[index], self.quoteUnitX, QUOTE_ROW_WIDTH)
 end
@@ -1142,10 +1214,11 @@ function RMS_WorkshopInterventionsFrame:updateRemap()
         finish = RMS_Utils.formatFinishTime(vehicle:getServiceFinishTime(remap, offer.option, nil, workshopType)),
         quote = quote
     })
-    self.startButton:setDisabled(not self.state.isOpen or offer.refusal ~= nil or price == nil)
+    self.startButton:setDisabled(not self.state.isOpen or offer.refusal ~= nil)
 end
 
 ---Draws the stroke of a legend entry, dashed for torque
+-- @param table element swatch element
 function RMS_WorkshopInterventionsFrame:onDrawLegendSwatch(element)
     local entry = element.legendEntry
     local x, width = element.absPosition[1], element.absSize[1]
@@ -1161,6 +1234,11 @@ function RMS_WorkshopInterventionsFrame:onDrawLegendSwatch(element)
 end
 
 ---Returns the bottom and the step of a chart axis holding low to high in CHART_INTERVALS steps
+-- @param float low lowest value
+-- @param float high highest value
+-- @param table steps steps to try, smallest first
+-- @return float bottom bottom of the axis
+-- @return float step step of the axis
 local function getAxisScale(low, high, steps)
     for _, step in ipairs(steps) do
         local bottom = math.floor(low / step) * step
@@ -1173,6 +1251,13 @@ local function getAxisScale(low, high, steps)
 end
 
 ---Draws a text of the chart
+-- @param float x x (screen)
+-- @param float y y (screen)
+-- @param float size text size
+-- @param string text text
+-- @param table color rgba color
+-- @param boolean isBold true for bold
+-- @param integer alignment RenderText alignment
 local function drawAxisText(x, y, size, text, color, isBold, alignment)
     setTextBold(isBold)
     setTextColor(color[1], color[2], color[3], color[4])
@@ -1181,6 +1266,12 @@ local function drawAxisText(x, y, size, text, color, isBold, alignment)
 end
 
 ---Draws a text on a rounded pill centred on a point
+-- @param float x centre x (screen)
+-- @param float y centre y (screen)
+-- @param string text text
+-- @param float size text size
+-- @param table background rgba color of the pill
+-- @param table textColor rgba color of the text
 local function drawPill(x, y, text, size, background, textColor)
     setTextBold(true)
     local width = getTextWidth(size, text) + size * 1.2 * g_screenHeight / g_screenWidth
@@ -1280,11 +1371,13 @@ function RMS_WorkshopInterventionsFrame:onDrawRemapChart()
 end
 
 ---Opens the intervention of a clicked choice
+-- @param table button choice clicked
 function RMS_WorkshopInterventionsFrame:onClickAction(button)
     self.dialog:selectService(ACTIONS[RMS_Utils.getKeyByValue(self.actionButtons, button)].service)
 end
 
 ---Picks the option of a clicked column
+-- @param table button column clicked
 function RMS_WorkshopInterventionsFrame:onClickColumn(button)
     self.choice = self.choices[button.templateIndex]
     if self.hasStockShortage then
@@ -1294,18 +1387,21 @@ function RMS_WorkshopInterventionsFrame:onClickColumn(button)
 end
 
 ---Picks the system of a partial overhaul
+-- @param table button system card clicked
 function RMS_WorkshopInterventionsFrame:onClickSystem(button)
     self.optionTwo = self.systemValues[button.templateIndex]
     self.dialog:refresh()
 end
 
 ---Picks a part quality
+-- @param table button quality card clicked
 function RMS_WorkshopInterventionsFrame:onClickQuality(button)
     self.optionTwo = RealisticMechanicalSystems.PART_TYPES_ORDER[button.templateIndex]
     self.dialog:refresh()
 end
 
 ---Opens the color picker of a zone
+-- @param table button color button of the zone
 function RMS_WorkshopInterventionsFrame:onClickColor(button)
     local zone, vehicle = button.colorZone, self.vehicle
     local choices = RMS_Bodywork.getColorChoices(vehicle, zone, self.bodyworkColors)
@@ -1315,13 +1411,11 @@ function RMS_WorkshopInterventionsFrame:onClickColor(button)
     if currentIndex == nil or currentIndex == 0 then
         currentIndex = vehicle.configurations[zone]
     end
-    local colors, defaultIndex, defaultMaterial = {}, nil, nil
+    local colors, defaultIndex = {}, nil
     for position, choice in ipairs(choices) do
-        local item = choice.item
-        local material = item.isMetallic and "metallic" or item.isMat and "matte" or "glossy"
-        colors[position] = { name = item.name, color = item.color, material = material, materialTemplateName = item.materialTemplateName }
+        colors[position] = choice.item
         if choice.index == currentIndex then
-            defaultIndex, defaultMaterial = position, material
+            defaultIndex = position
         end
     end
     local customColor
@@ -1338,10 +1432,14 @@ function RMS_WorkshopInterventionsFrame:onClickColor(button)
         if self.vehicle == vehicle and self.serviceType == STATUS.BODYWORK then
             self:onColorPicked(zone, choices, selectedIndex, customColorData)
         end
-    end, self, nil, colors, defaultIndex, defaultMaterial, customColor, customChoice ~= nil, false, true)
+    end, self, nil, colors, defaultIndex, nil, customColor, customChoice ~= nil, false, true)
 end
 
 ---Applies the color picked for a zone, and drops the ones it rules out
+-- @param string zone color configuration
+-- @param table choices colors offered for the zone
+-- @param integer? selectedIndex color picked
+-- @param table? customColorData custom color picked
 function RMS_WorkshopInterventionsFrame:onColorPicked(zone, choices, selectedIndex, customColorData)
     local vehicle = self.vehicle
     if customColorData ~= nil then
@@ -1398,6 +1496,7 @@ function RMS_WorkshopInterventionsFrame:onClickStart()
 end
 
 ---Starts the remap once the player confirmed it
+-- @param boolean yes true when the player confirmed
 function RMS_WorkshopInterventionsFrame:onRemapConfirm(yes)
     if yes then
         self:startOrder()
@@ -1414,6 +1513,7 @@ function RMS_WorkshopInterventionsFrame:startOrder()
 end
 
 ---Leaves the open order for the choice list
+-- @return boolean isHandled true when an order was left
 function RMS_WorkshopInterventionsFrame:goBack()
     if self.serviceType == nil and self.refusedService == nil then
         return false
@@ -1424,7 +1524,8 @@ function RMS_WorkshopInterventionsFrame:goBack()
     return true
 end
 
----The choices, the order, then the start button
+---Columns of rows the focus moves over: the choices, the order, then the start button
+-- @return table columns columns of rows of elements
 function RMS_WorkshopInterventionsFrame:getFocusColumns()
     local actions = {}
     for _, button in ipairs(self.actionButtons) do
@@ -1441,7 +1542,8 @@ function RMS_WorkshopInterventionsFrame:getFocusColumns()
     return { actions, order, { { self.startButton } } }
 end
 
----The selected column, when the order shows one
+---Element the focus enters the page on: the selected column, when the order shows one
+-- @return table? element column, nil for none
 function RMS_WorkshopInterventionsFrame:getFocusEntry()
     for index, column in ipairs(self.tableColumns) do
         if column:getIsVisible() and self.choices[index] == self.choice then
