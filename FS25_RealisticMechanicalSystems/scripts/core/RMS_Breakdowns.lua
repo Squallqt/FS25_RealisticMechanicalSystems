@@ -1588,7 +1588,8 @@ end
 
 local KNOCK_RECORDING_RPM = { engineKnocking = 670, pistonSlap = 580, valveTrainNoise = 710, injectorKnock = 1620, highPressurePump = 800 }
 local CRANK_DRIVEN_NOISES = { waterPumpBearing = true, accessoryBelt = true, fanNoice = true, fanBladeImbalance = true,
-    transmissionPump = true, hydraulicPump = true }
+    transmissionPump = true, hydraulicPump = true, engineKnocking = true, pistonSlap = true, valveTrainNoise = true,
+    highPressurePump = true }
 -- {full speed in m/s, pitch at full speed, exponent, pitch of the load}
 local SPEED_PITCH = {
     wheelHubBearingNoise = { 15.0, 0.12, 1.10, 0.03 },
@@ -1734,11 +1735,13 @@ end
 -- @param table vehicle vehicle
 -- @param table motor motor
 -- @param string? gateName gate of the noise
+-- @param float crankRpm engine speed the starter gives (rpm), 0 while it does not turn the engine
 -- @param float dt time of the step (ms)
 -- @return table reading reading of the machine
-local function readNoiseCause(vehicle, motor, gateName, dt)
+local function readNoiseCause(vehicle, motor, gateName, crankRpm, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local reading = { dt = dt, lastRpm = motor:getLastModulatedMotorRpm(), load = math.clamp(vehicle:getMotorLoadPercentage(), 0, 1),
+    local reading = { dt = dt, lastRpm = math.max(motor:getLastModulatedMotorRpm(), crankRpm),
+        load = math.clamp(vehicle:getMotorLoadPercentage(), 0, 1),
         boost = math.clamp(motor.lastTurboScale, 0, 1), hot = math.clamp((spec.engineTemperature - 70) / 40, 0, 1),
         speed = vehicle:getLastSpeed() / 3.6 }
     local rpm = reading.lastRpm
@@ -1766,16 +1769,22 @@ local function createEngineNoiseEffectApplicator(effectName, sampleName, gateNam
             return
         end
         local noise = getEffectState(vehicle, effectName)
-        local isCrankTurning = CRANK_DRIVEN_NOISES[sampleName] and RMS_Start.getIsCranking(vehicle)
-            and RMS_Electrical.getCrankingSpeed(vehicle) > 0
-        if not vehicle:getIsMotorStarted() and not isCrankTurning then
+        local crankSpeed = 0
+        if CRANK_DRIVEN_NOISES[sampleName] and RMS_Start.getIsCranking(vehicle) then
+            crankSpeed = RMS_Electrical.getCrankingSpeed(vehicle)
+        end
+        if not vehicle:getIsMotorStarted() and crankSpeed <= 0 then
             silenceNoise(sample)
             noise.gate = nil
             return
         end
 
+        local crankRpm = 0
+        if not spec.isElectricVehicle then
+            crankRpm = crankSpeed * RMS_Config.ELECTRICAL.CRANKING_RPM
+        end
         local motor = vehicle:getMotor()
-        local reading = readNoiseCause(vehicle, motor, gateName, dt)
+        local reading = readNoiseCause(vehicle, motor, gateName, crankRpm, dt)
         local volume = math.clamp(spec.activeEffects[effectName].value, 0, 2)
         local gate = 1
         if gateName ~= nil then

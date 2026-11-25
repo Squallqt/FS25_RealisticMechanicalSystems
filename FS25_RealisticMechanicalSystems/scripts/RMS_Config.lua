@@ -1430,6 +1430,7 @@ RMS_Config = {
         EMPTY_RESISTANCE_FACTOR = 2.0,
         -- {engine deg C, drag factor}
         CRANKING_DRAG_CURVE = { { -19, 0.65 }, { 22, 1 } },
+        CRANKING_RPM = 250, -- engine rpm at full cranking speed
         FIRING_CRANKING_SPEED = 0.4,
         -- {deg C, share of the charge out of reach}
         INACCESSIBLE_CHARGE_CURVE = { { -18, 0.54 }, { -12, 0.44 }, { -7, 0.34 }, { -1, 0.27 }, { 2, 0.21 }, { 10, 0.12 }, { 27, 0 } },
