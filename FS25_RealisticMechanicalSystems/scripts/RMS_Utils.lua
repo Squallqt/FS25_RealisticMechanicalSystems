@@ -1442,26 +1442,14 @@ function RMS_Utils.getKeyByValue(tbl, value)
     return nil
 end
 
----Tells whether at least one diagnosed breakdown is selected for repair
--- @param table vehicle vehicle
--- @return boolean hasSelected true when one is
-function RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
-    for _, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-        if breakdown.isSelectedForRepair and breakdown.isVisible then
-            return true
-        end
-    end
-    return false
-end
-
----Returns the ids of the breakdowns the workshop knows, worst stage first
+---Returns the ids of the known breakdowns the workshop can repair now, worst stage first
 -- @param table vehicle vehicle
 -- @return table ids breakdowns
-function RMS_Utils.getVisibleBreakdownIds(vehicle)
+function RMS_Utils.getRepairableBreakdownIds(vehicle)
     local breakdowns = vehicle:getActiveBreakdowns()
     local ids = {}
     for id, breakdown in pairs(breakdowns) do
-        if breakdown.isVisible then
+        if breakdown.isVisible and RealisticMechanicalSystems.getCanRepairFault(vehicle, id) then
             table.insert(ids, id)
         end
     end
@@ -1470,7 +1458,7 @@ function RMS_Utils.getVisibleBreakdownIds(vehicle)
         if aStage ~= bStage then
             return aStage > bStage
         end
-        return tostring(a) < tostring(b)
+        return a < b
     end)
     return ids
 end
@@ -1882,7 +1870,7 @@ end
 function RMS_Utils.getSellerCare(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     for breakdownId in pairs(spec.activeBreakdowns) do
-        if RMS_Breakdowns.BreakdownRegistry[breakdownId].isSelectable then
+        if RMS_Breakdowns.BreakdownRegistry[breakdownId].isPartFault then
             return "neglected"
         end
     end

@@ -93,7 +93,7 @@ function RMS_ServiceRequestEvent:run(connection)
         local sellingPoint = workshop ~= nil and workshop.sellingPoint or nil
         if self.stockRequestId ~= nil then
             local requirements = RMS_FluidWorkshop.getTransactionRequirements(self.vehicle,
-                self.serviceType, self.optionOne, self.optionTwo)
+                self.serviceType, self.workshopType, self.optionOne, self.optionTwo)
             local shortages = RMS_FluidWorkshop.getStockShortages(self.vehicle, sellingPoint, self.workshopType,
                 { { serviceType = self.serviceType, requirements = requirements } })
             connection:sendEvent(RMS_ServiceResultEvent.new(nil, self.stockRequestId, shortages))

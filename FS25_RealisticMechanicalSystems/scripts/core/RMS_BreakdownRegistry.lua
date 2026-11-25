@@ -713,6 +713,15 @@ local function getHasParticulateFilter(vehicle)
     return vehicle.spec_RealisticMechanicalSystems.hasParticulateFilter == true
 end
 
+---Tells whether the workshop may regenerate the particulate filter: neither full of ash nor known to have failed
+-- @param table vehicle vehicle
+-- @return boolean isHeld true when it may
+local function getIsParticulateFilterHeld(vehicle)
+    local breakdowns = vehicle.spec_RealisticMechanicalSystems.activeBreakdowns
+    local failure = breakdowns.PARTICULATE_FILTER_FAILURE
+    return breakdowns.PARTICULATE_FILTER_ASH == nil and (failure == nil or not failure.isVisible)
+end
+
 ---Returns the test of a light circuit lit by bulbs
 -- @param string circuit effect of the circuit failure
 -- @return function test tells whether a vehicle carries the circuit with bulbs
@@ -1048,10 +1057,10 @@ local function buildStage(id, shape, index, count, declared)
     local firstBranch = shape.branches ~= nil and 1 or nil
     local stage = {
         severity = declared.severity or SEVERITIES[index],
-        description = declared.description or (shape.isSelectable and getStageText(shape.texts, nil, firstBranch, index) or ""),
-        detectionChance = declared.detectionChance or (shape.isSelectable and 1.0 or 0.0),
+        description = declared.description or (shape.isPartFault and getStageText(shape.texts, nil, firstBranch, index) or ""),
+        detectionChance = declared.detectionChance or (shape.isPartFault and 1.0 or 0.0),
         progressMultiplier = declared.progressMultiplier
-            or ((shape.isSelectable and index < count) and STAGE_PROGRESS[index] * shape.progress or 0),
+            or ((shape.isPartFault and index < count) and STAGE_PROGRESS[index] * shape.progress or 0),
         repairPrice = stagePartPrices[id] ~= nil and stagePartPrices[id][index] or 0.0,
         renews = declared.renews,
         effects = {}
@@ -1073,7 +1082,7 @@ local function buildStage(id, shape, index, count, declared)
     if declared.hint ~= nil then
         stage.inspection = getHints(shape, index, declared.hint)
     end
-    if shape.branches ~= nil and shape.isSelectable then
+    if shape.branches ~= nil and shape.isPartFault then
         stage.branchDescriptions = declared.branchDescriptions or getBranchTexts(shape, nil, index)
     end
     if shape.electric then
@@ -1106,11 +1115,12 @@ end
 -- @param table stages stages as declared
 local function addBreakdown(id, def, stages)
     local entry = {
-        isSelectable = def.isSelectable ~= false,
+        isPartFault = def.isPartFault ~= false,
         system = def.system,
         part = def.part,
         isApplicable = def.system ~= nil and getIsApplicableInSystem(def.system, def.isApplicable) or def.isApplicable,
         isCanProgress = def.isCanProgress,
+        isCanRepair = def.isCanRepair,
         causes = def.causes,
         component = def.component,
         branches = def.branches,
@@ -1122,7 +1132,7 @@ local function addBreakdown(id, def, stages)
         stages = {}
     }
     local shape = {
-        isSelectable = entry.isSelectable,
+        isPartFault = entry.isPartFault,
         texts = def.texts or string.lower(id),
         progress = def.progress or 1,
         branches = def.branches,
@@ -1139,20 +1149,20 @@ local function addBreakdown(id, def, stages)
 end
 
 addBreakdown("COLD_ENGINE", {
-    isSelectable = false, system = systems.ENGINE, part = parts.ENGINE, isApplicable = getHasEngine, isCanProgress = never
+    isPartFault = false, system = systems.ENGINE, part = parts.ENGINE, isApplicable = getHasEngine, isCanProgress = never
 }, {
     { { "ENGINE_HARD_START_MODIFIER", 0 }, severity = PERMANENT }
 })
 
 addBreakdown("DEAD_BATTERY", {
-    isSelectable = false, system = systems.ELECTRICAL, part = parts.BATTERY, isApplicable = always, isCanProgress = never
+    isPartFault = false, system = systems.ELECTRICAL, part = parts.BATTERY, isApplicable = always, isCanProgress = never
 }, {
     { stopEngine({ message = "rms_breakdowns_dead_battery_message" }), { "LIGHTS_FAILURE", 1.0 }, severity = PERMANENT,
         lamps = { { db.BATTERY, color.CRITICAL } } }
 })
 
 addBreakdown("VOLTAGE_SAG", {
-    isSelectable = false, system = systems.ELECTRICAL, part = parts.VEHICLE, isApplicable = always, isCanProgress = never
+    isPartFault = false, system = systems.ELECTRICAL, part = parts.VEHICLE, isApplicable = always, isCanProgress = never
 }, {
     { { "LIGHTS_FLICKER_CHANCE", 0.1, { duration = 200 } },
         { "PTO_AUTO_DISENGAGE_CHANCE", 1 }, { "ENGINE_STALLS_CHANCE", 10.0 },
@@ -1161,7 +1171,7 @@ addBreakdown("VOLTAGE_SAG", {
 })
 
 addBreakdown("COLD_TRACTION_BATTERY", {
-    isSelectable = false, system = systems.FUEL, part = parts.TRACTION_BATTERY, isApplicable = getIsElectricVehicle,
+    isPartFault = false, system = systems.FUEL, part = parts.TRACTION_BATTERY, isApplicable = getIsElectricVehicle,
         isCanProgress = never
 }, {
     { { "FUEL_CONSUMPTION_MODIFIER", 0.1 }, { "ENGINE_TORQUE_MODIFIER", -0.05 }, severity = REDUCED_POWER },
@@ -1177,7 +1187,7 @@ addBreakdown("COLD_TRACTION_BATTERY", {
 })
 
 addBreakdown("AIRFILTER_CLOGGING", {
-    isSelectable = false, system = systems.ENGINE, part = parts.VEHICLE, isApplicable = getHasAirFilter,
+    isPartFault = false, system = systems.ENGINE, part = parts.VEHICLE, isApplicable = getHasAirFilter,
         isCanProgress = never
 }, {
     { { "ENGINE_TORQUE_MODIFIER", -0.03 }, { "FUEL_CONSUMPTION_MODIFIER", 0.03 } },
@@ -1186,7 +1196,7 @@ addBreakdown("AIRFILTER_CLOGGING", {
 })
 
 addBreakdown("STRESS_OVERLOAD", {
-    isSelectable = false, part = parts.VEHICLE, isApplicable = always, isCanProgress = never
+    isPartFault = false, part = parts.VEHICLE, isApplicable = always, isCanProgress = never
 }, {
     { lamps = { { db.WARNING, color.WARNING } } },
     { { "EMPTY_EFFECT", 1.0 }, severity = CRITICAL, lamps = { { db.WARNING, color.CRITICAL } } }
@@ -1194,13 +1204,13 @@ addBreakdown("STRESS_OVERLOAD", {
 
 -- its way is the defectBranch of the defective filter
 addBreakdown("MAINTENANCE_WITH_POOR_QUALITY_CONSUMABLES", {
-    isSelectable = false, part = parts.CONSUMABLES, isApplicable = always, isCanProgress = never, branches = 2
+    isPartFault = false, part = parts.CONSUMABLES, isApplicable = always, isCanProgress = never, branches = 2
 }, {
     { severity = "" }
 })
 
 addBreakdown("ENGINE_THERMAL_PROTECTION", {
-    isSelectable = false, system = systems.ENGINE, part = parts.VEHICLE, isApplicable = getHasThermalProtection,
+    isPartFault = false, system = systems.ENGINE, part = parts.VEHICLE, isApplicable = getHasThermalProtection,
         isCanProgress = never
 }, {
     { { "ENGINE_THERMAL_TORQUE_LIMIT", 0.8, { message = "rms_breakdowns_overheat_protection_stage1_message" } },
@@ -2810,7 +2820,8 @@ addBreakdown("PARTICULATE_FILTER_FAILURE", {
 })
 
 addBreakdown("PARTICULATE_FILTER_SOOT_OVERLOAD", {
-    isSelectable = false, system = systems.FUEL, part = parts.PARTICULATE_FILTER, isApplicable = getHasParticulateFilter
+    isPartFault = false, system = systems.FUEL, part = parts.PARTICULATE_FILTER, isApplicable = getHasParticulateFilter,
+        isCanRepair = getIsParticulateFilterHeld
 }, {
     { severity = MAJOR, description = "rms_breakdowns_particulate_filter_soot_overload_stage1_description",
         detectionChance = 1.0, lamps = { { db.DPF, color.WARNING }, { db.ENGINE, color.WARNING } } },
@@ -2819,7 +2830,7 @@ addBreakdown("PARTICULATE_FILTER_SOOT_OVERLOAD", {
 })
 
 addBreakdown("PARTICULATE_FILTER_ASH", {
-    isSelectable = false, system = systems.FUEL, part = parts.PARTICULATE_FILTER, isApplicable = getHasParticulateFilter
+    isPartFault = false, system = systems.FUEL, part = parts.PARTICULATE_FILTER, isApplicable = getHasParticulateFilter
 }, {
     { { "PARTICULATE_FILTER_BLOCKED", 1 }, severity = CRITICAL, description = "rms_breakdowns_particulate_filter_ash_stage1_description",
         detectionChance = 1.0, lamps = { { db.DPF, color.CRITICAL } } }

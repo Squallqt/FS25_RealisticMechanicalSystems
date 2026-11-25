@@ -183,7 +183,7 @@ function Report:readBreakdowns()
         local definition = RMS_Breakdowns.BreakdownRegistry[id]
         local findings = RMS_Utils.getBranchItems(definition.stages[breakdown.stage].inspection, breakdown)
         -- a filter has its own row
-        if #findings > 0 and not breakdown.isVisible and definition.isSelectable and RMS_Consumables.getFilterOfBreakdown(id) == nil then
+        if #findings > 0 and not breakdown.isVisible and definition.isPartFault and RMS_Consumables.getFilterOfBreakdown(id) == nil then
             hasUnidentified = true
         end
         for _, finding in ipairs(findings) do

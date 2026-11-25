@@ -252,26 +252,39 @@ function RMS_WorkshopOrders.getThoroughAddedCount(vehicle, workshopType)
     return count
 end
 
+---Tells whether a repair fits parts: a picked fault of a part, or a worn part picked
+-- @param table vehicle vehicle
+-- @return boolean fitsParts true when it fits some
+function RMS_WorkshopOrders.getRepairFitsParts(vehicle)
+    local R = RealisticMechanicalSystems
+    for id in pairs(vehicle:getActiveBreakdowns()) do
+        if RMS_Breakdowns.BreakdownRegistry[id].isPartFault and R.getIsPickedForRepair(vehicle, id, R.REPAIR_TYPES.MEDIUM) then
+            return true
+        end
+    end
+    return #R.getPreventiveParts(vehicle) > 0
+end
+
 ---Returns the table rows of the repair order
 -- @param table vehicle vehicle
 -- @param string workshopType workshop
 -- @return table rows rows of the order table
 local function getRepairRows(vehicle, workshopType)
-    local REPAIR = RealisticMechanicalSystems.REPAIR_TYPES
+    local R = RealisticMechanicalSystems
+    local REPAIR = R.REPAIR_TYPES
     local isCovered = vehicle:isWarrantyRepairCovered(workshopType)
     local picked, running = 0, 0
-    for _, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-        if breakdown.isSelectedForRepair and breakdown.isVisible then
-            picked = picked + 1
-            running = running + (breakdown.isActive and 1 or 0)
-        end
+    for id in pairs(vehicle:getActiveBreakdowns()) do
+        picked = picked + (R.getIsPickedForRepair(vehicle, id, REPAIR.MEDIUM) and 1 or 0)
+        running = running + (R.getIsPickedForRepair(vehicle, id, REPAIR.LOW) and 1 or 0)
     end
-    ---Returns a cell maker: the text for every method but the lightest
+    local fitsParts = RMS_WorkshopOrders.getRepairFitsParts(vehicle)
+    ---Returns a cell maker: the text for every method but the lightest, none for a repair fitting no part
     -- @param string key l10n key of the text
     -- @return function getCell cell maker
     local function replaces(key)
         return function(method)
-            if method == REPAIR.LOW then
+            if method == REPAIR.LOW or not fitsParts then
                 return "-", 0
             end
             return g_i18n:getText(key), 2
@@ -490,18 +503,17 @@ RMS_WorkshopOrders.ORDERS = {
     },
     [STATUS.REPAIR] = {
         getChoices = function(vehicle)
-            local REPAIR, choices = RealisticMechanicalSystems.REPAIR_TYPES, {}
+            local R = RealisticMechanicalSystems
+            local REPAIR, choices = R.REPAIR_TYPES, {}
             local hasPicked, hasRunning = false, false
-            for _, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-                if breakdown.isSelectedForRepair and breakdown.isVisible then
-                    hasPicked = true
-                    hasRunning = hasRunning or breakdown.isActive
-                end
+            for id in pairs(vehicle:getActiveBreakdowns()) do
+                hasPicked = hasPicked or R.getIsPickedForRepair(vehicle, id, REPAIR.MEDIUM)
+                hasRunning = hasRunning or R.getIsPickedForRepair(vehicle, id, REPAIR.LOW)
             end
             if hasRunning then
                 table.insert(choices, REPAIR.LOW)
             end
-            if hasPicked or #RealisticMechanicalSystems.getPreventiveParts(vehicle) > 0 then
+            if hasPicked or #R.getPreventiveParts(vehicle) > 0 then
                 table.insert(choices, REPAIR.MEDIUM)
                 table.insert(choices, REPAIR.HIGH)
             end

@@ -5,38 +5,46 @@
 local log_dbg = RMS_Utils.createLogger("[RMS_SPEC]")
 local getSafeMissionTimeScale = RealisticMechanicalSystems.getSafeMissionTimeScale
 
----Tells whether the player picked a known fault for a repair type
+---Tells whether the workshop can repair a fault now: it has an operation for it, and the fault allows it
+-- @param table vehicle vehicle
 -- @param string breakdownId breakdown
--- @param table breakdown state of the breakdown
+-- @return boolean canRepair true when it can
+function RealisticMechanicalSystems.getCanRepairFault(vehicle, breakdownId)
+    local isCanRepair = RMS_Breakdowns.BreakdownRegistry[breakdownId].isCanRepair
+    return RMS_Config.MAINTENANCE.REPAIR_OPERATIONS[breakdownId] ~= nil and (isCanRepair == nil or isCanRepair(vehicle))
+end
+
+---Tells whether the player picked a known fault the workshop can repair, a quick fix taking a running part only
+-- @param table vehicle vehicle
+-- @param string breakdownId breakdown
 -- @param string optionOne RealisticMechanicalSystems.REPAIR_TYPES
--- @return boolean isSelected true when picked for it
-local function isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, optionOne)
-    if not RMS_Breakdowns.BreakdownRegistry[breakdownId].isSelectable then
+-- @return boolean isPicked true when picked for it
+function RealisticMechanicalSystems.getIsPickedForRepair(vehicle, breakdownId, optionOne)
+    local R = RealisticMechanicalSystems
+    local breakdown = vehicle:getActiveBreakdowns()[breakdownId]
+    if not (breakdown.isSelectedForRepair and breakdown.isVisible and R.getCanRepairFault(vehicle, breakdownId)) then
         return false
     end
-
-    local isSelectedForQuickFix = breakdown.isSelectedForRepair and breakdown.isVisible and (optionOne == RealisticMechanicalSystems.REPAIR_TYPES.LOW and breakdown.isActive)
-    local isSelectedForStandartRepair = breakdown.isSelectedForRepair
-        and breakdown.isVisible
-        and (optionOne == RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM
-            or optionOne == RealisticMechanicalSystems.REPAIR_TYPES.HIGH)
-    return isSelectedForStandartRepair or isSelectedForQuickFix
+    if optionOne == R.REPAIR_TYPES.LOW then
+        -- a state has no part to patch up
+        return breakdown.isActive and RMS_Breakdowns.BreakdownRegistry[breakdownId].isPartFault
+    end
+    return optionOne == R.REPAIR_TYPES.MEDIUM or optionOne == R.REPAIR_TYPES.HIGH
 end
 
 ---Tells whether a picked fault is in a repair, warranty ones always
 -- @param table vehicle vehicle
 -- @param string breakdownId breakdown
--- @param table breakdown state of the breakdown
 -- @param string optionOne RealisticMechanicalSystems.REPAIR_TYPES
 -- @param string? workshopType workshop
 -- @return boolean isInRepair true when in the repair
-local function getIsFaultInRepair(vehicle, breakdownId, breakdown, optionOne, workshopType)
-    return isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, optionOne)
-        or isBreakdownSelectedForPlayerRepair(breakdownId, breakdown, RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM)
-            and vehicle:isWarrantyRepairCovered(workshopType, breakdownId)
+local function getIsFaultInRepair(vehicle, breakdownId, optionOne, workshopType)
+    local R = RealisticMechanicalSystems
+    return R.getIsPickedForRepair(vehicle, breakdownId, optionOne)
+        or R.getIsPickedForRepair(vehicle, breakdownId, R.REPAIR_TYPES.MEDIUM) and vehicle:isWarrantyRepairCovered(workshopType, breakdownId)
 end
 
----Returns the method and parts of a fault, the warranty's if covered
+---Returns the method and parts of a fault: a standard job for a state, which fits no part, the warranty's if covered
 -- @param table vehicle vehicle
 -- @param string breakdownId breakdown
 -- @param string optionOne RealisticMechanicalSystems.REPAIR_TYPES
@@ -45,7 +53,7 @@ end
 -- @return string repairType RealisticMechanicalSystems.REPAIR_TYPES
 -- @return string partType RealisticMechanicalSystems.PART_TYPES
 function RealisticMechanicalSystems.getFaultRepairOptions(vehicle, breakdownId, optionOne, optionTwo, workshopType)
-    if vehicle:isWarrantyRepairCovered(workshopType, breakdownId) then
+    if not RMS_Breakdowns.BreakdownRegistry[breakdownId].isPartFault or vehicle:isWarrantyRepairCovered(workshopType, breakdownId) then
         return RealisticMechanicalSystems.REPAIR_TYPES.MEDIUM, RealisticMechanicalSystems.PART_TYPES.OEM
     end
     return optionOne, optionTwo
@@ -58,8 +66,8 @@ end
 -- @return table ids breakdown ids
 function RealisticMechanicalSystems.getRepairQueue(vehicle, optionOne, workshopType)
     local ids = {}
-    for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-        if getIsFaultInRepair(vehicle, id, breakdown, optionOne, workshopType) then
+    for id in pairs(vehicle:getActiveBreakdowns()) do
+        if getIsFaultInRepair(vehicle, id, optionOne, workshopType) then
             table.insert(ids, id)
         end
     end
@@ -208,16 +216,6 @@ function RealisticMechanicalSystems.getRepairReplacedParts(vehicle, optionOne, o
     return replaced
 end
 
----Tells whether a breakdown may be picked for a repair
--- @param string breakdownId breakdown
--- @return boolean isSelectable true when it may
-local function getIsSelectableBreakdown(breakdownId)
-    if not RMS_Breakdowns.BreakdownRegistry[breakdownId].isSelectable then
-        return false
-    end
-    return true
-end
-
 ---Returns the parts a maintenance renews: due filters, worn harvest parts in a major one
 -- @param table vehicle vehicle
 -- @param string maintenanceType RealisticMechanicalSystems.MAINTENANCE_TYPES
@@ -298,8 +296,8 @@ function RealisticMechanicalSystems.getServiceWorkHours(vehicle, serviceType, op
         return hours
     elseif serviceType == states.REPAIR then
         local R, hours = RealisticMechanicalSystems, 0
-        for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-            if getIsFaultInRepair(vehicle, id, breakdown, optionOne, workshopType) then
+        for id in pairs(vehicle:getActiveBreakdowns()) do
+            if getIsFaultInRepair(vehicle, id, optionOne, workshopType) then
                 local repairType = R.getFaultRepairOptions(vehicle, id, optionOne, optionTwo, workshopType)
                 hours = hours + R.getRepairLabourHours(vehicle, id, repairType)
             end
@@ -642,7 +640,7 @@ function RealisticMechanicalSystems:initService(type, workshopType, optionOne, o
     return spec.currentState == type and spec.maintenanceTimer > 0
 end
 
----Repairs one fault of the queue, fitting its parts
+---Repairs one fault of the queue: fits its parts, or puts a state back to new by removing its fault
 -- @param table vehicle vehicle
 -- @param table spec RMS specialization of the vehicle
 -- @param string breakdownId breakdown
@@ -656,6 +654,10 @@ local function processPendingRepairStep(vehicle, spec, breakdownId, optionOne, o
     local optionTwoKey = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.PART_TYPES, optionTwo)
 
     table.insert(spec.pendingSelectedBreakdowns, breakdownId)
+    if not RMS_Breakdowns.BreakdownRegistry[breakdownId].isPartFault then
+        vehicle:removeBreakdown(breakdownId)
+        return
+    end
 
     local C = RMS_Config.MAINTENANCE
     local systemKey = RMS_Utils.getSystemKey(RealisticMechanicalSystems.SYSTEMS, RMS_Breakdowns.BreakdownRegistry[breakdownId].system)
@@ -880,7 +882,7 @@ end
 function RealisticMechanicalSystems.getHasUnidentifiedWarning(vehicle)
     for breakdownId, breakdown in pairs(vehicle:getActiveBreakdowns()) do
         local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
-        if definition.isSelectable and breakdown.isActive and not breakdown.isVisible then
+        if definition.isPartFault and breakdown.isActive and not breakdown.isVisible then
             for _, indicator in ipairs(RMS_Utils.getBranchItems(definition.stages[breakdown.stage].indicators, breakdown)) do
                 -- A gearbox fault lights the warning, not the oil temperature lamp
                 local lampId = indicator.id == "transmission" and "warning" or indicator.id
@@ -960,8 +962,8 @@ function RealisticMechanicalSystems:completeService()
         local idsToRepair = {}
         local isPartial = optionOne == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
         for breakdownId in pairs(spec.activeBreakdowns) do
-            local definition = RMS_Breakdowns.BreakdownRegistry[breakdownId]
-            if definition.isSelectable and (not isPartial or optionTwo == definition.system) then
+            local system = RMS_Breakdowns.BreakdownRegistry[breakdownId].system
+            if RealisticMechanicalSystems.getCanRepairFault(self, breakdownId) and (not isPartial or optionTwo == system) then
                 table.insert(idsToRepair, breakdownId)
             end
         end
@@ -971,6 +973,9 @@ function RealisticMechanicalSystems:completeService()
             self:removeBreakdown(table.unpack(idsToRepair))
         end
         RMS_Consumables.renewFilters(self)
+        if not isPartial or optionTwo == RealisticMechanicalSystems.SYSTEMS.FUEL then
+            RMS_Breakdowns.cleanParticulateFilter(self)
+        end
     elseif serviceType == states.REPAIR then
         local repairQueue = spec.pendingRepairQueue
         while spec.pendingProgressStepIndex < #repairQueue do
@@ -1640,8 +1645,8 @@ function RealisticMechanicalSystems:isWarrantyRepairCovered(workshopType, breakd
     local factory = R.getIsWithinWarrantyLimits(self)
     if breakdownId == nil then
         local picked, covered, reason = 0, 0, nil
-        for id, fault in pairs(self:getActiveBreakdowns()) do
-            if isBreakdownSelectedForPlayerRepair(id, fault, R.REPAIR_TYPES.MEDIUM) then
+        for id in pairs(self:getActiveBreakdowns()) do
+            if R.getIsPickedForRepair(self, id, R.REPAIR_TYPES.MEDIUM) then
                 picked = picked + 1
                 local isCovered, faultReason = self:isWarrantyRepairCovered(workshopType, id)
                 if isCovered then
@@ -1701,11 +1706,11 @@ function RealisticMechanicalSystems.markFittedPart(vehicle, partId, partType)
     vehicle.spec_RealisticMechanicalSystems.partAbuse[partId] = not isFilter and R.WARRANTY_ABUSE[abuse] or nil
 end
 
----Draws the donor machine of the used part of a fault, none for a filter
+---Draws the donor machine of the used part of a fault, none for a filter or a state
 -- @param string breakdownId breakdown
--- @return integer? hours work hours of the donor machine, nil for a filter or a fault no repair fixes
+-- @return integer? hours work hours of the donor machine, nil for a filter or a state, which fits no part
 function RealisticMechanicalSystems.drawUsedPartDonorHours(breakdownId)
-    if RMS_Breakdowns.BreakdownRegistry[breakdownId].isSelectable and RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
+    if RMS_Breakdowns.BreakdownRegistry[breakdownId].isPartFault and RMS_Consumables.getFilterOfBreakdown(breakdownId) == nil then
         local donors = RMS_Config.MAINTENANCE.USED_PART_DONOR_HOURS
         return donors[math.random(#donors)]
     end
@@ -1752,7 +1757,7 @@ end
 function RealisticMechanicalSystems:getUsedPartOfferSummary(repairType, workshopType)
     local minimum, maximum, count, guaranteed = nil, nil, 0, 0
     for id, fault in pairs(self:getActiveBreakdowns()) do
-        if fault.usedPartHours ~= nil and isBreakdownSelectedForPlayerRepair(id, fault, repairType)
+        if fault.usedPartHours ~= nil and RealisticMechanicalSystems.getIsPickedForRepair(self, id, repairType)
             and not self:isWarrantyRepairCovered(workshopType, id) then
             local hours = RealisticMechanicalSystems.getUsedPartMeterHours(fault.usedPartHours)
             minimum, maximum = math.min(minimum or hours, hours), math.max(maximum or hours, hours)
@@ -2139,8 +2144,8 @@ function RealisticMechanicalSystems:getRepairPriceLines(optionOne, optionTwo, wo
     local R = RealisticMechanicalSystems
     local workshopType = workshopTypeOverride or self.spec_RealisticMechanicalSystems.workshopType
     local ids = {}
-    for id, breakdown in pairs(self:getActiveBreakdowns()) do
-        if getIsFaultInRepair(self, id, breakdown, optionOne, workshopType) or (allBreakdowns and getIsSelectableBreakdown(id)) then
+    for id in pairs(self:getActiveBreakdowns()) do
+        if getIsFaultInRepair(self, id, optionOne, workshopType) or (allBreakdowns and R.getCanRepairFault(self, id)) then
             table.insert(ids, id)
         end
     end

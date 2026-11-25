@@ -89,7 +89,7 @@ end
 ---Writes the worst known breakdown, or the fault state
 function RMS_WorkshopSummaryFrame:updateAlert()
     local vehicle = self.vehicle
-    local ids = RMS_Utils.getVisibleBreakdownIds(vehicle)
+    local ids = RMS_Utils.getRepairableBreakdownIds(vehicle)
     local alertId = ids[1]
     self.summaryAlertRow:setVisible(alertId ~= nil)
     self.summaryNoAlertText:setVisible(alertId == nil)

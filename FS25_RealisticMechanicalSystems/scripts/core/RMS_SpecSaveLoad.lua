@@ -31,6 +31,25 @@ local function keepKnownKeys(map)
     return known
 end
 
+---Keeps the lines of a logged bill whose fault or part the mod still has, with the parts it still has
+-- @param table? invoice lines of the bill, nil for a log entry without one
+-- @return table? known lines
+local function keepKnownInvoiceLines(invoice)
+    if invoice == nil then
+        return nil
+    end
+    local known = {}
+    for _, line in ipairs(invoice) do
+        if (line.kind ~= "repair" and line.kind ~= "preventive") or RMS_Breakdowns.BreakdownRegistry[line.key] ~= nil then
+            if line.ownParts ~= nil then
+                line.ownParts, line.kitParts, line.wornParts = keepKnownIds(line.ownParts), keepKnownIds(line.kitParts), keepKnownIds(line.wornParts)
+            end
+            table.insert(known, line)
+        end
+    end
+    return known
+end
+
 ---Keeps the systems the mod knows, leaving out one an older version had
 -- @param table systems state by system key
 -- @return table known state by known system key
@@ -205,7 +224,7 @@ local LOG_ENTRY_XML = {
         read = function(value) return RMS_Utils.normalizeBoolValue(value, true) end },
     { name = "invoice",
         write = function(entry) return entry.invoice ~= nil and RMS_Utils.serializeInvoice(entry.invoice) or nil end,
-        read = function(value) return RMS_Utils.deserializeInvoice(value) end }
+        read = function(value) return keepKnownInvoiceLines(RMS_Utils.deserializeInvoice(value)) end }
 }
 
 -- attributes of the machine as a log entry found it, in saved order

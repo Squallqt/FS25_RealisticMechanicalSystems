@@ -158,7 +158,7 @@ function RealisticMechanicalSystems:addBreakdown(breakdownId, stageOrOptions)
     end
 
     local registryEntry = RMS_Breakdowns.BreakdownRegistry[breakdownId]
-    local isFull = registryEntry.isSelectable and countActiveBreakdowns(spec) >= RMS_Config.CORE.CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE
+    local isFull = registryEntry.isPartFault and countActiveBreakdowns(spec) >= RMS_Config.CORE.CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE
     if isFull or self:hasBreakdown(breakdownId) then
         return
     end
@@ -248,14 +248,14 @@ function RealisticMechanicalSystems:removeBreakdown(...)
     end
 end
 
----Tells whether a breakdown is active, any selectable one without an id
+---Tells whether a breakdown is active, any fault of a part without an id
 -- @param string? breakdownId breakdown
 -- @return boolean hasBreakdown true when active
 function RealisticMechanicalSystems:hasBreakdown(breakdownId)
     local spec = self.spec_RealisticMechanicalSystems
     if breakdownId == nil then
         for activeBreakdownId, _ in pairs(spec.activeBreakdowns) do
-            if RMS_Breakdowns.BreakdownRegistry[activeBreakdownId].isSelectable then
+            if RMS_Breakdowns.BreakdownRegistry[activeBreakdownId].isPartFault then
                 return true
             end
         end

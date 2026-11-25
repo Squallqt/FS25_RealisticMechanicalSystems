@@ -396,7 +396,7 @@ function RMS_ReportFrame:collectBreakdowns()
     for _, id in ipairs(ids) do
         local breakdown, definition = breakdowns[id], RMS_Breakdowns.BreakdownRegistry[id]
         findings.hasPoorConsumables = findings.hasPoorConsumables or id == POOR_CONSUMABLES
-        if breakdown.isVisible and definition.isSelectable then
+        if breakdown.isVisible and definition.isPartFault then
             shownCount = shownCount + 1
             local partName = RMS_Utils.getBreakdownPartName(id, self.vehicle)
             local isActive = breakdown.isActive

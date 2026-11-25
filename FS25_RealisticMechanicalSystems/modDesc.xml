@@ -138,6 +138,9 @@ Changelog 1.0.0.0-beta.3:
 - Fixed preheating drawing battery current with a failed relay or dead glow plugs
 - Fixed a refused engine remap showing a general message instead of its reason
 - Fixed metallic and matte paints shown as glossy in the workshop colour picker
+- Fixed a full particulate filter that no repair or overhaul could clear, even by replacing it
+- Fixed temporary repairs with a warranty fault not yet showing being wrongly refused or accepted
+- Fixed an error on the Technical Record page with repairs logged by older versions
 ]]></en>
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
@@ -270,6 +273,9 @@ Changelog 1.0.0.0-beta.3:
 - Vorglühen behoben, das bei defektem Relais oder ausgefallenen Glühkerzen Batteriestrom zog
 - Abgelehnte Motoroptimierung behoben, die eine allgemeine Meldung statt ihres Grundes zeigte
 - Metallic- und Mattlacke behoben, die in der Farbauswahl der Werkstatt glänzend angezeigt wurden
+- Voller Partikelfilter behoben, den weder Reparatur noch Überholung leeren konnte, selbst durch Austausch
+- Behelfsreparaturen mit einem noch nicht aufgetretenen Garantiefall behoben, die zu Unrecht abgelehnt oder angenommen wurden
+- Fehler der Seite Technische Akte bei Reparaturen aus älteren Versionen behoben
 ]]></de>
 
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
@@ -402,6 +408,9 @@ Changelog 1.0.0.0-beta.3 :
 - Correction du préchauffage qui tirait sur la batterie avec un relais en panne ou des bougies hors service
 - Correction d'une reprogrammation moteur refusée qui affichait un message général au lieu de sa raison
 - Correction des peintures métallisées et mates affichées brillantes dans le choix des couleurs de l'atelier
+- Correction d'un filtre à particules plein qu'aucune réparation ni révision ne pouvait vider, même en le remplaçant
+- Correction des réparations de fortune avec une panne sous garantie pas encore apparue, refusées ou acceptées à tort
+- Correction d'une erreur de la page Dossier technique sur les réparations enregistrées par une ancienne version
 ]]></fr>
 
     </description>

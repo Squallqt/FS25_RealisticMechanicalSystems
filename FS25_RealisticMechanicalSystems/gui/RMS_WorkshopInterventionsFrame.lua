@@ -91,12 +91,11 @@ end
 -- @return string? text reason, nil when the intervention has work to do
 -- @return boolean isWarning true when the reason is a warning
 function RMS_WorkshopInterventionsFrame.getUnavailableText(vehicle, serviceType, workshopType)
-    if serviceType == STATUS.REPAIR and not RMS_Utils.hasSelectedVisibleBreakdown(vehicle)
-        and #RealisticMechanicalSystems.getPreventiveParts(vehicle) == 0 then
-        for id, breakdown in pairs(vehicle:getActiveBreakdowns()) do
-            if breakdown.isVisible and RMS_Breakdowns.BreakdownRegistry[id].isSelectable then
-                return g_i18n:getText("rms_ws_reason_repair_unselected"), false
-            end
+    local R = RealisticMechanicalSystems
+    if serviceType == STATUS.REPAIR and #R.getRepairQueue(vehicle, R.REPAIR_TYPES.MEDIUM, workshopType) == 0
+        and #R.getPreventiveParts(vehicle) == 0 then
+        if #RMS_Utils.getRepairableBreakdownIds(vehicle) > 0 then
+            return g_i18n:getText("rms_ws_reason_repair_unselected"), false
         end
         return RMS_WorkshopInterventionsFrame.getFaultStateText(vehicle)
     elseif serviceType == STATUS.OVERHAUL and #RMS_Utils.getEligibleOverhaulSystems(vehicle) == 0 then
@@ -517,7 +516,7 @@ function RMS_WorkshopInterventionsFrame:updateOrder()
     if serviceType == STATUS.REFILL then
         typeText = g_i18n:getText("rms_fluid_refill_work_order")
     end
-    local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, self.choice, optionTwo)
+    local requirements = RMS_FluidWorkshop.getTransactionRequirements(vehicle, serviceType, workshopType, self.choice, optionTwo)
     self:writeRecap({
         type = typeText,
         options = self:getRecapOptions(optionTwo),
@@ -677,6 +676,7 @@ function RMS_WorkshopInterventionsFrame:updateSecondOption(order)
     local vehicle = self.vehicle
     local isPartial = self.serviceType == STATUS.OVERHAUL and self.choice == RealisticMechanicalSystems.OVERHAUL_TYPES.PARTIAL
     local hasQualities = order.qualityPromptKey ~= nil and not getIsQuickFix(self, self.choice)
+        and (self.serviceType ~= STATUS.REPAIR or RMS_WorkshopOrders.getRepairFitsParts(vehicle))
     local promptKey = hasQualities and order.qualityPromptKey or isPartial and order.systemPromptKey or nil
     self.secondPrompt:setVisible(promptKey ~= nil)
     self.secondPrompt:setText(promptKey ~= nil and g_i18n:getText(promptKey) or "")
@@ -849,7 +849,7 @@ end
 function RMS_WorkshopInterventionsFrame:updateRefill()
     local isRefill = self.serviceType == STATUS.REFILL
     local vehicle = self.vehicle
-    local requirements = isRefill and RMS_FluidWorkshop.getTransactionRequirements(vehicle, STATUS.REFILL, nil, nil) or {}
+    local requirements = isRefill and RMS_FluidWorkshop.getTransactionRequirements(vehicle, STATUS.REFILL, self.workshopType, nil, nil) or {}
     local litersByCircuit = RMS_Fluids.getRequiredLitersByCircuit(requirements)
     local hasRequirements = next(litersByCircuit) ~= nil
     local unit = g_i18n:getText("unit_literShort")
@@ -961,7 +961,8 @@ function RMS_WorkshopInterventionsFrame:getRecapOptions(optionTwo)
     end
     if serviceType == STATUS.MAINTENANCE and RMS_FluidWorkshop.getConsumableQualityKey(optionTwo) ~= nil then
         table.insert(options, g_i18n:getText(RMS_FluidWorkshop.getConsumableQualityKey(optionTwo)))
-    elseif (serviceType == STATUS.REPAIR or serviceType == STATUS.OVERHAUL) and optionTwo ~= nil and optionTwo ~= "NONE" then
+    elseif (serviceType == STATUS.OVERHAUL or serviceType == STATUS.REPAIR and RMS_WorkshopOrders.getRepairFitsParts(vehicle))
+        and optionTwo ~= nil and optionTwo ~= "NONE" then
         table.insert(options, g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, optionTwo)))
     end
     return #options > 0 and table.concat(options, " · ") or "-"

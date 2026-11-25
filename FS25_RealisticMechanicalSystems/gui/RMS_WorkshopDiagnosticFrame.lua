@@ -58,7 +58,7 @@ function RMS_WorkshopDiagnosticFrame:refresh(state)
         row:getDescendantByName("value"):setTextColor(unpack(reading[entry.color]))
     end
 
-    self.breakdownIds = RMS_Utils.getVisibleBreakdownIds(vehicle)
+    self.breakdownIds = RMS_Utils.getRepairableBreakdownIds(vehicle)
     self.wornParts = RMS_Utils.getInspectedWornParts(vehicle)
     RMS_Utils.reloadListTemplates(self.breakdownTable)
     local isEmpty = #self.breakdownIds == 0

@@ -48,12 +48,29 @@ local function getLocation(entry)
     return RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, entry.location) ~= nil and g_i18n:getText(entry.location) or ""
 end
 
----Returns the system of a log entry in brackets, empty without one
+---Tells whether a logged repair fitted parts, whose quality the log names
+-- @param table entry log entry
+-- @return boolean hasParts true with one, or for a bill logged without its lines
+local function getHasFittedParts(entry)
+    if entry.invoice == nil then
+        return true
+    end
+    for _, line in ipairs(entry.invoice) do
+        if line.kind == "preventive" or line.kind == "repair" and RMS_Breakdowns.BreakdownRegistry[line.key].isPartFault then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns the system or part quality of a log entry in brackets, empty without one
 -- @param table vehicle vehicle
 -- @param table entry log entry
--- @return string suffix system in brackets
+-- @return string suffix system or quality in brackets
 local function getSystemSuffix(vehicle, entry)
-    if entry.type ~= RealisticMechanicalSystems.STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
+    local STATUS = RealisticMechanicalSystems.STATUS
+    if entry.type ~= STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE"
+        and (entry.type ~= STATUS.REPAIR or getHasFittedParts(entry)) then
         return " (" .. g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, entry.optionTwo)) .. ")"
     end
     return ""

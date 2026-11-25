@@ -685,6 +685,13 @@ RMS_Breakdowns.EffectApplicators.DIFF_LOCK_STUCK_ENGAGED = {
 
 }
 
+---Empties the particulate filter of its soot and ash, as a new or cleaned filter
+-- @param table vehicle vehicle
+function RMS_Breakdowns.cleanParticulateFilter(vehicle)
+    local fuelState = vehicle.spec_RealisticMechanicalSystems.fuelState
+    fuelState.particulateFilterLevel, fuelState.particulateFilterAsh, fuelState.particulateFilterOilAsh = 0, 0, 0
+end
+
 ---Sets the soot overload and the ash breakdowns of the particulate filter
 -- @param table vehicle vehicle
 function RMS_Breakdowns.updateParticulateFilterOverload(vehicle)
@@ -694,9 +701,14 @@ function RMS_Breakdowns.updateParticulateFilterOverload(vehicle)
     local breakdownId = "PARTICULATE_FILTER_SOOT_OVERLOAD"
     local breakdown = spec.activeBreakdowns[breakdownId]
     local isBlocked = spec.activeEffects.PARTICULATE_FILTER_BLOCKED ~= nil
+    local isOut = spec.activeBreakdowns.PARTICULATE_FILTER_ASH ~= nil or spec.activeBreakdowns.PARTICULATE_FILTER_FAILURE ~= nil
 
+    if fuelState.isFilterOut and not isOut then
+        RMS_Breakdowns.cleanParticulateFilter(vehicle)
+    end
     if (fuelState.isParticulateFilterOverloaded and breakdown == nil) or (fuelState.isParticulateFilterBlocked and not isBlocked) then
-        fuelState.particulateFilterLevel = 0
+        -- the ash stays, as after a regeneration
+        fuelState.particulateFilterLevel = fuelState.particulateFilterAsh
     end
     fuelState.isParticulateFilterBlocked = isBlocked
 
@@ -715,14 +727,8 @@ function RMS_Breakdowns.updateParticulateFilterOverload(vehicle)
     end
     fuelState.isParticulateFilterOverloaded = stage > 0
 
-    local isOut = spec.activeBreakdowns.PARTICULATE_FILTER_ASH ~= nil or spec.activeBreakdowns.PARTICULATE_FILTER_FAILURE ~= nil
-    if fuelState.isFilterOut and not isOut then
-        fuelState.particulateFilterAsh, fuelState.particulateFilterOilAsh = 0, 0
-    end
     if spec.activeBreakdowns.PARTICULATE_FILTER_ASH == nil and fuelState.particulateFilterAsh >= 1 then
-        if fuelState.particulateFilterOilAsh > 0 then
-            spec.partAbuse.PARTICULATE_FILTER_ASH = RealisticMechanicalSystems.WARRANTY_ABUSE.oil
-        end
+        spec.partAbuse.PARTICULATE_FILTER_ASH = fuelState.particulateFilterOilAsh > 0 and RealisticMechanicalSystems.WARRANTY_ABUSE.oil or nil
         vehicle:addBreakdown("PARTICULATE_FILTER_ASH", { stage = 1, isVisible = true })
         isOut = true
     end
