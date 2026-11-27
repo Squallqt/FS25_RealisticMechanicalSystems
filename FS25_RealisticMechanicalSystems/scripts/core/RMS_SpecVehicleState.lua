@@ -63,11 +63,19 @@ local function updateActiveDraftStats(vehicle)
     spec.activeDraftEffectiveForceCap = result.effectiveForceCap
 end
 
----Stores the engine load at stock power
+---Stores the load asked of the engine, the harvest load while a harvest loads it, and the engine load at stock power
 -- @param table vehicle vehicle
-local function updateDynamicMotorLoad(vehicle)
+-- @param float dt time of the step (ms)
+local function updateDynamicMotorLoad(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    spec.dynamicMotorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()),
+    local motor = vehicle:getMotor()
+    local C = RMS_Config.CORE.ENGINE_FACTOR_DATA
+    local load = (motor:getMotorAppliedTorque() / math.max(motor:getMotorAvailableTorque(), 0.0001) - C.IDLE_LOAD_SHARE) / (1 - C.IDLE_LOAD_SHARE)
+    spec.shownMotorLoad = spec.shownMotorLoad + (load - spec.shownMotorLoad) * (1 - math.exp(-dt * 0.001 / C.SHOWN_LOAD_TAU))
+    local harvestLoad = RMS_HarvestLoad.getEngineLoad(vehicle)
+    spec.isHarvestLoad = harvestLoad ~= nil
+    spec.motorDemand = harvestLoad or spec.shownMotorLoad
+    spec.dynamicMotorLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, RMS_Utils.getMotorLoad(vehicle)),
         0, 0, 1.5)
 end
 
@@ -697,7 +705,7 @@ local function updateFuelState(vehicle, dt)
 
         local idleSpeedThreshold = RMS_Config.CORE.FUEL_FACTOR_DATA.IDLE_DEPOSIT_SPEED_THRESHOLD
         local idleLoadThreshold = RMS_Config.CORE.FUEL_FACTOR_DATA.IDLE_DEPOSIT_LOAD_THRESHOLD
-        local motorLoad = vehicle:getMotorLoadPercentage()
+        local motorLoad = RMS_Utils.getMotorLoad(vehicle)
         local idleTimer = fuelState.idleTimer
         local isIdle = vehicle:getLastSpeed() <= idleSpeedThreshold and motorLoad <= idleLoadThreshold
 
@@ -791,14 +799,65 @@ local function updatePtoState(vehicle)
     spec.frontPtoShaftLimit = ptoData.frontShaft.limit
     spec.ptoShaftWear = isAIActive and 0 or ptoData.shaftWear
 
-    spec.ptoLastRpmShare = RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
+    local motor = vehicle:getMotor()
+    spec.ptoLastRpmShare = math.max(RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
+        - (motor:getRequiredMotorRpmRange() - motor.minRpm) / (motor.maxRpm - motor.minRpm), 0)
 end
+
+---Returns the speed where the torque curve gives the torque asked, at the lowest the speed where it reaches its peak
+-- @param table curve torque curve
+-- @param float rpm engine speed (rpm)
+-- @param float demand torque asked against the torque at that speed
+-- @return float luggedRpm lugged speed (rpm)
+local function getLuggedRpm(curve, rpm, demand)
+    local upperRpm, upperTorque = rpm, curve:get(rpm)
+    local asked = demand * upperTorque
+    for index = #curve.keyframes, 1, -1 do
+        local keyframe = curve.keyframes[index]
+        if keyframe.time < upperRpm then
+            if keyframe[1] <= upperTorque then
+                return upperRpm
+            end
+            if keyframe[1] >= asked then
+                return upperRpm - (upperRpm - keyframe.time) * (asked - upperTorque) / (keyframe[1] - upperTorque)
+            end
+            upperRpm, upperTorque = keyframe.time, keyframe[1]
+        end
+    end
+    return upperRpm
+end
+
+---Lugs the engine down its torque curve while it is asked more than its full load
+-- @param table vehicle vehicle
+function RealisticMechanicalSystems.updateEngineLugging(vehicle)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    spec.rpmDrop = 0
+    if vehicle:getIsMotorStarted() and spec.motorDemand > 1 then
+        local motor = vehicle:getMotor()
+        local rpm = motor:getLastRealMotorRpm()
+        spec.rpmDrop = rpm - getLuggedRpm(motor:getTorqueCurve(), rpm, spec.motorDemand)
+    end
+end
+
+VehicleMotor.getLastModulatedMotorRpm = Utils.overwrittenFunction(VehicleMotor.getLastModulatedMotorRpm, function(self, superFunc)
+    local spec = RMS_Breakdowns.getLoadedSpec(self.vehicle)
+    return superFunc(self) - (spec ~= nil and spec.rpmDrop or 0)
+end)
+
+VehicleMotor.getSmoothLoadPercentage = Utils.overwrittenFunction(VehicleMotor.getSmoothLoadPercentage, function(self, superFunc)
+    local spec = RMS_Breakdowns.getLoadedSpec(self.vehicle)
+    if spec == nil or not spec.isHarvestLoad then
+        return superFunc(self)
+    end
+    return superFunc(self) - self.smoothedLoadPercentage + RMS_Utils.getMotorLoad(self.vehicle)
+end)
 
 ---Refreshes the vehicle state on the server, each group on its interval
 -- @param float dt time of the step (ms)
 function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isServer or spec.isExcludedVehicle then return end
+    updateDynamicMotorLoad(self, dt)
 
     local delayOne = RMS_Config.UPDATE_VEHICLE_STATE_DELAY_ONE
     local delayTwo = RMS_Config.UPDATE_VEHICLE_STATE_DELAY_TWO
@@ -811,7 +870,6 @@ function RealisticMechanicalSystems:updateVehicleStateSnapshot(dt)
     if spec.updateVehicleStateTimerOne >= delayOne then
         spec.updateVehicleStateTimerOne = spec.updateVehicleStateTimerOne % delayOne
         updatePtoState(self)
-        updateDynamicMotorLoad(self)
     end
 
     if spec.updateVehicleStateTimerTwo >= delayTwo then

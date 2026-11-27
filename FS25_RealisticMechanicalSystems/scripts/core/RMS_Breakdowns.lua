@@ -521,7 +521,7 @@ local function updateEngineCough(vehicle, dt)
             end
             cough.status, cough.timer = "IDLE", 0
         end
-    elseif vehicle:getMotorLoadPercentage() > effect.extraData.motorLoad and vehicle.isServer
+    elseif RMS_Utils.getMotorLoad(vehicle) > effect.extraData.motorLoad and vehicle.isServer
         and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, effect.value) then
         RMS_Breakdowns.startEngineCough(vehicle, cough)
         RMS_EffectSyncEvent.send(vehicle, "ENGINE_HESITATION_CHANCE", "CHOKING")
@@ -909,7 +909,7 @@ local function getVariatorSlip(motor, spec, slip, minRatio, maxRatio)
     if minRatio == 0 or maxRatio == 0 or speedFactor >= 0.5 then
         return minRatio, false
     end
-    local decayPerSecond = 0.01 / slip * math.max(speedFactor, 0.1) / (vehicle:getMotorLoadPercentage() + 0.2)
+    local decayPerSecond = 0.01 / slip * math.max(speedFactor, 0.1) / (RMS_Utils.getMotorLoad(vehicle) + 0.2)
         / (vehicle:getTotalMass() / vehicle:getTotalMass(true))
     local acceleration = math.clamp(motor.motorRotAccelerationSmoothed / math.max(motor.motorRotationAccelerationLimit, 0.000001), 0, 1)
     if acceleration < lastAcceleration then
@@ -1741,7 +1741,7 @@ end
 local function readNoiseCause(vehicle, motor, gateName, crankRpm, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local reading = { dt = dt, lastRpm = math.max(motor:getLastModulatedMotorRpm(), crankRpm),
-        load = math.clamp(vehicle:getMotorLoadPercentage(), 0, 1),
+        load = math.clamp(RMS_Utils.getMotorLoad(vehicle), 0, 1),
         boost = math.clamp(motor.lastTurboScale, 0, 1), hot = math.clamp((spec.engineTemperature - 70) / 40, 0, 1),
         speed = vehicle:getLastSpeed() / 3.6 }
     local rpm = reading.lastRpm
@@ -2073,25 +2073,6 @@ RMS_Breakdowns.EffectApplicators.HARVEST_GRAIN_LOSS = {
         setThreshingLoss(vehicle, math.clamp(effect.value, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS))
     end,
     remove = function(vehicle) setThreshingLoss(vehicle, 0) end
-}
-
----Raises the PTO power a harvester needs
--- @param table vehicle vehicle
--- @param float extra share of power added
-local function setHarvestPowerDemand(vehicle, extra)
-    local spec_powerConsumer = vehicle.spec_powerConsumer
-    if spec_powerConsumer == nil then
-        return
-    end
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    spec.basePtoPower = spec.basePtoPower or { spec_powerConsumer.neededMinPtoPower, spec_powerConsumer.neededMaxPtoPower }
-    spec_powerConsumer.neededMinPtoPower = spec.basePtoPower[1] * (1 + extra)
-    spec_powerConsumer.neededMaxPtoPower = spec.basePtoPower[2] * (1 + extra)
-end
-
-RMS_Breakdowns.EffectApplicators.HARVEST_POWER_DEMAND = {
-    apply = function(vehicle, effect) setHarvestPowerDemand(vehicle, effect.value) end,
-    remove = function(vehicle) setHarvestPowerDemand(vehicle, 0) end
 }
 
 ---Blocks the harvest by chance while crop feeds the machine, the effect value a mean time in minutes
@@ -2480,7 +2461,7 @@ local function updateGearRejection(vehicle, dt)
             RMS_SoundManager.playSample(spec.samples.transmissionShiftFailed)
             RMS_EffectSyncEvent.send(vehicle, "GEAR_REJECTION_CHANCE", "IDLE")
         end
-    elseif vehicle.isServer and vehicle:getMotorLoadPercentage() > 0.8
+    elseif vehicle.isServer and RMS_Utils.getMotorLoad(vehicle) > 0.8
         and math.random() < RMS_Utils.getChancePerFrameFromMeanTime(dt, effect.value) then
         RMS_Breakdowns.rejectGear(vehicle, rejection)
         RMS_EffectSyncEvent.send(vehicle, "GEAR_REJECTION_CHANCE", "REJECTED")

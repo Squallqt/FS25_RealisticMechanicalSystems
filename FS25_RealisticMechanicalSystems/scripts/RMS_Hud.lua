@@ -640,55 +640,35 @@ function RMS_Hud.getLampColors(vehicle, motorState, isServiceOverdue, cvtFaultCo
     return lampColors, isRoutine
 end
 
----Returns the steps a reading shows
--- @param integer shown steps shown
--- @param float value value in steps
--- @return integer steps steps to show
-local function holdSteps(shown, value)
-    local reached = math.floor(value)
-    if reached >= shown then
-        return reached
-    end
-    return math.min(shown, math.floor(value + 0.5))
-end
-
----Tells whether the wear counts an engine load as an overload
--- @param table vehicle vehicle
--- @param float load engine load
--- @return boolean isOverloaded true for an overload
-function RMS_Hud.getIsOverloaded(vehicle, load)
-    -- the load the wear reads
-    local stockLoad = RealisticMechanicalSystems.sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, load), 0, 0, 1.5)
-    return stockLoad > RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD * RMS_EngineRemap.getOverloadRatio(vehicle)
-end
-
----Updates the power gauge and its figure
+---Updates the figure of the power gauge, its squares and its warning taken from it
 -- @param table vehicle vehicle
 -- @param boolean isRunning engine running
 -- @return integer squares squares lit
 -- @return string figure whole percent
--- @return boolean isWarning true for an overload
+-- @return boolean isWarning true at full load
 function RMS_Hud:updatePowerReading(vehicle, isRunning)
     if not isRunning then
         self.powerReading = nil
         return 0, "0", false
     end
-    local load = vehicle:getMotor():getSmoothLoadPercentage()
-    local squares = math.clamp(load, 0, 1) * RMS_HudLayout.gauges.power.count
+    local figure = math.floor(math.clamp(RMS_Utils.getMotorLoad(vehicle), 0, 1) * 100 + 0.5)
     local reading = self.powerReading
     if reading == nil then
-        reading = { buffer = ValueBuffer.new(RMS_Hud.POWER_REFRESH_MS), time = 0, squares = 0,
-            figure = math.floor(math.clamp(load * 100, 0, 100)) }
+        reading = { time = 0, figure = figure }
         self.powerReading = reading
     end
-    reading.buffer:add(load)
     reading.time = reading.time + g_currentDt
-    if reading.time > RMS_Hud.POWER_REFRESH_MS then
-        reading.time = 0
-        reading.figure = holdSteps(reading.figure, math.clamp(reading.buffer:getAverage() * 100, 0, 100))
+    local isShown, screenLoad = RMS_Utils.getHarvestModScreenLoad(vehicle)
+    if screenLoad ~= nil then
+        reading.time, reading.figure = 0, math.min(math.floor(screenLoad + 0.5), 100)
+    elseif not isShown and reading.time > RMS_Hud.POWER_REFRESH_MS then
+        reading.time, reading.figure = 0, figure
     end
-    reading.squares = holdSteps(reading.squares, squares)
-    return reading.squares, string.format("%d", reading.figure), RMS_Hud.getIsOverloaded(vehicle, load)
+    -- full load is shown at once, before the engine lugs
+    if (figure == 100) ~= (reading.figure == 100) then
+        reading.time, reading.figure = 0, figure
+    end
+    return math.floor(reading.figure * RMS_HudLayout.gauges.power.count / 100), string.format("%d", reading.figure), reading.figure == 100
 end
 
 ---Tells whether a machine has a screen
@@ -2342,7 +2322,7 @@ end
 -- @param float posX x of the dial centre (screen)
 -- @param float posY y of the dial centre (screen)
 -- @param integer squares squares lit
--- @param boolean isWarning true for an overload
+-- @param boolean isWarning true at full load
 function RMS_Hud:drawPowerGauge(posX, posY, squares, isWarning)
     local power = self.gaugeGeometry.power or self:buildPowerGauge()
     self:drawGaugeSegments(posX, posY, power.segments, squares, isWarning)

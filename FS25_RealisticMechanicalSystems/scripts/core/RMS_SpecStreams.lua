@@ -311,6 +311,8 @@ function RealisticMechanicalSystems:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, spec.realOperatingTime)
     streamWriteFloat32(streamId, spec._fuelUsageRaw)
     streamWriteFloat32(streamId, spec.dynamicMotorLoad)
+    streamWriteBool(streamId, spec.isHarvestLoad)
+    streamWriteFloat32(streamId, spec.motorDemand)
 
     -- [Group 4] Thermal
     writeThermalState(self, spec, streamId)
@@ -387,8 +389,9 @@ function RealisticMechanicalSystems:onReadStream(streamId, connection)
     spec.realOperatingTime = streamReadFloat32(streamId)
     local syncFuelRaw = streamReadFloat32(streamId)
     spec._fuelUsageRaw = syncFuelRaw
-    spec._netDynamicMotorLoad = streamReadFloat32(streamId)
-    spec.dynamicMotorLoad = spec._netDynamicMotorLoad
+    spec.dynamicMotorLoad = streamReadFloat32(streamId)
+    spec.isHarvestLoad = streamReadBool(streamId)
+    spec.motorDemand = streamReadFloat32(streamId)
     self.spec_motorized.lastFuelUsage = syncFuelRaw
 
     -- [Group 4] Thermal
@@ -494,6 +497,8 @@ function RealisticMechanicalSystems:onWriteUpdateStream(streamId, connection, di
             streamWriteFloat32(streamId, spec.realOperatingTime)
             streamWriteFloat32(streamId, spec._fuelUsageRaw)
             streamWriteFloat32(streamId, spec.dynamicMotorLoad)
+            streamWriteBool(streamId, spec.isHarvestLoad)
+            streamWriteFloat32(streamId, spec.motorDemand)
             streamWriteFloat32(streamId, RealisticMechanicalSystems.sanitizeNumber(spec.wheelSlipIntensity, 0, 0, 1))
             streamWriteFloat32(streamId, spec.fuelState.wetStackingLevel)
             streamWriteFloat32(streamId, spec.fuelState.particulateFilterLevel)
@@ -570,8 +575,9 @@ function RealisticMechanicalSystems:onReadUpdateStream(streamId, timestamp, conn
             self:setOperatingTime(streamReadFloat32(streamId), true)
             spec.realOperatingTime = streamReadFloat32(streamId)
             spec._fuelUsageRaw = streamReadFloat32(streamId)
-            spec._netDynamicMotorLoad = streamReadFloat32(streamId)
-            spec.dynamicMotorLoad = spec._netDynamicMotorLoad
+            spec.dynamicMotorLoad = streamReadFloat32(streamId)
+            spec.isHarvestLoad = streamReadBool(streamId)
+            spec.motorDemand = streamReadFloat32(streamId)
             spec.wheelSlipIntensity = streamReadFloat32(streamId)
             spec.fuelState.wetStackingLevel = streamReadFloat32(streamId)
             spec.fuelState.particulateFilterLevel = streamReadFloat32(streamId)

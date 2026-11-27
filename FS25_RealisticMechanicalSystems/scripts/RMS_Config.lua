@@ -28,7 +28,6 @@ RMS_Config = {
         BASE_SYSTEMS_WEAR = 0.01,
 
         SERVICE_EXPIRED_THRESHOLD = 0.5,
-        -- intervals overdue: {start, full}
         SERVICE_EXPIRED_KNEE = { engine = { 1.3, 1.7 }, transmission = { 1.3, 1.7 }, hydraulics = { 1.3, 1.7 },
             cooling = { 1.3, 1.7 } },
         SERVICE_EXPIRED_DOUBLING = 0.4,
@@ -50,6 +49,8 @@ RMS_Config = {
             SERVICE_EXPIRED_MAX = 6,
             MOTOR_IDLING_THRESHOLD = 0.05,
             MOTOR_OVERLOADED_THRESHOLD = 1.0,
+            IDLE_LOAD_SHARE = 0.05,
+            SHOWN_LOAD_TAU = 0.45,
             TORQUE_LIFE_EXPONENT = 10 / 3,
             LUGGING_MULTIPLIER = 3.0,
             LUGGING_MOTORLOAD_THRESHOLD = 0.80,
@@ -98,7 +99,6 @@ RMS_Config = {
             OVERLOAD_FACTOR_FULL_EFFECT = 1.20,
             OVERLOAD_FACTOR_MULTIPLIER = 6.1,
             SHAFT_ANGLE_REFERENCE = 5,
-            -- {joint angle in deg, life coefficient}
             SHAFT_CROSS_LIFE = { { 3, 422 }, { 5, 300 }, { 7, 221 }, { 10, 150 }, { 12, 121 },
                 { 15, 90 }, { 17, 74 }, { 20, 53 }, { 22, 41 }, { 25, 27 } },
             SHAFT_TORQUE_EXPONENT = 3,
@@ -113,10 +113,14 @@ RMS_Config = {
             BASE_RATE = 1 / 0.65,
             ROTARY_SHARE = 0.60,
             CHOPPER_SHARE = 0.20,
-            -- rotary power a + c * t/h, a in kW, c in kWh/t
             SMALL_GRAIN = { a = 20, c = 3.6 },
+            ENGINE_MOG_ENERGY = 9.6,
             MAIZE = { a = 35, c = 1.6 },
             FORAGE = { a = 6, c = 3.3 },
+            WILTED_FORAGE = { a = 6, c = 4.0 },
+            WIDTH_POWER = { beet = { b = 4.2, draft = 5.6 }, potato = { b = 10.7, draft = 11.6 }, cotton = { b = 9.3, draft = 0 } },
+            MOG_PER_GRAIN = { WHEAT = 1.23, BARLEY = 1.24, OAT = 1.24, CANOLA = 1.40, SOYBEAN = 1.0, SORGHUM = 0.6, RICE = 1.7,
+                RICELONGGRAIN = 1.7 },
             FORAGE_DRY_MATTER = 0.35,
             WHOLE_PLANT_STRAW_RATIO = 0.5,
             STONE_CUT_HEIGHT = 0.20,
@@ -125,6 +129,11 @@ RMS_Config = {
             RICE_MULTIPLIER = 0.5,
             DETECTOR_OFF_STONE_MULTIPLIER = 2.0,
             MAX_GRAIN_LOSS = 0.15,
+            MIN_CUTTING_SPEED = 0.5,
+            LOAD_TICK_SHARE = 0.05,
+            FILL_TIME = 7,
+            SHOWN_LOAD_STOP_TAU = 0.2,
+            SHOWN_LOAD_STOP_SPEED = 0.4,
             KINDS = {
                 HARVESTERS = "grain", RICEHARVESTERS = "grain", FORAGEHARVESTERS = "forage",
                 BEETHARVESTERS = "beet", POTATOHARVESTING = "potato", COTTONHARVESTERS = "cotton",
@@ -134,17 +143,13 @@ RMS_Config = {
             }
         },
 
-        -- lining in mm3, heat capacity in J per kg per K, heat rise in K
         HEADER_DRIVE = {
             SLIP_EFFORT = 2,
             START_INERTIA_RATIO = 9,
             ENGAGEMENT_TIME_S = 0.2,
-            IDLE_START_SHARE = 0.1,
+            HELD_RPM_MARGIN = 150,
             LINING_WEAR_PER_KWH = 110,
             LINING_WEAR_ALLOWED = 67000,
-            LIMITER_MASS_KG = 10.3,
-            LIMITER_HEAT_CAPACITY = 460,
-            LIMITER_HEAT_RISE = 230,
             SEIZE_DAYS = 14,
             DAYS_PER_MONTH = 30.4
         },
@@ -243,7 +248,6 @@ RMS_Config = {
             },
         },
         RESALE = {
-            -- share of the new price: (c1 - c2 * sqrt(years) - c3 * sqrt(hours per year))^2
             CLASSES = {
                 TRACTOR_SMALL  = { c1 = 0.981, c2 = 0.093, c3 = 0.0058, hoursPerYear = 400 },
                 TRACTOR_MEDIUM = { c1 = 0.942, c2 = 0.100, c3 = 0.0008, hoursPerYear = 400 },
@@ -267,7 +271,6 @@ RMS_Config = {
         CONCURRENT_BREAKDOWN_LIMIT_PER_VEHICLE = 15,
         ENABLE_WARNING_MESSAGES = true,
 
-        -- speeds in km/h, rates in km/h per s, times in s, distance in m
         AI_WORKER = {
             MIN_SPEED = 5,
             SLOW_DOWN_LEVEL = 0.5,
@@ -320,7 +323,6 @@ RMS_Config = {
             { effect = "HARVEST_POWER_DEMAND", system = "HARVEST", amplitude = 0.15, exponent = 3, aggregation = "sum",
                 combustion = { "FORAGE_KNIFE_WEAR", "SHEAR_BAR_WEAR" } },
         },
-        -- price: % of REPAIR_REFERENCE_VALUE
         RENEWAL_GROUPS = {
             { key = "head", price = 0.8469,
                 parts = { "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" } },
@@ -337,7 +339,6 @@ RMS_Config = {
         SECONDARY_CAUSE_SHARE = 0.35,
 
         MACHINE_LIFE_HOURS = 12000,
-        -- Weibull shape and characteristic life in h
         COMPONENT_LIVES = {
             BALL_BEARING           = { shape = 2, scale = 26245 },
             ROLLER_BEARING         = { shape = 2, scale = 30342 },
@@ -700,7 +701,6 @@ RMS_Config = {
         FAN_AIRFLOW_EXPONENT = 0.39,
         FAN_DRIVE_YEARS = { VISCOUS = 1997, ELECTRONIC = 2013 },
         REVERSIBLE_FAN = { KIT_PRICE = 2176, REVERSAL_MS = 15000, AUTO_INTERVAL_MS = 1200000, MIN_YEAR = 2007, AUTO_MIN_YEAR = 2008 },
-        -- heating in deg C per s, cooling per s
         PROFILES = {
             diesel = {
                 warmup = {
@@ -835,7 +835,6 @@ RMS_Config = {
         CARTRIDGE_ML = 420,
         GREASE_L10_INTERVALS = 2.7,
         DRY_WEAR_FACTOR = 26,
-        -- tiers: points every hours, months or bales, none: daily; organ chassis needs own wheels, tandem two axles
         FAMILIES = {
             TRACTOR_SMALL = { { points = 3, hours = 50 } },
             TRACTOR_MEDIUM = { { points = 13, hours = 100 } },
@@ -966,7 +965,6 @@ RMS_Config = {
             BALERSROUND = "IMP_BALER_ROUND",
             WOODCHIPPERS = "IMP_MULCHER",
         },
-        -- category -> family, or a choice read from the machine; byWidth in m; false: not greased
         IMPLEMENT_CATEGORY_FAMILIES = {
             BALERS = "IMP_BALER_ROUND",
             BALERSROUND = "IMP_BALER_ROUND",
@@ -1281,7 +1279,6 @@ RMS_Config = {
 
         ERA_BREAKDOWN_FLOOR = 0.60,
 
-        -- {built before year, factor}
         ERA_FACTORS = {
             {2001, 1.00},
             {2006, 0.70},
@@ -1290,7 +1287,6 @@ RMS_Config = {
             {9999, 0.18}
         },
 
-        -- {built before year, factor}
         UNBURNT_ERA_FACTORS = {
             {2001, 1.00},
             {2006, 0.90},
@@ -1393,7 +1389,6 @@ RMS_Config = {
         FAULT_FLASH_DURATION_MS = 60000,
         START_ASSIST_TEMPERATURE_C = 5,
         ACTIVATION_TEMPERATURE_C = 25,
-        -- {engine deg C, wait in ms}
         WAIT_TIME_CURVE = {
             {-15, 15000},
             {-10, 10000},
@@ -1409,7 +1404,6 @@ RMS_Config = {
         RATING = {
             POWER_RANGE_HP = { 20, 705 },
             YEAR_RANGE = { 1970, 2026 },
-            -- base * (hp / 100)^powerExponent * decadeFactor^((year - 2000) / 10)
             ALTERNATOR_A = { base = 80.7, powerExponent = 0.53, decadeFactor = 1.27 },
             BATTERY_AH = { base = 124.6, powerExponent = 0.60, decadeFactor = 0.93 },
             STARTER_KW = { base = 2.93, powerExponent = 0.44, decadeFactor = 1 },
@@ -1421,18 +1415,14 @@ RMS_Config = {
             BATTERY_24V_AH = 180,
             ROAD_LIGHT = { alternatorA = 140, batteryCapacityAh = 68, starterKw = 2.0, glowPlugs = 4 }
         },
-        -- {state of charge, V of one 12 V battery}
         OCV_CURVE = { { 0, 11.7 }, { 0.25, 12.0 }, { 0.5, 12.2 }, { 0.75, 12.4 }, { 1, 12.6 } },
         REGULATED_VOLTAGE_V = 14.0,
         MIN_CRANKING_VOLTAGE_V = 7.2,
-        -- {deg C, ohm of a 1 Ah battery}
         INTERNAL_RESISTANCE_CURVE = { { -18, 0.51 }, { -10, 0.49 }, { 0, 0.46 }, { 25, 0.30 } },
         EMPTY_RESISTANCE_FACTOR = 2.0,
-        -- {engine deg C, drag factor}
         CRANKING_DRAG_CURVE = { { -19, 0.65 }, { 22, 1 } },
-        CRANKING_RPM = 250, -- engine rpm at full cranking speed
+        CRANKING_RPM = 250,
         FIRING_CRANKING_SPEED = 0.4,
-        -- {deg C, share of the charge out of reach}
         INACCESSIBLE_CHARGE_CURVE = { { -18, 0.54 }, { -12, 0.44 }, { -7, 0.34 }, { -1, 0.27 }, { 2, 0.21 }, { 10, 0.12 }, { 27, 0 } },
         CHARGE_ACCEPTANCE_BULK = 1.5,
         CHARGE_ACCEPTANCE_TOPPING = 0.04,
@@ -1447,7 +1437,6 @@ RMS_Config = {
         LAMP_VOLTAGE_V = 12,
         WORK_LAMPS_BEFORE_1990 = 2,
         WORK_LAMPS_BEFORE_2012 = 6,
-        -- {up to hp, lamps}
         WORK_LAMPS_BY_POWER = { { 100, 4 }, { 170, 6 }, { 300, 8 }, { 400, 10 }, { math.huge, 12 } },
         WORK_LAMPS_HARVESTER_FACTOR = 2,
         WORK_LAMP_HALOGEN_W = 55,
@@ -1460,13 +1449,11 @@ RMS_Config = {
         TURN_LIGHT_DUTY = 0.5,
         LED_YEARS = { LOW_BEAM_FAILURE = 2017, HIGH_BEAM_FAILURE = 2017, FRONT_WORK_LIGHTS_FAILURE = 2015,
             REAR_WORK_LIGHTS_FAILURE = 2015, BEACON_LIGHTS_FAILURE = 2017, TURN_LIGHTS_FAILURE = 2016 },
-        -- {deg C, A per kW of starter}
         STARTER_CURRENT_CURVE = { { -20, 165 }, { 0, 145 } },
         STARTER_HEAT_LIMIT_S = { Car = 10, Tractor4 = 30, Tractor6 = 30, Heavy = 30 },
         STARTER_REST_PER_CRANK = 4,
         STARTER_PERMISSIBLE_RISE_K = 105,
         GLOW_PLUG_A = 12,
-        -- {up to hp, glow plugs}
         GLOW_PLUGS_BY_POWER = { { 130, 4 }, { math.huge, 6 } },
         STANDBY_A = 0.05,
         LEAKAGE_FAULT_A = 0.1,
@@ -1485,7 +1472,6 @@ RMS_Config = {
         LICENCE_PRICE = 595,
         SCAN_DURATION_MS = 120000,
         ECUS = { "ENGINE", "INVERTER", "TRACTION_BATTERY", "CONVERTER", "CHARGER", "TRANSMISSION", "TRACTOR", "DASHBOARD" },
-        -- SPN and FMI at warning and critical; branches by stage
         FAULT_CODES = {
             ECU_MALFUNCTION = { ecu = "ENGINE", spn = 523612, warning = 12, critical = 12 },
             TURBOCHARGER_MALFUNCTION = { ecu = "ENGINE", spn = 102, warning = 1, critical = 1 },
@@ -1598,7 +1584,6 @@ RMS_Config = {
         BATTERY_COLD_STAGES = { 10, 0, -10, -20 },
 
         BATTERY_CAPACITY_FADE = 0.20,
-        -- {deg C, share of the charge power accepted}
         CHARGE_ACCEPTANCE_CURVE = { { -10, 0.2 }, { 0, 0.5 }, { 10, 1.0 } },
         CHARGE_SLICE = 0.001
     },

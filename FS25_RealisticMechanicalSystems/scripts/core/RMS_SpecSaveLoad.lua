@@ -567,7 +567,6 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.engineTemperature = -99
     self.spec_RealisticMechanicalSystems.rawEngineTemperature = -99
     self.spec_RealisticMechanicalSystems._smoothedMotorLoad = 0
-    self.spec_RealisticMechanicalSystems._netDynamicMotorLoad = 0
     self.spec_RealisticMechanicalSystems.radiatorHealth = 1.0
     self.spec_RealisticMechanicalSystems.fanClutchHealth = 1.0
     self.spec_RealisticMechanicalSystems.hasReversibleFan = self.configurations[RMS_Thermal.REVERSIBLE_FAN] == 2
@@ -614,6 +613,10 @@ function RealisticMechanicalSystems:onLoad(savegame)
     self.spec_RealisticMechanicalSystems.roofLastRaycastTime = nil
     self.spec_RealisticMechanicalSystems.roofWasStationary = false
     self.spec_RealisticMechanicalSystems.dynamicMotorLoad = 0
+    self.spec_RealisticMechanicalSystems.shownMotorLoad = 0
+    self.spec_RealisticMechanicalSystems.isHarvestLoad = false
+    self.spec_RealisticMechanicalSystems.motorDemand = 0
+    self.spec_RealisticMechanicalSystems.rpmDrop = 0
     self.spec_RealisticMechanicalSystems.activeDraftMaxForce = 0
     self.spec_RealisticMechanicalSystems.activeDraftEffectiveForceCap = 0
     self.spec_RealisticMechanicalSystems.isCranking = false

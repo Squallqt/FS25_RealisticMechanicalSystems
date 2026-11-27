@@ -476,9 +476,10 @@ end
 -- @param table vehicle vehicle
 -- @param table wear wear of the update
 -- @param float load engine load
+-- @param float askedLoad load asked of the engine, above its full load when asked more than it gives
 -- @param table C wear configuration of the system
 -- @param string overloadName cause of the overload
-local function addTorqueWear(vehicle, wear, load, C, overloadName)
+local function addTorqueWear(vehicle, wear, load, askedLoad, C, overloadName)
     local isElectric = vehicle.spec_RealisticMechanicalSystems.isElectricVehicle
     local torque = RMS_Utils.getRatedTorqueRatio(vehicle, load)
     local rated = RMS_Config.CORE.ENGINE_FACTOR_DATA.MOTOR_OVERLOADED_THRESHOLD * RMS_EngineRemap.getOverloadRatio(vehicle)
@@ -486,10 +487,9 @@ local function addTorqueWear(vehicle, wear, load, C, overloadName)
     -- the curve falls at very low revs, the strain on the block does not
     local lowRevWear = 0
     if not isElectric and load > C.LUGGING_MOTORLOAD_THRESHOLD and vehicle:getLastSpeed() > 0.5 then
-        lowRevWear = RMS_Utils.getEngineLuggingSeverity(vehicle.spec_motorized.motor, load, C.LUGGING_MOTORLOAD_THRESHOLD)
-            * C.LUGGING_MULTIPLIER
+        lowRevWear = RMS_Utils.getEngineLuggingSeverity(vehicle, load, C.LUGGING_MOTORLOAD_THRESHOLD) * C.LUGGING_MULTIPLIER
     end
-    if load > rated or isElectric then
+    if askedLoad > rated or isElectric then
         addCause(wear, overloadName, lawWear)
         addCause(wear, "luggingFactor", lowRevWear)
     else
@@ -522,7 +522,7 @@ local function updateElectricMotorSystem(vehicle, dt, systemKey)
         addCause(wear, "motorLoadFactor", RMS_Utils.getLifeLawFactor(torque, C.TORQUE_LIFE_EXPONENT))
         local overload = math.max(torque - 1, 0) / C.OVERLOAD_HEATING_SHARE * C.OVERLOAD_HEATING_K
         addCause(wear, "hotMotorFactor", RMS_Utils.getHeatWearFactor(temperature + overload, getNormalTop(spec)))
-        if getIsIdling(vehicle, vehicle:getMotorLoadPercentage()) then
+        if getIsIdling(vehicle, RMS_Utils.getMotorLoad(vehicle)) then
             wear.rate = wear.rate * C.MOTOR_STANDSTILL_MULTIPLIER
         end
     else
@@ -553,8 +553,8 @@ function RealisticMechanicalSystems:updateEngineSystem(dt)
     local wear = startWear(1.0, ENGINE_CAUSES)
     local temperature = getEngineTemperature(spec)
     if self:getIsMotorStarted() then
-        local motorLoad = self:getMotorLoadPercentage()
-        addTorqueWear(self, wear, spec.dynamicMotorLoad, C, "motorLoadFactor")
+        local motorLoad = RMS_Utils.getMotorLoad(self)
+        addTorqueWear(self, wear, spec.dynamicMotorLoad, RMS_EngineRemap.getStockLoad(self, spec.motorDemand), C, "motorLoadFactor")
 
         if spec.airFilterClogging > C.AIR_FILTER_CLOGGING_THRESHOLD then
             addCause(wear, "airFilterCloggingFactor", RMS_Utils.calculateQuadraticMultiplier(spec.airFilterClogging, C.AIR_FILTER_CLOGGING_THRESHOLD, false)
@@ -587,9 +587,9 @@ local TRANSMISSION_CAUSES = { "expiredServiceFactor", "pullOverloadFactor", "fil
 local function addTransmissionWork(vehicle, wear, driveLoad, transTemp)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.CORE.TRANSMISSION_FACTOR_DATA
-    local motorLoad, speed = vehicle:getMotorLoadPercentage(), vehicle:getLastSpeed()
+    local motorLoad, speed = RMS_Utils.getMotorLoad(vehicle), vehicle:getLastSpeed()
 
-    addTorqueWear(vehicle, wear, driveLoad, C, "pullOverloadFactor")
+    addTorqueWear(vehicle, wear, driveLoad, driveLoad, C, "pullOverloadFactor")
 
     local isSlipping = not RMS_Drivetrain.getIsTurning(vehicle) and spec.wheelSlipIntensity > C.WHEEL_SLIP_THRESHOLD and speed < 20
         and motorLoad > 0.5 and (speed > 0.5 or not vehicle:getIsAIActive())
@@ -637,7 +637,7 @@ function RealisticMechanicalSystems:updateTransmissionSystem(dt)
 
     -- the transmission addon owns the wear of its gearbox
     if hasCVTAddon(self) and isRunning then
-        if getIsIdling(self, self:getMotorLoadPercentage()) then
+        if getIsIdling(self, RMS_Utils.getMotorLoad(self)) then
             wear.rate = wear.rate * C.TRANSMISSION_IDLING_MULTIPLIER
         end
     elseif isRunning then
@@ -759,17 +759,14 @@ function RealisticMechanicalSystems:updatePtoSystem(dt)
         ptoUtilization = spec.ptoUtilization, ptoEngagementCount = spec.ptoEngagementCount })
 end
 
----Returns the stone multiplier, whether a pickup is attached and the crop conversion
+---Returns the stone multiplier and whether a pickup is attached
 -- @param table spec_combine combine specialization
--- @param integer? fruitTypeIndex crop harvested
 -- @return float stone stone multiplier
 -- @return boolean isPickup true with a pickup
--- @return table? conversion crop conversion, nil without one
-local function getAttachedCutterData(spec_combine, fruitTypeIndex)
-    local stone, isPickup, conversion = 1, false, nil
+local function getAttachedCutterData(spec_combine)
+    local stone, isPickup = 1, false
     for cutter in pairs(spec_combine.attachedCutters) do
         local spec_cutter = cutter.spec_cutter
-        -- stones only reach a header at the ground, cutting or picking up
         local isAtGround = spec_cutter == nil or spec_cutter.useWindrow == true
             or (spec_cutter.currentCutHeight or 0) <= RMS_Config.CORE.HARVEST_FACTOR_DATA.STONE_CUT_HEIGHT
         if cutter.getCutterStoneMultiplier ~= nil and isAtGround then
@@ -777,17 +774,17 @@ local function getAttachedCutterData(spec_combine, fruitTypeIndex)
         end
         if spec_cutter ~= nil then
             isPickup = isPickup or spec_cutter.useWindrow == true
-            conversion = conversion or spec_cutter.fruitTypeConverters[fruitTypeIndex]
         end
     end
-    return stone, isPickup, conversion
+    return stone, isPickup
 end
 
 ---Returns the crop counted since the last measure
 -- @param table spec RMS specialization of the vehicle
 -- @return table input liters, crop and straw counted
 local function getHarvestInput(spec)
-    spec.harvestInput = spec.harvestInput or { liters = 0, time = g_currentMission.time }
+    local now = g_currentMission.time
+    spec.harvestInput = spec.harvestInput or { liters = 0, time = now, batchTime = now, countedTime = now, batchLiters = 0, batchMs = 0 }
     return spec.harvestInput
 end
 
@@ -806,27 +803,34 @@ function RealisticMechanicalSystems.addCutterArea(self, superFunc, area, liters,
     local spec = self.spec_RealisticMechanicalSystems
     if applied > 0 and liters > 0 then
         local input = getHarvestInput(spec)
-        input.liters = input.liters + liters
-        -- a pickup hands over a windrow, its crop read from the grain
+        input.liters, input.batchTime = input.liters + liters, g_currentMission.time
         input.fruitTypeIndex = inputFruitType or g_fruitTypeManager:getFruitTypeIndexByFillTypeIndex(outputFillType)
         input.fillTypeIndex, input.strawRatio = outputFillType, math.clamp(strawRatio, 0, 1)
     end
     return applied
 end
 
----Returns the straw of the crop as the combine buffers it, in t per l of grain
+---Returns the material other than grain of a crop per tonne of grain
 -- @param table fruitDesc crop
--- @param table? conversion crop conversion, nil without one
--- @return float straw straw (t per l of grain)
-local function getStrawPerGrainLiter(fruitDesc, conversion)
-    if fruitDesc.windrowLiterPerSqm == nil or fruitDesc.literPerSqm <= 0 then
-        return 0
+-- @return float? mogPerGrain material other than grain (t per t), nil without straw
+local function getMogPerGrain(fruitDesc)
+    local mogPerGrain = RMS_Config.CORE.HARVEST_FACTOR_DATA.MOG_PER_GRAIN
+    return mogPerGrain[fruitDesc.name] or fruitDesc.windrowLiterPerSqm ~= nil and mogPerGrain.WHEAT or nil
+end
+
+---Returns the working width of a harvester's headers, its own without header
+-- @param table vehicle harvester
+-- @return float width width (m)
+local function getHarvestWidth(vehicle)
+    local cutters = vehicle.spec_combine.attachedCutters
+    if next(cutters) == nil then
+        return RMS_Utils.getWorkingWidth(vehicle)
     end
-    -- a crop without windrow drops straw all the same
-    local windrowFillType = g_fruitTypeManager:getWindrowFillTypeIndexByFruitTypeIndex(fruitDesc.index) or FillType.STRAW
-    local cropPerLiter = 1 / (conversion ~= nil and conversion.conversionFactor or 1)
-    return cropPerLiter / fruitDesc.literPerSqm * fruitDesc.windrowLiterPerSqm
-        * g_fillTypeManager:getFillTypeByIndex(windrowFillType).massPerLiter
+    local width = 0
+    for cutter in pairs(cutters) do
+        width = width + RMS_Utils.getWorkingWidth(cutter)
+    end
+    return width
 end
 
 ---Returns a flow against the flow of full work, a model being a + c * t/h
@@ -839,83 +843,98 @@ local function getFullWorkShare(flow, model, engineKw)
     return flow * model.c / math.max(C.ROTARY_SHARE * engineKw - model.a, 1)
 end
 
----Measures the work of the crop taken in since the last measure, over the time really gone by
+---Measures the work of the crop taken in, each batch over the time since the one before, at most what the engine gives
 -- @param table vehicle vehicle
 -- @param table state harvest state
 -- @param table input crop counted
--- @param float elapsedMs time gone by (ms)
-local function measureHarvestWork(vehicle, state, input, elapsedMs)
+-- @param float now time of the measure (ms)
+local function measureHarvestWork(vehicle, state, input, now)
     local C = RMS_Config.CORE.HARVEST_FACTOR_DATA
     local spec_combine = vehicle.spec_combine
     local engineKw = math.max(vehicle:getMotor().peakMotorPower, 1)
-    local liters = input.liters
+    local delivered = input.liters
     input.liters = 0
+    if delivered > 0 then
+        input.batchLiters, input.batchMs, input.countedTime = delivered, input.batchTime - input.countedTime, input.batchTime
+    end
+    local rowMs = math.sqrt(g_currentMission:getFruitPixelsToSqm()) * 3600 / math.max(vehicle:getLastSpeed(), C.MIN_CUTTING_SPEED)
+    local sinceBatch = now - input.countedTime
+    local liters = sinceBatch <= 2 * rowMs and input.batchLiters or 0
 
     local fruitTypeIndex = input.fruitTypeIndex or spec_combine.lastValidInputFruitType
     local fruitDesc = g_fruitTypeManager:getFruitTypeByIndex(fruitTypeIndex)
-    local stone, isPickup, conversion = getAttachedCutterData(spec_combine, fruitTypeIndex)
+    local stone, isPickup = getAttachedCutterData(spec_combine)
     state.stone = stone - 1
     state.crop = fruitDesc ~= nil and fruitDesc.name or nil
     state.isRice = state.crop ~= nil and string.find(state.crop, "RICE", 1, true) ~= nil
 
-    local hours = elapsedMs / 3600000
+    local hours = math.max(input.batchMs, sinceBatch) / 3600000
     local strawRatio = input.strawRatio or 1
-    local grainTph, strawTph = 0, 0
+    local grainTph = 0
     local fillType = g_fillTypeManager:getFillTypeByIndex(input.fillTypeIndex)
     if liters > 0 and fruitDesc ~= nil and fillType ~= nil then
         grainTph = liters * fillType.massPerLiter / hours
-        strawTph = liters * getStrawPerGrainLiter(fruitDesc, conversion) * strawRatio / hours
     end
 
-    local isChopping = spec_combine.chopper.isAvailable and not spec_combine.isSwathActive
-        and vehicle.spec_RealisticMechanicalSystems.activeEffects.CHOPPER_FAILURE == nil
-    local rotaryKw, chopperKw = nil, 0
+    local effects = vehicle.spec_RealisticMechanicalSystems.activeEffects
+    local demand = 1 + (effects.HARVEST_POWER_DEMAND ~= nil and effects.HARVEST_POWER_DEMAND.value or 0)
+    local isChopping = spec_combine.chopper.isAvailable and not spec_combine.isSwathActive and effects.CHOPPER_FAILURE == nil
+    local rotaryKw, chopperKw, powerKw = nil, 0, nil
     state.grain = 0
     if state.kind == "grain" then
-        -- the whole plant goes through on its straw, ears alone on their grain
-        local isWholePlant = fruitDesc ~= nil and fruitDesc.windrowLiterPerSqm ~= nil and strawRatio > C.WHOLE_PLANT_STRAW_RATIO
-        local model = isWholePlant and C.SMALL_GRAIN or C.MAIZE
-        local flow = isWholePlant and strawTph or grainTph
-        rotaryKw = model.a + model.c * flow
+        local mogPerGrain = fruitDesc ~= nil and strawRatio > C.WHOLE_PLANT_STRAW_RATIO and getMogPerGrain(fruitDesc) or nil
+        local model = mogPerGrain ~= nil and C.SMALL_GRAIN or C.MAIZE
+        local flow = mogPerGrain ~= nil and grainTph * mogPerGrain * strawRatio or grainTph
+        rotaryKw = (model.a + model.c * flow) * demand
+        powerKw = mogPerGrain ~= nil and (model.a + C.ENGINE_MOG_ENERGY * flow) * demand or nil
         state.grain = getFullWorkShare(flow, model, engineKw)
-        chopperKw = isChopping and C.CHOPPER_ENERGY * strawTph or 0
-    elseif state.kind == "forage" and not isPickup then
+        chopperKw = isChopping and mogPerGrain ~= nil and C.CHOPPER_ENERGY * grainTph or 0
+    elseif state.kind == "forage" then
+        local model = isPickup and C.WILTED_FORAGE or C.FORAGE
         local flow = grainTph * C.FORAGE_DRY_MATTER
-        rotaryKw = C.FORAGE.a + C.FORAGE.c * flow
-        state.grain = getFullWorkShare(flow, C.FORAGE, engineKw)
+        rotaryKw = (model.a + model.c * flow) * demand
+        state.grain = getFullWorkShare(flow, model, engineKw)
+    elseif C.WIDTH_POWER[state.kind] ~= nil then
+        local model = C.WIDTH_POWER[state.kind]
+        powerKw = grainTph > 0 and (model.b + model.draft * vehicle:getLastSpeed() / 3.6) * getHarvestWidth(vehicle) * demand or 0
     end
+    state.powerKw = powerKw or rotaryKw
 
     local effort = rotaryKw ~= nil and rotaryKw / (C.ROTARY_SHARE * engineKw) or spec_combine.numAttachedCutters > 0 and vehicle:getCombineLoadPercentage() or 0
     local chopper = chopperKw / (C.CHOPPER_SHARE * engineKw)
     state.source, state.isWet = "rms", vehicle:getIsThreshingDuringRain()
 
     local api = RMS_Utils.getHarvestModApi()
-    if api ~= nil and api.isActivelyHarvesting(vehicle) then
+    if api ~= nil and api.isActivelyHarvesting(vehicle) and not RMS_Utils.getIsHarvestModArcade() then
         local power = api.getPowerBreakdown(vehicle)
         local processHp = power.pProcess + power.pChopper + power.pSoil
-        -- a provider that stops computing keeps its last powers unchanged
-        if power.effectiveHp > 0 and processHp > 0 and (api.getEngineLoad(vehicle) > 0 or processHp ~= state.rhProcessHp) then
-            -- against the rated engine, not the power its difficulty adds
-            local ratedHp = engineKw * 1.35962
-            effort = processHp / (C.ROTARY_SHARE * ratedHp)
-            chopper = power.pChopper / (C.CHOPPER_SHARE * ratedHp)
-            -- from hp to kW
-            rotaryKw, chopperKw = processHp / 1.35962, power.pChopper / 1.35962
+        if power.effectiveHp > 0 and processHp > 0 and api.getEngineLoad(vehicle) > 0 then
+            local engineShare = RMS_Utils.getHarvestModEngineShare()
+            local ratedHp = engineKw * RMS_Fluids.KW_TO_HP
+            effort = processHp * engineShare / (C.ROTARY_SHARE * ratedHp)
+            chopper = power.pChopper * engineShare / (C.CHOPPER_SHARE * ratedHp)
+            rotaryKw, chopperKw = processHp * engineShare / RMS_Fluids.KW_TO_HP, power.pChopper * engineShare / RMS_Fluids.KW_TO_HP
             state.source, state.isWet = "rh", api.isMoistureExceeded(vehicle)
         end
-        state.rhProcessHp = processHp
+    end
+
+    if rotaryKw ~= nil then
+        local harvestLoad = vehicle.spec_rmsHarvestLoad
+        local asked = state.source == "rh" and harvestLoad ~= nil and harvestLoad.shownLoad or rotaryKw / engineKw
+        local engineGiven = 1 / math.max(asked, 1)
+        effort, chopper, state.grain = effort * engineGiven, chopper * engineGiven, state.grain * engineGiven
+        rotaryKw, chopperKw = rotaryKw * engineGiven, chopperKw * engineGiven
     end
 
     local motor, peak = vehicle:getMotor(), 0
     for rpm = motor.minRpm, motor.maxRpm, 50 do
         peak = math.max(peak, motor:getTorqueCurveValue(rpm) * rpm)
     end
-    -- from kNm and rpm to hp
-    state.enginePowerHp = peak * math.pi / 30 * 1.35962
+    state.enginePowerHp = peak * math.pi / 30 * RMS_Fluids.KW_TO_HP
 
     state.effort, state.chopper = effort, chopper
     state.tonPerHour, state.rotaryKw, state.chopperKw = grainTph, rotaryKw or 0, chopperKw
-    state.tons = (state.tons or 0) + grainTph * hours
+    state.tons = (state.tons or 0) + (fillType ~= nil and delivered * fillType.massPerLiter or 0)
 end
 
 ---Returns the gamma function of a value
@@ -942,8 +961,8 @@ end
 -- @param integer? starts header starts saved
 -- @return table drive header drive
 function RealisticMechanicalSystems.newHeaderDrive(starts)
-    return { isTurning = false, powerW = 0, starts = starts or 0, lastRpm = 0, lastStartShare = 0, lastStartJ = 0, startSlipMs = 0,
-        slipMs = 0, slipLimitMs = 0, isSlipSpent = false }
+    return { isTurning = false, powerW = 0, starts = starts or 0, lastRpm = 0, lastHeldRpm = 0, lastStartShare = 0, lastStartJ = 0,
+        startSlipMs = 0 }
 end
 
 ---Reads the headers the machine drives and their steady power (W)
@@ -958,23 +977,18 @@ local function readDrivenHeaders(vehicle, drive)
             drive.powerW = drive.powerW + (consumer ~= nil and consumer.neededMaxPtoPower or 0) * 1000
         end
     end
-    -- a standing header keeps its greasing and its slip clutch
     drive.header = drive.header or next(vehicle.spec_combine.attachedCutters)
 end
 
 ---Fails a part at its worst stage
 -- @param table vehicle vehicle
 -- @param string partId part
--- @param string? abuse abuse marked, none when nil
-local function failAtWorst(vehicle, partId, abuse)
+local function failAtWorst(vehicle, partId)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local stages = #RMS_Breakdowns.BreakdownRegistry[partId].stages
     local breakdown = spec.activeBreakdowns[partId]
     if breakdown ~= nil and breakdown.stage >= stages then
         return
-    end
-    if abuse ~= nil then
-        spec.partAbuse[partId] = RealisticMechanicalSystems.WARRANTY_ABUSE[abuse]
     end
     if breakdown ~= nil then
         vehicle:changeBreakdownStage(partId, stages)
@@ -1008,7 +1022,8 @@ local function getPartCauseShare(spec, systemKey, partId, alias)
     return nil
 end
 
----Counts a header start, its clutch slipping twice the kinetic energy of the header
+---Counts a header start, its clutch slipping twice the kinetic energy of the header when the engine runs above the speed
+-- held for the drives already turning
 -- @param table vehicle vehicle
 -- @param table spec RMS specialization of the vehicle
 -- @param table drive header drive
@@ -1016,63 +1031,31 @@ end
 local function startHeader(vehicle, spec, drive, systemKey)
     local C = RMS_Config.CORE.HEADER_DRIVE
     local motor = vehicle:getMotor()
-    local isAI = vehicle:getIsAIActive()
-    local rpm = isAI and motor.minRpm or drive.lastRpm
+    local rpm = vehicle:getIsAIActive() and motor.minRpm or drive.lastRpm
     local speedShare = math.clamp(rpm / motor.maxRpm, 0, 1)
     drive.starts, drive.lastStartShare, drive.lastStartJ, drive.startSlipMs = drive.starts + 1, speedShare, 0, 0
-    local aboveIdle = (rpm - motor.minRpm) / math.max(motor.maxRpm - motor.minRpm, 1)
-    local isHigh = not isAI and aboveIdle > C.IDLE_START_SHARE
+    local isHigh = rpm - drive.lastHeldRpm > C.HELD_RPM_MARGIN
     if RMS_Greasing.getIsLimiterSeized(drive.header) then
         return
     end
     local share = getPartCauseShare(spec, systemKey, "HEADER_SLIP_CLUTCH_WEAR", "hdef")
-    if C.START_INERTIA_RATIO * speedShare <= C.SLIP_EFFORT or drive.powerW <= 0 or share == nil or share <= 0 then
+    if not isHigh or C.START_INERTIA_RATIO * speedShare <= C.SLIP_EFFORT or drive.powerW <= 0 or share == nil or share <= 0 then
         return
     end
-    -- J slipped, the kinetic energy growing with speed squared
-    local energy = C.START_INERTIA_RATIO * drive.powerW * C.ENGAGEMENT_TIME_S * speedShare ^ 2
+    local energy = C.START_INERTIA_RATIO * drive.powerW * C.ENGAGEMENT_TIME_S * speedShare ^ 2 -- J
     drive.lastStartJ = energy
-    -- slipping at its setting torque, half the start speed on average
     drive.startSlipMs = energy / (C.SLIP_EFFORT * drive.powerW * speedShare / 2) * 1000
     local lining = energy / 3600000 * C.LINING_WEAR_PER_KWH / C.LINING_WEAR_ALLOWED
     vehicle:applyInstantDamageToSystem(spec.systems[systemKey].name, lining * getMeanLifeWear("FRICTION_CLUTCH") / share,
-        "headerEngagementFactor", isHigh and "header_engagement" or nil)
-end
-
----Slips the slip clutch past its setting, until its heat ruins it
--- @param table vehicle vehicle
--- @param table drive header drive
--- @param float effort effort against the setting of the clutch
--- @param float dt time of the step (ms)
-local function slipHeaderClutch(vehicle, drive, effort, dt)
-    local C = RMS_Config.CORE.HEADER_DRIVE
-    if not drive.isTurning or effort <= C.SLIP_EFFORT then
-        drive.slipMs, drive.isSlipSpent = 0, false
-        return
-    end
-    if RMS_Greasing.getIsLimiterSeized(drive.header) then
-        RealisticMechanicalSystems.onHeaderBlocked(vehicle)
-        return
-    end
-    if drive.powerW <= 0 then
-        return
-    end
-    drive.slipMs = drive.slipMs + dt
-    -- ms to heat the clutch, slipping at twice the steady power
-    drive.slipLimitMs = C.LIMITER_MASS_KG * C.LIMITER_HEAT_CAPACITY * C.LIMITER_HEAT_RISE / (2 * drive.powerW) * 1000
-    if drive.slipMs >= drive.slipLimitMs and not drive.isSlipSpent then
-        drive.isSlipSpent = true
-        failAtWorst(vehicle, "HEADER_SLIP_CLUTCH_WEAR", "heat")
-    end
+        "headerEngagementFactor", "header_engagement")
 end
 
 ---Follows the header the machine drives: starts, slipping, greasing
 -- @param table vehicle vehicle
 -- @param table spec RMS specialization of the vehicle
--- @param table state harvest state
 -- @param string systemKey key of the system
 -- @param float dt time of the step (ms)
-local function updateHeaderDrive(vehicle, spec, state, systemKey, dt)
+local function updateHeaderDrive(vehicle, spec, systemKey, dt)
     local drive = spec.headerDrive
     local wasTurning = drive.isTurning
     readDrivenHeaders(vehicle, drive)
@@ -1086,10 +1069,9 @@ local function updateHeaderDrive(vehicle, spec, state, systemKey, dt)
     else
         drive.startSlipMs = 0
     end
-    slipHeaderClutch(vehicle, drive, state.effort or 0, dt)
-    -- every player hears it slip
-    spec.isHeaderSlipping = drive.startSlipMs > 0 or drive.slipMs > 0 and not drive.isSlipSpent
-    drive.lastRpm = vehicle:getMotor():getLastModulatedMotorRpm()
+    spec.isHeaderSlipping = drive.startSlipMs > 0
+    local motor = vehicle:getMotor()
+    drive.lastRpm, drive.lastHeldRpm = motor:getLastModulatedMotorRpm(), motor:getRequiredMotorRpmRange()
 end
 
 ---Wears the harvest organs on the work they do, only while harvesting
@@ -1115,17 +1097,16 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
         spec.harvestState = state
     end
 
-    -- measured every step, so no crop is left over for later
     local input = getHarvestInput(spec)
     local now = g_currentMission.time
     if now > input.time then
-        measureHarvestWork(self, state, input, now - input.time)
+        measureHarvestWork(self, state, input, now)
         input.time = now
     end
 
     local drive = spec.headerDrive
     if drive ~= nil then
-        updateHeaderDrive(self, spec, state, systemKey, dt)
+        updateHeaderDrive(self, spec, systemKey, dt)
     end
 
     -- a header driven on its own still feeds the machine
@@ -1135,7 +1116,6 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
         harvestRiceFactor = 0, harvestWetFactor = 0, lubricationFactor = 0, headerLubricationFactor = 0 }
     if spec.isHarvestRunning then
         local work = C.BASE_RATE * state.effort
-        -- stones, rice straw and a damp crop only reach organs fed with crop
         local cropWork = state.tonPerHour > 0 and work or 0
         local stone = state.stone * (spec.activeEffects.METAL_DETECTOR_OFF ~= nil and C.DETECTOR_OFF_STONE_MULTIPLIER or 1)
         local rates = {
@@ -1150,7 +1130,6 @@ function RealisticMechanicalSystems:updateHarvestSystem(dt)
         }
         wearRate = C.BASE_RATE * math.min(state.effort, 1)
         for key, rate in pairs(rates) do
-            -- a cause spreads over its parts: scaled to reach each part whole
             local shares = spec.partCauseShares[systemKey][RealisticMechanicalSystems.FACTOR_STATS_ALIASES[key]]
             local maxShare = 0
             for _, share in pairs(shares or {}) do
@@ -1393,7 +1372,7 @@ local function updateTractionBatterySystem(vehicle, dt, systemKey)
         local heat = (spec.tractionBatteryTempC - C.BATTERY_HEAT_THRESHOLD) / C.BATTERY_HEAT_STEP_K
         addCause(wear, "batteryHeatFactor", heat > 0 and C.BATTERY_HEAT_FACTOR ^ heat - 1 or 0)
         if fuelState.level < C.DEEP_DISCHARGE_THRESHOLD then
-            local loadShare = 1 + RMS_Utils.calculateQuadraticMultiplier(vehicle:getMotorLoadPercentage(), 0.70, false)
+            local loadShare = 1 + RMS_Utils.calculateQuadraticMultiplier(RMS_Utils.getMotorLoad(vehicle), 0.70, false)
             addCause(wear, "deepDischargeFactor", RMS_Utils.calculateQuadraticMultiplier(fuelState.level, C.DEEP_DISCHARGE_THRESHOLD, true)
                 * loadShare * C.DEEP_DISCHARGE_MULTIPLIER)
         end
@@ -1430,7 +1409,7 @@ function RealisticMechanicalSystems:updateFuelSystem(dt)
     local readings = { currentFuelUsageRatio = 0, idleTimer = fuelState.idleTimer, fuelLevel = 0, fuelTemperature = 0 }
 
     if self:getIsMotorStarted() then
-        local motorLoad = self:getMotorLoadPercentage()
+        local motorLoad = RMS_Utils.getMotorLoad(self)
         local level, temperature, usage = fuelState.level, fuelState.temperature, fuelState.currentUsageRatio
         readings.fuelLevel, readings.fuelTemperature, readings.currentFuelUsageRatio = level, temperature, usage
 

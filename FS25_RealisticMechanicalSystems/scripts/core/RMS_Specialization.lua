@@ -604,7 +604,8 @@ local function getSyncGroups()
             watch(function(_, spec) return RMS_Utils.serializeInvoice(spec.pendingServiceInvoice) end) } },
         { group = GROUP.TELEMETRY, watches = {
             watch(getSyncOperatingTime, 60000.0), watch("realOperatingTime", 60000.0), watch("_fuelUsageRaw", 0.3),
-            watch("dynamicMotorLoad", 0.01), watch("wheelSlipIntensity", 0.01), watch("liftedMass", 10.0),
+            watch("dynamicMotorLoad", 0.01), watch("isHarvestLoad"), watch("motorDemand", 0.01),
+            watch("wheelSlipIntensity", 0.01), watch("liftedMass", 10.0),
             watch("tripFuelLitres", 0.5), watch("tripEngineTime", 60000.0), watch("tripWorkFuelLitres", 0.5),
             watch("tripWorkedHectares", 0.01) } },
         -- The engine temperature is brought up to date before it is compared
@@ -1578,7 +1579,7 @@ local function getThermalWarning(vehicle, spec, dt)
             end
         end
         if message == nil and spec.engineTemperature >= ENGINE.OVERHEAT_MOTOR_WARNING
-            and vehicle:getMotorLoadPercentage() > ENGINE.OVERHEAT_MOTOR_WARNING_LOAD then
+            and RMS_Utils.getMotorLoad(vehicle) > ENGINE.OVERHEAT_MOTOR_WARNING_LOAD then
             message = "rms_spec_overheat_engine_message"
         end
     end
@@ -1799,7 +1800,7 @@ local function getSmoothedMotorLoad(vehicle, dt)
         spec._smoothedMotorLoad = 0
         return
     end
-    local load = math.max(vehicle:getMotorLoadPercentage(), 0)
+    local load = math.max(RMS_Utils.getMotorLoad(vehicle), 0)
     local previous = spec._smoothedMotorLoad
     spec._smoothedMotorLoad = previous + math.min(dt / (300 + dt), 1) * (load - previous)
 end
@@ -1816,6 +1817,7 @@ function RealisticMechanicalSystems:onUpdate(dt, ...)
     RMS_Bodywork.syncPreview(self)
 
     self:updateVehicleStateSnapshot(dt)
+    RealisticMechanicalSystems.updateEngineLugging(self)
     if self.isServer then
         RMS_Steering.updateTerrainImpacts(self, dt)
         self:updateThermalSystems(dt, false, true)

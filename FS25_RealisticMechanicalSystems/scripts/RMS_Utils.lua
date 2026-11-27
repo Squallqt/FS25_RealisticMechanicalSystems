@@ -679,25 +679,18 @@ end
 -- @param table vehicle vehicle
 -- @return float share 0 at idle or with the engine off, 1 at maximum rpm
 function RMS_Utils.getMotorRpmShareAboveIdle(vehicle)
-    local motor = vehicle ~= nil and vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    if motor == nil or vehicle.getIsMotorStarted == nil or not vehicle:getIsMotorStarted() then
+    if not vehicle:getIsMotorStarted() then
         return 0
     end
-
-    local minRpm = tonumber(motor.minRpm) or 0
-    local maxRpm = tonumber(motor.maxRpm) or 0
-    if maxRpm <= minRpm then
-        return 0
-    end
-
-    return math.clamp(((tonumber(motor:getLastModulatedMotorRpm()) or 0) - minRpm) / (maxRpm - minRpm), 0, 1)
+    local motor = vehicle:getMotor()
+    return math.clamp((motor:getLastModulatedMotorRpm() - motor.minRpm) / (motor.maxRpm - motor.minRpm), 0, 1)
 end
 
 ---Returns the condition new PTO engagements take
 -- @param table vehicle vehicle
 -- @param table engagementTorques torque of each link
 -- @param table previousActiveLinks links active at the previous frame
--- @param float rpmShare engine speed above idle, 0 to 1
+-- @param float rpmShare engine speed above the speed held for what already turns, 0 to 1 of the range above idle
 -- @return float damage condition taken
 -- @return boolean isShock true for an engagement at speed
 function RMS_Utils.getPtoEngagementDamage(vehicle, engagementTorques, previousActiveLinks, rpmShare)
@@ -1142,19 +1135,20 @@ function RMS_Utils.calculateQuadraticMultiplier(level, threshold, lessIsWorse, c
     return distance * distance
 end
 
----Returns the lugging severity of a motor, high load at low rpm
--- @param table motor motor of the vehicle
+---Returns the lugging severity of an engine, high load at low rpm
+-- @param table vehicle vehicle
 -- @param float motorLoad engine load
 -- @param float loadThreshold load the lugging starts at
 -- @return float severity severity, 0 to 1
-function RMS_Utils.getEngineLuggingSeverity(motor, motorLoad, loadThreshold)
+function RMS_Utils.getEngineLuggingSeverity(vehicle, motorLoad, loadThreshold)
+    local motor = vehicle:getMotor()
     local minimum = RealisticMechanicalSystems.sanitizeNumber(motor:getMinRpm(), 0, 0)
     local maximum = RealisticMechanicalSystems.sanitizeNumber(motor:getMaxRpm(), 0, 0)
     if minimum <= 0 or maximum <= minimum or loadThreshold >= 1 then return 0 end
 
     local rangeShare = RMS_Config.CORE.LUGGING_RPM_RANGE_THRESHOLD
     local start = minimum + (maximum - minimum) * rangeShare
-    local rpm = RealisticMechanicalSystems.sanitizeNumber(motor:getLastRealMotorRpm(), maximum, 0)
+    local rpm = RealisticMechanicalSystems.sanitizeNumber(RMS_Utils.getMotorRpm(vehicle), maximum, 0)
     local loadShare = math.clamp((motorLoad - loadThreshold) / (1 - loadThreshold), 0, 1)
     local rpmShare = math.clamp((start - rpm) / (start - minimum), 0, 1)
     return loadShare * loadShare * rpmShare * rpmShare
@@ -1169,7 +1163,7 @@ function RMS_Utils.getRatedTorqueRatio(vehicle, stockLoad)
     local sanitize = RealisticMechanicalSystems.sanitizeNumber
     local ratedSpeed = sanitize(motor.peakMotorPowerRotSpeed, 0, 0)
     local rated = ratedSpeed > 0 and sanitize(motor.peakMotorPower, 0, 0) / ratedSpeed or 0
-    local rpm = sanitize(motor:getLastRealMotorRpm(), ratedSpeed * 30 / math.pi, 0)
+    local rpm = sanitize(RMS_Utils.getMotorRpm(vehicle), ratedSpeed * 30 / math.pi, 0)
     local rise = rated > 0 and sanitize(motor:getTorqueCurve():get(rpm), rated, 0) / rated or 1
     return stockLoad * rise / RMS_EngineRemap.getOverloadRatio(vehicle)
 end
@@ -3172,11 +3166,68 @@ function RMS_Utils.deserializeMaintenanceLogEntry(serialized)
     return entry
 end
 
+---Returns the working width of the fitted configuration, 0 when unknown
+-- @param table vehicle vehicle
+-- @return float width width (m)
+function RMS_Utils.getWorkingWidth(vehicle)
+    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
+    if storeItem == nil then
+        return 0
+    end
+    StoreItemUtil.loadSpecsFromXML(storeItem)
+    local width = Vehicle.getSpecValueWorkingWidthConfig(storeItem, vehicle, vehicle.configurations, nil, true) or 0
+    if width == 0 and storeItem.specs.workingWidth ~= nil then
+        width = storeItem.specs.workingWidth.width
+    end
+    return width
+end
+
+---Returns the engine load, the harvest load while a harvest loads the engine, else the torque it gives against the torque it has
+-- @param table vehicle vehicle
+-- @return float load engine load
+function RMS_Utils.getMotorLoad(vehicle)
+    return math.min(vehicle.spec_RealisticMechanicalSystems.motorDemand, 1)
+end
+
+---Returns the engine speed, lugged down while the engine is asked more than its full load
+-- @param table vehicle vehicle
+-- @return float rpm engine speed (rpm)
+function RMS_Utils.getMotorRpm(vehicle)
+    return vehicle:getMotor():getLastRealMotorRpm() - vehicle.spec_RealisticMechanicalSystems.rpmDrop
+end
+
 ---Returns the interface of the harvesting mod, kept in its own mod table
 -- @return table? api interface, nil without the mod
 function RMS_Utils.getHarvestModApi()
     local modEnv = _G.FS25_RealisticHarvesting
     return modEnv ~= nil and modEnv.RHM_Api or nil
+end
+
+---Tells whether the harvesting mod runs its Arcade engine setting
+-- @return boolean isArcade true on Arcade
+function RMS_Utils.getIsHarvestModArcade()
+    local modEnv = _G.FS25_RealisticHarvesting
+    return modEnv.g_realisticHarvestManager.settings.difficultyMotor == modEnv.RHMSettings.DIFFICULTY_ARCADE
+end
+
+---Returns the load the screen of the harvesting mod shows for a machine, in the frame it refreshes its figures
+-- @param table vehicle vehicle
+-- @return boolean isShown true while its screen shows a harvester of this machine
+-- @return float? load load shown (%), nil between its refreshes
+function RMS_Utils.getHarvestModScreenLoad(vehicle)
+    local modEnv = _G.FS25_RealisticHarvesting
+    local manager = modEnv ~= nil and modEnv.g_realisticHarvestManager or nil
+    local screen = manager ~= nil and manager.hud or nil
+    if screen == nil or screen.vehicle == nil or screen.vehicle.rootVehicle ~= vehicle then
+        return false, nil
+    end
+    return true, screen.displayTimer == 0 and screen.displayData.load or nil
+end
+
+---Returns the share of the engine in the power the harvesting mod reads
+-- @return float share engine power over the power it reads
+function RMS_Utils.getHarvestModEngineShare()
+    return 1 / (1 + 0.01 * _G.FS25_RealisticHarvesting.g_realisticHarvestManager.settings:getPowerBoost())
 end
 
 ---Tells whether the CVT addon mod drives the transmission of this vehicle

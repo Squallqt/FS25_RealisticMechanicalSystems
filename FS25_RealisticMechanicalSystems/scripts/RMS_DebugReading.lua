@@ -146,7 +146,7 @@ local CAUSES = {
     cmf = {"Cold engine worked", "cold", function(f) return string.format("%.0f °C engine", f.engineTemperature) end},
     hmf = {"Engine overheating", "overheating", function(f) return string.format("%.0f °C engine", f.engineTemperature) end},
     pof = {"Pull overload", "pull", function(f) return pct(f.driveTorqueRatio) .. " of rated torque" end},
-    lf = {"Lugging", "lugging", function(_, _, vehicle) return string.format("%.0f rpm", vehicle:getMotor():getLastModulatedMotorRpm()) end},
+    lf = {"Lugging", "lugging", function(_, _, vehicle) return string.format("%.0f rpm", RMS_Utils.getMotorRpm(vehicle)) end},
     wsf = {"Wheel slip", "slip", function(_, spec) return string.format("ground grip %.2f", spec.avgTireGroundFrictionCoeff) end},
     dwf = {"Driveline windup", "windup", function(_, spec) return pct(spec.drivetrain.windupStress) .. " windup" end},
     ctf = {"Cold transmission oil", "cold oil", function(_, spec) return string.format("%.0f °C oil", spec.transmissionTemperature) end},
@@ -1055,7 +1055,8 @@ local function readDrive(vehicle, spec, groups)
     table.insert(rows, itemsRow("Motor", {item("speed", string.format("%.1f km/h", vehicle:getLastSpeed())),
         item(spec.isElectricVehicle and "motor" or "engine", string.format("%.0f rpm", motor:getLastModulatedMotorRpm())), item("gear", getGear(motor)),
         item("to the transmission", string.format("%.0f kW", drivePower)), item("to PTO and hydraulics", string.format("%.0f kW", otherPower))}))
-    table.insert(rows, itemsRow("Load", isRunning and {item("RMS", pct(spec.dynamicMotorLoad)), item("game", pct(vehicle:getMotorLoadPercentage()))}
+    table.insert(rows, itemsRow("Load", isRunning and {item("RMS", pct(spec.dynamicMotorLoad)), item("game", pct(motor.smoothedLoadPercentage)),
+        item("asked", pct(spec.motorDemand))}
         or {item("", stopped)}))
 
     local drive = spec.drivetrain
@@ -1112,8 +1113,11 @@ local function readWorkRows(vehicle, spec, groups)
         local state = spec.harvestState or {}
         local effect = spec.activeEffects.HARVEST_GRAIN_LOSS
         local loss = math.clamp(effect ~= nil and effect.value or 0, 0, RMS_Config.CORE.HARVEST_FACTOR_DATA.MAX_GRAIN_LOSS)
+        local harvestLoad = vehicle.spec_rmsHarvestLoad
+        local load = harvestLoad ~= nil and harvestLoad.shownLoad or nil
         local items = {item("kind", state.kind or RMS_Drivetrain.getHarvestKind(vehicle)),
-            item("measured by", state.source == "rh" and "Realistic Harvesting" or "RMS")}
+            item("measured by", state.source == "rh" and "Realistic Harvesting" or "RMS"),
+            item("engine carries", load ~= nil and pct(load) or "the load the game gives")}
         if spec.isHarvestRunning then
             table.insert(items, item("crop", tostring(state.crop):lower()))
             table.insert(items, item("flow", string.format("%.0f t/h", state.tonPerHour)))
@@ -1130,7 +1134,6 @@ local function readWorkRows(vehicle, spec, groups)
     local drive = spec.headerDrive
     if drive ~= nil then
         local header = drive.header
-        local C = RMS_Config.CORE.HEADER_DRIVE
         local items = {item("header", header ~= nil and header:getFullName() or "none")}
         if header ~= nil then
             table.insert(items, item("driven", drive.isTurning and string.format("%.0f kW", drive.powerW / 1000) or "stopped"))
@@ -1139,14 +1142,8 @@ local function readWorkRows(vehicle, spec, groups)
         if drive.starts > 0 then
             table.insert(items, item("last start", string.format("%s speed, %.0f kJ", pct(drive.lastStartShare), drive.lastStartJ / 1000)))
         end
-        local clutch = "holds"
-        if header ~= nil and RMS_Greasing.getIsLimiterSeized(header) then
-            clutch = "seized, grease the header"
-        elseif drive.slipMs > 0 then
-            clutch = string.format("slipping %.1f of %.1f s", drive.slipMs / 1000, drive.slipLimitMs / 1000)
-        end
-        table.insert(items, item("slip clutch", clutch))
-        table.insert(items, item("slips past", string.format("work %s", pct(C.SLIP_EFFORT))))
+        local isSeized = header ~= nil and RMS_Greasing.getIsLimiterSeized(header)
+        table.insert(items, item("slip clutch", isSeized and "seized, grease the header" or "holds"))
         table.insert(rows, itemsRow("Header drive", items))
     end
     if RMS_Utils.getHasDashboardScreen(vehicle) and RMS_Utils.getHasPtoDisplay(vehicle) then

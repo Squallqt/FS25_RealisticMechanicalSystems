@@ -17,7 +17,8 @@ WEAR
 - Each part wears faster under what strains it: driving against the parking brake wears the parking brake, an engine pushed cold its valve train
 - About fourteen breakdowns over the life of a machine in normal use, few when new and more as it ages, more on the parts you strain
 - Overdue service accelerates wear in the systems covered by the overdue fluid
-- On a combine or a forage harvester, the header drive wears too: its belt and its driveline U-joints while the header turns, its slip clutch at each start, heard slipping until the header is up to speed, about five times more when the header is engaged at high revs than at idle. Past twice full work the slip clutch is heard slipping and burns out within a few seconds; a header left standing two weeks (half a game month) seizes its slip clutch until it is greased, and a blockage meanwhile breaks its driveline with a bang
+- On a combine or a forage harvester, the header drive wears too: its belt and its driveline U-joints while the header turns, and its slip clutch when the header is engaged with the engine revved up, heard slipping until the header is up to speed; engaged at idle, or with the threshing already running, it does not slip. A header left standing two weeks (half a game month) seizes its slip clutch until it is greased, and a blockage meanwhile breaks its driveline with a bang
+- On a self-propelled harvester, the engine load is the power the harvest takes, as Realistic Harvesting shows it when installed, except on its Arcade setting, and otherwise as RMS computes it on combines, forage harvesters and beet, potato and cotton harvesters: the power gauge shows it up to 100 %, its squares and its figure together, and the cab screens, the fuel, the engine sound, heat and wear follow it; the gauge turns amber only at 100 %, and past it the engine pulls down, heard and on the rev counter, coming back up as the harvest eases and wearing as overloaded the further it pulls down. Whatever the setting, the harvesting parts never get more than the engine gives
 
 BREAKDOWNS
 - 165 breakdowns spread across the systems, most in four stages from Minor to Critical
@@ -29,7 +30,7 @@ WORKSHOP
 - Inspection, Maintenance, Repair, and Overhaul each offer options that change price, duration, and quality
 - Fluid top-ups refill what is missing; Repainting repairs minor paint damage or renews the finish using the vehicle's available colour choices. The colours of a machine you own change only through a full repaint, and buying one in another colour than the one already selected costs a full repaint
 - Part quality from Used to Original: each repair card shows the wear of the part, the machine a used part was taken from, its warranty and whether the factory warranty is kept. Cheaper parts are more often defective and bring the same fault back, a used part keeps the wear of its machine, and a defective filter fitted at maintenance wears its circuit until it is changed. The quote lists every part a repair replaces
-- A fault under warranty is repaired by the dealer as a Standard repair with original parts, free with its fluids, for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, a header engaged above idle or a slip clutch burnt by slipping, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), or a part fitted aftermarket or used, excludes only the affected fault.
+- A fault under warranty is repaired by the dealer as a Standard repair with original parts, free with its fluids, for 24 months or the hour limit, whichever comes first. Extensions are available with a new machine. Dealer-fitted parts are covered for 12 months. The mobile workshop charges its extra labor cost; overdue service or greasing, or a part worn by misuse (a hard impact, overheating past the warning, low oil, a tank run dry, the parking brake on, a harsh PTO engagement, a header engaged with the engine revved up, stones, the starter held too long, a PTO shaft at too sharp an angle, diff lock or 4WD on hard ground, a clogged filter, an overweight trailer), or a part fitted aftermarket or used, excludes only the affected fault.
 - Engine remapping by the dealer, with the manufacturer's software up to the strongest engine of the range, or by a tuner at the farm or mobile workshop: 10 to 20% more power depending on the engine's place in its range, its curves before and after on a bench sheet, more fuel and heat for the extra power, wear at full load past the strongest engine of the range, and the warranty lost for good. Each puts its stock software back, the tuner free for 12 months
 - By default, work takes in-game time and pauses overnight at the dealer; farm and mobile workshops remain open. Separate settings can make inspections, maintenance and repair, repainting, overhauls or engine remapping instant
 - A fault is identified before it is repaired: an inspection or any maintenance identifies it, a warning light only shows that one is there
@@ -66,7 +67,7 @@ COMPATIBILITY
 - Extended Leasing: the wash is billed once, and the deposit refund shows in the return window
 - AutoDrive and Courseplay: their drivers slow down on an overload like the game's helpers, and a breakdown that stops the machine stops them too; a Courseplay driver pushing against an obstacle without moving stops like the game's helpers, AutoDrive keeps its own way out
 - Mobile Workshop: its workshop screen works as the RMS mobile workshop, with the same limits
-- Realistic Harvesting (1.6.5.0 or higher): losses, throughput and stops follow the wear of the RMS harvesting parts
+- Realistic Harvesting (1.6.5.0 or higher): losses, throughput and stops follow the wear of the RMS harvesting parts, and the engine load is the figure it shows, on a self-propelled harvester as on a tractor pulling one, except with its Engine Power Limit set to Arcade, where the engine keeps the game's own load; its speed limit stays its own
 - Red Tape: machines lent by a scheme are handled like contract machines, without wear
 - Mods giving canola, maize or other crops straw to bale: the straw chopper wears on that straw too, and once broken it leaves that straw in a swath
 
@@ -117,6 +118,8 @@ Changelog 1.0.0.0-beta.3:
 - Changed a failed preheat relay to flash the preheat lamp for a minute after ignition
 - Removed the engine lamp and fault code of a failed starter relay
 - Changed the starter to wear out when overheated instead of stopping and breaking at 30 s
+- Changed harvester engine load to follow the harvest power, the engine pulling down past full load
+- Changed harvesting part wear to count all the material each crop sends through
 - Fixed the engine temperature set with Easy Development Controls being discarded at once
 - Fixed faults and worn parts ticked in Diagnostic and Estimate on multiplayer servers
 - Fixed the estimate of a running procedure on multiplayer servers
@@ -141,6 +144,7 @@ Changelog 1.0.0.0-beta.3:
 - Fixed a full particulate filter that no repair or overhaul could clear, even by replacing it
 - Fixed temporary repairs with a warranty fault not yet showing being wrongly refused or accepted
 - Fixed an error on the Technical Record page with repairs logged by older versions
+- Fixed a second PTO turned on after the first counting as engaged at high revs
 ]]></en>
 
         <de><![CDATA[Ihre Maschinen verschleißen endlich wie echte.
@@ -152,7 +156,8 @@ VERSCHLEISS
 - Jedes Teil verschleißt schneller unter dem, was es beansprucht: Fahren gegen die angezogene Feststellbremse verschleißt die Feststellbremse, ein kalt geforderter Motor seinen Ventiltrieb
 - Etwa vierzehn Defekte im Leben einer normal genutzten Maschine, wenige im Neuzustand und mehr mit dem Alter, mehr an den Teilen, die Sie überlasten
 - Überfällige Wartung beschleunigt den Verschleiß der vom überfälligen Flüssigkeitswechsel betroffenen Systeme
-- An Mähdrescher und Feldhäcksler verschleißt auch der Vorsatzantrieb: Riemen und Kreuzgelenke der Gelenkwelle, solange der Vorsatz läuft, die Rutschkupplung bei jedem Einschalten, hörbar rutschend, bis der Vorsatz auf Drehzahl ist, etwa fünfmal stärker, wenn der Vorsatz bei hoher Drehzahl statt im Leerlauf eingekuppelt wird. Über dem Doppelten der vollen Arbeit rutscht die Rutschkupplung hörbar und brennt binnen weniger Sekunden durch; an einem zwei Wochen (einen halben Spielmonat) abgestellten Vorsatz rostet die Rutschkupplung fest, bis er abgeschmiert wird, und eine Verstopfung bricht in dieser Zeit seine Gelenkwelle mit einem Knall
+- An Mähdrescher und Feldhäcksler verschleißt auch der Vorsatzantrieb: Riemen und Kreuzgelenke der Gelenkwelle, solange der Vorsatz läuft, und die Rutschkupplung, wenn der Vorsatz bei hochgedrehtem Motor eingekuppelt wird, hörbar rutschend, bis der Vorsatz auf Drehzahl ist; im Leerlauf oder bei bereits laufendem Dreschwerk eingekuppelt, rutscht sie nicht. An einem zwei Wochen (einen halben Spielmonat) abgestellten Vorsatz rostet die Rutschkupplung fest, bis er abgeschmiert wird, und eine Verstopfung bricht in dieser Zeit seine Gelenkwelle mit einem Knall
+- An einer selbstfahrenden Erntemaschine ist die Motorlast die Leistung, die die Ernte verlangt, wie Realistic Harvesting sie anzeigt, wenn es installiert ist, außer auf seiner Einstellung „Arkade“, und sonst wie RMS sie an Mähdreschern, Feldhäckslern sowie Rüben-, Kartoffel- und Baumwollerntemaschinen berechnet: Die Leistungsanzeige zeigt sie bis 100 %, Segmente und Zahl immer gleich, und Kabinenbildschirme, Kraftstoffverbrauch, Motorklang, Erwärmung und Verschleiß folgen ihr; die Anzeige färbt sich erst bei 100 % gelb, und darüber wird der Motor gedrückt, hörbar und am Drehzahlmesser, dreht wieder hoch, sobald die Ernte nachlässt, und verschleißt umso mehr als überlastet, je tiefer er gedrückt wird. In jeder Einstellung erhalten die Ernteorgane nie mehr, als der Motor hergibt
 
 DEFEKTE
 - 165 Defekte, verteilt auf die Systeme, meist in vier Stufen von geringfügig bis kritisch
@@ -164,7 +169,7 @@ WERKSTATT
 - Inspektion, Wartung, Reparatur und Grundüberholung bieten jeweils Optionen für Preis, Dauer und Qualität
 - Flüssigkeiten können nachgefüllt werden; die Neulackierung bessert kleine Lackschäden aus oder erneuert den Lack mit den verfügbaren Farben des Fahrzeugs. Die Farben einer eigenen Maschine ändern sich nur durch eine komplette Neulackierung, und wer eine Maschine in einer anderen als der bereits gewählten Farbe kauft, zahlt eine komplette Neulackierung
 - Teilequalität von Gebraucht bis Original: Jede Karte einer Reparatur zeigt den Verschleiß des Teils, die Maschine, aus der ein Gebrauchtteil ausgebaut wurde, seine Garantie und ob die Werksgarantie bleibt. Billigere Teile sind häufiger defekt und holen denselben Fehler zurück, ein Gebrauchtteil behält den Verschleiß seiner Maschine, und ein bei der Wartung eingebauter defekter Filter verschleißt seinen Kreislauf bis zum Wechsel. Der Kostenvoranschlag listet jedes Teil, das eine Reparatur ersetzt
-- Ein Schaden unter Garantie wird vom Händler als Standard-Reparatur mit Originalteilen behoben, mit den benötigten Flüssigkeiten kostenlos, für 24 Monate oder bis zur Stundengrenze. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Vorsatz über Leerlauf eingekuppelt oder Rutschkupplung durch Rutschen verbrannt, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) oder ein eingebautes Nachbau- oder Gebrauchtteil schließt nur den betroffenen Schaden aus.
+- Ein Schaden unter Garantie wird vom Händler als Standard-Reparatur mit Originalteilen behoben, mit den benötigten Flüssigkeiten kostenlos, für 24 Monate oder bis zur Stundengrenze. Verlängerungen sind beim Neukauf erhältlich. Vom Händler eingebaute Teile sind 12 Monate abgedeckt. Die mobile Werkstatt berechnet den Arbeitskostenzuschlag; überfällige Wartung oder Abschmierung oder ein durch Fehlbedienung verschlissenes Teil (Aufprall, Überhitzung nach der Warnung, zu wenig Öl, leergefahrener Tank, angezogene Feststellbremse, Zapfwelle bei hoher Drehzahl eingeschaltet, Vorsatz bei hochgedrehtem Motor eingekuppelt, Steine, zu lange betätigter Anlasser, zu stark abgewinkelte Gelenkwelle, Sperre oder 4WD auf festem Boden, verstopfter Filter, zu schwerer Anhänger) oder ein eingebautes Nachbau- oder Gebrauchtteil schließt nur den betroffenen Schaden aus.
 - Motoroptimierung beim Händler, mit der Herstellersoftware bis zum stärksten Motor der Baureihe, oder durch einen Tuner in der Hofwerkstatt oder der mobilen Werkstatt: 10 bis 20 % mehr Leistung je nach Stellung des Motors in seiner Baureihe, seine Kurven vorher und nachher auf einem Prüfstandsblatt, mehr Kraftstoff und Wärme für die zusätzliche Leistung, Verschleiß unter Volllast über dem stärksten Motor der Baureihe, und die Garantie erlischt endgültig. Jeder spielt seine Serien-Software zurück, der Tuner 12 Monate kostenlos
 - Standardmäßig richtet sich die Arbeitsdauer nach der Spielzeit und pausiert beim Händler über Nacht; eigene und mobile Werkstätten bleiben geöffnet. Getrennte Einstellungen ermöglichen sofortige Inspektion, Wartung und Reparatur, Neulackierung, Überholung oder Motoroptimierung
 - Ein Schaden wird vor der Reparatur festgestellt: Eine Inspektion oder jede Wartung stellt ihn fest, eine Warnleuchte zeigt nur, dass es einen gibt
@@ -201,7 +206,7 @@ KOMPATIBILITÄT
 - Extended Leasing: Die Wäsche wird nur einmal berechnet, und die Rückzahlung der Kaution erscheint im Rückgabefenster
 - AutoDrive und Courseplay: Ihre Fahrer werden bei Überlastung langsamer wie die Helfer des Spiels, und ein Defekt, der die Maschine stoppt, stoppt auch sie; ein Courseplay-Fahrer, der gegen ein Hindernis drückt, ohne voranzukommen, hält an wie die Helfer des Spiels, AutoDrive behält seinen eigenen Ausweg
 - Mobile Workshop: Sein Werkstattbildschirm dient als mobile Werkstatt von RMS, mit denselben Grenzen
-- Realistic Harvesting (1.6.5.0 oder höher): Verluste, Durchsatz und Stopps folgen dem Verschleiß der RMS-Ernteorgane
+- Realistic Harvesting (1.6.5.0 oder höher): Verluste, Durchsatz und Stopps folgen dem Verschleiß der RMS-Ernteorgane, und die Motorlast ist die Zahl, die es anzeigt, an der selbstfahrenden Erntemaschine wie am Traktor, der eine zieht, außer mit seiner „Motorleistung“ auf „Arkade“, wo der Motor die Last des Spiels behält; seine Geschwindigkeitsbegrenzung bleibt seine eigene
 - Red Tape: Von einem Programm verliehene Maschinen werden wie Auftragsmaschinen behandelt, ohne Verschleiß
 - Mods, die Raps, Mais oder anderen Kulturen pressbares Stroh geben: Der Strohhäcksler verschleißt auch an diesem Stroh und legt es defekt im Schwad ab
 
@@ -252,6 +257,8 @@ Changelog 1.0.0.0-beta.3:
 - Defektes Vorglührelais geändert: Die Vorglühleuchte blinkt nach dem Einschalten der Zündung eine Minute lang
 - Motorkontrollleuchte und Fehlercode eines defekten Starterrelais entfernt
 - Anlasser geändert: Er verschleißt bei Überhitzung, statt nach 30 s abzuschalten und kaputtzugehen
+- Motorlast der Erntemaschinen geändert: Sie folgt der Ernteleistung, über Volllast wird der Motor gedrückt
+- Verschleiß der Ernteorgane geändert: Er zählt das gesamte Gut, das jede Frucht durchschickt
 - Mit Easy Development Controls gesetzte Motortemperatur behoben, die sofort verworfen wurde
 - In Diagnose und Kostenvoranschlag angehakte Schäden und verschlissene Teile auf Multiplayer-Servern behoben
 - Kostenvoranschlag des laufenden Vorgangs auf Multiplayer-Servern behoben
@@ -276,6 +283,7 @@ Changelog 1.0.0.0-beta.3:
 - Voller Partikelfilter behoben, den weder Reparatur noch Überholung leeren konnte, selbst durch Austausch
 - Behelfsreparaturen mit einem noch nicht aufgetretenen Garantiefall behoben, die zu Unrecht abgelehnt oder angenommen wurden
 - Fehler der Seite Technische Akte bei Reparaturen aus älteren Versionen behoben
+- Nach der ersten eingeschaltete zweite Zapfwelle behoben, die als bei hoher Drehzahl eingeschaltet galt
 ]]></de>
 
         <fr><![CDATA[Vos machines s'usent enfin comme les vraies.
@@ -287,7 +295,8 @@ USURE
 - Chaque pièce s'use plus vite sous ce qui la sollicite : rouler frein de parking serré use le frein de parking, un moteur poussé à froid ses soupapes
 - Environ quatorze pannes sur la vie d'une machine menée normalement, peu quand elle est neuve et davantage en vieillissant, davantage sur les pièces que vous malmenez
 - Un entretien en retard accélère l'usure des systèmes couverts par le fluide à remplacer
-- Sur une moissonneuse ou une ensileuse, l'entraînement de la coupe s'use aussi : sa courroie et les croisillons de son arbre quand la coupe tourne, son limiteur de couple à chaque démarrage, qu'on entend glisser jusqu'à ce que la coupe ait pris son régime, environ cinq fois plus quand la coupe est embrayée à haut régime qu'au ralenti. Au-delà de deux fois le plein travail, on entend le limiteur glisser et il brûle en quelques secondes ; une coupe remisée deux semaines (un demi-mois du jeu) grippe son limiteur jusqu'à ce qu'on la graisse, et un bourrage entre-temps casse son arbre dans un claquement
+- Sur une moissonneuse ou une ensileuse, l'entraînement de la coupe s'use aussi : sa courroie et les croisillons de son arbre quand la coupe tourne, et son limiteur de couple quand la coupe est embrayée moteur monté dans les tours, qu'on entend glisser jusqu'à ce que la coupe ait pris son régime ; embrayée au ralenti, ou batteuse déjà en marche, il ne glisse pas. Une coupe remisée deux semaines (un demi-mois du jeu) grippe son limiteur jusqu'à ce qu'on la graisse, et un bourrage entre-temps casse son arbre dans un claquement
+- Sur une machine de récolte automotrice, la charge du moteur est la puissance que demande la récolte, telle que l'affiche Realistic Harvesting quand il est installé, sauf sur son réglage « Arcade », et sinon telle que la calcule RMS sur les moissonneuses, les ensileuses, les arracheuses de betteraves et de pommes de terre et les récolteuses de coton : la jauge de puissance l'affiche jusqu'à 100 %, ses points et son chiffre toujours ensemble, et les écrans de la cabine, le gazole, le son, la chauffe et l'usure du moteur la suivent ; la jauge ne passe à l'orange qu'à 100 %, et au-delà le moteur perd des tours, à l'oreille comme au compte-tours, les reprend quand la récolte s'allège, et s'use en surcharge d'autant plus qu'il en perd. Quel que soit le réglage, les organes de récolte ne reçoivent jamais plus que ce que donne le moteur
 
 PANNES
 - 165 pannes réparties sur les systèmes, la plupart en quatre stades, de mineur à critique
@@ -299,7 +308,7 @@ ATELIER
 - L'inspection, l'entretien, la réparation et la révision proposent chacune des options qui changent le prix, la durée et la qualité
 - L'appoint remplit les fluides manquants ; la peinture retouche les petits dégâts ou se refait en entier avec les couleurs proposées par le véhicule. Les couleurs d'une machine possédée ne changent que par une peinture complète, et acheter une machine dans une autre couleur que celle déjà sélectionnée coûte une peinture complète
 - Qualité des pièces de l'occasion à l'origine : chaque carte d'une réparation montre l'usure de la pièce, la machine d'où une pièce d'occasion est démontée, sa garantie et si la garantie usine est gardée. Les pièces moins chères sont plus souvent défectueuses et ramènent la même panne, une pièce d'occasion garde l'usure de sa machine, et un filtre défectueux posé à l'entretien use son circuit jusqu'à son changement. Le devis liste chaque pièce que la réparation remplace
-- Une panne sous garantie est réparée par le concessionnaire en Standard, pièces d'origine, gratuitement avec ses fluides, pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, coupe embrayée au-dessus du ralenti ou limiteur brûlé à force de glisser, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), ou une pièce posée adaptable ou d'occasion, exclut seulement la panne concernée.
+- Une panne sous garantie est réparée par le concessionnaire en Standard, pièces d'origine, gratuitement avec ses fluides, pendant 24 mois ou jusqu'à la limite d'heures, au premier terme atteint. Des extensions sont proposées à l'achat neuf. Les pièces posées par le concessionnaire sont couvertes 12 mois. L'atelier mobile facture son supplément de main-d'œuvre ; un entretien ou un graissage en retard, ou une pièce usée par un mauvais usage (choc, surchauffe passé l'alerte, huile trop basse, réservoir vidé, frein de parking serré, prise de force enclenchée à haut régime, coupe embrayée moteur monté dans les tours, pierres, démarreur trop sollicité, angle de cardan excessif, blocage ou 4RM sur sol dur, filtre colmaté, remorque trop lourde), ou une pièce posée adaptable ou d'occasion, exclut seulement la panne concernée.
 - Reprogrammation moteur chez le concessionnaire, avec le logiciel du constructeur jusqu'au plus gros moteur de la gamme, ou par un préparateur à l'atelier de la ferme ou à l'atelier mobile : 10 à 20 % de puissance en plus selon la place du moteur dans sa gamme, ses courbes avant et après sur une fiche de banc, plus de gazole et de chaleur pour la puissance en plus, de l'usure à pleine charge au-delà du plus gros moteur de la gamme, et la garantie perdue pour toujours. Chacun remet son logiciel d'origine, le préparateur gratuitement pendant 12 mois
 - Par défaut, la durée des travaux suit le temps de la partie et les travaux s'interrompent la nuit chez le concessionnaire ; les ateliers personnels et mobiles restent ouverts. Des réglages distincts permettent de terminer instantanément les inspections, l'entretien et les réparations, la peinture, les révisions ou la reprogrammation moteur
 - Une panne s'identifie avant de se réparer : une inspection ou n'importe quel entretien l'identifie, un voyant montre seulement qu'il y en a une
@@ -336,7 +345,7 @@ COMPATIBILITÉ
 - Extended Leasing : le lavage n'est facturé qu'une fois, et le remboursement de la caution apparaît dans la fenêtre de retour
 - AutoDrive et Courseplay : leurs conducteurs ralentissent sur une surcharge comme les ouvriers du jeu, et une panne qui arrête la machine les arrête aussi ; un conducteur de Courseplay qui force contre un obstacle sans avancer s'arrête comme les ouvriers du jeu, AutoDrive garde sa propre façon de se dégager
 - Mobile Workshop : son écran d'atelier sert d'atelier mobile RMS, avec les mêmes limites
-- Realistic Harvesting (1.6.5.0 ou plus) : les pertes, le débit et les arrêts suivent l'usure des organes de récolte RMS
+- Realistic Harvesting (1.6.5.0 ou plus) : les pertes, le débit et les arrêts suivent l'usure des organes de récolte RMS, et la charge du moteur est le chiffre qu'il affiche, sur une machine de récolte automotrice comme sur le tracteur qui en tire une, sauf avec sa « Puissance moteur » sur « Arcade », où le moteur garde la charge du jeu ; sa limite de vitesse reste la sienne
 - Red Tape : les machines prêtées par un programme sont traitées comme des machines de contrat, sans usure
 - Mods qui donnent de la paille à presser au colza, au maïs ou à d'autres cultures : le broyeur s'use aussi sur cette paille, et une fois cassé, il la laisse en andain
 
@@ -387,6 +396,8 @@ Changelog 1.0.0.0-beta.3 :
 - Modification du relais de préchauffage en panne : le voyant de préchauffage clignote une minute après la mise du contact
 - Suppression du voyant moteur et du code défaut d'un relais de démarreur en panne
 - Modification du démarreur : il s'use quand il surchauffe, au lieu de se couper et de casser à 30 s
+- Modification de la charge moteur des machines de récolte : elle suit la puissance de récolte, le moteur perdant des tours au-delà de la pleine charge
+- Modification de l'usure des organes de récolte : elle compte toute la matière que chaque culture fait passer
 - Correction de la température moteur réglée avec Easy Development Controls, qui était aussitôt annulée
 - Correction des pannes et pièces usées cochées dans Diagnostic et devis sur les serveurs multijoueurs
 - Correction du devis de l'intervention en cours sur les serveurs multijoueurs
@@ -411,6 +422,7 @@ Changelog 1.0.0.0-beta.3 :
 - Correction d'un filtre à particules plein qu'aucune réparation ni révision ne pouvait vider, même en le remplaçant
 - Correction des réparations de fortune avec une panne sous garantie pas encore apparue, refusées ou acceptées à tort
 - Correction d'une erreur de la page Dossier technique sur les réparations enregistrées par une ancienne version
+- Correction d'une seconde prise de force, mise en marche après la première, comptée comme enclenchée à haut régime
 ]]></fr>
 
     </description>

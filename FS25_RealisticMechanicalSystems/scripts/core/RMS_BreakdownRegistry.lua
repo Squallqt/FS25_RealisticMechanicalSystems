@@ -756,14 +756,14 @@ local function getIsPreheatFaultFlashOver(vehicle) return not getIsPreheatFaultF
 -- @param table vehicle vehicle
 -- @return boolean isAtFullLoad true above 95 % load
 local function getIsAtFullLoad(vehicle)
-    return vehicle:getIsMotorStarted() and vehicle:getMotorLoadPercentage() > 0.95
+    return vehicle:getIsMotorStarted() and RMS_Utils.getMotorLoad(vehicle) > 0.95
 end
 
 ---Tells whether the engine runs below half load
 -- @param table vehicle vehicle
 -- @return boolean isBelowHalf true at half load or less
 local function getIsBelowHalfLoad(vehicle)
-    return vehicle:getIsMotorStarted() and vehicle:getMotorLoadPercentage() <= 0.5
+    return vehicle:getIsMotorStarted() and RMS_Utils.getMotorLoad(vehicle) <= 0.5
 end
 
 ---Tells whether the engine burns a fill type

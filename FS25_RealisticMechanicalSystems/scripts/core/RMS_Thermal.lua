@@ -60,12 +60,12 @@ end
 function RMS_Thermal.getNativeThermalInputs(vehicle, isMotorStarted)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local motor = vehicle:getMotor()
-    local load = sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, vehicle:getMotorLoadPercentage()), 0, 0, 1.5)
+    local load = sanitizeNumber(RMS_EngineRemap.getStockLoad(vehicle, RMS_Utils.getMotorLoad(vehicle)), 0, 0, 1.5)
         * RMS_Thermal.getEngineTorqueFactor(vehicle)
     local maxRpm = sanitizeNumber(motor:getMaxRpm(), 0, 0)
-    local rpm = maxRpm > 0 and sanitizeNumber(motor:getLastRealMotorRpm() / maxRpm, 0, 0, 1.5) or 0
+    local rpm = maxRpm > 0 and sanitizeNumber(RMS_Utils.getMotorRpm(vehicle) / maxRpm, 0, 0, 1.5) or 0
     local ratedRpm = sanitizeNumber(motor.peakMotorPowerRotSpeed, 0, 0) * 30 / math.pi
-    local fanSpeed = ratedRpm > 0 and sanitizeNumber(motor:getLastRealMotorRpm() / ratedRpm, 0, 0, 1) or 0
+    local fanSpeed = ratedRpm > 0 and sanitizeNumber(RMS_Utils.getMotorRpm(vehicle) / ratedRpm, 0, 0, 1) or 0
     local applied = sanitizeNumber(motor:getMotorAppliedTorque(), 0, 0)
     local peakPower = sanitizeNumber(motor.peakMotorPower, 0, 0)
     local rotation = sanitizeNumber(motor:getMotorRotSpeed(), 0, 0)

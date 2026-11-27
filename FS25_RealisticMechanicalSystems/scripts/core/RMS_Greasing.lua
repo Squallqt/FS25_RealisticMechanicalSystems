@@ -89,22 +89,6 @@ local function getArmCount(vehicle)
     return count
 end
 
----Returns the working width of the fitted configuration, 0 when unknown
--- @param table vehicle implement
--- @return float width width (m)
-local function getWorkingWidth(vehicle)
-    local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
-    if storeItem == nil then
-        return 0
-    end
-    StoreItemUtil.loadSpecsFromXML(storeItem)
-    local width = Vehicle.getSpecValueWorkingWidthConfig(storeItem, vehicle, vehicle.configurations, nil, true) or 0
-    if width == 0 and storeItem.specs.workingWidth ~= nil then
-        width = storeItem.specs.workingWidth.width
-    end
-    return width
-end
-
 ---Tells whether a trailer tips to the left and the right as well as to the rear
 -- @param table vehicle trailer
 -- @return boolean isThreeWay true for a three-way tipper
@@ -234,7 +218,7 @@ local function resolvePtoRating(vehicle)
             end
             return 1000, "augerWagon"
         elseif category == "MOWERS" then
-            local width = getWorkingWidth(vehicle)
+            local width = RMS_Utils.getWorkingWidth(vehicle)
             if getChassisWheels(vehicle) > 0 then
                 return width > 0 and (width >= 5 and 1000 or 540) or nil, "trailedMower"
             end
@@ -313,7 +297,7 @@ local function resolveFamily(vehicle, entry)
     if type(entry) ~= "table" then
         return entry
     elseif entry.byWidth ~= nil then
-        local width = getWorkingWidth(vehicle)
+        local width = RMS_Utils.getWorkingWidth(vehicle)
         if width == 0 and entry.unknown ~= nil then
             return resolveFamily(vehicle, entry.unknown)
         end
@@ -345,7 +329,7 @@ local function getRakeRotors(vehicle)
     if rotors > 0 then
         return rotors
     end
-    local width = getWorkingWidth(vehicle)
+    local width = RMS_Utils.getWorkingWidth(vehicle)
     return width > 10.5 and 4 or width > 5 and 2 or 1
 end
 
@@ -361,12 +345,12 @@ local function getOrganPoints(vehicle, tier, wheels, arms)
     end
     local points = tier.points
     if tier.noticeRows ~= nil then
-        local width = getWorkingWidth(vehicle)
+        local width = RMS_Utils.getWorkingWidth(vehicle)
         local rows = width > 0 and math.min(math.max(math.floor(width / tier.rowWidth + 0.5), 1), tier.noticeRows) or tier.noticeRows
         points = points + (rows - tier.noticeRows) * tier.rowPoints
     end
     if tier.unitWidth ~= nil then
-        local width = getWorkingWidth(vehicle)
+        local width = RMS_Utils.getWorkingWidth(vehicle)
         points = points * (width > 0 and math.max(math.floor(width / tier.unitWidth + 0.5), 1) or tier.units)
     end
     if tier.perRotor ~= nil then

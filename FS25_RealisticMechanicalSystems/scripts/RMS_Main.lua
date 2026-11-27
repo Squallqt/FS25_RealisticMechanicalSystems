@@ -187,6 +187,7 @@ source(g_currentModDirectory .. "events/RMS_DebugReadingEvent.lua")
 function RMS_Main.initSpec()
     g_specializationManager:addSpecialization("RealisticMechanicalSystems", "RealisticMechanicalSystems", g_currentModDirectory.."scripts/core/RMS_Specialization.lua", "")
     g_specializationManager:addSpecialization("rmsImplementGreasing", "RMS_ImplementGreasing", g_currentModDirectory .. "scripts/RMS_ImplementGreasing.lua", "")
+    g_specializationManager:addSpecialization("rmsHarvestLoad", "RMS_HarvestLoad", g_currentModDirectory .. "scripts/RMS_HarvestLoad.lua", "")
     TypeManager.finalizeTypes = Utils.appendedFunction(TypeManager.finalizeTypes, RMS_Main.registerSpecializationToVehicles)
 end
 
@@ -227,6 +228,14 @@ local function getIsImplementType(vehicleType)
 		and specializations.RealisticMechanicalSystems == nil and specializations.rmsImplementGreasing == nil
 end
 
+---Tells whether a vehicle type is a harvester
+-- @param table vehicleType vehicle type
+-- @return boolean isHarvester true for a harvester
+local function getIsHarvesterType(vehicleType)
+	local specializations = vehicleType.specializationsByName
+	return specializations.combine ~= nil and specializations.rmsHarvestLoad == nil
+end
+
 ---Adds a specialization to a vehicle type
 -- @param table vehicleType vehicle type
 -- @param string specName name of the specialization
@@ -237,13 +246,16 @@ local function addSpecialization(vehicleType, specName)
 	table.insert(vehicleType.specializations, specObject)
 end
 
----Attaches RMS to the machines and the greasing to the implements
+---Adds the RMS specializations to the vehicle types
 function RMS_Main.registerSpecializationToVehicles()
 	for _, vehicleType in pairs(g_vehicleTypeManager.types) do
 		if getIsTypeManagedByRMS(vehicleType) then
 			addSpecialization(vehicleType, "RealisticMechanicalSystems")
 		elseif getIsImplementType(vehicleType) then
 			addSpecialization(vehicleType, "rmsImplementGreasing")
+		end
+		if getIsHarvesterType(vehicleType) then
+			addSpecialization(vehicleType, "rmsHarvestLoad")
 		end
 	end
 end
