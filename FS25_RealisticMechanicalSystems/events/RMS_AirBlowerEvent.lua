@@ -1,15 +1,23 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Whether a player blows with an air blower, and at which machine
+---Event carrying whether an air blower blows, and at which machine
 RMS_AirBlowerEvent = {}
 local RMS_AirBlowerEvent_mt = Class(RMS_AirBlowerEvent, Event)
 
 InitEventClass(RMS_AirBlowerEvent, "RMS_AirBlowerEvent")
 
+---Create instance of Event class
+-- @return table self instance of class event
 function RMS_AirBlowerEvent.emptyNew()
     return Event.new(RMS_AirBlowerEvent_mt)
 end
 
+---Create new instance of event
+-- @param table blower air blower
+-- @param boolean isBlowing true while the blower blows
+-- @param table? target machine blown at, nil if none
+-- @param float distance distance to the machine (m)
+-- @return table self instance of event
 function RMS_AirBlowerEvent.new(blower, isBlowing, target, distance)
     local self = RMS_AirBlowerEvent.emptyNew()
     self.blower = blower
@@ -19,6 +27,9 @@ function RMS_AirBlowerEvent.new(blower, isBlowing, target, distance)
     return self
 end
 
+---Writes event data to a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event goes to
 function RMS_AirBlowerEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.blower)
     streamWriteBool(streamId, self.isBlowing)
@@ -26,6 +37,9 @@ function RMS_AirBlowerEvent:writeStream(streamId, connection)
     streamWriteFloat32(streamId, self.distance)
 end
 
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_AirBlowerEvent:readStream(streamId, connection)
     self.blower = NetworkUtil.readNodeObject(streamId)
     self.isBlowing = streamReadBool(streamId)
@@ -34,9 +48,11 @@ function RMS_AirBlowerEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Applies the state, the server passing it on to the other players
+-- @param Connection connection connection the event comes from
 function RMS_AirBlowerEvent:run(connection)
     local blower = self.blower
-    if blower == nil or not blower:getIsSynchronized() or blower.setRMSAirBlowerState == nil then
+    if blower == nil or not blower:getIsSynchronized() then
         return
     end
 
@@ -51,6 +67,10 @@ function RMS_AirBlowerEvent:run(connection)
 end
 
 ---Sends the state of a blower through the server to every player
+-- @param table blower air blower
+-- @param boolean isBlowing true while the blower blows
+-- @param table? target machine blown at, nil if none
+-- @param float distance distance to the machine (m)
 function RMS_AirBlowerEvent.send(blower, isBlowing, target, distance)
     if g_server ~= nil then
         blower:setRMSAirBlowerState(isBlowing, target, distance)

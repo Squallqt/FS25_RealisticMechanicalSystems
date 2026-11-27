@@ -1,15 +1,24 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----A clamp asked of the server, or the state of the cables it gives back
+---Event carrying a clamp asked of the server, or the state of the cables it gives back
 RMS_JumperCablesEvent = {}
 local RMS_JumperCablesEvent_mt = Class(RMS_JumperCablesEvent, Event)
 
 InitEventClass(RMS_JumperCablesEvent, "RMS_JumperCablesEvent")
 
+---Create instance of Event class
+-- @return table self instance of class event
 function RMS_JumperCablesEvent.emptyNew()
     return Event.new(RMS_JumperCablesEvent_mt)
 end
 
+---Create new instance of event
+-- @param table cables jumper cables
+-- @param string state change of the cables, empty in a request
+-- @param table? target machine clamped or unclamped
+-- @param table? machineA machine on the left pair of clamps
+-- @param table? machineB machine on the right pair of clamps
+-- @return table self instance of event
 function RMS_JumperCablesEvent.new(cables, state, target, machineA, machineB)
     local self = RMS_JumperCablesEvent.emptyNew()
     self.cables = cables
@@ -20,6 +29,9 @@ function RMS_JumperCablesEvent.new(cables, state, target, machineA, machineB)
     return self
 end
 
+---Writes event data to a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event goes to
 function RMS_JumperCablesEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.cables)
     streamWriteString(streamId, self.state)
@@ -28,6 +40,9 @@ function RMS_JumperCablesEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.machineB)
 end
 
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_JumperCablesEvent:readStream(streamId, connection)
     self.cables = NetworkUtil.readNodeObject(streamId)
     self.state = streamReadString(streamId)
@@ -37,9 +52,11 @@ function RMS_JumperCablesEvent:readStream(streamId, connection)
     self:run(connection)
 end
 
+---Clamps for the carrier on the server, applies the state on a client
+-- @param Connection connection connection the event comes from
 function RMS_JumperCablesEvent:run(connection)
     local cables = self.cables
-    if cables == nil or not cables:getIsSynchronized() or cables.setRMSJumperCablesState == nil then
+    if cables == nil or not cables:getIsSynchronized() then
         return
     end
 
@@ -54,11 +71,18 @@ function RMS_JumperCablesEvent:run(connection)
 end
 
 ---Asks the server to clamp or unclamp a machine
+-- @param table cables jumper cables
+-- @param table target machine aimed at
 function RMS_JumperCablesEvent.sendRequest(cables, target)
     g_client:getServerConnection():sendEvent(RMS_JumperCablesEvent.new(cables, "", target))
 end
 
 ---Gives every player the state of the cables
+-- @param table cables jumper cables
+-- @param string state change of the cables
+-- @param table? target machine clamped or unclamped
+-- @param table? machineA machine on the left pair of clamps
+-- @param table? machineB machine on the right pair of clamps
 function RMS_JumperCablesEvent.broadcastState(cables, state, target, machineA, machineB)
     g_server:broadcastEvent(RMS_JumperCablesEvent.new(cables, state, target, machineA, machineB), nil, nil, cables)
 end

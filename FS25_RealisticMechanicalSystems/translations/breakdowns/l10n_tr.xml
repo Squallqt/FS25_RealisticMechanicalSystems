@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Kalıcı"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Güç Kaybı"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Hizmet Dışı"/>
         <text name="rms_breakdowns_severity_minor" text="Hafif"/>
         <text name="rms_breakdowns_severity_moderate" text="Orta"/>
         <text name="rms_breakdowns_severity_major" text="Ciddi"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Aşırı ısınma koruması: güç azaltıldı"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Aşırı ısınma koruması güçleniyor. Motor artık gücünün yalnızca yarısını veriyor."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Aşırı ısınma koruması: güç yarıya düşürüldü"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Aşırı ısınma koruması maksimum seviyede. Motor gücünün yalnızca küçük bir kısmı kalmıştır."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Aşırı ısınma koruması: güç ciddi ölçüde azaltıldı"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Hasarı önlemek için motor durduruldu. Yeniden çalıştırmadan önce soğumasını bekle."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Aşırı ısınma koruması: motor kapatıldı"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Yağ pompasında hafif arıza. Yağ basıncı düşer, motor torku hafifçe azalır, motor sıcaklığı yükselir ve mekanik vuruntu hissedilebilir."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Orta derecede yağ pompası arızası. Yağ basıncı yetersiz, motor torkunda belirgin bir düşüş var, motor sıcaklığı yükselmiş ve mekanik vuruntu sesi açıkça duyuluyor."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ciddi yağ pompası arızası. Yağ basıncı kritik derecede düşük, motor torku önemli ölçüde azalmış, motorun aşırı ısınması muhtemel, mekanik vuruntu şiddetli ve motorun durması söz konusu olabilir."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritik yağ pompası arızası. Yağ dolaşımı motorun güvenli çalışması için yetersiz; motoru çalıştırmak veya çalıştırmaya devam etmek mümkün değil."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motor sıkıştı ve artık dönemiyor."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor durdu"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU’da hafif arıza. Motor gücü biraz azaldı."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU’da orta derecede arıza. Belirgin güç kaybı ve artan yakıt tüketimi."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Diferansiyel kilit kumandasında arıza. Kilit devrede kalıyor. Makine dönüşlerde direksiyona direniyor."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Tahrik Kayışları ve Varyatörler"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Tahrik Rulmanları ve Dişli Kutuları"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Tabla Tahrik Kayışı"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Tabla Tork Sınırlayıcısı"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Tabla Kardan Mili ve İstavrozları"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Besleme Kanalı Zinciri"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Besleme Hızlandırıcısı"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Dövücü Çubukları"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Tahrik rulmanlarında orta derecede aşınma. Uğultu açıkça duyulur ve rulmanlar ısınır."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Tahrik rulmanlarında ciddi aşınma. Uğultu artar ve miller boşluk yapar."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Tahrik rulmanlarında kritik arıza. Bir rulman sarmış: hasat imkânsız."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Tabla tahrik kayışında başlangıç aşınması. Tabla dönerken öter ve biraz kayar."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Tabla tahrik kayışında orta derecede aşınma. Daha yüksek sesle öter ve devir alarmı zaman zaman hasadı durdurur."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Tabla tahrik kayışında ciddi aşınma. Yüksek sesle öter, debi düşer ve duruşlar tekrarlanır."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Tabla tahrik kayışında kritik arıza. Kayış koptu: tabla artık tahrik edilmiyor, hasat imkânsız."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Tabla tork sınırlayıcısında başlangıç aşınması. Yük altında biraz kayar."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Tabla tork sınırlayıcısında orta derecede aşınma. Normal yükte kayar ve devir alarmı zaman zaman hasadı durdurur."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Tabla tork sınırlayıcısında ciddi aşınma. Kayar ve ısınır, debi düşer ve duruşlar tekrarlanır."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Tabla tork sınırlayıcısında kritik arıza. Artık hiçbir şey aktarmıyor: tabla durdu, hasat imkânsız."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Tabla kardan mili istavrozlarında başlangıç aşınması. Tabla dönerken hafif bir uğultu duyulur."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Tabla kardan mili istavrozlarında orta derecede aşınma. Uğultu açıkça duyulur."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Tabla kardan mili istavrozlarında ciddi aşınma. Uğultu artar ve istavrozlar boşluk yapar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Tabla kardan milinde kritik arıza. Bir istavroz kırıldı: tabla artık tahrik edilmiyor, hasat imkânsız."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Besleme kanalı zincirinde başlangıç aşınması. Zincir uzar ve besleme düzensizleşir."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Besleme kanalı zincirinde orta derecede aşınma. Besleme kanalının girişinde tıkanmalar oluşur."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Besleme kanalı zincirinde ciddi aşınma. Dişliler üzerinde atlar ve tıkanmalar sürer."/>

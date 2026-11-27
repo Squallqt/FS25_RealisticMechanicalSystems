@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Perte de puissance"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Mise hors service"/>
         <text name="rms_breakdowns_severity_minor" text="Mineur"/>
         <text name="rms_breakdowns_severity_moderate" text="Modéré"/>
         <text name="rms_breakdowns_severity_major" text="Majeur"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protection anti-surchauffe : puissance réduite"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protection anti-surchauffe se renforce. Le moteur ne délivre plus que la moitié de sa puissance."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protection anti-surchauffe : puissance réduite de moitié"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protection anti-surchauffe est à son maximum. Il ne reste qu'une fraction de la puissance moteur."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protection anti-surchauffe : puissance fortement réduite"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Le moteur a été coupé pour éviter des dommages. Laissez-le refroidir avant de redémarrer."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protection anti-surchauffe : moteur coupé"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Dysfonctionnement léger de la pompe à huile. La pression d'huile est réduite, le couple moteur baisse légèrement, la température moteur augmente et des cognements mécaniques peuvent apparaître."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Dysfonctionnement modéré de la pompe à huile. La pression d'huile est insuffisante, le couple moteur diminue nettement, la température moteur augmente et les cognements mécaniques sont clairement audibles."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Dysfonctionnement sévère de la pompe à huile. La pression d'huile est critique, le couple moteur chute fortement, une surchauffe est probable, les cognements mécaniques sont sévères et des calages peuvent se produire."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Défaillance critique de la pompe à huile. La circulation d'huile est insuffisante pour un fonctionnement sûr du moteur et tout démarrage ou fonctionnement supplémentaire est impossible."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Le moteur s'est bloqué et ne peut plus tourner."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Moteur calé"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Dysfonctionnement léger de l'ECU. Puissance moteur légèrement réduite."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Dysfonctionnement modéré de l'ECU. Perte de puissance notable et augmentation de la consommation de carburant."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Défaillance de la commande du blocage de différentiel. Le blocage reste enclenché. La machine résiste au braquage en virage."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Courroies et variateurs"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Roulements et boîtiers d'entraînement"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Courroie d'embrayage de la coupe"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limiteur de couple de la coupe"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Arbre et croisillons de la coupe"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Chaîne du convoyeur"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Accélérateur d'alimentation"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Battes"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Usure modérée des roulements d'entraînement des organes. Le grondement devient nettement audible et ils chauffent."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Usure sévère des roulements d'entraînement des organes. Le grondement s'amplifie, les arbres prennent du jeu."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Défaillance critique des roulements d'entraînement des organes. Un roulement a grippé : la récolte est impossible."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Usure naissante de la courroie d'embrayage de la coupe. Elle siffle et patine un peu quand la coupe tourne."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Usure modérée de la courroie d'embrayage de la coupe. Elle siffle plus fort et l'alarme de régime arrête parfois la récolte."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Usure sévère de la courroie d'embrayage de la coupe. Elle siffle fort, le débit baisse et les arrêts se répètent."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Défaillance critique de la courroie d'embrayage de la coupe. Elle a cassé : la coupe n'est plus entraînée, la récolte est impossible."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Usure naissante du limiteur de couple de la coupe. Il glisse un peu sous la charge."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Usure modérée du limiteur de couple de la coupe. Il glisse sous la charge normale et l'alarme de régime arrête parfois la récolte."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Usure sévère du limiteur de couple de la coupe. Il glisse et chauffe, le débit baisse et les arrêts se répètent."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Défaillance critique du limiteur de couple de la coupe. Il ne transmet plus rien : la coupe est arrêtée, la récolte est impossible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Usure naissante des croisillons de l'arbre de la coupe. Un léger grondement apparaît quand la coupe tourne."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Usure modérée des croisillons de l'arbre de la coupe. Le grondement devient nettement audible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Usure sévère des croisillons de l'arbre de la coupe. Le grondement s'amplifie, les croisillons ont pris du jeu."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Défaillance critique de l'arbre de la coupe. Un croisillon a cassé : la coupe n'est plus entraînée, la récolte est impossible."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Usure naissante de la chaîne du convoyeur. Elle s'allonge et l'alimentation devient irrégulière."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Usure modérée de la chaîne du convoyeur. Des bourrages se forment à l'entrée du convoyeur."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Usure sévère de la chaîne du convoyeur. Elle saute sur ses pignons et les bourrages se répètent."/>

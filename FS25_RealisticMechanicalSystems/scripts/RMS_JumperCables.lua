@@ -9,16 +9,26 @@ local modDirectory = g_currentModDirectory
 RMS_JumperCables.WARNING_DURATION = 2200
 RMS_JumperCables.REFUSALS = { TOO_FAR = "jumperTooFar", ELECTRIC_DONOR = "jumperElectricDonor", VOLTAGE = "jumperVoltage" }
 
+---Tells whether the local player carries the cables
+-- @param table cables jumper cables
+-- @return boolean isCarried true when the local player carries them
 local function getIsLocallyCarried(cables)
     local player = cables:getCarryingPlayer()
     return player ~= nil and player.isOwner
 end
 
+---Returns the machine a machine is linked to by cables
+-- @param table machine machine
+-- @return table? linked machine linked, nil for none
 local function getPowerLink(machine)
     local connection = machine.spec_RealisticMechanicalSystems.externalPowerConnection
     return type(connection) == "table" and connection.object or connection
 end
 
+---Tells whether two machines are linked to each other
+-- @param table? machineA first machine
+-- @param table? machineB second machine
+-- @return boolean isLinked true when they are linked to each other
 local function getAreLinked(machineA, machineB)
     if machineA == nil or machineB == nil then
         return false
@@ -27,21 +37,32 @@ local function getAreLinked(machineA, machineB)
     return machineA ~= machineB and getPowerLink(machineA) == machineB and getPowerLink(machineB) == machineA
 end
 
+---Shows the clamp pairs still free on the cables
+-- @param table spec cables specialization
 local function showClamps(spec)
     setVisibility(spec.leftPair, spec.machineA == nil)
     setVisibility(spec.rightPair, spec.machineB == nil)
 end
 
+---Shows a warning to the local player
+-- @param string textKey l10n key of the warning
+-- @param any ... values of the format of the warning
 local function warn(textKey, ...)
     g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), ...), RMS_JumperCables.WARNING_DURATION)
 end
 
+---Puts the left clamp pair back on the cables
+-- @param table spec cables specialization
 local function putLeftPairBack(spec)
     link(spec.leftPairParent, spec.leftPair)
     setTranslation(spec.leftPair, unpack(spec.leftPairTranslation))
     setRotation(spec.leftPair, unpack(spec.leftPairRotation))
 end
 
+---Sends a state of the cables to every player, the server included
+-- @param table cables jumper cables
+-- @param string state change of the cables
+-- @param table? target machine clamped or unclamped
 local function tell(cables, state, target)
     local spec = cables[specName]
     RMS_JumperCablesEvent.broadcastState(cables, state, target, spec.machineA, spec.machineB)
@@ -50,6 +71,8 @@ local function tell(cables, state, target)
     end
 end
 
+---Unlinks the clamped machines
+-- @param table cables jumper cables
 local function unclamp(cables)
     local spec = cables[specName]
     if getAreLinked(spec.machineA, spec.machineB) then
@@ -58,21 +81,30 @@ local function unclamp(cables)
     spec.machineA, spec.machineB = nil, nil
 end
 
+---Checks if all prerequisite specializations are loaded
+-- @param table specializations specializations
+-- @return boolean hasPrerequisite true if all prerequisite specializations are loaded
 function RMS_JumperCables.prerequisitesPresent(specializations)
     return true
 end
 
+---Registers the functions of the cables
+-- @param table handToolType hand tool type
 function RMS_JumperCables.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "clampRMSJumperCables", RMS_JumperCables.clampRMSJumperCables)
     SpecializationUtil.registerFunction(handToolType, "setRMSJumperCablesState", RMS_JumperCables.setRMSJumperCablesState)
 end
 
+---Registers the overwritten functions of the cables
+-- @param table handToolType hand tool type
 function RMS_JumperCables.registerOverwrittenFunctions(handToolType)
     SpecializationUtil.registerOverwrittenFunction(handToolType, "attachToolToHand", RMS_JumperCables.attachToolToHand)
     SpecializationUtil.registerOverwrittenFunction(handToolType, "attachToolToCamera", RMS_JumperCables.putLeftPairBackFirst)
     SpecializationUtil.registerOverwrittenFunction(handToolType, "detachTool", RMS_JumperCables.putLeftPairBackFirst)
 end
 
+---Registers the event listeners of the cables
+-- @param table handToolType hand tool type
 function RMS_JumperCables.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onDelete", "onUpdate", "onWriteStream", "onReadStream", "onHeldStart", "onHandToolHolderChanged",
         "onRegisterActionEvents" }) do
@@ -80,8 +112,14 @@ function RMS_JumperCables.registerEventListeners(handToolType)
     end
 end
 
+---Called on loading
+-- @param table xmlFile file of the hand tool
+-- @param string baseDirectory directory of the hand tool
 function RMS_JumperCables:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
+    ---Returns a node of the cables by its mapping
+    -- @param string name i3d mapping
+    -- @return entityId? node node
     local function node(name)
         return I3DUtil.indexToObject(self.components, name, self.i3dMappings)
     end
@@ -105,6 +143,7 @@ function RMS_JumperCables:onLoad(xmlFile, baseDirectory)
     end
 end
 
+---Called on deleting, unlinking the machines
 function RMS_JumperCables:onDelete()
     local spec = self[specName]
     putLeftPairBack(spec)
@@ -117,6 +156,9 @@ function RMS_JumperCables:onDelete()
     end
 end
 
+---Called on server side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_JumperCables:onWriteStream(streamId, connection)
     local spec = self[specName]
     for _, machine in ipairs({ spec.machineA or false, spec.machineB or false }) do
@@ -126,6 +168,9 @@ function RMS_JumperCables:onWriteStream(streamId, connection)
     end
 end
 
+---Called on client side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_JumperCables:onReadStream(streamId, connection)
     local spec = self[specName]
     -- the machines may join after the cables: kept as ids until they exist
@@ -137,6 +182,8 @@ function RMS_JumperCables:onReadStream(streamId, connection)
 end
 
 ---Holds the left clamp pair in the left hand of the character
+-- @param function superFunc original function
+-- @return boolean isAttached true once attached
 function RMS_JumperCables:attachToolToHand(superFunc)
     local spec = self[specName]
     putLeftPairBack(spec)
@@ -149,11 +196,16 @@ function RMS_JumperCables:attachToolToHand(superFunc)
 end
 
 ---Gives the left clamp pair back before the game moves the cables
+-- @param function superFunc original function
+-- @return any result what the game's function returns
 function RMS_JumperCables:putLeftPairBackFirst(superFunc)
     putLeftPairBack(self[specName])
     return superFunc(self)
 end
 
+---Shows the stored or held cables, unclamping them once stored
+-- @param table? holder new holder
+-- @param table? lastHolder previous holder
 function RMS_JumperCables:onHandToolHolderChanged(holder, lastHolder)
     local spec = self[specName]
     local isStored = holder ~= nil and holder:isa(HandToolHolder)
@@ -166,6 +218,7 @@ function RMS_JumperCables:onHandToolHolderChanged(holder, lastHolder)
     end
 end
 
+---Warns the carrier when both machines are already clamped
 function RMS_JumperCables:onHeldStart()
     local spec = self[specName]
     if getIsLocallyCarried(self) and spec.machineA ~= nil and spec.machineB ~= nil then
@@ -173,6 +226,7 @@ function RMS_JumperCables:onHeldStart()
     end
 end
 
+---Registers the key clamping a machine
 function RMS_JumperCables:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -186,6 +240,8 @@ function RMS_JumperCables:onRegisterActionEvents()
 end
 
 ---Clamps or unclamps the machine the cables point at
+-- @param string actionName input action
+-- @param float inputValue input value
 function RMS_JumperCables:onAction(actionName, inputValue)
     local machine = RMS_Utils.raycastMachine(self[specName].raycastNode)
     if machine == nil then
@@ -199,6 +255,7 @@ function RMS_JumperCables:onAction(actionName, inputValue)
 end
 
 ---Clamps a machine on the server: the first one, then a second fit to it
+-- @param table? machine machine aimed at
 function RMS_JumperCables:clampRMSJumperCables(machine)
     local spec = self[specName]
     local state
@@ -238,6 +295,10 @@ function RMS_JumperCables:clampRMSJumperCables(machine)
 end
 
 ---Shows and plays a state of the cables, told to their carrier
+-- @param string state change of the cables
+-- @param table? target machine clamped or unclamped
+-- @param table? machineA machine on the left pair of clamps
+-- @param table? machineB machine on the right pair of clamps
 function RMS_JumperCables:setRMSJumperCablesState(state, target, machineA, machineB)
     local spec = self[specName]
     spec.machineA, spec.machineB = machineA, machineB
@@ -272,6 +333,7 @@ function RMS_JumperCables:setRMSJumperCablesState(state, target, machineA, machi
 end
 
 ---Names the action after the machine aimed at, drops a broken link
+-- @param float dt time since the last frame (ms)
 function RMS_JumperCables:onUpdate(dt)
     local spec = self[specName]
     for side, objectId in pairs(spec.pendingIds) do

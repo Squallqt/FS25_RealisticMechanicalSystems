@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Egenvekt"/>
         <text name="rms_hud_mass_towed" text="Slepevekt"/>
-        <text name="rms_hud_mass_total" text="Totalvekt"/>
+        <text name="rms_hud_mass_total" text="Totalt"/>
+        <text name="rms_hud_fuel_average" text="Snitt"/>
+        <text name="rms_hud_unit_perHour" text="/t"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="Bakhjulstrekk (forakselen frakoblet)"/>
         <text name="rms_drivetrain_mode_4wd" text="Firehjulstrekk (forakselen tilkoblet)"/>
         <text name="rms_drivetrain_mode_auto" text="Firehjulstrekk AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontroller kjøretøyet"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Trekkmodus"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differensialsperre"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parkeringsbrems"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Angir hvorvidt mekaniske overhalinger på verkstedet fullføres øyeblikkelig, også de som pågår."/>
         <text name="rms_instantRemap_label" text="Øyeblikkelig motoroptimalisering"/>
         <text name="rms_instantRemap_tooltip" text="Angir hvorvidt motoroptimalisering og tilbakestilling til originalprogramvaren fullføres øyeblikkelig, også arbeid som pågår."/>
-        <text name="rms_debugMode_label" text="Feilsøkingsmodus"/>
-        <text name="rms_debugMode_tooltip" text="Angir hvorvidt feilsøkingsvinduet vises i maskinen du kjører, og konsollen får detaljerte logger. Tasten %s åpner og lukker vinduet; i flerspiller ser bare administratorer det."/>
+        <text name="rms_debugWindow_label" text="Feilsøkingsvindu"/>
+        <text name="rms_debugWindow_tooltip" text="Angir hvorvidt feilsøkingsvinduet vises i maskinen du kjører. Tasten %s åpner det også; i flerspiller ser bare administratorer det."/>
+        <text name="rms_debugLog_label" text="Detaljert logg"/>
+        <text name="rms_debugLog_tooltip" text="Angir hvorvidt konsollen får de detaljerte loggene fra RMS, til å legge ved en feilrapport, uten å åpne feilsøkingsvinduet."/>
         <text name="rms_warningMessages_label" text="Varselmeldinger"/>
         <text name="rms_warningMessages_tooltip" text="Angir hvorvidt advarsler som kald motor eller overoppheting vises. Meldinger om termisk effektbegrensning vises alltid."/>
         <text name="rms_serviceInterval_label" text="Avstand mellom service"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Angir driftstimene før kjøretøyets tilstand når 0 %; jo nærmere det kommer, desto mindre pålitelig blir det, og desto mer synker verdien. En endring gjelder fremover: kjøretøyene beholder tilstanden, bare verdien beregnes på nytt."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Eksosrøyk"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Angir hvorvidt eksosrøyken følger motorens faktiske tilstand: svart ved luftmangel, blå når den brenner olje, hvit når drivstoff slipper ut uforbrent, tettere under belastning. Gamle maskiner ryker langt mer enn moderne."/>
-        <text name="rms_tutorialMode_label" text="Opplæringsmodus"/>
-        <text name="rms_tutorialMode_tooltip" text="Angir hvorvidt tipsene i opplæringen vises under spillet."/>
-        <text name="rms_tutorialResetTips_label" text="Tilbakestill tipsene"/>
-        <text name="rms_tutorialResetTips_text" text="Tilbakestill"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Tilbakestiller historikken for opplæringstips: alle vises på nytt."/>
-        <text name="rms_tutorialResetConfirm_title" text="Tilbakestille opplæringstipsene?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Tilbakestille historikken over opplæringstips og vise alle tipsene igjen?"/>
         <text name="rms_drivetrainEnabled_label" text="Styring av firehjulstrekk og differensialsperre"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Angir hvorvidt traktorers foraksel og differensialsperrer styres manuelt. Innstillingen erstatter differensialstyringen i Enhanced Vehicle: slå av innstillingen og slå differensialene på igjen i menyen der for å gi styringen tilbake."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Tillat AUTO-trekkmodus"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Angir hvorvidt velgeren tilbyr AUTO, som kobler inn forakselen ved hjulspinn eller arbeid under belastning og kobler den ut på veien. Når innstillingen slås av, går kjøretøy i AUTO tilbake til firehjulstrekk."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Denne innstillingen krever at styring av firehjulstrekk og differensialsperre er slått på."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeringsbrems"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Angir hvorvidt fulgte kjøretøy har parkeringsbrems: automatisk på nyere maskiner med CVT- eller Powershift-gir, med egen tast på de andre. Innstillingen erstatter parkeringsbremsen i Enhanced Vehicle: slå av innstillingen og slå parkeringsbremsen på igjen i menyen der for å gi den tilbake."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Vedlikeholdslogg"/>
         <text name="rms_ws_label_last_maintenance" text="Siste vedlikehold"/>
         <text name="rms_ws_task_inspection" text="Inspeksjon"/>
-        <text name="rms_ws_task_maintenance" text="Vedlikehold"/>
         <text name="rms_ws_task_overhaul" text="Overhaling"/>
         <text name="rms_ws_info_no_breakdowns" text="Ingen fastslåtte feil. En inspeksjon eller en service fastslår dem maskinen ennå ikke viser."/>
         <text name="rms_ws_info_warning_unidentified" text="Varsellampe tent: feil må fastslås. En inspeksjon eller en service fastslår den, deretter kan den repareres."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Koble en vogns diagnoseutstyr til maskinen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnose kreves"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Demontering eller spesialverktøy kreves"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Høyspenningsutstyr kreves"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Høyspenningskvalifisert tekniker kreves"/>
         <text name="rms_ws_status_in_progress_format" text="%s pågår til %s"/>
         <text name="rms_ws_status_open" text="Verkstedet er åpent"/>
         <text name="rms_ws_status_closed" text="Verkstedet er stengt"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Beskrivelse"/>
         <text name="rms_log_button_show_report" text="Vis rapport"/>
         <text name="rms_log_empty" text="Loggen er fortsatt tom"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Termisk vern: effektbegrensningen opphevet"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Lavt AdBlue-nivå: fyll på AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Svært lavt AdBlue-nivå: fyll på AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Svært lavt AdBlue-nivå: motoreffekten er redusert. Fyll på AdBlue."/>
+        <text name="rms_adblue_empty_message" text="AdBlue-tanken er tom: fyll på AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue-tanken er tom: motoreffekten er kraftig redusert. Fyll på AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue fylt på: motoreffekten er gjenopprettet."/>
         <text name="rms_breakdown_at_progress_message" text="pågår"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Advarsel! Motoren er kald: den slites til den er varm."/>
         <text name="rms_spec_overheat_engine_message" text="Advarsel! Motoren overopphetes."/>
         <text name="rms_spec_overheat_transmission_message" text="Advarsel! Transmisjonen overopphetes."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motoroptimalisering"/>
         <text name="rms_spec_state_overdue" text="Overskredet"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Havarert"/>
         <text name="rms_spec_state_bad" text="Dårlig"/>
         <text name="rms_spec_state_excellent" text="Utmerket"/>
         <text name="rms_spec_state_good" text="God"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="sperre eller 4WD på fast underlag"/>
         <text name="rms_warranty_filter" text="tett filter"/>
         <text name="rms_warranty_oil" text="uegnet motorolje"/>
+        <text name="rms_warranty_header_engagement" text="skjærebord koblet inn over tomgang"/>
         <text name="rms_warranty_trailer" text="for tung henger"/>
         <text name="rms_warranty_aftermarket_part" text="uoriginal del"/>
         <text name="rms_warranty_used_part" text="brukt del"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visuell kontroll og funksjonstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniske feil"/>
         <text name="rms_ws_inspection_electronic_detail" text="Feilkoder lest av med diagnoseutstyret"/>
+        <text name="rms_ws_inspection_electrical" text="Elektriske feil"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Kretser kontrollert med multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Skjulte defekter"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defekt del, nødreparasjon"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet overopphetes"/>
         <text name="rms_report_wear_lubrication" text="Forsinket smøring"/>
         <text name="rms_report_wear_pto_overload" text="Kraftuttak overbelastet"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardangakselens vinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Høsting overbelastet"/>
         <text name="rms_report_wear_harvest_flow" text="Stor kornstrøm"/>
         <text name="rms_report_wear_harvest_straw" text="Halmkutter overbelastet"/>
         <text name="rms_report_wear_harvest_stones" text="Stein"/>
         <text name="rms_report_wear_harvest_rice" text="Rishøsting"/>
         <text name="rms_report_wear_harvest_wet" text="Fuktig avling"/>
+        <text name="rms_report_wear_header_starts" text="Oppstarter av skjærebordet"/>
+        <text name="rms_report_wear_service_overdue" text="Vedlikeholdsintervall overskredet"/>
+        <text name="rms_report_wear_engine_overload" text="Motoren er overbelastet"/>
+        <text name="rms_report_wear_cold_engine" text="Kald motor"/>
+        <text name="rms_report_wear_fluid_level" text="Lavt væskenivå"/>
+        <text name="rms_report_wear_engine_overheat" text="Motoren overopphetes"/>
+        <text name="rms_report_wear_lugging" text="Motor på for lavt turtall"/>
+        <text name="rms_report_wear_wheel_slip" text="Hjulspinn"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Belastning i drivlinjen"/>
+        <text name="rms_report_wear_cold_oil" text="Kald transmisjonsolje"/>
+        <text name="rms_report_wear_transmission_overheat" text="Transmisjonen overopphetes"/>
+        <text name="rms_report_wear_wet_weather" text="Fuktig vær"/>
+        <text name="rms_report_wear_cranking" text="Hyppige starter"/>
+        <text name="rms_report_wear_starter_heat" text="Startmotoren overopphetes"/>
+        <text name="rms_report_wear_steering" text="Styring i stillstand"/>
+        <text name="rms_report_wear_park_brake" text="Parkeringsbrems"/>
+        <text name="rms_report_wear_low_fuel" text="Drivstoffreserve"/>
+        <text name="rms_report_wear_idle_deposit" text="Lengre tomgang"/>
+        <text name="rms_report_wear_pto_engagement" text="Innkobling av kraftuttak"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmisjon"/>
         <text name="rms_report_system_condition_power" text="Aktuell effekt"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Begrenset utveksling"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Uregelmessig kraftoverføring"/>
         <text name="rms_report_transmission_failed" text="Sviktet"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
         <text name="rms_grease_gun_no_vehicle" text="Ingen kjøretøy innen smøreavstand"/>
         <text name="rms_grease_gun_function" text="Smører maskinenes smørenipler. Fylles med en fettpatron."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorolje, til maskiner uten AdBlue og partikkelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmisjons- og hydraulikkolje til manuell påfylling"/>
         <text name="rms_fluid_function_coolant" text="Kjølevæske til manuell påfylling"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue til AdBlue-tanken på maskiner som har en"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
         <text name="rms_fluid_level_done" text="Nivå fylt opp"/>
         <text name="rms_fluid_container_empty" text="Tom kanne"/>
         <text name="rms_fluid_drum_empty" text="Tomt fat"/>
+        <text name="rms_fluid_tank_empty" text="Tom tank"/>
         <text name="rms_fluid_container_label" text="Kanne"/>
         <text name="rms_fluid_drum_label" text="Fat"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Ta for å fylle på"/>
         <text name="rms_fluid_hand_carry" text="Bær kannen"/>
         <text name="rms_drum_pump_name" text="Batteridrevet fatpumpe"/>
-        <text name="rms_drum_pump_function" text="Settes på et 200 L fat for å fylle maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Settes på et fat eller en tank for å fylle maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sett på fatet"/>
+        <text name="rms_drum_pump_mount_tank" text="Sett på tanken"/>
         <text name="rms_drum_pump_take" text="Ta av pumpen"/>
         <text name="rms_drum_pump_nozzle_take" text="Ta pistolen"/>
         <text name="rms_drum_pump_nozzle_return" text="Heng opp pistolen"/>
         <text name="rms_drum_pump_hose_range" text="Pumpeslangen hindrer deg i å gå lenger.&#10;Pistolen henges opp om %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Flytt fatet nærmere: slangen er 4 m lang"/>
+        <text name="rms_drum_pump_tank_too_far" text="Flytt tanken nærmere: slangen er 4 m lang"/>
         <text name="rms_drum_pump_required" text="Fatpumpe kreves"/>
         <text name="rms_fluid_level_under_gauge" text="Under skalaen"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolje"/>
         <text name="rms_fluid_circuit_coolant" text="Kjølevæske"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmisjonsolje"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulikkolje"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmisjons- og hydraulikkolje"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolje"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olje"/>
         <text name="rms_fluid_hud_coolant" text="Kjølevæske"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Uegnet væske"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på motoren og gjøre den varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på kjølesystemet og gjøre motoren varmere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på hydraulikken, gjøre den varmere og langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dette produktet er ikke beregnet på denne kretsen. Det forurenser den og kan opptil tredoble slitasjen på transmisjonen og hydraulikken, gjøre dem varmere og gjøre hydraulikken langsommere. Bare et fullt væskeskift fjerner forurensningen. Fortsette?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Uegnet motorolje"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Denne motoren bruker AdBlue eller har partikkelfilter: instruksjonsboken krever en olje laget for dem. Med denne oljen kommer oljeskiftet opptil dobbelt så tidlig. Et partikkelfilter fylles dessuten 1,5 ganger så fort med aske. Fortsette?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Denne motoren bruker AdBlue eller har partikkelfilter: den trenger en olje laget for dem. Med denne oljen kommer oljeskiftet opptil dobbelt så tidlig. Et partikkelfilter fylles dessuten 1,5 ganger så fort med aske. Fortsette?"/>
         <text name="rms_fluid_error_no_circuit" text="Dette kjøretøyet trenger ikke påfylling av væske"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Dette kjøretøyet har ingen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Slå av motoren før du overfører væske"/>
         <text name="rms_fluid_error_vehicle_moving" text="Kjøretøyet må stå stille"/>
         <text name="rms_fluid_error_busy" text="En annen beholder fyller allerede denne kretsen"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Litt for lavt"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lett tilsmusset"/>
         <text name="rms_inspection_status_grease_due" text="Må smøres"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lett fukt"/>
-        <text name="rms_inspection_status_seepage" text="Siving"/>
-        <text name="rms_inspection_status_severe_leak" text="Kraftig lekkasje"/>
         <text name="rms_inspection_status_low" text="Lavt"/>
         <text name="rms_inspection_status_very_low" text="Svært lavt"/>
         <text name="rms_inspection_status_critically_low" text="Påfylling haster"/>
         <text name="rms_inspection_status_critically_clogged" text="Helt tettet igjen"/>
         <text name="rms_inspection_status_dirty" text="Tilsmusset"/>
         <text name="rms_inspection_status_grease_late" text="Forsinket"/>
-        <text name="rms_inspection_status_active_leak" text="Aktiv lekkasje"/>
         <text name="rms_inspection_status_heavily_clogged" text="Kraftig tilsmusset"/>
         <text name="rms_inspection_status_not_required" text="Ikke påkrevd"/>
         <text name="rms_inspection_status_change_overdue" text="Skift overskredet"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Kontroll"/>
         <text name="rms_fleet_location" text="Plassering"/>
         <text name="rms_fleet_next_service" text="Neste vedlikehold"/>
-        <text name="rms_fleet_remaining" text="%s t gjenstår"/>
-        <text name="rms_fleet_overdue" text="%s t forsinket"/>
         <text name="rms_fleet_overdue_label" text="Forsinket"/>
         <text name="rms_fleet_overdue_count" text="Forsinket: %d"/>
         <text name="rms_fleet_due_soon_label" text="Snart"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Stor slitasje"/>
         <text name="rms_fleet_part_failed" text="Ute av drift"/>
         <text name="rms_fleet_part_unmeasured" text="Ingen måling"/>
+        <text name="rms_fleet_part_replaced" text="Del skiftet"/>
         <text name="rms_fleet_parts_reading" text="Deler målt %s"/>
         <text name="rms_fleet_parts_need_complete" text="Deler måles ved neste fullstendige inspeksjon"/>
         <text name="rms_fleet_greasing_done" text="Smøring i orden"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Reparasjon"/>
         <text name="rms_sell_dialog_washing_penalty" text="Vask"/>
         <text name="rms_sell_dialog_deposit_refund" text="Tilbakebetalt depositum"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Lavt væskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av væskene på denne maskinen har falt under merket på måleren sin.&#10;&#10;Motorolje forbrukes med timene, og en sliten motor drikker langt mer av den. Kjølevæske, transmisjonsolje og hydraulikkolje faller bare ved en lekkasje.&#10;&#10;Under merket ber maskinen bare om en påfylling og arbeider fortsatt normalt. Jo lavere nivået blir, desto lettere suger pumpen luft i bakker: oljetrykklampen blinker, og på girkasse- eller hydraulikksiden hviner pumpen og de hydrauliske bevegelsene blir tregere. Hvert minutt på den måten skader veivaksellagrene eller pumpen: stopp og fyll opp nivået. En maskin som mangler kjølevæske, transmisjonsolje eller hydraulikkolje, blir også varm.&#10;&#10;Kjøp en kanne med et egnet produkt i butikken, ta den med bort til maskinen, og fyll opp nivået. Alle produkter til den kretsen har samme virkning; en feil væske forurenser bare den kretsen. Hos forhandleren leveres og faktureres de literne som trengs."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Velkommen til Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Slå av tipsene"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsene"/>
-        <text name="rms_tutorial_welcome_message" text="Denne modden gjør spillets systemer for skader og vedlikehold av kjøretøy helt om. Det er mange endringer, og derfor dukker det opp opplæringstips fra tid til annen. De hjelper deg med å forstå de nye mekanikkene raskere, unngå de vanlige feilene og holde maskinene dine fri for havari.&#10;&#10;Hvis du vil, kan du slå av opplæringstipsene med én gang. Du kan alltid slå dem på igjen senere i modinnstillingene under Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Fuktig vær"/>
-        <text name="rms_tutorial_wet_weather_message" text="Fukt skader ledninger og elektrisk utstyr. Slitasjen på det elektriske systemet stiger litt i regn, snø eller hagl når en maskin står ute."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Hjulspinn"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Hjulene dine spinner kraftig. Spinn er en av de mest ødeleggende faktorene for transmisjonen og flytter neste verkstedbesøk merkbart nærmere."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Vedlikehold i vente"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s trenger snart service. Velg anbefalt pakke på verkstedet: den dekker arbeidet som forfaller. Driftstimer eller kalendertid utløser service ved første grense, også ved lite bruk. Vedlikeholdsvennlighet viser inngrepenes kompleksitet; vanlig service er fortsatt mulig på mobilt verksted."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Vedlikeholdsintervall overskredet"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Vedlikeholdsintervallet for %s er overskredet.&#10;&#10;Kjør til et verksted så snart som mulig, og velg «Vedlikehold». Fortsetter du å bruke et kjøretøy med overskredet vedlikehold, stiger faren for flere feil på én gang kraftig."/>
-        <text name="rms_tutorial_steering_title" text="Styring i stillstand"/>
-        <text name="rms_tutorial_steering_message" text="Det er best å unngå å dreie rattet når maskinen står stille. Det belaster styretøyet og delene i forakselen hardt, noe som øker slitasjen på understellet.&#10;&#10;Kjør et lite stykke frem før du dreier: da svinger hjulene langt lettere."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Kjøling og luftfilter"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Kjøleren eller luftfilteret er tett. Hold %s-tasten inne mens du ser på kjøretøyet for å finne ut hvilket. Rens det med trykkluftblåseren. Hvis filteret ikke lenger kan blåses rent, skifter verkstedet det fra service %s og oppover."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Smøring nødvendig"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s har smørenipler som må smøres.&#10;&#10;I RMS har hver maskin smøreniplene fra bruksanvisningen. De må smøres igjen etter dagene maskinen arbeider: hver arbeidsdag, eller med noen arbeidsdagers mellomrom for dem bruksanvisningen smører sjeldnere. Forsinket smøring øker slitasjen på chassiset.&#10;&#10;Kjøp en fettpresse og patroner i butikken. Still deg foran en patron med fettpressen i hånden for å sette den inn, og sikt deretter på maskinen: hvert klikk smører én smørenippel, og holdes knappen inne, fortsetter smøringen på de neste.&#10;&#10;Hold %s-tasten inne mens du ser på kjøretøyet for å se smøreniplene som gjenstår."/>
-        <text name="rms_tutorial_needs_repair_title" text="Feil funnet"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s har et problem. En av delene kan ha gått i stykker.&#10;&#10;Kjør på verkstedet: en inspeksjon, eller servicen hvis den er forfalt, fastslår feilen. Ikke vent: feilen kan bli verre, og reparasjonen blir dyrere med den.&#10;&#10;Når feilen er fastslått, få den reparert på verkstedet."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Overhaling nødvendig"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s bærer tydelig preg av alderen sin. Det er på tide å vurdere en utskifting eller en overhaling. Det er en lang og dyr prosedyre, men det er den eneste måten å gi maskinen sin opprinnelige tilstand tilbake på.&#10;&#10;Levetiden stilles inn i modinnstillingene: jo høyere den er, desto langsommere slites kjøretøyene dine."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Økt fare for feil"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Motoren, drivstoffsystemet eller kjølesystemet på %s har økt risiko for feil.&#10;&#10;Service %s: justerer ventilene og kontrollerer dysene og termostaten, noe som senker den risikoen."/>
-        <text name="rms_tutorial_age_degradation_title" text="Aldersbetinget forringelse"/>
-        <text name="rms_tutorial_age_degradation_message" text="I RMS mister kjøretøy etter hvert en del av sin opprinnelige ytelse når de blir eldre.&#10;&#10;Etter omtrent en tredjedel av levetiden senker den aldersbetingede slitasjen enkelte viktige egenskaper litt, som effekt eller bremseevne. Virkningen forsterkes deretter og blir tydelig synlig sist i levetiden.&#10;&#10;Denne forringelsen kan slås av i modinnstillingene."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Forbruksmateriell av dårlig kvalitet"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s fikk et defekt filter ved sitt siste vedlikehold. Det skjer med de billige kvalitetene.&#10;&#10;Filteret slipper gjennom smuss: kretsen det beskytter, slites raskere til filteret skiftes. Et nytt vedlikehold skifter det. Bare en fullstendig inspeksjon peker det ut."/>
-        <text name="rms_tutorial_poor_parts_title" text="Deler av dårlig kvalitet"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s fikk en del av dårlig kvalitet ved en reparasjon. Feilen kommer sannsynligvis snart tilbake.&#10;&#10;Du kan vente på at den kommer igjen, eller kjøre en fullstendig inspeksjon, som pålitelig peker ut delen det gjelder."/>
-        <text name="rms_tutorial_park_brake_title" text="Parkeringsbrems"/>
-        <text name="rms_tutorial_park_brake_message" text="Parkeringsbremsen er satt på. Den settes på av seg selv så snart du forlater den stillestående maskinen, og slippes så snart du gir gass igjen. Den settes også på når du slår av motoren, eller etter 45 sekunders stillstand.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbremsen er satt på. Det er du som setter den på og slipper den med dens egen tast: gir du gass med bremsen på, arbeider maskinen mot den, og bremsene slites.&#10;&#10;I en bakke er det den som holder maskinen fra å trille av gårde av seg selv: forlater du maskinen uten å sette den på, kan den trille av gårde."/>
-        <text name="rms_tutorial_preheat_title" text="Forvarming av dieselmotor"/>
-        <text name="rms_tutorial_preheat_message" text="På en kald dieselmotor slår ett trykk på startknappen på tenningen og starter forvarmingen automatisk. Lampene i instrumentpanelet lyser kort opp, og deretter fortsetter forvarmingslampen å lyse til motoren er klar. Ikke gjenta kommandoen: startmotoren kobler inn av seg selv når lampen slukker."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Innkobling av kraftuttak"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Koble inn kraftuttaket på tomgang, og øk deretter turtallet: innkobling på høyt turtall gir hele drivverket et støt, særlig med et tungt redskap. Hver innkobling sliter også på clutchen."/>
-        <text name="rms_tutorial_pto_raised_title" text="Kraftuttak og løftet redskap"/>
-        <text name="rms_tutorial_pto_raised_message" text="Å kjøre kraftuttaket med løftet redskap får kardangene til å arbeide i skarp vinkel og sliter dem raskt. Slå av kraftuttaket før du løfter redskapet for transport."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Tomgang og stillstand"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Slitasjen er langt lavere når maskinen går uten å arbeide. Med motoren av blir den minimal. Under tak forsvinner den helt."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Lengre tomgang"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Maskinen ser ut til å ha stått for lenge på tomgang. Lange perioder på tomgang sløser ikke bare med drivstoff: med tiden fremmer de også avleiringer i drivstoffsystemet og skader motorens allmenne tilstand.&#10;&#10;Trenger du ikke maskinen akkurat nå, er det bedre å slå av motoren."/>
-        <text name="rms_tutorial_hot_weather_title" text="Varmt vær"/>
-        <text name="rms_tutorial_hot_weather_message" text="Det er svært varmt i dag. Hold øye med hvor ren kjøleren er i dette været, og unngå å overbelaste motoren, ellers er overoppheting bare et spørsmål om tid.&#10;&#10;Du kan se kjølerens tilstand: hold %s-tasten inne mens du ser på maskinen. Rensingen gjøres med trykkluftblåseren."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="For tung henger"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Den trukne lasten ser ut til å være for tung for dette kjøretøyet. Du kan kjøre videre, men transmisjonen og drivlinjen blir mer belastet.&#10;&#10;RMS bruker to rettesnorer: en traktor trenger minst 10 hk per tonn trukket masse, mens en lastebil trenger minst 6 hk per tonn samlet vogntogvekt. Under den gjeldende verdien og ved høy motorbelastning stiger slitasjen på transmisjonen."/>
-        <text name="rms_tutorial_hard_start_title" text="Vanskelig start"/>
-        <text name="rms_tutorial_hard_start_message" text="Motoren i %s er vanskelig å starte. Et svakt batteri, frost, en mekanisk feil eller slitasje på startmotoren kan være årsaken.&#10;&#10;Det elektriske systemet belastes hardt under start på grunn av de høye startstrømmene."/>
-        <text name="rms_tutorial_low_fuel_title" text="Drivstoffreserve"/>
-        <text name="rms_tutorial_low_fuel_message" text="Tanken nærmer seg reserven. Jo mindre drivstoff det er igjen, desto hardere må drivstoffpumpen arbeide for å suge det opp, og bunnen av tanken sender vann og bunnfall til filteret, som tettes raskere.&#10;&#10;Fyll heller tanken ved slutten av dagen: En full tank danner mindre kondens."/>
-        <text name="rms_tutorial_lugging_title" text="Motor på for lavt turtall"/>
-        <text name="rms_tutorial_lugging_message" text="Motoren, og særlig transmisjonen, lider på for lavt turtall, altså lave omdreininger under høy belastning. Det påhengte redskapet er kanskje for tungt for maskinen, eller det valgte giret er ikke det riktige hvis girkassen er manuell."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Motoren overopphetes"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Motoren begynner å overopphetes. Det kan skje av én eller flere grunner: motoren er hardt belastet, kjøleren er tilsmusset, været er varmt, eller kjøretøyets kjølesystem har en defekt.&#10;&#10;Vær oppmerksom: overoppheting er en av de mest ødeleggende faktorene for en maskin. Den skader ikke bare motoren: kjølesystemet arbeider på grensen sin, og varmen i motorrommet fremskynder nedbrytningen av ledninger og elektriske komponenter."/>
-        <text name="rms_tutorial_engine_overload_title" text="Motoren er overbelastet"/>
-        <text name="rms_tutorial_engine_overload_message" text="Motoren er svært hardt belastet. Oppgaven er kanskje for tung for denne maskinen og krever et kraftigere kjøretøy, eller det holder å senke farten for å lette belastningen.&#10;&#10;Uansett stiger slitasjen merkbart under denne belastningen."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Les røyken"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Røyken fra denne maskinen er ikke pynt: fargen er en diagnose.&#10;&#10;Svart røyk betyr at motoren får mer drivstoff enn luft: en kraftig akselerasjon før turboladeren er kommet opp i omdreininger, en motor som drar på for lavt turtall, en overbelastning, et tett luftfilter, en slitt turbolader eller en slitt innsprøytning. Blå røyk betyr en sliten motor som brenner sin egen olje. Hvit røyk betyr drivstoff som slipper ut ubrent.&#10;&#10;Røykfanen vokser også med det arbeidet motoren yter. Eldre maskiner røyker mye mer enn nyere, og det er normalt."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT-en overopphetes"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT-transmisjonen begynner å overopphetes. Det kan skyldes for høy belastning, en tilsmusset kjøler, svært varmt vær eller en defekt i transmisjonens kjølekrets. En for tung plog eller en overlesset henger er nok til å føre dit.&#10;&#10;Vær oppmerksom: overoppheting er en av de mest ødeleggende faktorene for en CVT-transmisjon."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Chassiset er belastet"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Å kjøre fort i ujevnt terreng sliter raskt på understellet på %s. Disse støtene skader også ledningene og kontaktene deres, og hydraulikken når et tungt redskap er løftet.&#10;&#10;Senk farten på ujevnt underlag."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Hardt slag"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Understellet har nettopp fått et hardt slag. En hindring som stanser maskinen brått eller bremser den kraftig, sliter på chassiset med en gang og bringer den neste skaden nærmere, oftest i styringen eller hjullagrene.&#10;&#10;Senk farten før hindringer."/>
-        <text name="rms_tutorial_cranking_title" text="Hyppige starter"/>
-        <text name="rms_tutorial_cranking_message" text="Motoren startes for ofte. Hver start sender en svært høy strøm gjennom det elektriske systemet, noe som fremskynder slitasjen på ledninger, startmotor og de øvrige elektriske komponentene.&#10;&#10;Unngå å slå av motoren ved korte avbrudd."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritisk feil"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s kan ikke lenger kjøre for egen maskin.&#10;&#10;Et mobilt verksted gjør en nødreparasjon mulig, nok til at maskinen selv kan nå frem til verkstedet. Ellers må den berges på annet vis."/>
-        <text name="rms_tutorial_cold_engine_title" text="Kald motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="La motoren komme opp i temperatur litt etter litt før du belaster den hardt. Bruk moderat gass og moderate omdreininger til den når driftstemperaturen sin."/>
-        <text name="rms_tutorial_cold_oil_title" text="Kald transmisjonsolje"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmisjons- og hydraulikkoljen blir varm langt langsommere enn motoren. Unngå tungt arbeid så lenge oljen er kald; varm den gradvis opp ved å kjøre rolig og bruke hydraulikken lett."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Transmisjonen overopphetes"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Transmisjonsoljen begynner å overopphetes. Det kan skyldes for tung belastning, en tilsmusset kjøler, svært varmt vær eller en defekt i transmisjonens kjøling.&#10;&#10;Transmisjonsoljen blir varm på alle maskiner, ikke bare på en CVT. For varm olje sliter på girkassen og ødelegger pakningene dens."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Varsel om overbelastning"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s er hardt belastet. Lampen som nettopp tentes i instrumentpanelet, gjør deg oppmerksom på det.&#10;&#10;Maskinen har kanskje ikke nok effekt til den aktuelle oppgaven. Prøv å senke belastningen: begrens farten med fartsholderen, eller slipp gassen litt i stedet for å kjøre for full kraft."/>
-        <text name="rms_tutorial_battery_low_title" text="Svakt batteri"/>
-        <text name="rms_tutorial_battery_low_message" text="Batteriet i denne maskinen er i ferd med å bli helt utladet. Det skjer etter lang tids stillstand, i streng kulde eller på grunn av en defekt i det elektriske systemet.&#10;&#10;Ved lav ladning blir start først vanskelig og siden umulig. Da kan du starte motoren fra et annet kjøretøy med startkablene. Koble fra batteriet med hovedstrømbryteren før lang tids stillstand, eller hvis det lades ut av seg selv, til fots foran maskinen."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Belastning i drivlinjen"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Du svinger på et underlag med godt feste med differensialsperren aktivert. I en sving kjører de indre og ytre hjulene ulike strekninger, men differensialsperren tvinger dem til å gå med samme hastighet: drivlinjen kommer under belastning, og slitasjen på den stiger. Deaktiver sperren før du svinger."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Trekkmodus og differensialsperre"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Denne maskinen lar deg velge trekket sitt: bakhjulstrekk, firehjulstrekk eller AUTO, som kobler til forakselen så snart hjulene spinner.&#10;&#10;Differensialsperren finner feste der det ikke er mer igjen, men den koster dyrt i sving på et underlag med godt feste: de indre og ytre hjulene kan ikke gå med samme hastighet, og det er drivlinjen som tar støyten. Deaktiver den før du svinger."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Med Realistic Mechanical Systems slites maskinene dine og bryter sammen som ekte maskiner. Tre regler er nok til å spille uten stadige havarier:&#10;&#10;1. Utfør service i tide. Mekanisk oversikt i spillmenyen viser neste service for hver maskin.&#10;2. Gjør maskinene dine klare hver dag. Hold %s inne ved en maskin for å kontrollere den: væskenivåer, kjøler, luftfilter, smøring. Rens kjøler og luftfilter med trykkluftblåseren, og smør maskinene med fettpressen. Redskapene og hengerne dine må også smøres: Mekanisk oversikt viser dem som står for tur. Trykkluftblåser, fettpresse og fettpatroner finnes i butikken under kategorien Vedlikehold.&#10;3. Skån maskinene dine: overbelastning, overoppheting, arbeid med kald motor og hjulspinn sliter på dem.&#10;&#10;Hvis spillet føles for vanskelig, øk Kjøretøyets levetid og Avstand mellom service under fanen RMS-INNSTILLINGER i Mekanisk oversikt."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin-lader på vogn, 150 A ved 12 V, 80 A ved 24 V. Koble den til nær kjøretøyet for å lade batteriet med strømmen det kan ta imot, eller for å gi starthjelp (START, 200 A ved 12 V). Ladingen følger spillets tidshastighet."/>
         <text name="rms_diagnostic_configuration" text="Diagnoseutstyr"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparasjonstid:"/>
         <text name="rms_diagnostic_where_label" text="Hvor den repareres:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobilt eller eget verksted med tilkoblet diagnoseutstyr, eller forhandler"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Eget verksted eller forhandler"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Forhandler"/>
         <text name="rms_diagnostic_note_inspection" text="Denne koden sier hva maskinen måler, ikke hvilken del som er defekt: en inspeksjon finner den."/>
+        <text name="rms_diagnostic_note_adblue" text="Denne koden melder lavt nivå i AdBlue-tanken: påfylling av AdBlue sletter den."/>
         <text name="rms_diagnostic_note_uncoded" text="En inspeksjon av maskinen finner den berørte delen."/>
         <text name="rms_diagnostic_uncoded" text="Varsellampe tent uten lagret kode. Ingen sensor overvåker den berørte delen."/>
         <text name="rms_diagnostic_uncoded_title" text="Lampe uten kode"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Kjølevæskenivå"/>
         <text name="rms_diagnostic_spn_1639" text="Viftehastighet"/>
         <text name="rms_diagnostic_spn_168" text="Batterispenning"/>
-        <text name="rms_diagnostic_spn_677" text="Startrelé"/>
+        <text name="rms_diagnostic_spn_676" text="Gløderelé"/>
         <text name="rms_diagnostic_spn_167" text="Ladespenning"/>
         <text name="rms_diagnostic_spn_157" text="Common rail-trykk"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-tanknivå"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-pumpe"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-doseringsdyse"/>
         <text name="rms_diagnostic_spn_3216" text="NOx-sensor før katalysatoren"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Defekt enhet eller komponent"/>
         <text name="rms_diagnostic_fmi_14" text="Spesielle instruksjoner"/>
         <text name="rms_diagnostic_fmi_16" text="Data over normalt område (moderat alvorlig nivå)"/>
+        <text name="rms_diagnostic_fmi_17" text="Data under normalt område (minst alvorlige nivå)"/>
         <text name="rms_diagnostic_fmi_18" text="Data under normalt område (moderat alvorlig nivå)"/>
         <text name="rms_diagnostic_fmi_31" text="Tilstand til stede"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="defekt komponent"/>
         <text name="rms_dashboard_fmi_14" text="inngrep kreves"/>
         <text name="rms_dashboard_fmi_16" text="høy verdi"/>
+        <text name="rms_dashboard_fmi_17" text="litt lav verdi"/>
         <text name="rms_dashboard_fmi_18" text="lav verdi"/>
         <text name="rms_dashboard_fmi_31" text="feil til stede"/>
         <text name="rms_diagnostic_log_title" text="Kodeavlesing"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starthjelp (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Lad batteriet"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Koble fra batteriet"/>
         <text name="rms_battery_isolator_restore" text="Koble til batteriet igjen"/>
         <text name="rms_battery_isolator_open" text="Batteriet er frakoblet. Koble det til igjen med hovedstrømbryteren, til fots foran kjøretøyet."/>

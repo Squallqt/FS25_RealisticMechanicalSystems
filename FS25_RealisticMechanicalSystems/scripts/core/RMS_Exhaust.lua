@@ -1,19 +1,33 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Exhaust emission and plume simulation.
-RMS_Exhaust = RMS_Exhaust or {}
+---Exhaust emission and plume simulation
+RMS_Exhaust = {}
 RMS_Exhaust.modDirectory = g_currentModDirectory
 
-RMS_Exhaust.plumeSources = nil
-
+---Returns a value clamped between two bounds
+-- @param float value value
+-- @param float minimum lower bound
+-- @param float maximum upper bound
+-- @return float value clamped value
 local function clamp(value, minimum, maximum)
     return math.max(minimum, math.min(value, maximum))
 end
 
+---Returns the value between two values at a share
+-- @param float startValue value at 0
+-- @param float endValue value at 1
+-- @param float alpha share
+-- @return float value value at the share
 local function lerp(startValue, endValue, alpha)
     return startValue + (endValue - startValue) * alpha
 end
 
+---Returns a finite number clamped, the default when it is not one
+-- @param any value value
+-- @param float defaultValue value when it is not a finite number
+-- @param float? minimum lower bound, none when nil
+-- @param float? maximum upper bound, none when nil
+-- @return float number number
 local function getNumber(value, defaultValue, minimum, maximum)
     local number = tonumber(value)
     if number == nil or number ~= number or number == math.huge or number == -math.huge then
@@ -29,10 +43,25 @@ local function getNumber(value, defaultValue, minimum, maximum)
     return number
 end
 
+---Returns the length of a vector
+-- @param float x x
+-- @param float y y
+-- @param float z z
+-- @return float length length
 local function getVectorLength(x, y, z)
     return math.sqrt(x * x + y * y + z * z)
 end
 
+---Returns a unit vector, the fallback for a null one
+-- @param float x x
+-- @param float y y
+-- @param float z z
+-- @param float? fallbackX x of the fallback, 0 when nil
+-- @param float? fallbackY y of the fallback, 1 when nil
+-- @param float? fallbackZ z of the fallback, 0 when nil
+-- @return float x x
+-- @return float y y
+-- @return float z z
 local function normalizeVector(x, y, z, fallbackX, fallbackY, fallbackZ)
     local length = getVectorLength(x, y, z)
     if length <= 0.000001 then
@@ -42,14 +71,42 @@ local function normalizeVector(x, y, z, fallbackX, fallbackY, fallbackZ)
     return x / length, y / length, z / length
 end
 
+---Returns the dot product of two vectors
+-- @param float ax x of the first vector
+-- @param float ay y of the first vector
+-- @param float az z of the first vector
+-- @param float bx x of the second vector
+-- @param float by y of the second vector
+-- @param float bz z of the second vector
+-- @return float product dot product
 local function dotProduct(ax, ay, az, bx, by, bz)
     return ax * bx + ay * by + az * bz
 end
 
+---Returns the cross product of two vectors
+-- @param float ax x of the first vector
+-- @param float ay y of the first vector
+-- @param float az z of the first vector
+-- @param float bx x of the second vector
+-- @param float by y of the second vector
+-- @param float bz z of the second vector
+-- @return float x x
+-- @return float y y
+-- @return float z z
 local function crossProduct(ax, ay, az, bx, by, bz)
     return ay * bz - az * by, az * bx - ax * bz, ax * by - ay * bx
 end
 
+---Returns two unit vectors square to a direction and to each other
+-- @param float directionX x of the direction
+-- @param float directionY y of the direction
+-- @param float directionZ z of the direction
+-- @return float sideX x of the side vector
+-- @return float sideY y of the side vector
+-- @return float sideZ z of the side vector
+-- @return float forwardX x of the forward vector
+-- @return float forwardY y of the forward vector
+-- @return float forwardZ z of the forward vector
 local function getDirectionBasis(directionX, directionY, directionZ)
     local referenceX, referenceY, referenceZ = 0, 1, 0
     if math.abs(directionY) > 0.9 then
@@ -66,27 +123,33 @@ local function getDirectionBasis(directionX, directionY, directionZ)
     return sideX, sideY, sideZ, forwardX, forwardY, forwardZ
 end
 
+---Returns a value between 0 and 1 drawn from a serial and a salt
+-- @param integer serial serial of the puff
+-- @param float salt salt of the draw
+-- @return float value value, 0 to 1
 local function getDeterministicValue(serial, salt)
     local value = math.sin(serial * 12.9898 + salt * 78.233) * 43758.5453
 
     return value - math.floor(value)
 end
 
+---Returns the share a value climbs between two bounds
+-- @param float value value
+-- @param float from value at 0
+-- @param float to value at 1
+-- @return float share share, 0 to 1
 local function getRamp(value, from, to)
-    if to <= from then
-        return value >= to and 1 or 0
-    end
-
     return clamp((value - from) / (to - from), 0, 1)
 end
 
 ---Returns the emission factor of the production year, read from an era table
+-- @param integer year production year
 -- @param table? eraFactors era table, the particulate one by default
+-- @return float factor emission factor
 function RMS_Exhaust.getEraFactor(year, eraFactors)
     local factors = eraFactors or RMS_Config.EXHAUST.ERA_FACTORS
-    local resolvedYear = getNumber(year, RMS_ProductionYear.DEFAULT_YEAR)
     for _, entry in ipairs(factors) do
-        if resolvedYear < entry[1] then
+        if year < entry[1] then
             return entry[2]
         end
     end
@@ -95,40 +158,55 @@ function RMS_Exhaust.getEraFactor(year, eraFactors)
 end
 
 ---Tells whether the engine falls under Stage V
+-- @param integer year production year
+-- @param any peakPowerKw peak power (kW)
+-- @return boolean isStageV true under Stage V
 function RMS_Exhaust.getIsStageV(year, peakPowerKw)
     local config = RMS_Config.EXHAUST.STAGE_V
-    local resolvedYear = getNumber(year, RMS_ProductionYear.DEFAULT_YEAR)
     local power = getNumber(peakPowerKw, 0, 0)
     if power < config.MIN_POWER_KW then
         return false
     end
 
     if power >= config.MID_POWER_MIN_KW and power < config.MID_POWER_MAX_KW then
-        return resolvedYear >= config.MID_POWER_YEAR
+        return year >= config.MID_POWER_YEAR
     end
 
-    return resolvedYear >= config.OUTER_POWER_YEAR
+    return year >= config.OUTER_POWER_YEAR
+end
+
+---Tells whether the engine falls under Stage IV
+-- @param integer year production year
+-- @param any peakPowerKw peak power (kW)
+-- @return boolean isStageIV true under Stage IV
+function RMS_Exhaust.getIsStageIV(year, peakPowerKw)
+    local config = RMS_Config.EXHAUST.STAGE_IV
+    local power = getNumber(peakPowerKw, 0, 0)
+    if power < config.MIN_POWER_KW or power > config.MAX_POWER_KW then
+        return false
+    end
+
+    return year >= (power >= config.HIGH_POWER_MIN_KW and config.HIGH_POWER_YEAR or config.MID_POWER_YEAR)
 end
 
 ---Builds wet stacking up at idle and burns it off under load
+-- @param table input level, diesel, idle time and state, load, step and engine temperature of a running engine
+-- @return float level wet stacking, 0 to 1
 function RMS_Exhaust.calculateWetStackingLevel(input)
-    local currentLevel = getNumber(input.currentLevel, 0, 0, 1)
-    if input.isDiesel ~= true then
+    local currentLevel = input.currentLevel
+    if not input.isDiesel then
         return 0
-    end
-    if input.isMotorStarted ~= true then
-        return currentLevel
     end
 
     local fuelConfig = RMS_Config.CORE.FUEL_FACTOR_DATA
-    local idleTimer = getNumber(input.idleTimer, 0, 0, fuelConfig.IDLE_DEPOSIT_FACTOR_MAX_TIMER)
+    local idleTimer = input.idleTimer
     local load = getNumber(input.load, 0, 0, 1.5)
-    local dt = getNumber(input.dt, 100, 1)
+    local dt = input.dt
     local coldTemperature = RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
     local operatingTemperature = RMS_Config.THERMAL.PID_TARGET_TEMP
-    local engineTemperature = getNumber(input.engineTemperature, operatingTemperature, -80, 160)
+    local engineTemperature = input.engineTemperature
 
-    if input.isIdle == true then
+    if input.isIdle then
         if idleTimer < fuelConfig.IDLE_DEPOSIT_FACTOR_TIMER_THRESHOLD then
             return currentLevel
         end
@@ -137,7 +215,7 @@ function RMS_Exhaust.calculateWetStackingLevel(input)
         local coldMultiplier = 1 + coldRisk
         local idleStep = dt / 1000
         local threshold = fuelConfig.IDLE_DEPOSIT_FACTOR_TIMER_THRESHOLD
-        local buildupDuration = math.max(fuelConfig.IDLE_DEPOSIT_FACTOR_MAX_TIMER - threshold, 1)
+        local buildupDuration = fuelConfig.IDLE_DEPOSIT_FACTOR_MAX_TIMER - threshold
         local previousIdleTimer = math.max(idleTimer - idleStep, 0)
         local buildupStart = math.max(previousIdleTimer, threshold)
         local buildupSeconds = math.max(idleTimer - buildupStart, 0)
@@ -148,37 +226,34 @@ function RMS_Exhaust.calculateWetStackingLevel(input)
 
     local loadFactor = getRamp(load, fuelConfig.IDLE_DEPOSIT_LOAD_THRESHOLD, 1)
     local temperatureFactor = getRamp(engineTemperature, coldTemperature, operatingTemperature)
-    local cleanupDuration = math.max(
-        fuelConfig.IDLE_DEPOSIT_FACTOR_MAX_TIMER - fuelConfig.IDLE_DEPOSIT_FACTOR_TIMER_THRESHOLD,
-        1
-    )
+    local cleanupDuration = fuelConfig.IDLE_DEPOSIT_FACTOR_MAX_TIMER - fuelConfig.IDLE_DEPOSIT_FACTOR_TIMER_THRESHOLD
     local cleanup = (dt / 1000) / cleanupDuration * loadFactor * temperatureFactor
 
     return clamp(currentLevel - cleanup, 0, 1)
 end
 
+---Returns the soot of the particulate filter, the regeneration time and whether it regenerates
+-- @param table input level, ash, Stage V, blocking, load, step, coolant temperature and regeneration time of a running engine
 -- @return float level soot level, 1 being the load that calls a regeneration
+-- @return float regenerationMs time of the regeneration under way (ms)
+-- @return boolean isRegenerating true while it regenerates
 function RMS_Exhaust.calculateParticulateFilterLoad(input)
     local config = RMS_Config.EXHAUST.PARTICULATE_FILTER
-    if input.isStageV ~= true then
+    if not input.isStageV then
         return 0, 0, false
     end
 
-    local level = getNumber(input.currentLevel, 0, 0, config.SERVICE_LEVEL)
-    if input.isBlocked == true or level >= config.SERVICE_LEVEL then
+    local level = input.currentLevel
+    if input.isBlocked or level >= config.SERVICE_LEVEL then
         return config.SERVICE_LEVEL, 0, false
     end
-    if input.isMotorStarted ~= true then
-        return level, 0, false
-    end
 
-    local dt = getNumber(input.dt, 100, 0)
-    local isWarm = getNumber(input.coolantTemperature, 0, -80, 160) >= config.REGENERATION_COOLANT
-    if level >= 1 and level < config.SERVICE_LEVEL and isWarm then
-        local regenerationMs = getNumber(input.regenerationMs, 0, 0) + dt
+    local dt = input.dt
+    if level >= 1 and input.coolantTemperature >= config.REGENERATION_COOLANT then
+        local regenerationMs = input.regenerationMs + dt
         if regenerationMs >= config.REGENERATION_MS then
             -- the ash stays: the filter fills again sooner
-            return getNumber(input.ash, 0, 0, 1), 0, false
+            return input.ash, 0, false
         end
         return level, regenerationMs, true
     end
@@ -191,31 +266,36 @@ function RMS_Exhaust.calculateParticulateFilterLoad(input)
 end
 
 ---Returns the filter ash, 1 calling a cleaning, and its oil part
+-- @param table input ash, oil ash, Stage V, step and share of suited oil of a running engine
+-- @return float ash ash
+-- @return float oilAsh ash of the oil
 function RMS_Exhaust.calculateParticulateFilterAsh(input)
     local config = RMS_Config.EXHAUST.PARTICULATE_FILTER
-    local ash, oilAsh = getNumber(input.ash, 0, 0, 1), getNumber(input.oilAsh, 0, 0, 1)
-    if input.isStageV ~= true or input.isMotorStarted ~= true then
+    local ash, oilAsh = input.ash, input.oilAsh
+    if not input.isStageV then
         return ash, oilAsh
     end
 
     local C = RMS_Config.CORE
-    local workHours = getNumber(input.dt, 0, 0) / (60 * 60 * 1000) * C.BASE_SYSTEMS_WEAR * C.MACHINE_LIFE_HOURS
+    local workHours = input.dt / (60 * 60 * 1000) * C.BASE_SYSTEMS_WEAR * C.MACHINE_LIFE_HOURS
     local base = workHours / config.ASH_CLEANING_HOURS
-    local extra = base * (1 - getNumber(input.suitedShare, 1, 0, 1)) * (config.UNSUITED_OIL_ASH - 1)
+    local extra = base * (1 - input.suitedShare) * (config.UNSUITED_OIL_ASH - 1)
 
     return math.min(ash + base + extra, 1), math.min(oilAsh + extra, 1)
 end
 
 ---Returns the target soot, oil and unburnt fractions of the engine
+-- @param table input engine, load, boost, clogging, service, temperature, preheat and effects
+-- @return table targets era factor, Stage V, boost deficit, soot, oil and unburnt
 function RMS_Exhaust.calculateTargets(input)
     local config = RMS_Config.EXHAUST
     local sootConfig = config.SOOT
     local oilConfig = config.OIL
     local unburntConfig = config.UNBURNT
-    local load = getNumber(input.load, 0, 0, 1.5)
+    local load = input.load
     local eraFactor = RMS_Exhaust.getEraFactor(input.year)
     local isStageV = RMS_Exhaust.getIsStageV(input.year, input.peakPowerKw)
-    local wetStackingLevel = getNumber(input.wetStackingLevel, 0, 0, 1)
+    local wetStackingLevel = input.wetStackingLevel
 
     local fuelDelivery = lerp(sootConfig.FUEL_IDLE_SHARE, 1, clamp(load, 0, 1))
 
@@ -223,31 +303,31 @@ function RMS_Exhaust.calculateTargets(input)
     sootContinuous = sootContinuous + wetStackingLevel * sootConfig.WET_STACKING_MAX * fuelDelivery
 
     local boostDeficit = 0
-    if input.hasTurbo == true then
-        boostDeficit = clamp(load - getNumber(input.boost, 0, 0, 1), 0, 1)
+    if input.hasTurbo then
+        boostDeficit = clamp(load - input.boost, 0, 1)
         sootContinuous = sootContinuous
             + getRamp(boostDeficit, sootConfig.BOOST_DEFICIT_THRESHOLD, sootConfig.BOOST_DEFICIT_FULL) * sootConfig.TRANSIENT_MAX
     end
 
-    local clogging = getNumber(input.airFilterClogging, 0, 0, 1)
+    local clogging = input.airFilterClogging
     local cloggingCurve = clogging * clogging
     if clogging > sootConfig.AIR_FILTER_KNEE then
         cloggingCurve = cloggingCurve + (clogging - sootConfig.AIR_FILTER_KNEE)
     end
     sootContinuous = sootContinuous + math.min(cloggingCurve, 1) * sootConfig.AIR_FILTER_MAX * fuelDelivery
 
-    local serviceLoss = 1 - getNumber(input.serviceLevel, 1, 0, 1)
+    local serviceLoss = 1 - input.serviceLevel
     sootContinuous = sootContinuous
         + getRamp(serviceLoss, sootConfig.SERVICE_THRESHOLD, 1) * sootConfig.SERVICE_MAX * fuelDelivery
 
     local breakdownFactor = math.max(eraFactor, config.ERA_BREAKDOWN_FLOOR)
-    local sootBreakdown = getNumber(input.sootEffect, 0, 0, 1) * sootConfig.BREAKDOWN_MAX
+    local sootBreakdown = input.sootEffect * sootConfig.BREAKDOWN_MAX
 
     local sootProfileFactor = 1
-    if input.isMethane == true then
+    if input.isMethane then
         sootProfileFactor = sootProfileFactor * config.METHANE_SOOT_FACTOR
     end
-    if input.hasDEF == true then
+    if input.hasDEF then
         sootProfileFactor = sootProfileFactor * config.DEF_SOOT_FACTOR
     end
     if isStageV then
@@ -260,21 +340,19 @@ function RMS_Exhaust.calculateTargets(input)
         1
     )
 
-    local oilBreakdown = getNumber(input.oilEffect, 0, 0, 1) * oilConfig.BREAKDOWN_MAX
+    local oilBreakdown = input.oilEffect * oilConfig.BREAKDOWN_MAX
     if load <= oilConfig.IDLE_LOAD_THRESHOLD then
         oilBreakdown = oilBreakdown * oilConfig.IDLE_BOOST
     end
     local oil = clamp(oilBreakdown * breakdownFactor, 0, 1)
 
-    local engineTemperature = getNumber(input.engineTemperature, unburntConfig.COLD_THRESHOLD_C, -80, 160)
-    local cold = 1 - getRamp(engineTemperature, unburntConfig.COLD_FULL_C, unburntConfig.COLD_THRESHOLD_C)
+    local cold = 1 - getRamp(input.engineTemperature, unburntConfig.COLD_FULL_C, unburntConfig.COLD_THRESHOLD_C)
     local unburntContinuous = cold * unburntConfig.COLD_MAX
-    if input.isStarting == true then
+    if input.isStarting then
         unburntContinuous = unburntContinuous * unburntConfig.CRANKING_BOOST
     end
-    local preheatSeverity = getNumber(input.preheatSeverity, 0, 0, 4)
-    unburntContinuous = unburntContinuous + (preheatSeverity / 4) * cold * unburntConfig.PREHEAT_FAULT_MAX
-    local unburntBreakdown = getNumber(input.unburntEffect, 0, 0, 1) * unburntConfig.BREAKDOWN_MAX
+    unburntContinuous = unburntContinuous + (input.preheatSeverity / 4) * cold * unburntConfig.PREHEAT_FAULT_MAX
+    local unburntBreakdown = input.unburntEffect * unburntConfig.BREAKDOWN_MAX
     local unburntEraFactor = RMS_Exhaust.getEraFactor(input.year, config.UNBURNT_ERA_FACTORS)
     local unburnt = clamp(unburntContinuous * unburntEraFactor + unburntBreakdown * breakdownFactor, 0, 1)
 
@@ -288,11 +366,22 @@ function RMS_Exhaust.calculateTargets(input)
     }
 end
 
+---Returns the value of an effect between 0 and 1
+-- @param table spec RMS specialization of the vehicle
+-- @param string effectId effect
+-- @return float intensity value, 0 without the effect
 local function getEffectIntensity(spec, effectId)
-    local effect = spec.activeEffects ~= nil and spec.activeEffects[effectId] or nil
-    return clamp(effect ~= nil and getNumber(effect.value, 0) or 0, 0, 1)
+    local effect = spec.activeEffects[effectId]
+    return effect ~= nil and effect.value or 0
 end
 
+---Returns a value eased toward its target, rising and falling at their own pace
+-- @param float current value now
+-- @param float target target
+-- @param float dt time since the last frame (ms)
+-- @param float? riseTau pace of a rise (ms), the default when nil
+-- @param float? fallTau pace of a fall (ms), the default when nil
+-- @return float value eased value
 local function getSmoothed(current, target, dt, riseTau, fallTau)
     local tau = target > current and (riseTau or RMS_Config.EXHAUST.RISE_TAU)
         or (fallTau or RMS_Config.EXHAUST.FALL_TAU)
@@ -301,6 +390,13 @@ local function getSmoothed(current, target, dt, riseTau, fallTau)
     return current + alpha * (target - current)
 end
 
+---Returns the tint of the smoke by its soot, oil and unburnt fuel
+-- @param float soot soot
+-- @param float oil oil
+-- @param float unburnt unburnt fuel
+-- @return float red red
+-- @return float green green
+-- @return float blue blue
 local function getTintMix(soot, oil, unburnt)
     local config = RMS_Config.EXHAUST
     local total = soot + oil + unburnt
@@ -317,6 +413,11 @@ local function getTintMix(soot, oil, unburnt)
         (soot * sootTint[3] + oil * oilTint[3] + unburnt * unburntTint[3]) / total
 end
 
+---Returns the opacity of the smoke above its floor
+-- @param float soot soot
+-- @param float oil oil
+-- @param float unburnt unburnt fuel
+-- @return float opacity opacity, 0 to 1
 local function getOpacity(soot, oil, unburnt)
     local config = RMS_Config.EXHAUST
     local opticalDepth = config.K_SOOT * soot + config.K_OIL * oil + config.K_UNBURNT * unburnt
@@ -326,52 +427,67 @@ local function getOpacity(soot, oil, unburnt)
     return math.max(raw - floor, 0) / (1 - floor)
 end
 
+---Returns the boost of a turbocharged engine
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @return float boost boost, 0 to 1
 local function getBoost(vehicle, state)
     if not state.hasTurbo then
         return 0
     end
 
-    local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-
-    return motor ~= nil and getNumber(motor.lastTurboScale, 0, 0, 1) or 0
+    return getNumber(vehicle:getMotor().lastTurboScale, 0, 0, 1)
 end
 
+---Returns the engine speed against its maximum
+-- @param table vehicle vehicle
+-- @return float scale engine speed share
 local function getRpmScale(vehicle)
-    local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    if motor == nil then
+    local maxRpm = vehicle:getMotor():getMaxRpm()
+    if maxRpm <= 0 then
         return 0
     end
 
-    local maxRpm = motor:getMaxRpm()
-    if maxRpm == nil or maxRpm <= 0 then
-        return 0
-    end
-
-    return (vehicle:getMotorRpmReal() or 0) / maxRpm
+    return vehicle:getMotorRpmReal() / maxRpm
 end
 
+---Returns the gas flow against the full flow, boost counted
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @return float flow flow, 0 to 1
 local function getFlow(vehicle, state)
     local gain = RMS_Config.EXHAUST.FLOW_BOOST_GAIN
 
     return clamp(getRpmScale(vehicle) * (1 + gain * getBoost(vehicle, state)) / (1 + gain), 0, 1)
 end
 
+---Tells whether the engine starts or runs
+-- @param table vehicle vehicle
+-- @return boolean isRendered true while it starts or runs
 local function getIsSmokeRendered(vehicle)
-    local motorState = vehicle.getMotorState ~= nil and vehicle:getMotorState() or MotorState.OFF
+    local motorState = vehicle:getMotorState()
 
     return motorState == MotorState.STARTING or motorState == MotorState.ON
 end
 
+---Returns the peak power of the engine
+-- @param table vehicle vehicle
+-- @return float power peak power (kW)
 local function getPeakPowerKw(vehicle)
-    local motor = vehicle.getMotor ~= nil and vehicle:getMotor() or nil
-    return motor ~= nil and getNumber(motor.peakMotorPower, 0, 0) or 0
+    return getNumber(vehicle:getMotor().peakMotorPower, 0, 0)
 end
 
+---Tells whether a Stage V diesel carries a particulate filter
+-- @param table vehicle vehicle
+-- @return boolean hasFilter true for such a diesel
 function RMS_Exhaust.getHasParticulateFilter(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    return spec.isDieselVehicle == true and RMS_Exhaust.getIsStageV(spec.year, getPeakPowerKw(vehicle))
+    return spec.isDieselVehicle and RMS_Exhaust.getIsStageV(spec.year, getPeakPowerKw(vehicle))
 end
 
+---Resolves once the turbo, the AdBlue and the methane of the engine
+-- @param table vehicle vehicle
+-- @param table state smoke state
 local function resolveEmissionProfile(vehicle, state)
     if state.profileResolved then
         return
@@ -379,12 +495,7 @@ local function resolveEmissionProfile(vehicle, state)
 
     state.hasTurbo = getPeakPowerKw(vehicle) >= RMS_Config.CORE.TURBO_MIN_POWER_KW
 
-    local motorizedSpec = vehicle.spec_motorized
-    local consumers = motorizedSpec ~= nil and motorizedSpec.consumersByFillTypeName or nil
-    if consumers == nil then
-        return
-    end
-
+    local consumers = vehicle.spec_motorized.consumersByFillTypeName
     state.hasDEF = consumers["DEF"] ~= nil
     state.isMethane = consumers["METHANE"] ~= nil
     state.profileResolved = true
@@ -392,6 +503,8 @@ end
 
 local WET_WEATHER_TYPES = {"RAIN", "SNOW", "HAIL"}
 
+---Returns the wetness of the air by the weather and the ground
+-- @return float wetness wetness, 0 to 1
 local function getAirWetness()
     for _, name in ipairs(WET_WEATHER_TYPES) do
         if RMS_Main.currentWeather == WeatherType[name] then
@@ -403,6 +516,8 @@ local function getAirWetness()
 end
 
 ---Returns the optical depth of the water vapour condensing in cold air
+-- @param table input ambient temperature, wetness, load and engine temperature
+-- @return float tau optical depth of the vapour
 -- @return float coldness share of the full condensation the ambient temperature allows
 function RMS_Exhaust.calculateVapourTarget(input)
     local config = RMS_Config.EXHAUST.VAPOUR
@@ -412,34 +527,57 @@ function RMS_Exhaust.calculateVapourTarget(input)
         return 0, 0
     end
 
-    local humidity = clamp(config.HUMIDITY_BASE + config.HUMIDITY_WEATHER * getNumber(input.wetness, 0, 0, 1), 0, 1)
-    local fuel = lerp(config.IDLE_SHARE, 1, clamp(getNumber(input.load, 0, 0, 1.5), 0, 1))
+    local humidity = clamp(config.HUMIDITY_BASE + config.HUMIDITY_WEATHER * input.wetness, 0, 1)
+    local fuel = lerp(config.IDLE_SHARE, 1, clamp(input.load, 0, 1))
     local coldTemperature = RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
     local operatingTemperature = RMS_Config.THERMAL.PID_TARGET_TEMP
-    local engineTemperature = getNumber(input.engineTemperature, operatingTemperature, -80, 160)
-    local coldEngine = 1 - getRamp(engineTemperature, coldTemperature, operatingTemperature)
+    local coldEngine = 1 - getRamp(input.engineTemperature, coldTemperature, operatingTemperature)
 
     return config.K * coldness * humidity * fuel * (1 + config.COLD_ENGINE_BOOST * coldEngine), coldness
 end
 
----Returns the temperature rise of the exhaust gas over the air
--- @param float engineTemperature engine temperature in degrees
-function RMS_Exhaust.getExhaustGasTemperatureRise(load, engineTemperature)
+---Returns the temperature of the gas entering the exhaust line
+-- @param float load share of the stock torque, above 1 on a remapped engine
+-- @param float ambientC ambient temperature (deg C)
+-- @param boolean isRegenerating true while the particulate filter regenerates
+-- @return float temperature temperature (deg C)
+function RMS_Exhaust.getLineInletTemperature(load, ambientC, isRegenerating)
     local config = RMS_Config.EXHAUST.EGT
-    local coldTemperature = RMS_Config.CORE.ENGINE_FACTOR_DATA.COLD_MOTOR_TEMP_THRESHOLD
-    local operatingTemperature = RMS_Config.THERMAL.PID_TARGET_TEMP
-    local warmth = getRamp(getNumber(engineTemperature, operatingTemperature, -80, 160), coldTemperature, operatingTemperature)
-    local rise = lerp(config.RISE_IDLE_K, config.RISE_FULL_K, clamp(getNumber(load, 0, 0, 1.5), 0, 1))
+    local temperature = ambientC + lerp(config.RISE_IDLE_K, config.RISE_FULL_K, math.min(load, 1))
+        + config.OVERLOAD_K * math.max(load - 1, 0)
+    if isRegenerating then
+        temperature = math.max(temperature, config.REGENERATION_C)
+    end
 
-    return rise * lerp(config.COLD_FACTOR, 1, warmth)
+    return temperature
+end
+
+---Returns the temperature of the exhaust line, which the gas leaves at
+-- @param table input flow as a share of the full gas flow, stoppedDt in world time
+-- @return float temperature temperature (deg C)
+function RMS_Exhaust.calculateLineTemperature(input)
+    local config = RMS_Config.EXHAUST.EGT
+    local ambient = input.ambientTemperature
+    local current = input.currentTemperature
+    if input.isMotorStarted then
+        local inlet = RMS_Exhaust.getLineInletTemperature(input.load, ambient, input.isRegenerating)
+
+        return inlet + (current - inlet) * math.exp(-input.dt * input.flow / config.LINE_TAU)
+    end
+
+    return ambient + (current - ambient) * math.exp(-input.stoppedDt / config.LINE_COOLING_TAU)
 end
 
 ---Returns the eddy velocity of the air at a point
+-- @param float x x of the point
+-- @param float y y of the point
+-- @param float z z of the point
+-- @param float timeSeconds time (s)
+-- @param float amplitude amplitude (m/s)
+-- @return float velocityX x of the velocity (m/s)
+-- @return float velocityY y of the velocity (m/s)
+-- @return float velocityZ z of the velocity (m/s)
 function RMS_Exhaust.getTurbulenceVelocity(x, y, z, timeSeconds, amplitude)
-    if amplitude <= 0 then
-        return 0, 0, 0
-    end
-
     local config = RMS_Config.EXHAUST.TURBULENCE
     local velocityX, velocityY, velocityZ, weights = 0, 0, 0, 0
     for index, octave in ipairs(config.OCTAVES) do
@@ -452,67 +590,40 @@ function RMS_Exhaust.getTurbulenceVelocity(x, y, z, timeSeconds, amplitude)
         weights = weights + octave.weight
     end
 
-    local scale = amplitude / math.max(weights, 0.001)
+    local scale = amplitude / weights
 
     return velocityX * scale, velocityY * scale * config.VERTICAL_SHARE, velocityZ * scale
 end
 
-local MANAGED_RENDERER_FUNCTIONS = {
-    "getGeometry",
-    "setMaxNumOfParticles",
-    "setNumOfParticlesToEmitPerMs",
-    "setParticleSystemSpeed",
-    "setParticleSystemSpeedRandom",
-    "setParticleSystemNormalSpeed",
-    "setParticleSystemTangentSpeed",
-    "setEmitterShapeVelocityScale",
-    "getParticleSystemLifespan",
-    "getParticleSystemSpriteScaleX",
-    "getParticleSystemSpriteScaleXGain",
-    "setParticleSystemLifespan",
-    "setParticleSystemSpriteScaleX",
-    "setParticleSystemSpriteScaleY",
-    "setParticleSystemSpriteScaleXGain",
-    "setParticleSystemSpriteScaleYGain",
-    "addParticleSystemSimulationTime",
-    "raycastClosest"
-}
-
-local function getHasManagedRendererApi()
-    for _, functionName in ipairs(MANAGED_RENDERER_FUNCTIONS) do
-        if type(_G[functionName]) ~= "function" then
-            return false
-        end
-    end
-
-    return true
-end
-
+---Returns the sprite size of a puff at its age
+-- @param table puff puff
+-- @return float size size (m)
 local function getPuffSize(puff)
-    local age = clamp(getNumber(puff.age, 0, 0), 0, puff.lifespan)
+    local age = clamp(puff.age, 0, puff.lifespan)
 
     return math.max(puff.sizeStart + puff.sizeGain * age, 0)
 end
 
+---Returns the width the shared plume schedule gives a puff at its age
+-- @param table puff puff
+-- @return float size width (m)
 local function getScheduleSize(puff)
     local schedule = puff.spacing
-    if schedule == nil then
-        return getPuffSize(puff)
-    end
-
-    local age = clamp(getNumber(puff.age, 0, 0), 0, puff.lifespan)
+    local age = clamp(puff.age, 0, puff.lifespan)
 
     return math.max(schedule.sizeStart + schedule.sizeGain * age, 0)
 end
 
+---Returns the width a puff spreads to at its age
+-- @param table puff puff
+-- @return float size width (m)
 local function getSpreadSize(puff)
-    local schedule = puff.spacing
-    local profile = schedule ~= nil and schedule.jetProfile or nil
-    if profile == nil or puff.spriteRatio == nil then
+    local profile = puff.spacing.jetProfile
+    if puff.spriteRatio == nil then
         return getPuffSize(puff)
     end
 
-    local age = clamp(getNumber(puff.age, 0, 0), 0, puff.lifespan)
+    local age = clamp(puff.age, 0, puff.lifespan)
     local position = age / profile.stepMs + 1
     local index = math.min(math.floor(position), #profile.widths - 1)
     local widths = profile.widths
@@ -522,34 +633,40 @@ local function getSpreadSize(puff)
 end
 
 ---Returns the bounding-sphere radius of one camera-facing puff
+-- @param table puff puff
+-- @return float radius radius (m)
 function RMS_Exhaust.getPuffRadius(puff)
     return getPuffSize(puff) * RMS_Config.EXHAUST.PUFF.RADIUS_SHARE
 end
 
 ---Returns the optical depths of the smoke and the vapour of one puff
+-- @param table puff puff
+-- @return float smoke optical depth of the smoke
+-- @return float vapour optical depth of the vapour
 function RMS_Exhaust.getPuffOpticalDepths(puff)
     local sizeStart = math.max(puff.sizeStart, 0.001)
-    local dilution = (sizeStart / math.max(getSpreadSize(puff), sizeStart)) ^ 2 * getNumber(puff.weight, 1, 0)
-    local smoke = getNumber(puff.tau, 0, 0) * dilution
-    local vapour = getNumber(puff.tauVapour, 0, 0) * dilution
+    local dilution = (sizeStart / math.max(getSpreadSize(puff), sizeStart)) ^ 2 * puff.weight
+    local smoke = puff.tau * dilution
+    local vapour = puff.tauVapour * dilution
     if vapour > 0 then
-        vapour = vapour * math.exp(-getNumber(puff.age, 0, 0) / math.max(getNumber(puff.evaporationMs, 1, 1), 1))
+        vapour = vapour * math.exp(-puff.age / puff.evaporationMs)
     end
 
     return smoke, vapour
 end
 
 ---Returns the alpha a puff is drawn with
+-- @param table puff puff
+-- @return float alpha alpha, 0 to 1
 function RMS_Exhaust.getPuffRenderAlpha(puff)
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local smoke, vapour = RMS_Exhaust.getPuffOpticalDepths(puff)
     local alpha = clamp((1 - math.exp(-(smoke + vapour))) * puffConfig.SPRITE_ALPHA_GAIN, 0, 1)
-    if puff.fadesOut == true then
-        local age = getNumber(puff.age, 0, 0)
-        alpha = alpha * clamp((getNumber(puff.lifespan, age, 0) - age) / puffConfig.FADE_OUT_MS, 0, 1)
+    if puff.fadesOut then
+        alpha = alpha * clamp((puff.lifespan - puff.age) / puffConfig.FADE_OUT_MS, 0, 1)
     end
-    local contactRadius = getNumber(puff.contactRadius, 0, 0)
-    local surfaceTravel = getNumber(puff.surfaceTravel, 0, 0)
+    local contactRadius = puff.contactRadius or 0
+    local surfaceTravel = puff.surfaceTravel
     if contactRadius > 0 and surfaceTravel > 0 then
         alpha = alpha * ((contactRadius / (contactRadius + surfaceTravel)) ^ 0.57)
     end
@@ -557,7 +674,31 @@ function RMS_Exhaust.getPuffRenderAlpha(puff)
     return alpha
 end
 
+---Returns the angle gas hotter than the air bends light by
+-- @param float rise temperature of the gas over the air (K)
+-- @param float ambientC ambient temperature (deg C)
+-- @return float angle angle (rad)
+function RMS_Exhaust.getHeatDeflection(rise, ambientC)
+    local config = RMS_Config.EXHAUST.HEAT
+
+    -- the refractivity of a gas follows its density
+    return config.PATH_FACTOR * config.AIR_REFRACTIVITY * rise / (ambientC + 273.15 + rise)
+end
+
+---Returns the angle the gas of a puff bends light by
+-- @param table puff heat puff
+-- @return float angle angle (rad)
+function RMS_Exhaust.getPuffHeatDeflection(puff)
+    local rise = puff.deltaT * (puff.jetStart / puff.width) ^ RMS_Config.EXHAUST.EGT.DILUTION_EXPONENT
+
+    return RMS_Exhaust.getHeatDeflection(rise, puff.ambientC)
+end
+
 ---Returns the colour a puff is drawn with
+-- @param table puff puff
+-- @return float red red
+-- @return float green green
+-- @return float blue blue
 function RMS_Exhaust.getPuffRenderColour(puff)
     local smoke, vapour = RMS_Exhaust.getPuffOpticalDepths(puff)
     if vapour <= 0 then
@@ -571,6 +712,9 @@ function RMS_Exhaust.getPuffRenderColour(puff)
 end
 
 ---Projects an impacting puff onto a surface, keeping its tangential momentum
+-- @param table puff puff
+-- @param table hit hit of the surface
+-- @param float radius radius of the puff (m)
 -- @param float? pushLimit maximum surface displacement (m), nil unbounded
 function RMS_Exhaust.resolvePuffImpact(puff, hit, radius, pushLimit)
     local normalX, normalY, normalZ = normalizeVector(hit.nx, hit.ny, hit.nz, 0, -1, 0)
@@ -627,26 +771,30 @@ function RMS_Exhaust.resolvePuffImpact(puff, hit, radius, pushLimit)
     }
 end
 
+---Returns the width of a jet after a step and the distance it travelled
+-- @param float width width (m)
+-- @param float relativeSpeed speed against the air (m/s)
+-- @param float stepSeconds step (s)
+-- @return float width width (m)
+-- @return float distance distance (m)
 local function getJetStep(width, relativeSpeed, stepSeconds)
     local spread = RMS_Config.EXHAUST.PUFF.JET_SPREAD
-    if spread <= 0 then
-        return width, relativeSpeed * stepSeconds
-    end
-
     local widened = math.sqrt(width * width + 2 * spread * relativeSpeed * width * stepSeconds)
 
     return widened, (widened - width) / spread
 end
 
 ---Advances one puff through entrainment, wind, eddies, buoyancy and contacts
+-- @param table puff puff
+-- @param float dt time to advance (ms)
+-- @param table environment wind, air temperature, eddies and contact tests
 function RMS_Exhaust.advancePuff(puff, dt, environment)
-    environment = environment or {}
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local turbulenceConfig = RMS_Config.EXHAUST.TURBULENCE
     local dilutionExponent = RMS_Config.EXHAUST.EGT.DILUTION_EXPONENT
     local ambientKelvin = getNumber(environment.ambientC, 15, -80, 80) + 273.15
-    local windSpeed = getNumber(environment.windSpeed, 0, 0)
-    local remainingMs = math.max(getNumber(dt, 0, 0), 0)
+    local windSpeed = environment.windSpeed
+    local remainingMs = dt
 
     while remainingMs > 0 and puff.age < puff.lifespan do
         local stepMs = math.min(remainingMs, 50)
@@ -655,25 +803,21 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
         puff.age = math.min(puff.age + stepMs, puff.lifespan)
         local radius = RMS_Exhaust.getPuffRadius(puff)
 
-        if puff.contact ~= nil and environment.hasContact ~= nil
-                and not environment.hasContact(puff, puff.contact, radius) then
+        if puff.contact ~= nil and not environment.hasContact(puff, puff.contact, radius) then
             puff.contact = nil
         end
 
-        local shelterTarget = getNumber(puff.shelterTarget, 0, 0, 1)
-        local shelter = getNumber(puff.shelter, shelterTarget, 0, 1)
+        local shelterTarget = puff.shelterTarget
+        local shelter = puff.shelter
         shelter = shelter + (shelterTarget - shelter) * math.min(stepMs / (puffConfig.SHELTER_TAU + stepMs), 1)
         puff.shelter = shelter
         local windScale = lerp(1, puffConfig.SHELTER_WIND_SHARE, shelter)
 
-        local airX = getNumber(environment.windX, 0) * windScale
-        local airY = getNumber(environment.windY, 0) * windScale
-        local airZ = getNumber(environment.windZ, 0) * windScale
-        if environment.getTurbulence ~= nil then
-            local amplitude = turbulenceConfig.BASE + turbulenceConfig.PER_WIND * windSpeed * windScale
-            local eddyX, eddyY, eddyZ = environment.getTurbulence(puff.x, puff.y, puff.z)
-            airX, airY, airZ = airX + eddyX * amplitude, airY + eddyY * amplitude, airZ + eddyZ * amplitude
-        end
+        local amplitude = turbulenceConfig.BASE + turbulenceConfig.PER_WIND * windSpeed * windScale
+        local eddyX, eddyY, eddyZ = environment.getTurbulence(puff.x, puff.y, puff.z)
+        local airX = environment.windX * windScale + eddyX * amplitude
+        local airY = environment.windY * windScale + eddyY * amplitude
+        local airZ = environment.windZ * windScale + eddyZ * amplitude
 
         if puff.contact ~= nil then
             local contact = puff.contact
@@ -698,10 +842,10 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
             local airSpeed = getVectorLength(airX, airY, airZ)
             crossSpeed = math.sqrt(math.max(airSpeed * airSpeed - airAlong * airAlong, 0))
         end
-        local width = getNumber(puff.width, puff.sizeStart, 0.001)
+        local width = puff.width
         local jetWidth, relativeTravel = getJetStep(width, relativeSpeed, stepSeconds)
         local widened = jetWidth + (puffConfig.JET_CROSS_SPREAD * crossSpeed
-            + getNumber(puff.ambientGrowth, 0, 0)) * stepSeconds
+            + puff.ambientGrowth) * stepSeconds
         puff.width = widened
         local dampingShare = clamp(crossSpeed / puffConfig.DAMPING_CROSS_SPEED, puffConfig.DAMPING_FLOOR_SHARE, 1)
         local damping = math.exp(-puffConfig.BASE_DAMPING * dampingShare * stepSeconds)
@@ -714,9 +858,9 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
         puff.vy = airY + relativeY * drag
         puff.vz = airZ + relativeZ * drag
 
-        local deltaT0 = getNumber(puff.deltaT, 0, 0)
+        local deltaT0 = puff.deltaT
         if deltaT0 > 0 then
-            local deltaT = deltaT0 * (getNumber(puff.jetStart, width, 0.001) / widened) ^ dilutionExponent
+            local deltaT = deltaT0 * (puff.jetStart / widened) ^ dilutionExponent
             local lift = 9.81 * deltaT / (ambientKelvin + deltaT) * stepSeconds
             puff.vy = puff.vy + lift
             travelY = travelY + lift * stepSeconds * 0.5
@@ -726,20 +870,18 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
         local nextX = puff.x + travelX
         local nextY = puff.y + travelY
         local nextZ = puff.z + travelZ
-        local hit = environment.trace ~= nil
-            and environment.trace(puff, puff.x, puff.y, puff.z, nextX, nextY, nextZ, radius) or nil
+        local hit = environment.trace(puff, puff.x, puff.y, puff.z, nextX, nextY, nextZ, radius)
 
         local pushLimit = puffConfig.SURFACE_PUSH_SPEED * stepSeconds
         if hit ~= nil then
             RMS_Exhaust.resolvePuffImpact(puff, hit, radius, pushLimit)
-            local remainingShare = clamp(1 - getNumber(hit.fraction, 1, 0, 1), 0, 1)
+            local remainingShare = 1 - hit.fraction
             nextX = puff.x + puff.vx * stepSeconds * remainingShare
             nextY = puff.y + puff.vy * stepSeconds * remainingShare
             nextZ = puff.z + puff.vz * stepSeconds * remainingShare
         end
 
-        if puff.contact == nil and puff.vy > 0 and radius >= puffConfig.ROOF_PROBE_MIN_RADIUS
-                and environment.probeAbove ~= nil then
+        if puff.contact == nil and puff.vy > 0 and radius >= puffConfig.ROOF_PROBE_MIN_RADIUS then
             local roofHit = environment.probeAbove(puff, nextX, nextY, nextZ, radius)
             if roofHit ~= nil then
                 RMS_Exhaust.resolvePuffImpact(puff, roofHit, radius, pushLimit)
@@ -775,7 +917,7 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
             local tangentX = moveX - normalMove * contact.nx
             local tangentY = moveY - normalMove * contact.ny
             local tangentZ = moveZ - normalMove * contact.nz
-            puff.surfaceTravel = (puff.surfaceTravel or 0)
+            puff.surfaceTravel = puff.surfaceTravel
                 + math.sqrt(tangentX * tangentX + tangentY * tangentY + tangentZ * tangentZ)
         end
 
@@ -783,6 +925,8 @@ function RMS_Exhaust.advancePuff(puff, dt, environment)
     end
 end
 
+---Lays out the widths and speeds of the jet over its life
+-- @param table emission emission of the plume
 local function updateJetProfile(emission)
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local profile = emission.jetProfile
@@ -831,6 +975,11 @@ local function updateJetProfile(emission)
     }
 end
 
+---Returns a series of the jet profile at an age
+-- @param table profile jet profile
+-- @param table series widths or speeds of the profile
+-- @param float ageMs age (ms)
+-- @return float value value at the age
 local function sampleJetProfile(profile, series, ageMs)
     local position = math.max(ageMs, 0) / profile.stepMs + 1
     local index = math.min(math.floor(position), #series - 1)
@@ -839,17 +988,29 @@ local function sampleJetProfile(profile, series, ageMs)
     return series[index] + (series[index + 1] - series[index]) * share
 end
 
+---Returns the width of the jet at an age
+-- @param table emission emission of the plume
+-- @param float ageMs age (ms)
+-- @return float width width (m)
 local function getJetWidth(emission, ageMs)
     return sampleJetProfile(emission.jetProfile, emission.jetProfile.widths, ageMs)
 end
 
+---Returns the spacing of puffs of a size along the jet
+-- @param table emission emission of the plume
+-- @param float size size of the puffs (m)
+-- @return float spacing spacing (m)
 local function getPuffSpacing(emission, size)
     local ageMs = math.max(size - emission.sizeStart, 0) / math.max(emission.sizeGain, 0.000001)
     local speed = sampleJetProfile(emission.jetProfile, emission.jetProfile.speeds, ageMs)
 
-    return math.max(speed, emission.dispersalSpeed) / math.max(emission.rate, 0.001)
+    return math.max(speed, emission.dispersalSpeed) / emission.rate
 end
 
+---Returns the optical depth of the plume where its puffs reach a size
+-- @param table emission emission of the plume
+-- @param float size size of the puffs (m)
+-- @return float tau optical depth
 local function getPlumeOpticalDepth(emission, size)
     local overlap = math.max(size / getPuffSpacing(emission, size), 1)
     local dilution = (emission.sizeStart / size) ^ 2
@@ -863,19 +1024,17 @@ local function getPlumeOpticalDepth(emission, size)
 end
 
 ---Returns the share of the plume one puff stands for
+-- @param table puff puff
 -- @param float size width the shared plume schedule gives the puff at its age, in metres
+-- @return float weight weight, 0 for a puff its level retires
 function RMS_Exhaust.getThinningWeight(puff, size)
-    if puff.spacing == nil then
-        return 1
-    end
-
     local excess = size / getPuffSpacing(puff.spacing, size) / RMS_Config.EXHAUST.PUFF.OVERLAP_TARGET
     if excess <= 1 then
         return 1
     end
 
     local stage = math.log(excess) / math.log(2)
-    local level = puff.level or 0
+    local level = puff.level
     local levelMax = RMS_Config.EXHAUST.PUFF.THIN_LEVEL_MAX
     if level >= levelMax then
         return 2 ^ math.min(stage, levelMax)
@@ -888,6 +1047,9 @@ function RMS_Exhaust.getThinningWeight(puff, size)
     return 0
 end
 
+---Returns the age the plume stays visible to
+-- @param table emission emission of the plume
+-- @return float lifespan age (ms)
 local function getVisibleLifespan(emission)
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local visible = puffConfig.TAU_VISIBLE
@@ -914,6 +1076,9 @@ local function getVisibleLifespan(emission)
     return clamp(lifespan, puffConfig.LIFE_MIN, puffConfig.LIFE_MAX)
 end
 
+---Sets the age each thinning level retires its puffs at
+-- @param table emission emission of the plume
+-- @param table lifespans retire age by level (ms)
 local function updateRetireLifespans(emission, lifespans)
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local sizeStart = emission.sizeStart
@@ -943,28 +1108,24 @@ local function updateRetireLifespans(emission, lifespans)
     end
 end
 
+---Loads the emitter shape and the sprites of the plume once, testing their controls
+-- @return boolean isValid true when the plume can be drawn
 local function loadPlumeSources()
     if RMS_Exhaust.plumeSources ~= nil then
         return RMS_Exhaust.plumeSources.isValid
     end
 
     local config = RMS_Config.EXHAUST
-    local sources = {
-        isValid = false,
-        hasManagedRendererApi = getHasManagedRendererApi()
-    }
+    local sources = { isValid = false }
     RMS_Exhaust.plumeSources = sources
-    if not sources.hasManagedRendererApi then
-        return false
-    end
 
     local shapeRoot = loadI3DFile(RMS_Exhaust.modDirectory .. config.PLUME_EMIT_SHAPE, false, false, false)
-    if shapeRoot == nil or shapeRoot == 0 then
+    if shapeRoot == 0 then
         return false
     end
 
     local emitShape = getChildAt(shapeRoot, 0)
-    if emitShape == nil or emitShape == 0 then
+    if emitShape == 0 then
         return false
     end
 
@@ -973,19 +1134,19 @@ local function loadPlumeSources()
 
     local file = config.PLUME_DIRECTORY .. config.PLUME_SPRITES .. "/" .. config.PLUME_FILE
     local root = loadI3DFile(RMS_Exhaust.modDirectory .. file, false, false, false)
-    if root == nil or root == 0 then
+    if root == 0 then
         return false
     end
 
     local node = getChildAt(root, 0)
-    if node == nil or node == 0 then
+    if node == 0 then
         return false
     end
 
     link(getRootNode(), node)
     setVisibility(node, false)
     local geometry = getGeometry(node)
-    if geometry == nil or geometry == 0 then
+    if geometry == 0 then
         return false
     end
 
@@ -993,7 +1154,7 @@ local function loadPlumeSources()
     sources.assetSize = getParticleSystemSpriteScaleX(geometry)
     sources.assetSizeGain = getParticleSystemSpriteScaleXGain(geometry)
 
-    -- Verify particle controls by reading back the written values.
+    -- Verify particle controls by reading back the written values
     setParticleSystemLifespan(geometry, 1234, false)
     sources.canSetLifespan = math.abs(getParticleSystemLifespan(geometry) - 1234) < 1
     setParticleSystemLifespan(geometry, sources.assetLifespan, false)
@@ -1013,17 +1174,29 @@ local function loadPlumeSources()
     sources.puffNode = node
     sources.isValid = true
 
+    -- heat sprites must take the size and lifespan of the gas
+    if sources.canSetLifespan and sources.canSetSize then
+        local heatRoot = loadI3DFile(RMS_Exhaust.modDirectory .. config.PLUME_DIRECTORY .. config.PLUME_SPRITES .. "/" .. config.PLUME_HEAT_FILE,
+            false, false, false)
+        local heatNode = getChildAt(heatRoot, 0)
+        link(getRootNode(), heatNode)
+        setVisibility(heatNode, false)
+        sources.heatNode = heatNode
+    end
+
     return true
 end
 
+---Shows or hides the game's own exhaust
+-- @param table vehicle vehicle
+-- @param table effects exhaust effects of the game
+-- @param boolean isNative true to show it
 local function setNativeExhaustState(vehicle, effects, isNative)
     local isDrawn = isNative and getIsSmokeRendered(vehicle)
     local motorizedSpec = vehicle.spec_motorized
     if motorizedSpec.exhaustParticleSystems ~= nil then
         for _, particleSystem in pairs(motorizedSpec.exhaustParticleSystems) do
-            if type(particleSystem) == "table" then
-                ParticleUtil.setEmittingState(particleSystem, isDrawn)
-            end
+            ParticleUtil.setEmittingState(particleSystem, isDrawn)
         end
     end
 
@@ -1040,11 +1213,13 @@ local function setNativeExhaustState(vehicle, effects, isNative)
     end
 end
 
+---Keeps the game's own exhaust off
+-- @param table vehicle vehicle
 local function enforceNativeSilence(vehicle)
     local motorizedSpec = vehicle.spec_motorized
     if motorizedSpec.exhaustParticleSystems ~= nil then
         for _, particleSystem in pairs(motorizedSpec.exhaustParticleSystems) do
-            if type(particleSystem) == "table" and particleSystem.isEmitting ~= false then
+            if particleSystem.isEmitting ~= false then
                 ParticleUtil.setEmittingState(particleSystem, false)
             end
         end
@@ -1061,6 +1236,9 @@ local function enforceNativeSilence(vehicle)
     end
 end
 
+---Logs the exhaust sources the game draws beside the plume
+-- @param table vehicle vehicle
+-- @param table effects exhaust effects of the game
 local function surveyNativeSources(vehicle, effects)
     local motorizedSpec = vehicle.spec_motorized
     local outletNode = nil
@@ -1077,13 +1255,11 @@ local function surveyNativeSources(vehicle, effects)
     local offsets = {}
     if motorizedSpec.exhaustParticleSystems ~= nil then
         for _, particleSystem in pairs(motorizedSpec.exhaustParticleSystems) do
-            if type(particleSystem) == "table" then
-                particleCount = particleCount + 1
-                local node = particleSystem.emitterShape or particleSystem.shape
-                if node ~= nil and node ~= 0 then
-                    local _, y, _ = getWorldTranslation(node)
-                    table.insert(offsets, string.format("%+.2f m", y - outletY))
-                end
+            particleCount = particleCount + 1
+            local node = particleSystem.emitterShape or particleSystem.shape
+            if node ~= nil and node ~= 0 then
+                local _, y, _ = getWorldTranslation(node)
+                table.insert(offsets, string.format("%+.2f m", y - outletY))
             end
         end
     end
@@ -1097,26 +1273,26 @@ local function surveyNativeSources(vehicle, effects)
 
     if particleCount > 0 or effectCount > 0 then
         Logging.info("RMS: %s draws its own exhaust too, %d engine particle systems (height against the outlet %s) and %d motor effects, all kept silent while the RMS plume runs",
-            vehicle.getFullName ~= nil and vehicle:getFullName() or "vehicle", particleCount,
+            vehicle:getFullName(), particleCount,
             #offsets > 0 and table.concat(offsets, ", ") or "-", effectCount)
     end
 end
 
+---Hands the exhaust to the game or to the plume
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param boolean isNative true to hand it to the game
 local function setNativeOwnership(vehicle, state, isNative)
     if state.isNativeOwned == isNative then
         return
     end
 
-    local motorizedSpec = vehicle.spec_motorized
-    local effects = motorizedSpec ~= nil and motorizedSpec.exhaustEffects or nil
-    if effects == nil then
-        return
-    end
-
-    setNativeExhaustState(vehicle, effects, isNative)
+    setNativeExhaustState(vehicle, vehicle.spec_motorized.exhaustEffects, isNative)
     state.isNativeOwned = isNative
 end
 
+---Returns the collision mask puffs stop against
+-- @return integer mask collision mask
 local function getPuffCollisionMask()
     if RMS_Exhaust.puffCollisionMask ~= nil then
         return RMS_Exhaust.puffCollisionMask
@@ -1137,6 +1313,14 @@ local function getPuffCollisionMask()
 end
 
 ---Receives the closest solid hit of the synchronous puff raycast
+-- @param entityId transformId object hit
+-- @param float x x of the hit
+-- @param float y y of the hit
+-- @param float z z of the hit
+-- @param float distance distance (m)
+-- @param float nx x of the normal
+-- @param float ny y of the normal
+-- @param float nz z of the normal
 function RMS_Exhaust:onPuffRaycast(transformId, x, y, z, distance, nx, ny, nz)
     self.puffRaycastHit = {
         objectId = transformId,
@@ -1150,6 +1334,10 @@ function RMS_Exhaust:onPuffRaycast(transformId, x, y, z, distance, nx, ny, nz)
     }
 end
 
+---Tells whether a hit object belongs to the vehicle
+-- @param table vehicle vehicle
+-- @param table? object object hit
+-- @return boolean isOwn true when it belongs to it
 local function getIsOwnVehicleHit(vehicle, object)
     if object == nil then
         return false
@@ -1158,10 +1346,20 @@ local function getIsOwnVehicleHit(vehicle, object)
         return true
     end
 
-    return object.rootVehicle ~= nil and vehicle.rootVehicle ~= nil
-        and object.rootVehicle == vehicle.rootVehicle
+    return object.rootVehicle == vehicle.rootVehicle
 end
 
+---Returns the first solid hit of a ray, triggers and the vehicle at the outlet passed through
+-- @param table vehicle vehicle
+-- @param table puff puff
+-- @param float originX x of the origin
+-- @param float originY y of the origin
+-- @param float originZ z of the origin
+-- @param float directionX x of the direction
+-- @param float directionY y of the direction
+-- @param float directionZ z of the direction
+-- @param float distance length of the ray (m)
+-- @return table? hit hit, nil without one
 local function castPuffRay(vehicle, puff, originX, originY, originZ, directionX, directionY, directionZ, distance)
     if distance <= 0.000001 then
         return nil
@@ -1183,7 +1381,7 @@ local function castPuffRay(vehicle, puff, originX, originY, originZ, directionX,
             return nil
         end
 
-        -- A zero-distance hit starts inside the vehicle collider.
+        -- A zero-distance hit starts inside the vehicle collider
         if travelled == 0 and hit.distance <= RMS_Config.EXHAUST.PUFF.INSIDE_HIT_DISTANCE then
             return nil
         end
@@ -1206,6 +1404,17 @@ local function castPuffRay(vehicle, puff, originX, originY, originZ, directionX,
     return nil
 end
 
+---Returns the hit of a puff moving between two points
+-- @param table vehicle vehicle
+-- @param table puff puff
+-- @param float fromX x of the start
+-- @param float fromY y of the start
+-- @param float fromZ z of the start
+-- @param float toX x of the end
+-- @param float toY y of the end
+-- @param float toZ z of the end
+-- @param float radius radius of the puff (m)
+-- @return table? hit hit, nil without one
 local function tracePuff(vehicle, puff, fromX, fromY, fromZ, toX, toY, toZ, radius)
     local deltaX, deltaY, deltaZ = toX - fromX, toY - fromY, toZ - fromZ
     local movementLength = getVectorLength(deltaX, deltaY, deltaZ)
@@ -1226,6 +1435,14 @@ local function tracePuff(vehicle, puff, fromX, fromY, fromZ, toX, toY, toZ, radi
     return hit
 end
 
+---Returns the hit above a rising puff
+-- @param table vehicle vehicle
+-- @param table puff puff
+-- @param float x x of the puff
+-- @param float y y of the puff
+-- @param float z z of the puff
+-- @param float radius radius of the puff (m)
+-- @return table? hit hit, nil without one
 local function probePuffAbove(vehicle, puff, x, y, z, radius)
     local hit = castPuffRay(vehicle, puff, x, y, z, 0, 1, 0, radius)
     if hit == nil then
@@ -1237,6 +1454,12 @@ local function probePuffAbove(vehicle, puff, x, y, z, radius)
     return hit
 end
 
+---Tells whether a puff still touches its surface, updating the contact
+-- @param table vehicle vehicle
+-- @param table puff puff
+-- @param table contact contact of the puff
+-- @param float radius radius of the puff (m)
+-- @return boolean hasContact true while it touches
 local function hasPuffContact(vehicle, puff, contact, radius)
     local margin = math.max(radius * 0.02, 0.005)
     local originX = puff.x + contact.nx * margin
@@ -1262,6 +1485,10 @@ local function hasPuffContact(vehicle, puff, contact, radius)
     return true
 end
 
+---Returns the wind velocity
+-- @return float windX x of the wind (m/s)
+-- @return float windY y of the wind, 0
+-- @return float windZ z of the wind (m/s)
 local function getWindVelocity()
     local updater = g_currentMission.environment.weather.windUpdater
     local velocity = getNumber(updater.currentVelocity, 0, 0)
@@ -1270,6 +1497,8 @@ local function getWindVelocity()
         getNumber(updater.currentDirZ, 0) * velocity
 end
 
+---Returns the collision mask a lee is searched against
+-- @return integer mask collision mask
 local function getLeeCollisionMask()
     if RMS_Exhaust.leeCollisionMask ~= nil then
         return RMS_Exhaust.leeCollisionMask
@@ -1286,10 +1515,24 @@ local function getLeeCollisionMask()
 end
 
 ---Receives the closest hit of a lee raycast
+-- @param entityId transformId object hit
+-- @param float x x of the hit
+-- @param float y y of the hit
+-- @param float z z of the hit
+-- @param float distance distance (m)
 function RMS_Exhaust:onLeeRaycast(transformId, x, y, z, distance)
     self.leeRaycastHit = {objectId = transformId, x = x, y = y, z = z, distance = distance}
 end
 
+---Returns the first solid hit of a lee ray, triggers passed through
+-- @param float originX x of the origin
+-- @param float originY y of the origin
+-- @param float originZ z of the origin
+-- @param float directionX x of the direction
+-- @param float directionY y of the direction
+-- @param float directionZ z of the direction
+-- @param float distance length of the ray (m)
+-- @return table? hit hit, nil without one
 local function castLeeRay(originX, originY, originZ, directionX, directionY, directionZ, distance)
     local travelled = 0
     for _ = 1, 6 do
@@ -1319,6 +1562,11 @@ local function castLeeRay(originX, originY, originZ, directionX, directionY, dir
     return nil
 end
 
+---Finds the face sheltering the outlet from the wind, and its height
+-- @param table state smoke state
+-- @param float x x of the outlet
+-- @param float y y of the outlet
+-- @param float z z of the outlet
 local function updateLee(state, x, y, z)
     local puffConfig = RMS_Config.EXHAUST.PUFF
     local lee = state.lee
@@ -1353,8 +1601,14 @@ local function updateLee(state, x, y, z)
     lee.height = math.max(topY - groundY, 0.5)
 end
 
+---Returns the shelter the lee of a face gives at a point
+-- @param table lee lee of the outlet
+-- @param float x x of the point
+-- @param float y y of the point
+-- @param float z z of the point
+-- @return float shelter shelter, 0 to 1
 local function getLeeShelter(lee, x, y, z)
-    if lee == nil or not lee.isValid then
+    if not lee.isValid then
         return 0
     end
 
@@ -1371,13 +1625,21 @@ local function getLeeShelter(lee, x, y, z)
     return clamp((1 - share) / (1 - puffConfig.SHELTER_WIND_SHARE), 0, 1)
 end
 
+---Returns the shelter at a point: indoors, under the roof, or in a lee
+-- @param table vehicle vehicle
+-- @param float x x of the point
+-- @param float y y of the point
+-- @param float z z of the point
+-- @param float pipeX x of the outlet
+-- @param float pipeZ z of the outlet
+-- @return float shelter shelter, 0 to 1
 local function getShelterTarget(vehicle, x, y, z, pipeX, pipeZ)
     if g_currentMission.indoorMask:getIsIndoorAtWorldPosition(x, z) then
         return 1
     end
 
     local spec = vehicle.spec_RealisticMechanicalSystems
-    if spec ~= nil and spec.isUnderRoof == true and pipeX ~= nil then
+    if spec.isUnderRoof then
         local radius = RMS_Config.EXHAUST.PUFF.SHELTER_RADIUS
         local deltaX, deltaZ = x - pipeX, z - pipeZ
         if deltaX * deltaX + deltaZ * deltaZ <= radius * radius then
@@ -1385,9 +1647,12 @@ local function getShelterTarget(vehicle, x, y, z, pipeX, pipeZ)
         end
     end
 
-    return getLeeShelter(spec ~= nil and spec.exhaustSmoke ~= nil and spec.exhaustSmoke.lee or nil, x, y, z)
+    return getLeeShelter(spec.exhaustSmoke.lee, x, y, z)
 end
 
+---Returns the thinning level of a puff by its rank
+-- @param integer rank rank of the puff
+-- @return integer level thinning level
 local function getThinningLevel(rank)
     local levelMax = RMS_Config.EXHAUST.PUFF.THIN_LEVEL_MAX
     local level = 0
@@ -1399,21 +1664,26 @@ local function getThinningLevel(rank)
     return level
 end
 
-local function createPuffSlot()
+---Creates a puff slot, its emitter and its single particle sprite
+-- @param boolean? isHeat true for a heat puff
+-- @return table? slot slot, nil without geometry
+local function createPuffSlot(isHeat)
     local config = RMS_Config.EXHAUST
     local sources = RMS_Exhaust.plumeSources
+    -- heat puffs carry a far bounding sphere, never clipped on it
+    local clipDistance = isHeat and 2 * config.HEAT.SORT_DISTANCE or config.PLUME_CLIP_DISTANCE
     local root = createTransformGroup("rmsManagedPuff")
     link(getRootNode(), root)
 
     local emitterShape = clone(sources.emitShape, true, false, true)
     link(root, emitterShape)
     setScale(emitterShape, 0.001, 0.001, 0.001)
-    setClipDistance(emitterShape, config.PLUME_CLIP_DISTANCE)
+    setClipDistance(emitterShape, clipDistance)
 
-    local node = clone(sources.puffNode, true, false, true)
+    local node = clone(isHeat and sources.heatNode or sources.puffNode, true, false, true)
     link(root, node)
     setVisibility(node, true)
-    setClipDistance(node, config.PLUME_CLIP_DISTANCE)
+    setClipDistance(node, clipDistance)
 
     local renderer = {}
     ParticleUtil.loadParticleSystemFromNode(node, renderer, false, false, true)
@@ -1421,7 +1691,7 @@ local function createPuffSlot()
     ParticleUtil.setEmittingState(renderer, false)
 
     local geometry = getGeometry(renderer.shape)
-    if geometry == nil or geometry == 0 then
+    if geometry == 0 then
         ParticleUtil.deleteParticleSystem(renderer)
         delete(root)
         return nil
@@ -1447,15 +1717,19 @@ local function createPuffSlot()
     }
 end
 
-local function deletePuffPool(plume)
-    for _, slot in ipairs(plume.pool) do
+---Deletes the puff slots of a layer
+-- @param table layer puff layer
+local function deletePuffPool(layer)
+    for _, slot in ipairs(layer.pool) do
         ParticleUtil.deleteParticleSystem(slot.renderer)
         delete(slot.root)
     end
-    plume.pool = {}
-    plume.freeSlots = {}
+    layer.pool = {}
+    layer.freeSlots = {}
 end
 
+---Stops the emission of every plume
+-- @param table state smoke state
 local function stopPlumes(state)
     if state.plumes == nil then
         return
@@ -1467,6 +1741,23 @@ local function stopPlumes(state)
     end
 end
 
+---Returns a puff layer, the plume holding its smoke puffs, plume.heat its heat puffs
+-- @param table layer fields of the layer
+-- @return table layer puff layer
+local function newPuffLayer(layer)
+    layer.pool = {}
+    layer.freeSlots = {}
+    layer.emissionAccumulator = 0
+    layer.isEmitting = false
+    layer.activePuffs = 0
+    layer.nextRank = 0
+
+    return layer
+end
+
+---Deletes the plumes and hands the exhaust back to the game
+-- @param table vehicle vehicle
+-- @param table state smoke state
 local function deletePlumes(vehicle, state)
     if state.plumes == nil then
         return
@@ -1474,12 +1765,19 @@ local function deletePlumes(vehicle, state)
 
     for _, plume in ipairs(state.plumes) do
         deletePuffPool(plume)
+        if plume.heat ~= nil then
+            deletePuffPool(plume.heat)
+        end
     end
 
     state.plumes = nil
     setNativeOwnership(vehicle, state, true)
 end
 
+---Creates a plume per exhaust outlet
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param table effects exhaust effects of the game
 local function createPlumes(vehicle, state, effects)
     if not loadPlumeSources() then
         return
@@ -1487,15 +1785,9 @@ local function createPlumes(vehicle, state, effects)
 
     local plumes = {}
     for _, effect in pairs(effects) do
-        table.insert(plumes, {
+        local plume = newPuffLayer({
             linkNode = effect.node,
             effect = effect,
-            pool = {},
-            freeSlots = {},
-            emissionAccumulator = 0,
-            isEmitting = false,
-            activePuffs = 0,
-            nextRank = 0,
             lastPipeX = nil,
             lastPipeY = nil,
             lastPipeZ = nil,
@@ -1503,6 +1795,11 @@ local function createPlumes(vehicle, state, effects)
             pipeVelocityY = 0,
             pipeVelocityZ = 0
         })
+        if RMS_Exhaust.plumeSources.heatNode ~= nil then
+            -- outlet and eddy travel along the camera right and up axes (m)
+            plume.heat = newPuffLayer({isHeat = true, outletX = 0, outletY = 0, scrollX = 0, scrollY = 0})
+        end
+        table.insert(plumes, plume)
     end
 
     state.plumes = plumes
@@ -1510,12 +1807,22 @@ local function createPlumes(vehicle, state, effects)
     setNativeOwnership(vehicle, state, false)
 end
 
+---Creates the plumes once
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param table effects exhaust effects of the game
 local function ensurePlumes(vehicle, state, effects)
     if state.plumes == nil then
         createPlumes(vehicle, state, effects)
     end
 end
 
+---Returns the outlet position and updates its velocity
+-- @param table plume plume
+-- @param float dt time since the last frame (ms)
+-- @return float x x of the outlet
+-- @return float y y of the outlet
+-- @return float z z of the outlet
 local function updatePipeVelocity(plume, dt)
     local x, y, z = getWorldTranslation(plume.linkNode)
     if plume.lastPipeX ~= nil and dt > 0 then
@@ -1533,35 +1840,66 @@ local function updatePipeVelocity(plume, dt)
     return x, y, z
 end
 
-local function getPuffSlot(plume)
-    local freeCount = #plume.freeSlots
+---Returns a free puff slot, a new one while the pool has room
+-- @param table layer puff layer
+-- @return table? slot slot, nil when the pool is full
+local function getPuffSlot(layer)
+    local freeCount = #layer.freeSlots
     if freeCount > 0 then
-        local slot = plume.freeSlots[freeCount]
-        plume.freeSlots[freeCount] = nil
+        local slot = layer.freeSlots[freeCount]
+        layer.freeSlots[freeCount] = nil
         return slot
     end
 
-    if #plume.pool >= RMS_Config.EXHAUST.PUFF.POOL_MAX then
+    local poolMax = layer.isHeat and RMS_Config.EXHAUST.HEAT.POOL_MAX or RMS_Config.EXHAUST.PUFF.POOL_MAX
+    if #layer.pool >= poolMax then
         return nil
     end
 
-    local slot = createPuffSlot()
+    local slot = createPuffSlot(layer.isHeat)
     if slot ~= nil then
-        table.insert(plume.pool, slot)
+        table.insert(layer.pool, slot)
     end
 
     return slot
 end
 
-local function spawnPuff(state, plume, emission, ageOffset)
-    local slot = getPuffSlot(plume)
+---Draws a heat puff, its deflection on screen and its sort distance
+-- @param table state smoke state
+-- @param table heat heat layer
+-- @param table slot slot of the puff
+local function drawHeatPuff(state, heat, slot)
+    local puff = slot.puff
+    local shape = slot.renderer.shape
+    setShaderParameterRecursive(shape, "heat", state.heatScreenPerRad * RMS_Exhaust.getPuffHeatDeflection(puff), heat.scrollX, heat.scrollY, 0,
+        false)
+    setShaderParameterRecursive(shape, "heatOutlet", heat.outletX, heat.outletY, 0, 0, false)
+
+    -- farthest bounding sphere centre draws first: heat before the rest
+    local distance = RMS_Config.EXHAUST.HEAT.SORT_DISTANCE
+    local directionX, directionY, directionZ = normalizeVector(puff.x - state.cameraX, puff.y - state.cameraY, puff.z - state.cameraZ, 0, 0, 1)
+    setShapeBoundingSphere(shape, directionX * distance, directionY * distance, directionZ * distance,
+        distance + RMS_Config.EXHAUST.PUFF.SIZE_MAX)
+end
+
+---Spawns a puff at the outlet, its sprite set for its life
+-- @param table state smoke state
+-- @param table plume plume
+-- @param table layer puff layer
+-- @param table emission emission of the layer
+-- @param float ageOffset age the puff starts at (ms)
+-- @return boolean isSpawned true when a slot was free
+local function spawnPuff(state, plume, layer, emission, ageOffset)
+    local slot = getPuffSlot(layer)
     if slot == nil then
         return false
     end
 
     local puffConfig = RMS_Config.EXHAUST.PUFF
-    state.nextPuffSerial = state.nextPuffSerial + 1
-    local serial = state.nextPuffSerial
+    -- own serials: heat puffs never shift the draws of the smoke
+    local serialKey = layer.isHeat and "nextHeatSerial" or "nextPuffSerial"
+    state[serialKey] = state[serialKey] + 1
+    local serial = state[serialKey]
     local directionX, directionY, directionZ = localDirectionToWorld(plume.linkNode, 0, 1, 0)
     directionX, directionY, directionZ = normalizeVector(directionX, directionY, directionZ, 0, 1, 0)
     local sideX, sideY, sideZ, forwardX, forwardY, forwardZ = getDirectionBasis(
@@ -1574,8 +1912,8 @@ local function spawnPuff(state, plume, emission, ageOffset)
     local initialSpeed = emission.speed
     local lateralSpeed = emission.speed * puffConfig.SPREAD_SHARE * getDeterministicValue(serial, 3)
 
-    plume.nextRank = plume.nextRank + 1
-    local level = getThinningLevel(plume.nextRank)
+    layer.nextRank = layer.nextRank + 1
+    local level = getThinningLevel(layer.nextRank)
 
     local sources = RMS_Exhaust.plumeSources
     local lifespan = emission.retireLifespans[level] or emission.lifespan
@@ -1590,7 +1928,6 @@ local function spawnPuff(state, plume, emission, ageOffset)
     end
 
     local puff = {
-        serial = serial,
         level = level,
         spacing = {
             speed = emission.speed,
@@ -1617,6 +1954,7 @@ local function spawnPuff(state, plume, emission, ageOffset)
         tauVapour = emission.tauVapour,
         evaporationMs = emission.evaporationMs,
         deltaT = emission.deltaT,
+        ambientC = emission.ambientC,
         vx = directionX * initialSpeed + spreadX * lateralSpeed + plume.pipeVelocityX,
         vy = directionY * initialSpeed + spreadY * lateralSpeed + plume.pipeVelocityY,
         vz = directionZ * initialSpeed + spreadZ * lateralSpeed + plume.pipeVelocityZ,
@@ -1629,13 +1967,12 @@ local function spawnPuff(state, plume, emission, ageOffset)
         surfaceTravel = 0
     }
 
-    local offset = clamp(getNumber(ageOffset, 0, 0), 0, lifespan * 0.5)
+    local offset = clamp(ageOffset, 0, lifespan * 0.5)
     puff.age = puff.age + offset
     local offsetSeconds = offset / 1000
     local jetStart = emission.jetStart
     local jetWidth = math.sqrt(jetStart * jetStart + 2 * puffConfig.JET_SPREAD * initialSpeed * jetStart * offsetSeconds)
-    local jetDistance = puffConfig.JET_SPREAD > 0 and (jetWidth - jetStart) / puffConfig.JET_SPREAD
-        or initialSpeed * offsetSeconds
+    local jetDistance = (jetWidth - jetStart) / puffConfig.JET_SPREAD
     local jetSlowdown = jetStart / jetWidth
     puff.width = jetWidth
     puff.vx = directionX * initialSpeed * jetSlowdown + spreadX * lateralSpeed + plume.pipeVelocityX
@@ -1652,12 +1989,7 @@ local function spawnPuff(state, plume, emission, ageOffset)
     puff.z = originZ + directionZ * (clearance + jetDistance) + spreadZ * outletJitter + carriedZ
     puff.selfIgnoreUntil = clamp(clearance / math.max(initialSpeed, 0.1) * 2000, 25, 250)
 
-    local red, green, blue = RMS_Exhaust.getPuffRenderColour(puff)
-    local alpha = RMS_Exhaust.getPuffRenderAlpha(puff)
-    puff.lastRenderedAlpha = alpha
-    puff.lastRenderedRed = red
-
-    -- Expire the previous sprite before reusing its slot.
+    -- Expire the previous sprite before reusing its slot
     local geometry = slot.geometry
     ParticleUtil.setEmittingState(slot.renderer, false)
     addParticleSystemSimulationTime(geometry, sources.flushMs)
@@ -1674,7 +2006,7 @@ local function spawnPuff(state, plume, emission, ageOffset)
         setParticleSystemSpriteScaleYGain(geometry, sizeGain)
     end
 
-    -- Wait for the old sprite to die before reusing its slot.
+    -- the slot is reused only once this sprite has died
     slot.puff = puff
     slot.elapsed = 1
     slot.releaseAt = (sources.canSetLifespan and spriteLifespan or sources.assetLifespan) + 100
@@ -1682,7 +2014,15 @@ local function spawnPuff(state, plume, emission, ageOffset)
     setWorldTranslation(slot.root, puff.x, puff.y, puff.z)
     setVisibility(slot.root, true)
     slot.isShown = true
-    setShaderParameterRecursive(slot.renderer.shape, "colorAlpha", red, green, blue, alpha, false)
+    if layer.isHeat then
+        drawHeatPuff(state, layer, slot)
+    else
+        local red, green, blue = RMS_Exhaust.getPuffRenderColour(puff)
+        local alpha = RMS_Exhaust.getPuffRenderAlpha(puff)
+        puff.lastRenderedAlpha = alpha
+        puff.lastRenderedRed = red
+        setShaderParameterRecursive(slot.renderer.shape, "colorAlpha", red, green, blue, alpha, false)
+    end
     ParticleUtil.setEmittingState(slot.renderer, false)
     ParticleUtil.resetNumOfEmittedParticles(slot.renderer)
     ParticleUtil.setEmittingState(slot.renderer, true)
@@ -1692,16 +2032,84 @@ local function spawnPuff(state, plume, emission, ageOffset)
     return true
 end
 
+---Advances and draws the puffs of a layer, freeing their slots
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param table plume plume
+-- @param table layer puff layer
+-- @param float dt time since the last frame (ms)
+-- @param table environment wind, air temperature, eddies and contact tests
+-- @return integer active puffs still alive
+local function updatePuffLayer(vehicle, state, plume, layer, dt, environment)
+    local puffConfig = RMS_Config.EXHAUST.PUFF
+    local active = 0
+    for _, slot in ipairs(layer.pool) do
+        if slot.isInUse then
+            slot.elapsed = slot.elapsed + dt
+            local puff = slot.puff
+            if puff.age < puff.lifespan then
+                puff.shelterTimer = puff.shelterTimer - dt
+                if puff.shelterTimer <= 0 then
+                    puff.shelterTarget = getShelterTarget(vehicle, puff.x, puff.y, puff.z, plume.lastPipeX,
+                        plume.lastPipeZ)
+                    puff.shelterTimer = puffConfig.SHELTER_CHECK_MS
+                end
+
+                RMS_Exhaust.advancePuff(puff, math.min(dt, puff.lifespan - puff.age), environment)
+                puff.weight = RMS_Exhaust.getThinningWeight(puff, getScheduleSize(puff))
+                if puff.weight <= 0 then
+                    puff.lifespan = puff.age
+                else
+                    setWorldTranslation(slot.root, puff.x, puff.y, puff.z)
+                    if layer.isHeat then
+                        drawHeatPuff(state, layer, slot)
+                    else
+                        local alpha = RMS_Exhaust.getPuffRenderAlpha(puff)
+                        local red, green, blue = RMS_Exhaust.getPuffRenderColour(puff)
+                        local threshold = puffConfig.ALPHA_EPSILON * math.max(alpha, puff.lastRenderedAlpha) + 0.0002
+                        if math.abs(alpha - puff.lastRenderedAlpha) >= threshold
+                                or math.abs(red - puff.lastRenderedRed) >= puffConfig.ALPHA_EPSILON * 0.3 then
+                            setShaderParameterRecursive(slot.renderer.shape, "colorAlpha", red, green, blue, alpha, false)
+                            puff.lastRenderedAlpha = alpha
+                            puff.lastRenderedRed = red
+                        end
+                    end
+                end
+            end
+
+            if puff.age < puff.lifespan then
+                active = active + 1
+            elseif slot.isShown ~= false then
+                setVisibility(slot.root, false)
+                slot.isShown = false
+            end
+
+            if slot.elapsed >= slot.releaseAt then
+                slot.isInUse = false
+                slot.puff = nil
+                table.insert(layer.freeSlots, slot)
+            end
+        end
+    end
+    layer.activePuffs = active
+
+    return active
+end
+
+---Advances the smoke and heat puffs of every plume
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param float dt time since the last frame (ms)
 local function updatePuffPools(vehicle, state, dt)
     if state.plumes == nil then
         state.activePuffs = 0
+        state.activeHeatPuffs = 0
         return
     end
 
-    local puffConfig = RMS_Config.EXHAUST.PUFF
     local windX, windY, windZ = getWindVelocity()
     local windSpeed = getVectorLength(windX, 0, windZ)
-    local timeSeconds = getNumber(g_time, 0, 0) / 1000
+    local timeSeconds = g_time / 1000
     local environment = {
         windX = windX,
         windY = windY,
@@ -1723,63 +2131,36 @@ local function updatePuffPools(vehicle, state, dt)
         end
     }
 
-    local activePuffs = 0
+    local heatConfig = RMS_Config.EXHAUST.HEAT
+    local camera = getCamera()
+    -- from rad of deflection to screen heights, at the screen centre
+    state.heatScreenPerRad = heatConfig.GAIN / (2 * math.tan(getFovY(camera) * 0.5))
+    state.cameraX, state.cameraY, state.cameraZ = getWorldTranslation(camera)
+
+    local activePuffs, activeHeatPuffs = 0, 0
     for _, plume in ipairs(state.plumes) do
-        updatePipeVelocity(plume, dt)
-        local plumeActive = 0
-        for _, slot in ipairs(plume.pool) do
-            if slot.isInUse then
-                slot.elapsed = slot.elapsed + dt
-                local puff = slot.puff
-                if puff.age < puff.lifespan then
-                    puff.shelterTimer = puff.shelterTimer - dt
-                    if puff.shelterTimer <= 0 then
-                        puff.shelterTarget = getShelterTarget(vehicle, puff.x, puff.y, puff.z, plume.lastPipeX,
-                            plume.lastPipeZ)
-                        puff.shelterTimer = puffConfig.SHELTER_CHECK_MS
-                    end
+        local pipeX, pipeY, pipeZ = updatePipeVelocity(plume, dt)
+        activePuffs = activePuffs + updatePuffLayer(vehicle, state, plume, plume, dt, environment)
 
-                    RMS_Exhaust.advancePuff(puff, math.min(dt, puff.lifespan - puff.age), environment)
-                    puff.weight = RMS_Exhaust.getThinningWeight(puff, getScheduleSize(puff))
-                    if puff.weight <= 0 then
-                        puff.lifespan = puff.age
-                    else
-                        setWorldTranslation(slot.root, puff.x, puff.y, puff.z)
-                        local alpha = RMS_Exhaust.getPuffRenderAlpha(puff)
-                        local red, green, blue = RMS_Exhaust.getPuffRenderColour(puff)
-                        local threshold = puffConfig.ALPHA_EPSILON * math.max(alpha, puff.lastRenderedAlpha) + 0.0002
-                        if math.abs(alpha - puff.lastRenderedAlpha) >= threshold
-                                or math.abs(red - puff.lastRenderedRed) >= puffConfig.ALPHA_EPSILON * 0.3 then
-                            setShaderParameterRecursive(slot.renderer.shape, "colorAlpha", red, green, blue, alpha, false)
-                            puff.lastRenderedAlpha = alpha
-                            puff.lastRenderedRed = red
-                        end
-                    end
-                end
-
-                if puff.age < puff.lifespan then
-                    plumeActive = plumeActive + 1
-                elseif slot.isShown ~= false then
-                    setVisibility(slot.root, false)
-                    slot.isShown = false
-                end
-
-                if slot.elapsed >= slot.releaseAt then
-                    slot.isInUse = false
-                    slot.puff = nil
-                    table.insert(plume.freeSlots, slot)
-                end
-            end
+        local heat = plume.heat
+        if heat ~= nil then
+            heat.outletX, heat.outletY = worldToLocal(camera, pipeX, pipeY, pipeZ)
+            local directionX, directionY = worldDirectionToLocal(camera, localDirectionToWorld(plume.linkNode, 0, 1, 0))
+            local travel = state.heatEmission.speed * dt / 1000
+            heat.scrollX = (heat.scrollX + directionX * travel) % heatConfig.SCROLL_PERIOD
+            heat.scrollY = (heat.scrollY + directionY * travel) % heatConfig.SCROLL_PERIOD
+            activeHeatPuffs = activeHeatPuffs + updatePuffLayer(vehicle, state, plume, heat, dt, environment)
         end
-        plume.activePuffs = plumeActive
-        activePuffs = activePuffs + plumeActive
     end
 
     state.activePuffs = activePuffs
+    state.activeHeatPuffs = activeHeatPuffs
 end
 
 local BURST_DRIVERS = {"boost", "unburnt", "wetStacking", "preheat", "fault"}
 
+---Resets the smoke state
+-- @param table state smoke state
 local function resetState(state)
     state.soot = 0
     state.oil = 0
@@ -1801,16 +2182,21 @@ local function resetState(state)
     state.boostDeficit = 0
     state.opacity = 0
     state.activePuffs = 0
+    state.activeHeatPuffs = 0
+    state.gasTemperature = nil
+    state.lineWorldTime = nil
+    state.heatDeflection = 0
     state.pipeShelter = 0
     state.lee = {isValid = false}
     state.leeTimer = 0
     state.nextPuffSerial = 0
+    state.nextHeatSerial = 0
     state.burst = 0
-    state.burstCause = nil
     state.burstRefractory = 0
     state.tuneTimer = 0
     state.isActive = false
     state.emission = {}
+    state.heatEmission = {speed = 0}
 
     state.drivers = state.drivers or {}
     state.slowDrivers = state.slowDrivers or {}
@@ -1823,12 +2209,8 @@ local function resetState(state)
 end
 
 ---Creates the exhaust smoke state on the vehicle spec
+-- @param table vehicle vehicle
 function RMS_Exhaust.initSpec(vehicle)
-    local spec = vehicle ~= nil and vehicle.spec_RealisticMechanicalSystems or nil
-    if spec == nil then
-        return
-    end
-
     local state = {
         profileResolved = false,
         hasTurbo = false,
@@ -1836,18 +2218,14 @@ function RMS_Exhaust.initSpec(vehicle)
         isMethane = false,
         isNativeOwned = true
     }
-    spec.exhaustSmoke = state
+    vehicle.spec_RealisticMechanicalSystems.exhaustSmoke = state
     resetState(state)
 end
 
 ---Drops the plumes, gives the exhaust back and clears the smoke state
+-- @param table vehicle vehicle
 function RMS_Exhaust.reset(vehicle)
-    if vehicle == nil then
-        return
-    end
-
-    local spec = vehicle.spec_RealisticMechanicalSystems
-    local state = spec ~= nil and spec.exhaustSmoke or nil
+    local state = vehicle.spec_RealisticMechanicalSystems.exhaustSmoke
     if state == nil then
         return
     end
@@ -1857,13 +2235,13 @@ function RMS_Exhaust.reset(vehicle)
 end
 
 ---Refreshes the emission targets and the burst drivers the renderer reads
+-- @param table vehicle vehicle
 function RMS_Exhaust.update(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local state = spec.exhaustSmoke
-    local motorizedSpec = vehicle.spec_motorized
-    local effects = motorizedSpec ~= nil and motorizedSpec.exhaustEffects or nil
+    local effects = vehicle.spec_motorized.exhaustEffects
 
-    if effects == nil or next(effects) == nil or spec.isElectricVehicle then
+    if next(effects) == nil or spec.isElectricVehicle then
         return
     end
 
@@ -1881,14 +2259,14 @@ function RMS_Exhaust.update(vehicle)
 
     resolveEmissionProfile(vehicle, state)
 
-    local load = getNumber(spec.dynamicMotorLoad, 0, 0, 1.5)
-    local motorState = vehicle.getMotorState ~= nil and vehicle:getMotorState() or MotorState.OFF
-    local wetStackingLevel = spec.fuelState ~= nil and spec.fuelState.wetStackingLevel or 0
-    local preheatSeverity = getNumber(spec.preheatColdStartFaultSeverity, 0, 0, 4)
+    local load = spec.dynamicMotorLoad
+    local motorState = vehicle:getMotorState()
+    local wetStackingLevel = spec.fuelState.wetStackingLevel
+    local preheatSeverity = spec.preheatColdStartFaultSeverity
     local sootEffect = getEffectIntensity(spec, "EXHAUST_SOOT")
     local oilEffect = getEffectIntensity(spec, "EXHAUST_OIL")
     local unburntEffect = getEffectIntensity(spec, "EXHAUST_UNBURNT")
-    local engineTemperature = spec.rawEngineTemperature or spec.engineTemperature
+    local engineTemperature = spec.rawEngineTemperature
 
     local targets = RMS_Exhaust.calculateTargets({
         year = spec.year,
@@ -1928,7 +2306,7 @@ function RMS_Exhaust.update(vehicle)
     local drivers = state.drivers
     drivers.boost = targets.boostDeficit
     drivers.unburnt = targets.unburnt
-    drivers.wetStacking = getNumber(wetStackingLevel, 0, 0, 1) * clamp(load, 0, 1)
+    drivers.wetStacking = wetStackingLevel * clamp(load, 0, 1)
     drivers.preheat = preheatSeverity / 4
     drivers.fault = math.max(sootEffect, oilEffect, unburntEffect)
 
@@ -1939,6 +2317,9 @@ function RMS_Exhaust.update(vehicle)
     end
 end
 
+---Starts a burst on the sharpest rise of its drivers
+-- @param table state smoke state
+-- @param float dt time since the last tuning (ms)
 local function updateBurstEdges(state, dt)
     local config = RMS_Config.EXHAUST
     local edges = config.BURST_EDGE
@@ -1949,9 +2330,11 @@ local function updateBurstEdges(state, dt)
     local latch = state.burstLatch
     local isRefractory = state.burstRefractory > 0
     local bestStrength = 0
-    local bestCause = nil
 
-    local function testEdge(key, threshold, cause)
+    ---Keeps the strongest rise of a driver past its threshold
+    -- @param string key driver
+    -- @param float threshold rise that starts a burst
+    local function testEdge(key, threshold)
         local driver = drivers[key]
         local rise = driver - slow[key]
         slow[key] = slow[key] + (driver - slow[key]) * follow
@@ -1967,23 +2350,23 @@ local function updateBurstEdges(state, dt)
         local strength = clamp(rise / (threshold * 2), 0, 1)
         if strength > bestStrength then
             bestStrength = strength
-            bestCause = cause
         end
     end
 
-    testEdge("boost", edges.BOOST_DEFICIT, "boost")
-    testEdge("unburnt", edges.UNBURNT, "cold")
-    testEdge("wetStacking", edges.WET_STACKING, "wetStacking")
-    testEdge("preheat", edges.PREHEAT, "preheat")
-    testEdge("fault", edges.FAULT, "fault")
+    testEdge("boost", edges.BOOST_DEFICIT)
+    testEdge("unburnt", edges.UNBURNT)
+    testEdge("wetStacking", edges.WET_STACKING)
+    testEdge("preheat", edges.PREHEAT)
+    testEdge("fault", edges.FAULT)
 
-    if bestCause ~= nil then
+    if bestStrength > 0 then
         state.burst = math.max(state.burst, bestStrength)
-        state.burstCause = bestCause
         state.burstRefractory = config.BURST_REFRACTORY
     end
 end
 
+---Sets the optical depth of a puff by the overlap of the plume
+-- @param table emission emission of the plume
 local function updatePuffDensity(emission)
     local sizeStart = emission.sizeStart
     local overlap = sizeStart / getPuffSpacing(emission, sizeStart)
@@ -1991,43 +2374,49 @@ local function updatePuffDensity(emission)
     local referenceOverlap = math.max(referenceSize / getPuffSpacing(emission, referenceSize), 1)
     local referenceAge = (referenceSize - sizeStart) / math.max(emission.sizeGain, 0.000001)
 
-    emission.overlap = overlap
     emission.tau = emission.tauTarget / overlap
     emission.tauVapour = emission.vapourTarget / referenceOverlap * (referenceSize / sizeStart) ^ 2
         * math.exp(referenceAge / emission.evaporationMs)
 end
 
-local function updateEmission(vehicle, state, opacity, vapour, flow, burst, dt)
+---Returns the outlet diameter by the engine power
+-- @param table vehicle vehicle
+-- @return float diameter diameter (m)
+local function getPipeDiameter(vehicle)
+    local puffConfig = RMS_Config.EXHAUST.PUFF
+
+    return clamp(puffConfig.PIPE_DIAMETER_PER_SQRT_KW * math.sqrt(getPeakPowerKw(vehicle)),
+        puffConfig.PIPE_DIAMETER_MIN, puffConfig.PIPE_DIAMETER_MAX)
+end
+
+---Lays out the jet at the outlet: speed, size, wind, shelter and rate
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param table emission emission of the plume
+-- @param float exitSpeed speed at the outlet (m/s)
+-- @param float deltaT temperature of the gas over the air (K)
+-- @param float dt time since the last frame (ms)
+local function updateJet(vehicle, state, emission, exitSpeed, deltaT, dt)
     local config = RMS_Config.EXHAUST
     local puffConfig = config.PUFF
-    local emission = state.emission
 
     local plume = state.plumes[1]
     state.leeTimer = state.leeTimer - dt
-    if state.leeTimer <= 0 and plume ~= nil and plume.lastPipeX ~= nil then
+    if state.leeTimer <= 0 then
         updateLee(state, plume.lastPipeX, plume.lastPipeY, plume.lastPipeZ)
         state.leeTimer = puffConfig.SHELTER_CHECK_MS
     end
-    local shelterTarget = plume ~= nil and plume.lastPipeX ~= nil
-        and getShelterTarget(vehicle, plume.lastPipeX, plume.lastPipeY, plume.lastPipeZ, plume.lastPipeX,
-            plume.lastPipeZ) or 0
+    local shelterTarget = getShelterTarget(vehicle, plume.lastPipeX, plume.lastPipeY, plume.lastPipeZ, plume.lastPipeX,
+        plume.lastPipeZ)
     state.pipeShelter = state.pipeShelter + (shelterTarget - state.pipeShelter)
         * math.min(dt / (puffConfig.SHELTER_TAU + dt), 1)
     local windX, _, windZ = getWindVelocity()
     local windSpeed = getVectorLength(windX, 0, windZ) * lerp(1, puffConfig.SHELTER_WIND_SHARE, state.pipeShelter)
 
-    local deltaT = RMS_Exhaust.getExhaustGasTemperatureRise(state.load, state.engineTemperature)
-    local gasKelvin = getNumber(state.ambientC, 15, -80, 80) + 273.15 + deltaT
-    local fullKelvin = 293.15 + config.EGT.RISE_FULL_K
-    local exitSpeed = math.max(puffConfig.EXIT_SPEED_MIN, puffConfig.EXIT_SPEED_FULL * flow * gasKelvin / fullKelvin)
-        * (1 + burst * config.BURST_SPEED_GAIN)
-    local jetStart = clamp(puffConfig.PIPE_DIAMETER_PER_SQRT_KW * math.sqrt(getPeakPowerKw(vehicle)),
-        puffConfig.PIPE_DIAMETER_MIN, puffConfig.PIPE_DIAMETER_MAX)
-    local spriteRatio = puffConfig.SPRITE_GAS_RATIO
-
+    local jetStart = getPipeDiameter(vehicle)
     emission.speed = exitSpeed
     emission.jetStart = jetStart
-    emission.sizeStart = jetStart * spriteRatio
+    emission.sizeStart = jetStart * puffConfig.SPRITE_GAS_RATIO
     emission.windSpeed = windSpeed
     emission.shelter = state.pipeShelter
     emission.dispersalSpeed = config.TURBULENCE.BASE + config.TURBULENCE.PER_WIND * windSpeed + puffConfig.RISE_SPEED
@@ -2043,7 +2432,57 @@ local function updateEmission(vehicle, state, opacity, vapour, flow, burst, dt)
     if not sources.canSetLifespan then
         rate = math.min(rate, 0.8 * puffConfig.POOL_MAX * 1000 / math.max(sources.assetLifespan, 1))
     end
-    emission.rate = rate * (1 + burst * config.BURST_EMIT_GAIN)
+    emission.rate = rate
+end
+
+---Returns the sprite growth fitting the jet width at an age
+-- @param table emission emission of the plume
+-- @param float fitMs age to fit (ms)
+-- @return float growth growth (m/ms)
+local function getGrowthFit(emission, fitMs)
+    return math.max(RMS_Config.EXHAUST.PUFF.SPRITE_GAS_RATIO * (getJetWidth(emission, fitMs) - emission.jetStart) / fitMs, 0.00005)
+end
+
+---Sets the retire age and growth of each thinning level
+-- @param table emission emission of the plume
+local function updateThinning(emission)
+    local puffConfig = RMS_Config.EXHAUST.PUFF
+    emission.retireLifespans = emission.retireLifespans or {}
+    updateRetireLifespans(emission, emission.retireLifespans)
+
+    emission.levelGains = emission.levelGains or {}
+    for level = 0, puffConfig.THIN_LEVEL_MAX do
+        local gain = emission.sizeGain
+        if RMS_Exhaust.plumeSources.canSetSize then
+            local levelLifespan = emission.retireLifespans[level] or emission.lifespan
+            gain = getGrowthFit(emission, clamp(levelLifespan * puffConfig.GROWTH_FIT_SHARE, puffConfig.GROWTH_FIT_LEVEL_MIN_MS,
+                puffConfig.GROWTH_FIT_MAX_MS))
+        end
+        emission.levelGains[level] = gain
+    end
+end
+
+---Returns the emission of the plume: jet, optical depth, colour and life
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param float opacity opacity of the smoke
+-- @param float vapour optical depth of the vapour
+-- @param float flow gas flow, 0 to 1
+-- @param float burst burst, 0 to 1
+-- @param float dt time since the last frame (ms)
+-- @return table emission emission of the plume
+local function updateEmission(vehicle, state, opacity, vapour, flow, burst, dt)
+    local config = RMS_Config.EXHAUST
+    local puffConfig = config.PUFF
+    local emission = state.emission
+
+    local deltaT = math.max(state.gasTemperature - state.ambientC, 0)
+    local gasKelvin = getNumber(state.ambientC, 15, -80, 80) + 273.15 + deltaT
+    local fullKelvin = 293.15 + config.EGT.RISE_FULL_K
+    local exitSpeed = math.max(puffConfig.EXIT_SPEED_MIN, puffConfig.EXIT_SPEED_FULL * flow * gasKelvin / fullKelvin)
+        * (1 + burst * config.BURST_SPEED_GAIN)
+    updateJet(vehicle, state, emission, exitSpeed, deltaT, dt)
+    emission.rate = emission.rate * (1 + burst * config.BURST_EMIT_GAIN)
 
     local evaporationMs = lerp(config.VAPOUR.EVAPORATION_WARM_MS, config.VAPOUR.EVAPORATION_COLD_MS, state.coldness)
     local tauTarget = -math.log(math.max(1 - opacity, 0.001)) * (1 + burst * config.BURST_TAU_GAIN)
@@ -2051,10 +2490,11 @@ local function updateEmission(vehicle, state, opacity, vapour, flow, burst, dt)
     emission.vapourTarget = vapour
     emission.evaporationMs = evaporationMs
 
+    local sources = RMS_Exhaust.plumeSources
     if sources.canSetSize then
         local fitMs = puffConfig.GROWTH_FIT_MIN_MS
         for _ = 1, 2 do
-            emission.sizeGain = math.max(spriteRatio * (getJetWidth(emission, fitMs) - jetStart) / fitMs, 0.00005)
+            emission.sizeGain = getGrowthFit(emission, fitMs)
             updatePuffDensity(emission)
             fitMs = clamp(getVisibleLifespan(emission) * puffConfig.GROWTH_FIT_SHARE,
                 puffConfig.GROWTH_FIT_MIN_MS, puffConfig.GROWTH_FIT_MAX_MS)
@@ -2070,33 +2510,215 @@ local function updateEmission(vehicle, state, opacity, vapour, flow, burst, dt)
     emission.blue = state.blue
     emission.isVisible = tauTarget + vapour > puffConfig.TAU_VISIBLE
     emission.lifespan = getVisibleLifespan(emission)
-    emission.retireLifespans = emission.retireLifespans or {}
-    updateRetireLifespans(emission, emission.retireLifespans)
-
-    emission.levelGains = emission.levelGains or {}
-    for level = 0, puffConfig.THIN_LEVEL_MAX do
-        local gain = emission.sizeGain
-        if sources.canSetSize then
-            local levelLifespan = emission.retireLifespans[level] or emission.lifespan
-            local fitMs = clamp(levelLifespan * puffConfig.GROWTH_FIT_SHARE, puffConfig.GROWTH_FIT_LEVEL_MIN_MS,
-                puffConfig.GROWTH_FIT_MAX_MS)
-            gain = math.max(spriteRatio * (getJetWidth(emission, fitMs) - jetStart) / fitMs, 0.00005)
-        end
-        emission.levelGains[level] = gain
-    end
+    updateThinning(emission)
 
     return emission
 end
 
----Drives the plume puffs from the channels, the gas flow and the bursts
+---Tells whether the outlet stands within heat sight of the camera
+-- @param table state smoke state
+-- @return boolean isInSight true within sight
+local function getIsHeatInSight(state)
+    local plume = state.plumes[1]
+
+    return getVectorLength(state.cameraX - plume.lastPipeX, state.cameraY - plume.lastPipeY, state.cameraZ - plume.lastPipeZ)
+        <= RMS_Config.EXHAUST.HEAT.CLIP_DISTANCE
+end
+
+local HEAT_JET_FIELDS = {"speed", "jetStart", "sizeStart", "windSpeed", "shelter", "dispersalSpeed", "ambientGrowth", "deltaT",
+    "ambientC", "jetProfile", "rate"}
+
+---Updates the heat emission, its puffs riding the jet last laid out in state.emission
+-- @param table state smoke state
+local function updateHeatEmission(state)
+    local config = RMS_Config.EXHAUST
+    local heatConfig = config.HEAT
+    local puffConfig = config.PUFF
+    local heat = state.heatEmission
+    for _, key in ipairs(HEAT_JET_FIELDS) do
+        heat[key] = state.emission[key]
+    end
+
+    state.heatDeflection = RMS_Exhaust.getHeatDeflection(heat.deltaT, heat.ambientC)
+    heat.isVisible = state.heatDeflection > heatConfig.MIN_DEFLECTION and getIsHeatInSight(state)
+    if not heat.isVisible then
+        return
+    end
+
+    -- gas rise that bends light by MIN_DEFLECTION, where a puff ends
+    local visibleRise = heatConfig.MIN_DEFLECTION * (heat.ambientC + 273.15)
+        / (heatConfig.PATH_FACTOR * heatConfig.AIR_REFRACTIVITY - heatConfig.MIN_DEFLECTION)
+    local width = heat.jetStart * (heat.deltaT / visibleRise) ^ (1 / config.EGT.DILUTION_EXPONENT)
+    local profile = heat.jetProfile
+    local widths = profile.widths
+    local index = 2
+    while index < #widths and widths[index] < width do
+        index = index + 1
+    end
+    heat.lifespan = (index - 2 + math.min((width - widths[index - 1]) / (widths[index] - widths[index - 1]), 1)) * profile.stepMs
+    heat.sizeGain = getGrowthFit(heat, clamp(heat.lifespan * puffConfig.GROWTH_FIT_SHARE, puffConfig.GROWTH_FIT_LEVEL_MIN_MS,
+        puffConfig.GROWTH_FIT_MAX_MS))
+    updateThinning(heat)
+end
+
+---Emits the puffs a layer owes this frame, returning how many
+-- @param table state smoke state
+-- @param table plume plume
+-- @param table layer puff layer
+-- @param table emission emission of the layer
+-- @param float dt time since the last frame (ms)
+-- @return integer spawned puffs spawned
+local function emitPuffs(state, plume, layer, emission, dt)
+    local shouldEmit = emission.isVisible and getEffectiveVisibility(plume.linkNode)
+    if layer.isEmitting ~= shouldEmit then
+        layer.isEmitting = shouldEmit
+        layer.emissionAccumulator = shouldEmit and math.max(layer.emissionAccumulator, 1) or 0
+    end
+    if not shouldEmit then
+        return 0
+    end
+
+    layer.emissionAccumulator = layer.emissionAccumulator + emission.rate * math.min(dt, 100) / 1000
+    local spawnCount = math.floor(layer.emissionAccumulator)
+    layer.emissionAccumulator = layer.emissionAccumulator - spawnCount
+    local interval = 1000 / emission.rate
+    local spawned = 0
+    for index = 1, spawnCount do
+        local ageOffset = math.min((spawnCount - index + layer.emissionAccumulator) * interval, dt)
+        if spawnPuff(state, plume, layer, emission, ageOffset) then
+            layer.activePuffs = layer.activePuffs + 1
+            spawned = spawned + 1
+        else
+            layer.emissionAccumulator = 0
+            break
+        end
+    end
+
+    return spawned
+end
+
+---Emits the heat puffs of every plume
+-- @param table state smoke state
+-- @param float dt time since the last frame (ms)
+local function emitHeat(state, dt)
+    updateHeatEmission(state)
+    for _, plume in ipairs(state.plumes) do
+        state.activeHeatPuffs = state.activeHeatPuffs + emitPuffs(state, plume, plume.heat, state.heatEmission, dt)
+    end
+end
+
+---Updates the temperature of the exhaust line
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param float dt time since the last frame (ms)
+-- @param boolean isMotorStarted true while the engine smokes
+-- @param float flow gas flow, 0 to 1
+local function updateLineTemperature(vehicle, state, dt, isMotorStarted, flow)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local ambient = RMS_Utils.getAmbientTemperature()
+    local isRegenerating = spec.fuelState.isParticulateFilterRegenerating
+    local worldTime = RMS_Thermal.getWorldTimeMS()
+    local stoppedDt = dt
+    if state.lineWorldTime ~= nil then
+        stoppedDt = math.max(worldTime - state.lineWorldTime, 0)
+    end
+    state.lineWorldTime = worldTime
+    state.ambientC = ambient
+
+    if state.gasTemperature == nil then
+        -- an engine first seen running has been running for a while
+        state.gasTemperature = vehicle:getMotorState() == MotorState.ON
+            and RMS_Exhaust.getLineInletTemperature(state.load, ambient, isRegenerating) or ambient
+    end
+    state.gasTemperature = RMS_Exhaust.calculateLineTemperature({
+        currentTemperature = state.gasTemperature,
+        ambientTemperature = ambient,
+        isMotorStarted = isMotorStarted,
+        load = state.load,
+        flow = flow,
+        isRegenerating = isRegenerating,
+        dt = dt,
+        stoppedDt = stoppedDt
+    })
+end
+
+---Returns the rise over the air of the air a stopped line heats
+-- @param table state smoke state
+-- @param float lineTemperature temperature of the line (deg C)
+-- @return float rise rise (K)
+local function getConvectionRise(state, lineTemperature)
+    return math.max(lineTemperature - state.ambientC, 0) * RMS_Config.EXHAUST.HEAT.CONVECTION_SHARE
+end
+
+---Tells whether a stopped machine shimmers in sight of the camera
+-- @param table vehicle vehicle
+-- @return boolean isInSight true when it shimmers in sight
+function RMS_Exhaust.getIsStoppedHeatInSight(vehicle)
+    local state = vehicle.spec_RealisticMechanicalSystems.exhaustSmoke
+    if state.gasTemperature == nil or RMS_Exhaust.plumeSources.heatNode == nil then
+        return false
+    end
+
+    state.cameraX, state.cameraY, state.cameraZ = getWorldTranslation(getCamera())
+    if not getIsHeatInSight(state) then
+        return false
+    end
+
+    local worldTime = RMS_Thermal.getWorldTimeMS()
+    local stoppedDt = 0
+    if state.lineWorldTime ~= nil then
+        stoppedDt = math.max(worldTime - state.lineWorldTime, 0)
+    end
+
+    local lineTemperature = RMS_Exhaust.calculateLineTemperature({
+        currentTemperature = state.gasTemperature,
+        ambientTemperature = state.ambientC,
+        isMotorStarted = false,
+        stoppedDt = stoppedDt
+    })
+    return RMS_Exhaust.getHeatDeflection(getConvectionRise(state, lineTemperature), state.ambientC) > RMS_Config.EXHAUST.HEAT.MIN_DEFLECTION
+end
+
+---Emits the air the line of a stopped engine heats, rising from the outlet
+-- @param table vehicle vehicle
+-- @param table state smoke state
+-- @param float dt time since the last frame (ms)
+-- @return boolean isVisible true while the heat shows
+local function emitConvection(vehicle, state, dt)
+    local deltaT = getConvectionRise(state, state.gasTemperature)
+    state.heatDeflection = RMS_Exhaust.getHeatDeflection(deltaT, state.ambientC)
+    if not (state.heatDeflection > RMS_Config.EXHAUST.HEAT.MIN_DEFLECTION and getIsHeatInSight(state)) then
+        return false
+    end
+
+    -- speed the lighter air gains while it rises by one pipe diameter
+    local speed = math.sqrt(9.81 * deltaT / (state.ambientC + 273.15 + deltaT) * getPipeDiameter(vehicle))
+    updateJet(vehicle, state, state.emission, speed, deltaT, dt)
+    emitHeat(state, dt)
+
+    return state.heatEmission.isVisible
+end
+
+---Drives the smoke and heat puffs of the plume
+-- @param table vehicle vehicle
+-- @param float dt time since the last frame (ms)
 function RMS_Exhaust.applyShader(vehicle, dt)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local state = spec.exhaustSmoke
-    dt = getNumber(dt, 0, 0)
     updatePuffPools(vehicle, state, dt)
 
-    local isSmoking = state.isActive and state.plumes ~= nil and getIsSmokeRendered(vehicle)
-    if (isSmoking or state.activePuffs > 0) and vehicle.raiseActive ~= nil then
+    if state.plumes == nil then
+        return
+    end
+
+    local config = RMS_Config.EXHAUST
+    local hasHeat = RMS_Exhaust.plumeSources.heatNode ~= nil
+    local isSmoking = state.isActive and getIsSmokeRendered(vehicle)
+    local flowScale = isSmoking and getFlow(vehicle, state) or 0
+    updateLineTemperature(vehicle, state, dt, isSmoking, flowScale)
+
+    local isConvecting = not isSmoking and hasHeat and emitConvection(vehicle, state, dt)
+    if (isSmoking or isConvecting or state.activePuffs > 0 or state.activeHeatPuffs > 0) then
         vehicle:raiseActive()
     end
 
@@ -2104,11 +2726,9 @@ function RMS_Exhaust.applyShader(vehicle, dt)
         return
     end
 
-    local config = RMS_Config.EXHAUST
     state.burst = state.burst * math.exp(-dt / config.BURST_DECAY_TAU)
     if state.burst < 0.001 then
         state.burst = 0
-        state.burstCause = nil
     end
     state.burstRefractory = math.max(state.burstRefractory - dt, 0)
 
@@ -2125,14 +2745,6 @@ function RMS_Exhaust.applyShader(vehicle, dt)
 
     local opacity = getOpacity(state.soot, state.oil, state.unburnt)
     local vapour = state.vapour
-    local flowScale = getFlow(vehicle, state)
-
-    local override = RMS_Exhaust.override
-    if override ~= nil then
-        opacity = override.opacity or opacity
-        flowScale = override.flow or flowScale
-        vapour = override.vapour or vapour
-    end
     state.opacity = opacity
 
     state.tuneTimer = state.tuneTimer + dt
@@ -2143,39 +2755,15 @@ function RMS_Exhaust.applyShader(vehicle, dt)
 
     local burst = state.burst * opacity
     local emission = updateEmission(vehicle, state, opacity, vapour, flowScale, burst, dt)
-    if override ~= nil and override.opacity ~= nil and state.soot + state.oil + state.unburnt < 0.01 then
-        emission.red, emission.green, emission.blue = unpack(config.SOOT_TINT)
-    end
-    local canEmit = emission.isVisible and emission.rate > 0
-
     for _, plume in ipairs(state.plumes) do
-        local shouldEmit = canEmit and getEffectiveVisibility(plume.linkNode)
-        if plume.isEmitting ~= shouldEmit then
-            plume.isEmitting = shouldEmit
-            plume.emissionAccumulator = shouldEmit and math.max(plume.emissionAccumulator, 1) or 0
-        end
+        state.activePuffs = state.activePuffs + emitPuffs(state, plume, plume, emission, dt)
+    end
 
-        if shouldEmit then
-            plume.emissionAccumulator = plume.emissionAccumulator + emission.rate * math.min(dt, 100) / 1000
-            local spawnCount = math.floor(plume.emissionAccumulator)
-            plume.emissionAccumulator = plume.emissionAccumulator - spawnCount
-            local interval = 1000 / emission.rate
-            for index = 1, spawnCount do
-                local ageOffset = math.min((spawnCount - index + plume.emissionAccumulator) * interval, dt)
-                if spawnPuff(state, plume, emission, ageOffset) then
-                    plume.activePuffs = plume.activePuffs + 1
-                    state.activePuffs = state.activePuffs + 1
-                else
-                    plume.emissionAccumulator = 0
-                    break
-                end
-            end
-        end
+    if hasHeat then
+        emitHeat(state, dt)
     end
 
     state.vapourOpacity = 1 - math.exp(-vapour)
-    state.gasTemperature = state.ambientC + emission.deltaT
     state.exitSpeed = emission.speed
     state.windSpeed = emission.windSpeed
-    state.isOverridden = override ~= nil
 end

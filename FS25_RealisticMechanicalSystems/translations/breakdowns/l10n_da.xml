@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Effekttab"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Ude af drift"/>
         <text name="rms_breakdowns_severity_minor" text="Mindre"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
         <text name="rms_breakdowns_severity_major" text="Alvorlig"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overophedningsbeskyttelse: effekt reduceret"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overophedningsbeskyttelsen griber hårdere ind. Motoren leverer kun halvdelen af sin effekt."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overophedningsbeskyttelse: effekt halveret"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overophedningsbeskyttelsen er på sit højeste. Der er kun en brøkdel af motoreffekten tilbage."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overophedningsbeskyttelse: effekt stærkt reduceret"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motoren er blevet standset for at undgå skader. Lad den køle af, før du starter igen."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overophedningsbeskyttelse: motoren standset"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Let fejlfunktion i oliepumpen. Olietrykket er lavere, motormomentet falder en smule, motortemperaturen stiger, og der kan opstå mekaniske bankelyde."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderat fejlfunktion i oliepumpen. Olietrykket er utilstrækkeligt, motormomentet falder tydeligt, motortemperaturen stiger, og de mekaniske bankelyde er klart hørbare."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Alvorlig fejlfunktion i oliepumpen. Olietrykket er kritisk, motormomentet falder kraftigt, overophedning er sandsynlig, bankelydene er voldsomme, og motoren kan gå i stå."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritisk svigt i oliepumpen. Oliecirkulationen er utilstrækkelig til sikker drift af motoren, og hverken start eller videre drift er mulig."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motoren har sat sig fast og kan ikke længere dreje rundt."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motoren gik i stå"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Let fejlfunktion i ECU'en. Motoreffekten er en smule reduceret."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderat fejlfunktion i ECU'en. Mærkbart effekttab og øget brændstofforbrug."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Svigt i betjeningen af differentialespærren. Spærren bliver indkoblet. Maskinen modarbejder styringen i sving."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drivremme og variatorer"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drivlejer og gearkasser"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Skærebordets drivrem"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Skærebordets friktionskobling"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Skærebordets kardanaksel og krydsled"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Indføringskanalens kæde"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Indføringsaccelerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Slaglister"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderat slid på drivlejerne. Brummen høres tydeligt, og de bliver varme."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Alvorligt slid på drivlejerne. Brummen tager til, og akslerne får slør."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritisk svigt i drivlejerne. Et leje er skåret fast: høst er umulig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Begyndende slid på skærebordets drivrem. Den hviner og glider lidt, mens skærebordet kører."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Moderat slid på skærebordets drivrem. Den hviner højere, og omdrejningsalarmen stopper af og til høsten."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Alvorligt slid på skærebordets drivrem. Den hviner højt, gennemløbet falder, og stoppene gentager sig."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritisk svigt i skærebordets drivrem. Den er knækket: skærebordet drives ikke længere, høst er umulig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Begyndende slid på skærebordets friktionskobling. Den glider lidt under belastning."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Moderat slid på skærebordets friktionskobling. Den glider under normal belastning, og omdrejningsalarmen stopper af og til høsten."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Alvorligt slid på skærebordets friktionskobling. Den glider og bliver varm, gennemløbet falder, og stoppene gentager sig."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritisk svigt i skærebordets friktionskobling. Den overfører ikke længere noget: skærebordet står stille, høst er umulig."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Begyndende slid på krydsleddene i skærebordets kardanaksel. Der opstår en svag brummen, mens skærebordet kører."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Moderat slid på krydsleddene i skærebordets kardanaksel. Brummen er tydeligt hørbar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Alvorligt slid på krydsleddene i skærebordets kardanaksel. Brummen tager til, og leddene får slør."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritisk svigt i skærebordets kardanaksel. Et krydsled er knækket: skærebordet drives ikke længere, høst er umulig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Begyndende slid på indføringskanalens kæde. Den strækker sig, og indføringen bliver ujævn."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderat slid på indføringskanalens kæde. Der opstår tilstopninger ved indgangen til indføringskanalen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Alvorligt slid på indføringskanalens kæde. Den springer på tandhjulene, og tilstopningerne bliver ved."/>

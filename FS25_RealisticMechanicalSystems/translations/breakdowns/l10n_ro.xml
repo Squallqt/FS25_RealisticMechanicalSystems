@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Pierdere de putere"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Scos din funcțiune"/>
         <text name="rms_breakdowns_severity_minor" text="Minor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderat"/>
         <text name="rms_breakdowns_severity_major" text="Major"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protecție la supraîncălzire: putere redusă"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Protecția la supraîncălzire se intensifică. Motorul mai furnizează doar jumătate din putere."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protecție la supraîncălzire: putere redusă la jumătate"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Protecția la supraîncălzire este la nivel maxim. A mai rămas doar o fracțiune din puterea motorului."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protecție la supraîncălzire: putere mult redusă"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motorul a fost oprit pentru a preveni deteriorarea. Lasă-l să se răcească înainte de a-l reporni."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protecție la supraîncălzire: motor oprit"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Defecțiune ușoară a pompei de ulei. Presiunea uleiului este redusă, cuplul motor scade ușor, temperatura motorului crește și pot apărea bătăi mecanice."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Defecțiune moderată a pompei de ulei. Presiunea uleiului este insuficientă, cuplul motor scade vizibil, temperatura motorului crește, iar bătăile mecanice sunt clar audibile."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Defecțiune gravă a pompei de ulei. Presiunea uleiului este critică, cuplul motor scade puternic, supraîncălzirea este probabilă, bătăile mecanice sunt puternice și motorul se poate opri."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Defecțiune critică a pompei de ulei. Circulația uleiului este insuficientă pentru funcționarea motorului în siguranță, iar pornirea sau continuarea funcționării este imposibilă."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motorul s-a gripat și nu se mai poate roti."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor oprit"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Defecțiune ușoară a ECU. Puterea motorului este ușor redusă."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Defecțiune moderată a ECU. Pierdere vizibilă de putere și consum crescut de combustibil."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Defecțiune a comenzii blocării diferențialului. Blocarea rămâne cuplată. Utilajul se opune virării."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Curele de transmisie și variatoare"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rulmenți și cutii de transmisie"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Cureaua de cuplare a hederului"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitatorul de cuplu al hederului"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Arborele cardanic și crucile hederului"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Lanțul canalului de alimentare"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Accelerator de alimentare"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Barele bătătorului"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Uzură moderată a rulmenților de transmisie. Zgomotul se aude clar, iar rulmenții se încălzesc."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Uzură gravă a rulmenților de transmisie. Zgomotul crește, iar arborii capătă joc."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Defecțiune critică a rulmenților de transmisie. Un rulment s-a gripat: recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Uzură incipientă a curelei de cuplare a hederului. Scârțâie și patinează puțin cât timp hederul se rotește."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Uzură moderată a curelei de cuplare a hederului. Scârțâie mai tare, iar alarma de turație oprește uneori recoltarea."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Uzură gravă a curelei de cuplare a hederului. Scârțâie puternic, debitul scade, iar opririle se repetă."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Defecțiune critică a curelei de cuplare a hederului. S-a rupt: hederul nu mai este antrenat, recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Uzură incipientă a limitatorului de cuplu al hederului. Patinează puțin sub sarcină."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Uzură moderată a limitatorului de cuplu al hederului. Patinează sub sarcina normală, iar alarma de turație oprește uneori recoltarea."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Uzură gravă a limitatorului de cuplu al hederului. Patinează și se încinge, debitul scade, iar opririle se repetă."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Defecțiune critică a limitatorului de cuplu al hederului. Nu mai transmite nimic: hederul stă, recoltarea este imposibilă."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Uzură incipientă a crucilor arborelui cardanic al hederului. Apare un ușor zgomot surd cât timp hederul se rotește."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Uzură moderată a crucilor arborelui cardanic al hederului. Zgomotul se aude clar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Uzură gravă a crucilor arborelui cardanic al hederului. Zgomotul crește, iar crucile capătă joc."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Defecțiune critică a arborelui cardanic al hederului. O cruce s-a rupt: hederul nu mai este antrenat, recoltarea este imposibilă."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Uzură incipientă a lanțului canalului de alimentare. Se alungește, iar alimentarea devine neregulată."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Uzură moderată a lanțului canalului de alimentare. La intrarea canalului se formează înfundări."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Uzură gravă a lanțului canalului de alimentare. Sare pe pinioane, iar înfundările revin mereu."/>

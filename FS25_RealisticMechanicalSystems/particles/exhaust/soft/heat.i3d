@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="heat" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="$data/effects/smoke/smoke6x6_diffuse.png"/>
+    <File fileId="2" filename="heatShader.xml"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="emitShape_mat" materialId="1" diffuseColor="1 1 1 1">
+    </Material>
+    <Material name="heat_mat" materialId="2" alphaBlending="true" customShaderId="2">
+      <Refractionmap type="planar" coeff="1" bumpScale="0.1"/>
+      <Texture fileId="1"/>
+      <CustomParameter name="heat" value="0 0 0 0"/>
+      <CustomParameter name="heatOutlet" value="0 0 0 0"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="plume.i3d.shapes">
+  </Shapes>
+
+
+  <Dynamics>
+    <ParticleSystem name="heatEmitter" dynamicId="1" type="sprite" rate="0.04" lifespan="3200" maxCount="1" speed="0" speedRandom="0" tangentSpeed="0" normalSpeed="1" damping="0" spriteScaleX="0.042" spriteScaleY="0.042" spriteScaleXGain="0.0009" spriteScaleYGain="0.0009" blendFactor="1" blendInFactor="0" blendOutFactor="0" depthSort="true" randomInitRotation="false" deltaRotateMax="0" textureAtlasSizeX="1" textureAtlasSizeY="1">
+      <Gravity force="0 0 0"/>
+    </ParticleSystem>
+  </Dynamics>
+
+  <Scene>
+    <Dynamic name="heatEmitter" dynamicId="1" emitterShapeNodeId="9" clipDistance="80" nodeId="8" castsShadows="false" receiveShadows="false" distanceBlending="false" materialIds="2">
+      <Shape name="emitShape" shapeId="2" nodeId="9" castsShadows="false" receiveShadows="false" nonRenderable="true" materialIds="1"/>
+    </Dynamic>
+  </Scene>
+
+</i3D>

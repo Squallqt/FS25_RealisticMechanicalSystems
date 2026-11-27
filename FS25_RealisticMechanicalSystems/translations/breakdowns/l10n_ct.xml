@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="永久"/>
         <text name="rms_breakdowns_severity_reduce_power" text="功率損失"/>
-        <text name="rms_breakdowns_severity_shutdown" text="停止運作"/>
         <text name="rms_breakdowns_severity_minor" text="輕微"/>
         <text name="rms_breakdowns_severity_moderate" text="中等"/>
         <text name="rms_breakdowns_severity_major" text="嚴重"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="過熱保護：功率降低"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="過熱保護進一步加強。發動機只能輸出一半功率。"/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="過熱保護：功率減半"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="過熱保護已達到最大強度。發動機只剩一小部分功率。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="過熱保護：功率大幅降低"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="為防止損壞，發動機已關閉。請等待發動機冷卻後再重新啟動。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="過熱保護：發動機已關閉"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="機油泵發生輕微故障。機油壓力降低，發動機扭矩略有下降，發動機溫度升高，並可能出現機械撞擊聲。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="機油泵發生中度故障。機油壓力不足，發動機扭矩明顯下降，發動機溫度升高，並能清楚聽到機械撞擊聲。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="機油泵發生嚴重故障。機油壓力降至不安全水準，發動機扭矩大幅下降，很可能過熱，機械撞擊嚴重，並可能停止運轉。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="機油泵發生極重度失效。機油循環不足以保證發動機安全運作，無法啟動或繼續運作。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="發動機已抱死，無法繼續轉動。"/>
         <text name="rms_breakdowns_engine_stalled_message" text="發動機停止運轉"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU發生輕微故障。發動機功率略有降低。"/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU發生中度故障。功率明顯下降，燃油消耗增加。"/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="差速鎖控制裝置失效。差速鎖無法解除，機具轉彎時轉向受阻。"/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="傳動帶和無級變速器"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="傳動軸承和齒輪箱"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="割台驅動皮帶"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="割台安全離合器"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="割台傳動軸和十字軸"/>
         <text name="rms_breakdowns_part_feeder_chain" text="過橋輸送鏈"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="餵入加速器"/>
         <text name="rms_breakdowns_part_threshing_bars" text="紋桿"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="部件傳動軸承中度磨損。噪音清晰可聞，軸承發熱。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="部件傳動軸承嚴重磨損。噪音加劇，軸出現間隙。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="部件傳動軸承發生極重度失效。一個軸承卡死：無法收穫。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="割台驅動皮帶開始磨損。割台運轉時皮帶發出尖叫並略有打滑。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="割台驅動皮帶中度磨損。尖叫聲更大，轉速報警有時會停止收穫。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="割台驅動皮帶嚴重磨損。尖叫聲很大，餵入量下降，停機反覆出現。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="割台驅動皮帶發生極重度失效。皮帶已斷裂：割台不再被驅動，無法收穫。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="割台安全離合器開始磨損。負載時略有打滑。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="割台安全離合器中度磨損。正常負載下也會打滑，轉速報警有時會停止收穫。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="割台安全離合器嚴重磨損。打滑並發熱，餵入量下降，停機反覆出現。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="割台安全離合器發生極重度失效。它已無法傳送任何動力：割台停轉，無法收穫。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="割台傳動軸十字軸開始磨損。割台運轉時出現輕微噪音。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="割台傳動軸十字軸中度磨損。噪音清晰可聞。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="割台傳動軸十字軸嚴重磨損。噪音加劇，十字軸出現間隙。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="割台傳動軸發生極重度失效。一個十字軸已斷裂：割台不再被驅動，無法收穫。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="過橋輸送鏈開始磨損。鏈條伸長，餵入變得不均勻。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="過橋輸送鏈中度磨損。過橋入口處出現堵塞。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="過橋輸送鏈嚴重磨損。鏈條在鏈輪上跳齒，堵塞反覆發生。"/>

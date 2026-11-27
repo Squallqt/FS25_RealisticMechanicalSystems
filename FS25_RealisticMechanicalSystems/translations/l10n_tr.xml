@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Araç"/>
         <text name="rms_hud_mass_towed" text="Bağlı"/>
         <text name="rms_hud_mass_total" text="Toplam"/>
+        <text name="rms_hud_fuel_average" text="Ort."/>
+        <text name="rms_hud_unit_perHour" text="/sa"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="OTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (ön aks devre dışı)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (ön aks devrede)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD OTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Aracı kontrol et"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="Tamam"/>
         <text name="input_RMS_TOGGLE_4WD" text="Çekiş modu"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Diferansiyel kilidi"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Park freni"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Atölyedeki mekanik revizyonların, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
         <text name="rms_instantRemap_label" text="Anında Motor Yazılımı"/>
         <text name="rms_instantRemap_tooltip" text="Motor yazılımının ve fabrika yazılımına dönüşün, devam edenler dahil, anında tamamlanıp tamamlanmayacağını belirler."/>
-        <text name="rms_debugMode_label" text="Hata Ayıklama Modu"/>
-        <text name="rms_debugMode_tooltip" text="Sürülen makinede hata ayıklama penceresinin gösterilip gösterilmeyeceğini ve konsola ayrıntılı günlük gönderilip gönderilmeyeceğini belirler. %s tuşu pencereyi açıp kapatır; çok oyunculuda yalnızca yöneticiler görür."/>
+        <text name="rms_debugWindow_label" text="Hata Ayıklama Penceresi"/>
+        <text name="rms_debugWindow_tooltip" text="Sürülen makinede hata ayıklama penceresinin gösterilip gösterilmeyeceğini belirler. %s tuşu da pencereyi açar; çok oyunculuda yalnızca yöneticiler görür."/>
+        <text name="rms_debugLog_label" text="Ayrıntılı Günlük"/>
+        <text name="rms_debugLog_tooltip" text="Hata ayıklama penceresi açılmadan konsola RMS'nin ayrıntılı günlüklerinin gönderilip gönderilmeyeceğini belirler; bunlar bir hata raporuna eklenebilir."/>
         <text name="rms_warningMessages_label" text="Uyarı Mesajları"/>
         <text name="rms_warningMessages_tooltip" text="Soğuk motor veya aşırı ısınma gibi uyarıların gösterilip gösterilmeyeceğini belirler. Sıcaklığa bağlı güç sınırlama mesajları her zaman gösterilir."/>
         <text name="rms_serviceInterval_label" text="Bakımlar arası süre"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Aracın durumunun %0'a ulaştığı çalışma saatini belirler; bu sınıra yaklaştıkça araç daha az güvenilir olur ve değeri düşer. Değişiklik o andan itibaren geçerlidir: araçlar durumlarını korur, yalnızca değerleri yeniden hesaplanır."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Egzoz Dumanı"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Egzoz dumanının motorun gerçek durumunu izleyip izlemeyeceğini belirler: hava eksikliğinde siyah, yağ yakarken mavi, yakıt yanmadan çıkarken beyaz, yük altında daha yoğun. Eski makineler modern olanlardan çok daha fazla duman çıkarır."/>
-        <text name="rms_tutorialMode_label" text="Eğitim Modu"/>
-        <text name="rms_tutorialMode_tooltip" text="Oyun sırasında eğitim ipuçlarının gösterilip gösterilmeyeceğini belirler."/>
-        <text name="rms_tutorialResetTips_label" text="İpuçlarını Sıfırla"/>
-        <text name="rms_tutorialResetTips_text" text="Sıfırla"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Eğitim ipuçlarının geçmişini sıfırlar: tüm ipuçları yeniden gösterilir."/>
-        <text name="rms_tutorialResetConfirm_title" text="Öğretici İpuçlarını Sıfırla?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Öğretici ipucu geçmişini sıfırlayıp tüm ipuçlarını yeniden göstermek istiyor musun?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD / Diferansiyel Kilidi Yönetimi"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Traktörlerin ön aksı ve diferansiyel kilitlerinin elle kontrol edilip edilmeyeceğini belirler. Bu seçenek Enhanced Vehicle'ın diferansiyel yönetiminin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde diferansiyelleri yeniden aç."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="OTO Moduna İzin Ver"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Seçicide AUTO konumu sunulup sunulmayacağını belirler; bu konum patinajda veya yük altında çalışırken ön aksı devreye alır, yolda çıkarır. Seçenek kapatıldığında AUTO'da bırakılan araçlar 4WD'ye döner."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Bu ayar, 4WD / Diferansiyel Kilidi Yönetiminin açık olmasını gerektirir."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="El Freni"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="İzlenen araçlarda el freni olup olmayacağını belirler: yeni CVT veya Powershift makinelerde otomatik, diğerlerinde kendi tuşuyla. Seçenek Enhanced Vehicle'ın el freninin yerini alır: geri vermek için seçeneği kapat, ardından onun menüsünde el frenini yeniden aç."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Bakım Kaydı"/>
         <text name="rms_ws_label_last_maintenance" text="Son Bakım"/>
         <text name="rms_ws_task_inspection" text="Muayene"/>
-        <text name="rms_ws_task_maintenance" text="Bakım"/>
         <text name="rms_ws_task_overhaul" text="Revizyon"/>
         <text name="rms_ws_info_no_breakdowns" text="Tespit edilmiş arıza yok. Muayene ya da bakım, makinenin henüz göstermediği arızaları tespit eder."/>
         <text name="rms_ws_info_warning_unidentified" text="Uyarı lambası yanıyor: tespit edilecek arıza. Muayene ya da bakım onu tespit eder, ardından onarılabilir."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Bir arabanın teşhis cihazını makineye bağla."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronik teşhis gerekli"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Söküm veya özel aletler gerekli"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim ekipmanı gerekli"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Yüksek gerilim yetkili teknisyen gerekli"/>
         <text name="rms_ws_status_in_progress_format" text="%s devam ediyor; bitiş: %s"/>
         <text name="rms_ws_status_open" text="Atölye açık"/>
         <text name="rms_ws_status_closed" text="Atölye kapalıdır"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Açıklama"/>
         <text name="rms_log_button_show_report" text="Raporu Göster"/>
         <text name="rms_log_empty" text="Henüz kayıt yok"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Isıl koruma: güç sınırlaması kaldırıldı"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue seviyesi düşük: AdBlue doldurun."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue seviyesi çok düşük: AdBlue doldurun."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue seviyesi çok düşük: motor gücü düşürüldü. AdBlue doldurun."/>
+        <text name="rms_adblue_empty_message" text="AdBlue tankı boş: AdBlue doldurun."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue tankı boş: motor gücü büyük ölçüde düşürüldü. AdBlue doldurun."/>
+        <text name="rms_adblue_restored_message" text="AdBlue dolduruldu: motor gücü geri geldi."/>
         <text name="rms_breakdown_at_progress_message" text="devam ediyor"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Dikkat! Motor soğuk: ısınana kadar aşınır."/>
         <text name="rms_spec_overheat_engine_message" text="Uyarı! Motor aşırı ısınmış."/>
         <text name="rms_spec_overheat_transmission_message" text="Uyarı! Şanzıman aşırı ısınıyor."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motor Yazılımı"/>
         <text name="rms_spec_state_overdue" text="Vadesi Geçmiş"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Arızalı"/>
         <text name="rms_spec_state_bad" text="Kötü"/>
         <text name="rms_spec_state_excellent" text="Mükemmel"/>
         <text name="rms_spec_state_good" text="İyi"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="kilit veya 4WD sert zeminde"/>
         <text name="rms_warranty_filter" text="tıkalı filtre"/>
         <text name="rms_warranty_oil" text="uygun olmayan motor yağı"/>
+        <text name="rms_warranty_header_engagement" text="tabla rölantinin üstünde devreye alındı"/>
         <text name="rms_warranty_trailer" text="römork çok ağır"/>
         <text name="rms_warranty_aftermarket_part" text="yan sanayi parça"/>
         <text name="rms_warranty_used_part" text="kullanılmış parça"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Gözle kontrol ve işlev testi"/>
         <text name="rms_ws_inspection_electronic" text="Elektronik Arızalar"/>
         <text name="rms_ws_inspection_electronic_detail" text="Arıza kodları teşhis cihazıyla okunur"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrik Arızaları"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Devreler multimetreyle kontrol edilir"/>
         <text name="rms_ws_inspection_dormant" text="Gizli Kusurlar"/>
         <text name="rms_ws_inspection_dormant_detail" text="Kusurlu parça, geçici onarım"/>
         <text name="rms_ws_inspection_report" text="Rapor"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Akünün Aşırı Isınması"/>
         <text name="rms_report_wear_lubrication" text="Geciken Gresleme"/>
         <text name="rms_report_wear_pto_overload" text="Kuyruk Milinin Aşırı Yüklenmesi"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardan Açısı"/>
         <text name="rms_report_wear_harvest_overload" text="Hasat aşırı yükü"/>
         <text name="rms_report_wear_harvest_flow" text="Yüksek tane akışı"/>
         <text name="rms_report_wear_harvest_straw" text="Saman parçalayıcı aşırı yükü"/>
         <text name="rms_report_wear_harvest_stones" text="Taşlar"/>
         <text name="rms_report_wear_harvest_rice" text="Pirinç hasadı"/>
         <text name="rms_report_wear_harvest_wet" text="Nemli ürün"/>
+        <text name="rms_report_wear_header_starts" text="Tabla Çalıştırmaları"/>
+        <text name="rms_report_wear_service_overdue" text="Bakım Aralığı Aşıldı"/>
+        <text name="rms_report_wear_engine_overload" text="Motorun Aşırı Yüklenmesi"/>
+        <text name="rms_report_wear_cold_engine" text="Soğuk Motor"/>
+        <text name="rms_report_wear_fluid_level" text="Sıvı Seviyesi Düşük"/>
+        <text name="rms_report_wear_engine_overheat" text="Motorun Aşırı Isınması"/>
+        <text name="rms_report_wear_lugging" text="Düşük Devirde Zorlanma"/>
+        <text name="rms_report_wear_wheel_slip" text="Tekerlek Patinajı"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Aktarma Organları Gerilimi"/>
+        <text name="rms_report_wear_cold_oil" text="Soğuk Şanzıman Yağı"/>
+        <text name="rms_report_wear_transmission_overheat" text="Şanzımanın Aşırı Isınması"/>
+        <text name="rms_report_wear_wet_weather" text="Nemli Hava"/>
+        <text name="rms_report_wear_cranking" text="Sık Marş Verme"/>
+        <text name="rms_report_wear_starter_heat" text="Marş Motorunun Aşırı Isınması"/>
+        <text name="rms_report_wear_steering" text="Dururken Direksiyon Kullanımı"/>
+        <text name="rms_report_wear_park_brake" text="El Freni"/>
+        <text name="rms_report_wear_low_fuel" text="Yakıt Rezervi"/>
+        <text name="rms_report_wear_idle_deposit" text="Uzun Süreli Rölanti"/>
+        <text name="rms_report_wear_pto_engagement" text="Kuyruk Mili Devreye Alma"/>
         <text name="rms_report_component_title" text="Bileşen"/>
         <text name="rms_report_system_condition_transmission" text="Şanzıman"/>
         <text name="rms_report_system_condition_power" text="Mevcut Güç"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Sınırlı oran aralığı"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Düzensiz Güç Aktarımı"/>
         <text name="rms_report_transmission_failed" text="Arızalı"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Gres Tabancası"/>
         <text name="rms_grease_gun_no_vehicle" text="Gresleme menzilinde araç yok"/>
         <text name="rms_grease_gun_function" text="Makinelerin gresörlüklerini gresler. Gres kartuşuyla doldurulur."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motor yağı, AdBlue ve partikül filtresi olmayan makineler için"/>
         <text name="rms_fluid_function_utto" text="Manuel takviye için şanzıman ve hidrolik yağı"/>
         <text name="rms_fluid_function_coolant" text="Manuel soğutma sıvısı takviyesi için"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue deposu olan makineler için AdBlue"/>
         <text name="rms_fluid_pour_action" text="Ekle: %s"/>
         <text name="rms_fluid_level_done" text="Seviye Tamamlandı"/>
         <text name="rms_fluid_container_empty" text="Bidon Boş"/>
         <text name="rms_fluid_drum_empty" text="Varil Boş"/>
+        <text name="rms_fluid_tank_empty" text="Tank Boş"/>
         <text name="rms_fluid_container_label" text="Bidon"/>
         <text name="rms_fluid_drum_label" text="Varil"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Eklemek İçin Al"/>
         <text name="rms_fluid_hand_carry" text="Bidonu Taşı"/>
         <text name="rms_drum_pump_name" text="Akülü Varil Pompası"/>
-        <text name="rms_drum_pump_function" text="200 L varile takılır ve makineleri tabancasıyla doldurur"/>
+        <text name="rms_drum_pump_function" text="Varile veya tanka takılır ve makineleri tabancasıyla doldurur"/>
         <text name="rms_drum_pump_mount" text="Varile Tak"/>
+        <text name="rms_drum_pump_mount_tank" text="Tanka Tak"/>
         <text name="rms_drum_pump_take" text="Pompayı Geri Al"/>
         <text name="rms_drum_pump_nozzle_take" text="Tabancayı Al"/>
         <text name="rms_drum_pump_nozzle_return" text="Tabancayı As"/>
         <text name="rms_drum_pump_hose_range" text="Pompanın hortumu daha ileri gitmenizi engelliyor.&#10;Tabanca %.1f m sonra yerine asılacak!"/>
         <text name="rms_drum_pump_machine_too_far" text="Varili yaklaştırın: hortum 4 m uzunluğunda"/>
+        <text name="rms_drum_pump_tank_too_far" text="Tankı yaklaştırın: hortum 4 m uzunluğunda"/>
         <text name="rms_drum_pump_required" text="Varil Pompası Gerekli"/>
         <text name="rms_fluid_level_under_gauge" text="Ölçeğin Altında"/>
         <text name="rms_fluid_circuit_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_circuit_coolant" text="Soğutma Sıvısı"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue Deposu"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Şanzıman Yağı"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hidrolik Yağı"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Şanzıman ve Hidrolik Yağı"/>
         <text name="rms_fluid_hud_engineOil" text="Motor Yağı"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Şanz./Hidrolik Yağı"/>
         <text name="rms_fluid_hud_coolant" text="Soğutma Sıvısı"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Uyumsuz Sıvı"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, motor aşınmasını 3 katına kadar çıkarabilir ve motorun ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, soğutma sistemi aşınmasını 3 katına kadar çıkarabilir ve motorun ısınmasını artırabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, hidrolik aşınmasını 3 katına kadar çıkarabilir, hidroliğin ısınmasını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Bu ürün bu devre için uygun değil. Devreyi kirletir, şanzıman ve hidrolik aşınmasını 3 katına kadar çıkarabilir, ısınmalarını artırabilir ve hidroliği yavaşlatabilir. Kirlenmeyi yalnızca tam sıvı değişimi giderir. Devam edilsin mi?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Uygun Olmayan Motor Yağı"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: kullanım kılavuzu bunlar için yapılmış bir yağ istiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Bu motor AdBlue kullanıyor veya partikül filtresine sahip: bunlar için yapılmış bir yağ gerekiyor. Bu yağla yağ değişimi iki kata kadar daha erken gelir. Partikül filtresi de 1,5 kat daha hızlı külle dolar. Devam edilsin mi?"/>
         <text name="rms_fluid_error_no_circuit" text="Bu araç için sıvı takviyesi gerekmiyor"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Bu aracın AdBlue deposu yok"/>
         <text name="rms_fluid_error_motor_running" text="Sıvı aktarmadan önce motoru durdur"/>
         <text name="rms_fluid_error_vehicle_moving" text="Araç hareketsiz olmalı"/>
         <text name="rms_fluid_error_busy" text="Bu devreyi zaten başka bir kap dolduruyor"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Hafif Düşük"/>
         <text name="rms_inspection_status_slightly_dirty" text="Hafif Kirli"/>
         <text name="rms_inspection_status_grease_due" text="Gresleme Gerekli"/>
-        <text name="rms_inspection_status_slight_moisture" text="Hafif Nem"/>
-        <text name="rms_inspection_status_seepage" text="Sızıntı"/>
-        <text name="rms_inspection_status_severe_leak" text="Yoğun Sızıntı"/>
         <text name="rms_inspection_status_low" text="Düşük"/>
         <text name="rms_inspection_status_very_low" text="Çok Düşük"/>
         <text name="rms_inspection_status_critically_low" text="Acil Tamamlama"/>
         <text name="rms_inspection_status_critically_clogged" text="Tamamen Tıkalı"/>
         <text name="rms_inspection_status_dirty" text="Kirli"/>
         <text name="rms_inspection_status_grease_late" text="Gecikmiş"/>
-        <text name="rms_inspection_status_active_leak" text="Aktif Sızıntı"/>
         <text name="rms_inspection_status_heavily_clogged" text="Çok Kirli"/>
         <text name="rms_inspection_status_not_required" text="Gerekli Değil"/>
         <text name="rms_inspection_status_change_overdue" text="Değişim Gecikti"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Kontrol"/>
         <text name="rms_fleet_location" text="Konum"/>
         <text name="rms_fleet_next_service" text="Sonraki bakım"/>
-        <text name="rms_fleet_remaining" text="%s sa kaldı"/>
-        <text name="rms_fleet_overdue" text="%s sa gecikme"/>
         <text name="rms_fleet_overdue_label" text="Gecikmiş"/>
         <text name="rms_fleet_overdue_count" text="Gecikmiş: %d"/>
         <text name="rms_fleet_due_soon_label" text="Yakında"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="İleri aşınma"/>
         <text name="rms_fleet_part_failed" text="Arızalı"/>
         <text name="rms_fleet_part_unmeasured" text="Ölçüm yok"/>
+        <text name="rms_fleet_part_replaced" text="Parça değiştirildi"/>
         <text name="rms_fleet_parts_reading" text="Parçaların ölçümü: %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parçaların ölçümü: bir sonraki kapsamlı muayenede"/>
         <text name="rms_fleet_greasing_done" text="Gresleme güncel"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Onarım"/>
         <text name="rms_sell_dialog_washing_penalty" text="Yıkama"/>
         <text name="rms_sell_dialog_deposit_refund" text="Depozito iadesi"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Sıvı Seviyesi Düşük"/>
-        <text name="rms_tutorial_fluid_level_message" text="Bu makinenin sıvılarından biri göstergesindeki işaretin altına düştü.&#10;&#10;Motor yağı çalışma saatleriyle tükenir ve yorgun motor çok daha fazlasını tüketir. Soğutma sıvısı, şanzıman yağı ve hidrolik yağı yalnızca sızıntıyla azalır.&#10;&#10;İşaretin altında makine yalnızca tamamlama ister ve normal çalışır. Seviye düştükçe pompa yokuşlarda daha kolay hava emer: yağ basıncı lambası yanıp söner, şanzıman veya hidrolik tarafında ise pompa uğuldar ve hidrolik hareketler yavaşlar. Bu şekilde geçen her dakika krank mili yataklarına veya pompaya zarar verir: dur ve seviyeyi tamamla. Soğutma sıvısı, şanzıman yağı veya hidrolik yağı eksik makine ayrıca ısınır.&#10;&#10;Mağazadan uyumlu ürün kabı satın al, makinenin yanına götür ve seviyeyi tamamla. Bu devreye yönelik tüm ürünler aynı etkiyi gösterir; yanlış sıvı yalnızca o devreyi kirletir. Bayide gerekli litre sağlanır ve ücretlendirilir."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Realistic Mechanical Systems’e Hoş Geldin"/>
-        <text name="rms_tutorial_welcome_disable_button" text="İpuçlarını Devre Dışı Bırak"/>
-        <text name="rms_tutorial_welcome_enable_button" text="İpuçlarını Etkinleştir"/>
-        <text name="rms_tutorial_welcome_message" text="Bu mod, oyundaki araç hasar ve bakım sistemlerini tamamen yeniler. Çok sayıda değişiklik getirdiği için zaman zaman öğretici ipuçları gösterilir. Bunlar yeni mekanikleri daha hızlı anlamana, sık yapılan hatalardan kaçınmana ve makinelerinin arızalanmasını önlemene yardımcı olur.&#10;&#10;İstersen öğretici ipuçlarını şimdi kapatabilirsin. Daha sonra mod ayarlarının &quot;Realistic Mechanical Systems&quot; bölümünden yeniden açabilirsin."/>
-        <text name="rms_tutorial_wet_weather_title" text="Nemli Hava"/>
-        <text name="rms_tutorial_wet_weather_message" text="Nem, kablolara ve elektrikli ekipmanlara zarar verir. Bu koşullarda elektrik sistemindeki aşınma yağmurda, karda veya doluda, araç açıkta bekliyorsa biraz daha fazla olur."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Tekerlek Patinajı"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Tekerlekler çok fazla patinaj yapıyor. Patinaj, şanzıman için en yıkıcı etkenlerden biridir ve sonraki atölye ziyaretini belirgin biçimde yaklaştırır."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Yaklaşan Bakım"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s yakında bakım gerektirecek. Atölyede önerilen paketi seçin: zamanı gelen işleri kapsar. Az kullanımda bile, çalışma saati veya takvim sınırından önce dolan geçerlidir. Bakım kolaylığı müdahalelerin karmaşıklığını gösterir; rutin bakım mobil atölyede hâlâ yapılabilir."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Bakım Aralığı Aşıldı"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Bu %s için bakım aralığı aşıldı.&#10;&#10;En kısa sürede atölyeye git ve &quot;Bakım&quot; işlemini seç. Bakımı gecikmiş bir aracı kullanmaya devam etmek birden fazla arıza riskini büyük ölçüde artırır."/>
-        <text name="rms_tutorial_steering_title" text="Dururken Direksiyon Kullanımı"/>
-        <text name="rms_tutorial_steering_message" text="Araç dururken direksiyonu çevirmemek en iyisidir. Bu, direksiyon mekanizmasına ve ön aks bileşenlerine ağır yük bindirerek yürüyen aksamın aşınmasını artırır.&#10;&#10;Direksiyonu çevirmeden önce biraz ilerle: tekerlekler çok daha kolay döner."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Soğutma ve Hava Filtresi"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Radyatör veya hava filtresi tıkandı. Hangisi olduğunu görmek için araca bakarken %s tuşunu basılı tut. Basınçlı hava üfleyicisiyle temizle. Filtre artık üflenerek temizlenemiyorsa atölye onu %s bakımından itibaren değiştirir."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Gresleme Gerekiyor"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Bu %s üzerinde greslenecek gresörlükler var.&#10;&#10;RMS’de her makinenin kendi kılavuzundaki gresörlükleri bulunur. Makinenin çalıştığı günlere göre yeniden greslenmeleri gerekir: her çalışılan gün ya da kılavuzun daha seyrek greslediklerinde birkaç çalışılan günde bir. Geç gresleme şasi aşınmasını hızlandırır.&#10;&#10;Mağazadan Gres Tabancası ve kartuşlar satın al. Tabanca elindeyken doldurmak için bir kartuşun önünde dur, ardından makineye nişan al: her tıklama bir gresörlüğü gresler, düğmeyi basılı tutmak sonraki gresörlüklerle devam eder.&#10;&#10;Kalan gresörlükleri görmek için araca bakarken %s tuşunu basılı tut."/>
-        <text name="rms_tutorial_needs_repair_title" text="Arıza Tespit Edildi"/>
-        <text name="rms_tutorial_needs_repair_message" text="Bu %s üzerinde bir sorun var. Parçalarından biri arızalanmış olabilir.&#10;&#10;Atölyeye git: muayene ya da zamanı geldiyse bakım arızayı tespit eder. Geciktirme: arıza kötüleşmeye devam edebilir ve onarım maliyeti artar.&#10;&#10;Arıza tespit edildiğinde atölyede onart."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Revizyon Gerekli"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="Bu %s yaşını belli ediyor. Değiştirmeyi veya revizyonu düşünme zamanı geldi. Bu uzun ve pahalı bir işlemdir ancak makineyi orijinal durumuna döndürmenin tek yoludur.&#10;&#10;Kullanım ömrü mod ayarlarından değiştirilebilir: değer yükseldikçe araçlar daha yavaş aşınır."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Artan Arıza Riski"/>
-        <text name="rms_tutorial_needs_preventive_message" text="%s üzerinde motorun, yakıt sisteminin veya soğutma sisteminin arıza riski artmış.&#10;&#10;%s bakımı: valfleri ayarlar, enjektörleri ve termostatı kontrol eder; bu da riski azaltır."/>
-        <text name="rms_tutorial_age_degradation_title" text="Yaşlanmaya Bağlı Bozulma"/>
-        <text name="rms_tutorial_age_degradation_message" text="RMS’de araçlar yaşlandıkça orijinal performanslarının bir kısmını kademeli olarak kaybeder.&#10;&#10;Ömrün yaklaşık üçte birinden sonra yaşa bağlı aşınma, güç veya frenleme gibi bazı önemli özellikleri biraz azaltır. Etki daha sonra güçlenir ve ömrün sonunda açıkça görülür.&#10;&#10;Bu aşınma mod ayarlarından devre dışı bırakılabilir."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Kalitesiz Sarf Malzemeleri"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Bu %s üzerinde son bakımda kusurlu bir filtre takıldı. Bu, ekonomik kalitede görülebilir.&#10;&#10;Bu filtre kiri geçirir: koruduğu devre, filtre değiştirilene kadar daha hızlı aşınır. Yeni bir bakım filtreyi değiştirir. Yalnızca kapsamlı muayene bu filtreyi belirler."/>
-        <text name="rms_tutorial_poor_parts_title" text="Kalitesiz Parçalar"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s için onarımda düşük kaliteli bir parça takıldı. Arıza büyük olasılıkla yakında yeniden ortaya çıkacak.&#10;&#10;Tekrar etmesini bekle veya kusurlu parçayı güvenilir biçimde belirleyen kapsamlı bir muayene başlat."/>
-        <text name="rms_tutorial_park_brake_title" text="El Freni"/>
-        <text name="rms_tutorial_park_brake_message" text="El freni çekili. Duran makineden indiğinde kendiliğinden devreye girer ve yeniden hızlandığında bırakılır. Motoru durdurduğunda veya makine 45 saniye durduğunda da devreye girer.&#10;&#10;Eğimde makinenin kendi kendine kaymasını engeller."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="El freni çekili. Kendi tuşuyla çekip bırakırsın: fren çekiliyken gaz verirsen makine frene karşı zorlanır ve frenleri aşınır.&#10;&#10;Eğimde makinenin kendiliğinden kaymasını engeller: freni çekmeden makineden inersen makine kayabilir."/>
-        <text name="rms_tutorial_preheat_title" text="Dizel Ön Isıtma"/>
-        <text name="rms_tutorial_preheat_message" text="Soğuk dizel motorda çalıştırma kumandasına bir kez basmak kontağı açar ve kızdırma çevrimini otomatik başlatır. Gösterge paneli ışıkları kısa süre yanar, ardından motor hazır olana kadar kızdırma göstergesi açık kalır. Komutu tekrarlama: gösterge söndüğünde marş motoru otomatik devreye girer."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Kuyruk Mili Devreye Alma"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Kuyruk milini rölantide devreye alın, ardından devri yükseltin: yüksek devirde devreye almak tüm aktarma organlarına darbe verir, ağır bir ekipmanla daha da fazla. Her devreye alma kavramasını da aşındırır."/>
-        <text name="rms_tutorial_pto_raised_title" text="Kuyruk Mili ve Kaldırılmış Ekipman"/>
-        <text name="rms_tutorial_pto_raised_message" text="Ekipman kaldırılmışken kuyruk milini çalıştırmak kardan mafsallarını dik bir açıyla çalıştırır ve hızla aşındırır. Ekipmanı nakliye için kaldırmadan önce kuyruk milini kapatın."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Rölanti ve Hareketsizlik"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Makine çalışır durumda olsa da aktif olarak iş yapmadığında aşınma çok daha azdır. Motor kapalıyken aşınma çok az olur ve makine kapalı bir yerde saklanırsa aşınma tamamen ortadan kalkar."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Uzun Süreli Rölanti"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Görünüşe göre makine çok uzun süredir rölantide çalışıyor. Uzun süreli rölanti sadece yakıt israfı anlamına gelmez: zamanla yakıt sisteminde birikintilere yol açar ve motorun genel sağlığını da olumsuz etkiler.&#10;&#10;Makineye şu anda ihtiyaç duyulmuyorsa, motoru kapatmak daha iyidir."/>
-        <text name="rms_tutorial_hot_weather_title" text="Sıcak Hava"/>
-        <text name="rms_tutorial_hot_weather_message" text="Bugün hava çok sıcak. Böyle havalarda radyatörün temizliğine dikkat et ve motoru aşırı yüklemekten kaçın; yoksa aşırı ısınma yalnızca zaman meselesidir.&#10;&#10;Makineye bakarken %s tuşunu basılı tutarak radyatörün durumunu kontrol edebilirsin. Temizlik hava üfleyicisiyle yapılır."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Römork Çok Ağır"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Çekilen yük bu araç için fazla ağır görünüyor. Sürmeye devam edebilirsin ancak şanzıman ve aktarma organları daha fazla zorlanmaya maruz kalır.&#10;&#10;RMS iki ölçüt kullanır: traktör için çekilen ton başına en az 10 bg, kamyon için toplam yüklü kütlenin tonu başına en az 6 bg gerekir. Ağır motor yükünde ilgili değerin altında kalmak şanzıman aşınmasını artırır."/>
-        <text name="rms_tutorial_hard_start_title" text="Zor Çalıştırma"/>
-        <text name="rms_tutorial_hard_start_message" text="Bu %s üzerindeki motor zor çalışıyor. Nedeni zayıf akü, don, mekanik arıza veya marş motoru aşınması olabilir.&#10;&#10;Yüksek ilk akımlar nedeniyle elektrik sistemi çalıştırma sırasında ağır yük altında kalır."/>
-        <text name="rms_tutorial_low_fuel_title" text="Yakıt Rezervi"/>
-        <text name="rms_tutorial_low_fuel_message" text="Depo, yedek seviyeye yaklaşıyor. Depoda ne kadar az yakıt kalırsa, yakıt pompasının onu çekmek için o kadar zorlanması gerekir; deponun dibindeki su ve tortu da filtreye gider ve filtre daha çabuk tıkanır.&#10;&#10;Depoyu gün sonunda doldurmak en iyisidir: Dolu bir depoda daha az yoğuşma olur."/>
-        <text name="rms_tutorial_lugging_title" text="Düşük Devirde Zorlanma"/>
-        <text name="rms_tutorial_lugging_message" text="Motor ve özellikle şanzıman, ağır yük altında düşük devirde çalışmaktan zarar görür. Takılı ekipman makine için fazla ağır olabilir; şanzıman manuelse seçilen vites de uygun olmayabilir."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Motorun Aşırı Isınması"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Motor aşırı ısınmaya başlıyor. Bunun nedeni ağır motor yükü, kirli radyatör, sıcak hava veya aracın soğutma sistemindeki bir arıza olabilir.&#10;&#10;Dikkat et: aşırı ısınma bir makine için en yıkıcı etkenlerden biridir. Yalnızca motora zarar vermez; soğutma sistemi sınırında çalışır ve motor bölmesindeki ısı, kablolarla elektrikli bileşenlerin bozulmasını hızlandırır."/>
-        <text name="rms_tutorial_engine_overload_title" text="Motorun Aşırı Yüklenmesi"/>
-        <text name="rms_tutorial_engine_overload_message" text="Motor çok yüksek zorlanma altında. İş bu makine için fazla ağır olabilir ve daha güçlü bir araç gerektirebilir; yükü azaltmak için yavaşlamak da yeterli olabilir.&#10;&#10;Her durumda bu zorlanma aşınmayı belirgin biçimde artırır."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Dumanı Okuma"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Bu makineden çıkan duman süs değildir: rengi bir teşhistir.&#10;&#10;Siyah duman, motorun havadan fazla yakıt aldığını gösterir: turboşarj devrini almadan sert hızlanma, düşük devirde zorlanma, aşırı yük, tıkalı hava filtresi, yıpranmış turboşarj veya enjeksiyon. Mavi duman, yorgun motorun kendi yağını yaktığını; beyaz duman, yakıtın yanmadan çıktığını gösterir.&#10;&#10;Duman motorun yaptığı işle de büyür. Eski makineler yenilerden çok daha fazla duman çıkarır ve bu normaldir."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT Aşırı Isınması"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT şanzımanı aşırı ısınmaya başlıyor. Bunun nedeni aşırı yük, kirli radyatör, çok sıcak hava veya şanzıman soğutma devresindeki bir arıza olabilir. Çok ağır bir pulluk veya aşırı yüklü römork bunun için yeterlidir.&#10;&#10;Dikkat et: aşırı ısınma, CVT şanzımanı için en yıkıcı etkenlerden biridir."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Şasi Zorlanması"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Engebeli arazide hızlı sürüldüğünde %s üzerindeki yürüyen aksam çabuk aşınır. Bu sarsıntılar kablolamaya ve konektörlerine, ağır bir ekipman kaldırılmışken de hidroliğe zarar verir.&#10;&#10;Engebeli zeminde yavaşla."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Sert Darbe"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Yürüyen aksam az önce sert bir darbe aldı. Makineyi aniden durduran veya sertçe yavaşlatan bir engel şasiyi anında yıpratır ve bir sonraki arızasını yaklaştırır; bu çoğunlukla direksiyonda veya rulmanlarda olur.&#10;&#10;Engellerden önce yavaşla."/>
-        <text name="rms_tutorial_cranking_title" text="Sık Marş Verme"/>
-        <text name="rms_tutorial_cranking_message" text="Motor çok sık çalıştırılıyor. Her çalıştırma elektrik sisteminden çok yüksek akım geçirerek kabloların, marş motorunun ve diğer elektrikli bileşenlerin aşınmasını hızlandırır.&#10;&#10;Kısa kesintilerde motoru kapatmaktan kaçın."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritik Arıza"/>
-        <text name="rms_tutorial_critical_failure_message" text="Bu %s artık kendi gücüyle hareket edemiyor.&#10;&#10;Mobil atölye, makinenin atölyeye kendi başına ulaşmasına yetecek geçici onarım sağlar. Aksi halde onu başka bir yolla kurtarman gerekir."/>
-        <text name="rms_tutorial_cold_engine_title" text="Soğuk Motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Motoru ağır yük altına sokmadan önce kademeli olarak ısıt. Çalışma sıcaklığına ulaşana kadar orta düzeyde gaz ve motor devri kullan."/>
-        <text name="rms_tutorial_cold_oil_title" text="Soğuk Şanzıman Yağı"/>
-        <text name="rms_tutorial_cold_oil_message" text="Şanzıman ve hidrolik yağı motordan çok daha yavaş ısınır. Yağ soğukken ağır işlerden kaçın; yavaş sürerek ve hidroliği hafifçe kullanarak yağı kademeli biçimde ısıt."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Şanzımanın Aşırı Isınması"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Şanzıman yağı aşırı ısınmaya başlıyor. Bunun nedeni fazla yük, kirli radyatör, çok sıcak hava veya şanzıman soğutmasındaki bir arıza olabilir.&#10;&#10;Şanzıman yağı yalnızca CVT’de değil, her makinede ısınır. Aşırı sıcak yağ şanzımanı aşındırır ve keçelerini bozar."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Aşırı Yük Uyarısı"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s ağır yük altında. Gösterge panelinde az önce yanan ışık bunu bildiriyor.&#10;&#10;Makinenin mevcut iş için gücü yetersiz olabilir. Yükü azaltmayı dene: sabit hız kontrolüyle hızını sınırla veya tam güçte gitmek yerine gazı biraz bırak."/>
-        <text name="rms_tutorial_battery_low_title" text="Akü Zayıf"/>
-        <text name="rms_tutorial_battery_low_message" text="Bu makinenin aküsü tamamen boşalmak üzere. Buna uzun süreli hareketsizlik, aşırı soğuk veya elektrik sistemindeki bir arıza yol açabilir.&#10;&#10;Şarj azken çalıştırma önce zorlaşır, sonra imkânsız olur. Bu durumda takviye kablolarıyla motoru başka bir araçtan çalıştırabilirsin. Uzun bir duruştan önce veya akü kendiliğinden boşalıyorsa, aküyü makinenin önünde yaya olarak akü şalterinden devreden çıkar."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Aktarma Organları Gerilimi"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Diferansiyel kilidi devredeyken tutunmalı zeminde dönüyorsun. Virajda iç ve dış tekerlekler farklı mesafeler kat eder ancak kilit onları aynı hızda dönmeye zorlar: aktarma organlarında zorlanma birikir ve şanzıman aşınması hızlanır. Dönmeden önce kilidi bırak."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Çekiş Modları ve Diferansiyel Kilidi"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Bu makinede çekiş modunu seçebilirsin: 2WD, 4WD veya patinaj başlar başlamaz ön aksı devreye alan OTO.&#10;&#10;Diferansiyel kilidi tutuş kalmadığında çekiş sağlar ancak tutunmalı zeminde virajın bedeli ağırdır: iç ve dış tekerlekler aynı hızda dönemez ve yükü aktarma organları taşır. Dönmeden önce kilidi devre dışı bırak."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Realistic Mechanical Systems ile makinelerin gerçekleri gibi aşınır ve arızalanır. Sık sık arıza yaşamadan oynamak için üç kural yeterli:&#10;&#10;1. Bakımı zamanında yap. Oyun menüsündeki Mekanik gösterge paneli, her makinenin bir sonraki bakımını gösterir.&#10;2. Makinelerini her gün hazırla. Kontrol etmek için bir makinenin yanında %s tuşunu basılı tut: sıvı seviyeleri, radyatör, hava filtresi, gresleme. Radyatörü ve hava filtresini hava üfleyiciyle temizle, makineleri gres tabancasıyla gresle. Ekipmanların ve römorkların da greslenmeli: Mekanik gösterge paneli zamanı gelenleri listeler. Hava üfleyici, gres tabancası ve gres kartuşları mağazada, Bakım kategorisinde.&#10;3. Makinelerine iyi bak: aşırı yük, aşırı ısınma, soğuk motorla çalışma ve patinaj onları aşındırır.&#10;&#10;Oyun sana fazla zor geliyorsa Mekanik gösterge panelinin RMS AYARLARI sekmesinden Aracın Kullanım Ömrü ve Bakımlar arası süre ayarlarını artır."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Tekerlekli Telwin şarj cihazı, 12 V’ta 150 A, 24 V’ta 80 A. Aküyü kabul ettiği akımla şarj etmek veya marş desteği sağlamak için aracın yakınına bağla (START, 12 V’ta 200 A). Şarj, oyunun zaman hızını izler."/>
         <text name="rms_diagnostic_configuration" text="Teşhis Cihazı"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Onarım Süresi:"/>
         <text name="rms_diagnostic_where_label" text="Onarım Yeri:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Cihaz bağlıyken mobil atölye veya kendi atölyen ya da bayi"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Kendi atölyen veya bayi"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Bayi"/>
         <text name="rms_diagnostic_note_inspection" text="Bu kod, makinenin neyi ölçtüğünü söyler, hangi parçanın arızalı olduğunu değil: bir muayene onu bulur."/>
+        <text name="rms_diagnostic_note_adblue" text="Bu kod, AdBlue tankının düşük olduğunu bildirir: AdBlue doldurmak onu siler."/>
         <text name="rms_diagnostic_note_uncoded" text="Makinenin muayenesi etkilenen parçayı bulur."/>
         <text name="rms_diagnostic_uncoded" text="Uyarı lambası kayıtlı kod olmadan yanıyor. Hiçbir sensör etkilenen parçayı izlemiyor."/>
         <text name="rms_diagnostic_uncoded_title" text="Kodsuz Lamba"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Soğutma Sıvısı Seviyesi"/>
         <text name="rms_diagnostic_spn_1639" text="Fan Devri"/>
         <text name="rms_diagnostic_spn_168" text="Akü Gerilimi"/>
-        <text name="rms_diagnostic_spn_677" text="Marş Rölesi"/>
+        <text name="rms_diagnostic_spn_676" text="Kızdırma Rölesi"/>
         <text name="rms_diagnostic_spn_167" text="Şarj Gerilimi"/>
         <text name="rms_diagnostic_spn_157" text="Enjeksiyon Rampası Basıncı"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue Tankı Seviyesi"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue Pompası"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue Dozaj Enjektörü"/>
         <text name="rms_diagnostic_spn_3216" text="Katalizör Öncesi NOx Sensörü"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Arızalı cihaz veya bileşen"/>
         <text name="rms_diagnostic_fmi_14" text="Özel talimatlar"/>
         <text name="rms_diagnostic_fmi_16" text="Veri normal aralığın üzerinde (orta derecede ciddi seviye)"/>
+        <text name="rms_diagnostic_fmi_17" text="Veri normal aralığın altında (en hafif seviye)"/>
         <text name="rms_diagnostic_fmi_18" text="Veri normal aralığın altında (orta derecede ciddi seviye)"/>
         <text name="rms_diagnostic_fmi_31" text="Durum mevcut"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="arızalı bileşen"/>
         <text name="rms_dashboard_fmi_14" text="müdahale gerekli"/>
         <text name="rms_dashboard_fmi_16" text="değer yüksek"/>
+        <text name="rms_dashboard_fmi_17" text="değer biraz düşük"/>
         <text name="rms_dashboard_fmi_18" text="değer düşük"/>
         <text name="rms_dashboard_fmi_31" text="arıza mevcut"/>
         <text name="rms_diagnostic_log_title" text="Kod Okuma"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Marş desteği (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Aküyü şarj et"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Aküyü devreden çıkar"/>
         <text name="rms_battery_isolator_restore" text="Aküyü devreye al"/>
         <text name="rms_battery_isolator_open" text="Akü devre dışı. Aracın önünde, yaya olarak akü şalterinden yeniden devreye al."/>

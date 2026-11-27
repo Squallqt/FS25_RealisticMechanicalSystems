@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Trvalé"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Snížený výkon"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Vyřazení z provozu"/>
         <text name="rms_breakdowns_severity_minor" text="Drobná"/>
         <text name="rms_breakdowns_severity_moderate" text="Střední"/>
         <text name="rms_breakdowns_severity_major" text="Vážná"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ochrana proti přehřátí: výkon snížen"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ochrana proti přehřátí sílí. Motor dodává jen polovinu výkonu."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ochrana proti přehřátí: výkon snížen na polovinu"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ochrana proti přehřátí je na maximu. Zbývá jen zlomek výkonu motoru."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ochrana proti přehřátí: výkon výrazně snížen"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Motor byl vypnut, aby se zabránilo poškození. Nech ho vychladnout, než ho znovu nastartuješ."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ochrana proti přehřátí: motor vypnut"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lehká porucha olejového čerpadla. Tlak oleje je snížený, točivý moment motoru mírně klesá, teplota motoru stoupá a může se objevit mechanické klepání."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Střední porucha olejového čerpadla. Tlak oleje je nedostatečný, točivý moment motoru je znatelně snížen, teplota motoru je zvýšená a mechanické klepání je jasně slyšitelné."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Silná porucha olejového čerpadla. Tlak oleje je kriticky nízký, točivý moment motoru je silně snížen, hrozí přehřátí motoru, mechanické klepání je silné a motor může zhasínat."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritické selhání olejového čerpadla. Cirkulace oleje nestačí k bezpečnému chodu motoru a jeho spuštění ani další provoz nejsou možné."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Motor se zadřel a již se nemůže otáčet."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor zhasl"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lehká porucha ECU. Výkon motoru je mírně snížen."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Střední porucha ECU. Znatelná ztráta výkonu a zvýšená spotřeba paliva."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Porucha ovládání uzávěrky diferenciálu. Uzávěrka zůstává zapnutá. Stroj v zatáčkách klade odpor řízení."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Hnací řemeny a variátory"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Ložiska a převodovky pohonu"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Řemen pohonu adaptéru"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Prokluzová spojka adaptéru"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Kloubový hřídel a kříže adaptéru"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Řetěz šikmého dopravníku"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Urychlovač podávání"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Mlatné lišty"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Střední opotřebení ložisek pohonu. Hučení je zřetelně slyšet a ložiska se zahřívají."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Silné opotřebení ložisek pohonu. Hučení sílí a hřídele získávají vůli."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritické selhání ložisek pohonu. Ložisko se zadřelo: sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Počínající opotřebení řemene pohonu adaptéru. Piští a mírně prokluzuje, dokud adaptér běží."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Střední opotřebení řemene pohonu adaptéru. Piští hlasitěji a alarm otáček občas zastaví sklizeň."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Silné opotřebení řemene pohonu adaptéru. Hlasitě piští, průchodnost klesá a zastavení se opakují."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritické selhání řemene pohonu adaptéru. Řemen praskl: adaptér už není poháněn, sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Počínající opotřebení prokluzové spojky adaptéru. Pod zatížením mírně prokluzuje."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Střední opotřebení prokluzové spojky adaptéru. Prokluzuje už při běžném zatížení a alarm otáček občas zastaví sklizeň."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Silné opotřebení prokluzové spojky adaptéru. Prokluzuje a hřeje se, průchodnost klesá a zastavení se opakují."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritické selhání prokluzové spojky adaptéru. Už nic nepřenáší: adaptér stojí, sklizeň je nemožná."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Počínající opotřebení křížů kloubového hřídele adaptéru. Když adaptér běží, objevuje se mírné hučení."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Střední opotřebení křížů kloubového hřídele adaptéru. Hučení je zřetelně slyšet."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Silné opotřebení křížů kloubového hřídele adaptéru. Hučení sílí a kříže získávají vůli."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritické selhání kloubového hřídele adaptéru. Kříž praskl: adaptér už není poháněn, sklizeň je nemožná."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Počínající opotřebení řetězu šikmého dopravníku. Natahuje se a podávání je nerovnoměrné."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Střední opotřebení řetězu šikmého dopravníku. Na vstupu šikmého dopravníku vznikají ucpávky."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Silné opotřebení řetězu šikmého dopravníku. Přeskakuje na ozubených kolech a ucpávky se stále vracejí."/>

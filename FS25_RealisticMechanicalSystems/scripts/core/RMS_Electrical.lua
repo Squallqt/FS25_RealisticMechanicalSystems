@@ -1,17 +1,19 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Low-voltage electrical system.
-RMS_Electrical = RMS_Electrical or {}
-
-local sanitizeNumber = RealisticMechanicalSystems.sanitizeNumber
+---Low-voltage electrical system
+RMS_Electrical = {}
 
 local DAY_MS = 24 * 60 * 60 * 1000
 local HOUR_MS = 60 * 60 * 1000
 local MIN_CAPACITY_AH = 0.01
--- Substep linked batteries to limit charge-transfer overshoot.
+-- Substep linked batteries to limit charge-transfer overshoot
 local PAIR_STEP_MS = 30000
 local PAIR_MAX_STEPS = 120
 
+---Returns the value of a curve at x, held at its ends
+-- @param table curve points {x, value}
+-- @param float x x
+-- @return float value value
 local function interpolate(curve, x)
     if x <= curve[1][1] then
         return curve[1][2]
@@ -27,6 +29,10 @@ local function interpolate(curve, x)
     return curve[#curve][2]
 end
 
+---Returns the value of the first step reaching x
+-- @param table steps steps {up to x, value}
+-- @param float x x
+-- @return any? value value, nil past the last step
 local function pickStep(steps, x)
     for _, step in ipairs(steps) do
         if x <= step[1] then
@@ -35,11 +41,18 @@ local function pickStep(steps, x)
     end
 end
 
+---Returns a value rounded to a catalogue step
+-- @param float value value
+-- @param float step step
+-- @return float value value rounded
 local function toCatalogueStep(value, step)
     return math.floor(value / step + 0.5) * step
 end
 
 ---Tells whether no configuration hides a lamp of the machine
+-- @param table vehicle vehicle
+-- @param entityId node node of the lamp
+-- @return boolean isMounted true when no configuration hides it
 function RMS_Electrical.getIsLampMounted(vehicle, node)
     local isComponent = false
     while node ~= 0 and not isComponent do
@@ -54,6 +67,10 @@ function RMS_Electrical.getIsLampMounted(vehicle, node)
     return true
 end
 
+---Tells whether one of the lights is mounted
+-- @param table vehicle vehicle
+-- @param table lights lights
+-- @return boolean holdsLamp true when one is mounted
 local function getHoldsMountedLamp(vehicle, lights)
     for _, light in ipairs(lights) do
         if RMS_Electrical.getIsLampMounted(vehicle, light.node) then
@@ -64,6 +81,8 @@ local function getHoldsMountedLamp(vehicle, lights)
 end
 
 ---Tells whether the machine carries turn lights
+-- @param table vehicle vehicle
+-- @return boolean carriesTurnLights true with turn lights
 function RMS_Electrical.getCarriesTurnLights(vehicle)
     local spec = vehicle.spec_lights
     if spec == nil then
@@ -81,6 +100,8 @@ function RMS_Electrical.getCarriesTurnLights(vehicle)
 end
 
 ---Returns the number of beacons on the machine
+-- @param table vehicle vehicle
+-- @return integer count number of beacons
 function RMS_Electrical.getMountedBeaconCount(vehicle)
     if vehicle.spec_lights == nil then
         return 0
@@ -88,7 +109,7 @@ function RMS_Electrical.getMountedBeaconCount(vehicle)
     local count = 0
     for _, beaconLight in ipairs(vehicle.spec_lights.beaconLights) do
         if beaconLight.linkNode ~= nil and RMS_Electrical.getIsLampMounted(vehicle, beaconLight.linkNode)
-            or beaconLight.linkNode == nil and getHoldsMountedLamp(vehicle, beaconLight.staticLights or {}) then
+            or beaconLight.linkNode == nil and getHoldsMountedLamp(vehicle, beaconLight.staticLights) then
             count = count + 1
         end
     end
@@ -96,6 +117,8 @@ function RMS_Electrical.getMountedBeaconCount(vehicle)
 end
 
 ---Sizes the circuit of a machine from its family, its power and its year
+-- @param table vehicle vehicle
+-- @return table rating ratings of the circuit
 function RMS_Electrical.resolveRating(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.ELECTRICAL
@@ -104,11 +127,14 @@ function RMS_Electrical.resolveRating(vehicle)
     local power = math.clamp(RMS_Fluids.getEnginePower(vehicle), law.POWER_RANGE_HP[1], law.POWER_RANGE_HP[2])
     local year = math.clamp(spec.year, law.YEAR_RANGE[1], law.YEAR_RANGE[2])
 
+    ---Returns a rating at the power and the year of the machine
+    -- @param table entry base, power exponent and decade factor of the rating
+    -- @return float value rating
     local function size(entry)
         return entry.base * (power / 100) ^ entry.powerExponent * entry.decadeFactor ^ ((year - 2000) / 10)
     end
 
-    local is24V = law.SYSTEM_24V_FAMILIES[family] == true or family == "WHEEL_LOADER" and power > law.WHEEL_LOADER_24V_ABOVE_HP
+    local is24V = law.SYSTEM_24V_FAMILIES[family] or family == "WHEEL_LOADER" and power > law.WHEEL_LOADER_24V_ABOVE_HP
     local series = is24V and 2 or 1
     local rating = { seriesBatteries = series }
     if family == "ROAD_LIGHT" then
@@ -122,7 +148,7 @@ function RMS_Electrical.resolveRating(vehicle)
         rating.starterKw = size(law.STARTER_KW)
     end
 
-    rating.hasCalculators = spec.isElectricVehicle == true or RMS_Utils.getUsesEngineECUProfile(vehicle)
+    rating.hasCalculators = spec.isElectricVehicle or RMS_Utils.getUsesEngineECUProfile(vehicle)
     rating.baseLoadA = (rating.hasCalculators and C.BASE_LOAD_ECU_A or C.BASE_LOAD_A) / series
 
     local workLamps
@@ -137,7 +163,6 @@ function RMS_Electrical.resolveRating(vehicle)
         workLamps = workLamps * C.WORK_LAMPS_HARVESTER_FACTOR
     end
     local lampW = year < C.LED_YEARS.FRONT_WORK_LIGHTS_FAILURE and C.WORK_LAMP_HALOGEN_W or C.WORK_LAMP_LED_W
-    rating.workLamps = workLamps
     rating.workLightsSideA = workLamps / 2 * lampW / (C.LAMP_VOLTAGE_V * series)
     local beaconA = year < C.LED_YEARS.BEACON_LIGHTS_FAILURE and C.BEACON_HALOGEN_A or C.BEACON_LED_W / C.LAMP_VOLTAGE_V
     rating.beaconsA = RMS_Electrical.getMountedBeaconCount(vehicle) * beaconA / series
@@ -155,12 +180,17 @@ function RMS_Electrical.resolveRating(vehicle)
     return rating
 end
 
+---Returns the resting voltage of the batteries at a charge
+-- @param table rating ratings of the circuit
+-- @param float soc state of charge, 0 to 1
+-- @return float voltage voltage (V)
 local function getRestingVoltage(rating, soc)
     return interpolate(RMS_Config.ELECTRICAL.OCV_CURVE, soc) * rating.seriesBatteries
 end
 RMS_Electrical.getRestingVoltage = getRestingVoltage
 
 ---Sizes the circuit and settles the voltmeter on the resting voltage
+-- @param table vehicle vehicle
 function RMS_Electrical.initializeVehicle(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     spec.electricalRating = RMS_Electrical.resolveRating(vehicle)
@@ -171,11 +201,18 @@ function RMS_Electrical.initializeVehicle(vehicle)
 end
 
 ---Returns the capacity the battery still holds, sulfation taken off
+-- @param table vehicle vehicle
+-- @return float capacity capacity (Ah)
 function RMS_Electrical.getBatteryCapacityAh(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return math.max(spec.electricalRating.batteryCapacityAh * spec.batteryHealth, MIN_CAPACITY_AH)
 end
 
+---Returns the current of the alternator, or of the converter of an electric machine
+-- @param table vehicle vehicle
+-- @param table spec RMS specialization of the vehicle
+-- @param boolean isRunning true while the engine runs
+-- @return float current current (A)
 local function getGeneratorOutput(vehicle, spec, isRunning)
     local ratedA = spec.electricalRating.alternatorA * spec.alternatorHealth
 
@@ -190,6 +227,13 @@ local function getGeneratorOutput(vehicle, spec, isRunning)
     return ratedA * (idleFactor + (1 - idleFactor) * RMS_Utils.getMotorRpmShareAboveIdle(vehicle))
 end
 
+---Returns the currents the consumers draw
+-- @param table vehicle vehicle
+-- @param table spec RMS specialization of the vehicle
+-- @param boolean isRunning true while the engine runs
+-- @param boolean isCranking true while the starter turns
+-- @param float ambientC ambient temperature (deg C)
+-- @return table loads current of each consumer (A)
 local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     local C = RMS_Config.ELECTRICAL
     local rating = spec.electricalRating
@@ -202,7 +246,7 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     end
 
     if vehicle.spec_lights ~= nil then
-        -- Light types: 0 road, 1 rear work, 2 front work.
+        -- Light types: 0 road, 1 rear work, 2 front work
         local mask = vehicle:getLightsTypesMask()
         if mask % 2 == 1 then
             loads.lights = C.ROAD_LIGHTS_A / series
@@ -227,8 +271,7 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
     if isCranking then
         loads.starter = rating.starterKw * interpolate(C.STARTER_CURRENT_CURVE, ambientC) / series
     end
-    -- the glow plugs are off while the starter turns
-    if RMS_Preheat.isHeating(vehicle) and not isCranking then
+    if RMS_Preheat.isHeating(vehicle) and not isCranking and RMS_Preheat.getGlowPlugFailureSeverity(vehicle) < 4 then
         loads.preheat = rating.glowPlugsA
     end
 
@@ -237,17 +280,23 @@ local function getLoads(vehicle, spec, isRunning, isCranking, ambientC)
 end
 
 ---Tells whether a machine is being started at this instant
+-- @param table vehicle vehicle
+-- @return boolean isStarting true while the starter turns
 function RMS_Electrical.getIsStarting(vehicle)
     return RMS_Start.getIsCranking(vehicle)
 end
 
+---Returns the circuit of a machine at this instant
+-- @param table vehicle vehicle
+-- @param boolean? isStarting true while the starter turns
+-- @return table node circuit
 local function buildNode(vehicle, isStarting)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local C = RMS_Config.ELECTRICAL
     local rating = spec.electricalRating
     local ambientC = RMS_Utils.getAmbientTemperature()
     local isRunning = vehicle:getIsMotorStarted()
-    local isCranking = not spec.isElectricVehicle and (isStarting == true or RMS_Electrical.getIsStarting(vehicle))
+    local isCranking = not spec.isElectricVehicle and (isStarting or RMS_Electrical.getIsStarting(vehicle))
     local capacityAh = RMS_Electrical.getBatteryCapacityAh(vehicle)
 
     local node = {
@@ -256,10 +305,10 @@ local function buildNode(vehicle, isStarting)
         isRunning = isRunning,
         isCranking = isCranking,
         capacityAh = capacityAh,
-        soc = sanitizeNumber(spec.batterySoc, 1, 0, 1),
+        soc = spec.batterySoc,
         floorSoc = interpolate(C.INACCESSIBLE_CHARGE_CURVE, ambientC),
         resistanceOhm = interpolate(C.INTERNAL_RESISTANCE_CURVE, ambientC) / capacityAh * rating.seriesBatteries
-            * (1 + (C.EMPTY_RESISTANCE_FACTOR - 1) * (1 - sanitizeNumber(spec.batterySoc, 1, 0, 1))),
+            * (1 + (C.EMPTY_RESISTANCE_FACTOR - 1) * (1 - spec.batterySoc)),
         circuitOhm = spec.circuitResistanceFactor * C.CIRCUIT_ADMISSIBLE_DROP_V * rating.seriesBatteries / rating.starterRatedA,
         generatorA = 0,
         chargerA = 0,
@@ -284,6 +333,9 @@ local function buildNode(vehicle, isStarting)
     return node
 end
 
+---Returns the charge current the battery accepts
+-- @param table node circuit
+-- @return float current current (A)
 local function getAcceptance(node)
     local C = RMS_Config.ELECTRICAL
     if node.soc >= 1 then
@@ -294,6 +346,8 @@ local function getAcceptance(node)
     return rate * node.capacityAh
 end
 
+---Solves the battery current and the voltage of a circuit
+-- @param table node circuit
 local function solveNode(node)
     local restingV = getRestingVoltage(node.rating, node.soc)
     local shortfallA = node.loads.total - node.generatorA - node.chargerA
@@ -314,6 +368,9 @@ local function solveNode(node)
     end
 end
 
+---Advances the charge of a circuit over hours, through its charge stages
+-- @param table node circuit
+-- @param float hours hours
 local function advanceNode(node, hours)
     local C = RMS_Config.ELECTRICAL
 
@@ -341,6 +398,9 @@ local function advanceNode(node, hours)
     solveNode(node)
 end
 
+---Solves the currents and voltages of two circuits linked by cables
+-- @param table a first circuit
+-- @param table b second circuit
 local function solvePair(a, b)
     local C = RMS_Config.ELECTRICAL
     local nodes = { a, b }
@@ -370,7 +430,6 @@ local function solvePair(a, b)
 
     local conductance = { 1 / a.resistanceOhm, 1 / b.resistanceOhm }
     local cable = 1 / C.JUMPER_CABLE_RESISTANCE_OHM
-    -- A clamped battery becomes a fixed-current node.
     local fixedA = { 0, 0 }
     local voltageV = { 0, 0 }
 
@@ -408,6 +467,10 @@ local function solvePair(a, b)
     end
 end
 
+---Advances the charge of two linked circuits in substeps
+-- @param table a first circuit
+-- @param table b second circuit
+-- @param float elapsedMs time elapsed (ms)
 local function advancePair(a, b, elapsedMs)
     local steps = math.clamp(math.ceil(elapsedMs / PAIR_STEP_MS), 1, PAIR_MAX_STEPS)
     local stepHours = elapsedMs / HOUR_MS / steps
@@ -426,19 +489,25 @@ local function advancePair(a, b, elapsedMs)
     solvePair(a, b)
 end
 
+---Returns the time elapsed for the circuit and the world time elapsed
+-- @param table spec RMS specialization of the vehicle
+-- @param float dt time of the step (ms)
+-- @param boolean isWorking true while the circuit works
+-- @return float elapsedMs time elapsed for the circuit (ms)
+-- @return float worldElapsedMs world time elapsed (ms)
 local function getElapsed(spec, dt, isWorking)
     local worldTime = RMS_Thermal.getWorldTimeMS()
     local previousTime = spec._electricalWorldTime
     spec._electricalWorldTime = worldTime
 
-    local worldElapsedMs = dt
-    if worldTime ~= nil then
-        worldElapsedMs = previousTime ~= nil and math.max(worldTime - previousTime, 0) or 0
-    end
+    local worldElapsedMs = previousTime ~= nil and math.max(worldTime - previousTime, 0) or 0
 
     return isWorking and dt or worldElapsedMs, worldElapsedMs
 end
 
+---Returns the current drawn with the engine off
+-- @param table spec RMS specialization of the vehicle
+-- @return float current current of one battery (A)
 local function getRestingDraw(spec)
     local C = RMS_Config.ELECTRICAL
     local rating = spec.electricalRating
@@ -446,6 +515,10 @@ local function getRestingDraw(spec)
 end
 RMS_Electrical.getRestingDraw = getRestingDraw
 
+---Takes the self discharge and the resting draw off the charge
+-- @param table node circuit
+-- @param table spec RMS specialization of the vehicle
+-- @param float worldElapsedMs world time elapsed (ms)
 local function applyCalendarLosses(node, spec, worldElapsedMs)
     local C = RMS_Config.ELECTRICAL
     local months = worldElapsedMs / DAY_MS / g_currentMission.environment.daysPerPeriod
@@ -459,6 +532,10 @@ local function applyCalendarLosses(node, spec, worldElapsedMs)
     end
 end
 
+---Stores the charge and eases the voltmeter
+-- @param table node circuit
+-- @param table spec RMS specialization of the vehicle
+-- @param float dt time of the step (ms)
 local function commitNode(node, spec, dt)
     spec.batterySoc = node.soc
     spec.rawSystemVoltageV = node.voltageV
@@ -468,6 +545,9 @@ local function commitNode(node, spec, dt)
     spec.electricalBalance = node
 end
 
+---Returns the machine linked by cables, unlinked once one of them moves
+-- @param table vehicle vehicle
+-- @return table? partner machine linked
 local function getCablePartner(vehicle)
     local partner = vehicle.spec_RealisticMechanicalSystems.externalPowerConnection
     if partner == nil then
@@ -483,14 +563,9 @@ local function getCablePartner(vehicle)
 end
 
 ---Runs one step of a circuit, and of the one linked to it by cables
+-- @param float dt time of the step (ms)
 function RMS_Electrical:updateBatteryChargingModel(dt)
     local spec = self.spec_RealisticMechanicalSystems
-    dt = sanitizeNumber(dt, 0, 0)
-    if not self.isServer or dt <= 0 then
-        return
-    end
-
-    -- Solve a linked battery pair only once per frame.
     local solveStamp = g_currentMission.time
     if spec._electricalSolveStamp == solveStamp then
         return
@@ -530,6 +605,10 @@ function RMS_Electrical:updateBatteryChargingModel(dt)
     end
 end
 
+---Returns the voltage of the circuit solved at this instant
+-- @param table vehicle vehicle
+-- @param boolean? isStarting true while the starter turns
+-- @return float voltage voltage (V)
 local function getVoltageNow(vehicle, isStarting)
     local node = buildNode(vehicle, isStarting)
     local partner = vehicle.spec_RealisticMechanicalSystems.externalPowerConnection
@@ -543,6 +622,8 @@ local function getVoltageNow(vehicle, isStarting)
 end
 
 ---Returns the voltage the circuit would hold if started now
+-- @param table vehicle vehicle
+-- @return float voltage voltage (V), 0 with the isolator open
 function RMS_Electrical.getStartingVoltage(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.batteryIsolated then
         return 0
@@ -551,11 +632,15 @@ function RMS_Electrical.getStartingVoltage(vehicle)
 end
 
 ---Returns the lowest voltage that still turns the starter of a machine
+-- @param table vehicle vehicle
+-- @return float voltage voltage (V)
 function RMS_Electrical.getMinCrankingVoltage(vehicle)
     return RMS_Config.ELECTRICAL.MIN_CRANKING_VOLTAGE_V * vehicle.spec_RealisticMechanicalSystems.electricalRating.seriesBatteries
 end
 
 ---Tells whether the circuit can start the machine
+-- @param table vehicle vehicle
+-- @return boolean canStart true when it can
 function RMS_Electrical.getCanStart(vehicle)
     local voltageV = RMS_Electrical.getStartingVoltage(vehicle)
     if vehicle.spec_RealisticMechanicalSystems.isElectricVehicle then
@@ -565,6 +650,8 @@ function RMS_Electrical.getCanStart(vehicle)
 end
 
 ---Returns how fast the starter turns, against a full battery on a mild engine
+-- @param table vehicle vehicle
+-- @return float speed speed, 0 to 1
 function RMS_Electrical.getCrankingSpeed(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local voltageV = RMS_Electrical.getStartingVoltage(vehicle)
@@ -572,32 +659,72 @@ function RMS_Electrical.getCrankingSpeed(vehicle)
         return 0
     end
 
-    local engineC = tonumber(spec.rawEngineTemperature)
-    if engineC == nil or engineC <= -99 then
-        engineC = RMS_Utils.getAmbientTemperature()
-    end
     return math.min(voltageV / spec.electricalRating.referenceCrankingV, 1)
-        * interpolate(RMS_Config.ELECTRICAL.CRANKING_DRAG_CURVE, engineC)
+        * interpolate(RMS_Config.ELECTRICAL.CRANKING_DRAG_CURVE, spec.rawEngineTemperature)
         * spec.starterHealth
 end
 
+---Returns how long the starter may crank from rest and how fast it cools
+-- @param table vehicle vehicle
+-- @return float limitS cranking that brings it to its permissible rise (s)
+-- @return float coolingS time constant of its cooling (s)
+local function getStarterHeatTimes(vehicle)
+    local C = RMS_Config.ELECTRICAL
+    local limitS = C.STARTER_HEAT_LIMIT_S[RMS_Breakdowns.getStarterFamily(vehicle)]
+    return limitS, limitS * C.STARTER_REST_PER_CRANK / math.log(C.STARTER_PERMISSIBLE_RISE_K / RMS_Config.CORE.HEAT_HALVING_K)
+end
+
+---Heats the starter while it turns and cools it at rest
+-- @param table vehicle vehicle
+-- @param float dt time of the step (ms)
+-- @param boolean isTurning true while the starter turns
+function RMS_Electrical.updateStarterHeat(vehicle, dt, isTurning)
+    local spec = vehicle.spec_RealisticMechanicalSystems
+    local C = RMS_Config.ELECTRICAL
+    local riseK = C.STARTER_PERMISSIBLE_RISE_K
+    local limitS, coolingS = getStarterHeatTimes(vehicle)
+    local targetK = 0
+    if isTurning then
+        local curve = C.STARTER_CURRENT_CURVE
+        local currentRatio = interpolate(curve, RMS_Utils.getAmbientTemperature()) / curve[#curve][2]
+        targetK = riseK / (1 - math.exp(-limitS / coolingS)) * currentRatio ^ 2
+    end
+    spec.starterHeatK = targetK + (spec.starterHeatK - targetK) * math.exp(-dt / 1000 / coolingS)
+end
+
+---Tells whether the starter is hotter than cranks and rests as its manual asks ever make it
+-- @param table vehicle vehicle
+-- @return boolean isOverheated true past that heat
+function RMS_Electrical.getIsStarterOverheated(vehicle)
+    local C = RMS_Config.ELECTRICAL
+    local limitS, coolingS = getStarterHeatTimes(vehicle)
+    local cycleS = limitS * (1 + C.STARTER_REST_PER_CRANK)
+    return vehicle.spec_RealisticMechanicalSystems.starterHeatK > C.STARTER_PERMISSIBLE_RISE_K / (1 - math.exp(-cycleS / coolingS))
+end
+
 ---Tells whether no lamp of a machine gets any current
+-- @param table vehicle vehicle
+-- @return boolean isUnpowered true when none does
 function RMS_Electrical.getIsUnpowered(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     return spec.batteryIsolated or spec.activeEffects.LIGHTS_FAILURE ~= nil
 end
 
 ---Tells whether the lights of a machine stay off whatever asks for them
+-- @param table vehicle vehicle
+-- @return boolean keepsOff true when they stay off
 function RMS_Electrical.getKeepsLightsOff(vehicle)
     if RMS_Electrical.getIsUnpowered(vehicle) then
         return true
     end
 
-    -- Native and driving-mod updates reapply AI light requests.
+    -- Native and driving-mod updates reapply AI light requests
     return vehicle:getIsAIActive() and not vehicle:getIsMotorStarted() and not vehicle:getIsControlled()
 end
 
 ---Puts out every lamp of a machine left without current
+-- @param table vehicle vehicle
+-- @param boolean? noEventSend true to send no event
 function RMS_Electrical.switchOffAllLights(vehicle, noEventSend)
     if vehicle.spec_lights == nil then
         return
@@ -614,11 +741,15 @@ function RMS_Electrical.switchOffAllLights(vehicle, noEventSend)
 end
 
 ---Tells whether a machine carries a battery isolator, every RMS machine
+-- @param table vehicle vehicle
+-- @return boolean hasIsolator true with one
 function RMS_Electrical.getHasBatteryIsolator(vehicle)
     return not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
 end
 
 ---Opens or closes the battery isolator of a machine, on the server
+-- @param table vehicle vehicle
+-- @param boolean isIsolated true to open it
 function RMS_Electrical.setBatteryIsolated(vehicle, isIsolated)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if spec.batteryIsolated == isIsolated then
@@ -633,6 +764,7 @@ function RMS_Electrical.setBatteryIsolated(vehicle, isIsolated)
 end
 
 ---Returns the text refusing to move the battery isolator
+-- @param table vehicle vehicle
 -- @return string? reason text key, nil when the isolator may be moved
 function RMS_Electrical.getBatteryIsolatorRefusal(vehicle)
     if vehicle:getMotorState() ~= MotorState.OFF then
@@ -642,6 +774,8 @@ function RMS_Electrical.getBatteryIsolatorRefusal(vehicle)
 end
 
 ---Opens or closes the battery isolator a player asks for, on the server
+-- @param table vehicle vehicle
+-- @param boolean isIsolated true to open it
 function RMS_Electrical.requestBatteryIsolated(vehicle, isIsolated)
     if RMS_Electrical.getHasBatteryIsolator(vehicle) and RMS_Electrical.getBatteryIsolatorRefusal(vehicle) == nil then
         RMS_Electrical.setBatteryIsolated(vehicle, isIsolated)
@@ -649,12 +783,17 @@ function RMS_Electrical.requestBatteryIsolated(vehicle, isIsolated)
 end
 
 ---Plays the click of the battery isolator on the machine
+-- @param table vehicle vehicle
 function RMS_Electrical.playBatteryIsolatorSound(vehicle)
     if vehicle.isClient then
         RMS_SoundManager.playSample(vehicle.spec_RealisticMechanicalSystems.samples.batteryIsolator)
     end
 end
 
+---Adds or removes a breakdown
+-- @param table vehicle vehicle
+-- @param string breakdownId breakdown
+-- @param boolean isActive true to add it
 local function setBreakdownActive(vehicle, breakdownId, isActive)
     if vehicle:hasBreakdown(breakdownId) ~= isActive then
         if isActive then
@@ -685,6 +824,7 @@ function RMS_Electrical:syncDeadBatteryEffect()
 end
 
 ---Adds or removes the voltage sag breakdown
+-- @param float dt time of the step (ms)
 function RMS_Electrical:syncVoltageSagEffect(dt)
     local spec = self.spec_RealisticMechanicalSystems
     if not self.isServer then
@@ -711,11 +851,11 @@ function RMS_Electrical:syncVoltageSagEffect(dt)
 end
 
 ---Tells whether two vehicles may be linked by jumper cables
+-- @param table vehicleA first vehicle
+-- @param table vehicleB second vehicle
+-- @return boolean isValid true when they may
+-- @return string? reason reason of a refusal, "ELECTRIC_DONOR" for an electric donor
 function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
-    if vehicleA == nil or vehicleB == nil then
-        return false
-    end
-
     vehicleA, vehicleB = vehicleA:getRootVehicle(), vehicleB:getRootVehicle()
     local specA, specB = vehicleA.spec_RealisticMechanicalSystems, vehicleB.spec_RealisticMechanicalSystems
     if vehicleA == vehicleB then
@@ -742,12 +882,18 @@ function RMS_Electrical.isValidPowerPair(vehicleA, vehicleB)
     return not isElectricDonor, isElectricDonor and "ELECTRIC_DONOR" or nil
 end
 
+---Links or unlinks two machines on both ends
+-- @param table vehicle vehicle
+-- @param table partner other machine
+-- @param boolean isLinked true to link them
 local function setCableLink(vehicle, partner, isLinked)
     vehicle.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and partner or nil
     partner.spec_RealisticMechanicalSystems.externalPowerConnection = isLinked and vehicle or nil
 end
 
 ---Records the jumper cable link toward another vehicle
+-- @param table otherVehicle other machine
+-- @return boolean canLink true once linked
 function RMS_Electrical:establishExternalPowerConnection(otherVehicle)
     local canLink, reason = RMS_Electrical.isValidPowerPair(self, otherVehicle)
     if canLink then

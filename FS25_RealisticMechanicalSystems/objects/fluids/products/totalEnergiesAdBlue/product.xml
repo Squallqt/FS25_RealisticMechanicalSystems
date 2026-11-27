@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<vehicle type="rmsFluidContainer">
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
+    <storeData>
+        <name>AdBlue</name>
+        <specs><weight/></specs>
+        <functions><function>$l10n_rms_fluid_function_adblue</function></functions>
+        <image>objects/fluids/products/totalEnergiesAdBlue/store_totalEnergiesAdBlue.png</image>
+        <price>13</price>
+        <category>rmsMaintenance</category>
+        <brand>TOTALENERGIES</brand>
+        <showInStore>true</showInStore>
+        <canBeSold>false</canBeSold>
+        <allowLeasing>false</allowLeasing>
+        <rotation>0</rotation>
+        <shopHeight>0.65</shopHeight>
+        <financeCategory>OTHER</financeCategory>
+        <storeIconRendering><settings centerIcon="true" cameraXRot="-15" cameraYRot="35"/></storeIconRendering>
+    </storeData>
+    <base>
+        <typeDesc>$l10n_rms_fluid_container_typedesc</typeDesc>
+        <filename>objects/fluids/products/totalEnergiesAdBlue/adBlueContainer.i3d</filename>
+        <size width="1.2" length="0.8" height="1.1"/>
+        <components maxMass="550"><component centerOfMass="0 0.3 0" solverIterationCount="10" mass="1"/></components>
+        <supportsPickUp>true</supportsPickUp>
+        <showInVehicleMenu>false</showInVehicleMenu>
+        <mapHotspot available="false"/>
+        <input allowed="false"/>
+    </base>
+    <rmsFluidContainer productKey="TOTALENERGIES_ADBLUE"
+        canDiffuse="objects/fluids/products/totalEnergiesAdBlue/canister_diffuse.png"
+        canPrints="objects/fluids/products/totalEnergiesAdBlue/canisterLabel.i3d"
+        drumDiffuse="objects/fluids/products/totalEnergiesAdBlue/drum_diffuse.png"
+        drumSpecular="objects/fluids/products/totalEnergiesAdBlue/drum_specular.png"
+        drumPrints="objects/fluids/products/totalEnergiesAdBlue/drumLabel.i3d"/>
+    <fillUnit><fillUnitConfigurations title="$l10n_configuration_fillUnit">
+            <fillUnitConfiguration name="10 L" price="0" isDefault="true">
+                <fillUnits removeVehicleIfEmpty="true">
+                    <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="10" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="10"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
+                <objectChange node="canCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="canVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="adBlueContainer_component1" massActive="0.585" centerOfMassActive="0 0.133 0"/>
+            </fillUnitConfiguration>
+            <fillUnitConfiguration name="208 L" price="131">
+                <fillUnits removeVehicleIfEmpty="true">
+                    <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="208" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="208"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
+                <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="adBlueContainer_component1" massActive="33.85"/>
+            </fillUnitConfiguration>
+            <fillUnitConfiguration name="2 × 208 L" price="275">
+                <fillUnits removeVehicleIfEmpty="true">
+                    <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="208" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="208"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                    <fillUnit fillTypes="RMS_TOTALENERGIES_ADBLUE" capacity="208" startFillType="RMS_TOTALENERGIES_ADBLUE" startFillLevel="208"
+                        unitTextOverride="$l10n_unit_literShort" canBeUnloaded="false" showOnInfoHud="false"
+                        synchronizeFullFillLevel="true" ignoreFillLimit="true"/>
+                </fillUnits>
+                <objectChange node="drumPalletCollision" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision01" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumPalletFloorCollision02" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollisionA" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumCollisionB" compoundChildActive="true" compoundChildInactive="false"/>
+                <objectChange node="drumVisualLinkA" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumVisualLinkB" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="drumPalletVisualLink" visibilityActive="true" visibilityInactive="false"/>
+                <objectChange node="adBlueContainer_component1" massActive="42.7"/>
+            </fillUnitConfiguration>
+    </fillUnitConfigurations></fillUnit>
+    <pallet/>
+    <dynamicMount triggerNode="dynamicMountTrigger" triggerForceAcceleration="4" additionalMountDistance="1.054" jointTransY="0.106" jointLimitToRotY="true"/>
+    <foliageBending/>
+    <wearable wearDuration="480" workMultiplier="1" fieldMultiplier="1"/>
+    <washable dirtDuration="90" washDuration="1" workMultiplier="1" fieldMultiplier="1"/>
+    <i3dMappings>
+        <i3dMapping id="adBlueContainer_component1" node="0>"/><i3dMapping id="canCollision" node="0>0"/>
+        <i3dMapping id="drumPalletCollision" node="0>1"/><i3dMapping id="drumPalletFloorCollision01" node="0>2"/>
+        <i3dMapping id="drumPalletFloorCollision02" node="0>3"/><i3dMapping id="drumCollision" node="0>4"/>
+        <i3dMapping id="dynamicMountTrigger" node="0>5"/><i3dMapping id="canVisualLink" node="0>6"/>
+        <i3dMapping id="drumVisualLink" node="0>7"/><i3dMapping id="drumPalletVisualLink" node="0>8"/>
+        <i3dMapping id="pickupNode" node="0>10"/>
+        <i3dMapping id="drumCollisionA" node="0>11"/><i3dMapping id="drumCollisionB" node="0>12"/>
+        <i3dMapping id="drumVisualLinkA" node="0>13"/><i3dMapping id="drumVisualLinkB" node="0>14"/>
+    </i3dMappings>
+</vehicle>

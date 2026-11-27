@@ -76,7 +76,7 @@
                     </BoxLayout>
                 </GuiElement>
 
-                <!-- Performance -->
+                <!-- Vehicle specifications -->
                 <GuiElement profile="rms_workshopReportCard">
                     <RoundCorner profile="rms_workshopSurfaceStrong" />
                     <GuiElement profile="rms_workshopBlock" position="20px -16px" size="456px 32px">

@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Fahrzeug"/>
         <text name="rms_hud_mass_towed" text="Angehängt"/>
         <text name="rms_hud_mass_total" text="Gesamt"/>
+        <text name="rms_hud_fuel_average" text="Ø"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="U/min"/>
         <text name="rms_drivetrain_mode_4x2" text="Hinterradantrieb (Vorderachse abgeschaltet)"/>
         <text name="rms_drivetrain_mode_4wd" text="Allrad (Vorderachse zugeschaltet)"/>
         <text name="rms_drivetrain_mode_auto" text="Allrad AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Fahrzeug kontrollieren"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Antriebsmodus"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differentialsperre"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Feststellbremse"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Legt fest, ob mechanische Überholungen in der Werkstatt sofort abgeschlossen werden, auch bereits laufende."/>
         <text name="rms_instantRemap_label" text="Sofortige Motoroptimierung"/>
         <text name="rms_instantRemap_tooltip" text="Legt fest, ob die Motoroptimierung und die Rückrüstung auf den Serienstand sofort abgeschlossen werden, auch bereits laufende."/>
-        <text name="rms_debugMode_label" text="Debug-Modus"/>
-        <text name="rms_debugMode_tooltip" text="Legt fest, ob das Debugfenster in der gefahrenen Maschine erscheint und die Konsole detaillierte Protokolle erhält. Die Taste %s öffnet und schließt es; im Mehrspielermodus sehen es nur Administratoren."/>
+        <text name="rms_debugWindow_label" text="Debug-Fenster"/>
+        <text name="rms_debugWindow_tooltip" text="Legt fest, ob das Debugfenster in der gefahrenen Maschine erscheint. Die Taste %s öffnet es ebenfalls; im Mehrspielermodus sehen es nur Administratoren."/>
+        <text name="rms_debugLog_label" text="Detailliertes Protokoll"/>
+        <text name="rms_debugLog_tooltip" text="Legt fest, ob die Konsole die detaillierten Protokolle von RMS erhält, zum Anhängen an einen Fehlerbericht, ohne das Debugfenster zu öffnen."/>
         <text name="rms_warningMessages_label" text="Warnmeldungen"/>
         <text name="rms_warningMessages_tooltip" text="Legt fest, ob Warnungen wie kalter Motor oder Überhitzung angezeigt werden. Meldungen zur thermischen Leistungsbegrenzung werden immer angezeigt."/>
         <text name="rms_serviceInterval_label" text="Wartungsabstände"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Legt die Betriebsstunden fest, nach denen der Fahrzeugzustand 0 % erreicht; je näher das Fahrzeug diesem Wert kommt, desto unzuverlässiger wird es und desto stärker sinkt sein Wert. Eine Änderung gilt ab dann: Die Fahrzeuge behalten ihren Zustand, nur ihr Wert wird neu berechnet."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Abgasrauch"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Legt fest, ob die Abgasfahne dem tatsächlichen Motorzustand folgt: schwarz bei Luftmangel, blau beim Verbrennen von Öl, weiß bei unverbrannt austretendem Kraftstoff, dichter unter Last. Alte Maschinen rauchen viel stärker als moderne."/>
-        <text name="rms_tutorialMode_label" text="Tutorial-Modus"/>
-        <text name="rms_tutorialMode_tooltip" text="Legt fest, ob die Tutorial-Hinweise während des Spiels angezeigt werden."/>
-        <text name="rms_tutorialResetTips_label" text="Hinweise zurücksetzen"/>
-        <text name="rms_tutorialResetTips_text" text="Zurücksetzen"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Setzt den Verlauf der Tutorial-Hinweise zurück: Alle Hinweise werden erneut angezeigt."/>
-        <text name="rms_tutorialResetConfirm_title" text="Tutorial-Hinweise zurücksetzen?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Verlauf der Tutorial-Hinweise zurücksetzen und alle Hinweise erneut anzeigen?"/>
         <text name="rms_drivetrainEnabled_label" text="Verwaltung von Allrad und Differentialsperren"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Legt fest, ob Vorderachse und Differentialsperren von Traktoren von Hand bedient werden. Die Option ersetzt die Differentialverwaltung von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere die Differentiale wieder in dessen Menü."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="AUTO-Antriebsmodus erlauben"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Legt fest, ob der Wahlschalter AUTO anbietet: Die Vorderachse schaltet bei Radschlupf oder Arbeit unter Last zu und auf der Straße ab. Beim Deaktivieren wechseln in AUTO belassene Fahrzeuge zu Allrad."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Diese Einstellung erfordert die aktivierte Verwaltung von Allrad und Differentialsperren."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Feststellbremse"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Legt fest, ob betreute Fahrzeuge eine Feststellbremse haben: automatisch bei neueren Maschinen mit CVT- oder Powershift-Getriebe, per Taste bei den übrigen. Die Option ersetzt die Feststellbremse von Enhanced Vehicle: Um sie zurückzugeben, deaktiviere die Option und aktiviere seine Feststellbremse wieder in dessen Menü."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Wartungsprotokoll"/>
         <text name="rms_ws_label_last_maintenance" text="Letzte Wartung"/>
         <text name="rms_ws_task_inspection" text="Inspektion"/>
-        <text name="rms_ws_task_maintenance" text="Wartung"/>
         <text name="rms_ws_task_overhaul" text="Überholung"/>
         <text name="rms_ws_info_no_breakdowns" text="Kein festgestellter Schaden. Eine Inspektion oder eine Wartung stellt die fest, die die Maschine noch nicht zeigt."/>
         <text name="rms_ws_info_warning_unidentified" text="Warnleuchte an: Schaden festzustellen. Eine Inspektion oder eine Wartung stellt ihn fest, danach kann er repariert werden."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Das Diagnosegerät eines Wagens an die Maschine anschließen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronische Diagnose erforderlich"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Demontage oder Spezialwerkzeug erforderlich"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Hochvoltausrüstung erforderlich"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Hochvolt-Fachkraft erforderlich"/>
         <text name="rms_ws_status_in_progress_format" text="%s läuft bis %s"/>
         <text name="rms_ws_status_open" text="Werkstatt ist geöffnet"/>
         <text name="rms_ws_status_closed" text="Werkstatt ist geschlossen"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Beschreibung"/>
         <text name="rms_log_button_show_report" text="Bericht anzeigen"/>
         <text name="rms_log_empty" text="Protokoll ist noch leer"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Überhitzungsschutz: Leistungsbegrenzung aufgehoben"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue-Füllstand niedrig: AdBlue nachfüllen."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue-Füllstand sehr niedrig: AdBlue nachfüllen."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue-Füllstand sehr niedrig: Motorleistung reduziert. AdBlue nachfüllen."/>
+        <text name="rms_adblue_empty_message" text="AdBlue-Tank leer: AdBlue nachfüllen."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue-Tank leer: Motorleistung stark reduziert. AdBlue nachfüllen."/>
+        <text name="rms_adblue_restored_message" text="AdBlue nachgefüllt: Motorleistung wiederhergestellt."/>
         <text name="rms_breakdown_at_progress_message" text="läuft"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Warnung! Motor kalt: Er verschleißt, bis er warmgelaufen ist."/>
         <text name="rms_spec_overheat_engine_message" text="Warnung! Motor überhitzt."/>
         <text name="rms_spec_overheat_transmission_message" text="Warnung! Getriebe überhitzt."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motoroptimierung"/>
         <text name="rms_spec_state_overdue" text="Überfällig"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Ausgefallen"/>
         <text name="rms_spec_state_bad" text="Schlecht"/>
         <text name="rms_spec_state_excellent" text="Exzellent"/>
         <text name="rms_spec_state_good" text="Gut"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="Sperre oder 4WD auf festem Boden"/>
         <text name="rms_warranty_filter" text="Filter verstopft"/>
         <text name="rms_warranty_oil" text="ungeeignetes Motoröl"/>
+        <text name="rms_warranty_header_engagement" text="Vorsatz über Leerlauf eingekuppelt"/>
         <text name="rms_warranty_trailer" text="Anhänger zu schwer"/>
         <text name="rms_warranty_aftermarket_part" text="Nachbauteil"/>
         <text name="rms_warranty_used_part" text="Gebrauchtteil"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Sichtprüfung und Funktionstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektronische Schäden"/>
         <text name="rms_ws_inspection_electronic_detail" text="Fehlercodes mit dem Diagnosegerät ausgelesen"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrische Schäden"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Stromkreise mit dem Multimeter geprüft"/>
         <text name="rms_ws_inspection_dormant" text="Verdeckte Mängel"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defektes Teil, Behelfsreparatur"/>
         <text name="rms_ws_inspection_report" text="Bericht"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Batterie überhitzt"/>
         <text name="rms_report_wear_lubrication" text="Schmierung überfällig"/>
         <text name="rms_report_wear_pto_overload" text="Zapfwelle überlastet"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Gelenkwellenwinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Ernte überlastet"/>
         <text name="rms_report_wear_harvest_flow" text="Hoher Kornfluss"/>
         <text name="rms_report_wear_harvest_straw" text="Häcksler überlastet"/>
         <text name="rms_report_wear_harvest_stones" text="Steine"/>
         <text name="rms_report_wear_harvest_rice" text="Reisernte"/>
         <text name="rms_report_wear_harvest_wet" text="Feuchtes Erntegut"/>
+        <text name="rms_report_wear_header_starts" text="Vorsatzstarts"/>
+        <text name="rms_report_wear_service_overdue" text="Wartungsintervall überschritten"/>
+        <text name="rms_report_wear_engine_overload" text="Motorüberlastung"/>
+        <text name="rms_report_wear_cold_engine" text="Kalter Motor"/>
+        <text name="rms_report_wear_fluid_level" text="Niedriger Flüssigkeitsstand"/>
+        <text name="rms_report_wear_engine_overheat" text="Motor überhitzt"/>
+        <text name="rms_report_wear_lugging" text="Untertouriger Betrieb"/>
+        <text name="rms_report_wear_wheel_slip" text="Radschlupf"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Antriebsstrangbelastung"/>
+        <text name="rms_report_wear_cold_oil" text="Kaltes Getriebeöl"/>
+        <text name="rms_report_wear_transmission_overheat" text="Getriebe überhitzt"/>
+        <text name="rms_report_wear_wet_weather" text="Nasses Wetter"/>
+        <text name="rms_report_wear_cranking" text="Häufiges Starten"/>
+        <text name="rms_report_wear_starter_heat" text="Anlasser überhitzt"/>
+        <text name="rms_report_wear_steering" text="Lenken im Stand"/>
+        <text name="rms_report_wear_park_brake" text="Feststellbremse"/>
+        <text name="rms_report_wear_low_fuel" text="Wenig Kraftstoff"/>
+        <text name="rms_report_wear_idle_deposit" text="Zu langer Leerlauf"/>
+        <text name="rms_report_wear_pto_engagement" text="Zapfwelle einkuppeln"/>
         <text name="rms_report_component_title" text="Komponente"/>
         <text name="rms_report_system_condition_transmission" text="Getriebe"/>
         <text name="rms_report_system_condition_power" text="Aktuelle Leistung"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Übersetzung begrenzt"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Unregelmäßige Kraftübertragung"/>
         <text name="rms_report_transmission_failed" text="Ausgefallen"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Fettpresse"/>
         <text name="rms_grease_gun_no_vehicle" text="Kein Fahrzeug in Schmierreichweite"/>
         <text name="rms_grease_gun_function" text="Schmiert die Schmiernippel der Maschinen. Wird mit einer Fettkartusche geladen."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motoröl, für Maschinen ohne AdBlue und Partikelfilter"/>
         <text name="rms_fluid_function_utto" text="Getriebe- und Hydrauliköl zum manuellen Nachfüllen"/>
         <text name="rms_fluid_function_coolant" text="Kühlmittel zum manuellen Nachfüllen"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue für den AdBlue-Tank der Maschinen, die einen haben"/>
         <text name="rms_fluid_pour_action" text="Einfüllen: %s"/>
         <text name="rms_fluid_level_done" text="Füllstand aufgefüllt"/>
         <text name="rms_fluid_container_empty" text="Kanister leer"/>
         <text name="rms_fluid_drum_empty" text="Fass leer"/>
+        <text name="rms_fluid_tank_empty" text="Tank leer"/>
         <text name="rms_fluid_container_label" text="Kanister"/>
         <text name="rms_fluid_drum_label" text="Fass"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Zum Einfüllen nehmen"/>
         <text name="rms_fluid_hand_carry" text="Kanister tragen"/>
         <text name="rms_drum_pump_name" text="Akku-Fasspumpe"/>
-        <text name="rms_drum_pump_function" text="Wird auf ein 200-L-Fass gesetzt, um Maschinen mit der Zapfpistole zu befüllen"/>
+        <text name="rms_drum_pump_function" text="Wird auf ein Fass oder einen Tank gesetzt, um Maschinen mit der Zapfpistole zu befüllen"/>
         <text name="rms_drum_pump_mount" text="Auf Fass setzen"/>
+        <text name="rms_drum_pump_mount_tank" text="Auf Tank setzen"/>
         <text name="rms_drum_pump_take" text="Pumpe abnehmen"/>
         <text name="rms_drum_pump_nozzle_take" text="Zapfpistole nehmen"/>
         <text name="rms_drum_pump_nozzle_return" text="Zapfpistole einhängen"/>
         <text name="rms_drum_pump_hose_range" text="Der Schlauch der Pumpe lässt Sie nicht weiter gehen.&#10;Die Zapfpistole wird in %.1f m eingehängt!"/>
         <text name="rms_drum_pump_machine_too_far" text="Fass näher heranbringen: Der Schlauch ist 4 m lang"/>
+        <text name="rms_drum_pump_tank_too_far" text="Tank näher heranbringen: Der Schlauch ist 4 m lang"/>
         <text name="rms_drum_pump_required" text="Fasspumpe erforderlich"/>
         <text name="rms_fluid_level_under_gauge" text="Unter der Skala"/>
         <text name="rms_fluid_circuit_engineOil" text="Motoröl"/>
         <text name="rms_fluid_circuit_coolant" text="Kühlmittel"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-Tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Getriebeöl"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydrauliköl"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Getriebe- und Hydrauliköl"/>
         <text name="rms_fluid_hud_engineOil" text="Motoröl"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Getriebe-Hydrauliköl"/>
         <text name="rms_fluid_hud_coolant" text="Kühlmittel"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Ungeeignete Flüssigkeit"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß des Motors bis zu verdreifachen und ihn stärker erwärmen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß des Kühlsystems bis zu verdreifachen und den Motor stärker erwärmen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß der Hydraulik bis zu verdreifachen, sie stärker erwärmen und verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Dieses Produkt ist nicht für diesen Kreislauf vorgesehen. Es verunreinigt ihn und kann den Verschleiß von Getriebe und Hydraulik bis zu verdreifachen, beide stärker erwärmen und die Hydraulik verlangsamen. Nur ein vollständiger Wechsel beseitigt die Verunreinigung. Fortfahren?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Ungeeignetes Motoröl"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Dieser Motor hat AdBlue oder einen Partikelfilter: Seine Betriebsanleitung verlangt ein Öl, das dafür ausgelegt ist. Mit diesem Öl wird sein Ölwechsel bis zu doppelt so früh fällig. Ein Partikelfilter füllt sich zudem 1,5-mal so schnell mit Asche. Fortfahren?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Dieser Motor hat AdBlue oder einen Partikelfilter: Er braucht ein Öl, das dafür ausgelegt ist. Mit diesem Öl wird sein Ölwechsel bis zu doppelt so früh fällig. Ein Partikelfilter füllt sich zudem 1,5-mal so schnell mit Asche. Fortfahren?"/>
         <text name="rms_fluid_error_no_circuit" text="Dieses Fahrzeug benötigt kein Nachfüllen von Flüssigkeit"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Dieses Fahrzeug hat keinen AdBlue-Tank"/>
         <text name="rms_fluid_error_motor_running" text="Motor abstellen, bevor Flüssigkeit umgefüllt wird"/>
         <text name="rms_fluid_error_vehicle_moving" text="Das Fahrzeug muss stehen"/>
         <text name="rms_fluid_error_busy" text="Ein anderer Behälter füllt diesen Kreislauf bereits"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Leicht niedrig"/>
         <text name="rms_inspection_status_slightly_dirty" text="Leicht zugesetzt"/>
         <text name="rms_inspection_status_grease_due" text="Schmieren fällig"/>
-        <text name="rms_inspection_status_slight_moisture" text="Leichte Feuchtigkeit"/>
-        <text name="rms_inspection_status_seepage" text="Sickerung"/>
-        <text name="rms_inspection_status_severe_leak" text="Starke Leckage"/>
         <text name="rms_inspection_status_low" text="Niedrig"/>
         <text name="rms_inspection_status_very_low" text="Sehr niedrig"/>
         <text name="rms_inspection_status_critically_low" text="Nachfüllen erforderlich"/>
         <text name="rms_inspection_status_critically_clogged" text="Vollständig zugesetzt"/>
         <text name="rms_inspection_status_dirty" text="Zugesetzt"/>
         <text name="rms_inspection_status_grease_late" text="Überfällig"/>
-        <text name="rms_inspection_status_active_leak" text="Aktive Leckage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Stark zugesetzt"/>
         <text name="rms_inspection_status_not_required" text="Nicht erforderlich"/>
         <text name="rms_inspection_status_change_overdue" text="Wechsel überfällig"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Prüfung"/>
         <text name="rms_fleet_location" text="Standort"/>
         <text name="rms_fleet_next_service" text="Nächste Wartung"/>
-        <text name="rms_fleet_remaining" text="%s h verbleibend"/>
-        <text name="rms_fleet_overdue" text="%s h überfällig"/>
         <text name="rms_fleet_overdue_label" text="Überfällig"/>
         <text name="rms_fleet_overdue_count" text="Überfällig: %d"/>
         <text name="rms_fleet_due_soon_label" text="Bald fällig"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Starker Verschleiß"/>
         <text name="rms_fleet_part_failed" text="Ausgefallen"/>
         <text name="rms_fleet_part_unmeasured" text="Nicht erfasst"/>
+        <text name="rms_fleet_part_replaced" text="Teil ersetzt"/>
         <text name="rms_fleet_parts_reading" text="Teile erfasst %s"/>
         <text name="rms_fleet_parts_need_complete" text="Teileerfassung bei nächster vollständiger Inspektion"/>
         <text name="rms_fleet_greasing_done" text="Schmierung erledigt"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Reparatur"/>
         <text name="rms_sell_dialog_washing_penalty" text="Reinigung"/>
         <text name="rms_sell_dialog_deposit_refund" text="Kautionserstattung"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Niedriger Flüssigkeitsstand"/>
-        <text name="rms_tutorial_fluid_level_message" text="Eine der Betriebsflüssigkeiten dieser Maschine ist unter die Markierung ihrer Anzeige gefallen.&#10;&#10;Motoröl wird mit den Betriebsstunden verbraucht, und ein verschlissener Motor verbraucht deutlich mehr davon. Kühlmittel, Getriebeöl und Hydrauliköl sinken nur durch ein Leck.&#10;&#10;Unter der Markierung benötigt die Maschine nur Nachfüllen und arbeitet weiterhin normal. Je tiefer der Stand sinkt, desto leichter saugt die Pumpe an Hängen Luft an: Die Öldruckleuchte flackert, und bei Getriebe oder Hydraulik heult die Pumpe und die Hydraulikbewegungen werden langsamer. Jede so gefahrene Minute schädigt die Kurbelwellenlager oder die Pumpe: Halte an und füll den Stand auf. Eine Maschine mit zu wenig Kühlmittel, Getriebeöl oder Hydrauliköl läuft außerdem heiß.&#10;&#10;Kauf im Shop einen Behälter mit einem kompatiblen Produkt, bring ihn zur Maschine und füll den Stand auf. Alle für diesen Kreislauf vorgesehenen Produkte haben dieselbe Wirkung; eine falsche Flüssigkeit verunreinigt nur diesen Kreislauf. Beim Händler werden die benötigten Liter bereitgestellt und berechnet."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Willkommen bei Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Hinweise deaktivieren"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Hinweise aktivieren"/>
-        <text name="rms_tutorial_welcome_message" text="Dieser Mod überarbeitet das Schadens- und Wartungssystem für Fahrzeuge im Spiel grundlegend. Es gibt viele Änderungen, deshalb werden von Zeit zu Zeit Tutorial-Hinweise eingeblendet. Sie helfen dir, die neuen Mechaniken schneller zu verstehen, typische Fehler zu vermeiden und deine Maschinen vor Schäden zu bewahren.&#10;&#10;Wenn du möchtest, kannst du die Tutorial-Hinweise jetzt direkt deaktivieren. Später lassen sie sich in den Mod-Einstellungen im Bereich Realistic Mechanical Systems jederzeit wieder einschalten."/>
-        <text name="rms_tutorial_wet_weather_title" text="Nasses Wetter"/>
-        <text name="rms_tutorial_wet_weather_message" text="Feuchtigkeit setzt Verkabelung und elektrischen Komponenten zu. Der Verschleiß des elektrischen Systems steigt bei Regen, Schnee oder Hagel leicht an, wenn die Maschine im Freien steht."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Radschlupf"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Deine Räder drehen stark durch. Schlupf gehört zu den zerstörerischsten Faktoren für das Getriebe und rückt deinen nächsten Werkstattbesuch deutlich näher."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Wartung steht an"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s braucht bald Wartung. In der Werkstatt das empfohlene Paket wählen: Es deckt die fälligen Arbeiten ab. Betriebsstunden oder Kalenderzeit bestimmen den Termin, je nachdem, was zuerst erreicht wird, auch bei wenig Nutzung. Wartbarkeit beschreibt den Aufwand der Eingriffe; laufende Wartung ist weiterhin in der mobilen Werkstatt möglich."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Wartungsintervall überschritten"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s hat sein Wartungsintervall überschritten und braucht eine Wartung.&#10;&#10;Fahr so schnell wie möglich in eine Werkstatt und wähle „Wartung&quot;. Wenn du ein Fahrzeug mit überfälliger Wartung weiter einsetzt, steigt das Risiko mehrerer Schäden deutlich an."/>
-        <text name="rms_tutorial_steering_title" text="Lenken im Stand"/>
-        <text name="rms_tutorial_steering_message" text="Du solltest möglichst nicht im Stand lenken. Dabei werden Lenkgetriebe und Bauteile der Vorderachse stark belastet, was den Verschleiß des Fahrwerks erhöht.&#10;&#10;Fahr einfach ein wenig an, dann lassen sich die Räder deutlich leichter einschlagen."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Kühlsystem und Luftfilter"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Der Kühler oder der Luftfilter ist verschmutzt. Halte die Taste %s gedrückt, während du das Fahrzeug ansiehst, um zu erkennen, welcher betroffen ist. Reinige ihn mit dem Druckluftgebläse. Lässt sich der Filter nicht mehr ausblasen, ersetzt ihn die Werkstatt ab der Wartung %s."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Schmierung erforderlich"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s hat Schmiernippel, die geschmiert werden müssen.&#10;&#10;In RMS hat jede Maschine die Schmiernippel ihrer Betriebsanleitung. Sie werden an den Einsatztagen der Maschine wieder fällig: an jedem Arbeitstag oder alle paar Arbeitstage bei denen, die die Betriebsanleitung seltener schmiert. Verspätetes Schmieren beschleunigt den Verschleiß des Fahrwerks.&#10;&#10;Kauf im Shop eine Fettpresse und Kartuschen. Stell dich mit der Fettpresse in der Hand vor eine Kartusche, um sie zu laden, und ziele dann auf die Maschine: Jeder Klick schmiert einen Schmiernippel. Gedrückthalten setzt das Schmieren am nächsten fort.&#10;&#10;Halte die Taste %s gedrückt und sieh die Maschine an, um die noch zu schmierenden Schmiernippel zu sehen."/>
-        <text name="rms_tutorial_needs_repair_title" text="Schaden festgestellt"/>
-        <text name="rms_tutorial_needs_repair_message" text="Dein %s hat ein Problem. Eines seiner Teile ist möglicherweise ausgefallen.&#10;&#10;Fahr zur Werkstatt: Eine Inspektion, oder die Wartung, wenn sie fällig ist, stellt den Schaden fest. Warte nicht: Der Schaden kann sich weiter verschlimmern, und die Reparaturkosten steigen mit ihm.&#10;&#10;Ist der Schaden festgestellt, lass ihn in der Werkstatt reparieren."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Überholung erforderlich"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="Dein %s zeigt sein Alter. Es wird Zeit, über einen Ersatz oder eine Überholung nachzudenken. Das ist ein langer und teurer Vorgang, aber der einzige Weg, der Maschine ihren ursprünglichen Zustand zurückzugeben.&#10;&#10;Die Lebensdauer wird in den Einstellungen des Mods festgelegt: Je höher sie ist, desto langsamer verschleißen deine Fahrzeuge."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Erhöhtes Schadensrisiko"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Bei Motor, Kraftstoffsystem oder Kühlsystem von %s besteht ein erhöhtes Ausfallrisiko.&#10;&#10;Wartung %s: Stellt die Ventile ein und prüft Einspritzdüsen und Thermostat, was dieses Risiko senkt."/>
-        <text name="rms_tutorial_age_degradation_title" text="Altersbedingter Verschleiß"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS verlieren Fahrzeuge mit zunehmendem Alter nach und nach einen Teil ihrer ursprünglichen Leistung.&#10;&#10;Nach etwa einem Drittel der Lebensdauer verringert der altersbedingte Verschleiß wichtige Eigenschaften leicht, etwa Leistung oder Bremswirkung. Der Effekt verstärkt sich danach und wird gegen Ende der Lebensdauer deutlich sichtbar.&#10;&#10;Diese Alterung lässt sich in den Einstellungen des Mods abschalten."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Minderwertige Verbrauchsmaterialien"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Dein %s hat bei der letzten Wartung einen defekten Filter erhalten. Das kommt bei den günstigen Qualitäten vor.&#10;&#10;Dieser Filter lässt Schmutz durch: Der Kreislauf, den er schützt, verschleißt bis zum Filterwechsel schneller. Eine neue Wartung wechselt ihn. Nur eine vollständige Inspektion benennt ihn."/>
-        <text name="rms_tutorial_poor_parts_title" text="Minderwertige Ersatzteile"/>
-        <text name="rms_tutorial_poor_parts_message" text="Dein %s hat bei einer Reparatur ein minderwertiges Ersatzteil erhalten. Der Schaden wird wahrscheinlich bald zurückkehren.&#10;&#10;Du kannst abwarten, bis er wiederkommt, oder eine vollständige Inspektion durchführen, die das betroffene Teil zuverlässig benennt."/>
-        <text name="rms_tutorial_park_brake_title" text="Feststellbremse"/>
-        <text name="rms_tutorial_park_brake_message" text="Die Feststellbremse ist angezogen. Sie greift von selbst, sobald du die Maschine im Stand verlässt, und löst sich, sobald du wieder Gas gibst. Sie greift auch, wenn du den Motor abstellst, oder nach 45 Sekunden im Stand.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Die Feststellbremse ist angezogen. Du ziehst und löst sie selbst mit ihrer eigenen Taste: Gibst du bei angezogener Bremse Gas, arbeitet die Maschine gegen sie an und ihre Bremsen verschleißen.&#10;&#10;Am Hang verhindert sie, dass die Maschine von allein wegrollt: Verlässt du die Maschine, ohne sie anzuziehen, kann sie wegrollen."/>
-        <text name="rms_tutorial_preheat_title" text="Diesel-Vorglühen"/>
-        <text name="rms_tutorial_preheat_message" text="Bei kaltem Dieselmotor schaltet ein Druck auf die Starttaste die Zündung ein und startet automatisch den Vorglühzyklus. Die Kontrollleuchten leuchten kurz auf; danach bleibt die Vorglühleuchte an, bis der Motor startbereit ist. Die Taste nicht erneut drücken: Der Anlasser wird automatisch betätigt, sobald die Leuchte erlischt."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Zapfwelle einkuppeln"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Kupple die Zapfwelle im Leerlauf ein und erhöhe dann die Drehzahl: Einkuppeln bei hoher Drehzahl belastet den ganzen Antriebsstrang mit einem Stoß, umso mehr bei einem schweren Gerät. Jedes Einkuppeln verschleißt außerdem die Kupplung."/>
-        <text name="rms_tutorial_pto_raised_title" text="Zapfwelle und ausgehobenes Gerät"/>
-        <text name="rms_tutorial_pto_raised_message" text="Läuft die Zapfwelle bei ausgehobenem Gerät, arbeiten die Gelenkwellen unter starkem Winkel und verschleißen schnell. Schalte die Zapfwelle ab, bevor du das Gerät für den Transport aushebst."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Leerlauf und Standzeit"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Der Verschleiß ist deutlich geringer, wenn die Maschine läuft, ohne zu arbeiten. Bei abgestelltem Motor wird er minimal, und er verschwindet ganz, wenn die Maschine unter einem Dach steht."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Zu langer Leerlauf"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Die Maschine stand zu lange im Leerlauf. Lange Leerlaufphasen verschwenden nicht nur Kraftstoff: Mit der Zeit begünstigen sie Ablagerungen im Kraftstoffsystem und schaden dem allgemeinen Zustand des Motors.&#10;&#10;Wird die Maschine gerade nicht gebraucht, stellst du den Motor besser ab."/>
-        <text name="rms_tutorial_hot_weather_title" text="Heißes Wetter"/>
-        <text name="rms_tutorial_hot_weather_message" text="Es ist heute sehr heiß. Bei diesem Wetter solltest du den Kühler sauber halten und den Motor nicht überlasten, sonst ist Überhitzung nur eine Frage der Zeit.&#10;&#10;Den Kühlerzustand prüfst du, indem du die Taste %s gedrückt hältst und die Maschine ansiehst, und mit dem Druckluftgebläse reinigst du ihn."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Schwerer Anhänger"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Die gezogene Last scheint für dieses Fahrzeug zu hoch zu sein. Du kannst weiterfahren, aber Getriebe und Antriebsstrang werden stärker belastet.&#10;&#10;RMS verwendet zwei Richtwerte: Traktoren benötigen mindestens 10 PS pro Tonne gezogener Masse, Lkw mindestens 6 PS pro Tonne Gesamtzuggewicht. Wird der jeweilige Wert bei hoher Motorlast unterschritten, steigt der Getriebeverschleiß."/>
-        <text name="rms_tutorial_hard_start_title" text="Schwieriger Start"/>
-        <text name="rms_tutorial_hard_start_message" text="Der Motor von %s springt schwer an. Eine schwache Batterie, Frost, ein mechanischer Schaden oder Anlasserverschleiß können die Ursache sein.&#10;&#10;Das Bordnetz wird beim Starten wegen der hohen Einschaltströme stark belastet."/>
-        <text name="rms_tutorial_low_fuel_title" text="Wenig Kraftstoff"/>
-        <text name="rms_tutorial_low_fuel_message" text="Der Tank nähert sich der Reserve. Je weniger Kraftstoff übrig ist, desto stärker muss die Kraftstoffpumpe ansaugen, und vom Tankboden gelangen Wasser und Ablagerungen in den Filter, der schneller verstopft.&#10;&#10;Tanke am besten am Ende des Tages voll: In einem vollen Tank bildet sich weniger Kondenswasser."/>
-        <text name="rms_tutorial_lugging_title" text="Untertouriger Betrieb"/>
-        <text name="rms_tutorial_lugging_message" text="Der Motor und vor allem das Getriebe leiden im untertourigen Betrieb, also bei niedriger Drehzahl unter hoher Last. Das angehängte Gerät ist vielleicht zu schwer für die Maschine, oder bei einem Schaltgetriebe ist der gewählte Gang nicht der richtige."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Motor überhitzt"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Der Motor beginnt zu überhitzen. Das kann einen oder mehrere Gründe haben: Der Motor steht unter hoher Last, der Kühler ist verschmutzt, das Wetter ist heiß oder es gibt einen Defekt im Kühlsystem des Fahrzeugs.&#10;&#10;Bleib wachsam: Überhitzung ist einer der zerstörerischsten Faktoren für jede Maschine. Nicht nur der Motor leidet darunter. Das Kühlsystem arbeitet am Limit, und die Hitze im Motorraum beschleunigt die Alterung von Verkabelung und elektrischen Komponenten."/>
-        <text name="rms_tutorial_engine_overload_title" text="Motorüberlastung"/>
-        <text name="rms_tutorial_engine_overload_message" text="Der Motor steht unter sehr hoher Belastung. Die Arbeit ist vielleicht zu schwer für diese Maschine und verlangt ein stärkeres Fahrzeug, oder es reicht, langsamer zu fahren und so die Last zu senken.&#10;&#10;In jedem Fall steigt der Verschleiß unter dieser Belastung deutlich an."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Den Rauch lesen"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Der Rauch dieser Maschine ist nicht nur Dekoration: Seine Farbe liefert eine Diagnose.&#10;&#10;Schwarzer Rauch zeigt, dass der Motor mehr Kraftstoff als Luft erhält: bei starkem Beschleunigen, bevor der Turbolader Drehzahl aufgebaut hat, bei untertourigem Betrieb, Überlastung, einem zugesetzten Luftfilter, einem verschlissenen Turbolader oder einer verschlissenen Einspritzung. Blauer Rauch zeigt, dass ein verschlissener Motor sein eigenes Öl verbrennt. Weißer Rauch zeigt, dass Kraftstoff unverbrannt austritt.&#10;&#10;Die Fahne wird auch mit steigender Motorlast größer. Ältere Maschinen rauchen viel stärker als neuere; das ist normal."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT überhitzt"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="Das CVT-Getriebe beginnt zu überhitzen. Das kann von zu hoher Last, einem zugesetzten Kühler, sehr heißem Wetter oder einem Defekt im Kühlkreislauf des Getriebes kommen. Ein zu schwerer Pflug oder ein überladener Anhänger reichen dafür aus.&#10;&#10;Bleib aufmerksam: Überhitzung gehört zu den zerstörerischsten Belastungen für ein CVT-Getriebe."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Fahrwerk unter Belastung"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Schnelles Fahren auf unebenem Gelände verschleißt das Fahrwerk deines %s schnell. Diese Stöße schädigen auch die Verkabelung mit ihren Steckverbindungen und die Hydraulik, wenn ein schweres Gerät ausgehoben ist.&#10;&#10;Fahr auf unebenem Boden langsamer."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Harter Schlag"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Das Fahrwerk hat gerade einen harten Schlag abbekommen. Ein Hindernis, das die Maschine abrupt stoppt oder stark abbremst, verschleißt das Fahrwerk sofort und bringt seinen nächsten Schaden näher, meist an Lenkung oder Radlagern.&#10;&#10;Fahr vor Hindernissen langsamer."/>
-        <text name="rms_tutorial_cranking_title" text="Häufiges Starten"/>
-        <text name="rms_tutorial_cranking_message" text="Der Motor wird zu oft gestartet. Jeder Start schickt einen sehr hohen Strom durch das Bordnetz, was den Verschleiß von Kabelbaum, Anlasser und den übrigen elektrischen Bauteilen beschleunigt.&#10;&#10;Vermeide es, den Motor für kurze Pausen abzustellen."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritischer Schaden"/>
-        <text name="rms_tutorial_critical_failure_message" text="Dein %s ist vollständig ausgefallen und kann sich nicht mehr aus eigener Kraft bewegen.&#10;&#10;Eine mobile Werkstatt erlaubt eine Behelfsreparatur, die ausreicht, damit die Maschine die Werkstatt selbst erreicht. Andernfalls muss sie anders geborgen werden."/>
-        <text name="rms_tutorial_cold_engine_title" text="Kalter Motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Wärme den Motor schonend auf, bevor du ihn stark belastest. Fahr mit mäßigem Gas und mittlerer Drehzahl, bis er seine Betriebstemperatur erreicht."/>
-        <text name="rms_tutorial_cold_oil_title" text="Kaltes Getriebeöl"/>
-        <text name="rms_tutorial_cold_oil_message" text="Getriebeöl und Hydrauliköl erwärmen sich deutlich langsamer als der Motor. Vermeide schwere Arbeiten, solange das Öl kalt ist; wärme es durch ruhiges Fahren und leichte Hydraulikarbeit allmählich auf."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Getriebe überhitzt"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Das Getriebeöl beginnt zu überhitzen. Das kann von zu hoher Last, einem zugesetzten Kühler, sehr heißem Wetter oder einem Defekt der Getriebekühlung kommen.&#10;&#10;Getriebeöl erhitzt sich auf jeder Maschine, nicht nur bei einem CVT. Zu heißes Öl verschleißt das Getriebe und zerstört seine Dichtungen."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Überlastungswarnung"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s steht unter hoher Last. Darauf weist dich die Warnleuchte hin, die gerade im Armaturenbrett aufgeleuchtet ist.&#10;&#10;Möglicherweise hat die Maschine nicht genug Leistung für die aktuelle Arbeit. Versuche, die Last zu verringern: Begrenze deine Geschwindigkeit mit dem Tempomat oder nimm etwas Gas weg, statt mit voller Leistung zu fahren."/>
-        <text name="rms_tutorial_battery_low_title" text="Schwache Batterie"/>
-        <text name="rms_tutorial_battery_low_message" text="Die Batterie dieser Maschine steht kurz vor der vollständigen Entladung. Das passiert nach längerem Stillstand, bei starker Kälte oder durch einen Defekt im Bordnetz.&#10;&#10;Bei geringer Ladung wird der Start schwierig und dann unmöglich. Du kannst den Motor dann mit dem Starthilfekabel von einem anderen Fahrzeug aus starten. Trenne die Batterie vor einem langen Stillstand, oder wenn sie sich von selbst entlädt, am Batterietrennschalter, zu Fuß vor der Maschine."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Antriebsstrangbelastung"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Du lenkst auf griffigem Boden mit eingelegter Differentialsperre. In einer Kurve legen die kurveninneren und kurvenäußeren Räder unterschiedliche Strecken zurück, doch die Differentialsperre zwingt sie zur gleichen Drehzahl: Der Antriebsstrang wird belastet und der Getriebeverschleiß steigt. Löse die Sperre vor Kurvenfahrten."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Antriebsmodi und Differentialsperre"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Diese Maschine lässt dich den Antrieb wählen: Hinterradantrieb, Allrad oder AUTO, wobei die Vorderachse zugeschaltet wird, sobald die Räder durchdrehen.&#10;&#10;Die Differentialsperre sorgt für Traktion, wo sie sonst fehlt, belastet den Antriebsstrang aber in Kurven auf griffigem Untergrund stark: Innen- und Außenräder können nicht mit derselben Drehzahl laufen. Löse die Sperre vor dem Abbiegen."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Mit Realistic Mechanical Systems verschleißen deine Maschinen und fallen aus wie echte. Drei Regeln genügen, um ohne ständige Pannen zu spielen:&#10;&#10;1. Halte die Wartung pünktlich ein. Die Technikübersicht im Spielmenü zeigt die nächste Wartung jeder Maschine.&#10;2. Bereite deine Maschinen jeden Tag vor. Halte %s neben einer Maschine gedrückt, um sie zu prüfen: Füllstände, Kühler, Luftfilter, Schmierung. Reinige Kühler und Luftfilter mit dem Druckluftgebläse und schmiere die Maschinen mit der Fettpresse ab. Auch deine Geräte und Anhänger müssen abgeschmiert werden: Die Technikübersicht listet die fälligen auf. Druckluftgebläse, Fettpresse und Fettkartuschen gibt es im Shop in der Kategorie Wartung.&#10;3. Schone deine Maschinen: Überlastung, Überhitzung, Arbeit mit kaltem Motor und Radschlupf verschleißen sie.&#10;&#10;Wenn dir das Spiel zu schwer ist, erhöhe Fahrzeuglebensdauer und Wartungsabstände im Reiter RMS-EINSTELLUNGEN der Technikübersicht."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin-Ladegerät auf Fahrgestell, 150 A bei 12 V, 80 A bei 24 V. Schließe es in der Nähe des Fahrzeugs an, um dessen Batterie mit dem zulässigen Ladestrom aufzuladen oder Starthilfe zu geben (START, 200 A bei 12 V). Die Ladung folgt der Zeitgeschwindigkeit des Spiels."/>
         <text name="rms_diagnostic_configuration" text="Diagnosegerät"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparaturzeit:"/>
         <text name="rms_diagnostic_where_label" text="Reparaturort:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobile oder eigene Werkstatt mit angeschlossenem Diagnosegerät, oder Händler"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Eigene Werkstatt oder Händler"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Händler"/>
         <text name="rms_diagnostic_note_inspection" text="Dieser Code sagt, was die Maschine misst, nicht welches Teil betroffen ist: Eine Inspektion findet es."/>
+        <text name="rms_diagnostic_note_adblue" text="Dieser Code meldet einen niedrigen AdBlue-Tank: Nachfüllen von AdBlue löscht ihn."/>
         <text name="rms_diagnostic_note_uncoded" text="Eine Inspektion der Maschine findet das betroffene Teil."/>
         <text name="rms_diagnostic_uncoded" text="Warnleuchte an, ohne gespeicherten Code. Kein Sensor überwacht das betroffene Teil."/>
         <text name="rms_diagnostic_uncoded_title" text="Leuchte ohne Code"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Kühlmittelstand"/>
         <text name="rms_diagnostic_spn_1639" text="Lüfterdrehzahl"/>
         <text name="rms_diagnostic_spn_168" text="Batteriespannung"/>
-        <text name="rms_diagnostic_spn_677" text="Starterrelais"/>
+        <text name="rms_diagnostic_spn_676" text="Vorglührelais"/>
         <text name="rms_diagnostic_spn_167" text="Ladespannung"/>
         <text name="rms_diagnostic_spn_157" text="Raildruck"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-Tankfüllstand"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-Pumpe"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-Dosierdüse"/>
         <text name="rms_diagnostic_spn_3216" text="NOx-Sensor vor dem Katalysator"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Fehlerhaftes Gerät oder Komponente"/>
         <text name="rms_diagnostic_fmi_14" text="Besondere Anweisungen"/>
         <text name="rms_diagnostic_fmi_16" text="Physikalischer Grenzwert überschritten (mittlerer Schweregrad)"/>
+        <text name="rms_diagnostic_fmi_17" text="Physikalischer Grenzwert unterschritten (niedriger Schweregrad)"/>
         <text name="rms_diagnostic_fmi_18" text="Physikalischer Grenzwert unterschritten (mittlerer Schweregrad)"/>
         <text name="rms_diagnostic_fmi_31" text="Zustand liegt vor"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="defekte Komponente"/>
         <text name="rms_dashboard_fmi_14" text="Eingriff erforderlich"/>
         <text name="rms_dashboard_fmi_16" text="hoher Wert"/>
+        <text name="rms_dashboard_fmi_17" text="leicht niedriger Wert"/>
         <text name="rms_dashboard_fmi_18" text="niedriger Wert"/>
         <text name="rms_dashboard_fmi_31" text="Fehler vorhanden"/>
         <text name="rms_diagnostic_log_title" text="Codeauslesung"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starthilfe (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Batterie aufladen"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Batterie trennen"/>
         <text name="rms_battery_isolator_restore" text="Batterie zuschalten"/>
         <text name="rms_battery_isolator_open" text="Batterie getrennt. Schalte sie am Batterietrennschalter wieder zu, zu Fuß vor dem Fahrzeug."/>

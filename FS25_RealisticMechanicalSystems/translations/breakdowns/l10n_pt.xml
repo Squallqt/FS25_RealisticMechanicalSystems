@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanente"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Perda de potência"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Imobilização"/>
         <text name="rms_breakdowns_severity_minor" text="Ligeira"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderada"/>
         <text name="rms_breakdowns_severity_major" text="Grave"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Proteção contra sobreaquecimento: potência reduzida"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="A proteção contra sobreaquecimento intensifica-se. O motor fornece apenas metade da potência."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Proteção contra sobreaquecimento: potência reduzida a metade"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="A proteção contra sobreaquecimento está no máximo. Resta apenas uma fração da potência do motor."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Proteção contra sobreaquecimento: potência fortemente reduzida"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="O motor foi desligado para evitar danos. Deixa-o arrefecer antes de voltar a ligar."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Proteção contra sobreaquecimento: motor desligado"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Mau funcionamento ligeiro da bomba de óleo. A pressão do óleo é reduzida, o binário do motor cai ligeiramente, a temperatura do motor aumenta e batidas mecânicas podem aparecer."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Mau funcionamento moderado da bomba de óleo. A pressão do óleo é insuficiente, o binário do motor diminui notavelmente, a temperatura do motor aumenta e as batidas mecânicas são claramente audíveis."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Mau funcionamento grave da bomba de óleo. A pressão do óleo é crítica, o binário do motor cai drasticamente, o sobreaquecimento é provável, as batidas mecânicas são severas e o motor pode ir abaixo."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Falha crítica da bomba de óleo. A circulação de óleo é insuficiente para o funcionamento seguro do motor e qualquer arranque ou utilização posterior é impossível."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="O motor bloqueou e já não consegue rodar."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor foi abaixo"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Mau funcionamento ligeiro da ECU. Potência do motor ligeiramente reduzida."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Mau funcionamento moderado da ECU. Perda notável de potência e aumento do consumo de combustível."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Falha do comando do bloqueio do diferencial. O bloqueio permanece engatado. A máquina resiste à direção nas curvas."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Correias e variadores"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Rolamentos e caixas de transmissão"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Correia de embraiagem da plataforma"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitador de binário da plataforma"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Veio cardã e cruzetas da plataforma"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Corrente do canal de alimentação"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Acelerador de alimentação"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Barras do batedor"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Desgaste moderado dos rolamentos de transmissão dos órgãos. O ronco ouve-se claramente e aquecem."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Desgaste grave dos rolamentos de transmissão dos órgãos. O ronco aumenta e os veios ganham folga."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Falha crítica dos rolamentos de transmissão dos órgãos. Um rolamento gripou: a colheita é impossível."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Desgaste inicial da correia de embraiagem da plataforma. Chia e patina um pouco enquanto a plataforma roda."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Desgaste moderado da correia de embraiagem da plataforma. Chia mais alto e o alarme de regime por vezes para a colheita."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Desgaste grave da correia de embraiagem da plataforma. Chia alto, o débito baixa e as paragens repetem-se."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Falha crítica da correia de embraiagem da plataforma. Partiu-se: a plataforma deixou de ser acionada, a colheita é impossível."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Desgaste inicial do limitador de binário da plataforma. Patina um pouco em carga."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Desgaste moderado do limitador de binário da plataforma. Patina com a carga normal e o alarme de regime por vezes para a colheita."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Desgaste grave do limitador de binário da plataforma. Patina e aquece, o débito baixa e as paragens repetem-se."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Falha crítica do limitador de binário da plataforma. Já não transmite nada: a plataforma está parada, a colheita é impossível."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Desgaste inicial das cruzetas do veio cardã da plataforma. Surge um ligeiro ronco enquanto a plataforma roda."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Desgaste moderado das cruzetas do veio cardã da plataforma. O ronco ouve-se claramente."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Desgaste grave das cruzetas do veio cardã da plataforma. O ronco aumenta e as cruzetas ganham folga."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Falha crítica do veio cardã da plataforma. Uma cruzeta partiu-se: a plataforma deixou de ser acionada, a colheita é impossível."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Desgaste inicial da corrente do canal de alimentação. Estica e a alimentação torna-se irregular."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Desgaste moderado da corrente do canal de alimentação. Formam-se encravamentos à entrada do canal."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Desgaste grave da corrente do canal de alimentação. Salta nos carretos e os encravamentos repetem-se."/>

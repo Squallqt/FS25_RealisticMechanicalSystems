@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<CustomShader version="5" shaderType="PARTICLE_SYSTEM">
+    <annotation>Copyright © 2026 Squallqt. All rights reserved.</annotation>
+
+    <Parameters>
+        <Parameter name="heat" target="heat" type="float4" group="base" defaultValue="0.0 0.0 0.0 0.0" minValue="0.0 0.0 0.0 0.0" maxValue="1.0 100000.0 100000.0 0.0" description="X - rms image shift of a far background, in screen heights\nY, Z - how far the gas has carried the eddies along the camera right and up axes (m)"/>
+        <Parameter name="heatOutlet" target="heatOutlet" type="float4" group="base" defaultValue="0.0 0.0 0.0 0.0" minValue="-100000.0 -100000.0 0.0 0.0" maxValue="100000.0 100000.0 0.0 0.0" description="X, Y - outlet the eddies stay on, along the camera right and up axes (m)"/>
+    </Parameters>
+    <UvUsages/>
+    <LodLevel startDistance="0">
+        <CodeInjections>
+            <CodeInjection position="OBJECT_PARAMETERS">
+<![CDATA[
+/*
+    heat.x - rms image shift of a far background, in screen heights
+    heat.yz - how far the gas has carried the eddies along the camera right and up axes (m)
+    heatOutlet.xy - outlet the eddies stay on, along the camera right and up axes (m)
+*/
+    float4 heat;
+    float4 heatOutlet;
+]]>
+            </CodeInjection>
+            <CodeInjection position="LIB_FUNCTION_FS">
+<![CDATA[
+// smooth value noise in [-0.5, 0.5]
+float getHeatEddy(float2 position){
+    float2 cell = floor(position);
+    float2 blend = position - cell;
+    blend = blend * blend * (3.0 - 2.0 * blend);
+    // the lattice repeats every 256 cells, large hash inputs lose their precision
+    cell -= 256.0 * floor(cell / 256.0);
+    float a = frac(sin(dot(cell, float2(12.9898, 78.233))) * 43758.5453);
+    float b = frac(sin(dot(cell + float2(1.0, 0.0), float2(12.9898, 78.233))) * 43758.5453);
+    float c = frac(sin(dot(cell + float2(0.0, 1.0), float2(12.9898, 78.233))) * 43758.5453);
+    float d = frac(sin(dot(cell + float2(1.0, 1.0), float2(12.9898, 78.233))) * 43758.5453);
+    return lerp(lerp(a, b, blend.x), lerp(c, d, blend.x), blend.y) - 0.5;
+}
+
+// share of the gas in front of what is drawn at this screen position: none before the sprite, all of it past the blob
+float getHeatBehind(float2 coord, float ownEyeZ, float halfDepth){
+    // the sky is drawn at the far end of the depth range, raw depth 0, and is left as it is
+    if (sampleSceneRawDepthMap(samplerBilinearClamp, coord) <= 0.0) {
+        return 0.0;
+    }
+    float sceneEyeZ = tex2DSampleLod(sceneDepthMap, samplerBilinearClamp, coord, 0).x;
+    return saturate((sceneEyeZ - ownEyeZ) / halfDepth);
+}
+]]>
+            </CodeInjection>
+            <CodeInjection position="FS_GLOBALS">
+<![CDATA[
+    float2 gHeatCoord;
+    float  gHeatShare;
+]]>
+            </CodeInjection>
+            <CodeInjection position="START_FS">
+<![CDATA[
+    globals.gHeatCoord = float2(0.0, 0.0);
+    globals.gHeatShare = 0.0;
+#if defined(ALPHA_BLENDED) && defined(REFRACTION_MAP) && GPU_PROFILE >= GPU_PROFILE_HIGH
+    // the gas fills the sprite out to 0.6 of its half size
+    float mGas = 1.0 - smoothstep(0.55, 1.0, length(2.0 * In.vs.defaultTexCoords - 1.0));
+
+    // the eddies are laid out in space, along the camera right and up axes, so that overlapping sprites agree
+    float3 mPosition = getWorldPosition(In);
+    float2 mPlane = float2(dot(mPosition, float3(invViewMatrix[0][0], invViewMatrix[1][0], invViewMatrix[2][0])),
+                           dot(mPosition, float3(invViewMatrix[0][1], invViewMatrix[1][1], invViewMatrix[2][1])));
+    // eddies of 2.5 cm, and of 7.5 cm drifting at 0.6 of the gas speed
+    mPlane -= object.heatOutlet.xy;
+    float2 mFine = (mPlane - object.heat.yz) * 40.0;
+    float2 mCoarse = (mPlane - 0.6 * object.heat.yz) * 13.333333;
+    float2 mDirection = float2(getHeatEddy(mFine) + getHeatEddy(mCoarse + float2(37.2, 11.7)),
+                               getHeatEddy(mFine + float2(19.4, 53.1)) + getHeatEddy(mCoarse + float2(71.9, 5.3)));
+
+    // 3.2 brings the rms of the two layers to 1
+    float2 mScreen = float2(viewportSize.x, viewportSize.y);
+    float2 mShift = 3.2 * object.heat.x * mGas * mDirection * float2(mScreen.y / mScreen.x, 1.0);
+    float2 mCoord = float2(In.vs.position.x, In.vs.position.y) / mScreen;
+    #if !defined(FLIP_TEXCOORD_Y)
+        mCoord.y = 1.0 - mCoord.y;
+        mShift.y = -mShift.y;
+    #endif
+
+    // the blob of gas is as deep as it is wide, 0.6 of the sprite, whose size in metres the screen derivatives give
+    float mSize = abs(ddx(mPlane.x)) / max(abs(ddx(In.vs.defaultTexCoords.x)), 0.000001);
+    float mHalfDepth = max(0.3 * mSize, 0.01);
+
+    // what stands behind the gas moves, the machine as the scenery, what stands in front of it never does
+    float mOwnEyeZ = convertDepthToEyeZ(In.vs.screenPosZ / In.vs.screenPosW);
+    float mBehind = getHeatBehind(mCoord, mOwnEyeZ, mHalfDepth);
+    mBehind = min(mBehind, getHeatBehind(mCoord + mShift * mBehind, mOwnEyeZ, mHalfDepth));
+    mShift *= mBehind;
+
+    globals.gHeatCoord = mCoord + mShift;
+    // the shifted image replaces the scene from a third of a pixel of shift up, and blends in below
+    globals.gHeatShare = saturate(3.0 * length(mShift * mScreen));
+#endif
+]]>
+            </CodeInjection>
+            <CodeInjection position="POST_MATERIAL_PROPERTIES_FS">
+<![CDATA[
+    // the gas reflects nothing: the scene behind it comes through whole
+    specularColor = float3(0.0, 0.0, 0.0);
+]]>
+            </CodeInjection>
+            <CodeInjection position="GET_REFRACTION_COLOR_TEX_FS">
+<![CDATA[
+#if defined(REFRACTION_MAP)
+    return tex2DSampleLod(refractionMap, samplerBilinearClamp, globals.gHeatCoord, 0).xyz;
+#endif
+    return float3(0.0, 0.0, 0.0);
+]]>
+            </CodeInjection>
+            <CodeInjection position="ALPHA_FS">
+<![CDATA[
+#if defined(ALPHA_BLENDED)
+    alpha = 0.0;
+#endif
+]]>
+            </CodeInjection>
+            <CodeInjection position="POST_ALPHA_FS">
+<![CDATA[
+#if defined(ALPHA_BLENDED)
+    // the shifted image replaces its share of the scene
+    refractingLightingScale = globals.gHeatShare;
+    reflectingLightingScale = 0.0;
+    alpha = globals.gHeatShare;
+#endif
+]]>
+            </CodeInjection>
+        </CodeInjections>
+    </LodLevel>
+</CustomShader>

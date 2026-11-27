@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Egenvikt"/>
         <text name="rms_hud_mass_towed" text="Släpvikt"/>
         <text name="rms_hud_mass_total" text="Totalvikt"/>
+        <text name="rms_hud_fuel_average" text="Snitt"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="Bakhjulsdrift (framaxeln urkopplad)"/>
         <text name="rms_drivetrain_mode_4wd" text="Fyrhjulsdrift (framaxeln inkopplad)"/>
         <text name="rms_drivetrain_mode_auto" text="Fyrhjulsdrift AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Kontrollera fordonet"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Drivläge"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differentialspärr"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parkeringsbroms"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Avgör huruvida mekaniska renoveringar på verkstaden slutförs omedelbart, även pågående renoveringar."/>
         <text name="rms_instantRemap_label" text="Omedelbar motoroptimering"/>
         <text name="rms_instantRemap_tooltip" text="Avgör huruvida motoroptimering och återställning till originalprogramvaran slutförs omedelbart, även pågående arbeten."/>
-        <text name="rms_debugMode_label" text="Felsökningsläge"/>
-        <text name="rms_debugMode_tooltip" text="Avgör huruvida felsökningsfönstret visas i maskinen du kör och konsolen får detaljerade loggar. Tangenten %s öppnar och stänger fönstret; i flerspelarläge ser bara administratörer det."/>
+        <text name="rms_debugWindow_label" text="Felsökningsfönster"/>
+        <text name="rms_debugWindow_tooltip" text="Avgör huruvida felsökningsfönstret visas i maskinen du kör. Tangenten %s öppnar det också; i flerspelarläge ser bara administratörer det."/>
+        <text name="rms_debugLog_label" text="Detaljerad logg"/>
+        <text name="rms_debugLog_tooltip" text="Avgör huruvida konsolen får de detaljerade loggarna från RMS att bifoga till en felrapport, utan att felsökningsfönstret öppnas."/>
         <text name="rms_warningMessages_label" text="Varningsmeddelanden"/>
         <text name="rms_warningMessages_tooltip" text="Avgör huruvida varningar som kall motor eller överhettning visas. Meddelanden om termisk effektbegränsning visas alltid."/>
         <text name="rms_serviceInterval_label" text="Avstånd mellan service"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Anger drifttimmarna efter vilka fordonets skick når 0 %; ju närmare det kommer, desto mindre pålitligt blir det och desto mer sjunker värdet. En ändring gäller framåt: fordonen behåller sitt skick, bara värdet räknas om."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Avgasrök"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Avgör huruvida avgasröken följer motorns verkliga skick: svart vid luftbrist, blå när olja bränns, vit när bränsle kommer ut oförbränt, tätare under belastning. Gamla maskiner ryker mycket mer än moderna."/>
-        <text name="rms_tutorialMode_label" text="Handledningsläge"/>
-        <text name="rms_tutorialMode_tooltip" text="Avgör huruvida handledningens tips visas under spelet."/>
-        <text name="rms_tutorialResetTips_label" text="Återställ tipsen"/>
-        <text name="rms_tutorialResetTips_text" text="Återställ"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Återställer historiken för handledningens tips: alla visas igen."/>
-        <text name="rms_tutorialResetConfirm_title" text="Återställa handledningstipsen?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Återställa historiken över handledningstips och visa alla tips igen?"/>
         <text name="rms_drivetrainEnabled_label" text="Styrning av fyrhjulsdrift och differentialspärr"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Avgör huruvida traktorers framaxel och differentialspärrar styrs manuellt. Inställningen ersätter differentialstyrningen i Enhanced Vehicle: slå av inställningen och slå sedan på differentialerna igen i dess meny för att lämna tillbaka styrningen."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Tillåt AUTO-drivläge"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Avgör huruvida väljaren erbjuder AUTO, som kopplar in framaxeln vid hjulspinn eller arbete under belastning och kopplar ur den på väg. När inställningen stängs av går fordon som står i AUTO över till fyrhjulsdrift."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Den här inställningen kräver att styrning av fyrhjulsdrift och differentialspärr är aktiverad."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkeringsbroms"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Avgör huruvida följda fordon har parkeringsbroms: automatisk på nyare maskiner med CVT- eller Powershift-transmission, med egen tangent på de övriga. Inställningen ersätter parkeringsbromsen i Enhanced Vehicle: slå av inställningen och slå på dess parkeringsbroms igen i dess meny för att lämna tillbaka den."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Underhållslogg"/>
         <text name="rms_ws_label_last_maintenance" text="Senaste underhåll"/>
         <text name="rms_ws_task_inspection" text="Inspektion"/>
-        <text name="rms_ws_task_maintenance" text="Underhåll"/>
         <text name="rms_ws_task_overhaul" text="Renovering"/>
         <text name="rms_ws_info_no_breakdowns" text="Inga fastställda fel. En inspektion eller en service fastställer dem som maskinen ännu inte visar."/>
         <text name="rms_ws_info_warning_unidentified" text="Varningslampa tänd: fel att fastställa. En inspektion eller en service fastställer det, sedan kan det repareras."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Anslut en vagns diagnosutrustning till maskinen."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Elektronisk diagnos krävs"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Demontering eller specialverktyg krävs"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Högspänningsutrustning krävs"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Högspänningsbehörig tekniker krävs"/>
         <text name="rms_ws_status_in_progress_format" text="%s pågår till %s"/>
         <text name="rms_ws_status_open" text="Verkstaden är öppen"/>
         <text name="rms_ws_status_closed" text="Verkstaden är stängd"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Beskrivning"/>
         <text name="rms_log_button_show_report" text="Visa rapport"/>
         <text name="rms_log_empty" text="Loggen är fortfarande tom"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Termiskt skydd: effektbegränsningen hävd"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Låg AdBlue-nivå: fyll på AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Mycket låg AdBlue-nivå: fyll på AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Mycket låg AdBlue-nivå: motoreffekten är reducerad. Fyll på AdBlue."/>
+        <text name="rms_adblue_empty_message" text="AdBlue-tanken är tom: fyll på AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue-tanken är tom: motoreffekten är kraftigt reducerad. Fyll på AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue påfyllt: motoreffekten är återställd."/>
         <text name="rms_breakdown_at_progress_message" text="pågår"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Varning! Motorn är kall: den slits tills den blivit varm."/>
         <text name="rms_spec_overheat_engine_message" text="Varning! Motorn överhettas."/>
         <text name="rms_spec_overheat_transmission_message" text="Varning! Transmissionen överhettas."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Motoroptimering"/>
         <text name="rms_spec_state_overdue" text="Överskridet"/>
         <text name="rms_spec_state_optimal" text="Optimalt"/>
-        <text name="rms_spec_state_broken" text="Havererat"/>
         <text name="rms_spec_state_bad" text="Dåligt"/>
         <text name="rms_spec_state_excellent" text="Utmärkt"/>
         <text name="rms_spec_state_good" text="Bra"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="spärr eller 4WD på fast mark"/>
         <text name="rms_warranty_filter" text="igensatt filter"/>
         <text name="rms_warranty_oil" text="olämplig motorolja"/>
+        <text name="rms_warranty_header_engagement" text="skärbord inkopplat över tomgång"/>
         <text name="rms_warranty_trailer" text="för tungt släp"/>
         <text name="rms_warranty_aftermarket_part" text="ooriginal del"/>
         <text name="rms_warranty_used_part" text="begagnad del"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Okulärbesiktning och funktionstest"/>
         <text name="rms_ws_inspection_electronic" text="Elektroniska fel"/>
         <text name="rms_ws_inspection_electronic_detail" text="Felkoder lästa med diagnosverktyget"/>
+        <text name="rms_ws_inspection_electrical" text="Elektriska fel"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Kretsar kontrollerade med multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Dolda defekter"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defekt del, nödreparation"/>
         <text name="rms_ws_inspection_report" text="Rapport"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Batteriet överhettas"/>
         <text name="rms_report_wear_lubrication" text="Försenad smörjning"/>
         <text name="rms_report_wear_pto_overload" text="Kraftuttag överbelastat"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Kardanvinkel"/>
         <text name="rms_report_wear_harvest_overload" text="Skörd överbelastad"/>
         <text name="rms_report_wear_harvest_flow" text="Stort spannmålsflöde"/>
         <text name="rms_report_wear_harvest_straw" text="Halmhack överbelastad"/>
         <text name="rms_report_wear_harvest_stones" text="Stenar"/>
         <text name="rms_report_wear_harvest_rice" text="Risskörd"/>
         <text name="rms_report_wear_harvest_wet" text="Fuktig gröda"/>
+        <text name="rms_report_wear_header_starts" text="Starter av skärbordet"/>
+        <text name="rms_report_wear_service_overdue" text="Underhållsintervall överskridet"/>
+        <text name="rms_report_wear_engine_overload" text="Motorn är överbelastad"/>
+        <text name="rms_report_wear_cold_engine" text="Kall motor"/>
+        <text name="rms_report_wear_fluid_level" text="Låg vätskenivå"/>
+        <text name="rms_report_wear_engine_overheat" text="Motorn överhettas"/>
+        <text name="rms_report_wear_lugging" text="Motor på för lågt varvtal"/>
+        <text name="rms_report_wear_wheel_slip" text="Hjulspinn"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Belastning i drivlinan"/>
+        <text name="rms_report_wear_cold_oil" text="Kall transmissionsolja"/>
+        <text name="rms_report_wear_transmission_overheat" text="Transmissionen överhettas"/>
+        <text name="rms_report_wear_wet_weather" text="Fuktigt väder"/>
+        <text name="rms_report_wear_cranking" text="Täta starter"/>
+        <text name="rms_report_wear_starter_heat" text="Startmotorn överhettas"/>
+        <text name="rms_report_wear_steering" text="Styrning vid stillastående"/>
+        <text name="rms_report_wear_park_brake" text="Parkeringsbroms"/>
+        <text name="rms_report_wear_low_fuel" text="Bränslereserv"/>
+        <text name="rms_report_wear_idle_deposit" text="Långvarig tomgång"/>
+        <text name="rms_report_wear_pto_engagement" text="Inkoppling av kraftuttag"/>
         <text name="rms_report_component_title" text="Komponent"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Aktuell effekt"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Begränsad utväxling"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Oregelbunden kraftöverföring"/>
         <text name="rms_report_transmission_failed" text="Havererad"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Fettspruta"/>
         <text name="rms_grease_gun_no_vehicle" text="Inget fordon inom smörjavstånd"/>
         <text name="rms_grease_gun_function" text="Smörjer maskinernas smörjnipplar. Laddas med en fettpatron."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorolja, för maskiner utan AdBlue och partikelfilter"/>
         <text name="rms_fluid_function_utto" text="Transmissions- och hydraulolja för manuell påfyllning"/>
         <text name="rms_fluid_function_coolant" text="Kylvätska för manuell påfyllning"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue till AdBlue-tanken på maskiner som har en"/>
         <text name="rms_fluid_pour_action" text="Fyll på: %s"/>
         <text name="rms_fluid_level_done" text="Nivå påfylld"/>
         <text name="rms_fluid_container_empty" text="Tom dunk"/>
         <text name="rms_fluid_drum_empty" text="Tomt fat"/>
+        <text name="rms_fluid_tank_empty" text="Tom tank"/>
         <text name="rms_fluid_container_label" text="Dunk"/>
         <text name="rms_fluid_drum_label" text="Fat"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Ta för att fylla på"/>
         <text name="rms_fluid_hand_carry" text="Bär dunken"/>
         <text name="rms_drum_pump_name" text="Batteridriven fatpump"/>
-        <text name="rms_drum_pump_function" text="Sätts på ett 200 L fat för att fylla maskiner med pistolen"/>
+        <text name="rms_drum_pump_function" text="Sätts på ett fat eller en tank för att fylla maskiner med pistolen"/>
         <text name="rms_drum_pump_mount" text="Sätt på fatet"/>
+        <text name="rms_drum_pump_mount_tank" text="Sätt på tanken"/>
         <text name="rms_drum_pump_take" text="Ta av pumpen"/>
         <text name="rms_drum_pump_nozzle_take" text="Ta pistolen"/>
         <text name="rms_drum_pump_nozzle_return" text="Häng tillbaka pistolen"/>
         <text name="rms_drum_pump_hose_range" text="Pumpens slang hindrar dig från att gå längre.&#10;Pistolen hängs tillbaka om %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Flytta fatet närmare: slangen är 4 m lång"/>
+        <text name="rms_drum_pump_tank_too_far" text="Flytta tanken närmare: slangen är 4 m lång"/>
         <text name="rms_drum_pump_required" text="Fatpump krävs"/>
         <text name="rms_fluid_level_under_gauge" text="Under skalan"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorolja"/>
         <text name="rms_fluid_circuit_coolant" text="Kylvätska"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue-tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmissionsolja"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulolja"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmissions- och hydraulolja"/>
         <text name="rms_fluid_hud_engineOil" text="Motorolja"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Transm./hydr.-olja"/>
         <text name="rms_fluid_hud_coolant" text="Kylvätska"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Olämplig vätska"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på motorn och göra den varmare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på kylsystemet och göra motorn varmare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på hydrauliken, göra den varmare och långsammare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Den här produkten är inte avsedd för den här kretsen. Den förorenar kretsen och kan upp till tredubbla slitaget på transmissionen och hydrauliken, göra dem varmare och göra hydrauliken långsammare. Bara ett fullständigt vätskebyte tar bort föroreningen. Fortsätta?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Olämplig motorolja"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Den här motorn använder AdBlue eller har partikelfilter: instruktionsboken kräver en olja som är gjord för dem. Med den här oljan kommer oljebytet upp till dubbelt så tidigt. Ett partikelfilter fylls dessutom med aska 1,5 gånger så snabbt. Fortsätta?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Den här motorn använder AdBlue eller har partikelfilter: den behöver en olja som är gjord för dem. Med den här oljan kommer oljebytet upp till dubbelt så tidigt. Ett partikelfilter fylls dessutom med aska 1,5 gånger så snabbt. Fortsätta?"/>
         <text name="rms_fluid_error_no_circuit" text="Det här fordonet behöver ingen påfyllning av vätska"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Det här fordonet har ingen AdBlue-tank"/>
         <text name="rms_fluid_error_motor_running" text="Stäng av motorn innan du överför vätska"/>
         <text name="rms_fluid_error_vehicle_moving" text="Fordonet måste stå stilla"/>
         <text name="rms_fluid_error_busy" text="En annan behållare fyller redan denna krets"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Något för lågt"/>
         <text name="rms_inspection_status_slightly_dirty" text="Lätt nedsmutsat"/>
         <text name="rms_inspection_status_grease_due" text="Behöver smörjas"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lätt fukt"/>
-        <text name="rms_inspection_status_seepage" text="Svettning"/>
-        <text name="rms_inspection_status_severe_leak" text="Kraftigt läckage"/>
         <text name="rms_inspection_status_low" text="Lågt"/>
         <text name="rms_inspection_status_very_low" text="Mycket lågt"/>
         <text name="rms_inspection_status_critically_low" text="Påfyllning brådskar"/>
         <text name="rms_inspection_status_critically_clogged" text="Helt igensatt"/>
         <text name="rms_inspection_status_dirty" text="Nedsmutsat"/>
         <text name="rms_inspection_status_grease_late" text="Försenad"/>
-        <text name="rms_inspection_status_active_leak" text="Aktivt läckage"/>
         <text name="rms_inspection_status_heavily_clogged" text="Kraftigt nedsmutsat"/>
         <text name="rms_inspection_status_not_required" text="Krävs inte"/>
         <text name="rms_inspection_status_change_overdue" text="Byte överskridet"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Kontroll"/>
         <text name="rms_fleet_location" text="Plats"/>
         <text name="rms_fleet_next_service" text="Nästa underhåll"/>
-        <text name="rms_fleet_remaining" text="%s h kvar"/>
-        <text name="rms_fleet_overdue" text="%s h försenat"/>
         <text name="rms_fleet_overdue_label" text="Försenat"/>
         <text name="rms_fleet_overdue_count" text="Försenat: %d"/>
         <text name="rms_fleet_due_soon_label" text="Snart"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Kraftigt slitage"/>
         <text name="rms_fleet_part_failed" text="Ur funktion"/>
         <text name="rms_fleet_part_unmeasured" text="Mätning saknas"/>
+        <text name="rms_fleet_part_replaced" text="Del bytt"/>
         <text name="rms_fleet_parts_reading" text="Delar uppmätta %s"/>
         <text name="rms_fleet_parts_need_complete" text="Delar mäts vid nästa fullständiga inspektion"/>
         <text name="rms_fleet_greasing_done" text="Smörjning klar"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Reparation"/>
         <text name="rms_sell_dialog_washing_penalty" text="Tvätt"/>
         <text name="rms_sell_dialog_deposit_refund" text="Återbetald deposition"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Låg vätskenivå"/>
-        <text name="rms_tutorial_fluid_level_message" text="En av vätskorna på den här maskinen har sjunkit under märket på sin mätare.&#10;&#10;Motorolja förbrukas med timmarna, och en sliten motor dricker långt mer av den. Kylvätska, transmissionsolja och hydraulolja sjunker bara vid ett läckage.&#10;&#10;Under märket ber maskinen bara om en påfyllning och arbetar fortfarande normalt. Ju lägre nivån blir, desto lättare suger pumpen luft i backar: oljetryckslampan blinkar, och på växellåds- eller hydraulsidan tjuter pumpen och de hydrauliska rörelserna blir långsammare. Varje minut på det sättet skadar vevaxellagren eller pumpen: stanna och fyll på nivån. En maskin som saknar kylvätska, transmissionsolja eller hydraulolja blir också varm.&#10;&#10;Köp en dunk med en lämplig produkt i butiken, ta med den till maskinen och fyll på nivån. Alla produkter för den kretsen har samma verkan; en felaktig vätska förorenar bara den kretsen. Hos återförsäljaren levereras och faktureras de liter som behövs."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Välkommen till Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Stäng av tipsen"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Slå på tipsen"/>
-        <text name="rms_tutorial_welcome_message" text="Den här modden gör om spelets system för skador och underhåll av fordon i grunden. Det är många ändringar, och därför dyker det upp handledningstips då och då. De hjälper dig att förstå de nya mekanikerna snabbare, undvika de vanliga misstagen och hålla dina maskiner fria från haverier.&#10;&#10;Om du vill kan du stänga av handledningstipsen med detsamma. Du kan alltid slå på dem igen senare i moddens inställningar, under Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Fuktigt väder"/>
-        <text name="rms_tutorial_wet_weather_message" text="Fukt skadar kablage och elektrisk utrustning. Slitaget på elsystemet stiger något i regn, snö eller hagel när en maskin står ute."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Hjulspinn"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Dina hjul spinner kraftigt. Hjulspinn är en av de mest förödande faktorerna för transmissionen och flyttar nästa verkstadsbesök märkbart närmare."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Underhåll i sikte"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s behöver snart service. Välj det rekommenderade paketet på verkstaden: det täcker arbetet som förfaller. Drifttimmar eller kalendertid utlöser service vid den första gränsen, även vid liten användning. Underhållsvänlighet visar ingreppens komplexitet; vanlig service kan fortfarande göras på en mobil verkstad."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Underhållsintervall överskridet"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Underhållsintervallet för %s är överskridet.&#10;&#10;Kör till en verkstad så snart som möjligt och välj ”Underhåll”. Fortsätter du att använda ett fordon med överskridet underhåll stiger risken för flera fel på en gång kraftigt."/>
-        <text name="rms_tutorial_steering_title" text="Styrning vid stillastående"/>
-        <text name="rms_tutorial_steering_message" text="Det är bäst att undvika att vrida ratten när maskinen står stilla. Det belastar styrningen och framaxelns delar hårt, vilket ökar slitaget på underredet.&#10;&#10;Kör en liten bit framåt innan du vrider: då vrider sig hjulen långt lättare."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Kylning och luftfilter"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Kylaren eller luftfiltret är igensatt. Håll in %s-tangenten medan du tittar på fordonet för att se vilket. Rengör det med tryckluftsblåsaren. Om filtret inte längre kan blåsas rent byter verkstaden det från service %s och uppåt."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Smörjning behövs"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s har smörjnipplar som behöver smörjas.&#10;&#10;I RMS har varje maskin smörjnipplarna från sin instruktionsbok. De behöver smörjas igen efter de dagar maskinen arbetar: varje arbetsdag, eller med några arbetsdagars mellanrum för dem som instruktionsboken smörjer mer sällan. Försenad smörjning ökar slitaget på chassit.&#10;&#10;Köp en fettspruta och patroner i butiken. Ställ dig framför en patron med fettsprutan i handen för att ladda den och sikta sedan på maskinen: varje klick smörjer en smörjnippel och om knappen hålls inne fortsätter smörjningen på nästa.&#10;&#10;Håll in %s-tangenten medan du tittar på fordonet för att se de återstående smörjnipplarna."/>
-        <text name="rms_tutorial_needs_repair_title" text="Fel hittat"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s har ett problem. En av delarna kan ha gått sönder.&#10;&#10;Kör till verkstaden: en inspektion, eller servicen om den är förfallen, fastställer felet. Vänta inte: felet kan bli värre, och reparationen blir dyrare med det.&#10;&#10;När felet är fastställt, låt reparera det på verkstaden."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Renovering behövs"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s bär tydligt spår av sin ålder. Det är dags att överväga ett byte eller en renovering. Det är en lång och dyr åtgärd, men det är enda sättet att ge maskinen sitt ursprungliga skick tillbaka.&#10;&#10;Livslängden ställs in i moddens inställningar: ju högre den är, desto långsammare slits dina fordon."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Ökad risk för fel"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Motorn, bränslesystemet eller kylsystemet på %s har ökad risk för fel.&#10;&#10;Service %s: justerar ventilerna och kontrollerar spridarna och termostaten, vilket sänker den risken."/>
-        <text name="rms_tutorial_age_degradation_title" text="Åldersbetingad försämring"/>
-        <text name="rms_tutorial_age_degradation_message" text="I RMS förlorar fordon efter hand en del av sin ursprungliga prestanda när de blir äldre.&#10;&#10;Efter ungefär en tredjedel av livslängden sänker det åldersbetingade slitaget enstaka viktiga egenskaper något, som effekt eller bromsverkan. Verkan förstärks sedan och blir tydligt synlig sist i livslängden.&#10;&#10;Den här försämringen går att stänga av i moddens inställningar."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Förbrukningsmaterial av dålig kvalitet"/>
-        <text name="rms_tutorial_poor_consumables_message" text="%s fick ett defekt filter vid sitt senaste underhåll. Det händer med de billiga kvaliteterna.&#10;&#10;Filtret släpper igenom smuts: kretsen det skyddar slits snabbare tills filtret byts. Ett nytt underhåll byter det. Bara en fullständig inspektion pekar ut det."/>
-        <text name="rms_tutorial_poor_parts_title" text="Delar av dålig kvalitet"/>
-        <text name="rms_tutorial_poor_parts_message" text="%s fick en del av dålig kvalitet vid en reparation. Felet kommer sannolikt tillbaka snart.&#10;&#10;Du kan vänta på att det kommer igen, eller köra en fullständig inspektion, som tillförlitligt pekar ut den del det gäller."/>
-        <text name="rms_tutorial_park_brake_title" text="Parkeringsbroms"/>
-        <text name="rms_tutorial_park_brake_message" text="Parkeringsbromsen är åtdragen. Den dras åt av sig själv så snart du lämnar den stillastående maskinen, och släpper så snart du gasar igen. Den dras också åt när du stänger av motorn, eller efter 45 sekunders stillastående.&#10;&#10;I en backe är det den som hindrar maskinen från att rulla i väg av sig själv."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Parkeringsbromsen är åtdragen. Det är du som drar åt och släpper den med dess egen tangent: gasar du med bromsen åtdragen arbetar maskinen mot den och bromsarna slits.&#10;&#10;I en backe är det den som hindrar maskinen från att rulla i väg av sig själv: lämnar du maskinen utan att dra åt den kan den rulla i väg."/>
-        <text name="rms_tutorial_preheat_title" text="Förvärmning av dieselmotor"/>
-        <text name="rms_tutorial_preheat_message" text="På en kall dieselmotor slår ett tryck på startreglaget på tändningen och startar förvärmningen automatiskt. Lamporna i instrumentpanelet tänds kort, och sedan fortsätter förvärmningslampan att lysa tills motorn är klar. Upprepa inte kommandot: startmotorn kopplar in av sig själv när lampan slocknar."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Inkoppling av kraftuttag"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Koppla in kraftuttaget på tomgång och höj sedan varvtalet: inkoppling på högt varvtal ger hela drivlinan en stöt, särskilt med ett tungt redskap. Varje inkoppling sliter också på kopplingen."/>
-        <text name="rms_tutorial_pto_raised_title" text="Kraftuttag och lyft redskap"/>
-        <text name="rms_tutorial_pto_raised_message" text="Att köra kraftuttaget med redskapet lyft får kardanaxlarna att arbeta i skarp vinkel och sliter dem snabbt. Stäng av kraftuttaget innan du lyfter redskapet för transport."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Tomgång och stillestånd"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Slitaget är långt lägre när maskinen går utan att arbeta. Med motorn avstängd blir det minimalt. Under tak försvinner det helt."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Långvarig tomgång"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Maskinen verkar ha stått för länge på tomgång. Långa perioder på tomgång slösar inte bara bränsle: med tiden gynnar de också avlagringar i bränslesystemet och skadar motorns allmänna skick.&#10;&#10;Behöver du inte maskinen just nu är det bättre att stänga av motorn."/>
-        <text name="rms_tutorial_hot_weather_title" text="Varmt väder"/>
-        <text name="rms_tutorial_hot_weather_message" text="Det är mycket varmt i dag. Håll ett öga på hur ren kylaren är i det här vädret, och undvik att överbelasta motorn, annars är överhettning bara en tidsfråga.&#10;&#10;Du kan se kylarens skick: håll in %s-tangenten medan du tittar på maskinen. Rengöringen görs med tryckluftsblåsaren."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="För tungt släp"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Den dragna lasten verkar för tung för det här fordonet. Du kan köra vidare, men transmissionen och drivlinan blir mer belastade.&#10;&#10;RMS använder två riktmärken: en traktor behöver minst 10 hk per ton dragen massa, medan en lastbil behöver minst 6 hk per ton total tågvikt. Under det gällande värdet och vid hög motorbelastning stiger slitaget på transmissionen."/>
-        <text name="rms_tutorial_hard_start_title" text="Svår start"/>
-        <text name="rms_tutorial_hard_start_message" text="Motorn i %s är svår att starta. Ett svagt batteri, frost, ett mekaniskt fel eller slitage på startmotorn kan vara orsaken.&#10;&#10;Elsystemet belastas hårt vid start på grund av de höga startströmmarna."/>
-        <text name="rms_tutorial_low_fuel_title" text="Bränslereserv"/>
-        <text name="rms_tutorial_low_fuel_message" text="Tanken närmar sig reserven. Ju mindre bränsle det finns kvar, desto hårdare måste bränslepumpen arbeta för att suga upp det, och tankens botten skickar vatten och bottensats till filtret, som sätts igen snabbare.&#10;&#10;Fyll hellre tanken i slutet av dagen: I en full tank bildas mindre kondens."/>
-        <text name="rms_tutorial_lugging_title" text="Motor på för lågt varvtal"/>
-        <text name="rms_tutorial_lugging_message" text="Motorn, och särskilt transmissionen, far illa på för lågt varvtal, alltså låga varv under hög belastning. Det påkopplade redskapet är kanske för tungt för maskinen, eller den ilagda växeln är inte den rätta om lådan är manuell."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Motorn överhettas"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Motorn börjar överhettas. Det kan bero på en eller flera saker: motorn är hårt belastad, kylaren är nedsmutsad, vädret är varmt, eller fordonets kylsystem har ett fel.&#10;&#10;Var uppmärksam: överhettning är en av de mest förödande faktorerna för en maskin. Den skadar inte bara motorn: kylsystemet arbetar på sin gräns, och värmen i motorrummet snabbar på nedbrytningen av kablage och elektriska komponenter."/>
-        <text name="rms_tutorial_engine_overload_title" text="Motorn är överbelastad"/>
-        <text name="rms_tutorial_engine_overload_message" text="Motorn är mycket hårt belastad. Uppgiften är kanske för tung för den här maskinen och kräver ett kraftigare fordon, eller så räcker det att sänka farten för att lätta belastningen.&#10;&#10;Hur som helst stiger slitaget märkbart under den här belastningen."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Läs röken"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Röken från den här maskinen är inte till för syns skull: färgen är en diagnos.&#10;&#10;Svart rök betyder att motorn får mer bränsle än luft: en kraftig acceleration innan turboaggregatet kommit upp i varv, en motor som drar på för lågt varvtal, en överbelastning, ett igensatt luftfilter, ett slitet turboaggregat eller en sliten insprutning. Blå rök betyder en sliten motor som bränner sin egen olja. Vit rök betyder bränsle som slipper ut oförbränt.&#10;&#10;Rökplymen växer också med det arbete motorn utför. Äldre maskiner ryker mycket mer än nyare, och det är normalt."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT:n överhettas"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="CVT-transmissionen börjar överhettas. Det kan bero på för hög belastning, en nedsmutsad kylare, mycket varmt väder eller ett fel i transmissionens kylkrets. En för tung plog eller ett överlastat släp räcker för att leda dit.&#10;&#10;Var uppmärksam: överhettning är en av de mest förödande faktorerna för en CVT-transmission."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Chassit är belastat"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Att köra fort i ojämn terräng sliter snabbt på underredet på %s. Dessa stötar skadar också kablaget och dess kontakter, och hydrauliken när ett tungt redskap är lyft.&#10;&#10;Sänk farten på ojämnt underlag."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Hårt slag"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Underredet har just fått ett hårt slag. Ett hinder som stoppar maskinen tvärt eller bromsar den kraftigt sliter på chassit direkt och för dess nästa skada närmare, oftast i styrningen eller hjullagren.&#10;&#10;Sänk farten före hinder."/>
-        <text name="rms_tutorial_cranking_title" text="Täta starter"/>
-        <text name="rms_tutorial_cranking_message" text="Motorn startas för ofta. Varje start skickar en mycket hög ström genom elsystemet, vilket snabbar på slitaget på kablage, startmotor och de övriga elektriska komponenterna.&#10;&#10;Undvik att stänga av motorn vid korta avbrott."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritiskt fel"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s kan inte längre ta sig fram för egen maskin.&#10;&#10;En mobil verkstad gör en nödreparation möjlig, tillräckligt för att maskinen själv ska nå fram till verkstaden. Annars måste den bärgas på annat sätt."/>
-        <text name="rms_tutorial_cold_engine_title" text="Kall motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Låt motorn komma upp i temperatur så småningom innan du belastar den hårt. Använd måttlig gas och måttliga varv tills den når sin arbetstemperatur."/>
-        <text name="rms_tutorial_cold_oil_title" text="Kall transmissionsolja"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmissions- och hydrauloljan blir varm långt långsammare än motorn. Undvik tungt arbete så länge oljan är kall; värm upp den gradvis genom att köra lugnt och använda hydrauliken lätt."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Transmissionen överhettas"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Transmissionsoljan börjar överhettas. Det kan bero på för tung belastning, en nedsmutsad kylare, mycket varmt väder eller ett fel i transmissionens kylning.&#10;&#10;Transmissionsoljan blir varm på alla maskiner, inte bara på en CVT. För varm olja sliter på växellådan och förstör dess tätningar."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Varning för överbelastning"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s är hårt belastad. Lampan som just tändes i instrumentpanelen gör dig uppmärksam på det.&#10;&#10;Maskinen har kanske inte tillräckligt med effekt för den aktuella uppgiften. Försök sänka belastningen: begränsa farten med farthållaren, eller släpp gasen något i stället för att köra för full kraft."/>
-        <text name="rms_tutorial_battery_low_title" text="Svagt batteri"/>
-        <text name="rms_tutorial_battery_low_message" text="Batteriet i den här maskinen är på väg att laddas ur helt. Det händer efter lång tids stillestånd, i sträng kyla eller på grund av ett fel i elsystemet.&#10;&#10;Vid låg laddning blir starten först svår och sedan omöjlig. Då kan du starta motorn från ett annat fordon med startkablarna. Koppla från batteriet med huvudströmbrytaren före lång tids stillestånd, eller om det laddas ur av sig självt, till fots framför maskinen."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Belastning i drivlinan"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Du svänger på ett underlag med bra grepp med differentialspärren aktiverad. I en kurva rullar de inre och yttre hjulen olika sträckor, men differentialspärren tvingar dem att gå med samma hastighet: drivlinan kommer under belastning, och slitaget på den stiger. Avaktivera spärren innan du svänger."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Drivlägen och differentialspärr"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Den här maskinen låter dig välja sin drift: bakhjulsdrift, fyrhjulsdrift eller AUTO, som kopplar in framaxeln så snart hjulen spinner.&#10;&#10;Differentialspärren hittar grepp där det inte finns något kvar, men den kostar dyrt i kurvor på underlag med bra grepp: de inre och yttre hjulen kan inte gå med samma hastighet, och det är drivlinan som tar smällen. Avaktivera den innan du svänger."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Med Realistic Mechanical Systems slits dina maskiner och går sönder som riktiga maskiner. Tre regler räcker för att spela utan ständiga haverier:&#10;&#10;1. Gör servicen i tid. Mekanisk översikt i spelmenyn visar nästa service för varje maskin.&#10;2. Förbered dina maskiner varje dag. Håll ned %s vid en maskin för att kontrollera den: vätskenivåer, kylare, luftfilter, smörjning. Rengör kylare och luftfilter med tryckluftsblåsaren och smörj maskinerna med fettsprutan. Dina redskap och släp behöver också smörjas: Mekanisk översikt visar vilka som står på tur. Tryckluftsblåsare, fettspruta och fettpatroner finns i butiken under kategorin Underhåll.&#10;3. Skona dina maskiner: överbelastning, överhettning, arbete med kall motor och hjulspinn sliter på dem.&#10;&#10;Om spelet känns för svårt, höj Fordonets livslängd och Avstånd mellan service under fliken RMS-INSTÄLLNINGAR i Mekanisk översikt."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin-laddare på vagn, 150 A vid 12 V, 80 A vid 24 V. Anslut den nära fordonet för att ladda batteriet med den ström det kan ta emot eller för att ge starthjälp (START, 200 A vid 12 V). Laddningen följer spelets tidshastighet."/>
         <text name="rms_diagnostic_configuration" text="Diagnosutrustning"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Reparationstid:"/>
         <text name="rms_diagnostic_where_label" text="Var den repareras:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobil eller egen verkstad med ansluten diagnosutrustning, eller återförsäljare"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Egen verkstad eller återförsäljare"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Återförsäljare"/>
         <text name="rms_diagnostic_note_inspection" text="Den här koden anger vad maskinen mäter, inte vilken del som är defekt: en inspektion hittar den."/>
+        <text name="rms_diagnostic_note_adblue" text="Den här koden anger låg nivå i AdBlue-tanken: påfyllning av AdBlue raderar den."/>
         <text name="rms_diagnostic_note_uncoded" text="En inspektion av maskinen hittar den berörda delen."/>
         <text name="rms_diagnostic_uncoded" text="Varningslampa tänd utan sparad kod. Ingen givare övervakar den berörda delen."/>
         <text name="rms_diagnostic_uncoded_title" text="Lampa utan kod"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Kylvätskenivå"/>
         <text name="rms_diagnostic_spn_1639" text="Fläkthastighet"/>
         <text name="rms_diagnostic_spn_168" text="Batterispänning"/>
-        <text name="rms_diagnostic_spn_677" text="Startrelä"/>
+        <text name="rms_diagnostic_spn_676" text="Glödrelä"/>
         <text name="rms_diagnostic_spn_167" text="Laddspänning"/>
         <text name="rms_diagnostic_spn_157" text="Common rail-tryck"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue-tanknivå"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue-pump"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue-doseringsspridare"/>
         <text name="rms_diagnostic_spn_3216" text="NOx-givare före katalysatorn"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Defekt enhet eller komponent"/>
         <text name="rms_diagnostic_fmi_14" text="Särskilda anvisningar"/>
         <text name="rms_diagnostic_fmi_16" text="Data över normalt område (måttligt allvarlig nivå)"/>
+        <text name="rms_diagnostic_fmi_17" text="Data under normalt område (minst allvarliga nivå)"/>
         <text name="rms_diagnostic_fmi_18" text="Data under normalt område (måttligt allvarlig nivå)"/>
         <text name="rms_diagnostic_fmi_31" text="Tillstånd föreligger"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="defekt komponent"/>
         <text name="rms_dashboard_fmi_14" text="ingrepp krävs"/>
         <text name="rms_dashboard_fmi_16" text="högt värde"/>
+        <text name="rms_dashboard_fmi_17" text="något lågt värde"/>
         <text name="rms_dashboard_fmi_18" text="lågt värde"/>
         <text name="rms_dashboard_fmi_31" text="fel föreligger"/>
         <text name="rms_diagnostic_log_title" text="Kodavläsning"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starthjälp (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Ladda batteriet"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Koppla från batteriet"/>
         <text name="rms_battery_isolator_restore" text="Koppla in batteriet igen"/>
         <text name="rms_battery_isolator_open" text="Batteriet är frånkopplat. Koppla in det igen med huvudströmbrytaren, till fots framför fordonet."/>

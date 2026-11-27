@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Veicolo"/>
         <text name="rms_hud_mass_towed" text="Agganciato"/>
-        <text name="rms_hud_mass_total" text="Totale"/>
+        <text name="rms_hud_mass_total" text="Tot."/>
+        <text name="rms_hud_fuel_average" text="Media"/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2RM"/>
         <text name="rms_hud_drive_4wd" text="4RM"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2RM (assale anteriore disinserito)"/>
         <text name="rms_drivetrain_mode_4wd" text="4RM (assale anteriore inserito)"/>
         <text name="rms_drivetrain_mode_auto" text="4RM AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Controlla il veicolo"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Modalità di trazione"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Blocco differenziale"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Freno di stazionamento"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Stabilisce se le revisioni meccaniche in officina terminano all'istante, comprese quelle in corso."/>
         <text name="rms_instantRemap_label" text="Rimappatura motore istantanea"/>
         <text name="rms_instantRemap_tooltip" text="Stabilisce se la rimappatura motore e il ritorno all&apos;originale terminano all&apos;istante, compresi quelli in corso."/>
-        <text name="rms_debugMode_label" text="Modalità debug"/>
-        <text name="rms_debugMode_tooltip" text="Stabilisce se la finestra di debug appare nella macchina che guidi e se la console riceve registri dettagliati. Il tasto %s la apre e la chiude; in multigiocatore, la vedono solo gli amministratori."/>
+        <text name="rms_debugWindow_label" text="Finestra di debug"/>
+        <text name="rms_debugWindow_tooltip" text="Stabilisce se la finestra di debug appare nella macchina che guidi. Anche il tasto %s la apre; in multigiocatore, la vedono solo gli amministratori."/>
+        <text name="rms_debugLog_label" text="Registro dettagliato"/>
+        <text name="rms_debugLog_tooltip" text="Stabilisce se la console riceve i registri dettagliati di RMS, da allegare a una segnalazione di bug, senza aprire la finestra di debug."/>
         <text name="rms_warningMessages_label" text="Messaggi di avviso"/>
         <text name="rms_warningMessages_tooltip" text="Stabilisce se vengono mostrati avvisi come motore freddo o surriscaldamento. I messaggi di limitazione termica della potenza restano sempre visibili."/>
         <text name="rms_serviceInterval_label" text="Distanza tra manutenzioni"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Definisce le ore di funzionamento dopo le quali lo stato del veicolo raggiunge lo 0%; più si avvicina, meno è affidabile e più scende il suo valore. Una modifica vale da quel momento: i veicoli mantengono il loro stato, viene ricalcolato solo il valore."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Fumo di scarico"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Stabilisce se il fumo di scarico segue lo stato reale del motore: nero quando manca aria, blu quando brucia olio, bianco quando esce carburante incombusto, più denso sotto sforzo. Le macchine vecchie fumano molto più di quelle moderne."/>
-        <text name="rms_tutorialMode_label" text="Modalità tutorial"/>
-        <text name="rms_tutorialMode_tooltip" text="Stabilisce se i consigli del tutorial vengono mostrati durante il gioco."/>
-        <text name="rms_tutorialResetTips_label" text="Reimposta suggerimenti"/>
-        <text name="rms_tutorialResetTips_text" text="Reimposta"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Reimposta la cronologia dei consigli del tutorial: verranno mostrati tutti di nuovo."/>
-        <text name="rms_tutorialResetConfirm_title" text="Reimpostare i suggerimenti del tutorial?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Reimpostare la cronologia dei suggerimenti tutorial e mostrarli di nuovo tutti?"/>
         <text name="rms_drivetrainEnabled_label" text="Gestione della trazione 4RM e del blocco del differenziale"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Stabilisce se l'assale anteriore e i bloccaggi del differenziale dei trattori si comandano a mano. L'opzione sostituisce la gestione dei differenziali di Enhanced Vehicle: per restituirgliela, disattiva l'opzione e riattiva i differenziali nel suo menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Consenti modalità AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Stabilisce se il selettore offre la posizione AUTO, che inserisce l'assale anteriore quando le ruote slittano o nel lavoro sotto carico e lo disinserisce su strada. Disattivandola, i veicoli lasciati in AUTO tornano in 4RM."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Questa impostazione richiede l'attivazione della gestione della trazione 4RM e del blocco del differenziale."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Freno di stazionamento"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Stabilisce se i veicoli monitorati hanno un freno di stazionamento: automatico sulle macchine recenti con cambio CVT o Powershift, con il suo tasto sulle altre. L'opzione sostituisce il freno di stazionamento di Enhanced Vehicle: per restituirglielo, disattiva l'opzione e riattiva il suo freno di stazionamento nel suo menu."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Registro di manutenzione"/>
         <text name="rms_ws_label_last_maintenance" text="Ultima manutenzione"/>
         <text name="rms_ws_task_inspection" text="Ispezione"/>
-        <text name="rms_ws_task_maintenance" text="Manutenzione"/>
         <text name="rms_ws_task_overhaul" text="Revisione"/>
         <text name="rms_ws_info_no_breakdowns" text="Nessun guasto identificato. Un'ispezione o una manutenzione identifica quelli che la macchina non mostra ancora."/>
         <text name="rms_ws_info_warning_unidentified" text="Spia accesa: guasto da identificare. Un'ispezione o una manutenzione lo identifica, poi si può riparare."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Collega alla macchina lo strumento di diagnosi di un carrello."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Diagnosi elettronica necessaria"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Smontaggio o attrezzatura specializzata necessari"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Attrezzatura per alta tensione necessaria"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Tecnico abilitato all'alta tensione necessario"/>
         <text name="rms_ws_status_in_progress_format" text="%s in corso fino alle %s"/>
         <text name="rms_ws_status_open" text="L'officina è aperta"/>
         <text name="rms_ws_status_closed" text="L'officina è chiusa"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Descrizione"/>
         <text name="rms_log_button_show_report" text="Mostra rapporto"/>
         <text name="rms_log_empty" text="Il registro è vuoto"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Protezione termica: limitazione di potenza rimossa"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Livello AdBlue basso: rifornire AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Livello AdBlue molto basso: rifornire AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Livello AdBlue molto basso: potenza del motore ridotta. Rifornire AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Serbatoio AdBlue vuoto: rifornire AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Serbatoio AdBlue vuoto: potenza del motore fortemente ridotta. Rifornire AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue rifornito: potenza del motore ripristinata."/>
         <text name="rms_breakdown_at_progress_message" text="in corso"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Attenzione! Motore freddo: si usura finché non si scalda."/>
         <text name="rms_spec_overheat_engine_message" text="Attenzione! Surriscaldamento del motore."/>
         <text name="rms_spec_overheat_transmission_message" text="Attenzione! Surriscaldamento della trasmissione."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Rimappatura motore"/>
         <text name="rms_spec_state_overdue" text="Scaduto"/>
         <text name="rms_spec_state_optimal" text="Ottimale"/>
-        <text name="rms_spec_state_broken" text="Guasto"/>
         <text name="rms_spec_state_bad" text="Scarso"/>
         <text name="rms_spec_state_excellent" text="Eccellente"/>
         <text name="rms_spec_state_good" text="Buono"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="blocco o 4RM su fondo duro"/>
         <text name="rms_warranty_filter" text="filtro intasato"/>
         <text name="rms_warranty_oil" text="olio motore non adatto"/>
+        <text name="rms_warranty_header_engagement" text="testata innestata sopra il minimo"/>
         <text name="rms_warranty_trailer" text="rimorchio troppo pesante"/>
         <text name="rms_warranty_aftermarket_part" text="ricambio compatibile"/>
         <text name="rms_warranty_used_part" text="ricambio usato"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Esame visivo e prova delle funzioni"/>
         <text name="rms_ws_inspection_electronic" text="Guasti elettronici"/>
         <text name="rms_ws_inspection_electronic_detail" text="Codici di errore letti con lo strumento di diagnosi"/>
+        <text name="rms_ws_inspection_electrical" text="Guasti elettrici"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuiti controllati con il multimetro"/>
         <text name="rms_ws_inspection_dormant" text="Difetti latenti"/>
         <text name="rms_ws_inspection_dormant_detail" text="Pezzo difettoso, riparazione provvisoria"/>
         <text name="rms_ws_inspection_report" text="Rapporto"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Surriscaldamento della batteria"/>
         <text name="rms_report_wear_lubrication" text="Ingrassaggio in ritardo"/>
         <text name="rms_report_wear_pto_overload" text="Sovraccarico della PTO"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Angolo del cardano"/>
         <text name="rms_report_wear_harvest_overload" text="Sovraccarico della raccolta"/>
         <text name="rms_report_wear_harvest_flow" text="Flusso di granella elevato"/>
         <text name="rms_report_wear_harvest_straw" text="Trinciapaglia sovraccarico"/>
         <text name="rms_report_wear_harvest_stones" text="Sassi"/>
         <text name="rms_report_wear_harvest_rice" text="Raccolta del riso"/>
         <text name="rms_report_wear_harvest_wet" text="Raccolto umido"/>
+        <text name="rms_report_wear_header_starts" text="Avviamenti della testata"/>
+        <text name="rms_report_wear_service_overdue" text="Intervallo di manutenzione scaduto"/>
+        <text name="rms_report_wear_engine_overload" text="Sovraccarico del motore"/>
+        <text name="rms_report_wear_cold_engine" text="Motore freddo"/>
+        <text name="rms_report_wear_fluid_level" text="Livello del fluido basso"/>
+        <text name="rms_report_wear_engine_overheat" text="Surriscaldamento del motore"/>
+        <text name="rms_report_wear_lugging" text="Motore sotto sforzo a basso regime"/>
+        <text name="rms_report_wear_wheel_slip" text="Slittamento delle ruote"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Sollecitazione della trasmissione"/>
+        <text name="rms_report_wear_cold_oil" text="Olio della trasmissione freddo"/>
+        <text name="rms_report_wear_transmission_overheat" text="Surriscaldamento della trasmissione"/>
+        <text name="rms_report_wear_wet_weather" text="Tempo umido"/>
+        <text name="rms_report_wear_cranking" text="Avviamenti frequenti"/>
+        <text name="rms_report_wear_starter_heat" text="Motorino d'avviamento surriscaldato"/>
+        <text name="rms_report_wear_steering" text="Sterzare da fermo"/>
+        <text name="rms_report_wear_park_brake" text="Freno di stazionamento"/>
+        <text name="rms_report_wear_low_fuel" text="Riserva di carburante"/>
+        <text name="rms_report_wear_idle_deposit" text="Minimo prolungato"/>
+        <text name="rms_report_wear_pto_engagement" text="Innesto della PTO"/>
         <text name="rms_report_component_title" text="Componente"/>
         <text name="rms_report_system_condition_transmission" text="Trasmissione"/>
         <text name="rms_report_system_condition_power" text="Potenza attuale"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Rapporto ridotto"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Trasmissione irregolare"/>
         <text name="rms_report_transmission_failed" text="Guasta"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Pistola ingrassatrice"/>
         <text name="rms_grease_gun_no_vehicle" text="Nessun veicolo nel raggio di ingrassaggio"/>
         <text name="rms_grease_gun_function" text="Ingrassa gli ingrassatori delle macchine. Si carica con una cartuccia di grasso."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Olio motore, per macchine senza AdBlue né filtro antiparticolato"/>
         <text name="rms_fluid_function_utto" text="Olio per trasmissione e impianto idraulico per il rabbocco manuale"/>
         <text name="rms_fluid_function_coolant" text="Liquido di raffreddamento per il rabbocco manuale"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue per il serbatoio AdBlue delle macchine che ne hanno uno"/>
         <text name="rms_fluid_pour_action" text="Versa: %s"/>
         <text name="rms_fluid_level_done" text="Livello ripristinato"/>
         <text name="rms_fluid_container_empty" text="Tanica vuota"/>
         <text name="rms_fluid_drum_empty" text="Fusto vuoto"/>
+        <text name="rms_fluid_tank_empty" text="Cisternetta vuota"/>
         <text name="rms_fluid_container_label" text="Tanica"/>
         <text name="rms_fluid_drum_label" text="Fusto"/>
+        <text name="rms_fluid_tank_label" text="Cisternetta"/>
         <text name="rms_fluid_hand_take" text="Prendi per versare"/>
         <text name="rms_fluid_hand_carry" text="Porta la tanica"/>
         <text name="rms_drum_pump_name" text="Pompa per fusti a batteria"/>
-        <text name="rms_drum_pump_function" text="Si monta su un fusto da 200 L per riempire le macchine con la pistola"/>
+        <text name="rms_drum_pump_function" text="Si monta su un fusto o una cisternetta per riempire le macchine con la pistola"/>
         <text name="rms_drum_pump_mount" text="Monta sul fusto"/>
+        <text name="rms_drum_pump_mount_tank" text="Monta sulla cisternetta"/>
         <text name="rms_drum_pump_take" text="Riprendi la pompa"/>
         <text name="rms_drum_pump_nozzle_take" text="Prendi la pistola"/>
         <text name="rms_drum_pump_nozzle_return" text="Riaggancia la pistola"/>
         <text name="rms_drum_pump_hose_range" text="Il tubo della pompa ti impedisce di andare oltre.&#10;La pistola verrà riagganciata tra %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Avvicina il fusto: il tubo misura 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Avvicina la cisternetta: il tubo misura 4 m"/>
         <text name="rms_drum_pump_required" text="Pompa per fusti necessaria"/>
         <text name="rms_fluid_level_under_gauge" text="Sotto la scala"/>
         <text name="rms_fluid_circuit_engineOil" text="Olio motore"/>
         <text name="rms_fluid_circuit_coolant" text="Liquido di raffreddamento"/>
+        <text name="rms_fluid_circuit_adBlue" text="Serbatoio AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Olio della trasmissione"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Olio idraulico"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Olio della trasmissione e idraulico"/>
         <text name="rms_fluid_hud_engineOil" text="Olio motore"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Olio trasm./idraul."/>
         <text name="rms_fluid_hud_coolant" text="Liq. raffreddamento"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Fluido incompatibile"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura del motore e aumentarne il riscaldamento. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura del sistema di raffreddamento e aumentare il riscaldamento del motore. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura dell'impianto idraulico, aumentarne il riscaldamento e rallentarlo. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Questo prodotto non è previsto per questo circuito. Contaminerà la miscela e potrà arrivare a triplicare l'usura della trasmissione e dell'impianto idraulico, aumentarne il riscaldamento e rallentare l'impianto idraulico. Solo una sostituzione completa del fluido eliminerà la contaminazione. Continuare?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Olio motore non adatto"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Questo motore usa AdBlue o ha un filtro antiparticolato: il suo manuale richiede un olio fatto per questi sistemi. Con questo olio, il cambio dell'olio arriverà fino a due volte prima. Inoltre un filtro antiparticolato si riempie di cenere 1,5 volte più in fretta. Continuare?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Questo motore usa AdBlue o ha un filtro antiparticolato: gli serve un olio fatto per questi sistemi. Con questo olio, il cambio dell'olio arriverà fino a due volte prima. Inoltre un filtro antiparticolato si riempie di cenere 1,5 volte più in fretta. Continuare?"/>
         <text name="rms_fluid_error_no_circuit" text="Questo veicolo non richiede alcun rabbocco di fluido"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Questo veicolo non ha un serbatoio AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Spegni il motore prima di travasare il fluido"/>
         <text name="rms_fluid_error_vehicle_moving" text="Il veicolo deve essere fermo"/>
         <text name="rms_fluid_error_busy" text="Un altro contenitore sta già riempiendo questo circuito"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Leggermente basso"/>
         <text name="rms_inspection_status_slightly_dirty" text="Leggermente ostruito"/>
         <text name="rms_inspection_status_grease_due" text="Da ingrassare"/>
-        <text name="rms_inspection_status_slight_moisture" text="Leggera umidità"/>
-        <text name="rms_inspection_status_seepage" text="Trafilamento"/>
-        <text name="rms_inspection_status_severe_leak" text="Perdita grave"/>
         <text name="rms_inspection_status_low" text="Basso"/>
         <text name="rms_inspection_status_very_low" text="Molto basso"/>
         <text name="rms_inspection_status_critically_low" text="Rabbocco urgente"/>
         <text name="rms_inspection_status_critically_clogged" text="Totalmente ostruito"/>
         <text name="rms_inspection_status_dirty" text="Ostruito"/>
         <text name="rms_inspection_status_grease_late" text="In ritardo"/>
-        <text name="rms_inspection_status_active_leak" text="Perdita attiva"/>
         <text name="rms_inspection_status_heavily_clogged" text="Fortemente ostruito"/>
         <text name="rms_inspection_status_not_required" text="Non richiesto"/>
         <text name="rms_inspection_status_change_overdue" text="Cambio scaduto"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Controllo"/>
         <text name="rms_fleet_location" text="Posizione"/>
         <text name="rms_fleet_next_service" text="Prossima manutenzione"/>
-        <text name="rms_fleet_remaining" text="%s h rimanenti"/>
-        <text name="rms_fleet_overdue" text="%s h di ritardo"/>
         <text name="rms_fleet_overdue_label" text="In ritardo"/>
         <text name="rms_fleet_overdue_count" text="In ritardo: %d"/>
         <text name="rms_fleet_due_soon_label" text="A breve"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Usura avanzata"/>
         <text name="rms_fleet_part_failed" text="Fuori uso"/>
         <text name="rms_fleet_part_unmeasured" text="Nessun rilievo"/>
+        <text name="rms_fleet_part_replaced" text="Pezzo sostituito"/>
         <text name="rms_fleet_parts_reading" text="Pezzi rilevati %s"/>
         <text name="rms_fleet_parts_need_complete" text="Pezzi rilevati alla prossima ispezione completa"/>
         <text name="rms_fleet_greasing_done" text="Ingrassaggio in regola"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Riparazione"/>
         <text name="rms_sell_dialog_washing_penalty" text="Lavaggio"/>
         <text name="rms_sell_dialog_deposit_refund" text="Deposito restituito"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Livello del fluido basso"/>
-        <text name="rms_tutorial_fluid_level_message" text="Uno dei fluidi di questa macchina è sceso sotto il contrassegno della relativa astina.&#10;&#10;L'olio motore si consuma con le ore, e un motore usurato ne consuma molto di più. Il liquido di raffreddamento, l'olio della trasmissione e l'olio idraulico scendono solo in caso di perdita.&#10;&#10;Sotto il contrassegno, la macchina richiede solo un rabbocco e continua a lavorare normalmente. Più il livello scende, più facilmente la pompa aspira aria in pendenza: la spia della pressione dell'olio lampeggia e, sul lato trasmissione o idraulico, la pompa fischia e i movimenti idraulici rallentano. Ogni minuto trascorso così danneggia le bronzine di banco o la pompa: fermati e ripristina il livello. Una macchina con poco liquido di raffreddamento, olio della trasmissione o olio idraulico inoltre si surriscalda.&#10;&#10;Acquista in negozio un contenitore di prodotto compatibile, portalo alla macchina e ripristina il livello. Tutti i prodotti destinati a quel circuito hanno lo stesso effetto; un fluido errato contamina solo quel circuito. In concessionaria, i litri necessari vengono forniti e addebitati."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Benvenuto in Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Disattiva suggerimenti"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Attiva suggerimenti"/>
-        <text name="rms_tutorial_welcome_message" text="Questa mod rinnova completamente i sistemi di danni e manutenzione dei veicoli nel gioco. Ci sono molti cambiamenti, quindi di tanto in tanto compariranno suggerimenti tutorial. Ti aiuteranno a capire più rapidamente le nuove meccaniche, evitare gli errori più comuni e impedire che le tue macchine si guastino.&#10;&#10;Se vuoi, puoi disattivare subito i suggerimenti tutorial. Potrai sempre riattivarli più tardi nelle impostazioni della mod, nella sezione Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Tempo umido"/>
-        <text name="rms_tutorial_wet_weather_message" text="L'umidità danneggia i cablaggi e i componenti elettrici. L'usura dell'impianto elettrico aumenta leggermente in caso di pioggia, neve o grandine su una macchina lasciata all'aperto."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Slittamento delle ruote"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Le tue ruote slittano fortemente. Lo slittamento è uno dei fattori più distruttivi per la trasmissione e avvicina sensibilmente la tua prossima visita in officina."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Manutenzione imminente"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s avrà presto bisogno di manutenzione. Scegli in officina il pacchetto consigliato: copre i lavori dovuti. Vale il primo limite raggiunto, di ore di funzionamento o calendario, anche con poco utilizzo. La facilità di manutenzione riassume la complessità degli interventi; la manutenzione ordinaria resta possibile in officina mobile."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Intervallo di manutenzione scaduto"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="%s ha superato il suo intervallo di manutenzione e necessita di manutenzione.&#10;&#10;Vai in officina il prima possibile e seleziona &quot;Manutenzione&quot;. Continuare a usare un veicolo con la manutenzione scaduta aumenta notevolmente il rischio di guasti multipli."/>
-        <text name="rms_tutorial_steering_title" text="Sterzare da fermo"/>
-        <text name="rms_tutorial_steering_message" text="È meglio non sterzare da fermo. Questo sottopone a un forte carico la scatola dello sterzo e i componenti dell'assale anteriore, aumentando l'usura del treno di rotolamento.&#10;&#10;Basta iniziare a muoversi un poco e le ruote gireranno molto più facilmente."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Sistema di raffreddamento e filtro dell'aria"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Il radiatore o il filtro dell'aria è intasato. Tieni premuto il tasto %s mentre guardi il veicolo per scoprire quale dei due. Puliscilo con il soffiatore ad aria compressa. Se il filtro non può più essere pulito, l'officina lo sostituisce a partire dal tagliando %s."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Ingrassaggio necessario"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s ha degli ingrassatori da ingrassare.&#10;&#10;In RMS, ogni macchina ha gli ingrassatori del suo manuale. Richiedono nuovamente grasso in base ai giorni in cui la macchina lavora: ogni giorno di lavoro, o ogni pochi giorni di lavoro quelli che il manuale ingrassa meno spesso. Ingrassare in ritardo accelera l'usura del telaio.&#10;&#10;Acquista una pistola ingrassatrice e delle cartucce nel negozio. Con la pistola in mano, mettiti davanti a una cartuccia per caricarla, poi punta la macchina: ogni clic ingrassa un ingrassatore e tenendo premuto si passa ai successivi.&#10;&#10;Per vedere gli ingrassatori rimasti, tieni premuto il tasto %s mentre guardi il veicolo."/>
-        <text name="rms_tutorial_needs_repair_title" text="Guasto rilevato"/>
-        <text name="rms_tutorial_needs_repair_message" text="%s presenta un problema. Una delle sue parti potrebbe essersi guastata.&#10;&#10;Vai in officina: un'ispezione, o la manutenzione se è in scadenza, identifica il guasto. Non rimandare: il guasto potrebbe continuare a peggiorare e il costo della riparazione aumentare di conseguenza.&#10;&#10;Una volta identificato il guasto, fallo riparare in officina."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Revisione necessaria"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s mostra i segni dell'età. È il momento di valutare una sostituzione o una revisione. È un'operazione lunga e costosa, ma è l'unico modo per riportare la macchina al suo stato originale.&#10;&#10;La durata utile si regola nelle impostazioni della mod: più è alta, più lentamente si usurano i tuoi veicoli."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Rischio di guasto aumentato"/>
-        <text name="rms_tutorial_needs_preventive_message" text="Il motore, l'impianto di alimentazione o il sistema di raffreddamento di %s presenta un rischio di guasto maggiore.&#10;&#10;Tagliando %s: regola le valvole e controlla gli iniettori e il termostato, riducendo questo rischio."/>
-        <text name="rms_tutorial_age_degradation_title" text="Degrado dovuto all'età"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS, i veicoli perdono gradualmente parte delle loro prestazioni originali invecchiando.&#10;&#10;Dopo circa un terzo della vita utile, il degrado dovuto all'età riduce leggermente alcune caratteristiche importanti, come la potenza o la frenata. L'effetto si intensifica poi e diventa chiaramente visibile verso la fine della vita utile.&#10;&#10;Questo degrado può essere disattivato nelle impostazioni della mod."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Materiali di consumo di scarsa qualità"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Durante l'ultima manutenzione, %s ha ricevuto un filtro difettoso. Questo accade con le qualità più economiche.&#10;&#10;Il filtro lascia passare lo sporco: il circuito che protegge si usura più in fretta fino alla sostituzione del filtro. Una nuova manutenzione lo sostituisce. Solo un'ispezione completa lo identifica."/>
-        <text name="rms_tutorial_poor_parts_title" text="Ricambi di scarsa qualità"/>
-        <text name="rms_tutorial_poor_parts_message" text="Durante una riparazione, %s ha ricevuto un ricambio di scarsa qualità. Il guasto probabilmente si ripresenterà presto.&#10;&#10;Puoi aspettare che ritorni oppure avviare un'ispezione completa, che identifica in modo affidabile il ricambio interessato."/>
-        <text name="rms_tutorial_park_brake_title" text="Freno di stazionamento"/>
-        <text name="rms_tutorial_park_brake_message" text="Il freno di stazionamento è inserito. Si inserisce da solo appena lasci la macchina ferma, e si rilascia appena riacceleri. Si inserisce anche quando spegni il motore, o dopo 45 secondi da fermo.&#10;&#10;In pendenza è ciò che impedisce alla macchina di partire da sola."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Il freno di stazionamento è inserito. Sei tu a inserirlo e a rilasciarlo, con il suo tasto: se acceleri con il freno inserito, la macchina forza contro di esso e i suoi freni si usurano.&#10;&#10;In pendenza, è lui a impedire che la macchina scivoli via da sola: se la lasci senza inserirlo, può andarsene."/>
-        <text name="rms_tutorial_preheat_title" text="Preriscaldamento diesel"/>
-        <text name="rms_tutorial_preheat_message" text="Con un motore diesel freddo, una pressione del comando di avviamento accende il quadro e avvia automaticamente il ciclo di preriscaldamento. Le spie del cruscotto si accendono brevemente, poi la spia di preriscaldamento resta accesa finché il motore non è pronto. Non ripetere il comando: il motorino di avviamento si inserisce automaticamente quando la spia si spegne."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Innesto della PTO"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Innesta la PTO al minimo, poi aumenta i giri: innestarla ad alti giri dà un colpo a tutta la trasmissione, tanto più con un attrezzo pesante. Ogni innesto consuma anche la sua frizione."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO e attrezzo sollevato"/>
-        <text name="rms_tutorial_pto_raised_message" text="Far girare la PTO con l'attrezzo sollevato fa lavorare i cardani con un angolo accentuato e li consuma in fretta. Disinserisci la PTO prima di sollevare l'attrezzo per il trasporto."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Minimo e fermo macchina"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="L'usura è molto più bassa quando la macchina è accesa ma non lavora. A motore spento diventa minima, e scompare del tutto se la macchina è ricoverata al coperto."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Minimo prolungato"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Sembra che la macchina sia rimasta troppo a lungo al minimo. Lunghi periodi al minimo non sprecano solo carburante: col tempo favoriscono anche i depositi nell'impianto di alimentazione e peggiorano la salute generale del motore.&#10;&#10;Se la macchina non serve in questo momento, è meglio spegnere il motore."/>
-        <text name="rms_tutorial_hot_weather_title" text="Clima caldo"/>
-        <text name="rms_tutorial_hot_weather_message" text="Oggi fa davvero molto caldo. Con un clima simile, controlla con ancora più attenzione la pulizia del radiatore ed evita di sovraccaricare il motore, altrimenti il surriscaldamento sarà solo questione di tempo.&#10;&#10;Puoi controllare lo stato del radiatore tenendo premuto il tasto %s mentre guardi la macchina. Puoi pulirlo con il soffiatore ad aria compressa."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Rimorchio troppo pesante"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Il carico trainato sembra troppo pesante per questo veicolo. Puoi continuare a guidare, ma la trasmissione e la catena cinematica subiranno maggiori sollecitazioni.&#10;&#10;RMS usa due riferimenti: un trattore richiede almeno 10 CV per tonnellata di massa trainata, mentre un camion richiede almeno 6 CV per tonnellata di peso totale della combinazione. Sotto il valore applicabile e con un carico motore elevato, l'usura della trasmissione aumenta."/>
-        <text name="rms_tutorial_hard_start_title" text="Avviamento difficile"/>
-        <text name="rms_tutorial_hard_start_message" text="Il motore di %s parte con difficoltà. Una batteria scarica, il gelo, un guasto meccanico o l'usura del motorino d'avviamento possono esserne la causa.&#10;&#10;L'impianto elettrico subisce forti sollecitazioni all'avvio, a causa delle elevate correnti di spunto."/>
-        <text name="rms_tutorial_low_fuel_title" text="Riserva di carburante"/>
-        <text name="rms_tutorial_low_fuel_message" text="Il serbatoio si sta avvicinando alla riserva. Meno carburante resta, più la pompa del carburante deve forzare per aspirarlo, e il fondo del serbatoio manda acqua e sedimenti al filtro, che si intasa prima.&#10;&#10;Meglio fare il pieno a fine giornata: un serbatoio pieno forma meno condensa."/>
-        <text name="rms_tutorial_lugging_title" text="Motore sotto sforzo a basso regime"/>
-        <text name="rms_tutorial_lugging_message" text="Il motore, e soprattutto la trasmissione, soffrono quando lavorano a basso regime sotto forte carico. L'attrezzo agganciato potrebbe essere troppo pesante per la macchina oppure, con un cambio manuale, la marcia inserita potrebbe non essere quella giusta."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Surriscaldamento del motore"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Il motore sta iniziando a surriscaldarsi. Questo può accadere per una o più ragioni: il motore è sotto forte carico, il radiatore è ostruito, fa caldo oppure c'è un guasto nel sistema di raffreddamento del veicolo.&#10;&#10;Resta all'erta: il surriscaldamento è uno dei fattori più distruttivi per qualsiasi macchina. Non danneggia solo il motore: il sistema di raffreddamento lavora al limite e il calore nel vano motore accelera il degrado del cablaggio e dei componenti elettrici."/>
-        <text name="rms_tutorial_engine_overload_title" text="Sovraccarico del motore"/>
-        <text name="rms_tutorial_engine_overload_message" text="Il motore è sottoposto a uno sforzo enorme. Può darsi che il lavoro che stai cercando di svolgere sia semplicemente troppo per questa macchina e che dovresti pensare a un mezzo più potente. Oppure potrebbe bastare rallentare e ridurre il carico sul motore.&#10;&#10;In ogni caso, tieni presente che l'usura aumenta in modo evidente sotto questo tipo di sforzo."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Leggere il fumo"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Il fumo che esce da questa macchina non è decorativo: il suo colore costituisce una diagnosi.&#10;&#10;Il fumo nero segnala che il motore riceve più carburante che aria: una ripresa decisa prima che il turbocompressore sia salito di regime, un motore sotto sforzo a basso regime, un sovraccarico, un filtro dell'aria ostruito, un turbocompressore usurato o un'iniezione usurata. Il fumo blu segnala un motore usurato che brucia il proprio olio. Il fumo bianco segnala carburante incombusto.&#10;&#10;Il pennacchio aumenta anche con il lavoro svolto dal motore. Le macchine più vecchie fumano molto più di quelle recenti, ed è normale."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="Surriscaldamento della CVT"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="La trasmissione CVT sta iniziando a surriscaldarsi. Questo può dipendere da un carico eccessivo, da un radiatore ostruito, da un clima molto caldo o da un guasto al circuito di raffreddamento della trasmissione. Un aratro troppo pesante o un rimorchio sovraccarico sono sufficienti a provocarlo.&#10;&#10;Fai attenzione: il surriscaldamento è uno dei fattori più distruttivi per una trasmissione CVT."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Telaio sotto sforzo"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Guidare velocemente su terreni sconnessi usura rapidamente il telaio di %s. Questi scossoni danneggiano anche i cablaggi con i loro connettori e l'impianto idraulico quando è sollevato un attrezzo pesante.&#10;&#10;Rallenta sui terreni irregolari."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Urto violento"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Il telaio ha appena subito un urto violento. Un ostacolo che ferma di colpo la macchina o la rallenta bruscamente usura all'istante il telaio e avvicina il suo prossimo guasto, il più delle volte allo sterzo o ai cuscinetti.&#10;&#10;Rallenta prima degli ostacoli."/>
-        <text name="rms_tutorial_cranking_title" text="Avviamenti frequenti"/>
-        <text name="rms_tutorial_cranking_message" text="Sembra che tu stia avviando il motore troppo spesso. Ogni avviamento fa passare una corrente molto alta attraverso l'impianto elettrico, accelerando l'usura del cablaggio, del motorino d'avviamento e di altri componenti elettrici.&#10;&#10;Evita di spegnere il motore per brevi pause."/>
-        <text name="rms_tutorial_critical_failure_title" text="Guasto critico"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s non può più muoversi con i propri mezzi.&#10;&#10;Un'officina mobile permette una riparazione provvisoria, sufficiente perché la macchina raggiunga l'officina da sola. Altrimenti, dovrai farla recuperare in un altro modo."/>
-        <text name="rms_tutorial_cold_engine_title" text="Motore freddo"/>
-        <text name="rms_tutorial_cold_engine_message" text="Scalda il motore gradualmente prima di sottoporlo a un carico elevato. Usa un'accelerazione e un regime moderati finché non raggiunge la temperatura di esercizio."/>
-        <text name="rms_tutorial_cold_oil_title" text="Olio della trasmissione freddo"/>
-        <text name="rms_tutorial_cold_oil_message" text="L'olio della trasmissione e dell'impianto idraulico si scalda molto più lentamente del motore. Evita i lavori pesanti finché l'olio è freddo; scaldalo gradualmente guidando con calma e usando poco l'impianto idraulico."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Surriscaldamento della trasmissione"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="L'olio della trasmissione inizia a surriscaldarsi. Può dipendere da un carico eccessivo, da un radiatore intasato, da un clima molto caldo o da un guasto al raffreddamento della trasmissione.&#10;&#10;L'olio della trasmissione si scalda su ogni macchina, non solo su una CVT. Un olio troppo caldo usura la trasmissione e ne distrugge le tenute."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Avviso di sovraccarico"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s sta lavorando sotto forte carico. La spia appena accesa sul cruscotto lo segnala.&#10;&#10;La macchina potrebbe non avere potenza sufficiente per il lavoro in corso. Prova a ridurre il carico: limita la velocità con il regolatore oppure alleggerisci l'acceleratore invece di lavorare a piena potenza."/>
-        <text name="rms_tutorial_battery_low_title" text="Carica della batteria bassa"/>
-        <text name="rms_tutorial_battery_low_message" text="La batteria di questa macchina sta per scaricarsi completamente. Può succedere dopo una lunga immobilizzazione, per il freddo intenso o per un guasto dell'impianto elettrico.&#10;&#10;Con poca carica, l'avviamento diventa difficile e poi impossibile. Puoi allora avviare il motore da un altro veicolo con i cavi di avviamento. Prima di un lungo fermo, o se la batteria si scarica da sola, scollegala con lo staccabatteria, a piedi davanti alla macchina."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Sollecitazione della trasmissione"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Stai sterzando su un terreno ad alta aderenza con il blocco del differenziale inserito. In curva, le ruote interne ed esterne percorrono distanze diverse, ma il blocco le costringe a girare alla stessa velocità: la trasmissione viene sollecitata e la sua usura aumenta. Disinserisci il blocco prima di sterzare."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Modalità di trazione e bloccaggio"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Questa macchina permette di scegliere la modalità di trazione: 2RM, 4RM o AUTO, che inserisce l'assale anteriore non appena le ruote slittano.&#10;&#10;Il blocco del differenziale consente di trovare aderenza dove non ce n'è più, ma sollecita molto la trasmissione in curva su un terreno ad alta aderenza: le ruote interne ed esterne non possono girare alla stessa velocità. Disinseriscilo prima di sterzare."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="Con Realistic Mechanical Systems, le tue macchine si usurano e si guastano come quelle vere. Bastano tre regole per giocare senza guasti continui:&#10;&#10;1. Fai la manutenzione per tempo. Il Cruscotto meccanico, nel menu di gioco, mostra la prossima manutenzione di ogni macchina.&#10;2. Prepara le tue macchine ogni giorno. Tieni premuto %s vicino a una macchina per controllarla: livelli, radiatore, filtro dell'aria, ingrassaggio. Pulisci radiatore e filtro dell'aria con il soffiatore ad aria compressa e ingrassa le macchine con la pistola ingrassatrice. Anche i tuoi attrezzi e rimorchi vanno ingrassati: il Cruscotto meccanico elenca quelli da ingrassare. Soffiatore, pistola ingrassatrice e cartucce di grasso sono nel negozio, categoria Manutenzione.&#10;3. Tratta bene le tue macchine: sovraccarico, surriscaldamento, lavoro a motore freddo e slittamento delle ruote le usurano.&#10;&#10;Se la partita ti sembra troppo difficile, aumenta la Durata utile del veicolo e la Distanza tra manutenzioni nella scheda IMPOSTAZIONI RMS del Cruscotto meccanico."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Caricabatterie Telwin su carrello, 150 A a 12 V, 80 A a 24 V. Collegalo vicino al veicolo per ricaricarne la batteria alla corrente che accetta o per assistere l'avviamento (START, 200 A a 12 V). La ricarica segue la velocità del tempo della partita."/>
         <text name="rms_diagnostic_configuration" text="Strumento di diagnosi"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Tempo di riparazione:"/>
         <text name="rms_diagnostic_where_label" text="Dove ripararlo:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Officina mobile o propria con lo strumento collegato, oppure concessionario"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Officina propria o concessionario"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Concessionario"/>
         <text name="rms_diagnostic_note_inspection" text="Questo codice dice cosa misura la macchina, non quale componente è guasto: un'ispezione lo trova."/>
+        <text name="rms_diagnostic_note_adblue" text="Questo codice segnala il serbatoio AdBlue basso: il rifornimento di AdBlue lo cancella."/>
         <text name="rms_diagnostic_note_uncoded" text="Un'ispezione della macchina trova il componente coinvolto."/>
         <text name="rms_diagnostic_uncoded" text="Spia accesa senza codice registrato. Nessun sensore controlla il componente coinvolto."/>
         <text name="rms_diagnostic_uncoded_title" text="Spia senza codice"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Livello del liquido di raffreddamento"/>
         <text name="rms_diagnostic_spn_1639" text="Velocità della ventola"/>
         <text name="rms_diagnostic_spn_168" text="Tensione della batteria"/>
-        <text name="rms_diagnostic_spn_677" text="Relè del motorino di avviamento"/>
+        <text name="rms_diagnostic_spn_676" text="Relè di preriscaldamento"/>
         <text name="rms_diagnostic_spn_167" text="Tensione del circuito di carica"/>
         <text name="rms_diagnostic_spn_157" text="Pressione del rail di iniezione"/>
+        <text name="rms_diagnostic_spn_1761" text="Livello serbatoio AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Pompa AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Iniettore dosatore AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Sensore NOx a monte"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Dispositivo o componente difettoso"/>
         <text name="rms_diagnostic_fmi_14" text="Istruzioni speciali"/>
         <text name="rms_diagnostic_fmi_16" text="Dato sopra il campo normale (livello moderatamente grave)"/>
+        <text name="rms_diagnostic_fmi_17" text="Dato sotto il campo normale (livello meno grave)"/>
         <text name="rms_diagnostic_fmi_18" text="Dato sotto il campo normale (livello moderatamente grave)"/>
         <text name="rms_diagnostic_fmi_31" text="Condizione presente"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="componente difettoso"/>
         <text name="rms_dashboard_fmi_14" text="intervento necessario"/>
         <text name="rms_dashboard_fmi_16" text="valore alto"/>
+        <text name="rms_dashboard_fmi_17" text="valore leggermente basso"/>
         <text name="rms_dashboard_fmi_18" text="valore basso"/>
         <text name="rms_dashboard_fmi_31" text="guasto presente"/>
         <text name="rms_diagnostic_log_title" text="Lettura dei codici"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Aiuto avviamento (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Ricaricare la batteria"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Scollegare la batteria"/>
         <text name="rms_battery_isolator_restore" text="Ricollegare la batteria"/>
         <text name="rms_battery_isolator_open" text="Batteria scollegata. Ricollegala con lo staccabatteria, a piedi davanti al veicolo."/>

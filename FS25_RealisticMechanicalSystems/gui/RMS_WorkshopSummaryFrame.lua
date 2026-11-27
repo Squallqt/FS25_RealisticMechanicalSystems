@@ -6,11 +6,13 @@ RMS_WorkshopSummaryFrame = {}
 local RMS_WorkshopSummaryFrame_mt = Class(RMS_WorkshopSummaryFrame, RMS_WorkshopPage)
 
 ---Creates the page
+-- @return table self instance of the page
 function RMS_WorkshopSummaryFrame.new()
-    return RMS_WorkshopPage.new(nil, RMS_WorkshopSummaryFrame_mt)
+    return RMS_WorkshopPage.new(RMS_WorkshopSummaryFrame_mt)
 end
 
 ---Wires the condition card, builds the fact and fluid rows
+-- @param table dialog workshop dialog
 function RMS_WorkshopSummaryFrame:initialize(dialog)
     RMS_WorkshopSummaryFrame:superClass().initialize(self, dialog)
     self.conditionCard:initialize()
@@ -25,12 +27,15 @@ function RMS_WorkshopSummaryFrame:initialize(dialog)
 end
 
 ---Hands the vehicle to the condition card too
+-- @param table vehicle vehicle
+-- @param string? workshopType workshop, nil for the record alone
 function RMS_WorkshopSummaryFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopSummaryFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.conditionCard:setVehicle(vehicle)
 end
 
 ---Writes every card of the page
+-- @param table state state of the workshop dialog
 function RMS_WorkshopSummaryFrame:refresh(state)
     self.statusBar:setStatus(state)
     self:updateVehicleCard()
@@ -84,7 +89,7 @@ end
 ---Writes the worst known breakdown, or the fault state
 function RMS_WorkshopSummaryFrame:updateAlert()
     local vehicle = self.vehicle
-    local ids = RMS_Utils.getVisibleBreakdownIds(vehicle)
+    local ids = RMS_Utils.getRepairableBreakdownIds(vehicle)
     local alertId = ids[1]
     self.summaryAlertRow:setVisible(alertId ~= nil)
     self.summaryNoAlertText:setVisible(alertId == nil)
@@ -133,12 +138,14 @@ function RMS_WorkshopSummaryFrame:onDrawServiceRing()
     RMS_ProgressRing.renderInArea(self.serviceRingArea, self.reading.serviceRatio, self.reading.isOutdated and RMS_Utils.COLOR.TEXT_DIM or nil)
 end
 
----The condition list
+---Columns of rows the focus moves over: the condition list
+-- @return table columns columns of rows of elements
 function RMS_WorkshopSummaryFrame:getFocusColumns()
     return { { { self.conditionCard.stateList } } }
 end
 
----The page opens on the tab selector
+---Element the focus enters the page on: the tab selector
+-- @return table element tab selector
 function RMS_WorkshopSummaryFrame:getFocusEntry()
     return self.dialog.tabPaging
 end

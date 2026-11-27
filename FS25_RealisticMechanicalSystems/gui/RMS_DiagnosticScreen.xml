@@ -2,11 +2,9 @@
 <GUI onOpen="onOpen" onClose="onClose" onCreate="onCreate">
     <GuiElement profile="newLayer" />
 
-    <!-- PC -->
     <GuiElement profile="rms_diagPc">
         <Bitmap profile="rms_diagPcFrame" />
 
-        <!-- Diagnostic screen -->
         <GuiElement profile="rms_diagScreen" id="dialogElement">
             <Bitmap profile="rms_diagScreenBg" />
             <Bitmap profile="rms_diagBar" position="0px 0px" size="1407.08px 46.9px" />
@@ -42,7 +40,6 @@
             <Bitmap profile="rms_diagLine" position="234.51px -139.98px" size="1172.57px 1px" />
             <Bitmap profile="rms_diagDivider" />
 
-            <!-- Connection page -->
             <GuiElement profile="rms_diagPage" id="connectionPage">
                 <SmoothList profile="rms_diagList" id="machineList" size="606.8px 615.6px" onClick="onClickMachine">
                     <ListItem profile="rms_diagMachineRow" name="machineRow">
@@ -70,7 +67,6 @@
                 <Text profile="rms_diagNote" position="656.64px -218.39px" text="$l10n_rms_diagnostic_plug_note_power" />
             </GuiElement>
 
-            <!-- Scan page -->
             <GuiElement profile="rms_diagPage" id="scanPage">
                 <SmoothList profile="rms_diagList" id="codeList" size="606.8px 577.49px">
                     <ListItem profile="rms_diagSystemRow" name="systemRow">

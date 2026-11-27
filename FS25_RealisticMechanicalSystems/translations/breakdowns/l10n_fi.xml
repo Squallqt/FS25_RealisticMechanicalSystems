@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Pysyvä"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Tehon alennus"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Pois käytöstä"/>
         <text name="rms_breakdowns_severity_minor" text="Lievä"/>
         <text name="rms_breakdowns_severity_moderate" text="Kohtalainen"/>
         <text name="rms_breakdowns_severity_major" text="Vakava"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Ylikuumenemissuoja: teho alennettu"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Ylikuumenemissuoja tehostuu. Moottori tuottaa enää puolet tehostaan."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Ylikuumenemissuoja: teho alennettu puoleen"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Ylikuumenemissuoja on maksimissaan. Moottorin tehosta on jäljellä enää murto-osa."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Ylikuumenemissuoja: teho voimakkaasti alennettu"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Moottori on sammutettu vaurioiden estämiseksi. Anna sen jäähtyä ennen uudelleenkäynnistystä."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Ylikuumenemissuoja: moottori sammutettu"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lievä öljypumpun toimintahäiriö. Öljynpaine on alentunut, moottorin vääntömomentti on hieman alentunut, moottorin lämpötila on kohonnut ja mekaaninen kopina saattaa esiintyä."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Kohtalainen öljypumpun toimintahäiriö. Öljynpaine on riittämätön, moottorin vääntömomentti on havaittavasti alentunut, moottorin lämpötila on noussut ja mekaaninen kopina on selvästi kuultavissa."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Vakava öljypumpun toimintahäiriö. Öljynpaine on kriittisen alhainen, moottorin vääntömomentti on voimakkaasti alentunut, moottorin ylikuumeneminen on todennäköistä, mekaaninen kopina on voimakasta ja moottorin sammuminen on mahdollista."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Öljypumpussa on kriittinen vika. Öljyn kierto ei riitä moottorin turvalliseen käyttöön, eikä moottoria voi enää käynnistää tai käyttää."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Moottori on juuttunut eikä voi enää pyöriä."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Moottori sammunut"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU:n lievä toimintahäiriö. Moottorin teho on hieman alentunut."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Kohtalainen ECU:n toimintahäiriö. Teho laskee selvästi ja polttoaineen kulutus kasvaa."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Tasauspyörästön lukon ohjauksessa on vika. Lukko jää kytketyksi. Kone vastustaa ohjausta käännöksissä."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Vetohihnat ja variaattorit"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Käyttölaakerit ja vaihteistot"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Leikkuupöydän käyttöhihna"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Leikkuupöydän kitkakytkin"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Leikkuupöydän nivelakseli ja ristinivelet"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Syöttökuilun ketju"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Syötön kiihdytin"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Puintikiskot"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Käyttölaakereiden kohtalainen kuluminen. Jyrinä kuuluu selvästi, ja laakerit kuumenevat."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Käyttölaakereiden vakava kuluminen. Jyrinä voimistuu, ja akseleihin tulee välystä."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Käyttölaakereissa on kriittinen vika. Laakeri on leikannut kiinni: korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Leikkuupöydän käyttöhihnan alkava kuluminen. Se vinkuu ja luistaa hieman leikkuupöydän pyöriessä."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Leikkuupöydän käyttöhihnan kohtalainen kuluminen. Se vinkuu kovempaa, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Leikkuupöydän käyttöhihnan vakava kuluminen. Se vinkuu kovaa, läpäisy laskee ja pysähdykset toistuvat."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Leikkuupöydän käyttöhihnassa on kriittinen vika. Hihna on katkennut: leikkuupöytää ei enää käytetä, korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Leikkuupöydän kitkakytkimen alkava kuluminen. Se luistaa hieman kuormituksessa."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Leikkuupöydän kitkakytkimen kohtalainen kuluminen. Se luistaa jo normaalikuormalla, ja kierroslukuhälytys pysäyttää toisinaan korjuun."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Leikkuupöydän kitkakytkimen vakava kuluminen. Se luistaa ja kuumenee, läpäisy laskee ja pysähdykset toistuvat."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Leikkuupöydän kitkakytkimessä on kriittinen vika. Se ei enää välitä voimaa: leikkuupöytä on pysähtynyt, korjuu on mahdotonta."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Leikkuupöydän nivelakselin ristinivelten alkava kuluminen. Leikkuupöydän pyöriessä kuuluu lievää jyrinää."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Leikkuupöydän nivelakselin ristinivelten kohtalainen kuluminen. Jyrinä kuuluu selvästi."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Leikkuupöydän nivelakselin ristinivelten vakava kuluminen. Jyrinä voimistuu, ja niveliin tulee välystä."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Leikkuupöydän nivelakselissa on kriittinen vika. Ristinivel on katkennut: leikkuupöytää ei enää käytetä, korjuu on mahdotonta."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Syöttökuilun ketjun alkava kuluminen. Se venyy, ja syöttö muuttuu epätasaiseksi."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Syöttökuilun ketjun kohtalainen kuluminen. Syöttökuilun suulle muodostuu tukoksia."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Syöttökuilun ketjun vakava kuluminen. Se hyppää rattailla, ja tukokset jatkuvat."/>

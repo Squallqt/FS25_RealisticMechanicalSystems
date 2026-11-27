@@ -53,7 +53,7 @@
                 </SmoothList>
             </GuiElement>
 
-            <!-- Total charged on return -->
+            <!-- Return total -->
             <GuiElement profile="rms_workshopBlock" position="346px -392px" size="485px 72px">
                 <RoundCorner profile="rms_inspectionSurface" size="485px 72px"/>
                 <ThreePartBitmap profile="rms_sellTotalEdge" size="485px 3dp"/>

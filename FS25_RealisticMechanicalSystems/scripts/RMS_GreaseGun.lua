@@ -1,6 +1,6 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Grease gun emptying a real cartridge, one grease point per stroke
+---Grease gun emptying a cartridge, one grease point per stroke
 RMS_GreaseGun = {}
 
 local modName = g_currentModName
@@ -18,11 +18,15 @@ RMS_GreaseGun.HUD_MACHINE_HEIGHT = 172
 source(modDirectory .. "events/RMS_GreaseGunEvent.lua")
 
 ---Returns the grease one point takes, in ml
+-- @return float ml grease of a point (ml)
 function RMS_GreaseGun.getPointMl()
     local C = RMS_Config.GREASING
     return C.STROKE_ML * C.STROKES_PER_POINT
 end
 
+---Tells whether a node belongs to a machine with greasing
+-- @param entityId node node
+-- @return boolean isMachine true for a machine with greasing
 local function getIsMachineNode(node)
     local vehicle = g_currentMission:getNodeObject(node)
     if vehicle == nil then
@@ -32,32 +36,51 @@ local function getIsMachineNode(node)
     return vehicle.spec_rmsImplementGreasing ~= nil or machineSpec ~= nil and not machineSpec.isExcludedVehicle
 end
 
+---Tells whether a node belongs to a grease cartridge
+-- @param entityId node node
+-- @return boolean isCartridge true for a cartridge
 local function getIsCartridgeNode(node)
     local object = g_currentMission:getNodeObject(node)
     return object ~= nil and object.takeRMSGreaseCartridge ~= nil
 end
 
+---Tells whether the local player carries the gun
+-- @param table handTool grease gun
+-- @return boolean isCarried true when the local player carries it
 local function getIsLocallyCarried(handTool)
     local player = handTool:getCarryingPlayer()
     return player ~= nil and player.isOwner
 end
 
+---Shows a warning to the local player
+-- @param string textKey l10n key of the warning
+-- @param any ... values of the format of the warning
 local function warn(textKey, ...)
     g_currentMission:showBlinkingWarning(string.format(g_i18n:getText(textKey), ...), RMS_GreaseGun.WARNING_DURATION)
 end
 
+---Checks if all prerequisite specializations are loaded
+-- @param table specializations specializations
+-- @return boolean hasPrerequisite true if all prerequisite specializations are loaded
 function RMS_GreaseGun.prerequisitesPresent(specializations)
     return true
 end
 
+---Registers the saved grease of the gun
+-- @param table schema savegame schema
+-- @param string basePath base path of the hand tool
 function RMS_GreaseGun.registerSavegameXMLPaths(schema, basePath)
     schema:register(XMLValueType.FLOAT, basePath .. "." .. modName .. ".rmsGreaseGun#greaseMl", "Grease left in the gun")
 end
 
+---Registers the functions of the gun
+-- @param table handToolType hand tool type
 function RMS_GreaseGun.registerFunctions(handToolType)
     SpecializationUtil.registerFunction(handToolType, "applyRMSGreaseGunState", RMS_GreaseGun.applyRMSGreaseGunState)
 end
 
+---Registers the event listeners of the gun
+-- @param table handToolType hand tool type
 function RMS_GreaseGun.registerEventListeners(handToolType)
     for _, name in ipairs({ "onLoad", "onPostLoad", "onDelete", "onUpdate", "onDraw", "onWriteStream", "onReadStream",
         "onHeldStart", "onHeldEnd", "onRegisterActionEvents" }) do
@@ -65,6 +88,9 @@ function RMS_GreaseGun.registerEventListeners(handToolType)
     end
 end
 
+---Called on loading
+-- @param table xmlFile file of the hand tool
+-- @param string baseDirectory directory of the hand tool
 function RMS_GreaseGun:onLoad(xmlFile, baseDirectory)
     local spec = self[specName]
     spec.greaseMl = 0
@@ -81,16 +107,23 @@ function RMS_GreaseGun:onLoad(xmlFile, baseDirectory)
     end
 end
 
+---Called after loading, reading the saved grease
+-- @param table? savegame savegame
 function RMS_GreaseGun:onPostLoad(savegame)
     if savegame ~= nil then
         self[specName].greaseMl = savegame.xmlFile:getValue(savegame.key .. "." .. modName .. ".rmsGreaseGun#greaseMl", 0)
     end
 end
 
+---Saves the grease left in the gun
+-- @param table xmlFile savegame file
+-- @param string key key of the specialization
+-- @param table usedModNames mods used
 function RMS_GreaseGun:saveToXMLFile(xmlFile, key, usedModNames)
     xmlFile:setValue(key .. "#greaseMl", self[specName].greaseMl)
 end
 
+---Called on deleting
 function RMS_GreaseGun:onDelete()
     local spec = self[specName]
     if spec.strokeSample ~= nil then
@@ -98,30 +131,40 @@ function RMS_GreaseGun:onDelete()
     end
 end
 
+---Called on server side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_GreaseGun:onWriteStream(streamId, connection)
     streamWriteFloat32(streamId, self[specName].greaseMl)
 end
 
+---Called on client side on join
+-- @param integer streamId stream id
+-- @param Connection connection connection
 function RMS_GreaseGun:onReadStream(streamId, connection)
     self[specName].greaseMl = streamReadFloat32(streamId)
 end
 
 ---Greases a point or loads a cartridge for the player carrying the gun
+-- @param table handTool grease gun
+-- @param table player player asking
+-- @param integer kind RMS_GreaseGunEvent.STROKE or LOAD
+-- @param table target machine to grease or cartridge to load
 function RMS_GreaseGun.serve(handTool, player, kind, target)
     local spec = handTool[specName]
-    if spec == nil or handTool:getCarryingPlayer() ~= player then
+    if handTool:getCarryingPlayer() ~= player then
         return
     end
 
     local pointMl = RMS_GreaseGun.getPointMl()
     if kind == RMS_GreaseGunEvent.STROKE then
-        if spec.greaseMl < pointMl or RMS_Greasing.getSpec(target) == nil or not RMS_Greasing.greasePoint(target) then
+        if spec.greaseMl < pointMl or not RMS_Greasing.greasePoint(target) then
             return
         end
         spec.greaseMl = spec.greaseMl - pointMl
         handTool:applyRMSGreaseGunState(spec.greaseMl, true)
         RMS_GreaseGunEvent.broadcastState(handTool, spec.greaseMl, true)
-    elseif target.takeRMSGreaseCartridge ~= nil and spec.greaseMl < pointMl then
+    elseif spec.greaseMl < pointMl then
         target:takeRMSGreaseCartridge()
         spec.greaseMl = RMS_Config.GREASING.CARTRIDGE_ML
         handTool:applyRMSGreaseGunState(spec.greaseMl, false)
@@ -130,6 +173,8 @@ function RMS_GreaseGun.serve(handTool, player, kind, target)
 end
 
 ---Keeps the grease left and plays the stroke the gun made
+-- @param float greaseMl grease left in the gun (ml)
+-- @param boolean isStroke true when the state follows a stroke
 function RMS_GreaseGun:applyRMSGreaseGunState(greaseMl, isStroke)
     local spec = self[specName]
     spec.greaseMl = greaseMl
@@ -140,6 +185,8 @@ function RMS_GreaseGun:applyRMSGreaseGunState(greaseMl, isStroke)
 end
 
 ---Sends a stroke, false when nothing is done
+-- @param table handTool grease gun
+-- @return boolean isSent true once a stroke is sent
 local function useGun(handTool)
     local spec = handTool[specName]
     local pointMl = RMS_GreaseGun.getPointMl()
@@ -160,6 +207,8 @@ local function useGun(handTool)
 end
 
 ---Finds the cartridge in reach the player faces, without a crosshair
+-- @param table player player
+-- @return table? cartridge cartridge faced
 local function getFacedCartridge(player)
     local x, y, z, dx, dy, dz = player.targeter:getLastLookRay()
     if x == nil then
@@ -181,6 +230,9 @@ local function getFacedCartridge(player)
     return faced
 end
 
+---Finds the cartridge or the machine the player aims at
+-- @param table handTool grease gun
+-- @param table player player
 local function updateTarget(handTool, player)
     local spec = handTool[specName]
     local cartridgeNode = player.targeter:getClosestTargetedNodeFromType(RMS_GreaseCartridge)
@@ -195,6 +247,8 @@ local function updateTarget(handTool, player)
     end
 end
 
+---Called on update: aims on its interval, pumps while the key is held
+-- @param float dt time since the last frame (ms)
 function RMS_GreaseGun:onUpdate(dt)
     local spec = self[specName]
     local player = self:getCarryingPlayer()
@@ -219,10 +273,24 @@ end
 
 local WHITE, GREY, TRACK = { 1, 1, 1, 1 }, { 1, 1, 1, 0.6 }, { 1, 1, 1, 0.12 }
 
+---Draws a filled rectangle
+-- @param float x left (screen)
+-- @param float y bottom (screen)
+-- @param float width width (screen)
+-- @param float height height (screen)
+-- @param table color rgba color
+-- @param float? alpha alpha in place of the color's
 local function fill(x, y, width, height, color, alpha)
-    drawFilledRect(x, y, width, height, color[1], color[2], color[3], alpha or color[4] or 1)
+    drawFilledRect(x, y, width, height, color[1], color[2], color[3], alpha or color[4])
 end
 
+---Draws the outline of a rectangle
+-- @param table hud HUD
+-- @param float x left (screen)
+-- @param float y bottom (screen)
+-- @param float width width (screen)
+-- @param float height height (screen)
+-- @param table color rgba color
 local function outline(hud, x, y, width, height, color)
     local lineX, lineY = hud:scalePixelToScreenWidth(1.5), hud:scalePixelToScreenHeight(1.5)
     fill(x, y, width, lineY, color)
@@ -231,14 +299,59 @@ local function outline(hud, x, y, width, height, color)
     fill(x + width - lineX, y, lineX, height, color)
 end
 
+---Draws a text, shrunk to a width when one is given
+-- @param float x x (screen)
+-- @param float y y (screen)
+-- @param float size text size
+-- @param string value text
+-- @param boolean bold true for bold
+-- @param table color rgba color
+-- @param integer? alignment RenderText alignment, left by default
+-- @param float? width width to fit in (screen)
 local function text(x, y, size, value, bold, color, alignment, width)
     setTextBold(bold)
     setTextAlignment(alignment or RenderText.ALIGN_LEFT)
-    setTextColor(color[1], color[2], color[3], color[4] or 1)
+    setTextColor(color[1], color[2], color[3], color[4])
     renderText(x, y, width ~= nil and RMS_FluidHandTool.fitTextSize(value, size, width) or size, value)
 end
 
+---Returns a height of the panel in screen units
+-- @param table hud HUD
+-- @param float pixels height in pixels
+-- @return float height height (screen)
+local function scaledY(hud, pixels)
+    return hud:scalePixelToScreenHeight(pixels)
+end
+
+---Returns the screen y of a row, some pixels above the foot of the panel
+-- @param table hud HUD
+-- @param float y foot of the panel
+-- @param float pixels height of the row above the foot, in pixels
+-- @return float y y of the row (screen)
+local function rowY(hud, y, pixels)
+    return y + hud:scalePixelToScreenHeight(pixels)
+end
+
+local STATUS_TEXTS = { done = "rms_grease_hud_done", due = "rms_inspection_status_grease_due", late = "rms_inspection_status_grease_late" }
+local lateRest = { 0, 0, 0, 0.35 }
+
+---Returns the colour of a greasing status
+-- @param string state "done", "due" or "late"
+-- @return table color rgba color
+local function getStatusColor(state)
+    if state == "done" then
+        return HUD.COLOR.ACTIVE
+    end
+    return state == "due" and RMS_Breakdowns.COLORS.WARNING or RMS_Breakdowns.COLORS.CRITICAL
+end
+
 ---Draws the cartridge as a tube, filled by the grease left
+-- @param table hud HUD
+-- @param float x left (screen)
+-- @param float y bottom (screen)
+-- @param float width width (screen)
+-- @param float height height (screen)
+-- @param float share share of grease left, 0 to 1
 local function drawCartridge(hud, x, y, width, height, share)
     local inset = hud:scalePixelToScreenWidth(3)
     outline(hud, x, y, width, height, share > 0 and GREY or RMS_Breakdowns.COLORS.CRITICAL)
@@ -251,6 +364,12 @@ local function drawCartridge(hud, x, y, width, height, share)
 end
 
 ---Draws the grease left in ml, right aligned, and returns its width
+-- @param table spec gun specialization
+-- @param float right right edge (screen)
+-- @param float y y (screen)
+-- @param float size text size of the grease left
+-- @param float smallSize text size of the capacity
+-- @return float width width of the text (screen)
 local function drawGreaseLeft(spec, right, y, size, smallSize)
     local isEmpty = spec.greaseMl < RMS_GreaseGun.getPointMl()
     local ml = math.floor(spec.greaseMl + 0.5)
@@ -264,7 +383,13 @@ local function drawGreaseLeft(spec, right, y, size, smallSize)
     return capacityWidth + mlWidth
 end
 
----Draws the panel and the SKF logo, returning the frame of the panel
+---Draws the panel and the brand logo, returning the frame of the panel
+-- @param table hud HUD
+-- @param float height height of the panel in pixels
+-- @return float x left of the panel (screen)
+-- @return float y bottom of the panel (screen)
+-- @return float width width of the panel (screen)
+-- @return float padding inner margin (screen)
 local function drawFrame(hud, height)
     local width, padding = hud:scalePixelToScreenWidth(RMS_GreaseGun.HUD_WIDTH), hud:scalePixelToScreenWidth(20)
     local x, y = 0.5 - width * 0.5, g_hudAnchorBottom
@@ -278,23 +403,27 @@ local function drawFrame(hud, height)
 end
 
 ---Draws the cartridge alone, the gun in hand without a machine aimed at
+-- @param table handTool grease gun
+-- @param table hud HUD
 local function drawGunPanel(handTool, hud)
     local spec = handTool[specName]
     local x, y, width, padding = drawFrame(hud, RMS_GreaseGun.HUD_GUN_HEIGHT)
     local right, textX = x + width - padding, x + padding + hud:scalePixelToScreenWidth(56)
-    local function rowY(pixels) return y + hud:scalePixelToScreenHeight(pixels) end
-    local function size(pixels) return hud:scalePixelToScreenHeight(pixels) end
-    local leftWidth = drawGreaseLeft(spec, right, rowY(54), size(22), size(18))
+    local leftWidth = drawGreaseLeft(spec, right, rowY(hud, y, 54), scaledY(hud, 22), scaledY(hud, 18))
     local room = right - leftWidth - hud:scalePixelToScreenWidth(12) - textX
-    text(textX, rowY(54), size(20), g_i18n:getText("rms_grease_cartridge_typedesc"), true, WHITE, nil, room)
+    text(textX, rowY(hud, y, 54), scaledY(hud, 20), g_i18n:getText("rms_grease_cartridge_typedesc"), true, WHITE, nil, room)
     if spec.greaseMl < RMS_GreaseGun.getPointMl() then
-        text(textX, rowY(29), size(15), g_i18n:getText("rms_grease_gun_empty"), true, RMS_Breakdowns.COLORS.CRITICAL, nil, right - textX)
+        text(textX, rowY(hud, y, 29), scaledY(hud, 15), g_i18n:getText("rms_grease_gun_empty"), true, RMS_Breakdowns.COLORS.CRITICAL, nil,
+            right - textX)
     else
-        drawCartridge(hud, textX, rowY(22), hud:scalePixelToScreenWidth(300), size(12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
+        drawCartridge(hud, textX, rowY(hud, y, 22), hud:scalePixelToScreenWidth(300), scaledY(hud, 12),
+            spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
     end
 end
 
 ---Draws the greasing of the machine aimed at, one segment per point
+-- @param table handTool grease gun
+-- @param table hud HUD
 local function drawMachinePanel(handTool, hud)
     local spec = handTool[specName]
     local vehicle = spec.target
@@ -303,46 +432,47 @@ local function drawMachinePanel(handTool, hud)
     local x, y, width, padding = drawFrame(hud, RMS_GreaseGun.HUD_MACHINE_HEIGHT)
     local right, textX = x + width - padding, x + padding + hud:scalePixelToScreenWidth(56)
     local gap = hud:scalePixelToScreenWidth(12)
-    local function rowY(pixels) return y + hud:scalePixelToScreenHeight(pixels) end
-    local function size(pixels) return hud:scalePixelToScreenHeight(pixels) end
-    local status = ({ done = { "rms_grease_hud_done", HUD.COLOR.ACTIVE }, due = { "rms_inspection_status_grease_due", RMS_Breakdowns.COLORS.WARNING },
-        late = { "rms_inspection_status_grease_late", RMS_Breakdowns.COLORS.CRITICAL } })[state]
 
     local totalText = string.format(" / %d", total)
     setTextBold(false)
-    local totalWidth = getTextWidth(size(18), totalText)
-    text(right, rowY(142), size(18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
+    local totalWidth = getTextWidth(scaledY(hud, 18), totalText)
+    text(right, rowY(hud, y, 142), scaledY(hud, 18), totalText, false, GREY, RenderText.ALIGN_RIGHT)
     setTextBold(true)
-    local countWidth = totalWidth + getTextWidth(size(30), tostring(done))
-    text(right - totalWidth, rowY(144), size(30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
+    local countWidth = totalWidth + getTextWidth(scaledY(hud, 30), tostring(done))
+    text(right - totalWidth, rowY(hud, y, 144), scaledY(hud, 30), tostring(done), true, WHITE, RenderText.ALIGN_RIGHT)
     local greasedText = utf8ToUpper(g_i18n:getText("rms_grease_hud_greased"))
     setTextBold(true)
-    local greasedWidth = getTextWidth(size(15), greasedText)
-    text(right, rowY(117), size(15), greasedText, true, GREY, RenderText.ALIGN_RIGHT)
-    text(textX, rowY(144), size(22), g_i18n:getText("rms_grease_hud_title"), true, WHITE, nil, right - countWidth - gap - textX)
-    text(textX, rowY(119), size(16), vehicle:getFullName(), false, GREY, nil, right - greasedWidth - gap - textX)
+    local greasedWidth = getTextWidth(scaledY(hud, 15), greasedText)
+    text(right, rowY(hud, y, 117), scaledY(hud, 15), greasedText, true, GREY, RenderText.ALIGN_RIGHT)
+    text(textX, rowY(hud, y, 144), scaledY(hud, 22), g_i18n:getText("rms_grease_hud_title"), true, WHITE, nil, right - countWidth - gap - textX)
+    text(textX, rowY(hud, y, 119), scaledY(hud, 16), vehicle:getFullName(), false, GREY, nil, right - greasedWidth - gap - textX)
 
-    local barX, barWidth, barY, barHeight = x + padding, width - padding * 2, rowY(78), size(16)
+    local barX, barWidth, barY, barHeight = x + padding, width - padding * 2, rowY(hud, y, 78), scaledY(hud, 16)
     local segmentGap = hud:scalePixelToScreenWidth(RMS_Utils.getSegmentGap(total, 4))
     local critical = RMS_Breakdowns.COLORS.CRITICAL
-    local rest = state == "late" and { critical[1], critical[2], critical[3], 0.35 } or TRACK
+    local rest = TRACK
+    if state == "late" then
+        lateRest[1], lateRest[2], lateRest[3] = critical[1], critical[2], critical[3]
+        rest = lateRest
+    end
     local nextX, nextY, nextWidth, nextHeight = RMS_Utils.drawSegments(barX, barY, barWidth, barHeight, total, done,
         HUD.COLOR.ACTIVE, rest, segmentGap)
     if nextX ~= nil then
         outline(hud, nextX, nextY, nextWidth, nextHeight, state == "late" and critical or WHITE)
     end
-    local statusText = utf8ToUpper(g_i18n:getText(status[1]))
+    local statusText = utf8ToUpper(g_i18n:getText(STATUS_TEXTS[state]))
     setTextBold(true)
-    local statusWidth = getTextWidth(size(14), statusText)
-    text(barX + barWidth, rowY(63), size(14), statusText, true, status[2], RenderText.ALIGN_RIGHT)
-    text(barX, rowY(63), size(14), string.format(g_i18n:getText("rms_grease_gun_points"), due), true, GREY, nil, barWidth - statusWidth - gap)
-    fill(barX, rowY(47), barWidth, size(1), WHITE, 0.16)
+    local statusWidth = getTextWidth(scaledY(hud, 14), statusText)
+    text(barX + barWidth, rowY(hud, y, 63), scaledY(hud, 14), statusText, true, getStatusColor(state), RenderText.ALIGN_RIGHT)
+    text(barX, rowY(hud, y, 63), scaledY(hud, 14), string.format(g_i18n:getText("rms_grease_gun_points"), due), true, GREY, nil,
+        barWidth - statusWidth - gap)
+    fill(barX, rowY(hud, y, 47), barWidth, scaledY(hud, 1), WHITE, 0.16)
 
-    local leftWidth = drawGreaseLeft(spec, right, rowY(31), size(16), size(16))
+    local leftWidth = drawGreaseLeft(spec, right, rowY(hud, y, 31), scaledY(hud, 16), scaledY(hud, 16))
     local gaugeWidth = hud:scalePixelToScreenWidth(150)
     local gaugeX = right - leftWidth - gap - gaugeWidth
-    drawCartridge(hud, gaugeX, rowY(25), gaugeWidth, size(12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
-    text(barX, rowY(31), size(16), g_i18n:getText("rms_grease_cartridge_typedesc"), false, GREY, nil, gaugeX - gap - barX)
+    drawCartridge(hud, gaugeX, rowY(hud, y, 25), gaugeWidth, scaledY(hud, 12), spec.greaseMl / RMS_Config.GREASING.CARTRIDGE_ML)
+    text(barX, rowY(hud, y, 31), scaledY(hud, 16), g_i18n:getText("rms_grease_cartridge_typedesc"), false, GREY, nil, gaugeX - gap - barX)
 end
 
 ---Shows the cartridge in hand, and the greasing of the machine aimed at
@@ -363,6 +493,7 @@ function RMS_GreaseGun:onDraw()
     setTextColor(1, 1, 1, 1)
 end
 
+---Registers the stroke and load keys
 function RMS_GreaseGun:onRegisterActionEvents()
     if not self:getIsActiveForInput(true) then
         return
@@ -393,6 +524,8 @@ function RMS_GreaseGun:onLoadAction()
 end
 
 ---A press makes one stroke at once, holding the key pumps on
+-- @param string actionName input action
+-- @param float inputValue input value
 function RMS_GreaseGun:onAction(actionName, inputValue)
     local spec = self[specName]
     local isDown = inputValue ~= 0
@@ -415,6 +548,7 @@ function RMS_GreaseGun:onHeldStart()
     end
 end
 
+---Stops aiming once the gun leaves the hand
 function RMS_GreaseGun:onHeldEnd()
     local spec = self[specName]
     spec.isActionDown = false

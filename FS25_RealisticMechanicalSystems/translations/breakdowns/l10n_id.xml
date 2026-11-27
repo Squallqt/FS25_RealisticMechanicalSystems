@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanen"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Kehilangan daya"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Tidak dapat digunakan"/>
         <text name="rms_breakdowns_severity_minor" text="Ringan"/>
         <text name="rms_breakdowns_severity_moderate" text="Sedang"/>
         <text name="rms_breakdowns_severity_major" text="Berat"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Perlindungan panas berlebih: daya dikurangi"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Perlindungan panas berlebih diperketat. Mesin hanya menghasilkan separuh dayanya."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Perlindungan panas berlebih: daya dikurangi separuh"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Perlindungan panas berlebih berada pada tingkat maksimum. Hanya sebagian kecil daya mesin yang tersisa."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Perlindungan panas berlebih: daya sangat dikurangi"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Mesin dimatikan untuk mencegah kerusakan. Biarkan mesin mendingin sebelum dinyalakan kembali."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Perlindungan panas berlebih: mesin dimatikan"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Gangguan ringan pada pompa oli. Tekanan oli berkurang, torsi mesin sedikit menurun, suhu mesin meningkat, dan ketukan mekanis dapat muncul."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Gangguan sedang pada pompa oli. Tekanan oli tidak memadai, torsi mesin jelas menurun, suhu mesin meningkat, dan ketukan mekanis terdengar jelas."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Gangguan berat pada pompa oli. Tekanan oli sangat rendah, torsi mesin turun drastis, panas berlebih mungkin terjadi, ketukan mekanis sangat kuat, dan mesin dapat mati."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kegagalan kritis pompa oli. Sirkulasi oli tidak memadai untuk mengoperasikan mesin dengan aman sehingga mesin tidak dapat dinyalakan atau dioperasikan lebih lanjut."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Mesin macet dan tidak dapat lagi berputar."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Mesin mati"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Gangguan ringan pada ECU. Daya mesin sedikit berkurang."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Gangguan sedang pada ECU. Kehilangan daya terasa jelas dan konsumsi bahan bakar meningkat."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Kegagalan kontrol pengunci diferensial. Pengunci tetap aktif. Mesin sulit diarahkan saat berbelok."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Sabuk Penggerak dan Variator"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Bantalan dan Girboks Penggerak"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Sabuk Penggerak Pemotong"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Kopling Selip Pemotong"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Poros Kardan dan Silang Pemotong"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Rantai Saluran Pengumpan"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Akselerator Pengumpan"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Batang Perontok"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Keausan sedang pada bantalan penggerak. Dengung terdengar jelas dan bantalan memanas."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Keausan berat pada bantalan penggerak. Dengung makin keras dan poros mulai longgar."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kegagalan kritis pada bantalan penggerak. Sebuah bantalan macet: panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Awal keausan sabuk penggerak pemotong. Sabuk berdecit dan sedikit selip selama pemotong berputar."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Keausan sedang pada sabuk penggerak pemotong. Decitnya makin keras dan alarm putaran sesekali menghentikan panen."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Keausan berat pada sabuk penggerak pemotong. Decitnya keras, aliran panen turun dan penghentian terus berulang."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kegagalan kritis pada sabuk penggerak pemotong. Sabuk putus: pemotong tidak lagi digerakkan, panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Awal keausan kopling selip pemotong. Kopling sedikit selip saat terbebani."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Keausan sedang pada kopling selip pemotong. Kopling selip pada beban normal dan alarm putaran sesekali menghentikan panen."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Keausan berat pada kopling selip pemotong. Kopling selip dan memanas, aliran panen turun dan penghentian terus berulang."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kegagalan kritis pada kopling selip pemotong. Kopling tidak lagi meneruskan tenaga: pemotong berhenti, panen tidak mungkin."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Awal keausan silang poros kardan pemotong. Muncul dengung ringan selama pemotong berputar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Keausan sedang pada silang poros kardan pemotong. Dengungnya terdengar jelas."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Keausan berat pada silang poros kardan pemotong. Dengung makin keras dan silangnya mulai longgar."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kegagalan kritis pada poros kardan pemotong. Sebuah silang patah: pemotong tidak lagi digerakkan, panen tidak mungkin."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Awal keausan rantai saluran pengumpan. Rantai memanjang dan pengumpanan menjadi tidak rata."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Keausan sedang pada rantai saluran pengumpan. Penyumbatan terbentuk di pintu masuk saluran pengumpan."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Keausan berat pada rantai saluran pengumpan. Rantai melompat di gigi sproket dan penyumbatan terus terjadi."/>

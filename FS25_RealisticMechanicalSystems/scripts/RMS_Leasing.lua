@@ -3,10 +3,10 @@
 ---Return of a leased machine: wash, overdue service and repairs billed
 RMS_Leasing = {}
 
----Share of the deposit a full wash costs
+-- share of the deposit a full wash costs
 RMS_Leasing.WASH_DEPOSIT_SHARE = 0.3
 
----Charges of a return, in the order of the dialog
+-- charges of a return, in the order of the dialog
 RMS_Leasing.CHARGES = {
     { key = "overdueMaintenance", label = "rms_sell_dialog_overdue_maintenance_penalty" },
     { key = "repair", label = "rms_sell_dialog_repair_penalty" },
@@ -14,11 +14,13 @@ RMS_Leasing.CHARGES = {
 }
 
 ---Tells whether the extended leasing mod is loaded
+-- @return boolean isLoaded true when it is loaded
 function RMS_Leasing.hasExtendedLeasing()
     return g_modIsLoaded["FS25_ExtendedLeasing"] == true
 end
 
 ---Hooks the sale of the shop and its server event
+-- @param table _mission mission being loaded
 function RMS_Leasing.preLoad(_mission)
     SellVehicleEvent.run = Utils.overwrittenFunction(SellVehicleEvent.run, RMS_Leasing.onSellVehicleEventRun)
     ShopController.sell = Utils.overwrittenFunction(ShopController.sell, RMS_Leasing.onShopControllerSell)
@@ -30,28 +32,36 @@ function RMS_Leasing.init()
 end
 
 ---Tells whether RMS tracks the vehicle
+-- @param table vehicle vehicle
+-- @return boolean isTracked true when RMS tracks it
 function RMS_Leasing.isRMSVehicle(vehicle)
-    return vehicle ~= nil
-        and vehicle.spec_RealisticMechanicalSystems ~= nil
-        and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
+    return vehicle.spec_RealisticMechanicalSystems ~= nil and not vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle
 end
 
 ---Tells whether the vehicle is leased
+-- @param table vehicle vehicle
+-- @return boolean isLeased true when it is leased
 function RMS_Leasing.isLeasedVehicle(vehicle)
-    return vehicle ~= nil and vehicle.propertyState == VehiclePropertyState.LEASED
+    return vehicle.propertyState == VehiclePropertyState.LEASED
 end
 
 ---Tells whether the vehicle is both leased and tracked by RMS
+-- @param table vehicle vehicle
+-- @return boolean isSupported true when it is both
 function RMS_Leasing.isSupportedVehicle(vehicle)
     return RMS_Leasing.isRMSVehicle(vehicle) and RMS_Leasing.isLeasedVehicle(vehicle)
 end
 
----Deposit of the lease, as EconomyManager takes it
+---Returns the deposit of the lease
+-- @param table vehicle vehicle
+-- @return float deposit deposit
 local function getDeposit(vehicle)
     return MathUtil.round(vehicle:getPrice() * EconomyManager.DEFAULT_LEASING_DEPOSIT_FACTOR, 0)
 end
 
----Dealer price of the lightest maintenance, by how overdue it is
+---Returns the dealer price of the lightest maintenance, by how overdue it is
+-- @param table vehicle vehicle
+-- @return float cost cost
 local function getOverdueServiceCost(vehicle)
     local rms = RealisticMechanicalSystems
     local threshold = RMS_Config.CORE.SERVICE_EXPIRED_THRESHOLD
@@ -68,10 +78,12 @@ local function getOverdueServiceCost(vehicle)
     return overdue * price
 end
 
----What the machine owes on return, before any mod takes a part over
+---Returns what the machine owes on return, before any mod takes a part over
+-- @param table vehicle vehicle
+-- @return table costs cost by charge key
 local function getCosts(vehicle)
     local rms = RealisticMechanicalSystems
-    local dirt = vehicle.getDirtAmount ~= nil and math.min(vehicle:getDirtAmount(), 1) or 0
+    local dirt = vehicle.getDirtAmount ~= nil and vehicle:getDirtAmount() or 0
     return {
         overdueMaintenance = getOverdueServiceCost(vehicle),
         repair = vehicle:getServicePrice(rms.STATUS.REPAIR, rms.REPAIR_TYPES.MEDIUM, rms.PART_TYPES.OEM, rms.WORKSHOP.DEALER, true),
@@ -79,47 +91,48 @@ local function getCosts(vehicle)
     }
 end
 
----Return costs owed (raw), shown (display), billed (charge), and rows
+---Returns what the return of a machine shows and bills, line by line
+-- @param table vehicle vehicle
+-- @return table breakdown total shown (display), total billed (charge) and the rows shown
 function RMS_Leasing.getReturnBreakdown(vehicle)
-    local isTracked = RMS_Leasing.isRMSVehicle(vehicle)
-    local costs = isTracked and getCosts(vehicle) or {}
+    local costs = getCosts(vehicle)
     local breakdown = {
         hasExtendedLeasing = RMS_Leasing.hasExtendedLeasing(),
-        raw = {},
         display = { total = 0 },
         charge = { total = 0 },
         rows = {}
     }
 
     for _, charge in ipairs(RMS_Leasing.CHARGES) do
-        local cost = costs[charge.key] or 0
+        local cost = costs[charge.key]
         local billed = -cost
         -- Extended Leasing bills the wash itself
         if charge.key == "washing" and breakdown.hasExtendedLeasing then
             billed = 0
         end
-        breakdown.raw[charge.key] = cost
-        breakdown.display[charge.key] = -cost
         breakdown.display.total = breakdown.display.total - cost
-        breakdown.charge[charge.key] = billed
         breakdown.charge.total = breakdown.charge.total + billed
-        table.insert(breakdown.rows, { label = charge.label, key = charge.key, value = -cost })
+        table.insert(breakdown.rows, { label = charge.label, value = -cost })
     end
 
     -- Extended Leasing refunds the deposit itself
-    if isTracked and breakdown.hasExtendedLeasing then
+    if breakdown.hasExtendedLeasing then
         local deposit = getDeposit(vehicle)
-        breakdown.display.deposit = deposit
         breakdown.display.total = breakdown.display.total + deposit
-        table.insert(breakdown.rows, { label = "rms_sell_dialog_deposit_refund", key = "deposit", value = deposit })
+        table.insert(breakdown.rows, { label = "rms_sell_dialog_deposit_refund", value = deposit })
     end
 
     return breakdown
 end
 
 ---Asks a leased RMS vehicle back through the mod dialog
+-- @param table self shop controller
+-- @param function superFunc original function
+-- @param table storeItem store item
+-- @param table concreteItem item sold
+-- @param boolean isDirectSell true for a direct sale
 function RMS_Leasing.onShopControllerSell(self, superFunc, storeItem, concreteItem, isDirectSell)
-    if concreteItem == nil or concreteItem == ShopDisplayItem.NO_CONCRETE_ITEM or not RMS_Leasing.isSupportedVehicle(concreteItem) then
+    if not RMS_Leasing.isSupportedVehicle(concreteItem) then
         superFunc(self, storeItem, concreteItem, isDirectSell)
         return
     end
@@ -131,10 +144,13 @@ function RMS_Leasing.onShopControllerSell(self, superFunc, storeItem, concreteIt
 end
 
 ---Bills the return charges on the server
+-- @param table self sell vehicle event
+-- @param function superFunc original function
+-- @param Connection connection connection the event comes from
 function RMS_Leasing.onSellVehicleEventRun(self, superFunc, connection)
     local vehicle = self.vehicle
 
-    -- Restore the native constant after Float32 transport.
+    -- Restore the native constant after Float32 transport
     if not connection:getIsServer() and RMS_Leasing.isRMSVehicle(vehicle)
         and vehicle.propertyState == VehiclePropertyState.OWNED then
         self.multiplier = self.isDirectSell and EconomyManager.DIRECT_SELL_MULTIPLIER or 1

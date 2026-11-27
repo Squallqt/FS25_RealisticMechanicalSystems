@@ -2,16 +2,13 @@
 
 local LAMP_LIFE_FACTOR = 2
 
----RMS configuration.
+---Configuration of the mod: tuned values and the settings the savegame keeps
 RMS_Config = {
     CONFIG_VERSION = 1,
 
     DEBUG = false,
-    TUTORIAL_MODE = true,
 
-    -- update interval of the responsive effects, in ms
-    ON_UPDATE_DELAY = 100, -- 10 Hz
-    TUTORIAL_UPDATE_DELAY = 1000, 
+    ON_UPDATE_DELAY = 100,
 
     UPDATE_VEHICLE_STATE_DELAY_ONE = 50,
     UPDATE_VEHICLE_STATE_DELAY_TWO = 200,
@@ -21,11 +18,9 @@ RMS_Config = {
     ROOF_RAYCAST_START_OFFSET = 1,
     ROOF_STATIONARY_SPEED_LIMIT = 0.5,
     
-    -- Simulation interval (ms)
     CORE_UPDATE_DELAY = 250,
     META_UPDATE_DELAY = 30000,
 
-    -- wear and breakdown probability
     CORE = {
         REFERENCE_SERVICE_WEAR = 0.1,
         REFERENCE_SYSTEMS_WEAR = 0.01,
@@ -33,22 +28,17 @@ RMS_Config = {
         BASE_SYSTEMS_WEAR = 0.01,
 
         SERVICE_EXPIRED_THRESHOLD = 0.5,
-        -- intervals overdue: {start, full}
         SERVICE_EXPIRED_KNEE = { engine = { 1.3, 1.7 }, transmission = { 1.3, 1.7 }, hydraulics = { 1.3, 1.7 },
             cooling = { 1.3, 1.7 } },
-        -- intervals in which wear doubles past the knee
         SERVICE_EXPIRED_DOUBLING = 0.4,
-        -- share of a life per year outdoors
         OUTDOOR_LIFE_SHARE_PER_YEAR = { TRACTOR = 0.0149, COMBINE = 0.087 },
 
-        -- share of each system in the condition of the machine
         SYSTEM_WEIGHTS = { engine = 0.22, transmission = 0.16, hydraulics = 0.12, cooling = 0.12, electrical = 0.10, chassis = 0.10,
             fuel = 0.08, pto = 0.06, harvest = 0.13 },
 
         AVG_STRESS_WARNING_THRESHOLD = 0.048,
         AVG_STRESS_CRITICAL_THRESHOLD = 0.097,
 
-        -- K
         HEAT_HALVING_K = 10,
 
         LUGGING_RPM_RANGE_THRESHOLD = 0.25,
@@ -59,15 +49,15 @@ RMS_Config = {
             SERVICE_EXPIRED_MAX = 6,
             MOTOR_IDLING_THRESHOLD = 0.05,
             MOTOR_OVERLOADED_THRESHOLD = 1.0,
+            IDLE_LOAD_SHARE = 0.05,
+            SHOWN_LOAD_TAU = 0.45,
             TORQUE_LIFE_EXPONENT = 10 / 3,
             LUGGING_MULTIPLIER = 3.0,
             LUGGING_MOTORLOAD_THRESHOLD = 0.80,
-            -- per K
             COLD_MOTOR_TEMP_THRESHOLD = 55,
             COLD_MOTOR_WEAR_SLOPE = 0.032,
             COLD_MOTOR_MEASURED_MIN = 18,
             COLD_MOTOR_WARNING_EXPOSURE_MS = 2000,
-            -- deg C
             OVERHEAT_MOTOR_THRESHOLD = 94,
             OVERHEAT_MOTOR_WARNING = 105,
             OVERHEAT_MOTOR_WARNING_LOAD = 0.3,
@@ -84,17 +74,7 @@ RMS_Config = {
             LUGGING_MOTORLOAD_THRESHOLD = 0.80,
             WHEEL_SLIP_MULTIPLIER = 10.0,
             WHEEL_SLIP_THRESHOLD = 0.12,
-            HEAVY_TRAILER_MULTIPLIER = 0.75,
-            -- tractor masses
-            HEAVY_TRAILER_MASS_RATIO_THRESHOLD = 4.5,
-            HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT = 6,
-            HEAVY_TRAILER_TRUCK_MASS_RATIO_THRESHOLD = 6.0,
-            HEAVY_TRAILER_TRUCK_MASS_RATIO_FULL_EFFECT = 3.0,
-            HEAVY_TRAILER_MOTORLOAD_THRESHOLD = 0.7,
-            HEAVY_TRAILER_TUTORIAL_MARGIN = 0.8,
-            -- deg C
             COLD_TRANSMISSION_THRESHOLD = 10,
-            -- deg C
             OVERHEAT_TRANSMISSION_THRESHOLD = 93,
             OVERHEAT_TRANSMISSION_WARNING = 95,
         },
@@ -103,9 +83,7 @@ RMS_Config = {
             SERVICE_EXPIRED_MULTIPLIER = 1.0,
             SERVICE_EXPIRED_MAX = 3,
             PUMP_WEAR_RATE = 0.5,
-            -- deg C
             COLD_OIL_THRESHOLD = -5,
-            -- deg C
             HOT_OIL_THRESHOLD = 82,
             VIB_FULL_LIFT_MASS_RATIO = 0.33,
             FILTER_BYPASS_STAGE = 2,
@@ -120,16 +98,11 @@ RMS_Config = {
             LOAD_FACTOR_MULTIPLIER = 2.9,
             OVERLOAD_FACTOR_FULL_EFFECT = 1.20,
             OVERLOAD_FACTOR_MULTIPLIER = 6.1,
-            -- deg per cross the maker rates its life at
             SHAFT_ANGLE_REFERENCE = 5,
-            -- deg, life coefficient of a cross
             SHAFT_CROSS_LIFE = { { 3, 422 }, { 5, 300 }, { 7, 221 }, { 10, 150 }, { 12, 121 },
                 { 15, 90 }, { 17, 74 }, { 20, 53 }, { 22, 41 }, { 25, 27 } },
-            -- life of a cross against the torque it carries
             SHAFT_TORQUE_EXPONENT = 3,
-            -- shafts of the game drawn wide-angle at both ends
             SHAFT_WIDE_BOTH_ENDS = { walterscheidWWZ = true, walterscheidW_SC25 = true },
-            RAISED_TUTORIAL_MS = 20000,
             ENGAGEMENT_CLUTCH_DAMAGE = 0.0002,
             ENGAGEMENT_SHOCK_RPM_THRESHOLD = 0.25,
             ENGAGEMENT_SHOCK_DAMAGE = 0.005,
@@ -138,34 +111,47 @@ RMS_Config = {
 
         HARVEST_FACTOR_DATA = {
             BASE_RATE = 1 / 0.65,
-            -- shares of the rated engine power at full harvesting work
             ROTARY_SHARE = 0.60,
             CHOPPER_SHARE = 0.20,
-            -- rotary power a + c * t/h, a in kW, c in kWh/t
             SMALL_GRAIN = { a = 20, c = 3.6 },
+            ENGINE_MOG_ENERGY = 9.6,
             MAIZE = { a = 35, c = 1.6 },
             FORAGE = { a = 6, c = 3.3 },
+            WILTED_FORAGE = { a = 6, c = 4.0 },
+            WIDTH_POWER = { beet = { b = 4.2, draft = 5.6 }, potato = { b = 10.7, draft = 11.6 }, cotton = { b = 9.3, draft = 0 } },
+            MOG_PER_GRAIN = { WHEAT = 1.23, BARLEY = 1.24, OAT = 1.24, CANOLA = 1.40, SOYBEAN = 1.0, SORGHUM = 0.6, RICE = 1.7,
+                RICELONGGRAIN = 1.7 },
             FORAGE_DRY_MATTER = 0.35,
-            -- straw taken in past which the game spreads it: whole plant
             WHOLE_PLANT_STRAW_RATIO = 0.5,
-            -- m, highest cut close to the ground: soybean and maize
             STONE_CUT_HEIGHT = 0.20,
-            -- kWh per t of straw
             CHOPPER_ENERGY = 1.75,
             WET_MULTIPLIER = 1.0,
             RICE_MULTIPLIER = 0.5,
             DETECTOR_OFF_STONE_MULTIPLIER = 2.0,
             MAX_GRAIN_LOSS = 0.15,
-            -- store category -> organs of the machine
+            MIN_CUTTING_SPEED = 0.5,
+            LOAD_TICK_SHARE = 0.05,
+            FILL_TIME = 7,
+            SHOWN_LOAD_STOP_TAU = 0.2,
+            SHOWN_LOAD_STOP_SPEED = 0.4,
             KINDS = {
                 HARVESTERS = "grain", RICEHARVESTERS = "grain", FORAGEHARVESTERS = "forage",
-                BEETHARVESTERS = "beet", BEETVEHICLES = "beet", POTATOHARVESTING = "potato", POTATOVEHICLES = "potato",
-                COTTONHARVESTERS = "cotton", COTTONVEHICLES = "cotton",
-                SUGARCANEHARVESTERS = "sugarcane", SUGARCANEVEHICLES = "sugarcane",
-                GRAPEHARVESTERS = "grape", GRAPEVEHICLES = "grape", OLIVEHARVESTERS = "grape", OLIVEVEHICLES = "grape",
+                BEETHARVESTERS = "beet", POTATOHARVESTING = "potato", COTTONHARVESTERS = "cotton",
+                SUGARCANEHARVESTERS = "sugarcane", GRAPEHARVESTERS = "grape", OLIVEHARVESTERS = "grape",
                 VEGETABLEHARVESTERS = "vegetable", GREENBEANHARVESTERS = "vegetable", PEAHARVESTERS = "vegetable",
                 SPINACHHARVESTERS = "vegetable"
             }
+        },
+
+        HEADER_DRIVE = {
+            SLIP_EFFORT = 2,
+            START_INERTIA_RATIO = 9,
+            ENGAGEMENT_TIME_S = 0.2,
+            HELD_RPM_MARGIN = 150,
+            LINING_WEAR_PER_KWH = 110,
+            LINING_WEAR_ALLOWED = 67000,
+            SEIZE_DAYS = 14,
+            DAYS_PER_MONTH = 30.4
         },
 
         COOLING_FACTOR_DATA = {
@@ -175,7 +161,6 @@ RMS_Config = {
             HIGH_COOLING_FACTOR_MULTIPLIER = 1.5,
             HIGH_COOLING_FACTOR_THRESHOLD = 0.95,
             HIGH_COOLING_TEMP_MARGIN = 3,
-            -- deg C
             OVERHEAT_FACTOR_THRESHOLD = 100,
             ELECTRIC_OVERHEAT_MULTIPLIER = 50.0,
             COLD_SHOCK_FACTOR_MULTIPLIER = 30.0,
@@ -186,17 +171,14 @@ RMS_Config = {
             CRANKING_STRESS_MULTIPLIER = 5.0,
             VIB_FACTOR_THRESHOLD = 0.03,
             VIB_FACTOR_MAX_SIGNAL = 0.07,
-            -- share of the chassis fatigue
             VIB_FACTOR_MULTIPLIER = 0.25
         },
 
         CHASSIS_FACTOR_DATA = {
             CHASSIS_IDLING_MULTIPLIER = 0.5,
-            -- shaking signal: 20 km/h and 50 km/h across a field
             VIB_FACTOR_THRESHOLD = 0.03,
             VIB_FACTOR_MAX_SIGNAL = 0.07,
             VIB_FACTOR_MULTIPLIER = 1.0,
-            -- life against amplitude, welded steel
             VIB_FATIGUE_EXPONENT = 3,
             STEER_LOAD_FACTOR_MULTIPLIER = 1.33,
             STEER_LOCK_MULTIPLIER = 1.0,
@@ -220,17 +202,18 @@ RMS_Config = {
             TERRAIN_IMPACT_MIN_SPEED_LOSS = 10.0,
             TERRAIN_IMPACT_DAMAGE_PER_KMH = 0.001,
             TERRAIN_IMPACT_MAX_DAMAGE = 0.05,
-            VIB_TUTORIAL_MS = 3000,
-            TERRAIN_IMPACT_TUTORIAL_MS = 5000,
             BRAKE_MASS_FACTOR_MULTIPLIER = 4.5,
             BRAKE_MASS_SPEED_THRESHOLD = 2.0,
             BRAKE_PEDAL_THRESHOLD = 0.15,
+            HEAVY_TRAILER_MASS_RATIO_THRESHOLD = 4.5,
+            HEAVY_TRAILER_MASS_RATIO_FULL_EFFECT = 6,
+            HEAVY_TRAILER_TRUCK_MASS_RATIO_THRESHOLD = 6.0,
+            HEAVY_TRAILER_TRUCK_MASS_RATIO_FULL_EFFECT = 3.0,
         },
 
         FUEL_FACTOR_DATA = {
             LOW_FUEL_FACTOR_MULTIPLIER = 4.0,
             LOW_FUEL_THRESHOLD = 0.20,
-            -- deg C
             COLD_FUEL_THRESHOLD = 5,
             IDLE_DEPOSIT_SPEED_THRESHOLD = 0.5,
             IDLE_DEPOSIT_LOAD_THRESHOLD = 0.3,
@@ -241,20 +224,13 @@ RMS_Config = {
             HIGH_PRESSURE_FACTOR_THRESHOLD = 0.8,
         },
 
-        -- limit fails the part, release rearms it
         DIRECT_FAILURES = {
-            -- deg C
             ENGINE_HEAT = { limit = 115, release = 105 },
             TRANSMISSION_HEAT = { limit = 105, release = 95 },
             HYDRAULIC_HEAT = { limit = 104, release = 82 },
-            -- joint deg under power
             PTO_SHAFT_ANGLE = { limit = 35, release = 25 },
-            -- joint deg turning without work
             PTO_SHAFT_ANGLE_TURNING = { limit = 45, release = 25 },
-            -- joint deg of a wide-angle joint
             PTO_SHAFT_ANGLE_WIDE = { limit = 80, release = 25 },
-            -- s cranked; rest: s that clear them
-            STARTER_CRANKING = { limit = 30, release = 0, rest = 120 },
         },
 
         REPEAT_BREAKDOWN_TIME = 1.3 * 3600000,
@@ -296,19 +272,14 @@ RMS_Config = {
         ENABLE_WARNING_MESSAGES = true,
 
         AI_WORKER = {
-            -- km/h
             MIN_SPEED = 5,
             SLOW_DOWN_LEVEL = 0.5,
             RESUME_LEVEL = 0.25,
-            -- km/h per second
             SLOW_DOWN_RATE = 1.0,
             RESUME_RATE = 0.5,
             RELEASE_MARGIN = 3,
-            -- seconds
             OVERLOAD_SMOOTHING = 2,
-            -- seconds, past the game's 5 s and Courseplay's 15 s
             BLOCKED_SECONDS = 20,
-            -- m
             BLOCKED_DISTANCE = 1
         },
         WORN_PART_RAMP_START = 0.34,
@@ -336,7 +307,6 @@ RMS_Config = {
                 combustion = { "HYDRAULIC_PUMP_MALFUNCTION" }, electric = { "HYDRAULIC_PUMP_MALFUNCTION" } },
             { effect = "BRAKE_FORCE_MODIFIER", system = "CHASSIS", amplitude = -0.60, exponent = 3, aggregation = "min",
                 combustion = { "BRAKE_DISC_WEAR" }, electric = { "BRAKE_DISC_WEAR" } },
-            -- degrees
             { effect = "STEERING_PLAY_EFFECT", system = "CHASSIS", amplitude = 1.5, exponent = 3, rampStart = 0.67, aggregation = "max",
                 combustion = { "STEERING_LINKAGE_WEAR", "STEERING_KNUCKLE_PIVOT_WEAR", "STEERING_ORBITROL_MALFUNCTION" },
                 electric = { "STEERING_LINKAGE_WEAR", "STEERING_KNUCKLE_PIVOT_WEAR", "STEERING_ORBITROL_MALFUNCTION" } },
@@ -353,7 +323,6 @@ RMS_Config = {
             { effect = "HARVEST_POWER_DEMAND", system = "HARVEST", amplitude = 0.15, exponent = 3, aggregation = "sum",
                 combustion = { "FORAGE_KNIFE_WEAR", "SHEAR_BAR_WEAR" } },
         },
-        -- price: % of REPAIR_REFERENCE_VALUE
         RENEWAL_GROUPS = {
             { key = "head", price = 0.8469,
                 parts = { "INLET_VALVES", "EXHAUST_VALVES", "VALVE_GUIDES_SEALS", "CYLINDER_HEAD_GASKET" } },
@@ -363,17 +332,13 @@ RMS_Config = {
         },
 
 
-        -- kW
         TURBO_MIN_POWER_KW = 56,
-        -- Max rpm above which an engine burns petrol
         PETROL_ABOVE_MAX_RPM = 5500,
 
         BASE_BREAKDOWN_PROGRESS_TIME = 1 * 3600000,
         SECONDARY_CAUSE_SHARE = 0.35,
 
-        -- Operating hours at part wear 1.
         MACHINE_LIFE_HOURS = 12000,
-        -- Weibull shape and characteristic life (h)
         COMPONENT_LIVES = {
             BALL_BEARING           = { shape = 2, scale = 26245 },
             ROLLER_BEARING         = { shape = 2, scale = 30342 },
@@ -451,7 +416,6 @@ RMS_Config = {
         WORN_PART_FAILED_SHARE = 0.1,
     },
 
-    -- workshop opening hours and availability
     WORKSHOP = {
         DEALER_ALWAYS_AVAILABLE = false,
         MOBILE_ALWAYS_AVAILABLE = true,
@@ -467,7 +431,6 @@ RMS_Config = {
         MOBILE_WORKSHOP_RESTRICTIONS_ENABLED = true,
 
     },
-    -- service prices, durations and restore ratios
     MAINTENANCE = {
         INSTANT_INSPECTION = false,
         INSTANT_MAINTENANCE_REPAIR = false,
@@ -506,7 +469,6 @@ RMS_Config = {
             DCDC_CONVERTER_FAILURE = {hours = 1.5, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             ONBOARD_CHARGER_FAILURE = {hours = 1.5, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
             HV_INSULATION_LOSS = {hours = 4.3, category = "highVoltage", mobileRequirement = "MOBILE_HIGH_VOLTAGE"},
-            ENGINE_JAM = {hours = 20, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             TURBOCHARGER_MALFUNCTION = {hours = 4.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             OIL_PUMP_MALFUNCTION = {hours = 2, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             PISTONS = { hours = 27, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK" },
@@ -549,6 +511,9 @@ RMS_Config = {
             FRONT_PTO_CLUTCH_FAILURE = {hours = 9.5, category = "transmission", mobileRequirement = "MOBILE_HEAVY_WORK"},
             HARVEST_DRIVE_BELT_WEAR = {hours = 1, category = "mechanical"},
             HARVEST_DRIVE_BEARING_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HEADER_DRIVE_BELT_WEAR = {hours = 1, category = "mechanical"},
+            HEADER_SLIP_CLUTCH_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
+            HEADER_DRIVE_SHAFT_WEAR = {hours = 1.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             FEEDER_CHAIN_WEAR = {hours = 6.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             FEED_ACCELERATOR_WEAR = {hours = 4.3, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
             THRESHING_BAR_WEAR = {hours = 9.5, category = "mechanical", mobileRequirement = "MOBILE_HEAVY_WORK"},
@@ -690,7 +655,6 @@ RMS_Config = {
             AFTERMARKET = 0.66,
         },
         REFERENCE_POWER = 160,
-        -- EUR per hour
         LABOUR_RATE = 90,
         LABOUR_POWER_EXPONENT = 0.4,
         PARTS_POWER_EXPONENT = 0.6,
@@ -723,12 +687,10 @@ RMS_Config = {
         },
         OVERHAUL_MAX_PRICE_RATIO = 1.0,
     },
-    -- Heating: C/s; cooling: 1/s.
     THERMAL = {
         TAU = 5000,
         PID_TARGET_TEMP = 90,
         TELLTALE = { WARNING = 99, CRITICAL = 110 },
-        -- deg C, the top of what an oil sensor reads
         OIL_GAUGE_MAX = 150,
         ENGINE_PROTECTION = {
             START_TEMP = 110,
@@ -765,7 +727,6 @@ RMS_Config = {
                 forcedCooling = 0.0027000000000000001,
                 regulatedMin = 82,
                 regulatedMax = 97,
-                -- deg C, the coolant boils there under its cap
                 boilingPoint = 122,
                 faultHeatScale = 0.12365389417419846,
             },
@@ -851,7 +812,6 @@ RMS_Config = {
     },
 
     FIELD_CARE = {
-        -- share of the clogging an air blower clears each second
         CLEANING_SPEED = 0.05,
         AIR_FILTER_BREAKDOWN_THRESHOLD = 0.5,
         AIR_FILTER_BLOWOUT_RESIDUE_SHARE = 0.25,
@@ -860,7 +820,6 @@ RMS_Config = {
         FUEL_FILTER_LOW_FUEL_MULTIPLIER = 3.0,
         HYDRAULIC_FILTER_ACTIVE_MULTIPLIER = 2.0,
         ADBLUE_FILTER_SERVICE_INTERVALS = 6,
-        -- programme h as SERVICE_PROGRAM, FPT NEF natural gas plugs
         SPARK_PLUG_HOURS = 900,
         VISUAL_INSPECTION_DURATION = 5000,
         LUBRICATION_WARNING_THRESHOLD = 0.80,
@@ -868,10 +827,8 @@ RMS_Config = {
         JUMPER_CABLES_MAX_CONNECTION_DISTANCE = 12.0,
     },
 
-    -- tier hours of the notice, DAY_HOURS per worked day, none = daily
     GREASING = {
         DAY_HOURS = 10,
-        -- km/h
         TOWING_MIN_SPEED = 1,
         STROKE_ML = 0.46,
         STROKES_PER_POINT = 3,
@@ -890,6 +847,7 @@ RMS_Config = {
             COMBINE = { { points = 10 }, { points = 24, hours = 50 }, { points = 12, hours = 100 }, { points = 8, hours = 500 } },
             FORAGE_HARVESTER = { { points = 13, hours = 100 }, { points = 17, hours = 250 } },
             WINDROWER = { { points = 8, hours = 50 } },
+            SELF_PROPELLED_MOWER = { { points = 8, hours = 50 }, { points = 3, hours = 50, isDriveline = true } },
             SUGARCANE_HARVESTER = { { points = 53 }, { points = 19, hours = 250 } },
             FORWARDER = { { points = 46 }, { points = 2, hours = 125 }, { points = 1, hours = 250 }, { points = 9, hours = 500 },
                 { points = 2, hours = 1000 } },
@@ -900,11 +858,19 @@ RMS_Config = {
             SPRAYER = { { points = 22 }, { points = 3, hours = 50 } },
             IMP_BALER_ROUND = { { points = 18 } },
             IMP_BALER_SQUARE = { { points = 23, hours = 50 }, { points = 27, hours = 200 } },
+            IMP_BALER_SMALL = { { points = 16 }, { points = 8, hours = 50 } },
+            IMP_LOADER_WAGON = { { points = 8 }, { points = 10, hours = 50 }, { points = 6, months = 1, organ = "tandem" },
+                { points = 4, months = 3, organ = "chassis", perWheel = 1 }, { points = 2, months = 6, organ = "chassis" } },
             IMP_WRAPPER = { { points = 11, bales = 200 }, { points = 2, bales = 500 }, { points = 4, bales = 1000 } },
             IMP_MOWER = { { points = 11, hours = 50 } },
+            IMP_MOWER_BUTTERFLY = { { points = 26, hours = 50 } },
             IMP_RAKE = { { points = 8 } },
+            IMP_ROTARY_RAKE = { { points = 3 }, { points = 5, perRotor = 1 }, { points = 2, perRotor = 1, organ = "rotors" } },
+            IMP_BELT_MERGER = { { points = 50, hours = 50 }, { points = 4, hours = 200 } },
+            IMP_TEDDER = { { points = 1, unitWidth = 1.07, units = 8 }, { points = 4 } },
             IMP_BALE_LOADER = { { points = 22, hours = 50 } },
-            IMP_MIXER = { { points = 21, hours = 40 } },
+            IMP_MIXER = { { points = 15, hours = 40 }, { points = 6, hours = 40, organ = "chassis" },
+                { points = 12, hours = 40, organ = "tandem" } },
             IMP_BEDDER = { { points = 5, hours = 50 } },
             IMP_MULCHER = { { points = 4 } },
             IMP_CRANE = { { points = 9 }, { points = 14, hours = 50 } },
@@ -912,35 +878,58 @@ RMS_Config = {
             IMP_STUMP_CUTTER = { { points = 4 } },
             IMP_PLOW = { { points = 5 }, { points = 1, hours = 100 } },
             IMP_CULTIVATOR = { { points = 5, hours = 50 } },
+            IMP_CULTIVATOR_FOLDING = { { points = 5, hours = 50 }, { points = 8, hours = 50 },
+                { points = 6, hours = 50, organ = "chassis" } },
+            IMP_CULTIVATOR_WIDE = { { points = 5, hours = 50 }, { points = 16, hours = 50 },
+                { points = 6, hours = 50, organ = "chassis" } },
             IMP_DISC_HARROW_TRAILED = { { points = 28, hours = 50 } },
+            IMP_DISC_HARROW_WIDE = { { points = 36, hours = 50 } },
             IMP_DISC_HARROW_MOUNTED = { { points = 11, hours = 50 } },
-            IMP_POWER_HARROW = { { points = 4 } },
+            IMP_DISC_HARROW_RIGID = { { points = 7, hours = 50 } },
+            IMP_POWER_HARROW = { { points = 4 }, { points = 8, hours = 50 } },
+            IMP_ROLLER_RIGID = { { points = 6, hours = 50 } },
+            IMP_ROLLER_MEDIUM = { { points = 12 }, { points = 10, hours = 50 } },
             IMP_ROLLER = { { points = 20, hours = 50 } },
+            IMP_ROLLER_HUGE = { { points = 30, hours = 50 } },
+            IMP_SILO_ROLLER = { { points = 4, hours = 50 } },
             IMP_GRASSLAND_ROLLER = { { points = 6 }, { points = 10, hours = 50 }, { points = 2, hours = 200 } },
             IMP_SEEDER = { { points = 48, noticeRows = 36, rowPoints = 1, rowWidth = 0.254 }, { points = 8, hours = 30 } },
             IMP_PLANTER = { { points = 70, noticeRows = 12, rowPoints = 5, rowWidth = 0.762 }, { points = 4, hours = 50 } },
             IMP_SEED_TANK = { { points = 4, hours = 100 } },
-            IMP_CUTTER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 } },
+            IMP_CUTTER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 },
+                { points = 3, hours = 50, isDriveline = true } },
+            IMP_CUTTER_DOUBLE_KNIFE = { { points = 2 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 },
+                { points = 3, hours = 50, isDriveline = true } },
+            IMP_WINDROWER_HEADER = { { points = 1 }, { points = 1, hours = 100 }, { points = 2, hours = 250 }, { points = 3, hours = 500 } },
             IMP_CORN_HEADER = { { points = 2 }, { points = 4, hours = 50 } },
             IMP_BEET_HARVESTER = { { points = 18 }, { points = 37, hours = 40 } },
             IMP_POTATO_HARVESTER = { { points = 1 }, { points = 27, hours = 40 }, { points = 23, hours = 100 }, { points = 22, months = 12 } },
-            IMP_FERTILIZER_TRAILED = { { points = 18 }, { points = 3, hours = 60 } },
-            IMP_FERTILIZER_MOUNTED = {},
+            IMP_POTATO_ONE_ROW = { { points = 1 }, { points = 10, hours = 40 }, { points = 14, hours = 100 }, { points = 12, months = 12 } },
+            IMP_FERTILIZER_TRAILED = { { points = 17 }, { points = 1, organ = "chassis" }, { points = 3, hours = 60 } },
+            IMP_MANURE_SPREADER = { { points = 8 }, { points = 10, hours = 50 }, { points = 6, months = 1, organ = "tandem" },
+                { points = 4, months = 3, organ = "chassis", perWheel = 1 }, { points = 2, months = 6, organ = "chassis" } },
             IMP_SPRAYER_TRAILED = { { points = 2, hours = 50 }, { points = 7, hours = 100 } },
             IMP_SPRAYER_MOUNTED = { { points = 2, hours = 100 } },
             IMP_SLURRY_BAR = { { points = 7, hours = 50 } },
-            IMP_TRAILER_TIPPING = { { points = 10, months = 1 }, { points = 16, months = 3 }, { points = 2, months = 6 } },
-            IMP_TRAILER = { { points = 6, months = 1 }, { points = 4, months = 3 }, { points = 2, months = 6 } },
-            IMP_ANIMAL_TRAILER = { { points = 16, months = 3 }, { points = 9, months = 6 } },
+            IMP_TRAILER_TIPPING = { { points = 4, months = 1, organ = "chassis" }, { points = 6, months = 1, organ = "tandem" },
+                { points = 4, months = 3, organ = "chassis", perWheel = 1 }, { points = 3, months = 3, organ = "chassis" },
+                { points = 9, months = 3 }, { points = 2, months = 6, organ = "chassis" } },
+            IMP_TRAILER_THREEWAY = { { points = 5, months = 1, organ = "chassis" }, { points = 6, months = 1, organ = "tandem" },
+                { points = 20, months = 1 }, { points = 4, months = 2 }, { points = 4, months = 3, organ = "chassis", perWheel = 2 },
+                { points = 1, months = 3, organ = "chassis" }, { points = 3, months = 6, organ = "chassis" } },
+            IMP_TRAILER = { { points = 6, months = 1, organ = "tandem" }, { points = 4, months = 3, organ = "chassis", perWheel = 1 },
+                { points = 2, months = 6, organ = "chassis" } },
+            IMP_ANIMAL_TRAILER = { { points = 4, months = 3, organ = "chassis", perWheel = 2 }, { points = 1, months = 3, organ = "chassis" },
+                { points = 11, months = 3 }, { points = 1, months = 6, organ = "chassis" }, { points = 8, months = 6 } },
             IMP_AUGER_WAGON = { { points = 4 } },
             IMP_FRONT_LOADER = { { points = 22 } },
-            IMP_LOADER_TOOL = { { points = 6 } },
+            IMP_LOADER_TOOL = { { points = 6, perArm = 3 } },
             IMP_BLADE = { { points = 7 } },
             IMP_AUGER = { { points = 9 } },
-            IMP_DRIVEN = {},
         },
-        CARDAN = { { points = 2 }, { points = 2, hours = 40 } },
-        CARDAN_INCLUDED = { IMP_BEET_HARVESTER = true },
+        CARDAN = { { points = 2, isDriveline = true }, { points = 2, hours = 40, isDriveline = true } },
+        CARDAN_INCLUDED = { IMP_BEET_HARVESTER = true, IMP_CUTTER = true, IMP_CUTTER_DOUBLE_KNIFE = true, IMP_WINDROWER_HEADER = true },
+        SMALL_BALE_WIDTH = 0.5,
         CATEGORY_FAMILIES = {
             TRACTORSS = "TRACTOR_SMALL",
             TRACTORSM = "TRACTOR_MEDIUM",
@@ -951,13 +940,10 @@ RMS_Config = {
             FORKLIFTS = "FORKLIFT",
             HARVESTERS = "COMBINE",
             FORAGEHARVESTERS = "FORAGE_HARVESTER",
-            MOWERVEHICLES = "WINDROWER",
             COMBINEWINDROWER = "WINDROWER",
             SUGARCANEHARVESTERS = "SUGARCANE_HARVESTER",
-            SUGARCANEVEHICLES = "SUGARCANE_HARVESTER",
             FORESTRYFORWARDERS = "FORWARDER",
             GRAPEHARVESTERS = "GRAPE_HARVESTER",
-            GRAPEVEHICLES = "GRAPE_HARVESTER",
             OLIVEHARVESTERS = "GRAPE_HARVESTER",
             BEETHARVESTERS = "BEET_HARVESTER",
             BEETLOADING = "BEET_LOADER",
@@ -979,16 +965,15 @@ RMS_Config = {
             BALERSROUND = "IMP_BALER_ROUND",
             WOODCHIPPERS = "IMP_MULCHER",
         },
-        -- a pair picks by wheels, moving tools or bale loading, false: none
         IMPLEMENT_CATEGORY_FAMILIES = {
             BALERS = "IMP_BALER_ROUND",
             BALERSROUND = "IMP_BALER_ROUND",
-            BALERSSQUARE = "IMP_BALER_SQUARE",
+            BALERSSQUARE = { smallBales = "IMP_BALER_SMALL", bigBales = "IMP_BALER_SQUARE" },
             BALEWRAPPERS = "IMP_WRAPPER",
-            MOWERS = "IMP_MOWER",
-            TEDDERS = "IMP_RAKE",
-            WINDROWERS = "IMP_RAKE",
-            LOADERWAGONS = "IMP_BALER_ROUND",
+            MOWERS = { byWidth = { { 5, "IMP_MOWER" }, { math.huge, "IMP_MOWER_BUTTERFLY" } } },
+            TEDDERS = "IMP_TEDDER",
+            WINDROWERS = { belts = "IMP_BELT_MERGER", rotors = "IMP_ROTARY_RAKE", wheels = "IMP_RAKE" },
+            LOADERWAGONS = "IMP_LOADER_WAGON",
             BALELOADERS = { baleLoader = "IMP_BALE_LOADER", flatbed = "IMP_TRAILER" },
             FORAGEMIXERS = "IMP_MIXER",
             STRAWBLOWERS = "IMP_BEDDER",
@@ -1002,15 +987,18 @@ RMS_Config = {
             FORESTRYPLANTERS = "IMP_GRAPPLE",
             FORESTRYWINCHES = "IMP_MULCHER",
             PLOWS = "IMP_PLOW",
-            CULTIVATORS = "IMP_CULTIVATOR",
-            SUBSOILERS = "IMP_CULTIVATOR",
-            WEEDERS = "IMP_CULTIVATOR",
-            DISCHARROWS = { trailed = "IMP_DISC_HARROW_TRAILED", mounted = "IMP_DISC_HARROW_MOUNTED" },
+            CULTIVATORS = { byWidth = { { 4.5, "IMP_CULTIVATOR" }, { 9, "IMP_CULTIVATOR_FOLDING" }, { math.huge, "IMP_CULTIVATOR_WIDE" } } },
+            SUBSOILERS = { byWidth = { { 4.5, "IMP_CULTIVATOR" }, { 9, "IMP_CULTIVATOR_FOLDING" }, { math.huge, "IMP_CULTIVATOR_WIDE" } } },
+            WEEDERS = { byWidth = { { 4.5, "IMP_CULTIVATOR" }, { 9, "IMP_CULTIVATOR_FOLDING" }, { math.huge, "IMP_CULTIVATOR_WIDE" } } },
+            DISCHARROWS = { trailed = { byWidth = { { 9, "IMP_DISC_HARROW_TRAILED" }, { math.huge, "IMP_DISC_HARROW_WIDE" } } },
+                mounted = { byWidth = { { 3.5, "IMP_DISC_HARROW_RIGID" }, { math.huge, "IMP_DISC_HARROW_MOUNTED" } },
+                    unknown = "IMP_DISC_HARROW_MOUNTED" } },
             POWERHARROWS = "IMP_POWER_HARROW",
             SPADERS = "IMP_POWER_HARROW",
             VEGETABLEPLANTERS = "IMP_POWER_HARROW",
-            ROLLERS = "IMP_ROLLER",
-            SILOCOMPACTION = "IMP_ROLLER",
+            ROLLERS = { byWidth = { { 6.5, "IMP_ROLLER_RIGID" }, { 13, "IMP_ROLLER_MEDIUM" }, { 20, "IMP_ROLLER" }, { math.huge, "IMP_ROLLER_HUGE" } },
+                unknown = "IMP_ROLLER" },
+            SILOCOMPACTION = "IMP_SILO_ROLLER",
             GRASSLANDCARE = "IMP_GRASSLAND_ROLLER",
             SEEDERS = "IMP_SEEDER",
             PLANTERS = "IMP_PLANTER",
@@ -1018,26 +1006,27 @@ RMS_Config = {
             ONIONPLANTING = "IMP_PLANTER",
             SUGARCANEPLANTERS = "IMP_PLANTER",
             SEEDTANKS = "IMP_SEED_TANK",
-            CUTTERS = "IMP_CUTTER",
-            COMBINEWINDROWER = "IMP_CUTTER",
+            CUTTERS = { byWidth = { { 12, "IMP_CUTTER" }, { math.huge, "IMP_CUTTER_DOUBLE_KNIFE" } } },
+            COMBINEWINDROWER = "IMP_WINDROWER_HEADER",
             HARVESTERS = "IMP_CUTTER",
             CORNHEADERS = "IMP_CORN_HEADER",
             FORAGEHARVESTERCUTTERS = "IMP_CORN_HEADER",
             SPECIALHEADERS = "IMP_CORN_HEADER",
             FORAGEHARVESTERS = "FORAGE_HARVESTER",
             BEETHARVESTERS = "IMP_BEET_HARVESTER",
-            POTATOHARVESTING = "IMP_POTATO_HARVESTER",
-            VEGETABLEHARVESTERS = "IMP_POTATO_HARVESTER",
+            POTATOHARVESTING = { byWidth = { { 1, "IMP_POTATO_ONE_ROW" }, { math.huge, "IMP_POTATO_HARVESTER" } }, unknown = "IMP_POTATO_HARVESTER" },
+            VEGETABLEHARVESTERS = { byWidth = { { 1, "IMP_POTATO_ONE_ROW" }, { math.huge, "IMP_POTATO_HARVESTER" } },
+                unknown = "IMP_POTATO_HARVESTER" },
             STONEPICKERS = "IMP_MULCHER",
             FERTILIZERSPREADERS = { trailed = "IMP_FERTILIZER_TRAILED", mounted = "IMP_FERTILIZER_MOUNTED" },
-            MANURESPREADERS = "IMP_FERTILIZER_TRAILED",
+            MANURESPREADERS = "IMP_MANURE_SPREADER",
             SPRAYERS = { trailed = "IMP_SPRAYER_TRAILED", mounted = "IMP_SPRAYER_MOUNTED" },
             GRAPETOOLS = { trailed = "IMP_SPRAYER_TRAILED", mounted = "IMP_SPRAYER_MOUNTED" },
             SLURRYTOOLS = "IMP_SLURRY_BAR",
             SLURRYTANKS = "IMP_TRAILER",
             SLURRYTRANSPORT = "IMP_TRAILER",
             BARRELS = "IMP_TRAILER",
-            TRAILERS = "IMP_TRAILER_TIPPING",
+            TRAILERS = { threeWay = "IMP_TRAILER_THREEWAY", rear = "IMP_TRAILER_TIPPING" },
             TRAILERSCHANGINGSYSTEM = "IMP_TRAILER_TIPPING",
             TRAILERSFLATBED = "IMP_TRAILER",
             TRAILERSSEMI = "IMP_TRAILER",
@@ -1063,11 +1052,7 @@ RMS_Config = {
         },
     },
 
-    -- Fluid levels
     FLUIDS = {
-        -- Exact vehicle XML keys override category profiles.
-        CAPACITY_OVERRIDES = {},
-
         ENGINE_OIL_CONSUMPTION_PER_INTERVAL = 0.15 / 1.45,
         ENGINE_OIL_WEAR_CONSUMPTION = 13.5,
         ENGINE_OIL_LOAD_SHARE = 1.5,
@@ -1075,35 +1060,33 @@ RMS_Config = {
         LEVEL_MIN_MARK = 0.85,
         LEVEL_LOW = 0.70,
         LEVEL_VERY_LOW = 0.50,
-        -- a pump draws air on level ground from this level down
         LEVEL_CRITICALLY_LOW = 0.30,
-        -- deg of lean a sump at its MIN mark keeps its pump covered to
         PICKUP_MIN_MARK_ANGLE = 30,
-        -- s of air drawn by a pump, summed, for each stage of its fault
         PICKUP_STAGE_SECONDS = 60,
-        -- s the oil takes to follow the slope
         PICKUP_SMOOTHING_SECONDS = 0.5,
-        -- deg back under its limit before a pump draws oil again
         PICKUP_HYSTERESIS_ANGLE = 3,
-        -- share of its speed a hydraulic function keeps while its pump draws air
         PICKUP_HYDRAULIC_SPEED = 0.5,
-        -- share of its oil interval an engine keeps on an unsuited oil
         UNSUITED_ENGINE_OIL_INTERVAL = 0.5,
     },
 
-    -- drive mode, differential lock and park brake
     DRIVETRAIN = {
         ENABLED = true,
-        ALLOW_AUTO_MODE = true,
 
         OPEN_AXLE_SPEED_RATIO = 4.0,
         LOCKED_AXLE_SPEED_RATIO = 1.0,
 
-        AUTO_ENGAGE_SLIP_THRESHOLD = 0.12,
-        AUTO_ENGAGE_LOAD_THRESHOLD = 0.55,
-        AUTO_ENGAGE_SPEED = 13,
+        DRIVE_MANAGEMENT_MIN_YEAR = 1993,
+        DRIVE_MANAGEMENT_CATEGORIES = {
+            TRACTORSS = true,
+            TRACTORSM = true,
+            TRACTORSL = true
+        },
+        STEERING_LOCK_MARGIN = 1,
         AUTO_DISENGAGE_SPEED = 20,
+        AUTO_DISENGAGE_STEER_ANGLE = 25,
         AUTO_HYSTERESIS_MS = 250,
+        DIFF_LOCK_RELEASE_SPEED = 20,
+        DIFF_LOCK_RELEASE_STEER_ANGLE = 15,
 
         WINDUP_STEER_THRESHOLD = 0.12,
         WINDUP_FRICTION_THRESHOLD = 0.85,
@@ -1111,10 +1094,8 @@ RMS_Config = {
         WINDUP_4WD_MAX_STRESS = 0.18,
         WINDUP_ACCUMULATION_RATE = 0.09,
         WINDUP_RELEASE_RATE = 0.25,
-        -- gear life against torque, the windup a share of it
         WINDUP_GEAR_EXPONENT = 4,
         WINDUP_INSTANT_DAMAGE = 0.03,
-        WINDUP_TUTORIAL_THRESHOLD = 0.05,
         WINDUP_4WD_WARNING_THRESHOLD = 0.05,
         WINDUP_WARNING_THRESHOLD = 0.22,
         WINDUP_CRITICAL_THRESHOLD = 0.44,
@@ -1143,11 +1124,9 @@ RMS_Config = {
         PARKBRAKE_DRAG_WEAR_MULTIPLIER = 5.0 
     },
 
-    -- Exhaust
     EXHAUST = {
         ENABLED = true,
 
-        -- Soot, oil, unburnt fuel, water vapour, clean gas.
         SOOT_TINT = {0.020, 0.020, 0.025},
         OIL_TINT = {0.050, 0.090, 0.350},
         UNBURNT_TINT = {0.980, 0.980, 0.980},
@@ -1169,17 +1148,16 @@ RMS_Config = {
         PLUME_SPRITES = "soft",
         PLUME_DIRECTORY = "particles/exhaust/",
         PLUME_FILE = "plume.i3d",
+        PLUME_HEAT_FILE = "heat.i3d",
 
         PUFF = {
             OVERLAP_TARGET = 5,
             RATE_MIN = 8,
             RATE_MAX = 720,
             THIN_LEVEL_MAX = 6,
-            -- Exit speed (m/s)
             EXIT_SPEED_MIN = 2.0,
             EXIT_SPEED_FULL = 30.0,
             SPREAD_SHARE = 0.02,
-            -- Tailpipe diameter per square root of kW (m)
             PIPE_DIAMETER_PER_SQRT_KW = 0.009,
             PIPE_DIAMETER_MIN = 0.06,
             PIPE_DIAMETER_MAX = 0.16,
@@ -1188,11 +1166,9 @@ RMS_Config = {
             SIZE_MAX = 8.0,
             JET_SPREAD = 0.22,
             JET_CROSS_SPREAD = 0.10,
-            -- Jet integration step (ms)
             JET_PROFILE_STEP_MS = 50,
             GROWTH_BASE = 0.18,
             GROWTH_PER_WIND = 0.15,
-            -- Sprite growth interval (ms)
             GROWTH_FIT_SHARE = 0.35,
             GROWTH_FIT_MIN_MS = 400,
             GROWTH_FIT_LEVEL_MIN_MS = 20,
@@ -1205,14 +1181,12 @@ RMS_Config = {
             SPRITE_ALPHA_GAIN = 1.60,
             ALPHA_EPSILON = 0.03,
             FADE_OUT_MS = 300,
-            -- Air drag (1/s)
             BASE_DAMPING = 1.20,
             DAMPING_CROSS_SPEED = 2.0,
             DAMPING_FLOOR_SHARE = 0.30,
             SURFACE_SPREAD = 0.06,
             SURFACE_FLOW_SHARE = 0.85,
             SURFACE_PUSH_SPEED = 1.5,
-            -- Roof probe radius threshold (m)
             ROOF_PROBE_MIN_RADIUS = 0.30,
             SHELTER_WIND_SHARE = 0.15,
             SHELTER_RADIUS = 8.0,
@@ -1226,7 +1200,6 @@ RMS_Config = {
             LEE_RECOVERY_HEIGHTS = 10,
             LEE_TOP_BLEND = 1.5,
             LEE_GROUND_FALLBACK = 2.5,
-            -- Ray origin tolerance (m)
             INSIDE_HIT_DISTANCE = 0.001,
             POOL_MAX = 400
         },
@@ -1234,8 +1207,23 @@ RMS_Config = {
         EGT = {
             RISE_IDLE_K = 120,
             RISE_FULL_K = 430,
-            COLD_FACTOR = 0.45,
+            OVERLOAD_K = 130,
+            REGENERATION_C = 600,
+            LINE_TAU = 75000,
+            LINE_COOLING_TAU = 390000,
             DILUTION_EXPONENT = 1.30
+        },
+
+        HEAT = {
+            AIR_REFRACTIVITY = 2.77e-4,
+            PATH_FACTOR = 4,
+            GAIN = 2.5,
+            MIN_DEFLECTION = 1.25e-4,
+            CONVECTION_SHARE = 0.5,
+            SORT_DISTANCE = 20000,
+            SCROLL_PERIOD = 96,
+            CLIP_DISTANCE = 80,
+            POOL_MAX = 200
         },
 
         TURBULENCE = {
@@ -1278,10 +1266,8 @@ RMS_Config = {
 
         TUNE_INTERVAL = 80,
 
-        -- Culling distance (m)
         PLUME_CLIP_DISTANCE = 150,
 
-        -- Smoothing time constants (ms)
         TINT_TAU = 900,
         RISE_TAU = 250,
         SOOT_RISE_TAU = 150,
@@ -1317,6 +1303,36 @@ RMS_Config = {
             MID_POWER_MAX_KW = 130,
             SOOT_FACTOR = 0.15
         },
+        STAGE_IV = {
+            MIN_POWER_KW = 56,
+            HIGH_POWER_MIN_KW = 130,
+            MAX_POWER_KW = 560,
+            HIGH_POWER_YEAR = 2013,
+            MID_POWER_YEAR = 2014
+        },
+        ADBLUE = {
+            BRAND_RATIOS = {
+                JOHNDEERE = 0.0311,
+                FENDT = 0.0651,
+                MASSEYFERGUSON = 0.0706,
+                NEWHOLLAND = 0.0817,
+                CASEIH = 0.0633,
+                CLAAS = 0.0632,
+                VALTRA = 0.0655,
+                DEUTZFAHR = 0.0419,
+                KUBOTA = 0.0380,
+                JCB = 0.0620,
+                MCCORMICK = 0.0480,
+                MERCEDES = 0.0220,
+                MERCEDESBENZ = 0.0220,
+                MERCEDESBENZTRUCKS = 0.0220
+            },
+            DEFAULT_RATIO = 0.0586,
+            WARNING_LEVEL = 0.10,
+            INDUCEMENT_LEVEL = 0.025,
+            EMPTY_BLINK_FACTOR = 0.5,
+            GAUGE_COLOR = { 0.0075, 0.1248, 0.4508, 1 }
+        },
         PARTICULATE_FILTER = {
             FILL_HOURS = 28,
             PASSIVE_LOAD = 0.40,
@@ -1325,9 +1341,7 @@ RMS_Config = {
             DERATE_LEVEL = 1.14,
             SERVICE_LEVEL = 1.44,
             DERATE_RPM = 1500,
-            -- work hours between ash cleanings, on the right oil
             ASH_CLEANING_HOURS = 5500,
-            -- ash of an unsuited oil against the right one
             UNSUITED_OIL_ASH = 1.5
         },
         SCR_INDUCEMENT = {
@@ -1372,6 +1386,7 @@ RMS_Config = {
 
     PREHEAT = {
         LAMP_TEST_DURATION_MS = 1000,
+        FAULT_FLASH_DURATION_MS = 60000,
         START_ASSIST_TEMPERATURE_C = 5,
         ACTIVATION_TEMPERATURE_C = 25,
         WAIT_TIME_CURVE = {
@@ -1385,7 +1400,6 @@ RMS_Config = {
         }
     },
 
-    -- Electrical
     ELECTRICAL = {
         RATING = {
             POWER_RANGE_HP = { 20, 705 },
@@ -1401,14 +1415,13 @@ RMS_Config = {
             BATTERY_24V_AH = 180,
             ROAD_LIGHT = { alternatorA = 140, batteryCapacityAh = 68, starterKw = 2.0, glowPlugs = 4 }
         },
-        -- Voltages refer to one 12 V battery.
         OCV_CURVE = { { 0, 11.7 }, { 0.25, 12.0 }, { 0.5, 12.2 }, { 0.75, 12.4 }, { 1, 12.6 } },
         REGULATED_VOLTAGE_V = 14.0,
         MIN_CRANKING_VOLTAGE_V = 7.2,
-        -- One-amp-hour battery resistance (ohms)
         INTERNAL_RESISTANCE_CURVE = { { -18, 0.51 }, { -10, 0.49 }, { 0, 0.46 }, { 25, 0.30 } },
         EMPTY_RESISTANCE_FACTOR = 2.0,
         CRANKING_DRAG_CURVE = { { -19, 0.65 }, { 22, 1 } },
+        CRANKING_RPM = 250,
         FIRING_CRANKING_SPEED = 0.4,
         INACCESSIBLE_CHARGE_CURVE = { { -18, 0.54 }, { -12, 0.44 }, { -7, 0.34 }, { -1, 0.27 }, { 2, 0.21 }, { 10, 0.12 }, { 27, 0 } },
         CHARGE_ACCEPTANCE_BULK = 1.5,
@@ -1428,19 +1441,18 @@ RMS_Config = {
         WORK_LAMPS_HARVESTER_FACTOR = 2,
         WORK_LAMP_HALOGEN_W = 55,
         WORK_LAMP_LED_W = 45,
-        -- a halogen beacon with its motor
         BEACON_HALOGEN_A = 5.5,
         BEACON_LED_W = 10,
-        -- one front and one rear indicator a side, lit half of each flash
         TURN_LAMPS_PER_SIDE = 2,
         TURN_LAMP_BULB_W = 21,
         TURN_LAMP_LED_W = 4,
         TURN_LIGHT_DUTY = 0.5,
-        -- year LEDs are offered on most machines, by light circuit
         LED_YEARS = { LOW_BEAM_FAILURE = 2017, HIGH_BEAM_FAILURE = 2017, FRONT_WORK_LIGHTS_FAILURE = 2015,
             REAR_WORK_LIGHTS_FAILURE = 2015, BEACON_LIGHTS_FAILURE = 2017, TURN_LIGHTS_FAILURE = 2016 },
-        -- Starter current per kW (A)
         STARTER_CURRENT_CURVE = { { -20, 165 }, { 0, 145 } },
+        STARTER_HEAT_LIMIT_S = { Car = 10, Tractor4 = 30, Tractor6 = 30, Heavy = 30 },
+        STARTER_REST_PER_CRANK = 4,
+        STARTER_PERMISSIBLE_RISE_K = 105,
         GLOW_PLUG_A = 12,
         GLOW_PLUGS_BY_POWER = { { 130, 4 }, { math.huge, 6 } },
         STANDBY_A = 0.05,
@@ -1456,11 +1468,9 @@ RMS_Config = {
         SYSTEM_VOLTAGE_TAU_MS = 250
     },
 
-    -- Diagnostic tool
     DIAGNOSTIC = {
         LICENCE_PRICE = 595,
         SCAN_DURATION_MS = 120000,
-        -- Controller scan order
         ECUS = { "ENGINE", "INVERTER", "TRACTION_BATTERY", "CONVERTER", "CHARGER", "TRANSMISSION", "TRACTOR", "DASHBOARD" },
         FAULT_CODES = {
             ECU_MALFUNCTION = { ecu = "ENGINE", spn = 523612, warning = 12, critical = 12 },
@@ -1487,6 +1497,7 @@ RMS_Config = {
             ADBLUE_PUMP_FAILURE = { ecu = "ENGINE", spn = 4375, warning = 5, critical = 4 },
             ADBLUE_DOSER_FAILURE = { ecu = "ENGINE", spn = 3361, warning = 3, critical = 4 },
             NOX_SENSOR_FAILURE = { ecu = "ENGINE", spn = 3216, warning = 2, critical = 4 },
+            ADBLUE_TANK_LEVEL = { ecu = "ENGINE", spn = 1761, warning = 17, critical = 18 },
             PARTICULATE_FILTER_FAILURE = { branches = {
                 [1] = { ecu = "ENGINE", spn = 3251, warning = 1, critical = 1 },
                 [2] = { ecu = "ENGINE", spn = 3251, warning = 0, critical = 0 } } },
@@ -1505,7 +1516,7 @@ RMS_Config = {
             FAN_CLUTCH_FAILURE = { ecu = "ENGINE", spn = 1639, warning = 1, critical = 1, fanDrive = "ELECTRONIC" },
             BATTERY_SULFATION = { ecu = "ENGINE", spn = 168, warning = 1, critical = 1 },
             POWER_CABLE_CONNECTION_FAILURE = { ecu = "ENGINE", spn = 168, warning = 2, critical = 2 },
-            STARTER_RELAY_FAILURE = { ecu = "ENGINE", spn = 677, warning = 5, critical = 5 },
+            PREHEAT_RELAY_FAILURE = { ecu = "ENGINE", spn = 676, warning = 5, critical = 5 },
             ALTERNATOR = { ecu = "DASHBOARD", spn = 167, warning = 18, critical = 1 },
             TRANSMISSION_PUMP_MALFUNCTION = { ecu = "TRANSMISSION", spn = 127, warning = 18, critical = 1 },
             HYDROSTATIC_UNIT_MALFUNCTION = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
@@ -1534,15 +1545,11 @@ RMS_Config = {
             HV_INSULATION_LOSS = { ecu = "TRACTION_BATTERY", spn = 8432, warning = 18, critical = 1 },
             TRACTION_BATTERY_CELL_FAULT = { ecu = "TRACTION_BATTERY", spn = 5923, warning = 18, critical = 1 },
             HV_CONTACTOR_FAILURE = { ecu = "TRACTION_BATTERY", spn = 8091, warning = 7, critical = 7 },
-            -- Persistent states
             ENGINE_THERMAL_PROTECTION = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0 },
-            OVERHEAT_PROTECTION = { ecu = "ENGINE", spn = 110, warning = 0, critical = 0,
-                electric = { ecu = "INVERTER", spn = 9059 } },
             VOLTAGE_SAG = { ecu = "ENGINE", spn = 168, warning = 1, critical = 1 },
             POWERSHIFT_CLUTCH_FAILURE = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
             POWERSHIFT_REVERSER_FAILURE = { ecu = "TRANSMISSION", spn = 526, warning = 7, critical = 7 },
             TRANSMISSION_CONTROL_FAILURE = { ecu = "TRANSMISSION", spn = 4217, warning = 7, critical = 7 },
-            -- Output speed, clutch pressure.
             TRANSMISSION_SENSOR_FAILURE = { ecu = "TRANSMISSION", spn = 191, warning = 2, critical = 5,
                 branches = { [2] = { ecu = "TRANSMISSION", spn = 127, warning = 3, critical = 5 } } },
             CVT_SENSOR_FAILURE = { ecu = "TRANSMISSION", spn = 191, warning = 2, critical = 5,
@@ -1550,30 +1557,24 @@ RMS_Config = {
             FOUR_WD_CONTROL_FAILURE = { ecu = "TRACTOR", spn = 2612, warning = 7, critical = 7 },
             DIFF_LOCK_CONTROL_FAILURE = { ecu = "TRACTOR", spn = 569, warning = 7, critical = 7 },
             LIFT_VALVE_FAILURE = { ecu = "TRACTOR", spn = 4084, warning = 7, critical = 7 },
-            -- a header height sensor has no standard code
             LIFT_POSITION_SENSOR_FAILURE = { ecu = "TRACTOR", spn = 1873, warning = 2, critical = 2, uncodedVariant = "header" },
-            -- Redundant joystick input, supply.
             LOADER_CONTROL_FAILURE = { ecu = "TRACTOR", spn = 2660, warning = 14, critical = 4 },
             HYDRAULIC_CYLINDER_INTERNAL_LEAK = { branches = { [2] = { ecu = "TRACTOR", spn = 2602, warning = 18, critical = 1 } } },
             HYDRAULIC_QUICK_COUPLER_FAILURE = { branches = { [1] = { ecu = "TRACTOR", spn = 2602, warning = 18, critical = 1 } } },
         }
     },
 
-    -- Electric drive
     ELECTRIC_DRIVE = {
         MOTOR_STANDSTILL_MULTIPLIER = 0,
         TORQUE_LIFE_EXPONENT = 3,
-        -- K per share of load past the rated one
         OVERLOAD_HEATING_K = 10,
         OVERLOAD_HEATING_SHARE = 0.15,
         DEEP_DISCHARGE_THRESHOLD = 0.15,
         DEEP_DISCHARGE_MULTIPLIER = 3.0,
-        -- K; life divided by FACTOR every STEP
         BATTERY_HEAT_THRESHOLD = 30,
         BATTERY_HEAT_STEP_K = 15,
         BATTERY_HEAT_FACTOR = 4.53,
 
-        -- Motor and inverter temperature limits
         THERMAL = {
             PID_TARGET_TEMP = 60,
             OVERHEAT_THRESHOLD = 70,
@@ -1626,9 +1627,6 @@ RMS_Config = {
         FORD = 1.1,
         RENAULT = 1.1,
         INTERNATIONALHARVESTER = 1.1,
-        LANDROVER = 1.0,
-        NEXAT = 1.0,
-        ZETOR = 1.0,
         FIAT = 1.1,
         LANDINI = 1.1,
         SAME = 1.1,
@@ -1639,24 +1637,18 @@ RMS_Config = {
         PTZKIROWEC = 1.1,
         MTZ = 1.1,
         SKODA = 1.1,
-        GAZ = 1.0,
-        MAZ = 1.0,
         BUEHRER = 1.1,
         LTZ = 1.1,
         PORSCHEDIESEL = 1.1,
         OLIVER = 1.1,
         ALLISCHALMERS = 1.1,
-        LIZARD = 1.0,
-        GIANTS = 1.0,
-        NONE = 1.0,
     },
 
     SERVICE_REFERENCE_HOURS = 500,
     SERVICE_ACCESS_PROFILES = {
-        SIMPLE = {label = "rms_service_access_easy", shopLabel = "rms_shop_service_access_easy", transmission = 0.9},
-        STANDARD = {label = "rms_service_access_average", shopLabel = "rms_shop_service_access_average"},
-        COMPLEX = {label = "rms_service_access_demanding", shopLabel = "rms_shop_service_access_demanding", transmission = 1.25,
-            diagnostic = 1.25}
+        SIMPLE = {label = "rms_service_access_easy", shopLabel = "rms_shop_service_access_easy", tier = 1},
+        STANDARD = {label = "rms_service_access_average", shopLabel = "rms_shop_service_access_average", tier = 2},
+        COMPLEX = {label = "rms_service_access_demanding", shopLabel = "rms_shop_service_access_demanding", tier = 3}
     },
     SERVICE_PROGRAM = {
         engine = { hours = 500, months = 12 },
@@ -1664,7 +1656,6 @@ RMS_Config = {
         hydraulic = { hours = 1000, months = 24 },
         coolant = { hours = 2000, months = 24 }
     },
-    -- engine oil hours of a dated machine built before each year
     ENGINE_OIL_HOURS_BY_YEAR = {
         { before = 1960, hours = 100 },
         { before = 1980, hours = 220 },
@@ -1673,187 +1664,14 @@ RMS_Config = {
     }
 }
 
----Tips of the tutorial, in the order their flags are saved and sent
-RMS_Config.TUTORIAL_MESSAGE_IDS = {
-    "AGE_DEGRADATION", "BATTERY_LOW", "CHASSIS_VIBRATION", "COLD_ENGINE", "COLD_OIL", "CRANKING", "CRITICAL_FAILURE",
-    "CVT_OVERHEAT", "DRIVETRAIN_MODES", "DRIVETRAIN_WINDUP", "ENGINE_OVERHEAT", "ENGINE_OVERLOAD", "EXHAUST_SMOKE",
-    "FLUID_LEVEL", "HARD_START", "HEAVY_TRAILER", "HOT_WEATHER", "IDLE_AND_DOWNTIME", "IDLE_DEPOSIT", "LOW_FUEL",
-    "LUGGING", "NEEDS_LUBRICATION", "NEEDS_OVERHAUL", "NEEDS_PREVENTIVE", "NEEDS_REPAIR", "OVERLOAD_INDICATOR",
-    "PARK_BRAKE", "PARK_BRAKE_MANUAL", "POOR_CONSUMABLES", "POOR_PARTS", "PREHEAT", "PTO_ENGAGEMENT", "PTO_RAISED",
-    "RAD_OR_FILTER_CLOGGED", "SERVICE_DUE_SOON", "SERVICE_INTERVAL_EXPIRED", "STEERING", "TERRAIN_IMPACT",
-    "TRANSMISSION_OVERHEAT", "WET_WEATHER", "WHEEL_SLIP"
-}
-
----Seen flag of each tip, none seen yet
-RMS_Config.TUTORIAL_MESSAGES = {}
-for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-    RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-end
-
----Clears every seen flag of the tutorial messages
-function RMS_Config.resetTutorialMessages()
-    for messageId, _ in pairs(RMS_Config.TUTORIAL_MESSAGES) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-    end
-end
-
-RMS_Config.TUTORIAL_PLAYER_STATES = {}
-RMS_Config.TUTORIAL_STATE_LOADED = false
-RMS_Config.TUTORIAL_LOCAL_USER_ID = nil
-
----Builds a normalized tutorial state from its three parts
-function RMS_Config.createTutorialState(tutorialMode, welcomeMessageSeen, messages)
-    local state = {
-        tutorialMode = tutorialMode ~= false,
-        welcomeMessageSeen = welcomeMessageSeen == true,
-        messages = {}
-    }
-
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        state.messages[messageId] = messages ~= nil and messages[messageId] == true or false
-    end
-
-    return state
-end
-
----Snapshots the current tutorial state
-function RMS_Config.captureTutorialState()
-    return RMS_Config.createTutorialState(
-        RMS_Config.TUTORIAL_MODE,
-        RMS_Config.WELCOME_MESSAGE_SEEN,
-        RMS_Config.TUTORIAL_MESSAGES
-    )
-end
-
----Writes a tutorial state into the configuration
-function RMS_Config.applyTutorialState(state)
-    local normalized = RMS_Config.createTutorialState(
-        state ~= nil and state.tutorialMode or nil,
-        state ~= nil and state.welcomeMessageSeen or nil,
-        state ~= nil and state.messages or nil
-    )
-
-    RMS_Config.TUTORIAL_MODE = normalized.tutorialMode
-    RMS_Config.WELCOME_MESSAGE_SEEN = normalized.welcomeMessageSeen
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = normalized.messages[messageId]
-    end
-    RMS_Config.TUTORIAL_STATE_LOADED = true
-end
-
----Resets the tutorial state of the local player
-function RMS_Config.resetLocalTutorialState()
-    RMS_Config.TUTORIAL_MODE = true
-    RMS_Config.WELCOME_MESSAGE_SEEN = false
-    for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-        RMS_Config.TUTORIAL_MESSAGES[messageId] = false
-    end
-    RMS_Config.TUTORIAL_STATE_LOADED = false
-    RMS_Config.TUTORIAL_LOCAL_USER_ID = nil
-end
-
----Clears the tutorial states of every player for a new session
-function RMS_Config.resetTutorialStateSession()
-    RMS_Config.TUTORIAL_PLAYER_STATES = {}
-    RMS_Config.resetLocalTutorialState()
-end
-
----Returns the tutorial state stored for a player
-function RMS_Config.getTutorialPlayerState(uniqueUserId)
-    if uniqueUserId == nil or uniqueUserId == "" then return nil end
-
-    uniqueUserId = tostring(uniqueUserId)
-    local state = RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId]
-    if state == nil then
-        state = RMS_Config.createTutorialState()
-        RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId] = state
-    end
-    return RMS_Config.createTutorialState(state.tutorialMode, state.welcomeMessageSeen, state.messages)
-end
-
----Stores the tutorial state of a player
-function RMS_Config.setTutorialPlayerState(uniqueUserId, state)
-    if uniqueUserId == nil or uniqueUserId == "" or state == nil then return end
-    RMS_Config.TUTORIAL_PLAYER_STATES[tostring(uniqueUserId)] = RMS_Config.createTutorialState(
-        state.tutorialMode,
-        state.welcomeMessageSeen,
-        state.messages
-    )
-end
-
----Creates the tutorial state of the local player on first use
-function RMS_Config.ensureLocalTutorialState()
-    if RMS_Config.TUTORIAL_STATE_LOADED then return true end
-    if g_server == nil or g_localPlayer == nil then return false end
-
-    local uniqueUserId = g_localPlayer:getUniqueId()
-    local state = RMS_Config.getTutorialPlayerState(uniqueUserId)
-    if state == nil then return false end
-
-    RMS_Config.TUTORIAL_LOCAL_USER_ID = uniqueUserId
-    RMS_Config.applyTutorialState(state)
-    return true
-end
-
----Replicates the tutorial state between the server and the client
-function RMS_Config.syncTutorialState()
-    if not RMS_Config.TUTORIAL_STATE_LOADED and not RMS_Config.ensureLocalTutorialState() then return end
-
-    local state = RMS_Config.captureTutorialState()
-    if g_server ~= nil then
-        RMS_Config.setTutorialPlayerState(RMS_Config.TUTORIAL_LOCAL_USER_ID, state)
-    else
-        RMS_TutorialStateEvent.sendToServer(state)
-    end
-end
-
 RMS_Config.savegameFile = "realisticMechanicalSystems.xml"
 
 ---Prints a settings file message while debugging
+-- @param string text format of the message
+-- @param any ... values of the format
 local function logSettingsDebug(text, ...)
     if RMS_Config.DEBUG then
         print("[RMS_CFG] " .. string.format(text, ...))
-    end
-end
-
-local function saveTutorialPlayerStates(xmlFile, root)
-    local userIds = {}
-    for uniqueUserId, _ in pairs(RMS_Config.TUTORIAL_PLAYER_STATES) do
-        table.insert(userIds, uniqueUserId)
-    end
-    table.sort(userIds)
-
-    for index, uniqueUserId in ipairs(userIds) do
-        local state = RMS_Config.TUTORIAL_PLAYER_STATES[uniqueUserId]
-        local key = string.format("%s.tutorialPlayers.player(%d)", root, index - 1)
-        setXMLString(xmlFile, key .. "#uniqueUserId", uniqueUserId)
-        setXMLBool(xmlFile, key .. ".tutorialMode", state.tutorialMode)
-        setXMLBool(xmlFile, key .. ".welcomeMessageSeen", state.welcomeMessageSeen)
-        for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-            setXMLBool(xmlFile, key .. ".messages." .. messageId, state.messages[messageId] == true)
-        end
-    end
-end
-
-local function loadTutorialPlayerStates(xmlFile, root)
-    RMS_Config.TUTORIAL_PLAYER_STATES = {}
-    local index = 0
-
-    while true do
-        local key = string.format("%s.tutorialPlayers.player(%d)", root, index)
-        local uniqueUserId = getXMLString(xmlFile, key .. "#uniqueUserId")
-        if uniqueUserId == nil then break end
-
-        local messages = {}
-        for _, messageId in ipairs(RMS_Config.TUTORIAL_MESSAGE_IDS) do
-            messages[messageId] = getXMLBool(xmlFile, key .. ".messages." .. messageId) == true
-        end
-        RMS_Config.setTutorialPlayerState(uniqueUserId, {
-            tutorialMode = getXMLBool(xmlFile, key .. ".tutorialMode"),
-            welcomeMessageSeen = getXMLBool(xmlFile, key .. ".welcomeMessageSeen"),
-            messages = messages
-        })
-        index = index + 1
     end
 end
 
@@ -1874,22 +1692,25 @@ RMS_Config.SHARED_SETTINGS = {
     { group = "WORKSHOP", field = "OPEN_HOUR", isFloat = true },
     { group = "WORKSHOP", field = "CLOSE_HOUR", isFloat = true },
     { group = "DRIVETRAIN", field = "ENABLED", element = "DRIVETRAIN_ENABLED" },
-    { group = "DRIVETRAIN", field = "ALLOW_AUTO_MODE", element = "DRIVETRAIN_ALLOW_AUTO_MODE" },
     { group = "DRIVETRAIN", field = "PARKBRAKE_ENABLED", element = "DRIVETRAIN_PARKBRAKE_ENABLED" },
     { group = "EXHAUST", field = "ENABLED", element = "EXHAUST_SMOKE_ENABLED" },
     { field = "DEBUG", element = "DEBUG_MODE" }
 }
 
 ---Returns the table of the configuration holding a setting
+-- @param table setting entry of RMS_Config.SHARED_SETTINGS
+-- @return table table table holding the setting
 function RMS_Config.getSettingTable(setting)
     return setting.group ~= nil and RMS_Config[setting.group] or RMS_Config
 end
 
-local function writeConfigFile(xmlFileName, includeTutorialStates)
+---Writes the settings file
+-- @param string xmlFileName path of the file
+local function writeConfigFile(xmlFileName)
     local xmlFile = createXMLFile("realisticMechanicalSystems", xmlFileName, "realisticMechanicalSystems")
-    if xmlFile == nil or xmlFile == 0 then
-        logSettingsDebug("SAVE ERROR - createXMLFile returned %s", tostring(xmlFile))
-        return false
+    if xmlFile == 0 then
+        logSettingsDebug("SAVE ERROR - createXMLFile failed")
+        return
     end
 
     local root = "realisticMechanicalSystems"
@@ -1904,22 +1725,16 @@ local function writeConfigFile(xmlFileName, includeTutorialStates)
         end
     end
 
-    if includeTutorialStates then
-        if RMS_Config.TUTORIAL_STATE_LOADED and RMS_Config.TUTORIAL_LOCAL_USER_ID ~= nil then
-            RMS_Config.setTutorialPlayerState(RMS_Config.TUTORIAL_LOCAL_USER_ID, RMS_Config.captureTutorialState())
-        end
-        saveTutorialPlayerStates(xmlFile, root)
-    end
+    RMS_Welcome.saveToXMLFile(xmlFile, root .. ".welcome")
 
     saveXMLFile(xmlFile)
     delete(xmlFile)
-    return true
 end
 
----Writes every adjustable setting to the savegame file
+---Writes the savegame settings file, on the server
 function RMS_Config.saveToXMLFile()
     if not g_currentMission:getIsServer() then
-        return false
+        return
     end
 
     local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory
@@ -1927,17 +1742,11 @@ function RMS_Config.saveToXMLFile()
         savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex)
     end
 
-    local savegameWritten = writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile, true)
-
-    return savegameWritten
+    writeConfigFile(savegameFolderPath .. "/" .. RMS_Config.savegameFile)
 end
 
----Reads every adjustable setting from the savegame settings file
+---Reads the savegame settings file
 function RMS_Config.loadFromXMLFile()
-    if RMS_Config._loaded then
-        return
-    end
-
     local savegameFolderPath = g_currentMission.missionInfo.savegameDirectory
     if savegameFolderPath == nil then
         savegameFolderPath = ('%ssavegame%d'):format(getUserProfileAppPath(), g_currentMission.missionInfo.savegameIndex)
@@ -1949,8 +1758,8 @@ function RMS_Config.loadFromXMLFile()
     end
 
     local xmlFile = loadXMLFile("realisticMechanicalSystems", xmlFileName)
-    if xmlFile == nil or xmlFile == 0 then
-        logSettingsDebug("LOAD ERROR - loadXMLFile returned %s", tostring(xmlFile))
+    if xmlFile == 0 then
+        logSettingsDebug("LOAD ERROR - loadXMLFile failed")
         return
     end
 
@@ -1970,17 +1779,16 @@ function RMS_Config.loadFromXMLFile()
     end
 
     if g_currentMission:getIsServer() then
-        loadTutorialPlayerStates(xmlFile, root)
+        RMS_Welcome.loadFromXMLFile(xmlFile, root .. ".welcome")
     end
 
     RMS_Config.applyLoadedVersion()
     delete(xmlFile)
-    RMS_Config._loaded = true
 end
 
 ---Compares a loaded settings file with the current configuration format
 function RMS_Config.applyLoadedVersion()
-    local loadedVersion = tonumber(RMS_Config.loadedConfigVersion) or 0
+    local loadedVersion = RMS_Config.loadedConfigVersion
     local currentVersion = RMS_Config.CONFIG_VERSION
     if loadedVersion > currentVersion then
         Logging.warning("RMS: settings file version %d is newer than supported %d", loadedVersion, currentVersion)

@@ -5,15 +5,13 @@ RMS_ConditionCardFrame = {}
 
 local RMS_ConditionCardFrame_mt = Class(RMS_ConditionCardFrame, FrameElement)
 
--- the list above its foot line, then into the band it leaves free
-local LIST_HEIGHT = 180
+local LIST_HEIGHT = 175
 local LIST_FULL_HEIGHT = 200
 
 ---Creates the card
+-- @return table self instance of the card
 function RMS_ConditionCardFrame.new()
-    local self = FrameElement.new(nil, RMS_ConditionCardFrame_mt)
-    self.stateRows = {}
-    return self
+    return FrameElement.new(nil, RMS_ConditionCardFrame_mt)
 end
 
 ---Wires the callbacks and the condition list of a placed card
@@ -29,6 +27,7 @@ function RMS_ConditionCardFrame:initialize()
 end
 
 ---Keeps the vehicle the card reads, its systems folded when it changes
+-- @param table vehicle vehicle
 function RMS_ConditionCardFrame:setVehicle(vehicle)
     if vehicle ~= self.vehicle then
         self.openSystem = nil
@@ -74,22 +73,34 @@ function RMS_ConditionCardFrame:onDrawRing()
 end
 
 ---Number of rows of the condition list
+-- @return integer count number of rows
 function RMS_ConditionCardFrame:getNumberOfItemsInSection()
     return #self.stateRows
 end
 
 ---Template of a row; an empty list still measures its first one
+-- @param table _list condition list
+-- @param integer _section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_ConditionCardFrame:getCellTypeForItemInSection(_list, _section, index)
     local row = self.stateRows[index]
     return row ~= nil and row.kind or "system"
 end
 
 ---Fills a row of the condition list
+-- @param table _list condition list
+-- @param integer _section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_ConditionCardFrame:populateCellForItemInSection(_list, _section, index, cell)
     RMS_Utils.populateConditionCell(cell, self.stateRows[index])
 end
 
 ---Unfolds a system on its parts, or folds it back
+-- @param table _list condition list
+-- @param integer _section section
+-- @param integer index row clicked
 function RMS_ConditionCardFrame:onClickStateRow(_list, _section, index)
     local row = self.stateRows[index]
     if row.kind ~= "system" or not row.canOpen then

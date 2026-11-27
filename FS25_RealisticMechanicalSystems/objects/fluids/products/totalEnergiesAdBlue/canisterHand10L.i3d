@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<i3D name="canisterHand10L" version="1.6"><Files /><Materials /><Scene><TransformGroup name="canisterHand10L" nodeId="1"><TransformGroup name="graphics" translation="0 0.111 0" nodeId="2"><TransformGroup name="visualLink" translation="0 -0.111 0" rotation="0 180 0" nodeId="3" /></TransformGroup><TransformGroup name="handNode" translation="0 0.209 0" rotation="0 0 90" nodeId="4" /><TransformGroup name="firstPersonNode" translation="0.240 0.349 -0.683" nodeId="5" /></TransformGroup></Scene></i3D>

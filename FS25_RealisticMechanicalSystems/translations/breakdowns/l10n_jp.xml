@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="恒久"/>
         <text name="rms_breakdowns_severity_reduce_power" text="出力低下"/>
-        <text name="rms_breakdowns_severity_shutdown" text="運転不能"/>
         <text name="rms_breakdowns_severity_minor" text="軽度"/>
         <text name="rms_breakdowns_severity_moderate" text="中度"/>
         <text name="rms_breakdowns_severity_major" text="重度"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="過熱保護：出力低下"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="過熱保護が強化されています。エンジン出力は半分に制限されています。"/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="過熱保護：出力半減"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="過熱保護が最大まで作動しています。エンジン出力はごく一部しか残っていません。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="過熱保護：出力大幅低下"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="損傷を防ぐためエンジンが停止しました。冷えるまで待ってから再始動してください。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="過熱保護：エンジン停止"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="オイルポンプに軽度の不具合が発生しています。油圧が低下し、エンジントルクがわずかに減少して、エンジン温度が上昇し、機械的なノッキングが発生することがあります。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="オイルポンプに中度の不具合が発生しています。油圧が不足し、エンジントルクが明らかに低下して、エンジン温度が上昇し、機械的なノッキングがはっきり聞こえます。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="オイルポンプに重度の不具合が発生しています。油圧がきけんな水準まで低下し、エンジントルクが大幅に減少して、過熱や激しいノッキング、エンジン停止が発生するおそれがあります。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="オイルポンプに重大な不具合が発生しています。安全なエンジン運転に必要なオイル循環を確保できず、始動も運転継続もできません。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="エンジンが焼き付き、回転できません。"/>
         <text name="rms_breakdowns_engine_stalled_message" text="エンスト"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECUに軽度の不具合が発生しています。エンジン出力がわずかに低下します。"/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECUに中度の不具合が発生しています。明らかな出力低下と燃料消費量の増加が生じます。"/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="デフロック制御装置に不具合が発生しています。デフロックがかかったままとなり、旋回しにくくなります。"/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="駆動ベルトとバリエーター"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="駆動ベアリングとギアボックス"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="ヘッダー駆動ベルト"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="ヘッダーのスリップクラッチ"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="ヘッダーのドライブシャフトと自在継手"/>
         <text name="rms_breakdowns_part_feeder_chain" text="フィーダーハウスチェーン"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="フィードアクセラレーター"/>
         <text name="rms_breakdowns_part_threshing_bars" text="ラスプバー"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="駆動ベアリングが中度に摩耗しています。うなりがはっきり聞こえ、ベアリングが熱を持ちます。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="駆動ベアリングが重度に摩耗しています。うなりが大きくなり、シャフトにがたが出ます。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="駆動ベアリングに重大な不具合が発生しています。ベアリングが焼き付きました：収穫できません。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="ヘッダー駆動ベルトが摩耗し始めています。ヘッダーの回転中に鳴き、少し滑ります。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="ヘッダー駆動ベルトが中度に摩耗しています。鳴きが大きくなり、回転数警報でときどき収穫が止まります。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="ヘッダー駆動ベルトが重度に摩耗しています。大きく鳴き、処理量が落ち、停止が繰り返されます。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="ヘッダー駆動ベルトに重大な不具合が発生しています。ベルトが切れました：ヘッダーが駆動されず、収穫できません。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="ヘッダーのスリップクラッチが摩耗し始めています。負荷がかかると少し滑ります。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="ヘッダーのスリップクラッチが中度に摩耗しています。通常の負荷でも滑り、回転数警報でときどき収穫が止まります。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="ヘッダーのスリップクラッチが重度に摩耗しています。滑って熱くなり、処理量が落ち、停止が繰り返されます。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="ヘッダーのスリップクラッチに重大な不具合が発生しています。もう何も伝えません：ヘッダーが止まり、収穫できません。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="ヘッダーのドライブシャフトの自在継手が摩耗し始めています。ヘッダーの回転中にかすかなうなりが出ます。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="ヘッダーのドライブシャフトの自在継手が中度に摩耗しています。うなりがはっきり聞こえます。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="ヘッダーのドライブシャフトの自在継手が重度に摩耗しています。うなりが大きくなり、継手にがたが出ます。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="ヘッダーのドライブシャフトに重大な不具合が発生しています。自在継手が壊れました：ヘッダーが駆動されず、収穫できません。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="フィーダーハウスチェーンが摩耗し始めています。チェーンが伸び、送り込みが不均一になります。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="フィーダーハウスチェーンが中度に摩耗しています。フィーダーハウスの入口で詰まりが発生します。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="フィーダーハウスチェーンが重度に摩耗しています。スプロケットから外れかけ、詰まりが続きます。"/>

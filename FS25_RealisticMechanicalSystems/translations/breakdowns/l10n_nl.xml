@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Vermogensverlies"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Buiten dienst"/>
         <text name="rms_breakdowns_severity_minor" text="Licht"/>
         <text name="rms_breakdowns_severity_moderate" text="Matig"/>
         <text name="rms_breakdowns_severity_major" text="Ernstig"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Oververhittingsbeveiliging: vermogen verlaagd"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="De oververhittingsbeveiliging grijpt sterker in. De motor levert nog maar de helft van zijn vermogen."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Oververhittingsbeveiliging: vermogen gehalveerd"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="De oververhittingsbeveiliging grijpt maximaal in. Slechts een fractie van het motorvermogen blijft over."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Oververhittingsbeveiliging: vermogen sterk verlaagd"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="De motor is uitgeschakeld om schade te voorkomen. Laat hem afkoelen voordat je opnieuw start."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Oververhittingsbeveiliging: motor uitgeschakeld"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Lichte storing van de oliepomp. De oliedruk is verminderd, het motorkoppel daalt licht, de motortemperatuur stijgt en er kunnen mechanische klopgeluiden ontstaan."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Matige storing van de oliepomp. De oliedruk is onvoldoende, het motorkoppel daalt duidelijk, de motortemperatuur stijgt en mechanisch kloppen is goed hoorbaar."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Ernstige storing van de oliepomp. De oliedruk is kritiek laag, het motorkoppel daalt sterk, oververhitting is waarschijnlijk, het mechanische kloppen is ernstig en de motor kan afslaan."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritieke uitval van de oliepomp. De oliecirculatie is onvoldoende voor veilig gebruik van de motor en starten of verder gebruik is onmogelijk."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="De motor is vastgelopen en kan niet meer draaien."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motor afgeslagen"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Lichte ECU-storing. Het motorvermogen is licht verminderd."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Matige ECU-storing. Duidelijk vermogensverlies en hoger brandstofverbruik."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Storing van de differentieelsperbediening. De sper blijft ingeschakeld. De machine verzet zich tegen sturen in bochten."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Aandrijfriemen en variators"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Aandrijflagers en tandwielkasten"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Aandrijfriem van het maaibord"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Slipkoppeling van het maaibord"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Cardanas en kruiskoppelingen van het maaibord"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Ketting van het invoerkanaal"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Invoerversneller"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Dorslijsten"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Matige slijtage van de aandrijflagers. Het gebrom is duidelijk hoorbaar en ze worden warm."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Ernstige slijtage van de aandrijflagers. Het gebrom wordt luider en de assen krijgen speling."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritieke uitval van de aandrijflagers. Een lager is vastgelopen: oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Beginnende slijtage van de aandrijfriem van het maaibord. Hij piept en slipt een beetje zolang het maaibord draait."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Matige slijtage van de aandrijfriem van het maaibord. Hij piept harder en het toerentalalarm stopt soms het oogsten."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Ernstige slijtage van de aandrijfriem van het maaibord. Hij piept luid, de doorvoer daalt en het oogsten stopt steeds vaker."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritieke uitval van de aandrijfriem van het maaibord. Hij is gebroken: het maaibord wordt niet meer aangedreven, oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Beginnende slijtage van de slipkoppeling van het maaibord. Ze slipt een beetje onder belasting."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Matige slijtage van de slipkoppeling van het maaibord. Ze slipt al bij normale belasting en het toerentalalarm stopt soms het oogsten."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Ernstige slijtage van de slipkoppeling van het maaibord. Ze slipt en wordt heet, de doorvoer daalt en het oogsten stopt steeds vaker."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritieke uitval van de slipkoppeling van het maaibord. Ze brengt niets meer over: het maaibord staat stil, oogsten is onmogelijk."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Beginnende slijtage van de kruiskoppelingen van de cardanas van het maaibord. Er klinkt een licht gebrom zolang het maaibord draait."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Matige slijtage van de kruiskoppelingen van de cardanas van het maaibord. Het gebrom is duidelijk te horen."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Ernstige slijtage van de kruiskoppelingen van de cardanas van het maaibord. Het gebrom wordt luider en de koppelingen krijgen speling."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritieke uitval van de cardanas van het maaibord. Een kruiskoppeling is gebroken: het maaibord wordt niet meer aangedreven, oogsten is onmogelijk."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Beginnende slijtage van de ketting van het invoerkanaal. Hij rekt uit en de invoer wordt onregelmatig."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Matige slijtage van de ketting van het invoerkanaal. Bij de ingang van het invoerkanaal ontstaan verstoppingen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Ernstige slijtage van de ketting van het invoerkanaal. Hij springt over de tandwielen en de verstoppingen blijven komen."/>

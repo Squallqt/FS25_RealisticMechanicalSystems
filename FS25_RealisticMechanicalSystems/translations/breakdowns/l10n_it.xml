@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanente"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Potenza ridotta"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Fuori servizio"/>
         <text name="rms_breakdowns_severity_minor" text="Lieve"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderato"/>
         <text name="rms_breakdowns_severity_major" text="Grave"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Protezione anti-surriscaldamento: potenza ridotta"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="La protezione anti-surriscaldamento si intensifica. Il motore eroga solo metà della sua potenza."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Protezione anti-surriscaldamento: potenza dimezzata"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="La protezione anti-surriscaldamento è al massimo. Resta solo una frazione della potenza del motore."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Protezione anti-surriscaldamento: potenza fortemente ridotta"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Il motore è stato spento per evitare danni. Lascialo raffreddare prima di riavviarlo."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Protezione anti-surriscaldamento: motore spento"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Malfunzionamento lieve della pompa dell'olio. La pressione dell'olio è ridotta, la coppia motore cala leggermente, la temperatura motore aumenta e possono comparire battiti meccanici."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Malfunzionamento moderato della pompa dell'olio. La pressione dell'olio è insufficiente, la coppia motore diminuisce sensibilmente, la temperatura aumenta e i battiti meccanici sono chiaramente udibili."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Grave malfunzionamento della pompa dell'olio. La pressione dell'olio è critica, la coppia motore cala fortemente, il surriscaldamento è probabile, i battiti meccanici sono forti e possono verificarsi stalli."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Guasto critico della pompa dell'olio. La circolazione dell'olio non è sufficiente per il funzionamento in sicurezza e l'avviamento o il proseguimento del lavoro non sono possibili."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Il motore si è bloccato e non può più girare."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Motore in stallo"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Malfunzionamento lieve dell'ECU. Potenza del motore leggermente ridotta."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Malfunzionamento moderato dell'ECU. Perdita di potenza evidente e aumento del consumo di carburante."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Guasto del comando del bloccaggio differenziale. Il bloccaggio resta inserito. La macchina resiste alla sterzata in curva."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Cinghie e variatori"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Cuscinetti e scatole di trasmissione"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Cinghia di innesto della testata"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Limitatore di coppia della testata"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Albero cardanico e crociere della testata"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Catena del canale elevatore"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Acceleratore di alimentazione"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Spranghe del battitore"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Usura moderata dei cuscinetti di trasmissione degli organi. Il rombo si sente chiaramente e scaldano."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Usura grave dei cuscinetti di trasmissione degli organi. Il rombo aumenta e gli alberi prendono gioco."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Guasto critico dei cuscinetti di trasmissione degli organi. Un cuscinetto si è grippato: la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Usura iniziale della cinghia di innesto della testata. Fischia e slitta un po' mentre la testata gira."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Usura moderata della cinghia di innesto della testata. Fischia più forte e l'allarme di regime a volte ferma la raccolta."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Usura grave della cinghia di innesto della testata. Fischia forte, la portata cala e le fermate si ripetono."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Guasto critico della cinghia di innesto della testata. Si è rotta: la testata non è più azionata, la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Usura iniziale del limitatore di coppia della testata. Slitta un po' sotto carico."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Usura moderata del limitatore di coppia della testata. Slitta sotto il carico normale e l'allarme di regime a volte ferma la raccolta."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Usura grave del limitatore di coppia della testata. Slitta e si scalda, la portata cala e le fermate si ripetono."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Guasto critico del limitatore di coppia della testata. Non trasmette più nulla: la testata è ferma, la raccolta è impossibile."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Usura iniziale delle crociere dell'albero cardanico della testata. Compare un leggero rombo mentre la testata gira."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Usura moderata delle crociere dell'albero cardanico della testata. Il rombo si sente chiaramente."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Usura grave delle crociere dell'albero cardanico della testata. Il rombo aumenta e le crociere prendono gioco."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Guasto critico dell'albero cardanico della testata. Una crociera si è rotta: la testata non è più azionata, la raccolta è impossibile."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Usura iniziale della catena del canale elevatore. Si allunga e l'alimentazione diventa irregolare."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Usura moderata della catena del canale elevatore. Si formano intasamenti all'ingresso del canale elevatore."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Usura grave della catena del canale elevatore. Salta sui pignoni e gli intasamenti si ripetono."/>

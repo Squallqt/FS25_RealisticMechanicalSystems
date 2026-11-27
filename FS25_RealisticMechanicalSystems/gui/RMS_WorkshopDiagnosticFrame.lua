@@ -5,12 +5,11 @@ RMS_WorkshopDiagnosticFrame = {}
 
 local RMS_WorkshopDiagnosticFrame_mt = Class(RMS_WorkshopDiagnosticFrame, RMS_WorkshopPage)
 
--- quote list in reference pixels, as laid out in the XML
+-- quote list in reference pixels
 local QUOTE_WIDTH, QUOTE_HEIGHT = 316, 288
 -- a fault row: its description, shortened beside its warranty
 local ROW_WIDTH, DESCRIPTION_WIDTH, DESCRIPTION_COVERED = 683, 547, 390
--- the warranty that pays a fault, named on its row
-local COVER_NAMES = { factory = "rms_ws_quote_cover_factory", part = "rms_ws_quote_cover_part", used = "rms_ws_quote_cover_used" }
+local COVER_NAMES = { factory = "rms_ws_quote_cover_factory", part = "rms_ws_quote_cover_part" }
 
 local READING_ROWS = {
     { label = "rms_ws_label_condition", icon = "rms_workshopRowConditionIcon", text = "conditionText", color = "conditionColor" },
@@ -18,15 +17,13 @@ local READING_ROWS = {
 }
 
 ---Creates the page
+-- @return table self instance of the page
 function RMS_WorkshopDiagnosticFrame.new()
-    local self = RMS_WorkshopPage.new(nil, RMS_WorkshopDiagnosticFrame_mt)
-    self.breakdownIds = {}
-    self.wornParts = {}
-    self.quoteLines = {}
-    return self
+    return RMS_WorkshopPage.new(RMS_WorkshopDiagnosticFrame_mt)
 end
 
 ---Wires both lists
+-- @param table dialog workshop dialog
 function RMS_WorkshopDiagnosticFrame:initialize(dialog)
     RMS_WorkshopDiagnosticFrame:superClass().initialize(self, dialog)
     for _, list in ipairs({ self.breakdownTable, self.diagnosticQuoteList }) do
@@ -45,6 +42,7 @@ function RMS_WorkshopDiagnosticFrame:initialize(dialog)
 end
 
 ---Writes the reading, the breakdowns and the estimate
+-- @param table state state of the workshop dialog
 function RMS_WorkshopDiagnosticFrame:refresh(state)
     local vehicle = self.vehicle
     self.isUnderService = state.isUnderService
@@ -60,7 +58,7 @@ function RMS_WorkshopDiagnosticFrame:refresh(state)
         row:getDescendantByName("value"):setTextColor(unpack(reading[entry.color]))
     end
 
-    self.breakdownIds = RMS_Utils.getVisibleBreakdownIds(vehicle)
+    self.breakdownIds = RMS_Utils.getRepairableBreakdownIds(vehicle)
     self.wornParts = RMS_Utils.getInspectedWornParts(vehicle)
     RMS_Utils.reloadListTemplates(self.breakdownTable)
     local isEmpty = #self.breakdownIds == 0
@@ -76,7 +74,7 @@ function RMS_WorkshopDiagnosticFrame:refresh(state)
     RMS_Utils.fitValuePills(self)
 end
 
----Writes the quote of the picked faults, Standard with original parts
+---Writes the quote of the picked faults, a medium repair with OEM parts
 function RMS_WorkshopDiagnosticFrame:updateEstimate()
     local R, vehicle, workshopType = RealisticMechanicalSystems, self.vehicle, self.workshopType
     local REPAIR, OEM = R.REPAIR_TYPES.MEDIUM, R.PART_TYPES.OEM
@@ -96,6 +94,8 @@ function RMS_WorkshopDiagnosticFrame:updateEstimate()
 end
 
 ---Rows of a list
+-- @param table list breakdown list or quote list
+-- @return integer count number of rows
 function RMS_WorkshopDiagnosticFrame:getNumberOfItemsInSection(list)
     if list == self.diagnosticQuoteList then
         return #self.quoteLines
@@ -105,6 +105,10 @@ function RMS_WorkshopDiagnosticFrame:getNumberOfItemsInSection(list)
 end
 
 ---Template of a row: a fault, the worn parts or a quote row
+-- @param table list breakdown list or quote list
+-- @param integer _section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_WorkshopDiagnosticFrame:getCellTypeForItemInSection(list, _section, index)
     if list == self.diagnosticQuoteList then
         return RMS_FluidWorkshop.getQuoteCellType(self.quoteLines[index])
@@ -115,6 +119,10 @@ function RMS_WorkshopDiagnosticFrame:getCellTypeForItemInSection(list, _section,
 end
 
 ---Fills a row of a list
+-- @param table list breakdown list or quote list
+-- @param integer _section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section, index, cell)
     if list == self.diagnosticQuoteList then
         RMS_FluidWorkshop.populateQuoteCell(cell, self.quoteLines[index], self.diagnosticQuoteList.size[1] / QUOTE_WIDTH, QUOTE_WIDTH)
@@ -122,7 +130,6 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     elseif index > #self.breakdownIds then
         local worn = self.wornParts[index - #self.breakdownIds - 1]
         if worn ~= nil then
-            -- a worn part is picked for its replacement as a fault is
             local isPicked = self.vehicle.spec_RealisticMechanicalSystems.preventiveParts[worn.partId] ~= nil
             local toggle = cell:getAttribute("wornSelect")
             RMS_Utils.mirrorSelectionToChildren(toggle, cell)
@@ -152,17 +159,16 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     RMS_Utils.applyScrollSpeed(cell)
     local stage = cell:getAttribute("rms_tableBreakdownStage")
     stage:setText(stageText)
-    stage:setTextColor(unpack(RMS_Utils.COLOR.STAGE[breakdown.stage] or RMS_Utils.COLOR.STAGE[4]))
+    stage:setTextColor(unpack(RMS_Utils.COLOR.STAGE[breakdown.stage]))
     cell:getAttribute("rms_tableBreakdownName"):setText(RMS_Utils.getBreakdownPartName(id, vehicle))
     cell:getAttribute("rms_tableBreakdownPrice"):setText(g_i18n:formatMoney(price, 0, true, false))
     local description = cell:getAttribute("rms_tableBreakdownDisc")
     local isCovered, reason = vehicle:isWarrantyRepairCovered(self.workshopType, id)
     local cover = cell:getAttribute("rms_tableBreakdownCover")
-    cover:setVisible(isCovered and COVER_NAMES[reason] ~= nil)
-    cover:setText(isCovered and COVER_NAMES[reason] ~= nil and g_i18n:getText(COVER_NAMES[reason]) or "")
-    description:setSize(((isCovered and COVER_NAMES[reason] ~= nil) and DESCRIPTION_COVERED or DESCRIPTION_WIDTH)
+    cover:setVisible(isCovered)
+    cover:setText(isCovered and g_i18n:getText(COVER_NAMES[reason]) or "")
+    description:setSize((isCovered and DESCRIPTION_COVERED or DESCRIPTION_WIDTH)
         * self.breakdownTable.size[1] / ROW_WIDTH, nil)
-    -- an unpicked row starts its description over
     description:setText(descriptionText, nil, nil, not isPicked)
 
     local toggle = cell:getAttribute("rms_tableBreakdownSelect")
@@ -178,7 +184,10 @@ function RMS_WorkshopDiagnosticFrame:populateCellForItemInSection(list, _section
     description:setDisabled(not isPicked)
 end
 
----Picks a breakdown for repair, or puts it back
+---Picks a breakdown or a worn part for repair, or puts it back
+-- @param table _list breakdown list
+-- @param integer _section section
+-- @param integer index row clicked
 function RMS_WorkshopDiagnosticFrame:onBreakdownClick(_list, _section, index)
     if self.isUnderService then
         return
@@ -191,8 +200,7 @@ function RMS_WorkshopDiagnosticFrame:onBreakdownClick(_list, _section, index)
         end
         return
     end
-    local breakdown = self.vehicle:getActiveBreakdowns()[self.breakdownIds[index]]
-    breakdown.isSelectedForRepair = not breakdown.isSelectedForRepair
+    RealisticMechanicalSystems.toggleRepairFault(self.vehicle, self.breakdownIds[index])
     self.dialog:refresh()
 end
 
@@ -201,7 +209,8 @@ function RMS_WorkshopDiagnosticFrame:onClickRepair()
     self.dialog:selectService(RealisticMechanicalSystems.STATUS.REPAIR)
 end
 
----The breakdown list, then the estimate button
+---Columns of rows the focus moves over: the breakdown list, then the estimate button
+-- @return table columns columns of rows of elements
 function RMS_WorkshopDiagnosticFrame:getFocusColumns()
     return { { { self.breakdownTable } }, { { self.diagnosticConfigureButton } } }
 end

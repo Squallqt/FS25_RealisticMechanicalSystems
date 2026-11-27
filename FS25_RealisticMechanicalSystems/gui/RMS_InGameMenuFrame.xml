@@ -26,7 +26,7 @@
         <ThreePartBitmap profile="rms_fleetMainSeparator"/>
         <MultiTextOption profile="rms_fleetMainPaging" id="subCategoryPaging" onClick="updateSubCategoryPages" />
 
-        <!-- Fleet and running interventions -->
+        <!-- Fleet page -->
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="fleetPage">
             <BoxLayout profile="rms_fleetPageFlow">
                 <!-- Fleet pulse -->
@@ -112,7 +112,6 @@
                         </Button>
                     </GuiElement>
 
-                    <!-- Identity -->
                     <GuiElement profile="rms_workshopBlock" id="identityCard" size="400px 626px">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Text profile="rms_workshopVehicleBrand" id="brandText" position="20px -16px" size="360px 22px" />
@@ -183,7 +182,7 @@
                         </Button>
                     </GuiElement>
 
-                    <!-- Dossier of a tracked machine -->
+                    <!-- Machine dossier -->
                     <GuiElement profile="rms_workshopBlock" id="dossierColumn" size="669px 626px">
                         <GuiElement profile="rms_workshopBlock" size="669px 64px">
                             <RoundCorner profile="rms_inspectionSurface" />
@@ -200,7 +199,7 @@
 
                         <GuiElement profile="rms_workshopBlock" position="0px -76px" size="328px 550px">
                             <FrameReference ref="RMS_ConditionCardFrame" id="conditionCard" />
-                            <!-- Greasing of an implement -->
+                            <!-- Implement greasing -->
                             <GuiElement profile="rms_fillParent" id="greasingCard" visible="false">
                                 <RoundCorner profile="rms_workshopSurfaceStrong" />
                                 <GuiElement profile="rms_workshopBlock" position="20px -16px" size="288px 32px">
@@ -229,7 +228,7 @@
                             </GuiElement>
                         </GuiElement>
 
-                        <!-- Wear of an implement -->
+                        <!-- Implement wear -->
                         <GuiElement profile="rms_workshopBlock" id="wearCard" position="340px -76px" size="329px 550px" visible="false">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
@@ -257,7 +256,7 @@
                             </GuiElement>
                         </GuiElement>
 
-                        <!-- Next maintenance, or the running intervention -->
+                        <!-- Maintenance or intervention -->
                         <GuiElement profile="rms_workshopBlock" id="serviceCard" position="340px -76px" size="329px 550px">
                             <RoundCorner profile="rms_workshopSurfaceStrong" />
                             <GuiElement profile="rms_workshopBlock" position="20px -16px" size="289px 32px">
@@ -283,7 +282,6 @@
                         </GuiElement>
                     </GuiElement>
 
-                    <!-- Untracked machine -->
                     <GuiElement profile="rms_workshopBlock" id="untrackedCard" size="669px 626px" visible="false">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Bitmap profile="rms_workshopIcon" position="298px -235px" size="72px 72px" imageSliceId="gui.loadingAnimationFull">
@@ -292,7 +290,6 @@
                         <Text profile="rms_workshopTitle" position="40px -327px" size="589px 36px" textAlignment="center" text="$l10n_rms_ingame_menu_section_other" />
                     </GuiElement>
 
-                    <!-- Nothing to show -->
                     <GuiElement profile="rms_workshopBlock" id="emptyCard" size="1081px 626px" visible="false">
                         <RoundCorner profile="rms_workshopSurfaceStrong" />
                         <Bitmap profile="rms_workshopIcon" position="504px -235px" size="72px 72px" imageSliceId="gui.icon_construction_buildings" />
@@ -302,23 +299,9 @@
             </BoxLayout>
         </GuiElement>
 
-        <!-- Settings -->
         <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="settingsContainer">
             <GuiElement profile="rms_menuSettingsContainer" id="settingsPage">
                 <ScrollingLayout profile="fs25_settingsLayout" id="settingsLayout">
-                    <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsTutorialMode" onClick="onClickRmsOption" useYesNoTexts="true">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialMode_tooltip"/>
-                        </BinaryOption>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialMode_label"/>
-                    </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer">
-                        <Button profile="rms_settingsButton" id="rmsTutorialResetTips" text="$l10n_rms_tutorialResetTips_text" onClick="onClickRmsResetTutorialTips">
-                            <ThreePartBitmap profile="rms_settingsButtonBg"/>
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_tutorialResetTips_tooltip"/>
-                        </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_tutorialResetTips_label"/>
-                    </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
                         <BinaryOption profile="fs25_settingsBinaryOption" id="rmsWarningMessages" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_warningMessages_tooltip"/>
@@ -329,13 +312,22 @@
                         <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_warningMessages_label"/>
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugMode" onClick="onClickRmsOption" useYesNoTexts="true">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugWindow" onClick="onClickRmsOption" useYesNoTexts="true">
                             <Text profile="fs25_multiTextOptionTooltip" name="ignore"/>
                         </BinaryOption>
                         <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
                             <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
                         </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugMode_label"/>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugWindow_label"/>
+                    </Bitmap>
+                    <Bitmap profile="fs25_multiTextOptionContainer">
+                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDebugLog" onClick="onClickRmsOption" useYesNoTexts="true">
+                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_debugLog_tooltip"/>
+                        </BinaryOption>
+                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
+                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
+                        </Button>
+                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_debugLog_label"/>
                     </Bitmap>
 
                     <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_rms_settings_section_service_wear"/>
@@ -477,15 +469,6 @@
                             <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
                         </Button>
                         <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainEnabled_label"/>
-                    </Bitmap>
-                    <Bitmap profile="fs25_multiTextOptionContainer">
-                        <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainAllowAutoMode" onClick="onClickRmsOption" useYesNoTexts="true">
-                            <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_rms_drivetrainAllowAutoMode_tooltip"/>
-                        </BinaryOption>
-                        <Button profile="fs25_settingsMultiTextOptionLocked" name="iconDisabled" onClick="onClickLockedIcon" onFocus="onFocusLockedIcon">
-                            <Text profile="fs25_multiTextOptionTooltip" name="reason" position="940px 0px"/>
-                        </Button>
-                        <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_rms_drivetrainAllowAutoMode_label"/>
                     </Bitmap>
                     <Bitmap profile="fs25_multiTextOptionContainer">
                         <BinaryOption profile="fs25_settingsBinaryOption" id="rmsDrivetrainParkBrakeEnabled" onClick="onClickRmsOption" useYesNoTexts="true">

@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Постоянная"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Снижение мощности"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Остановка техники"/>
         <text name="rms_breakdowns_severity_minor" text="Незначительная"/>
         <text name="rms_breakdowns_severity_moderate" text="Умеренная"/>
         <text name="rms_breakdowns_severity_major" text="Серьёзная"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Защита от перегрева: мощность снижена"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Защита от перегрева усиливается. Двигатель выдаёт лишь половину мощности."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Защита от перегрева: мощность снижена вдвое"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Защита от перегрева работает на максимуме. Осталась лишь малая часть мощности двигателя."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Защита от перегрева: мощность сильно снижена"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="Двигатель заглушен, чтобы избежать повреждений. Дайте ему остыть перед повторным запуском."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Защита от перегрева: двигатель заглушен"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Лёгкая неисправность масляного насоса. Давление масла снижено, крутящий момент двигателя немного уменьшен, температура двигателя повышена, возможен механический стук."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Умеренная неисправность масляного насоса. Давление масла недостаточно, крутящий момент заметно снижен, температура двигателя повышена, механический стук отчётливо слышен."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Сильная неисправность масляного насоса. Давление масла критически низкое, крутящий момент сильно снижен, вероятен перегрев, механический стук выражен, двигатель может глохнуть."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Критический отказ масляного насоса. Циркуляция масла недостаточна для безопасной работы двигателя, запуск или дальнейшая эксплуатация невозможны."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="Двигатель заклинило, коленчатый вал не вращается."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Двигатель заглох"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Лёгкая неисправность ЭБУ. Мощность двигателя слегка снижена."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Умеренная неисправность ЭБУ. Заметная потеря мощности и повышенный расход топлива."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Неисправность управления блокировкой дифференциала. Блокировка остаётся включённой. Машина сопротивляется повороту."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Приводные ремни и вариаторы"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Подшипники и редукторы привода"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Ремень включения жатки"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Предохранительная муфта жатки"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Карданный вал и крестовины жатки"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Цепь наклонной камеры"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Ускоритель подачи"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Бичи барабана"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Умеренный износ подшипников привода. Гул хорошо слышен, подшипники греются."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Сильный износ подшипников привода. Гул усиливается, у валов появляется люфт."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Критический отказ подшипников привода. Подшипник заклинило: уборка невозможна."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Начальный износ ремня включения жатки. Он свистит и немного проскальзывает, пока жатка работает."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Умеренный износ ремня включения жатки. Он свистит громче, и сигнал оборотов иногда останавливает уборку."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Сильный износ ремня включения жатки. Он громко свистит, пропускная способность падает, остановки повторяются."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Критический отказ ремня включения жатки. Ремень порвался: жатка больше не приводится, уборка невозможна."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Начальный износ предохранительной муфты жатки. Под нагрузкой она немного проскальзывает."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Умеренный износ предохранительной муфты жатки. Она проскальзывает при обычной нагрузке, и сигнал оборотов иногда останавливает уборку."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Сильный износ предохранительной муфты жатки. Она проскальзывает и греется, пропускная способность падает, остановки повторяются."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Критический отказ предохранительной муфты жатки. Она больше ничего не передаёт: жатка стоит, уборка невозможна."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Начальный износ крестовин карданного вала жатки. Пока жатка работает, появляется лёгкий гул."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Умеренный износ крестовин карданного вала жатки. Гул отчётливо слышен."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Сильный износ крестовин карданного вала жатки. Гул усиливается, у крестовин появляется люфт."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Критический отказ карданного вала жатки. Крестовина сломалась: жатка больше не приводится, уборка невозможна."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Начальный износ цепи наклонной камеры. Она вытягивается, подача становится неравномерной."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Умеренный износ цепи наклонной камеры. На входе в наклонную камеру образуются забивания."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Сильный износ цепи наклонной камеры. Она перескакивает по звёздочкам, забивания не прекращаются."/>

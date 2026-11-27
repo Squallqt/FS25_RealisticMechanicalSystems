@@ -25,31 +25,61 @@ local KPI_CARDS = {
     { profile = "rms_logKpiMaintenanceIcon", label = "rms_log_average_maintenance_interval_title", figure = "maintenanceInterval" }
 }
 
+---Returns the names of the parts a log entry picked, each once
+-- @param table vehicle vehicle
+-- @param table entry log entry
+-- @return table names names of the parts
 local function getPartNames(vehicle, entry)
     local names, seen = {}, {}
-    for _, id in ipairs(entry.conditionData ~= nil and entry.conditionData.selectedBreakdowns or {}) do
-        if RMS_Breakdowns.BreakdownRegistry[id] ~= nil then
-            local name = RMS_Utils.getBreakdownPartName(id, vehicle)
-            if not seen[name] then
-                seen[name] = true
-                table.insert(names, name)
-            end
+    for _, id in ipairs(entry.conditionData.selectedBreakdowns) do
+        local name = RMS_Utils.getBreakdownPartName(id, vehicle)
+        if not seen[name] then
+            seen[name] = true
+            table.insert(names, name)
         end
     end
     return names
 end
 
+---Returns the text naming the workshop of a log entry, empty for none
+-- @param table entry log entry
+-- @return string text name of the workshop
 local function getLocation(entry)
     return RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, entry.location) ~= nil and g_i18n:getText(entry.location) or ""
 end
 
+---Tells whether a logged repair fitted parts, whose quality the log names
+-- @param table entry log entry
+-- @return boolean hasParts true with one, or for a bill logged without its lines
+local function getHasFittedParts(entry)
+    if entry.invoice == nil then
+        return true
+    end
+    for _, line in ipairs(entry.invoice) do
+        if line.kind == "preventive" or line.kind == "repair" and RMS_Breakdowns.BreakdownRegistry[line.key].isPartFault then
+            return true
+        end
+    end
+    return false
+end
+
+---Returns the system or part quality of a log entry in brackets, empty without one
+-- @param table vehicle vehicle
+-- @param table entry log entry
+-- @return string suffix system or quality in brackets
 local function getSystemSuffix(vehicle, entry)
-    if entry.type ~= RealisticMechanicalSystems.STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE" then
+    local STATUS = RealisticMechanicalSystems.STATUS
+    if entry.type ~= STATUS.BODYWORK and entry.optionTwo ~= nil and entry.optionTwo ~= "NONE"
+        and (entry.type ~= STATUS.REPAIR or getHasFittedParts(entry)) then
         return " (" .. g_i18n:getText(RMS_Utils.getSystemLabel(vehicle, entry.optionTwo)) .. ")"
     end
     return ""
 end
 
+---Returns the summary of a log entry and the list shown under it
+-- @param table vehicle vehicle
+-- @param table entry log entry
+-- @return table presentation summary, detailLabel and detailItems
 local function getPresentation(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(vehicle, entry)
@@ -80,6 +110,10 @@ local function getPresentation(vehicle, entry)
     return { summary = (RMS_Utils.getLogTypePresentation(entry)), detailLabel = "", detailItems = {} }
 end
 
+---Returns the one line description of a log entry in the history
+-- @param table vehicle vehicle
+-- @param table entry log entry
+-- @return string description description
 local function getDescription(vehicle, entry)
     local STATUS = RealisticMechanicalSystems.STATUS
     local partNames = getPartNames(vehicle, entry)
@@ -104,19 +138,17 @@ local function getDescription(vehicle, entry)
     return description
 end
 
--- invoice list in reference pixels, as laid out in the XML
+-- invoice list in reference pixels
 local INVOICE_WIDTH, INVOICE_HEIGHT = 457, 154
 
 ---Creates the page
+-- @return table self instance of the page
 function RMS_WorkshopRecordFrame.new()
-    local self = RMS_WorkshopPage.new(nil, RMS_WorkshopRecordFrame_mt)
-    self.entries = {}
-    self.detailItems = {}
-    self.invoiceRows, self.invoiceHeight = {}, 0
-    return self
+    return RMS_WorkshopPage.new(RMS_WorkshopRecordFrame_mt)
 end
 
 ---Wires the lists and the report view
+-- @param table dialog workshop dialog
 function RMS_WorkshopRecordFrame:initialize(dialog)
     RMS_WorkshopRecordFrame:superClass().initialize(self, dialog)
     for _, list in ipairs({ self.logTable, self.detailPartsTable, self.invoiceTable }) do
@@ -146,6 +178,8 @@ function RMS_WorkshopRecordFrame:initialize(dialog)
 end
 
 ---Opens the log on the newest entry
+-- @param table vehicle vehicle
+-- @param string? workshopType workshop, nil for the record alone
 function RMS_WorkshopRecordFrame:setVehicle(vehicle, workshopType)
     RMS_WorkshopRecordFrame:superClass().setVehicle(self, vehicle, workshopType)
     self.selectedIndex = 1
@@ -171,10 +205,10 @@ function RMS_WorkshopRecordFrame:refresh()
 
     local totalCost, purchaseDate, purchaseHours = 0, nil, 0
     for _, entry in ipairs(log) do
-        totalCost = totalCost + (entry.price or 0)
+        totalCost = totalCost + entry.price
         if entry.id == 1 then
             purchaseDate = entry.date
-            purchaseHours = entry.conditionData ~= nil and entry.conditionData.operatingHours or 0
+            purchaseHours = entry.conditionData.operatingHours
         end
     end
     local environment = g_currentMission.environment
@@ -194,8 +228,8 @@ function RMS_WorkshopRecordFrame:refresh()
 
     local maintenanceCount, intervalSum, lastHours = 0, 0, purchaseHours
     for _, entry in ipairs(log) do
-        local hours = entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or nil
-        if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE and entry.isCompleted ~= false and hours ~= nil then
+        local hours = entry.conditionData.operatingHours
+        if entry.type == RealisticMechanicalSystems.STATUS.MAINTENANCE and entry.isCompleted ~= false then
             intervalSum = intervalSum + math.max(hours - lastHours, 0)
             lastHours = hours
             maintenanceCount = maintenanceCount + 1
@@ -248,12 +282,12 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
         self.selectedLogType:setText(typeText)
         self.selectedLogType:setTextColor(unpack(color))
         self.selectedLogDate:setText(RMS_Utils.formatMaintenanceLogDate(entry))
-        self.selectedLogHours:setText(RMS_Utils.formatHours(math.floor((entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0) * 10) / 10))
-        self.selectedLogPrice:setText(g_i18n:formatMoney(entry.price or 0, 0, true, false))
+        self.selectedLogHours:setText(RMS_Utils.formatHours(math.floor(entry.conditionData.operatingHours * 10) / 10))
+        self.selectedLogPrice:setText(g_i18n:formatMoney(entry.price, 0, true, false))
         self.selectedLogSummary:setText(presentation.summary)
         local location = getLocation(entry)
         self.selectedLogLocation:setText((location ~= "" and location .. " · " or "") .. "ODO "
-            .. RMS_Utils.formatOdometerKilometers(entry.conditionData ~= nil and entry.conditionData.odometerKilometers or nil))
+            .. RMS_Utils.formatOdometerKilometers(entry.conditionData.odometerKilometers))
         local groups = entry.isCompleted ~= false and entry.invoice ~= nil and RMS_FluidWorkshop.getQuoteGroups(self.vehicle,
             entry.type, entry.optionOne, entry.optionTwo, entry.invoice, entry.location) or {}
         self.invoiceRows, self.invoiceHeight = RMS_FluidWorkshop.getQuoteRows(groups)
@@ -274,11 +308,17 @@ function RMS_WorkshopRecordFrame:updateSelectedEntry()
 end
 
 ---Template of a row of the invoice, the only list with several
+-- @param table _list list
+-- @param integer _section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_WorkshopRecordFrame:getCellTypeForItemInSection(_list, _section, index)
     return RMS_FluidWorkshop.getQuoteCellType(self.invoiceRows[index])
 end
 
 ---Rows of a list
+-- @param table list history, invoice or detail list
+-- @return integer count number of rows
 function RMS_WorkshopRecordFrame:getNumberOfItemsInSection(list)
     if list == self.detailPartsTable then
         return math.ceil(#self.detailItems / 2)
@@ -289,6 +329,10 @@ function RMS_WorkshopRecordFrame:getNumberOfItemsInSection(list)
 end
 
 ---Fills a row of a list
+-- @param table list history, invoice or detail list
+-- @param integer _section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_WorkshopRecordFrame:populateCellForItemInSection(list, _section, index, cell)
     if list == self.detailPartsTable then
         RMS_Utils.populateTwoColumnTextRow(self.detailItems, index, cell, "detailPartLeft", "detailPartRight", "detailPartRightBullet")
@@ -307,12 +351,15 @@ function RMS_WorkshopRecordFrame:populateCellForItemInSection(list, _section, in
     cell:getAttribute("logType"):setText(typeText)
     cell:getAttribute("logType"):setTextColor(unpack(color))
     cell:getAttribute("logDate"):setText(RMS_Utils.formatMaintenanceLogDate(entry))
-    cell:getAttribute("logHours"):setText(RMS_Utils.formatHours(math.floor((entry.conditionData ~= nil and tonumber(entry.conditionData.operatingHours) or 0) * 10) / 10))
+    cell:getAttribute("logHours"):setText(RMS_Utils.formatHours(math.floor(entry.conditionData.operatingHours * 10) / 10))
     cell:getAttribute("logDescription"):setText(getDescription(self.vehicle, entry))
-    cell:getAttribute("logPrice"):setText(g_i18n:formatMoney(entry.price or 0, 0, true, false))
+    cell:getAttribute("logPrice"):setText(g_i18n:formatMoney(entry.price, 0, true, false))
 end
 
 ---Follows the entry the list selects
+-- @param table list list whose selection changed
+-- @param integer _section section
+-- @param integer index row selected
 function RMS_WorkshopRecordFrame:onListSelectionChanged(list, _section, index)
     if list == self.logTable and index ~= self.selectedIndex then
         self.selectedIndex = index
@@ -321,11 +368,13 @@ function RMS_WorkshopRecordFrame:onListSelectionChanged(list, _section, index)
 end
 
 ---Selects the clicked entry
+-- @param table row row clicked
 function RMS_WorkshopRecordFrame:onRowClick(row)
     self.logTable:setSelectedItem(1, row.indexInSection, false, false)
 end
 
 ---Shows the report of an entry, or the log again
+-- @param table? entry log entry, nil for the log
 function RMS_WorkshopRecordFrame:showReport(entry)
     self.logView:setVisible(entry == nil)
     self.reportView:setVisible(entry ~= nil)
@@ -340,7 +389,9 @@ function RMS_WorkshopRecordFrame:onAction()
     self.dialog:setTab(RMS_WorkshopDialog.TAB.RECORD)
 end
 
----The report button of the log
+---Button the page puts in the bar: the report button of the log, none on a report
+-- @return string? text text of the button, nil for none
+-- @return boolean isDisabled true when the entry has no report
 function RMS_WorkshopRecordFrame:getAction()
     if self.reportView:getIsVisible() then
         return nil, true
@@ -350,6 +401,7 @@ function RMS_WorkshopRecordFrame:getAction()
 end
 
 ---Leaves the report for the log
+-- @return boolean isHandled true when a report was left
 function RMS_WorkshopRecordFrame:goBack()
     if not self.reportView:getIsVisible() then
         return false
@@ -359,7 +411,8 @@ function RMS_WorkshopRecordFrame:goBack()
     return true
 end
 
----The history list, or the lists of the report
+---Columns of rows the focus moves over: the history list, or the lists of the report
+-- @return table columns columns of rows of elements
 function RMS_WorkshopRecordFrame:getFocusColumns()
     if self.reportView:getIsVisible() then
         return self.report:getFocusColumns()

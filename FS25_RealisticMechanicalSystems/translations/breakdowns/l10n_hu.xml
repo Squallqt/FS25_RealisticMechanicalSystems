@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Állandó"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Teljesítményvesztés"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Üzemképtelen"/>
         <text name="rms_breakdowns_severity_minor" text="Kisebb"/>
         <text name="rms_breakdowns_severity_moderate" text="Közepes"/>
         <text name="rms_breakdowns_severity_major" text="Súlyos"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Túlmelegedés elleni védelem: teljesítmény csökkentve"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="A túlmelegedés elleni védelem erősödik. A motor már csak a teljesítménye felét adja le."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Túlmelegedés elleni védelem: teljesítmény felére csökkentve"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="A túlmelegedés elleni védelem a maximumon van. Csak a motorteljesítmény töredéke marad."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Túlmelegedés elleni védelem: teljesítmény erősen csökkentve"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="A motor leállt a károsodás elkerülése érdekében. Hagyd lehűlni újraindítás előtt."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Túlmelegedés elleni védelem: motor leállítva"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Enyhe meghibásodás az olajszivattyúban. Az olajnyomás csökkent, a motor nyomatéka enyhén visszaesett, a motor hőmérséklete magasabb, és mechanikus kopogás is hallható lehet."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Közepes meghibásodás az olajszivattyúban. Az olajnyomás elégtelen, a motor nyomatéka érezhetően csökkent, a motor hőmérséklete magasabb, és a mechanikus kopogás jól hallható."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Súlyos meghibásodás az olajszivattyúban. Az olajnyomás kritikusan alacsony, a motor nyomatéka erősen csökkent, túlmelegedés valószínű, a mechanikus kopogás erős, és motorleállás is előfordulhat."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Kritikus hiba az olajszivattyúban. Az olajkeringés nem elegendő a biztonságos motorüzemhez, a motor indítása vagy további működtetése nem lehetséges."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="A motor megszorult, és már nem tud forogni."/>
         <text name="rms_breakdowns_engine_stalled_message" text="A motor lefulladt"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Enyhe meghibásodás az ECU-ban. A motorteljesítmény enyhén csökkent."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Közepes meghibásodás az ECU-ban. Érezhető teljesítményvesztés és megnövekedett üzemanyag-fogyasztás."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Meghibásodás a differenciálzár vezérlésében. A zár bekapcsolva marad. A gép kanyarban ellenáll a kormányzásnak."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Hajtószíjak és variátorok"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Hajtáscsapágyak és hajtóművek"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Vágóasztal hajtószíja"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Vágóasztal nyomatékhatárolója"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Vágóasztal kardántengelye és keresztcsuklói"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Ferdefelhordó-lánc"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Adagológyorsító"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Verőlécek"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="A hajtáscsapágyak közepes kopása. A zúgás jól hallható, és a csapágyak melegszenek."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="A hajtáscsapágyak súlyos kopása. A zúgás erősödik, és a tengelyek holtjátékot kapnak."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Kritikus hiba a hajtáscsapágyakban. Egy csapágy beragadt: a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="A vágóasztal hajtószíjának kezdődő kopása. Sivít és kissé csúszik, amíg a vágóasztal forog."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="A vágóasztal hajtószíjának közepes kopása. Hangosabban sivít, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="A vágóasztal hajtószíjának súlyos kopása. Hangosan sivít, az áteresztés csökken, és a leállások ismétlődnek."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Kritikus hiba a vágóasztal hajtószíjában. Elszakadt: a vágóasztal nem kap hajtást, a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="A vágóasztal nyomatékhatárolójának kezdődő kopása. Terhelés alatt kissé csúszik."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="A vágóasztal nyomatékhatárolójának közepes kopása. Már normál terhelésnél csúszik, és a fordulatszám-riasztás időnként leállítja a betakarítást."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="A vágóasztal nyomatékhatárolójának súlyos kopása. Csúszik és melegszik, az áteresztés csökken, és a leállások ismétlődnek."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Kritikus hiba a vágóasztal nyomatékhatárolójában. Már semmit sem visz át: a vágóasztal áll, a betakarítás lehetetlen."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="A vágóasztal kardántengely-keresztcsuklóinak kezdődő kopása. Enyhe zúgás jelenik meg, amíg a vágóasztal forog."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="A vágóasztal kardántengely-keresztcsuklóinak közepes kopása. A zúgás jól hallható."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="A vágóasztal kardántengely-keresztcsuklóinak súlyos kopása. A zúgás erősödik, és a csuklók holtjátékot kapnak."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Kritikus hiba a vágóasztal kardántengelyében. Egy keresztcsukló eltört: a vágóasztal nem kap hajtást, a betakarítás lehetetlen."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="A ferdefelhordó-lánc kezdődő kopása. Megnyúlik, és az adagolás egyenetlenné válik."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="A ferdefelhordó-lánc közepes kopása. A ferdefelhordó bejáratánál dugulások keletkeznek."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="A ferdefelhordó-lánc súlyos kopása. Átugrik a lánckerekeken, és a dugulások visszatérnek."/>

@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Vozidlo"/>
         <text name="rms_hud_mass_towed" text="Tažené"/>
         <text name="rms_hud_mass_total" text="Celkem"/>
+        <text name="rms_hud_fuel_average" text="Prům."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="4x2"/>
         <text name="rms_hud_drive_4wd" text="4x4"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="4x2 (přední náprava odpojena)"/>
         <text name="rms_drivetrain_mode_4wd" text="4x4 (přední náprava připojena)"/>
         <text name="rms_drivetrain_mode_auto" text="4x4 AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Zkontrolovat vozidlo"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Režim pohonu"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Uzávěrka diferenciálu"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parkovací brzda"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Určuje, zda se generální opravy v dílně dokončí okamžitě, včetně již probíhajících."/>
         <text name="rms_instantRemap_label" text="Okamžitý chiptuning motoru"/>
         <text name="rms_instantRemap_tooltip" text="Určuje, zda se chiptuning motoru a návrat do série dokončí okamžitě, včetně již probíhajících."/>
-        <text name="rms_debugMode_label" text="Režim ladění"/>
-        <text name="rms_debugMode_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno a konzole dostává podrobné záznamy. Klávesa %s okno otevírá a zavírá; ve hře více hráčů ho vidí jen správci."/>
+        <text name="rms_debugWindow_label" text="Okno ladění"/>
+        <text name="rms_debugWindow_tooltip" text="Určuje, zda se v řízeném stroji zobrazuje ladicí okno. Otevírá ho i klávesa %s; ve hře více hráčů ho vidí jen správci."/>
+        <text name="rms_debugLog_label" text="Podrobné záznamy"/>
+        <text name="rms_debugLog_tooltip" text="Určuje, zda konzole dostává podrobné záznamy RMS k přiložení k hlášení chyby, aniž by se otevřelo ladicí okno."/>
         <text name="rms_warningMessages_label" text="Varovné zprávy"/>
         <text name="rms_warningMessages_tooltip" text="Určuje, zda se zobrazují varování jako studený motor nebo přehřátí. Zprávy o tepelném omezení výkonu se zobrazují vždy."/>
         <text name="rms_serviceInterval_label" text="Rozestupy údržby"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Určuje provozní hodiny, po kterých stav vozidla dosáhne 0 %; čím je jim blíže, tím je méně spolehlivé a tím více klesá jeho hodnota. Změna platí od té chvíle: vozidla si zachovají stav, přepočítá se jen jejich hodnota."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Kouř z výfuku"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Určuje, zda kouř z výfuku odpovídá skutečnému stavu motoru: černý při nedostatku vzduchu, modrý při spalování oleje, bílý při úniku nespáleného paliva, hustší při zatížení. Staré stroje kouří mnohem více než moderní."/>
-        <text name="rms_tutorialMode_label" text="Režim výukového programu"/>
-        <text name="rms_tutorialMode_tooltip" text="Určuje, zda se během hry zobrazují tipy výuky."/>
-        <text name="rms_tutorialResetTips_label" text="Resetovat rady"/>
-        <text name="rms_tutorialResetTips_text" text="Resetovat"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Obnoví historii tipů výuky: všechny se znovu zobrazí."/>
-        <text name="rms_tutorialResetConfirm_title" text="Resetovat rady výukového programu?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Resetovat historii rad výukového programu a znovu je všechny zobrazit?"/>
         <text name="rms_drivetrainEnabled_label" text="Správa 4x4 a uzávěrky diferenciálu"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Určuje, zda se přední náprava a uzávěrky diferenciálu traktorů ovládají ručně. Tato možnost nahrazuje správu diferenciálů v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a pak znovu zapni diferenciály v jeho menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Povolit režim AUTO"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Určuje, zda volič nabízí polohu AUTO, která připojuje přední nápravu při prokluzu kol nebo práci pod zatížením a odpojuje ji na silnici. Vypnutí přepne vozidla ponechaná v AUTO na 4x4."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Toto nastavení vyžaduje zapnutou správu 4x4 a uzávěrky diferenciálu."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parkovací brzda"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Určuje, zda mají sledovaná vozidla parkovací brzdu: automatickou u novějších strojů s převodovkou CVT nebo Powershift, ovládanou klávesou u ostatních. Tato možnost nahrazuje brzdu v Enhanced Vehicle: chceš-li ji vrátit, vypni tuto možnost a znovu zapni parkovací brzdu v jeho menu."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Deník údržby"/>
         <text name="rms_ws_label_last_maintenance" text="Poslední údržba"/>
         <text name="rms_ws_task_inspection" text="Prohlídka"/>
-        <text name="rms_ws_task_maintenance" text="Údržba"/>
         <text name="rms_ws_task_overhaul" text="Generální oprava"/>
         <text name="rms_ws_info_no_breakdowns" text="Žádná zjištěná porucha. Prohlídka nebo údržba zjistí ty, které stroj ještě nedává najevo."/>
         <text name="rms_ws_info_warning_unidentified" text="Kontrolka svítí: porucha ke zjištění. Prohlídka nebo údržba ji zjistí, pak ji lze opravit."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Připojte ke stroji diagnostické zařízení vozíku."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Vyžadována elektronická diagnostika"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Vyžadována demontáž nebo speciální nástroje"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadováno vysokonapěťové vybavení"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Vyžadován technik s vysokonapěťovou kvalifikací"/>
         <text name="rms_ws_status_in_progress_format" text="Probíhá %s do %s"/>
         <text name="rms_ws_status_open" text="Dílna je otevřena"/>
         <text name="rms_ws_status_closed" text="Dílna je zavřena"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Popis"/>
         <text name="rms_log_button_show_report" text="Zobrazit zprávu"/>
         <text name="rms_log_empty" text="Záznam je prázdný"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Tepelná ochrana: omezení výkonu zrušeno"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Nízká hladina AdBlue: doplňte AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Velmi nízká hladina AdBlue: doplňte AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Velmi nízká hladina AdBlue: výkon motoru snížen. Doplňte AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Nádrž AdBlue je prázdná: doplňte AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Nádrž AdBlue je prázdná: výkon motoru výrazně snížen. Doplňte AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue doplněno: výkon motoru obnoven."/>
         <text name="rms_breakdown_at_progress_message" text="probíhá"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Pozor! Studený motor: opotřebovává se, dokud se nezahřeje."/>
         <text name="rms_spec_overheat_engine_message" text="Varování! Přehřívání motoru"/>
         <text name="rms_spec_overheat_transmission_message" text="Varování! Přehřívání převodovky"/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Chiptuning motoru"/>
         <text name="rms_spec_state_overdue" text="Po termínu"/>
         <text name="rms_spec_state_optimal" text="Optimální"/>
-        <text name="rms_spec_state_broken" text="Rozbité"/>
         <text name="rms_spec_state_bad" text="Špatný"/>
         <text name="rms_spec_state_excellent" text="Vynikající"/>
         <text name="rms_spec_state_good" text="Dobrý"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="uzávěrka nebo 4x4 na tvrdém povrchu"/>
         <text name="rms_warranty_filter" text="zanesený filtr"/>
         <text name="rms_warranty_oil" text="nevhodný motorový olej"/>
+        <text name="rms_warranty_header_engagement" text="adaptér zapnutý nad volnoběhem"/>
         <text name="rms_warranty_trailer" text="příliš těžký přívěs"/>
         <text name="rms_warranty_aftermarket_part" text="díl z druhovýroby"/>
         <text name="rms_warranty_used_part" text="použitý díl"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Vizuální kontrola a zkouška funkcí"/>
         <text name="rms_ws_inspection_electronic" text="Elektronické poruchy"/>
         <text name="rms_ws_inspection_electronic_detail" text="Chybové kódy načtené diagnostikou"/>
+        <text name="rms_ws_inspection_electrical" text="Elektrické poruchy"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Obvody ověřené multimetrem"/>
         <text name="rms_ws_inspection_dormant" text="Skryté vady"/>
         <text name="rms_ws_inspection_dormant_detail" text="Vadný díl, provizorní oprava"/>
         <text name="rms_ws_inspection_report" text="Zpráva"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Přehřívání baterie"/>
         <text name="rms_report_wear_lubrication" text="Opožděné mazání"/>
         <text name="rms_report_wear_pto_overload" text="Přetížení vývodového hřídele"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Úhel kloubového hřídele"/>
         <text name="rms_report_wear_harvest_overload" text="Přetížení sklizně"/>
         <text name="rms_report_wear_harvest_flow" text="Velký průtok zrna"/>
         <text name="rms_report_wear_harvest_straw" text="Přetížený drtič"/>
         <text name="rms_report_wear_harvest_stones" text="Kameny"/>
         <text name="rms_report_wear_harvest_rice" text="Sklizeň rýže"/>
         <text name="rms_report_wear_harvest_wet" text="Vlhká plodina"/>
+        <text name="rms_report_wear_header_starts" text="Spuštění adaptéru"/>
+        <text name="rms_report_wear_service_overdue" text="Interval údržby překročen"/>
+        <text name="rms_report_wear_engine_overload" text="Přetížení motoru"/>
+        <text name="rms_report_wear_cold_engine" text="Studený motor"/>
+        <text name="rms_report_wear_fluid_level" text="Nízká hladina kapaliny"/>
+        <text name="rms_report_wear_engine_overheat" text="Přehřívání motoru"/>
+        <text name="rms_report_wear_lugging" text="Podtáčení motoru"/>
+        <text name="rms_report_wear_wheel_slip" text="Prokluz kol"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Namáhání hnacího ústrojí"/>
+        <text name="rms_report_wear_cold_oil" text="Studený převodový olej"/>
+        <text name="rms_report_wear_transmission_overheat" text="Přehřívání převodovky"/>
+        <text name="rms_report_wear_wet_weather" text="Vlhké počasí"/>
+        <text name="rms_report_wear_cranking" text="Časté startování"/>
+        <text name="rms_report_wear_starter_heat" text="Přehřívání startéru"/>
+        <text name="rms_report_wear_steering" text="Otáčení kol na místě"/>
+        <text name="rms_report_wear_park_brake" text="Parkovací brzda"/>
+        <text name="rms_report_wear_low_fuel" text="Nízká zásoba paliva"/>
+        <text name="rms_report_wear_idle_deposit" text="Dlouhý volnoběh"/>
+        <text name="rms_report_wear_pto_engagement" text="Zapínání vývodového hřídele"/>
         <text name="rms_report_component_title" text="Součást"/>
         <text name="rms_report_system_condition_transmission" text="Převodovka"/>
         <text name="rms_report_system_condition_power" text="Aktuální výkon"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Omezený převodový poměr"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Nepravidelný přenos síly"/>
         <text name="rms_report_transmission_failed" text="Nefunkční"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Mazací lis"/>
         <text name="rms_grease_gun_no_vehicle" text="V dosahu mazání není žádné vozidlo"/>
         <text name="rms_grease_gun_function" text="Maže maznice strojů. Plní se kartuší s mazivem."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Motorový olej, pro stroje bez AdBlue a filtru pevných částic"/>
         <text name="rms_fluid_function_utto" text="Převodový a hydraulický olej pro ruční doplnění"/>
         <text name="rms_fluid_function_coolant" text="Chladicí kapalina pro ruční doplnění"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue do nádrže AdBlue strojů, které ji mají"/>
         <text name="rms_fluid_pour_action" text="Doplnit: %s"/>
         <text name="rms_fluid_level_done" text="Hladina doplněna"/>
         <text name="rms_fluid_container_empty" text="Prázdný kanystr"/>
         <text name="rms_fluid_drum_empty" text="Prázdný sud"/>
+        <text name="rms_fluid_tank_empty" text="Prázdná nádrž"/>
         <text name="rms_fluid_container_label" text="Kanystr"/>
         <text name="rms_fluid_drum_label" text="Sud"/>
+        <text name="rms_fluid_tank_label" text="Nádrž"/>
         <text name="rms_fluid_hand_take" text="Vzít k doplnění"/>
         <text name="rms_fluid_hand_carry" text="Nést kanystr"/>
         <text name="rms_drum_pump_name" text="Akumulátorové sudové čerpadlo"/>
-        <text name="rms_drum_pump_function" text="Nasazuje se na 200l sud a plní stroje výdejní pistolí"/>
+        <text name="rms_drum_pump_function" text="Nasazuje se na sud nebo nádrž a plní stroje výdejní pistolí"/>
         <text name="rms_drum_pump_mount" text="Nasadit na sud"/>
+        <text name="rms_drum_pump_mount_tank" text="Nasadit na nádrž"/>
         <text name="rms_drum_pump_take" text="Sejmout čerpadlo"/>
         <text name="rms_drum_pump_nozzle_take" text="Vzít pistoli"/>
         <text name="rms_drum_pump_nozzle_return" text="Zavěsit pistoli"/>
         <text name="rms_drum_pump_hose_range" text="Hadice čerpadla vám nedovolí jít dál.&#10;Pistole se zavěsí za %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Přisuňte sud blíž: hadice měří 4 m"/>
+        <text name="rms_drum_pump_tank_too_far" text="Přisuňte nádrž blíž: hadice měří 4 m"/>
         <text name="rms_drum_pump_required" text="Je potřeba sudové čerpadlo"/>
         <text name="rms_fluid_level_under_gauge" text="Pod stupnicí"/>
         <text name="rms_fluid_circuit_engineOil" text="Motorový olej"/>
         <text name="rms_fluid_circuit_coolant" text="Chladicí kapalina"/>
+        <text name="rms_fluid_circuit_adBlue" text="Nádrž AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Převodový olej"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulický olej"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Převodový a hydraulický olej"/>
         <text name="rms_fluid_hud_engineOil" text="Motorový olej"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Převod./hydr. olej"/>
         <text name="rms_fluid_hud_coolant" text="Chladicí kapalina"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Nekompatibilní kapalina"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení motoru a zvýšit jeho zahřívání. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení chladicího systému a zvýšit zahřívání motoru. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení hydrauliky, zvýšit její zahřívání a zpomalit ji. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Tento produkt není určen pro tento okruh. Znečistí směs a může až ztrojnásobit opotřebení převodovky a hydrauliky, zvýšit jejich zahřívání a zpomalit hydrauliku. Kontaminaci odstraní pouze úplná výměna kapaliny. Pokračovat?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Nevhodný motorový olej"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Tento motor používá AdBlue nebo má filtr pevných částic: jeho návod předepisuje olej určený pro ně. S tímto olejem přijde výměna oleje až dvakrát dříve. Filtr pevných částic se navíc zaplní popelem 1,5krát rychleji. Pokračovat?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Tento motor používá AdBlue nebo má filtr pevných částic: potřebuje olej určený pro ně. S tímto olejem přijde výměna oleje až dvakrát dříve. Filtr pevných částic se navíc zaplní popelem 1,5krát rychleji. Pokračovat?"/>
         <text name="rms_fluid_error_no_circuit" text="Toto vozidlo nevyžaduje doplnění žádné kapaliny"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="Toto vozidlo nemá nádrž AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Před přečerpáním kapaliny vypni motor"/>
         <text name="rms_fluid_error_vehicle_moving" text="Vozidlo musí stát"/>
         <text name="rms_fluid_error_busy" text="Tento okruh už plní jiná nádoba"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Mírně nízká"/>
         <text name="rms_inspection_status_slightly_dirty" text="Mírně zanesený"/>
         <text name="rms_inspection_status_grease_due" text="Namazat"/>
-        <text name="rms_inspection_status_slight_moisture" text="Lehká vlhkost"/>
-        <text name="rms_inspection_status_seepage" text="Průsak"/>
-        <text name="rms_inspection_status_severe_leak" text="Silný únik"/>
         <text name="rms_inspection_status_low" text="Nízká"/>
         <text name="rms_inspection_status_very_low" text="Velmi nízká"/>
         <text name="rms_inspection_status_critically_low" text="Nutné doplnění"/>
         <text name="rms_inspection_status_critically_clogged" text="Zcela ucpaný"/>
         <text name="rms_inspection_status_dirty" text="Zanesený"/>
         <text name="rms_inspection_status_grease_late" text="Po termínu"/>
-        <text name="rms_inspection_status_active_leak" text="Aktivní únik"/>
         <text name="rms_inspection_status_heavily_clogged" text="Silně zanesený"/>
         <text name="rms_inspection_status_not_required" text="Není vyžadováno"/>
         <text name="rms_inspection_status_change_overdue" text="Výměna po termínu"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Kontrola"/>
         <text name="rms_fleet_location" text="Poloha"/>
         <text name="rms_fleet_next_service" text="Příští údržba"/>
-        <text name="rms_fleet_remaining" text="Zbývá %s h"/>
-        <text name="rms_fleet_overdue" text="Zpoždění %s h"/>
         <text name="rms_fleet_overdue_label" text="Po termínu"/>
         <text name="rms_fleet_overdue_count" text="Po termínu: %d"/>
         <text name="rms_fleet_due_soon_label" text="Brzy"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Silné opotřebení"/>
         <text name="rms_fleet_part_failed" text="Porucha"/>
         <text name="rms_fleet_part_unmeasured" text="Bez měření"/>
+        <text name="rms_fleet_part_replaced" text="Součást vyměněna"/>
         <text name="rms_fleet_parts_reading" text="Měření součástí %s"/>
         <text name="rms_fleet_parts_need_complete" text="Měření součástí při příští úplné prohlídce"/>
         <text name="rms_fleet_greasing_done" text="Mazání provedeno"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Oprava"/>
         <text name="rms_sell_dialog_washing_penalty" text="Mytí"/>
         <text name="rms_sell_dialog_deposit_refund" text="Vrácená kauce"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Nízká hladina kapaliny"/>
-        <text name="rms_tutorial_fluid_level_message" text="Jedna z kapalin tohoto stroje klesla pod značku na ukazateli.&#10;&#10;Motorový olej ubývá s provozními hodinami a opotřebený motor ho spotřebuje mnohem více. Chladicí kapalina, převodový olej a hydraulický olej ubývají pouze kvůli úniku.&#10;&#10;Pod značkou stroj potřebuje pouze doplnit kapalinu a stále pracuje normálně. Čím níž hladina klesá, tím snáz čerpadlo nasává vzduch ve svahu: kontrolka tlaku oleje bliká a u převodovky nebo hydrauliky čerpadlo píská a hydraulické pohyby se zpomalují. Každá takto strávená minuta poškozuje hlavní ložiska klikového hřídele nebo čerpadlo: zastav a doplň hladinu. Stroj s nedostatkem chladicí kapaliny, převodového nebo hydraulického oleje se také přehřívá.&#10;&#10;Kup v obchodě kanystr s kompatibilním produktem, doprav jej ke stroji a doplň hladinu. Všechny produkty určené pro daný okruh mají stejný účinek; nesprávná kapalina znečistí pouze tento okruh. U prodejce jsou potřebné litry dodány a účtovány."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Vítejte v Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Vypnout rady"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Zapnout rady"/>
-        <text name="rms_tutorial_welcome_message" text="Tento mod zcela přepracovává systémy poškození a údržby vozidel ve hře. Přináší mnoho změn, proto se čas od času objeví rady výukového programu. Pomohou ti rychleji pochopit nové mechanismy, vyhnout se běžným chybám a zabránit poruchám strojů.&#10;&#10;Pokud chceš, můžeš rady výukového programu hned vypnout. Později je můžeš kdykoli znovu zapnout v parametrech modu v části Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Vlhké počasí"/>
-        <text name="rms_tutorial_wet_weather_message" text="Vlhkost škodí kabeláži a elektrickým zařízením. Opotřebení elektrického systému se mírně zvyšuje za deště, sněžení nebo krupobití, pokud stroj zůstane venku."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Prokluz kol"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Tvá kola silně prokluzují. Prokluz kol je jedním z nejničivějších faktorů pro převodovku a výrazně ti přiblíží příští návštěvu dílny."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Blížící se údržba"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s bude brzy potřebovat údržbu. V dílně zvolte doporučený balíček: pokrývá potřebné práce. Rozhoduje první dosažený limit provozních hodin nebo kalendáře, i při malém používání. Snadnost údržby vystihuje náročnost zásahů; běžná údržba je nadále možná v mobilní dílně."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Interval údržby překročen"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Interval údržby stroje %s je překročen.&#10;&#10;Co nejdříve se vydej do dílny a zvol „Údržba“. Další používání vozidla s opožděnou údržbou výrazně zvyšuje riziko několika poruch."/>
-        <text name="rms_tutorial_steering_title" text="Otáčení kol na místě"/>
-        <text name="rms_tutorial_steering_message" text="Raději se vyhýbej otáčení kol na místě. Silně to zatěžuje mechanismus řízení a součásti přední nápravy, čímž se zvyšuje opotřebení podvozku.&#10;&#10;Před zatočením se mírně rozjeď: kola se budou otáčet mnohem snadněji."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Chlazení a vzduchový filtr"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Chladič nebo vzduchový filtr je zanesený. Při pohledu na vozidlo podrž klávesu %s a zjisti, který z nich to je. Vyčisti jej ofukovačem stlačeného vzduchu. Pokud už filtr nelze profouknout, dílna jej vymění od údržby %s."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Nutné mazání"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Stroj %s má maznice k namazání.&#10;&#10;V RMS má každý stroj maznice podle svého návodu. Znovu se mažou podle dnů, kdy stroj pracuje: každý pracovní den, nebo jednou za několik pracovních dnů ty, které návod maže méně často. Opožděné mazání urychluje opotřebení podvozku.&#10;&#10;Kup si v obchodě mazací lis a kartuše. S lisem v ruce se postav před kartuši, aby se vložila, a potom zamiř na stroj: každé kliknutí namaže jednu maznici a podržením tlačítka pokračuješ na další.&#10;&#10;Zbývající maznice uvidíš, když při pohledu na vozidlo podržíš klávesu %s."/>
-        <text name="rms_tutorial_needs_repair_title" text="Zjištěná porucha"/>
-        <text name="rms_tutorial_needs_repair_message" text="Stroj %s má problém. Jedna z jeho součástí možná selhala.&#10;&#10;Zajeď do dílny: prohlídka, nebo údržba, pokud je na řadě, poruchu zjistí. Neotálej: porucha se může dále zhoršovat a spolu s ní rostou i náklady na opravu.&#10;&#10;Jakmile je porucha zjištěna, nech ji opravit v dílně."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Nutná generální oprava"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="Stroj %s už ukazuje svůj věk. Je čas zvážit jeho výměnu nebo generální opravu. Je to dlouhý a nákladný úkon, ale jedině tak lze stroji vrátit původní stav.&#10;&#10;Životnost lze nastavit v parametrech modu: čím je vyšší, tím pomaleji se tvá vozidla opotřebovávají."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Zvýšené riziko poruchy"/>
-        <text name="rms_tutorial_needs_preventive_message" text="U motoru, palivové soustavy nebo chladicího systému stroje %s je zvýšené riziko poruchy.&#10;&#10;Údržba %s: seřídí ventily a zkontroluje vstřikovače a termostat, čímž toto riziko sníží."/>
-        <text name="rms_tutorial_age_degradation_title" text="Zhoršování stářím"/>
-        <text name="rms_tutorial_age_degradation_message" text="V RMS vozidla s věkem postupně ztrácejí část své původní výkonnosti.&#10;&#10;Přibližně po první třetině životnosti opotřebení související s věkem mírně snižuje některé důležité vlastnosti, například výkon nebo účinnost brzd. Účinek potom zesiluje a na konci životnosti je jasně patrný.&#10;&#10;Tuto degradaci lze vypnout v parametrech modu."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Nekvalitní spotřební materiál"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Stroj %s dostal při poslední údržbě vadný filtr. To se stává u levných variant.&#10;&#10;Tento filtr propouští nečistoty: okruh, který chrání, se až do výměny filtru opotřebovává rychleji. Nová údržba ho vymění. Pouze úplná prohlídka ho určí."/>
-        <text name="rms_tutorial_poor_parts_title" text="Nekvalitní díly"/>
-        <text name="rms_tutorial_poor_parts_message" text="Stroj %s dostal při opravě nekvalitní díl. Porucha se pravděpodobně brzy vrátí.&#10;&#10;Můžeš počkat, až se vrátí, nebo zahájit úplnou prohlídku, která spolehlivě určí příslušný díl."/>
-        <text name="rms_tutorial_park_brake_title" text="Parkovací brzda"/>
-        <text name="rms_tutorial_park_brake_message" text="Parkovací brzda je zatažená. Sama se zatáhne, jakmile opustíš zastavený stroj, a uvolní se, jakmile znovu přidáš plyn. Zatáhne se také, když vypneš motor, nebo po 45 sekundách stání.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Parkovací brzda je zatažená. Zatahuješ a uvolňuješ ji příslušnou klávesou: pokud přidáš plyn se zataženou brzdou, stroj pracuje proti ní a jeho brzdy se opotřebovávají.&#10;&#10;Ve svahu právě ona brání stroji, aby se samovolně rozjel: pokud stroj opustíš, aniž ji zatáhneš, může se rozjet."/>
-        <text name="rms_tutorial_preheat_title" text="Předehřev vznětového motoru"/>
-        <text name="rms_tutorial_preheat_message" text="U studeného vznětového motoru jedno stisknutí ovladače spuštění zapne zapalování a automaticky zahájí cyklus předehřevu. Kontrolky na palubní desce se krátce rozsvítí a potom zůstane kontrolka předehřevu svítit, dokud není motor připraven. Povel neopakuj: startér se zapne automaticky, jakmile kontrolka zhasne."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Zapínání vývodového hřídele"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Vývodový hřídel zapínej při volnoběhu a teprve potom zvyš otáčky: zapnutí ve vysokých otáčkách je ráz pro celé hnací ústrojí, tím silnější s těžkým nářadím. Každé zapnutí navíc opotřebovává jeho spojku."/>
-        <text name="rms_tutorial_pto_raised_title" text="Vývodový hřídel a zvednuté nářadí"/>
-        <text name="rms_tutorial_pto_raised_message" text="Chod vývodového hřídele se zvednutým nářadím nutí kloubové hřídele pracovat pod velkým úhlem a rychle je opotřebovává. Vypni vývodový hřídel dřív, než nářadí zvedneš k přepravě."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Volnoběh a odstavení"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Opotřebení je mnohem nižší, když stroj běží, ale aktivně nepracuje. Pokud je motor vypnutý, opotřebení je minimální, a pokud je stroj zaparkován pod střechou, mizí úplně."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Dlouhý volnoběh"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Stroj zřejmě běžel příliš dlouho na volnoběh. Dlouhá období volnoběhu nejen plýtvají palivem, ale časem také podporují tvorbu usazenin v palivovém systému a zhoršují celkový stav motoru.&#10;&#10;Pokud stroj právě nepotřebuješ, raději motor vypni."/>
-        <text name="rms_tutorial_hot_weather_title" text="Horké počasí"/>
-        <text name="rms_tutorial_hot_weather_message" text="Dnes je velmi horko. Za tohoto počasí sleduj čistotu chladiče a nepřetěžuj motor, jinak je přehřátí jen otázkou času.&#10;&#10;Stav chladiče můžeš zkontrolovat: při pohledu na stroj podrž klávesu %s. K čištění použij ofukovací pistoli."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Příliš těžký přívěs"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Tažený náklad může být pro toto vozidlo příliš těžký. Můžeš pokračovat v jízdě, ale převodovka a hnací ústrojí budou více namáhány.&#10;&#10;RMS používá dvě hodnoty: traktor potřebuje alespoň 10 koní na tunu tažené hmotnosti, zatímco nákladní vůz alespoň 6 koní na tunu celkové hmotnosti soupravy. Pod příslušnou hodnotou a při vysokém zatížení motoru se opotřebení převodovky zvyšuje."/>
-        <text name="rms_tutorial_hard_start_title" text="Obtížné startování"/>
-        <text name="rms_tutorial_hard_start_message" text="Motor stroje %s se obtížně spouští. Příčinou může být slabá baterie, mráz, mechanická porucha nebo opotřebovaný startér.&#10;&#10;Elektrický systém je při spouštění silně namáhán vysokými nárazovými proudy."/>
-        <text name="rms_tutorial_low_fuel_title" text="Nízká zásoba paliva"/>
-        <text name="rms_tutorial_low_fuel_message" text="Nádrž se blíží k rezervě. Čím méně paliva zbývá, tím více se palivové čerpadlo musí namáhat, aby ho nasálo, a ze dna nádrže se do filtru dostává voda a usazeniny, takže se rychleji zanáší.&#10;&#10;Nejlépe je dotankovat na konci dne: v plné nádrži vzniká méně kondenzátu."/>
-        <text name="rms_tutorial_lugging_title" text="Podtáčení motoru"/>
-        <text name="rms_tutorial_lugging_message" text="Motor, a zejména převodovka, trpí při podtáčení, tedy při nízkých otáčkách pod vysokým zatížením. Připojené nářadí je možná pro stroj příliš těžké, nebo je u manuální převodovky zařazen nesprávný rychlostní stupeň."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Přehřívání motoru"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Motor se začíná přehřívat. Příčinou může být jeden nebo více faktorů: motor je silně zatížený, chladič je zanesený, počasí je horké nebo chladicí systém vozidla vykazuje vadu.&#10;&#10;Buď ve střehu: přehřívání je jedním z nejničivějších faktorů pro stroj. Neškodí pouze motoru: chladicí systém pracuje na hranici možností a teplo v motorovém prostoru urychluje degradaci kabeláže a elektrických součástí."/>
-        <text name="rms_tutorial_engine_overload_title" text="Přetížení motoru"/>
-        <text name="rms_tutorial_engine_overload_message" text="Motor je vystaven velmi vysokému namáhání. Úkol je možná pro tento stroj příliš náročný a vyžaduje výkonnější vozidlo, nebo stačí zpomalit a snížit zatížení.&#10;&#10;V každém případě se při tomto namáhání opotřebení výrazně zvyšuje."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Číst kouř"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Kouř vycházející z tohoto stroje není dekorativní: jeho barva slouží k diagnostice.&#10;&#10;Černý kouř znamená, že motor dostává více paliva než vzduchu: při prudké akceleraci dříve, než turbodmychadlo získá otáčky, když motor pracuje namáhavě v nízkých otáčkách, při přetížení, zaneseném vzduchovém filtru, opotřebeném turbodmychadle nebo vstřikování. Modrý kouř znamená, že opotřebený motor spaluje vlastní olej. Bílý kouř znamená, že palivo odchází nespálené.&#10;&#10;Množství kouře se zvyšuje s prací motoru. Starší stroje kouří mnohem více než moderní, které téměř nekouří, dokud se něco skutečně neporouchá."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="Přehřívání CVT"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="Převodovka CVT se začíná přehřívat. Příčinou může být nadměrné zatížení, zanesený chladič, velmi horké počasí nebo vada chladicího okruhu převodovky. Stačí k tomu příliš těžký pluh nebo přetížený přívěs.&#10;&#10;Buď pozorný: přehřívání je jedním z nejničivějších faktorů pro převodovku CVT."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Namáhání podvozku"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Rychlá jízda v nerovném terénu rychle opotřebovává podvozek stroje %s. Tyto otřesy poškozují také kabeláž s jejími konektory a hydrauliku, když je zvednuté těžké nářadí.&#10;&#10;Na nerovném povrchu zpomal."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Prudký náraz"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Podvozek právě dostal prudký náraz. Překážka, která stroj prudce zastaví nebo zbrzdí, okamžitě opotřebí podvozek a přiblíží jeho další poruchu, nejčastěji řízení nebo ložisek.&#10;&#10;Před překážkami zpomal."/>
-        <text name="rms_tutorial_cranking_title" text="Časté startování"/>
-        <text name="rms_tutorial_cranking_message" text="Motor je spouštěn příliš často. Při každém spuštění prochází elektrickým systémem velmi vysoký proud, což urychluje opotřebení kabeláže, startéru a dalších elektrických součástí.&#10;&#10;Při krátkých přerušeních motor nevypínej."/>
-        <text name="rms_tutorial_critical_failure_title" text="Kritická porucha"/>
-        <text name="rms_tutorial_critical_failure_message" text="Stroj %s se již nemůže pohybovat vlastní silou.&#10;&#10;Mobilní dílna umožňuje provizorní opravu, která stačí k tomu, aby stroj dojel do dílny vlastní silou. Jinak bude nutné zajistit jeho odvoz jiným způsobem."/>
-        <text name="rms_tutorial_cold_engine_title" text="Studený motor"/>
-        <text name="rms_tutorial_cold_engine_message" text="Před vysokým zatížením motor postupně zahřej. Používej mírný plyn a otáčky, dokud motor nedosáhne provozní teploty."/>
-        <text name="rms_tutorial_cold_oil_title" text="Studený převodový olej"/>
-        <text name="rms_tutorial_cold_oil_message" text="Převodový a hydraulický olej se zahřívají mnohem pomaleji než motor. Dokud jsou oleje studené, vyhni se těžké práci; zahřívej je postupně klidnou jízdou a lehkým používáním hydrauliky."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Přehřívání převodovky"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Převodový olej se začíná přehřívat. Příčinou může být příliš vysoké zatížení, zanesený chladič, velmi horké počasí nebo vada chlazení převodovky.&#10;&#10;Převodový olej se zahřívá v každém stroji, nejen v převodovce CVT. Příliš horký olej opotřebovává převodovku a ničí její těsnění."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Varování před přetížením"/>
-        <text name="rms_tutorial_overload_indicator_message" text="Stroj %s je pod velkým zatížením. Upozorňuje tě na to kontrolka, která se právě rozsvítila na palubní desce.&#10;&#10;Stroj možná nemá dostatek výkonu pro aktuální úkol. Zkus snížit zatížení: omez rychlost pomocí tempomatu nebo mírně uber plyn, místo abys jel na plný výkon."/>
-        <text name="rms_tutorial_battery_low_title" text="Slabá baterie"/>
-        <text name="rms_tutorial_battery_low_message" text="Baterie tohoto stroje se brzy zcela vybije. To se může stát po dlouhém odstavení, při silném mrazu nebo kvůli vadě elektrického systému.&#10;&#10;Při nízkém nabití je spuštění motoru obtížné a později nemožné. Motor pak můžeš spustit z jiného vozidla pomocí startovacích kabelů. Před dlouhým odstavením, nebo když se baterie vybíjí sama, ji odpoj odpojovačem baterie, pěšky před strojem."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Namáhání hnacího ústrojí"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Zatáčíš na přilnavém povrchu se zapnutou uzávěrkou diferenciálu. V zatáčce urazí vnitřní a vnější kola různé vzdálenosti, ale uzávěrka je nutí otáčet se stejnou rychlostí: hnací ústrojí se namáhá a jeho opotřebení se zrychluje. Před zatáčením uzávěrku uvolni."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Režimy pohonu a uzávěrka diferenciálu"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Tento stroj ti umožňuje zvolit pohon: 4x2, 4x4 nebo AUTO, který připojí přední nápravu, jakmile kola začnou prokluzovat.&#10;&#10;Uzávěrka diferenciálu pomáhá získat přilnavost tam, kde už chybí, ale zatáčení na přilnavém povrchu s ní silně namáhá hnací ústrojí: vnitřní a vnější kola se nemohou otáčet stejnou rychlostí. Před zatáčením ji uvolni."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="S Realistic Mechanical Systems se tvoje stroje opotřebovávají a porouchávají jako skutečné. Ke hraní bez neustálých poruch stačí tři pravidla:&#10;&#10;1. Prováděj údržbu včas. Mechanický přehled v herním menu ukazuje další údržbu každého stroje.&#10;2. Připravuj své stroje každý den. Podržením %s u stroje ho zkontroluješ: hladiny kapalin, chladič, vzduchový filtr, mazání. Chladič a vzduchový filtr čisti ofukovací pistolí a stroje promaž mazacím lisem. Také tvoje nářadí a přívěsy je třeba mazat: Mechanický přehled ukazuje ty, na které přišla řada. Ofukovací pistoli, mazací lis a kartuše s mazivem najdeš v obchodě v kategorii Údržba.&#10;3. Šetři své stroje: přetížení, přehřátí, práce se studeným motorem a prokluz kol je opotřebovávají.&#10;&#10;Pokud je pro tebe hra příliš těžká, prodluž Životnost vozidla a Rozestupy údržby na kartě NASTAVENÍ RMS v Mechanickém přehledu."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Nabíječka Telwin na vozíku, 150 A při 12 V, 80 A při 24 V. Připoj ji poblíž vozidla pro dobití baterie proudem, který přijímá, nebo pro pomoc při startování (START, 200 A při 12 V). Nabíjení sleduje rychlost času ve hře."/>
         <text name="rms_diagnostic_configuration" text="Diagnostické zařízení"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Doba opravy:"/>
         <text name="rms_diagnostic_where_label" text="Kde opravit:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobilní nebo vlastní dílna s připojeným diagnostickým zařízením, nebo prodejce"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Vlastní dílna nebo prodejce"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Prodejce"/>
         <text name="rms_diagnostic_note_inspection" text="Tento kód říká, co stroj měří, ne který díl je vadný: prohlídka ho najde."/>
+        <text name="rms_diagnostic_note_adblue" text="Tento kód hlásí nízkou hladinu v nádrži AdBlue: doplnění AdBlue ho vymaže."/>
         <text name="rms_diagnostic_note_uncoded" text="Prohlídka stroje najde dotčený díl."/>
         <text name="rms_diagnostic_uncoded" text="Kontrolka svítí bez uloženého kódu. Žádný snímač dotčený díl nehlídá."/>
         <text name="rms_diagnostic_uncoded_title" text="Kontrolka bez kódu"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Hladina chladicí kapaliny"/>
         <text name="rms_diagnostic_spn_1639" text="Otáčky ventilátoru"/>
         <text name="rms_diagnostic_spn_168" text="Napětí baterie"/>
-        <text name="rms_diagnostic_spn_677" text="Relé startéru"/>
+        <text name="rms_diagnostic_spn_676" text="Relé žhavení"/>
         <text name="rms_diagnostic_spn_167" text="Nabíjecí napětí"/>
         <text name="rms_diagnostic_spn_157" text="Tlak ve vstřikovacím potrubí"/>
+        <text name="rms_diagnostic_spn_1761" text="Hladina v nádrži AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Čerpadlo AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Dávkovací vstřikovač AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Snímač NOx před katalyzátorem"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Vadné zařízení nebo součást"/>
         <text name="rms_diagnostic_fmi_14" text="Zvláštní pokyny"/>
         <text name="rms_diagnostic_fmi_16" text="Data nad normálním rozsahem (středně závažná úroveň)"/>
+        <text name="rms_diagnostic_fmi_17" text="Data pod normálním rozsahem (nejméně závažná úroveň)"/>
         <text name="rms_diagnostic_fmi_18" text="Data pod normálním rozsahem (středně závažná úroveň)"/>
         <text name="rms_diagnostic_fmi_31" text="Stav nastal"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="vadná součást"/>
         <text name="rms_dashboard_fmi_14" text="nutný zásah"/>
         <text name="rms_dashboard_fmi_16" text="vysoká hodnota"/>
+        <text name="rms_dashboard_fmi_17" text="mírně nízká hodnota"/>
         <text name="rms_dashboard_fmi_18" text="nízká hodnota"/>
         <text name="rms_dashboard_fmi_31" text="závada přítomna"/>
         <text name="rms_diagnostic_log_title" text="Načtení kódů"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Pomoc při startování (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Dobít baterii"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Odpojit baterii"/>
         <text name="rms_battery_isolator_restore" text="Připojit baterii"/>
         <text name="rms_battery_isolator_open" text="Baterie je odpojena. Připoj ji odpojovačem baterie, pěšky před vozidlem."/>

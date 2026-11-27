@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="永久"/>
         <text name="rms_breakdowns_severity_reduce_power" text="功率损失"/>
-        <text name="rms_breakdowns_severity_shutdown" text="停止运行"/>
         <text name="rms_breakdowns_severity_minor" text="轻微"/>
         <text name="rms_breakdowns_severity_moderate" text="中等"/>
         <text name="rms_breakdowns_severity_major" text="严重"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="过热保护：功率降低"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="过热保护进一步加强。发动机只能输出一半功率。"/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="过热保护：功率减半"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="过热保护已达到最大强度。发动机只剩一小部分功率。"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="过热保护：功率大幅降低"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="为防止损坏，发动机已关闭。请等待发动机冷却后再重新启动。"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="过热保护：发动机已关闭"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="机油泵发生轻微故障。机油压力降低，发动机扭矩略有下降，发动机温度升高，并可能出现机械撞击声。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="机油泵发生中度故障。机油压力不足，发动机扭矩明显下降，发动机温度升高，并能清楚听到机械撞击声。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="机油泵发生严重故障。机油压力降至不安全水平，发动机扭矩大幅下降，很可能过热，机械撞击严重，并可能停止运转。"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="机油泵发生极重度失效。机油循环不足以保证发动机安全运行，无法启动或继续运行。"/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="发动机已抱死，无法继续转动。"/>
         <text name="rms_breakdowns_engine_stalled_message" text="发动机停止运转"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="ECU发生轻微故障。发动机功率略有降低。"/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="ECU发生中度故障。功率明显下降，燃油消耗增加。"/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="差速锁控制装置失效。差速锁无法解除，机器转弯时转向受阻。"/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="传动带和无级变速器"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="传动轴承和齿轮箱"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="割台驱动皮带"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="割台安全离合器"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="割台传动轴和十字轴"/>
         <text name="rms_breakdowns_part_feeder_chain" text="过桥输送链"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="喂入加速器"/>
         <text name="rms_breakdowns_part_threshing_bars" text="纹杆"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="部件传动轴承中度磨损。轰鸣清晰可闻，轴承发热。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="部件传动轴承严重磨损。轰鸣加剧，轴出现间隙。"/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="部件传动轴承发生极重度失效。一个轴承卡死：无法收获。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="割台驱动皮带开始磨损。割台运转时皮带发出尖叫并略有打滑。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="割台驱动皮带中度磨损。尖叫声更大，转速报警有时会停止收获。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="割台驱动皮带严重磨损。尖叫声很大，喂入量下降，停机反复出现。"/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="割台驱动皮带发生极重度失效。皮带已断裂：割台不再被驱动，无法收获。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="割台安全离合器开始磨损。负载时略有打滑。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="割台安全离合器中度磨损。正常负载下也会打滑，转速报警有时会停止收获。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="割台安全离合器严重磨损。打滑并发热，喂入量下降，停机反复出现。"/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="割台安全离合器发生极重度失效。它已无法传送任何动力：割台停转，无法收获。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="割台传动轴十字轴开始磨损。割台运转时出现轻微轰鸣。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="割台传动轴十字轴中度磨损。轰鸣声清晰可闻。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="割台传动轴十字轴严重磨损。轰鸣加剧，十字轴出现间隙。"/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="割台传动轴发生极重度失效。一个十字轴已断裂：割台不再被驱动，无法收获。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="过桥输送链开始磨损。链条伸长，喂入变得不均匀。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="过桥输送链中度磨损。过桥入口处出现堵塞。"/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="过桥输送链严重磨损。链条在链轮上跳齿，堵塞反复发生。"/>

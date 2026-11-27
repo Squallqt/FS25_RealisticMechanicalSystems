@@ -1,11 +1,14 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Traction battery temperature and charge limits.
-RMS_ElectricDrive = RMS_ElectricDrive or {}
+---Traction battery temperature and charge limits
+RMS_ElectricDrive = {}
 
 local COLD_BATTERY_ID = "COLD_TRACTION_BATTERY"
 
 ---Counts the thresholds a temperature has gone past, in the order they are met
+-- @param float temperature temperature (deg C)
+-- @param table thresholds thresholds (deg C)
+-- @return integer stage thresholds gone past
 function RMS_ElectricDrive.getTemperatureStage(temperature, thresholds)
     local isRising = thresholds[#thresholds] > thresholds[1]
     local stage = 0
@@ -18,13 +21,17 @@ function RMS_ElectricDrive.getTemperatureStage(temperature, thresholds)
 end
 
 ---Returns the share of its original capacity a traction battery holds
+-- @param float condition condition of the battery, 0 to 1
 -- @param float lostToCells share failed cells take on top of the wear, 0 or negative
+-- @return float share share, to the thousandth
 function RMS_ElectricDrive.getCapacityShare(condition, lostToCells)
     local share = (1 - (1 - condition) * RMS_Config.ELECTRIC_DRIVE.BATTERY_CAPACITY_FADE) * (1 + lostToCells)
     return math.floor(share * 1000 + 0.5) / 1000
 end
 
 ---Returns the capacity share the traction battery of a vehicle still holds
+-- @param table vehicle vehicle
+-- @return float share share, to the thousandth
 function RMS_ElectricDrive.getCapacityFactor(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local cellFault = spec.activeEffects.TRACTION_BATTERY_CAPACITY_MODIFIER
@@ -32,6 +39,7 @@ function RMS_ElectricDrive.getCapacityFactor(vehicle)
 end
 
 ---Gives the traction battery the capacity its wear leaves it
+-- @param table vehicle vehicle
 function RMS_ElectricDrive.applyBatteryCapacity(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local fillUnitIndex = vehicle:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE)
@@ -48,12 +56,16 @@ function RMS_ElectricDrive.applyBatteryCapacity(vehicle)
 end
 
 ---Records the original capacity of the traction battery, then applies its wear
+-- @param table vehicle vehicle
 function RMS_ElectricDrive.initBatteryCapacity(vehicle)
     local fillUnitIndex = vehicle:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE)
     vehicle.spec_RealisticMechanicalSystems.tractionBatteryNominalCapacity = vehicle:getFillUnitCapacity(fillUnitIndex)
     RMS_ElectricDrive.applyBatteryCapacity(vehicle)
 end
 
+---Returns the share of the charge power a battery accepts at a temperature
+-- @param float temperature temperature (deg C)
+-- @return float share share accepted
 local function getColdChargeAcceptance(temperature)
     local curve = RMS_Config.ELECTRIC_DRIVE.CHARGE_ACCEPTANCE_CURVE
     if temperature <= curve[1][1] then
@@ -69,6 +81,9 @@ local function getColdChargeAcceptance(temperature)
 end
 
 ---Returns the share of a station's power a fill unit takes
+-- @param table object object charged
+-- @param integer fillUnitIndex fill unit charged
+-- @return float share share accepted
 function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     local spec = object.spec_RealisticMechanicalSystems
     if spec == nil or spec.isExcludedVehicle or not spec.isElectricVehicle
@@ -79,18 +94,28 @@ function RMS_ElectricDrive.getChargeAcceptance(object, fillUnitIndex)
     spec.tractionBatteryChargeTime = g_currentMission.time
 
     local chargerFault = spec.activeEffects.CHARGE_ACCEPTANCE_MODIFIER
-    local chargerShare = chargerFault ~= nil and math.max(1 + chargerFault.value, 0) or 1
+    local chargerShare = chargerFault ~= nil and 1 + chargerFault.value or 1
     return getColdChargeAcceptance(spec.tractionBatteryTempC) * chargerShare
 end
 
+---Tells whether a value is a finite number
+-- @param any value value
+-- @return boolean isFinite true for a finite number
 local function isFiniteChargeValue(value)
     return type(value) == "number" and value == value and value > -math.huge and value < math.huge
 end
 
+---Returns the level, capacity and elapsed time of a charge to observe, nil when none
+-- @param table trigger load trigger
+-- @param table object object charged
+-- @param float dt time since the last frame (ms)
+-- @return float? level level before the step
+-- @return float? capacity capacity
+-- @return float? elapsedMS game time of the step (ms)
 local function getChargeObservationInputs(trigger, object, dt)
     local spec = object.spec_RealisticMechanicalSystems
     local fillUnitIndex = trigger.fillUnitIndex
-    if not object.isServer or spec == nil or spec.isExcludedVehicle or not spec.isElectricVehicle
+    if spec == nil or spec.isExcludedVehicle or not spec.isElectricVehicle
             or trigger.selectedFillType ~= FillType.ELECTRICCHARGE
             or fillUnitIndex ~= object:getConsumerFillUnitIndex(FillType.ELECTRICCHARGE) then
         return nil
@@ -98,8 +123,7 @@ local function getChargeObservationInputs(trigger, object, dt)
 
     local capacity = object:getFillUnitCapacity(fillUnitIndex)
     local level = object:getFillUnitFillLevel(fillUnitIndex)
-    if not isFiniteChargeValue(capacity) or capacity <= 0 or not isFiniteChargeValue(level)
-            or not isFiniteChargeValue(dt) or dt < 0 then
+    if not isFiniteChargeValue(capacity) or capacity <= 0 then
         return nil
     end
 
@@ -107,12 +131,15 @@ local function getChargeObservationInputs(trigger, object, dt)
     if trigger.useTimeScale then
         elapsedMS = elapsedMS * g_currentMission:getEffectiveTimeScale()
     end
-    if not isFiniteChargeValue(elapsedMS) or elapsedMS < 0 then
-        return nil
-    end
     return level, capacity, elapsedMS
 end
 
+---Adds the energy a charge step brought to the traction battery
+-- @param table object object charged
+-- @param integer fillUnitIndex fill unit charged
+-- @param float levelBefore level before the step
+-- @param float capacity capacity
+-- @param float elapsedMS game time of the step (ms)
 local function recordChargeObservation(object, fillUnitIndex, levelBefore, capacity, elapsedMS)
     local spec = object.spec_RealisticMechanicalSystems
     local observation = spec.tractionBatteryChargeObservation
@@ -123,7 +150,7 @@ local function recordChargeObservation(object, fillUnitIndex, levelBefore, capac
     observation.elapsedMS = observation.elapsedMS + elapsedMS
 
     local levelAfter = object:getFillUnitFillLevel(fillUnitIndex)
-    if isFiniteChargeValue(levelAfter) and levelAfter > levelBefore then
+    if levelAfter > levelBefore then
         local accepted = levelAfter - levelBefore
         observation.energy = observation.energy + accepted
         observation.capacityShare = observation.capacityShare + accepted / capacity
@@ -131,9 +158,13 @@ local function recordChargeObservation(object, fillUnitIndex, levelBefore, capac
 end
 
 ---Consumes the transient charging observations
+-- @param table vehicle vehicle
+-- @return float energy energy taken
+-- @return float capacityShare share of the capacity taken
+-- @return float elapsedMS game time observed (ms)
 function RMS_ElectricDrive.consumeChargeObservation(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local observation = spec ~= nil and spec.tractionBatteryChargeObservation or nil
+    local observation = spec.tractionBatteryChargeObservation
     if observation == nil then
         return 0, 0, 0
     end
@@ -142,6 +173,10 @@ function RMS_ElectricDrive.consumeChargeObservation(vehicle)
 end
 
 ---Runs a load trigger, slicing the energy a slowed traction battery takes
+-- @param table trigger load trigger
+-- @param function superFunc original function
+-- @param float dt time since the last frame (ms)
+-- @return any ... what the game's function returns
 function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
     local object = trigger.currentFillableObject
     if not trigger.isServer or not trigger.isLoading or object == nil then
@@ -150,6 +185,9 @@ function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
 
     local fillUnitIndex = trigger.fillUnitIndex
     local levelBefore, capacity, elapsedMS = getChargeObservationInputs(trigger, object, dt)
+    ---Records the charge step, passing on what it is given
+    -- @param any ... values passed on
+    -- @return any ... the values given
     local function finishCharge(...)
         if levelBefore ~= nil then
             recordChargeObservation(object, fillUnitIndex, levelBefore, capacity, elapsedMS)
@@ -185,39 +223,36 @@ function RMS_ElectricDrive.updateLoadTrigger(trigger, superFunc, dt)
 end
 
 ---Tells whether the traction battery is taking charge from a station
+-- @param table vehicle vehicle
+-- @return boolean isCharging true while it charges
 function RMS_ElectricDrive.getIsCharging(vehicle)
     local chargeTime = vehicle.spec_RealisticMechanicalSystems.tractionBatteryChargeTime
     return chargeTime ~= nil and g_currentMission.time - chargeTime < 1000
 end
 
 ---Advances the traction battery through the common role kernel
--- @param float? dtBatteryMS battery interval (ms), defaults to operating dt
+-- @param table vehicle vehicle
+-- @param float dtOperatingMS operating interval (ms)
+-- @param float ambientC ambient temperature (deg C)
+-- @param float dtBatteryMS battery interval (ms)
+-- @param float ambientPrev ambient temperature at the previous step (deg C)
+-- @param table inputs native thermal inputs
 function RMS_ElectricDrive.updateBatteryTemperature(vehicle, dtOperatingMS, ambientC, dtBatteryMS, ambientPrev, inputs)
     local spec = vehicle.spec_RealisticMechanicalSystems
-    local operating = RealisticMechanicalSystems.sanitizeNumber(dtOperatingMS, 0, 0)
-    local elapsed = dtBatteryMS ~= nil and RealisticMechanicalSystems.sanitizeNumber(dtBatteryMS, 0, 0) or operating
-    if elapsed <= 0 then return end
-    inputs = inputs or RMS_Thermal.getNativeThermalInputs(vehicle, vehicle:getIsMotorStarted())
+    if dtBatteryMS <= 0 then return end
     local _, chargedShare, chargingMS = RMS_ElectricDrive.consumeChargeObservation(vehicle)
-    local temperature = spec.tractionBatteryTempC
-    if not isFiniteChargeValue(temperature) or temperature == -99 then
-        temperature = ambientC
-    end
-    local workShare = inputs.motorStarted and math.clamp(operating / elapsed, 0, 1) or 0
-    local nextTemperature, values = RMS_Thermal.advanceRole(vehicle, "battery", temperature, elapsed,
-        ambientPrev or ambientC, ambientC, inputs, {
+    local workShare = inputs.motorStarted and dtOperatingMS / dtBatteryMS or 0
+    local nextTemperature = RMS_Thermal.advanceRole(vehicle, "battery", spec.tractionBatteryTempC, dtBatteryMS,
+        ambientPrev, ambientC, inputs, {
             workShare = workShare, chargeCapacityShare = chargedShare,
             forcedActive = inputs.motorStarted or chargingMS > 0 or RMS_ElectricDrive.getIsCharging(vehicle),
             fluidKey = "coolantLevel"
         })
     spec.tractionBatteryTempC = nextTemperature
-    values.acceptedChargeCapacityShare = chargedShare
-    values.chargingElapsedMS = chargingMS
-    values.workShare = workShare
-    spec.tractionBatteryHeatBalance = values
 end
 
 ---Keeps the cold battery state in step with its temperature
+-- @param table vehicle vehicle
 function RMS_ElectricDrive.syncColdBattery(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     if not vehicle.isServer then

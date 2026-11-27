@@ -3,7 +3,6 @@
         <!-- Breakdowns -->
         <text name="rms_breakdowns_severity_permanent" text="Permanent"/>
         <text name="rms_breakdowns_severity_reduce_power" text="Power loss"/>
-        <text name="rms_breakdowns_severity_shutdown" text="Out of service"/>
         <text name="rms_breakdowns_severity_minor" text="Minor"/>
         <text name="rms_breakdowns_severity_moderate" text="Moderate"/>
         <text name="rms_breakdowns_severity_major" text="Major"/>
@@ -263,15 +262,10 @@
         <text name="rms_breakdowns_overheat_protection_stage1_message" text="Overheat protection: power reduced"/>
         <text name="rms_breakdowns_overheat_protection_stage2_description" text="Overheat protection is tightening. The engine delivers only half its power."/>
         <text name="rms_breakdowns_overheat_protection_stage2_message" text="Overheat protection: power halved"/>
-        <text name="rms_breakdowns_overheat_protection_stage3_description" text="Overheat protection is at its maximum. Only a fraction of engine power remains."/>
-        <text name="rms_breakdowns_overheat_protection_stage3_message" text="Overheat protection: power heavily reduced"/>
-        <text name="rms_breakdowns_overheat_protection_stage4_description" text="The engine has been shut down to prevent damage. Let it cool before restarting."/>
-        <text name="rms_breakdowns_overheat_protection_stage4_message" text="Overheat protection: engine shut down"/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage1_description" text="Light oil pump malfunction. Oil pressure is reduced, engine torque drops slightly, engine temperature rises and mechanical knocking may appear."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage2_description" text="Moderate oil pump malfunction. Oil pressure is insufficient, engine torque is noticeably reduced, engine temperature is increased, and mechanical knocking is clearly audible."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage3_description" text="Severe oil pump malfunction. Oil pressure is critically low, engine torque is heavily reduced, engine overheating is likely, mechanical knocking is severe, and engine stalls may occur."/>
         <text name="rms_breakdowns_oil_pump_malfunction_stage4_description" text="Critical oil pump failure. Oil circulation is insufficient for safe engine operation and engine start or further operation is not possible."/>
-        <text name="rms_breakdowns_engine_jam_stage1_description" text="The engine has jammed and can no longer turn."/>
         <text name="rms_breakdowns_engine_stalled_message" text="Engine stalled"/>
         <text name="rms_breakdowns_ecu_malfunction_stage1_description" text="Light ECU malfunction. Slightly reduced engine power."/>
         <text name="rms_breakdowns_ecu_malfunction_stage2_description" text="Moderate ECU malfunction. Noticeable power loss and increased fuel consumption."/>
@@ -785,6 +779,9 @@
         <text name="rms_breakdowns_diff_lock_control_failure_branch2_stage1_description" text="Differential lock control failure. The lock remains engaged. The machine resists steering when turning."/>
         <text name="rms_breakdowns_part_harvest_drive_belts" text="Drive Belts and Variators"/>
         <text name="rms_breakdowns_part_harvest_drive_bearings" text="Drive Bearings and Gearboxes"/>
+        <text name="rms_breakdowns_part_header_drive_belt" text="Header Drive Belt"/>
+        <text name="rms_breakdowns_part_header_slip_clutch" text="Header Slip Clutch"/>
+        <text name="rms_breakdowns_part_header_drive_shaft" text="Header Driveline and U-Joints"/>
         <text name="rms_breakdowns_part_feeder_chain" text="Feeder House Chain"/>
         <text name="rms_breakdowns_part_feed_accelerator" text="Feed Accelerator"/>
         <text name="rms_breakdowns_part_threshing_bars" text="Rasp Bars"/>
@@ -837,6 +834,18 @@
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage2_description" text="Moderate wear of the drive bearings. The rumble becomes clearly audible and they run hot."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage3_description" text="Severe wear of the drive bearings. The rumble grows louder and the shafts gain play."/>
         <text name="rms_breakdowns_harvest_drive_bearing_wear_stage4_description" text="Critical drive bearing failure. A bearing has seized: harvesting is impossible."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage1_description" text="Early wear of the header drive belt. It squeals and slips a little while the header turns."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage2_description" text="Moderate wear of the header drive belt. It squeals louder and the speed alarm sometimes stops harvesting."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage3_description" text="Severe wear of the header drive belt. It squeals loudly, throughput drops and the stops repeat."/>
+        <text name="rms_breakdowns_header_drive_belt_wear_stage4_description" text="Critical header drive belt failure. It has snapped: the header is no longer driven, harvesting is impossible."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage1_description" text="Early wear of the header slip clutch. It slips a little under load."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage2_description" text="Moderate wear of the header slip clutch. It slips under normal load and the speed alarm sometimes stops harvesting."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage3_description" text="Severe wear of the header slip clutch. It slips and heats up, throughput drops and the stops repeat."/>
+        <text name="rms_breakdowns_header_slip_clutch_wear_stage4_description" text="Critical header slip clutch failure. It no longer transmits anything: the header has stopped, harvesting is impossible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage1_description" text="Early wear of the header driveline U-joints. A slight rumble appears while the header turns."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage2_description" text="Moderate wear of the header driveline U-joints. The rumble becomes clearly audible."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage3_description" text="Severe wear of the header driveline U-joints. The rumble grows louder and the joints gain play."/>
+        <text name="rms_breakdowns_header_drive_shaft_wear_stage4_description" text="Critical header driveline failure. A U-joint has broken: the header is no longer driven, harvesting is impossible."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage1_description" text="Early wear of the feeder house chain. It stretches and the feed becomes uneven."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage2_description" text="Moderate wear of the feeder house chain. Blockages form at the feeder house intake."/>
         <text name="rms_breakdowns_feeder_chain_wear_stage3_description" text="Severe wear of the feeder house chain. It jumps on its sprockets and the blockages keep coming."/>

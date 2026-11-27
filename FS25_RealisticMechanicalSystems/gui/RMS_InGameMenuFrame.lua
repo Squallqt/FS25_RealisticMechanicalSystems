@@ -1,11 +1,11 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Fleet and settings menu frame.
+---Fleet and settings page of the in-game menu
 RMS_InGameMenuFrame = {}
 RMS_InGameMenuFrame.MOD_DIR = g_currentModDirectory
 RMS_InGameMenuFrame.PAGE_NAME = "pageRMSFleet"
 RMS_InGameMenuFrame.REFRESH_INTERVAL_MS = 5000
--- fitToBoundary uses 1 as its overview reference.
+-- fitToBoundary uses 1 as its overview reference
 RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT = 7
 RMS_InGameMenuFrame.MAP_ZOOM_MIN = 1
 RMS_InGameMenuFrame.MAP_ZOOM_MAX = RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT * 4
@@ -35,7 +35,6 @@ local URGENCY = RMS_InGameMenuFrame.URGENCY
 local SORT_TEXT_KEYS = {"rms_fleet_sort_deadline", "rms_fleet_sort_name", "rms_fleet_sort_hours"}
 local TRACKED_SORTS = {SORT.DEADLINE, SORT.NAME, SORT.HOURS}
 local UNTRACKED_SORTS = {SORT.NAME, SORT.HOURS}
-local COLOR_SOON = {1.0, 0.55, 0.0, 1.0}
 local COLOR_LATE_TRACK = {0.102, 0.0103, 0.0103, 1.0}
 local GREASING_STATE = {
     done = { value = "rms_grease_hud_done", banner = "rms_fleet_greasing_done" },
@@ -56,28 +55,41 @@ local MENU_BUTTONS = {
 
 local RMS_InGameMenuFrame_mt = Class(RMS_InGameMenuFrame, TabbedMenuFrameElement)
 
+---Returns the colour of an urgency
+-- @param integer urgency RMS_InGameMenuFrame.URGENCY
+-- @return table color rgba color
 local function getUrgencyColor(urgency)
     if urgency == URGENCY.OVERDUE then
         return RMS_Utils.COLOR.ALERT
     elseif urgency == URGENCY.SOON then
-        return COLOR_SOON
+        return RMS_Breakdowns.COLORS.WARNING
     end
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
-local function formatDeadline(remaining)
-    local key = remaining < 0 and "rms_fleet_overdue" or "rms_fleet_remaining"
-    return string.format(g_i18n:getText(key), g_i18n:formatNumber(math.abs(remaining), 1))
+---Formats a service's progress through its hours and its months
+-- @param table schedule service schedule
+-- @return string text progress
+local function formatServiceProgress(schedule)
+    return string.format(g_i18n:getText("rms_service_either"),
+        g_i18n:formatNumber(schedule.used, 1) .. " / " .. RMS_Utils.formatHours(schedule.interval),
+        g_i18n:formatNumber(schedule.months - schedule.remainingMonths, 0) .. " / " .. RMS_Utils.formatMonths(schedule.months))
 end
 
+---Returns what every logged service of the machine cost
+-- @param table vehicle vehicle
+-- @return float cost total cost
 local function getTotalCost(vehicle)
     local totalCost = 0
     for _, entry in ipairs(vehicle.spec_RealisticMechanicalSystems.maintenanceLog) do
-        totalCost = totalCost + (entry.price or 0)
+        totalCost = totalCost + entry.price
     end
     return totalCost
 end
 
+---Returns the price of the running service
+-- @param table vehicle vehicle
+-- @return float price price, 0 when unknown
 local function getCommittedCost(vehicle)
     local spec = vehicle.spec_RealisticMechanicalSystems
     local price = spec.pendingServicePrice
@@ -89,9 +101,13 @@ local function getCommittedCost(vehicle)
         return RMS_FluidWorkshop.getTransactionPrice(vehicle, spec.currentState, spec.workshopType,
             spec.serviceOptionOne, spec.serviceOptionTwo) or 0
     end
-    return vehicle:getServicePrice(spec.currentState, spec.serviceOptionOne, spec.serviceOptionTwo) or 0
+    return vehicle:getServicePrice(spec.currentState, spec.serviceOptionOne, spec.serviceOptionTwo)
 end
 
+---Tells whether the fleet lists a vehicle of the farm
+-- @param table vehicle vehicle
+-- @param integer farmId farm of the player
+-- @return boolean canDisplay true when the fleet lists it
 local function canDisplayVehicle(vehicle, farmId)
     return g_currentMission.accessHandler:canPlayerAccess(vehicle)
         and vehicle:getOwnerFarmId() == farmId
@@ -99,15 +115,21 @@ local function canDisplayVehicle(vehicle, farmId)
         and g_storeManager:getItemByXMLFilename(vehicle.configFileName) ~= nil
 end
 
+---Returns the colour of a greasing state
+-- @param string state "done", "due" or "late"
+-- @return table color rgba color
 local function getGreasingColor(state)
     if state == "late" then
         return RMS_Utils.COLOR.ALERT
     elseif state == "due" then
-        return COLOR_SOON
+        return RMS_Breakdowns.COLORS.WARNING
     end
     return RMS_Utils.COLOR.HIGHLIGHT
 end
 
+---Formats the interval of a greasing tier
+-- @param table tier greasing tier
+-- @return string text interval
 local function formatTierPeriod(tier)
     if tier.unit == "months" then
         return tier.interval == 1 and g_i18n:getText("rms_fleet_greasing_period_month")
@@ -120,6 +142,10 @@ local function formatTierPeriod(tier)
     return g_i18n:getText("rms_fleet_greasing_period_day")
 end
 
+---Formats how late a greasing tier is
+-- @param table tier greasing tier
+-- @param float delay delay in the unit of the tier
+-- @return string text delay
 local function formatTierDelay(tier, delay)
     local count = math.ceil(delay)
     if tier.unit == "months" then
@@ -130,11 +156,17 @@ local function formatTierDelay(tier, delay)
     return string.format(g_i18n:getText(count == 1 and "rms_fleet_day_late" or "rms_fleet_days_late"), count)
 end
 
+---Formats what is left before a greasing tier falls due
+-- @param table tier greasing tier
+-- @return string text time left
 local function formatTierLeft(tier)
     return string.format(g_i18n:getText("rms_fleet_greasing_in"), RMS_Utils.formatGreasingLeft(tier))
 end
 
----Line of the power a tool asks of its tractor, empty without any
+---Returns the line of the power a tool asks of its tractor, empty without any
+-- @param table storeItem store item of the tool
+-- @param table vehicle tool
+-- @return string text line of the power
 local function getNeededPowerText(storeItem, vehicle)
     local neededPower = storeItem.specs.neededPower
     local configured = neededPower.config[vehicle.configurations.powerConsumer]
@@ -153,6 +185,9 @@ local function getNeededPowerText(storeItem, vehicle)
     return string.format("%s %s", g_i18n:getText("shop_neededPower"), value)
 end
 
+---Fills the row of an implement from its greasing
+-- @param table row fleet row
+-- @param table vehicle implement
 local function buildImplementRow(row, vehicle)
     local greasing = RMS_Greasing.read(vehicle)
     row.isImplement, row.greasing = true, greasing
@@ -172,6 +207,10 @@ local function buildImplementRow(row, vehicle)
     end
 end
 
+---Builds the fleet row of a vehicle
+-- @param table vehicle vehicle
+-- @param boolean isTracked true when RMS tracks the vehicle
+-- @return table row fleet row
 local function buildRow(vehicle, isTracked)
     local storeItem = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
     local category = g_storeManager:getCategoryByName(storeItem.categoryName)
@@ -216,16 +255,15 @@ local function buildRow(vehicle, isTracked)
         elseif row.schedule ~= nil and row.schedule.progress >= RMS_InGameMenuFrame.DUE_SOON_RATIO then
             row.urgency = URGENCY.SOON
         end
-        if row.schedule ~= nil and row.schedule.calendarDue then
+        if row.schedule == nil then
+            row.status = ""
+        elseif row.schedule.calendarDue then
             row.status = g_i18n:getText("rms_service_calendar_due")
-        elseif row.remaining >= 0 and row.schedule ~= nil and row.schedule.months ~= nil then
-            row.status = RMS_Utils.formatServiceDeadline(row.schedule)
         else
-            row.status = formatDeadline(row.remaining)
+            row.status = formatServiceProgress(row.schedule)
         end
     end
 
-    -- banner and ring stay on the service, list and alerts take both
     row.serviceStatus, row.serviceUrgency = row.status, row.urgency
     local greasingState = RMS_Greasing.getStatus(vehicle)
     local greasingUrgency = greasingState == "late" and URGENCY.OVERDUE or greasingState == "due" and URGENCY.SOON or URGENCY.NONE
@@ -237,6 +275,11 @@ local function buildRow(vehicle, isTracked)
     return row
 end
 
+---Tells whether a row sorts before another in a sort mode
+-- @param integer sortMode RMS_InGameMenuFrame.SORT
+-- @param table a first row
+-- @param table b second row
+-- @return boolean isBefore true when a sorts before b
 local function isRowBefore(sortMode, a, b)
     if sortMode == SORT.DEADLINE and a.urgency ~= b.urgency then
         return a.urgency > b.urgency
@@ -254,6 +297,7 @@ local function isRowBefore(sortMode, a, b)
 end
 
 ---Loads the frame layout and returns the frame
+-- @return table frame fleet frame
 function RMS_InGameMenuFrame.register()
     local frame = RMS_InGameMenuFrame.new()
     local filename = RMS_InGameMenuFrame.MOD_DIR .. "gui/RMS_InGameMenuFrame.xml"
@@ -263,27 +307,11 @@ function RMS_InGameMenuFrame.register()
 end
 
 ---Create instance of RMS_InGameMenuFrame
-function RMS_InGameMenuFrame.new(target, customMt)
-    local self = TabbedMenuFrameElement.new(target, customMt or RMS_InGameMenuFrame_mt)
-
-    self.hasCustomMenuButtons = true
-    self.trackedRows = {}
-    self.servicingRows = {}
-    self.untrackedRows = {}
-    self.categories = {}
-    self.machineRows = {}
-    self.refreshTimerMs = 0
+-- @return table self instance of the frame
+function RMS_InGameMenuFrame.new()
+    local self = TabbedMenuFrameElement.new(nil, RMS_InGameMenuFrame_mt)
     self.subCategoryState = SUB_CATEGORY.ACTIVE
-    self.isUntrackedView = false
-    self.isCategoryView = true
-    self.sortMode = SORT.DEADLINE
-    self.sortModes = TRACKED_SORTS
-    self.showMap = false
     self.vehicleMapZoom = RMS_InGameMenuFrame.MAP_ZOOM_DEFAULT
-    self.isRefreshing = false
-    self.isFrameOpen = false
-    self.serviceRingRatio = 0
-
     return self
 end
 
@@ -337,11 +365,13 @@ function RMS_InGameMenuFrame:initialize()
 end
 
 ---Tells whether the navigator shows a view opened from another one
+-- @return boolean isNested true for a view opened from another one
 function RMS_InGameMenuFrame:getIsNestedView()
     return self.subCategoryState == SUB_CATEGORY.ACTIVE and (self.isUntrackedView or not self.isCategoryView)
 end
 
 ---Shows a main tab from its first view, the last one being the settings page
+-- @param integer state RMS_InGameMenuFrame.SUB_CATEGORY
 function RMS_InGameMenuFrame:updateSubCategoryPages(state)
     local isSettings = state == SUB_CATEGORY.SETTINGS
 
@@ -380,6 +410,7 @@ function RMS_InGameMenuFrame:updateScreenEdgeSliders()
     end
 end
 
+---Called on frame open
 function RMS_InGameMenuFrame:onFrameOpen()
     self.subCategoryBox:invalidateLayout()
     self.subCategoryPaging:setSize(self.subCategoryBox.maxFlowSize + 140 * g_pixelSizeScaledX)
@@ -389,16 +420,28 @@ function RMS_InGameMenuFrame:onFrameOpen()
 
     self.isFrameOpen = true
     self.refreshTimerMs = RMS_InGameMenuFrame.REFRESH_INTERVAL_MS
+    g_messageCenter:subscribe(MessageType.VEHICLE_ADDED, self.onFleetChanged, self)
+    g_messageCenter:subscribe(MessageType.VEHICLE_REMOVED, self.onFleetChanged, self)
     self:updateSubCategoryPages(self.subCategoryState)
     self:updateScreenEdgeSliders()
 end
 
+---Called on frame close, applying the changed settings
 function RMS_InGameMenuFrame:onFrameClose()
     self.isFrameOpen = false
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_ADDED, self)
+    g_messageCenter:unsubscribe(MessageType.VEHICLE_REMOVED, self)
     RMS_SettingsPage.applyChanges()
     RMS_InGameMenuFrame:superClass().onFrameClose(self)
 end
 
+---Reloads the rows on the next update
+function RMS_InGameMenuFrame:onFleetChanged()
+    self.refreshTimerMs = 0
+end
+
+---Called on update, reloading the rows on their interval
+-- @param float dt time since the last frame (ms)
 function RMS_InGameMenuFrame:update(dt)
     RMS_InGameMenuFrame:superClass().update(self, dt)
     self:updateScreenEdgeSliders()
@@ -452,9 +495,12 @@ function RMS_InGameMenuFrame:reloadRows()
 end
 
 ---Writes the three counters of the fleet
+-- @param integer overdue number of machines overdue
+-- @param integer soon number of machines due soon
+-- @param integer servicing number of machines in service
 function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
     local counts = {overdue, soon, servicing}
-    local colors = {RMS_Utils.COLOR.ALERT, COLOR_SOON, RMS_Utils.COLOR.HIGHLIGHT}
+    local colors = {RMS_Utils.COLOR.ALERT, RMS_Breakdowns.COLORS.WARNING, RMS_Utils.COLOR.HIGHLIGHT}
 
     for index, element in ipairs(self.pulseValues) do
         element:setText(tostring(counts[index]))
@@ -464,6 +510,7 @@ function RMS_InGameMenuFrame:updatePulse(overdue, soon, servicing)
 end
 
 ---Returns the rows of the section on screen
+-- @return table rows fleet rows
 function RMS_InGameMenuFrame:getSectionRows()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return self.servicingRows
@@ -471,6 +518,9 @@ function RMS_InGameMenuFrame:getSectionRows()
     return self.isUntrackedView and self.untrackedRows or self.trackedRows
 end
 
+---Groups the rows by store category, each with its counts and most urgent row
+-- @param table rows fleet rows
+-- @return table categories categories in store order
 local function groupCategories(rows)
     local categories, byName = {}, {}
 
@@ -580,7 +630,6 @@ function RMS_InGameMenuFrame:refreshNavigator()
         return
     end
 
-    -- Suppress selection callbacks during reload.
     local list = isCategoryView and self.categoryList or self.machineList
     self.isRefreshing = true
     list:setSoundSuppressed(true)
@@ -591,6 +640,7 @@ function RMS_InGameMenuFrame:refreshNavigator()
 end
 
 ---Returns the l10n key of the title of the section on screen
+-- @return string key l10n key
 function RMS_InGameMenuFrame:getSectionTitleKey()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return "rms_ingame_menu_section_service"
@@ -599,6 +649,7 @@ function RMS_InGameMenuFrame:getSectionTitleKey()
 end
 
 ---Returns the l10n key of the message an empty section shows
+-- @return string key l10n key
 function RMS_InGameMenuFrame:getEmptyTextKey()
     if self.subCategoryState == SUB_CATEGORY.SERVICE then
         return "rms_ingame_menu_empty_service"
@@ -607,11 +658,14 @@ function RMS_InGameMenuFrame:getEmptyTextKey()
 end
 
 ---Returns the l10n key of the entry listing every machine of the pool on screen
+-- @return string key l10n key
 function RMS_InGameMenuFrame:getAllMachinesTextKey()
     return self.isUntrackedView and "rms_fleet_all_untracked" or "rms_fleet_all"
 end
 
 ---Returns a category of the section on screen
+-- @param string? name name of the category
+-- @return table? category category, nil when the section has none of that name
 function RMS_InGameMenuFrame:getCategory(name)
     for _, category in ipairs(self.categories) do
         if category.name == name then
@@ -622,6 +676,7 @@ function RMS_InGameMenuFrame:getCategory(name)
 end
 
 ---Returns the list index of the highlighted category
+-- @return integer index row of the category list
 function RMS_InGameMenuFrame:getFocusedCategoryIndex()
     for index, category in ipairs(self.categories) do
         if category.name == self.focusedCategory then
@@ -634,6 +689,7 @@ function RMS_InGameMenuFrame:getFocusedCategoryIndex()
 end
 
 ---Returns the list index of the selected machine
+-- @return integer index row of the machine list
 function RMS_InGameMenuFrame:getSelectedMachineIndex()
     for index, row in ipairs(self.machineRows) do
         if row.vehicle == self.selectedVehicle then
@@ -706,6 +762,10 @@ function RMS_InGameMenuFrame:focusNavigator()
     end
 end
 
+---Number of rows of a list
+-- @param table list category list or machine list
+-- @param integer _section section
+-- @return integer count number of rows
 function RMS_InGameMenuFrame:getNumberOfItemsInSection(list, _section)
     if list == self.categoryList then
         return #self.categories + 1
@@ -713,6 +773,11 @@ function RMS_InGameMenuFrame:getNumberOfItemsInSection(list, _section)
     return #self.machineRows
 end
 
+---Template of a row of a list
+-- @param table list category list or machine list
+-- @param integer _section section
+-- @param integer index row
+-- @return string cellType name of the template
 function RMS_InGameMenuFrame:getCellTypeForItemInSection(list, _section, index)
     if list == self.categoryList then
         return index == 1 and "all" or "category"
@@ -720,6 +785,9 @@ function RMS_InGameMenuFrame:getCellTypeForItemInSection(list, _section, index)
     return "machine"
 end
 
+---Sets the picture of a cell when it changes
+-- @param table element picture element
+-- @param string filename file of the picture
 local function setCellImage(element, filename)
     if element.rmsImageFilename ~= filename then
         element.rmsImageFilename = filename
@@ -727,6 +795,11 @@ local function setCellImage(element, filename)
     end
 end
 
+---Fills a row of a list
+-- @param table list category list or machine list
+-- @param integer _section section
+-- @param integer index row
+-- @param table cell cell to fill
 function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index, cell)
     if list == self.machineList then
         local row = self.machineRows[index]
@@ -761,12 +834,15 @@ function RMS_InGameMenuFrame:populateCellForItemInSection(list, _section, index,
         noteElement:setTextColor(unpack(RMS_Utils.COLOR.ALERT))
     elseif category.soon > 0 then
         noteElement:setText(string.format(g_i18n:getText("rms_fleet_due_soon_count"), category.soon))
-        noteElement:setTextColor(unpack(COLOR_SOON))
+        noteElement:setTextColor(unpack(RMS_Breakdowns.COLORS.WARNING))
     end
     cell:getAttribute("texts"):invalidateLayout()
 end
 
 ---Follows the highlight: a category shows its most urgent machine
+-- @param table list list whose selection changed
+-- @param integer _section section
+-- @param integer index row selected
 function RMS_InGameMenuFrame:onListSelectionChanged(list, _section, index)
     if self.isRefreshing then
         return
@@ -785,6 +861,9 @@ function RMS_InGameMenuFrame:onListSelectionChanged(list, _section, index)
 end
 
 ---Opens the list of a category, or of the whole section from the first entry
+-- @param table _list category list
+-- @param integer _section section
+-- @param integer index row clicked
 function RMS_InGameMenuFrame:onClickCategory(_list, _section, index)
     local category = self.categories[index - 1]
     local top = category ~= nil and category.top or self.topRow
@@ -814,6 +893,7 @@ function RMS_InGameMenuFrame:onClickBack()
     self:focusNavigator()
 end
 
+---Opens the machines RMS does not track
 function RMS_InGameMenuFrame:onClickView()
     self.isUntrackedView = true
     self.focusedCategory = nil
@@ -823,19 +903,24 @@ function RMS_InGameMenuFrame:onClickView()
     self:focusNavigator()
 end
 
+---Sorts the machine list by the chosen mode
+-- @param integer state state of the sort selector
 function RMS_InGameMenuFrame:onSortChanged(state)
     self.sortMode = self.sortModes[state]
     self:reloadRows()
 end
 
+---Shows the fleet tab
 function RMS_InGameMenuFrame:onClickFleetSection()
     self:updateSubCategoryPages(SUB_CATEGORY.ACTIVE)
 end
 
+---Shows the running services tab
 function RMS_InGameMenuFrame:onClickServiceSection()
     self:updateSubCategoryPages(SUB_CATEGORY.SERVICE)
 end
 
+---Shows the settings tab
 function RMS_InGameMenuFrame:onClickSettingsSection()
     self:updateSubCategoryPages(SUB_CATEGORY.SETTINGS)
 end
@@ -851,6 +936,7 @@ function RMS_InGameMenuFrame:onPagePrevious()
 end
 
 ---Returns the row the right side shows
+-- @return table? row fleet row, nil for none
 function RMS_InGameMenuFrame:getDisplayedRow()
     if #self:getSectionRows() == 0 then
         return nil
@@ -905,6 +991,7 @@ function RMS_InGameMenuFrame:refreshDossier()
 end
 
 ---Fills the identity card: what the machine is, its reliability and its figures
+-- @param table row fleet row
 function RMS_InGameMenuFrame:updateIdentity(row)
     local vehicle = row.vehicle
     if self.identityVehicle ~= vehicle then
@@ -956,6 +1043,7 @@ function RMS_InGameMenuFrame:updateIdentity(row)
 end
 
 ---Fills the banner and the two cards of an implement: greasing and wear
+-- @param table row fleet row of the implement
 function RMS_InGameMenuFrame:updateImplementDossier(row)
     local vehicle, greasing = row.vehicle, row.greasing
     local color = getGreasingColor(greasing.state)
@@ -1024,7 +1112,7 @@ end
 
 ---Draws the wear of the implement against that of a dry joint
 function RMS_InGameMenuFrame:onDrawWearRing()
-    RMS_ProgressRing.renderInArea(self.wearRingArea, self.wearRingRatio or 0, RMS_Utils.COLOR.ALERT)
+    RMS_ProgressRing.renderInArea(self.wearRingArea, self.wearRingRatio, RMS_Utils.COLOR.ALERT)
 end
 
 ---Draws the share of the implement's grease points greased
@@ -1037,6 +1125,7 @@ function RMS_InGameMenuFrame:onDrawGreasingRing()
 end
 
 ---Fills the banner and the second card: next maintenance or running work
+-- @param table row fleet row
 function RMS_InGameMenuFrame:updateService(row)
     local vehicle = row.vehicle
     local spec = vehicle.spec_RealisticMechanicalSystems
@@ -1061,8 +1150,8 @@ function RMS_InGameMenuFrame:updateService(row)
         local duration = RMS_Utils.formatDuration(vehicle:getServiceDuration())
         local procedure = RMS_Utils.formatServiceState(spec.currentState)
         local isKnownWorkshop = RMS_Utils.getKeyByValue(RealisticMechanicalSystems.WORKSHOP, spec.workshopType) ~= nil
-        local totalTime = spec.pendingProgressTotalTime or 0
-        local progress = totalTime > 0 and math.clamp((spec.pendingProgressElapsedTime or 0) / totalTime, 0, 1) or 0
+        local totalTime = spec.pendingProgressTotalTime
+        local progress = totalTime > 0 and math.clamp(spec.pendingProgressElapsedTime / totalTime, 0, 1) or 0
 
         self.bannerTitle:setText(procedure)
         self.bannerDetail:setText(isKnownWorkshop and string.format("%s · %s", g_i18n:getText(spec.workshopType), duration) or duration)
@@ -1133,13 +1222,13 @@ function RMS_InGameMenuFrame:onClickLocation()
     self:updateFocusLinks()
 end
 
----Keeps the two preview controls in sync with the available zoom range
+---Keeps the two zoom buttons in step with the zoom range
 function RMS_InGameMenuFrame:updateMapZoomControls()
     self.mapZoomInButton:setDisabled(self.vehicleMapZoom >= RMS_InGameMenuFrame.MAP_ZOOM_MAX)
     self.mapZoomOutButton:setDisabled(self.vehicleMapZoom <= RMS_InGameMenuFrame.MAP_ZOOM_MIN)
 end
 
----Zooms the visible vehicle preview
+---Zooms the map of the machine by one step
 -- @param integer direction positive to zoom in, negative to zoom out
 function RMS_InGameMenuFrame:changeMapZoom(direction)
     self.vehicleMapZoom = math.clamp(self.vehicleMapZoom * RMS_InGameMenuFrame.MAP_ZOOM_STEP ^ direction,
@@ -1148,15 +1237,24 @@ function RMS_InGameMenuFrame:changeMapZoom(direction)
     self:updateMapZoomControls()
 end
 
+---Zooms the map in
 function RMS_InGameMenuFrame:onClickMapZoomIn()
     self:changeMapZoom(1)
 end
 
+---Zooms the map out
 function RMS_InGameMenuFrame:onClickMapZoomOut()
     self:changeMapZoom(-1)
 end
 
----Uses the wheel only over the visible preview
+---Zooms the map with the wheel while the mouse is over it
+-- @param float posX mouse x (screen)
+-- @param float posY mouse y (screen)
+-- @param boolean isDown true when a button went down
+-- @param boolean isUp true when a button went up
+-- @param integer button mouse button
+-- @param boolean eventUsed true when the event was used already
+-- @return boolean eventUsed true when the event is used
 function RMS_InGameMenuFrame:mouseEvent(posX, posY, isDown, isUp, button, eventUsed)
     local map = self.vehicleMap
     if not eventUsed and isDown and self.isFrameOpen and map:getIsVisible()
@@ -1174,6 +1272,7 @@ function RMS_InGameMenuFrame:mouseEvent(posX, posY, isDown, isUp, button, eventU
 end
 
 ---Returns the machine the footer actions apply to
+-- @return table? vehicle vehicle, nil for none
 function RMS_InGameMenuFrame:getSelectedVehicle()
     if self.subCategoryState == SUB_CATEGORY.SETTINGS or (self.subCategoryState == SUB_CATEGORY.ACTIVE and self.isCategoryView) then
         return nil
@@ -1183,6 +1282,7 @@ function RMS_InGameMenuFrame:getSelectedVehicle()
     return row ~= nil and row.vehicle or nil
 end
 
+---Builds the footer buttons for the selected machine
 function RMS_InGameMenuFrame:updateActionButtons()
     local buttons = {self:getIsNestedView() and self.levelUpButtonInfo or self.backButtonInfo,
         self.prevPageButtonInfo, self.nextPageButtonInfo}
@@ -1226,7 +1326,7 @@ function RMS_InGameMenuFrame:onToggleExclusion()
     self:reloadRows()
 end
 
----Enters the selected machine, as InGameMenuMapFrame does
+---Enters the selected machine
 function RMS_InGameMenuFrame:onTryEnterVehicle()
     local vehicle = self:getSelectedVehicle()
     -- only an enterable machine has the method, and a frozen player stays
@@ -1237,7 +1337,7 @@ function RMS_InGameMenuFrame:onTryEnterVehicle()
     end
 end
 
----Returns a leased RMS vehicle through the mod dialog, sells anything else
+---Sells or returns the selected machine through the shop
 function RMS_InGameMenuFrame:onSellSelectedVehicle()
     local vehicle = self:getSelectedVehicle()
     if vehicle == nil then
@@ -1251,21 +1351,7 @@ function RMS_InGameMenuFrame:onSellSelectedVehicle()
         return
     end
 
-    if isTracked and vehicle.propertyState == VehiclePropertyState.LEASED then
-        RMS_SellItemDialog.show(vehicle, self.onRMSSellDialogCallback, self, vehicle)
-        return
-    end
-
     g_shopController:sell(storeItem, vehicle)
-end
-
----Sends the vehicle return once the player confirmed it
-function RMS_InGameMenuFrame:onRMSSellDialogCallback(yes, vehicle)
-    if not yes or vehicle.isDeleted or vehicle.propertyState ~= VehiclePropertyState.LEASED or vehicle:isUnderService() then
-        return
-    end
-
-    g_client:getServerConnection():sendEvent(SellVehicleEvent.new(vehicle, 1, true))
 end
 
 ---Opens the maintenance log of the displayed machine
@@ -1275,7 +1361,7 @@ function RMS_InGameMenuFrame:onShowMaintenanceLog()
         return
     end
 
-    if #row.vehicle.spec_RealisticMechanicalSystems.maintenanceLog > 1 then
+    if #RMS_Utils.getVisibleLogEntries(row.vehicle) > 0 then
         RMS_WorkshopDialog.show(row.vehicle)
     else
         InfoDialog.show(g_i18n:getText("rms_ws_no_log_empty_message"))

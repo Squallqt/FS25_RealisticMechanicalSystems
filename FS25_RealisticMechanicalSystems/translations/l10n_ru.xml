@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Техника"/>
         <text name="rms_hud_mass_towed" text="Прицеп"/>
         <text name="rms_hud_mass_total" text="Всего"/>
+        <text name="rms_hud_fuel_average" text="Сред."/>
+        <text name="rms_hud_unit_perHour" text="/ч"/>
+        <text name="rms_hud_unit_kw" text="кВт"/>
+        <text name="rms_hud_unit_kwh" text="кВт·ч"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="АВТО"/>
+        <text name="rms_hud_pto_rpm_unit" text="r/min"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (передний мост отключён)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (передний мост подключён)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD АВТО"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Проверить технику"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="ОК"/>
         <text name="input_RMS_TOGGLE_4WD" text="Режим привода"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Блокировка дифф."/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Стояночный тормоз"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Определяет, завершается ли капитальный ремонт в мастерской мгновенно, включая уже начатый."/>
         <text name="rms_instantRemap_label" text="Мгновенный чип-тюнинг двигателя"/>
         <text name="rms_instantRemap_tooltip" text="Определяет, завершаются ли чип-тюнинг двигателя и возврат к заводской прошивке мгновенно, включая уже начатые."/>
-        <text name="rms_debugMode_label" text="Режим отладки"/>
-        <text name="rms_debugMode_tooltip" text="Определяет, показывается ли окно отладки в управляемой машине и получает ли консоль подробные журналы. Клавиша %s открывает и закрывает окно; в сетевой игре его видят только администраторы."/>
+        <text name="rms_debugWindow_label" text="Окно отладки"/>
+        <text name="rms_debugWindow_tooltip" text="Определяет, показывается ли окно отладки в управляемой машине. Клавиша %s тоже открывает его; в сетевой игре его видят только администраторы."/>
+        <text name="rms_debugLog_label" text="Подробный журнал"/>
+        <text name="rms_debugLog_tooltip" text="Определяет, получает ли консоль подробные журналы RMS для отчёта об ошибке, не открывая окно отладки."/>
         <text name="rms_warningMessages_label" text="Предупреждающие сообщения"/>
         <text name="rms_warningMessages_tooltip" text="Определяет, показываются ли предупреждения, например о холодном двигателе или перегреве. Сообщения об ограничении мощности из-за температуры показываются всегда."/>
         <text name="rms_serviceInterval_label" text="Периодичность обслуживания"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Задаёт моточасы, после которых состояние техники достигает 0%; чем ближе к этому сроку, тем ниже её надёжность и стоимость. Изменение действует с этого момента: техника сохраняет своё состояние, пересчитывается только её стоимость."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Выхлопной дым"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Определяет, соответствует ли выхлопной дым реальному состоянию двигателя: чёрный при нехватке воздуха, синий при сгорании масла, белый при выходе несгоревшего топлива, гуще под нагрузкой. Старая техника дымит гораздо сильнее современной."/>
-        <text name="rms_tutorialMode_label" text="Режим обучения"/>
-        <text name="rms_tutorialMode_tooltip" text="Определяет, показываются ли обучающие подсказки во время игры."/>
-        <text name="rms_tutorialResetTips_label" text="Сбросить подсказки"/>
-        <text name="rms_tutorialResetTips_text" text="Сбросить подсказки"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Сбрасывает историю обучающих подсказок: все подсказки будут показаны снова."/>
-        <text name="rms_tutorialResetConfirm_title" text="Сбросить подсказки?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Сбросить историю обучающих подсказок и показывать их заново?"/>
         <text name="rms_drivetrainEnabled_label" text="Управление 4WD и блокировкой дифференциала"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Определяет, управляются ли передний мост и блокировки дифференциалов тракторов вручную. Настройка заменяет управление дифференциалами Enhanced Vehicle: чтобы вернуть его, отключите настройку и снова включите дифференциалы в его меню."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Разрешить режим АВТО"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Определяет, предлагает ли переключатель положение AUTO: передний мост подключается при пробуксовке колёс или работе под нагрузкой и отключается на дороге. При отключении настройки машины, оставленные в AUTO, переходят в 4WD."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="Для этой настройки нужно включить управление 4WD и блокировкой дифференциала."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Стояночный тормоз"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Определяет, есть ли у отслеживаемой техники стояночный тормоз: автоматический у новых машин с CVT или Powershift, с отдельной клавишей у остальных. Настройка заменяет стояночный тормоз Enhanced Vehicle: чтобы вернуть его, отключите настройку и снова включите его стояночный тормоз в его меню."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Журнал техобслуживания"/>
         <text name="rms_ws_label_last_maintenance" text="Последнее техобслуживание"/>
         <text name="rms_ws_task_inspection" text="Осмотр"/>
-        <text name="rms_ws_task_maintenance" text="Техобслуживание"/>
         <text name="rms_ws_task_overhaul" text="Капитальный ремонт"/>
         <text name="rms_ws_info_no_breakdowns" text="Выявленных неисправностей нет. Осмотр или техобслуживание выявит те, что техника ещё не показывает."/>
         <text name="rms_ws_info_warning_unidentified" text="Горит индикатор: неисправность нужно выявить. Осмотр или техобслуживание её выявит, затем её можно отремонтировать."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Подключите к машине диагностическое оборудование тележки."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Требуется электронная диагностика"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Требуется разборка или специальный инструмент"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="Требуется высоковольтное оборудование"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Требуется специалист с допуском к высокому напряжению"/>
         <text name="rms_ws_status_in_progress_format" text="%s в процессе до %s"/>
         <text name="rms_ws_status_open" text="Мастерская открыта"/>
         <text name="rms_ws_status_closed" text="Мастерская закрыта"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Описание"/>
         <text name="rms_log_button_show_report" text="Показать отчёт"/>
         <text name="rms_log_empty" text="В журнале нет записей"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Тепловая защита: ограничение мощности снято"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="Низкий уровень AdBlue: заправьте AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="Очень низкий уровень AdBlue: заправьте AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="Очень низкий уровень AdBlue: мощность двигателя снижена. Заправьте AdBlue."/>
+        <text name="rms_adblue_empty_message" text="Бак AdBlue пуст: заправьте AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="Бак AdBlue пуст: мощность двигателя сильно снижена. Заправьте AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue заправлен: мощность двигателя восстановлена."/>
         <text name="rms_breakdown_at_progress_message" text="в процессе"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Внимание! Двигатель холодный: он изнашивается, пока не прогреется."/>
         <text name="rms_spec_overheat_engine_message" text="Внимание! Перегрев двигателя."/>
         <text name="rms_spec_overheat_transmission_message" text="Внимание! Перегрев трансмиссии."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Чип-тюнинг двигателя"/>
         <text name="rms_spec_state_overdue" text="Просрочено"/>
         <text name="rms_spec_state_optimal" text="Оптимальное"/>
-        <text name="rms_spec_state_broken" text="Неисправно"/>
         <text name="rms_spec_state_bad" text="Плохое"/>
         <text name="rms_spec_state_excellent" text="Отличное"/>
         <text name="rms_spec_state_good" text="Хорошее"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="блокировка или 4WD на твёрдом грунте"/>
         <text name="rms_warranty_filter" text="засорённый фильтр"/>
         <text name="rms_warranty_oil" text="неподходящее моторное масло"/>
+        <text name="rms_warranty_header_engagement" text="жатка включена выше холостых оборотов"/>
         <text name="rms_warranty_trailer" text="слишком тяжёлый прицеп"/>
         <text name="rms_warranty_aftermarket_part" text="неоригинальная деталь"/>
         <text name="rms_warranty_used_part" text="подержанная деталь"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Внешний осмотр и проверка функций"/>
         <text name="rms_ws_inspection_electronic" text="Электронные неисправности"/>
         <text name="rms_ws_inspection_electronic_detail" text="Коды ошибок, считанные сканером"/>
+        <text name="rms_ws_inspection_electrical" text="Электрические неисправности"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Цепи, проверенные мультиметром"/>
         <text name="rms_ws_inspection_dormant" text="Скрытые дефекты"/>
         <text name="rms_ws_inspection_dormant_detail" text="Дефектная деталь, временный ремонт"/>
         <text name="rms_ws_inspection_report" text="Отчёт"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Перегрев аккумулятора"/>
         <text name="rms_report_wear_lubrication" text="Просроченная смазка"/>
         <text name="rms_report_wear_pto_overload" text="Перегрузка ВОМ"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="Угол карданного вала"/>
         <text name="rms_report_wear_harvest_overload" text="Перегрузка уборки"/>
         <text name="rms_report_wear_harvest_flow" text="Большой поток зерна"/>
         <text name="rms_report_wear_harvest_straw" text="Перегрузка измельчителя"/>
         <text name="rms_report_wear_harvest_stones" text="Камни"/>
         <text name="rms_report_wear_harvest_rice" text="Уборка риса"/>
         <text name="rms_report_wear_harvest_wet" text="Влажная масса"/>
+        <text name="rms_report_wear_header_starts" text="Пуски жатки"/>
+        <text name="rms_report_wear_service_overdue" text="Интервал техобслуживания истёк"/>
+        <text name="rms_report_wear_engine_overload" text="Перегрузка двигателя"/>
+        <text name="rms_report_wear_cold_engine" text="Холодный двигатель"/>
+        <text name="rms_report_wear_fluid_level" text="Низкий уровень жидкости"/>
+        <text name="rms_report_wear_engine_overheat" text="Перегрев двигателя"/>
+        <text name="rms_report_wear_lugging" text="Работа двигателя внатяг"/>
+        <text name="rms_report_wear_wheel_slip" text="Пробуксовка колёс"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Нагрузка на трансмиссию"/>
+        <text name="rms_report_wear_cold_oil" text="Холодное трансмиссионное масло"/>
+        <text name="rms_report_wear_transmission_overheat" text="Перегрев трансмиссии"/>
+        <text name="rms_report_wear_wet_weather" text="Сырая погода"/>
+        <text name="rms_report_wear_cranking" text="Частый запуск"/>
+        <text name="rms_report_wear_starter_heat" text="Перегрев стартера"/>
+        <text name="rms_report_wear_steering" text="Руление на месте"/>
+        <text name="rms_report_wear_park_brake" text="Стояночный тормоз"/>
+        <text name="rms_report_wear_low_fuel" text="Мало топлива"/>
+        <text name="rms_report_wear_idle_deposit" text="Долгий холостой ход"/>
+        <text name="rms_report_wear_pto_engagement" text="Включение ВОМ"/>
         <text name="rms_report_component_title" text="Компонент"/>
         <text name="rms_report_system_condition_transmission" text="Трансмиссия"/>
         <text name="rms_report_system_condition_power" text="Текущая мощность"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Передаточное отношение ограничено"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Неравномерная передача тяги"/>
         <text name="rms_report_transmission_failed" text="Неисправна"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Смазочный шприц"/>
         <text name="rms_grease_gun_no_vehicle" text="Нет техники в зоне смазки"/>
         <text name="rms_grease_gun_function" text="Смазывает пресс-маслёнки машин. Заправляется картриджем со смазкой."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Моторное масло, для машин без AdBlue и сажевого фильтра"/>
         <text name="rms_fluid_function_utto" text="Трансмиссионное и гидравлическое масло для ручного долива"/>
         <text name="rms_fluid_function_coolant" text="Охлаждающая жидкость для ручного долива"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue для бака AdBlue машин, в которых он есть"/>
         <text name="rms_fluid_pour_action" text="Долить: %s"/>
         <text name="rms_fluid_level_done" text="Уровень восстановлен"/>
         <text name="rms_fluid_container_empty" text="Канистра пуста"/>
         <text name="rms_fluid_drum_empty" text="Бочка пуста"/>
+        <text name="rms_fluid_tank_empty" text="Ёмкость пуста"/>
         <text name="rms_fluid_container_label" text="Канистра"/>
         <text name="rms_fluid_drum_label" text="Бочка"/>
+        <text name="rms_fluid_tank_label" text="Ёмкость"/>
         <text name="rms_fluid_hand_take" text="Взять для долива"/>
         <text name="rms_fluid_hand_carry" text="Нести канистру"/>
         <text name="rms_drum_pump_name" text="Аккумуляторный бочковой насос"/>
-        <text name="rms_drum_pump_function" text="Ставится на бочку 200 л и заправляет машины через пистолет"/>
+        <text name="rms_drum_pump_function" text="Ставится на бочку или ёмкость и заправляет машины через пистолет"/>
         <text name="rms_drum_pump_mount" text="Поставить на бочку"/>
+        <text name="rms_drum_pump_mount_tank" text="Поставить на ёмкость"/>
         <text name="rms_drum_pump_take" text="Снять насос"/>
         <text name="rms_drum_pump_nozzle_take" text="Взять пистолет"/>
         <text name="rms_drum_pump_nozzle_return" text="Повесить пистолет"/>
         <text name="rms_drum_pump_hose_range" text="Шланг насоса не даёт отойти дальше.&#10;Пистолет будет повешен через %.1f м!"/>
         <text name="rms_drum_pump_machine_too_far" text="Подвиньте бочку ближе: длина шланга 4 м"/>
+        <text name="rms_drum_pump_tank_too_far" text="Подвиньте ёмкость ближе: длина шланга 4 м"/>
         <text name="rms_drum_pump_required" text="Нужен бочковой насос"/>
         <text name="rms_fluid_level_under_gauge" text="Ниже шкалы"/>
         <text name="rms_fluid_circuit_engineOil" text="Моторное масло"/>
         <text name="rms_fluid_circuit_coolant" text="Охлаждающая жидкость"/>
+        <text name="rms_fluid_circuit_adBlue" text="Бак AdBlue"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Трансмиссионное масло"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Гидравлическое масло"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Трансмиссионно-гидравлическое масло"/>
         <text name="rms_fluid_hud_engineOil" text="Моторное масло"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Масло транс./гидр."/>
         <text name="rms_fluid_hud_coolant" text="Антифриз"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Несовместимая жидкость"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ двигателя и усилить его нагрев. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ системы охлаждения и усилить нагрев двигателя. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ гидравлики, усилить её нагрев и замедлить её работу. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="Этот продукт не предназначен для этого контура. Он загрязнит смесь и может втрое ускорить износ трансмиссии и гидравлики, усилить их нагрев и замедлить работу гидравлики. Загрязнение устраняется только полной заменой жидкости. Продолжить?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Неподходящее моторное масло"/>
-        <text name="rms_fluid_unsuited_oil_message" text="Этот двигатель работает с AdBlue или имеет сажевый фильтр: его руководство требует масла, предназначенного для них. С этим маслом замена масла понадобится до двух раз раньше. Сажевый фильтр к тому же забивается золой в 1,5 раза быстрее. Продолжить?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="Этот двигатель работает с AdBlue или имеет сажевый фильтр: ему нужно масло, предназначенное для них. С этим маслом замена масла понадобится до двух раз раньше. Сажевый фильтр к тому же забивается золой в 1,5 раза быстрее. Продолжить?"/>
         <text name="rms_fluid_error_no_circuit" text="Этой машине не требуется долив жидкости"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="У этой машины нет бака AdBlue"/>
         <text name="rms_fluid_error_motor_running" text="Заглушите двигатель перед переливом жидкости"/>
         <text name="rms_fluid_error_vehicle_moving" text="Машина должна стоять на месте"/>
         <text name="rms_fluid_error_busy" text="Этот контур уже заправляется из другой ёмкости"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Незначительно снижен"/>
         <text name="rms_inspection_status_slightly_dirty" text="Слегка забит"/>
         <text name="rms_inspection_status_grease_due" text="Пора смазать"/>
-        <text name="rms_inspection_status_slight_moisture" text="Незначительная влажность"/>
-        <text name="rms_inspection_status_seepage" text="Подтекание"/>
-        <text name="rms_inspection_status_severe_leak" text="Сильная утечка"/>
         <text name="rms_inspection_status_low" text="Снижен"/>
         <text name="rms_inspection_status_very_low" text="Сильно снижен"/>
         <text name="rms_inspection_status_critically_low" text="Срочный долив"/>
         <text name="rms_inspection_status_critically_clogged" text="Полностью забит"/>
         <text name="rms_inspection_status_dirty" text="Забит"/>
         <text name="rms_inspection_status_grease_late" text="Просрочено"/>
-        <text name="rms_inspection_status_active_leak" text="Активная утечка"/>
         <text name="rms_inspection_status_heavily_clogged" text="Сильно забит"/>
         <text name="rms_inspection_status_not_required" text="Не требуется"/>
         <text name="rms_inspection_status_change_overdue" text="Замена просрочена"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Осмотр"/>
         <text name="rms_fleet_location" text="Местоположение"/>
         <text name="rms_fleet_next_service" text="Следующее обслуживание"/>
-        <text name="rms_fleet_remaining" text="Осталось %s ч"/>
-        <text name="rms_fleet_overdue" text="Просрочено на %s ч"/>
         <text name="rms_fleet_overdue_label" text="Просрочено"/>
         <text name="rms_fleet_overdue_count" text="Просрочено: %d"/>
         <text name="rms_fleet_due_soon_label" text="Скоро"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Сильный износ"/>
         <text name="rms_fleet_part_failed" text="Неисправность"/>
         <text name="rms_fleet_part_unmeasured" text="Нет замера"/>
+        <text name="rms_fleet_part_replaced" text="Деталь заменена"/>
         <text name="rms_fleet_parts_reading" text="Замер деталей %s"/>
         <text name="rms_fleet_parts_need_complete" text="Замер деталей при следующем полном осмотре"/>
         <text name="rms_fleet_greasing_done" text="Смазка выполнена"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Ремонт"/>
         <text name="rms_sell_dialog_washing_penalty" text="Мойка"/>
         <text name="rms_sell_dialog_deposit_refund" text="Возврат залога"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Низкий уровень жидкости"/>
-        <text name="rms_tutorial_fluid_level_message" text="Уровень одной из жидкостей этой машины опустился ниже отметки на шкале.&#10;&#10;Моторное масло расходуется с моточасами, а изношенный двигатель расходует его намного быстрее. Охлаждающая жидкость, трансмиссионное и гидравлическое масло убывают только из-за утечки.&#10;&#10;Если уровень лишь немного ниже отметки, достаточно долива, и машина продолжает работать нормально. Чем ниже уровень, тем легче насос засасывает воздух на склонах: индикатор давления масла мигает, а со стороны трансмиссии или гидравлики насос воет и гидравлические движения замедляются. Каждая такая минута повреждает коренные вкладыши или насос: остановитесь и восстановите уровень. Машина с нехваткой охлаждающей жидкости, трансмиссионного или гидравлического масла к тому же перегревается.&#10;&#10;Купите в магазине канистру совместимого продукта, доставьте её к машине и восстановите уровень. Все продукты для одного контура механически равноценны; неподходящая жидкость загрязняет только этот контур. У дилера необходимые литры предоставляются и включаются в счёт."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Добро пожаловать в Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Отключить подсказки"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Включить подсказки"/>
-        <text name="rms_tutorial_welcome_message" text="Этот мод полностью перерабатывает системы повреждений и техобслуживания техники в игре. Изменений много, поэтому время от времени будут появляться обучающие подсказки. Они помогут быстрее понять новые механики, избежать типичных ошибок и предотвратить неисправности техники.&#10;&#10;При желании подсказки можно отключить сейчас и снова включить позже в настройках мода, в разделе Realistic Mechanical Systems."/>
-        <text name="rms_tutorial_wet_weather_title" text="Сырая погода"/>
-        <text name="rms_tutorial_wet_weather_message" text="Влага плохо влияет на проводку и электрооборудование. Износ электрической системы немного повышен во время дождя, снега или града, если техника стоит на улице."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Пробуксовка колёс"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Ваши колёса сильно буксуют. Пробуксовка — один из самых разрушительных факторов для трансмиссии и заметно приближает ваш следующий визит в мастерскую."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Плановое техобслуживание"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s скоро потребуется обслуживание. В мастерской выберите рекомендованный пакет: он включает необходимые работы. Действует первый достигнутый предел моточасов или календарного времени, даже при редком использовании. Удобство обслуживания отражает сложность работ; обычное ТО остаётся доступным в мобильной мастерской."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Интервал техобслуживания истёк"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="Интервал техобслуживания для %s истёк.&#10;&#10;Как можно скорее отправляйтесь в мастерскую и выберите «Техобслуживание». Дальнейшая эксплуатация техники с просроченным техобслуживанием заметно повышает риск нескольких неисправностей."/>
-        <text name="rms_tutorial_steering_title" text="Руление на месте"/>
-        <text name="rms_tutorial_steering_message" text="Не стоит крутить руль на месте. В этот момент сильно нагружаются рулевой механизм и элементы передней оси, а вместе с этим повышается и износ ходовой части.&#10;&#10;Достаточно начать движение хотя бы на небольшой скорости — и колёсам поворачиваться станет заметно легче."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Система охлаждения и воздушный фильтр"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="Радиатор или воздушный фильтр засорён. Смотрите на технику и удерживайте клавишу %s, чтобы узнать, какой именно. Очистите его воздуходувкой со сжатым воздухом. Если фильтр больше не продувается, мастерская заменяет его начиная с ТО %s."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Требуется смазка"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="%s имеет пресс-маслёнки, требующие смазки.&#10;&#10;В RMS у каждой машины есть пресс-маслёнки из её руководства. Их нужно смазывать вновь по дням работы машины: каждый рабочий день или раз в несколько рабочих дней те, что руководство смазывает реже. Запоздалая смазка ускоряет износ ходовой части.&#10;&#10;Купите смазочный шприц и картриджи в магазине. Держа шприц в руках, встаньте перед картриджем для заправки, затем наведите шприц на машину: каждый щелчок смазывает одну пресс-маслёнку, а удержание кнопки продолжает смазку следующих.&#10;&#10;Чтобы увидеть оставшиеся пресс-маслёнки, удерживайте клавишу %s, глядя на машину."/>
-        <text name="rms_tutorial_needs_repair_title" text="Обнаружена неисправность"/>
-        <text name="rms_tutorial_needs_repair_message" text="У %s возникла проблема. Возможно, одна из деталей отказала.&#10;&#10;Посетите мастерскую: осмотр или техобслуживание, если оно подошло, выявит неисправность. Не откладывайте: неисправность может усугубиться, а стоимость ремонта вырастет.&#10;&#10;Когда неисправность выявлена, отремонтируйте её в мастерской."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Требуется капитальный ремонт"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="%s уже заметно стареет. Пора задуматься о замене или капитальном ремонте. Это долгая и дорогая работа, но только она вернёт технике исходное состояние.&#10;&#10;Ресурс можно изменить в настройках мода: чем он выше, тем медленнее изнашивается техника."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Повышенный риск неисправности"/>
-        <text name="rms_tutorial_needs_preventive_message" text="У двигателя, топливной системы или системы охлаждения %s повышен риск неисправности.&#10;&#10;ТО %s: регулирует клапаны, проверяет форсунки и термостат, что снижает этот риск."/>
-        <text name="rms_tutorial_age_degradation_title" text="Возрастной износ"/>
-        <text name="rms_tutorial_age_degradation_message" text="В RMS техника с возрастом постепенно теряет часть своих первоначальных характеристик.&#10;&#10;Примерно после трети срока службы возрастной износ начинает понемногу снижать некоторые важные параметры, такие как мощность или эффективность тормозов. Затем этот эффект усиливается и становится хорошо заметен ближе к концу срока службы.&#10;&#10;Возрастной износ можно отключить в настройках мода."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Некачественные расходники"/>
-        <text name="rms_tutorial_poor_consumables_message" text="При последнем техобслуживании для %s установили дефектный фильтр. Так бывает с экономичными материалами.&#10;&#10;Этот фильтр пропускает загрязнения: система, которую он защищает, изнашивается быстрее до замены фильтра. Повторное техобслуживание заменит его. Только полный осмотр выявит его."/>
-        <text name="rms_tutorial_poor_parts_title" text="Некачественные запчасти"/>
-        <text name="rms_tutorial_poor_parts_message" text="При ремонте на %s установили некачественную запчасть. Неисправность, вероятно, скоро повторится.&#10;&#10;Можно дождаться её возвращения или сразу провести полный осмотр, который надёжно выявит некачественную деталь."/>
-        <text name="rms_tutorial_park_brake_title" text="Стояночный тормоз"/>
-        <text name="rms_tutorial_park_brake_message" text="Стояночный тормоз затянут. Он срабатывает сам, как только вы покидаете машину на стоянке, и отпускается, как только вы снова даёте газ. Он срабатывает и когда вы глушите двигатель, и после 45 секунд стоянки.&#10;&#10;На склоне именно он не даёт машине укатиться самой."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="Стояночный тормоз затянут. Вы затягиваете и отпускаете его сами, отдельной клавишей: при попытке тронуться с затянутым тормозом машина едет через силу, а её тормоза изнашиваются.&#10;&#10;На склоне именно он не даёт машине скатиться: если покинуть машину, не затянув его, она может укатиться."/>
-        <text name="rms_tutorial_preheat_title" text="Предпусковой подогрев дизеля"/>
-        <text name="rms_tutorial_preheat_message" text="При холодном дизельном двигателе одно нажатие кнопки запуска включает зажигание и автоматически запускает цикл предпускового подогрева. Контрольные лампы панели выполняют самопроверку, затем лампа предпускового подогрева горит до готовности двигателя. Не нажимайте кнопку повторно: стартер включится автоматически после того, как лампа погаснет."/>
-        <text name="rms_tutorial_pto_engagement_title" text="Включение ВОМ"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Включайте ВОМ на холостых оборотах, а затем повышайте обороты: включение на высоких оборотах даёт удар по всей трансмиссии, тем сильнее, чем тяжелее орудие. Каждое включение также изнашивает его муфту."/>
-        <text name="rms_tutorial_pto_raised_title" text="ВОМ и поднятое орудие"/>
-        <text name="rms_tutorial_pto_raised_message" text="Работа ВОМ с поднятым орудием заставляет карданы работать под большим углом и быстро их изнашивает. Выключайте ВОМ, прежде чем поднимать орудие для транспортировки."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Холостой ход и простой"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Износ намного меньше, когда техника работает без нагрузки. При заглушённом двигателе он становится минимальным, а под крышей полностью исчезает."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Долгий холостой ход"/>
-        <text name="rms_tutorial_idle_deposit_message" text="Техника слишком долго работает на холостом ходу. Длительная работа без нагрузки не только расходует топливо: со временем она способствует образованию отложений в топливной системе и ухудшает общее состояние двигателя.&#10;&#10;Если техника сейчас не нужна, лучше заглушить двигатель."/>
-        <text name="rms_tutorial_hot_weather_title" text="Жаркая погода"/>
-        <text name="rms_tutorial_hot_weather_message" text="Сегодня очень жарко. В такую погоду тщательно следите за чистотой радиатора и старайтесь не перегружать двигатель — иначе перегрев не заставит себя ждать.&#10;&#10;Вы можете проверить состояние радиатора, удерживая клавишу %s и глядя на технику, а также продуть его с помощью воздуходувки."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Тяжёлый прицеп"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="Похоже, буксируемая нагрузка может быть слишком велика для этой техники. Вы можете продолжать движение, но трансмиссия и привод будут испытывать повышенную нагрузку.&#10;&#10;RMS использует два правила: трактору требуется не менее 10 л.с. на тонну буксируемой массы, а тягачу — не менее 6 л.с. на тонну полной массы автопоезда. Если при высокой нагрузке двигателя соответствующее значение ниже нормы, износ трансмиссии увеличивается."/>
-        <text name="rms_tutorial_hard_start_title" text="Запуск затруднён"/>
-        <text name="rms_tutorial_hard_start_message" text="Запуск двигателя %s затруднён. Это может быть вызвано низким зарядом аккумулятора, морозом, техническими неисправностями или износом стартера.&#10;&#10;Электросистема подвергается высоким нагрузкам во время запуска из-за больших пусковых токов."/>
-        <text name="rms_tutorial_low_fuel_title" text="Мало топлива"/>
-        <text name="rms_tutorial_low_fuel_message" text="Топливо в баке приближается к резерву. Чем меньше его остаётся, тем больше усилий требуется топливному насосу для всасывания, а со дна бака в фильтр попадают вода и осадок, и он быстрее засоряется.&#10;&#10;Лучше заправляться до полного бака в конце дня: в полном баке образуется меньше конденсата."/>
-        <text name="rms_tutorial_lugging_title" text="Работа двигателя внатяг"/>
-        <text name="rms_tutorial_lugging_message" text="Двигатель и особенно трансмиссия страдают при работе внатяг, то есть на низких оборотах под высокой нагрузкой. Возможно, орудие слишком тяжёлое для машины, либо при механической коробке выбрана неподходящая передача."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Перегрев двигателя"/>
-        <text name="rms_tutorial_engine_overheat_message" text="Двигатель начинает перегреваться. Причиной может быть высокая нагрузка, загрязнённый радиатор, жаркая погода или неисправность системы охлаждения техники.&#10;&#10;Будьте внимательны: перегрев — один из самых разрушительных факторов для техники. Страдает не только двигатель: система охлаждения работает на пределе, а жара под капотом ускоряет износ проводки и электрических компонентов."/>
-        <text name="rms_tutorial_engine_overload_title" text="Перегрузка двигателя"/>
-        <text name="rms_tutorial_engine_overload_message" text="Двигатель испытывает очень высокую нагрузку. Возможно, задача слишком тяжела для этой машины и требуется более мощная техника, либо достаточно снизить скорость, чтобы уменьшить нагрузку.&#10;&#10;В любом случае при такой нагрузке износ заметно возрастает."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Что говорит дым"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="Дым из этой машины не декоративен: его цвет — диагностический признак.&#10;&#10;Чёрный дым означает, что топлива больше, чем воздуха: резкий разгон до набора оборотов турбокомпрессором, работа внатяг на низких оборотах, перегрузка, забитый воздушный фильтр, изношенный турбокомпрессор или система впрыска. Синий дым означает, что изношенный двигатель сжигает собственное масло. Белый дым означает, что топливо не сгорает.&#10;&#10;Дым также густеет с ростом нагрузки двигателя. Старая техника дымит гораздо сильнее новой, и это нормально."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="Перегрев CVT"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="Трансмиссия CVT начинает перегреваться. Причиной может быть чрезмерная нагрузка, загрязнённый радиатор, сильная жара или неисправность системы охлаждения трансмиссии. Например, к этому приводит слишком тяжёлый плуг или перегруженный прицеп.&#10;&#10;Будьте внимательны: перегрев — один из самых разрушительных факторов для трансмиссии CVT."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Нагрузка на ходовую часть"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Быстрая езда по пересечённой местности быстро изнашивает ходовую часть %s. Такие удары вредят также проводке с её разъёмами и гидравлике, когда поднято тяжёлое орудие.&#10;&#10;Снижайте скорость на неровной поверхности."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Сильный удар"/>
-        <text name="rms_tutorial_terrain_impact_message" text="Ходовая часть только что получила сильный удар. Препятствие, которое резко останавливает или тормозит машину, сразу изнашивает ходовую часть и приближает её следующую поломку, чаще всего рулевого управления или подшипников.&#10;&#10;Снижайте скорость перед препятствиями."/>
-        <text name="rms_tutorial_cranking_title" text="Частый запуск"/>
-        <text name="rms_tutorial_cranking_message" text="Вы слишком часто запускаете двигатель. Каждый запуск пропускает по электросистеме очень высокий ток, а это ускоряет износ проводки, стартера и других электрических компонентов.&#10;&#10;Избегайте глушить двигатель ради коротких остановок."/>
-        <text name="rms_tutorial_critical_failure_title" text="Критическая неисправность"/>
-        <text name="rms_tutorial_critical_failure_message" text="%s больше не может передвигаться своим ходом.&#10;&#10;Мобильная мастерская позволяет выполнить временный ремонт, достаточный, чтобы техника самостоятельно добралась до мастерской. В противном случае потребуется другой способ эвакуации."/>
-        <text name="rms_tutorial_cold_engine_title" text="Холодный двигатель"/>
-        <text name="rms_tutorial_cold_engine_message" text="Перед высокой нагрузкой прогревайте двигатель постепенно. Используйте умеренную подачу газа и средние обороты, пока двигатель не достигнет рабочей температуры."/>
-        <text name="rms_tutorial_cold_oil_title" text="Холодное трансмиссионное масло"/>
-        <text name="rms_tutorial_cold_oil_message" text="Масло трансмиссии и гидравлики прогревается гораздо медленнее двигателя. Не выполняйте тяжёлую работу, пока оно холодное; прогревайте его постепенно спокойной ездой и лёгкой работой гидравлики."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Перегрев трансмиссии"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="Трансмиссионное масло начинает перегреваться. Причиной может быть слишком большая нагрузка, забитый радиатор, очень жаркая погода или неисправность охлаждения трансмиссии.&#10;&#10;Трансмиссионное масло нагревается на любой машине, не только с CVT. Слишком горячее масло изнашивает трансмиссию и разрушает её уплотнения."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Предупреждение о перегрузке"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s работает под высокой нагрузкой. Об этом вас предупреждает индикатор, который только что загорелся на приборной панели.&#10;&#10;Возможно, машине не хватает мощности для текущей работы. Попробуйте снизить нагрузку: ограничьте скорость круиз-контролем или немного сбросьте газ вместо того, чтобы работать на полной мощности."/>
-        <text name="rms_tutorial_battery_low_title" text="Слабый аккумулятор"/>
-        <text name="rms_tutorial_battery_low_message" text="Аккумулятор этой техники вот-вот полностью разрядится. Такое может случиться после долгой стоянки, из-за сильного мороза или неисправностей в электросистеме.&#10;&#10;При низком заряде запуск становится затруднённым, а затем невозможным. В этом случае можно запустить двигатель от другой машины с помощью пусковых проводов. Перед долгой стоянкой, или если аккумулятор разряжается сам, отключите массу выключателем массы, стоя перед техникой."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Нагрузка на трансмиссию"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="Вы поворачиваете на покрытии с хорошим сцеплением при включённой блокировке дифференциала. В повороте внутренние и внешние колёса проходят разные расстояния, но блокировка заставляет их вращаться с одинаковой скоростью: в трансмиссии возникает напряжение и её износ ускоряется. Отключайте блокировку перед поворотом."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Привод и блокировка"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="Эта машина позволяет выбрать привод: 2WD, 4WD или АВТО, который подключает передний мост при пробуксовке колёс.&#10;&#10;Блокировка дифференциала помогает при потере сцепления, но вредит при повороте на покрытии с хорошим сцеплением: внутренние и внешние колёса не могут вращаться с одной скоростью, поэтому в трансмиссии возникает напряжение. Отключайте блокировку перед поворотом."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="С Realistic Mechanical Systems ваша техника изнашивается и ломается, как настоящая. Чтобы играть без постоянных поломок, достаточно трёх правил:&#10;&#10;1. Проводите обслуживание вовремя. Панель состояния техники в меню игры показывает следующее обслуживание каждой машины.&#10;2. Готовьте технику каждый день. Удерживайте %s рядом с машиной, чтобы проверить её: уровни жидкостей, радиатор, воздушный фильтр, смазка. Очищайте радиатор и воздушный фильтр воздуходувкой и смазывайте машины смазочным шприцем. Орудия и прицепы тоже нужно смазывать: Панель состояния техники показывает те, которым пора. Воздуходувка, смазочный шприц и картриджи со смазкой продаются в магазине, в категории Техобслуживание.&#10;3. Берегите технику: перегрузка, перегрев, работа на холодном двигателе и пробуксовка колёс её изнашивают.&#10;&#10;Если игра кажется слишком сложной, увеличьте Ресурс техники и Периодичность обслуживания на вкладке НАСТРОЙКИ RMS Панели состояния техники."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Зарядное устройство Telwin на тележке, 150 А при 12 В, 80 А при 24 В. Подключите его рядом с машиной, чтобы зарядить аккумулятор допустимым для него током или помочь при запуске (START, 200 А при 12 В). Зарядка следует скорости игрового времени."/>
         <text name="rms_diagnostic_configuration" text="Диагностическое оборудование"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Время ремонта:"/>
         <text name="rms_diagnostic_where_label" text="Где ремонтировать:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Мобильная или собственная мастерская с подключённым оборудованием либо дилер"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Собственная мастерская или дилер"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Дилер"/>
         <text name="rms_diagnostic_note_inspection" text="Этот код говорит, что измеряет машина, а не какая деталь неисправна: её найдёт осмотр."/>
+        <text name="rms_diagnostic_note_adblue" text="Этот код сообщает о низком уровне в баке AdBlue: заправка AdBlue его стирает."/>
         <text name="rms_diagnostic_note_uncoded" text="Осмотр машины найдёт неисправную деталь."/>
         <text name="rms_diagnostic_uncoded" text="Индикатор горит без сохранённого кода. Ни один датчик не контролирует неисправную деталь."/>
         <text name="rms_diagnostic_uncoded_title" text="Индикатор без кода"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Уровень охлаждающей жидкости"/>
         <text name="rms_diagnostic_spn_1639" text="Частота вращения вентилятора"/>
         <text name="rms_diagnostic_spn_168" text="Напряжение аккумулятора"/>
-        <text name="rms_diagnostic_spn_677" text="Реле стартера"/>
+        <text name="rms_diagnostic_spn_676" text="Реле свечей накаливания"/>
         <text name="rms_diagnostic_spn_167" text="Напряжение зарядки"/>
         <text name="rms_diagnostic_spn_157" text="Давление в топливной рампе"/>
+        <text name="rms_diagnostic_spn_1761" text="Уровень в баке AdBlue"/>
         <text name="rms_diagnostic_spn_4375" text="Насос AdBlue"/>
         <text name="rms_diagnostic_spn_3361" text="Дозирующая форсунка AdBlue"/>
         <text name="rms_diagnostic_spn_3216" text="Датчик NOx перед катализатором"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Неисправное устройство или компонент"/>
         <text name="rms_diagnostic_fmi_14" text="Особые указания"/>
         <text name="rms_diagnostic_fmi_16" text="Данные выше нормального диапазона (умеренно серьёзный уровень)"/>
+        <text name="rms_diagnostic_fmi_17" text="Данные ниже нормального диапазона (наименее серьёзный уровень)"/>
         <text name="rms_diagnostic_fmi_18" text="Данные ниже нормального диапазона (умеренно серьёзный уровень)"/>
         <text name="rms_diagnostic_fmi_31" text="Условие присутствует"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="неисправный компонент"/>
         <text name="rms_dashboard_fmi_14" text="требуется вмешательство"/>
         <text name="rms_dashboard_fmi_16" text="высокое значение"/>
+        <text name="rms_dashboard_fmi_17" text="слегка низкое значение"/>
         <text name="rms_dashboard_fmi_18" text="низкое значение"/>
         <text name="rms_dashboard_fmi_31" text="неисправность присутствует"/>
         <text name="rms_diagnostic_log_title" text="Считывание кодов"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Помощь при запуске (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Зарядить аккумулятор"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Отключить массу"/>
         <text name="rms_battery_isolator_restore" text="Включить массу"/>
         <text name="rms_battery_isolator_open" text="Масса отключена. Включите её выключателем массы, стоя перед машиной."/>

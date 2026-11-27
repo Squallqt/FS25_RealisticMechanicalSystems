@@ -1,18 +1,21 @@
 -- Copyright © 2026 Squallqt. All rights reserved.
 
----Debug reading request and response event.
+---Event asking the server for the debug reading of a vehicle, and carrying its answer
 RMS_DebugReadingEvent = {}
 local RMS_DebugReadingEvent_mt = Class(RMS_DebugReadingEvent, Event)
 
 InitEventClass(RMS_DebugReadingEvent, "RMS_DebugReadingEvent")
 
 ---Create instance of Event class
+-- @return table self instance of class event
 function RMS_DebugReadingEvent.emptyNew()
     return Event.new(RMS_DebugReadingEvent_mt)
 end
 
 ---Create new instance of event
+-- @param table vehicle vehicle
 -- @param table? reading reading of the server, nil for the request of a client
+-- @return table self instance of event
 function RMS_DebugReadingEvent.new(vehicle, reading)
     local self = RMS_DebugReadingEvent.emptyNew()
     self.vehicle = vehicle
@@ -20,7 +23,9 @@ function RMS_DebugReadingEvent.new(vehicle, reading)
     return self
 end
 
----Writes the event to a stream
+---Writes event data to a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event goes to
 function RMS_DebugReadingEvent:writeStream(streamId, connection)
     NetworkUtil.writeNodeObject(streamId, self.vehicle)
     if streamWriteBool(streamId, self.reading ~= nil) then
@@ -28,7 +33,9 @@ function RMS_DebugReadingEvent:writeStream(streamId, connection)
     end
 end
 
----Reads the event from a stream
+---Reads event data from a stream
+-- @param integer streamId stream id
+-- @param Connection connection connection the event comes from
 function RMS_DebugReadingEvent:readStream(streamId, connection)
     self.vehicle = NetworkUtil.readNodeObject(streamId)
     if streamReadBool(streamId) then
@@ -38,10 +45,10 @@ function RMS_DebugReadingEvent:readStream(streamId, connection)
 end
 
 ---Server answers an admin request; the client keeps the answer
+-- @param Connection connection connection the event comes from
 function RMS_DebugReadingEvent:run(connection)
     local vehicle = self.vehicle
-    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems == nil
-        or vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
+    if vehicle == nil or vehicle.spec_RealisticMechanicalSystems.isExcludedVehicle then
         return
     end
 
@@ -58,7 +65,8 @@ function RMS_DebugReadingEvent:run(connection)
     RMS_DebugReading.serverReading = { vehicle = vehicle, reading = self.reading, time = g_time }
 end
 
----Asks the server for the reading of a machine
+---Asks the server for the reading of a vehicle
+-- @param table vehicle vehicle
 function RMS_DebugReadingEvent.request(vehicle)
     g_client:getServerConnection():sendEvent(RMS_DebugReadingEvent.new(vehicle))
 end

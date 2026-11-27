@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<i3D name="tank_label" version="1.6" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://i3d.giants.ch/schema/i3d-1.6.xsd">
+  <Asset>
+    <Export program="i3dConverter" version="1.0"/>
+  </Asset>
+
+  <Files>
+    <File fileId="1" filename="tank_label.png"/>
+    <File fileId="2" filename="$data/shaders/decalShader.xml"/>
+  </Files>
+
+
+  <Materials>
+    <Material name="tankLabel_mat" materialId="1" customShaderId="2">
+      <Texture fileId="1"/>
+    </Material>
+  </Materials>
+
+
+  <Shapes externalShapesFile="tankLabel.i3d.shapes">
+  </Shapes>
+
+  <Scene>
+    <Shape name="tankLabel" shapeId="1" clipDistance="60" nodeId="4" castsShadows="false" receiveShadows="true" decalLayer="1" materialIds="1"/>
+  </Scene>
+
+</i3D>

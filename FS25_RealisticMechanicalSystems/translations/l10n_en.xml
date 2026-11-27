@@ -1,12 +1,17 @@
 ﻿<l10n>
     <texts>
-        <!-- HUD -->
+        <!-- HUD and messages -->
         <text name="rms_hud_mass_tractor" text="Vehicle"/>
         <text name="rms_hud_mass_towed" text="Attached"/>
         <text name="rms_hud_mass_total" text="Total"/>
+        <text name="rms_hud_fuel_average" text="Avg."/>
+        <text name="rms_hud_unit_perHour" text="/h"/>
+        <text name="rms_hud_unit_kw" text="kW"/>
+        <text name="rms_hud_unit_kwh" text="kWh"/>
         <text name="rms_hud_drive_2wd" text="2WD"/>
         <text name="rms_hud_drive_4wd" text="4WD"/>
         <text name="rms_hud_drive_auto" text="AUTO"/>
+        <text name="rms_hud_pto_rpm_unit" text="RPM"/>
         <text name="rms_drivetrain_mode_4x2" text="2WD (front axle disengaged)"/>
         <text name="rms_drivetrain_mode_4wd" text="4WD (front axle engaged)"/>
         <text name="rms_drivetrain_mode_auto" text="4WD AUTO"/>
@@ -24,7 +29,6 @@
         <text name="rms_hud_vehicle_notification" text="%s: %s"/>
         <!-- Inputs -->
         <text name="input_RMS_FIELD_INSPECTION" text="Check the vehicle"/>
-        <text name="input_RMS_CLOSE_NOTIFICATION" text="OK"/>
         <text name="input_RMS_TOGGLE_4WD" text="Drive mode"/>
         <text name="input_RMS_TOGGLE_DIFFLOCK" text="Differential lock"/>
         <text name="input_RMS_TOGGLE_PARKBRAKE" text="Parking brake"/>
@@ -61,8 +65,10 @@
         <text name="rms_instantOverhaul_tooltip" text="Sets whether workshop mechanical overhauls finish instantly, including those in progress."/>
         <text name="rms_instantRemap_label" text="Instant Engine Remapping"/>
         <text name="rms_instantRemap_tooltip" text="Sets whether engine remapping and going back to stock finish instantly, including any in progress."/>
-        <text name="rms_debugMode_label" text="Debug Mode"/>
-        <text name="rms_debugMode_tooltip" text="Sets whether the debug window is shown in the vehicle you drive and whether the console receives detailed logs. The %s key opens and closes it; in multiplayer, only administrators see it."/>
+        <text name="rms_debugWindow_label" text="Debug Window"/>
+        <text name="rms_debugWindow_tooltip" text="Sets whether the debug window is shown in the vehicle you drive. The %s key opens it too; in multiplayer, only administrators see it."/>
+        <text name="rms_debugLog_label" text="Detailed Log"/>
+        <text name="rms_debugLog_tooltip" text="Sets whether the console receives the detailed RMS logs, to attach to a bug report, without opening the debug window."/>
         <text name="rms_warningMessages_label" text="Warning Messages"/>
         <text name="rms_warningMessages_tooltip" text="Sets whether warnings such as a cold engine or overheating are shown. Thermal power-limit messages are always shown."/>
         <text name="rms_serviceInterval_label" text="Maintenance spacing"/>
@@ -71,18 +77,8 @@
         <text name="rms_vehicleLifespan_tooltip" text="Sets the operating hours after which a vehicle's condition reaches 0%; the closer it gets, the less reliable the vehicle and the lower its value. A change applies from then on: vehicles keep their condition, only their value is recalculated."/>
         <text name="rms_exhaustSmokeEnabled_label" text="Exhaust Smoke"/>
         <text name="rms_exhaustSmokeEnabled_tooltip" text="Sets whether the exhaust smoke follows the real state of the engine: black when it lacks air, blue when it burns oil, white when fuel leaves unburnt, thicker under load. Older machines smoke far more than modern ones."/>
-        <text name="rms_tutorialMode_label" text="Tutorial Mode"/>
-        <text name="rms_tutorialMode_tooltip" text="Sets whether tutorial tips are shown during gameplay."/>
-        <text name="rms_tutorialResetTips_label" text="Reset Tips"/>
-        <text name="rms_tutorialResetTips_text" text="Reset"/>
-        <text name="rms_tutorialResetTips_tooltip" text="Resets the tutorial tip history: every tip will be shown again."/>
-        <text name="rms_tutorialResetConfirm_title" text="Reset Tutorial Tips?"/>
-        <text name="rms_tutorialResetConfirm_message" text="Reset tutorial tip history and show all tips again?"/>
         <text name="rms_drivetrainEnabled_label" text="4WD and Differential Lock Management"/>
         <text name="rms_drivetrainEnabled_tooltip" text="Sets whether the front axle and differential locks of tractors are controlled by hand. This option replaces the differential control of Enhanced Vehicle: to hand it back, turn this option off, then turn the differentials back on in its menu."/>
-        <text name="rms_drivetrainAllowAutoMode_label" text="Allow AUTO Drive Mode"/>
-        <text name="rms_drivetrainAllowAutoMode_tooltip" text="Sets whether the drive mode switch offers the AUTO position, which engages the front axle when the wheels slip or when working under load, and disengages it on the road. When turned off, vehicles left in AUTO fall back to 4WD."/>
-        <text name="rms_drivetrainAllowAutoMode_locked" text="This setting requires 4WD and differential lock management to be enabled."/>
         <text name="rms_drivetrainParkBrakeEnabled_label" text="Parking Brake"/>
         <text name="rms_drivetrainParkBrakeEnabled_tooltip" text="Sets whether RMS vehicles have a parking brake: automatic on recent machines with a CVT or Powershift transmission, on its own key binding on the others. This option replaces the parking brake of Enhanced Vehicle: to hand it back, turn this option off, then turn its parking brake back on in its menu."/>
         <!-- Workshop -->
@@ -143,7 +139,6 @@
         <text name="rms_ws_label_maintenance_log" text="Maintenance Log"/>
         <text name="rms_ws_label_last_maintenance" text="Last Maintenance"/>
         <text name="rms_ws_task_inspection" text="Inspection"/>
-        <text name="rms_ws_task_maintenance" text="Maintenance"/>
         <text name="rms_ws_task_overhaul" text="Overhaul"/>
         <text name="rms_ws_info_no_breakdowns" text="No identified breakdown. An inspection or a service identifies those the machine does not show yet."/>
         <text name="rms_ws_info_warning_unidentified" text="Warning light on: breakdown to identify. An inspection or a service identifies it, then it can be repaired."/>
@@ -159,7 +154,7 @@
         <text name="rms_workshop_diagnostic_blocked" text="%s: %s. Connect a trolley's diagnostic tool to the machine."/>
         <text name="rms_mobile_workshop_diagnostic_required" text="Electronic diagnostics required"/>
         <text name="rms_mobile_workshop_heavy_work_required" text="Dismantling or specialist equipment required"/>
-        <text name="rms_mobile_workshop_high_voltage_required" text="High-voltage equipment required"/>
+        <text name="rms_mobile_workshop_high_voltage_required" text="Qualified high-voltage technician required"/>
         <text name="rms_ws_status_in_progress_format" text="%s in progress until %s"/>
         <text name="rms_ws_status_open" text="Workshop is open"/>
         <text name="rms_ws_status_closed" text="Workshop is closed"/>
@@ -206,10 +201,17 @@
         <text name="rms_log_description" text="Description"/>
         <text name="rms_log_button_show_report" text="Show report"/>
         <text name="rms_log_empty" text="Log is still empty"/>
-        <!-- Breakdowns -->
+        <!-- Engine and AdBlue -->
         <text name="rms_thermal_power_restored_message" text="Thermal protection: power limit cleared"/>
+        <text name="rms_adblue_title" text="AdBlue"/>
+        <text name="rms_adblue_low_message" text="AdBlue level low: refill AdBlue."/>
+        <text name="rms_adblue_very_low_message" text="AdBlue level very low: refill AdBlue."/>
+        <text name="rms_adblue_very_low_derate_message" text="AdBlue level very low: engine power reduced. Refill AdBlue."/>
+        <text name="rms_adblue_empty_message" text="AdBlue tank empty: refill AdBlue."/>
+        <text name="rms_adblue_empty_derate_message" text="AdBlue tank empty: engine power greatly reduced. Refill AdBlue."/>
+        <text name="rms_adblue_restored_message" text="AdBlue refilled: engine power restored."/>
         <text name="rms_breakdown_at_progress_message" text="in progress"/>
-        <!-- Vehicle Specifications -->
+        <!-- Machine messages -->
         <text name="rms_spec_cold_engine_message" text="Warning! Engine cold: it wears until it has warmed up."/>
         <text name="rms_spec_overheat_engine_message" text="Warning! Engine overheating."/>
         <text name="rms_spec_overheat_transmission_message" text="Warning! Transmission overheating."/>
@@ -274,7 +276,6 @@
         <text name="rms_spec_state_remap" text="Engine Remapping"/>
         <text name="rms_spec_state_overdue" text="Overdue"/>
         <text name="rms_spec_state_optimal" text="Optimal"/>
-        <text name="rms_spec_state_broken" text="Broken"/>
         <text name="rms_spec_state_bad" text="Bad"/>
         <text name="rms_spec_state_excellent" text="Excellent"/>
         <text name="rms_spec_state_good" text="Good"/>
@@ -406,6 +407,7 @@
         <text name="rms_warranty_windup" text="diff lock or 4WD on hard ground"/>
         <text name="rms_warranty_filter" text="clogged filter"/>
         <text name="rms_warranty_oil" text="unsuited engine oil"/>
+        <text name="rms_warranty_header_engagement" text="header engaged above idle"/>
         <text name="rms_warranty_trailer" text="trailer too heavy"/>
         <text name="rms_warranty_aftermarket_part" text="aftermarket part"/>
         <text name="rms_warranty_used_part" text="used part"/>
@@ -443,6 +445,8 @@
         <text name="rms_ws_inspection_mechanical_detail" text="Visual check and function test"/>
         <text name="rms_ws_inspection_electronic" text="Electronic Faults"/>
         <text name="rms_ws_inspection_electronic_detail" text="Fault codes read with a diagnostic tool"/>
+        <text name="rms_ws_inspection_electrical" text="Electrical Faults"/>
+        <text name="rms_ws_inspection_electrical_detail" text="Circuits checked with a multimeter"/>
         <text name="rms_ws_inspection_dormant" text="Latent Defects"/>
         <text name="rms_ws_inspection_dormant_detail" text="Defective part, temporary repair"/>
         <text name="rms_ws_inspection_report" text="Report"/>
@@ -591,12 +595,32 @@
         <text name="rms_report_wear_battery_heat" text="Battery Overheating"/>
         <text name="rms_report_wear_lubrication" text="Overdue Lubrication"/>
         <text name="rms_report_wear_pto_overload" text="PTO Overload"/>
+        <text name="rms_report_wear_pto_shaft_angle" text="PTO Shaft Angle"/>
         <text name="rms_report_wear_harvest_overload" text="Harvesting Overload"/>
         <text name="rms_report_wear_harvest_flow" text="Heavy Grain Flow"/>
         <text name="rms_report_wear_harvest_straw" text="Chopper Overload"/>
         <text name="rms_report_wear_harvest_stones" text="Stones"/>
         <text name="rms_report_wear_harvest_rice" text="Rice Harvesting"/>
         <text name="rms_report_wear_harvest_wet" text="Damp Crop"/>
+        <text name="rms_report_wear_header_starts" text="Header Starts"/>
+        <text name="rms_report_wear_service_overdue" text="Maintenance Interval Expired"/>
+        <text name="rms_report_wear_engine_overload" text="Engine Overload"/>
+        <text name="rms_report_wear_cold_engine" text="Cold Engine"/>
+        <text name="rms_report_wear_fluid_level" text="Low Fluid Level"/>
+        <text name="rms_report_wear_engine_overheat" text="Engine Overheating"/>
+        <text name="rms_report_wear_lugging" text="Engine Lugging"/>
+        <text name="rms_report_wear_wheel_slip" text="Wheel Slip"/>
+        <text name="rms_report_wear_drivetrain_windup" text="Drivetrain Wind-Up"/>
+        <text name="rms_report_wear_cold_oil" text="Cold Transmission Oil"/>
+        <text name="rms_report_wear_transmission_overheat" text="Transmission Overheating"/>
+        <text name="rms_report_wear_wet_weather" text="Wet Weather"/>
+        <text name="rms_report_wear_cranking" text="Frequent Starting"/>
+        <text name="rms_report_wear_starter_heat" text="Starter Overheating"/>
+        <text name="rms_report_wear_steering" text="Steering While Stationary"/>
+        <text name="rms_report_wear_park_brake" text="Parking Brake"/>
+        <text name="rms_report_wear_low_fuel" text="Low Fuel"/>
+        <text name="rms_report_wear_idle_deposit" text="Extended Idling"/>
+        <text name="rms_report_wear_pto_engagement" text="PTO Engagement"/>
         <text name="rms_report_component_title" text="Component"/>
         <text name="rms_report_system_condition_transmission" text="Transmission"/>
         <text name="rms_report_system_condition_power" text="Current Power"/>
@@ -613,7 +637,7 @@
         <text name="rms_report_transmission_cvt_ratio_limited" text="Ratio Reduced"/>
         <text name="rms_report_transmission_cvt_pressure_instability" text="Irregular Drive Transfer"/>
         <text name="rms_report_transmission_failed" text="Failed"/>
-        <!-- Tools and Inspection -->
+        <!-- Hand tools -->
         <text name="rms_grease_gun_name" text="Grease Gun"/>
         <text name="rms_grease_gun_no_vehicle" text="No vehicle in lubrication range"/>
         <text name="rms_grease_gun_function" text="Greases the grease points of machines. Loads with a grease cartridge."/>
@@ -661,32 +685,39 @@
         <text name="rms_fluid_function_engine_oil_standard" text="Engine oil, for machines without AdBlue or particulate filter"/>
         <text name="rms_fluid_function_utto" text="Transmission and hydraulic oil for manual top-up"/>
         <text name="rms_fluid_function_coolant" text="Coolant for manual top-up"/>
+        <text name="rms_fluid_function_adblue" text="AdBlue for the AdBlue tank of machines that have one"/>
         <text name="rms_fluid_pour_action" text="Pour: %s"/>
         <text name="rms_fluid_level_done" text="Level Topped Up"/>
         <text name="rms_fluid_container_empty" text="Container Empty"/>
         <text name="rms_fluid_drum_empty" text="Drum Empty"/>
+        <text name="rms_fluid_tank_empty" text="Tank Empty"/>
         <text name="rms_fluid_container_label" text="Container"/>
         <text name="rms_fluid_drum_label" text="Drum"/>
+        <text name="rms_fluid_tank_label" text="Tank"/>
         <text name="rms_fluid_hand_take" text="Take to Pour"/>
         <text name="rms_fluid_hand_carry" text="Carry Container"/>
         <text name="rms_drum_pump_name" text="Battery Drum Pump"/>
-        <text name="rms_drum_pump_function" text="Fits a 200 L drum to fill machines through its nozzle"/>
+        <text name="rms_drum_pump_function" text="Fits a drum or a tank to fill machines through its nozzle"/>
         <text name="rms_drum_pump_mount" text="Fit on Drum"/>
+        <text name="rms_drum_pump_mount_tank" text="Fit on Tank"/>
         <text name="rms_drum_pump_take" text="Take Pump Back"/>
         <text name="rms_drum_pump_nozzle_take" text="Take Nozzle"/>
         <text name="rms_drum_pump_nozzle_return" text="Hang Up Nozzle"/>
         <text name="rms_drum_pump_hose_range" text="The pump's hose restricts you from going any further.&#10;The nozzle will be hung up in %.1f m!"/>
         <text name="rms_drum_pump_machine_too_far" text="Bring the drum closer: the hose is 4 m long"/>
+        <text name="rms_drum_pump_tank_too_far" text="Bring the tank closer: the hose is 4 m long"/>
         <text name="rms_drum_pump_required" text="Drum Pump Required"/>
         <text name="rms_fluid_level_under_gauge" text="Below Gauge"/>
         <text name="rms_fluid_circuit_engineOil" text="Engine Oil"/>
         <text name="rms_fluid_circuit_coolant" text="Coolant"/>
+        <text name="rms_fluid_circuit_adBlue" text="AdBlue Tank"/>
         <text name="rms_fluid_circuit_transmissionOil" text="Transmission Oil"/>
         <text name="rms_fluid_circuit_hydraulicFluid" text="Hydraulic Oil"/>
         <text name="rms_fluid_circuit_transmissionHydraulic" text="Transmission and Hydraulic Oil"/>
         <text name="rms_fluid_hud_engineOil" text="Engine Oil"/>
         <text name="rms_fluid_hud_transmissionHydraulic" text="Trans-Hydraulic Oil"/>
         <text name="rms_fluid_hud_coolant" text="Coolant"/>
+        <text name="rms_fluid_hud_adBlue" text="AdBlue"/>
         <text name="rms_fluid_incompatible_title" text="Incompatible Fluid"/>
         <text name="rms_fluid_incompatible_message_engineOil" text="This product is not intended for this circuit. It will contaminate it and may wear the engine up to three times faster and make it run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_coolant" text="This product is not intended for this circuit. It will contaminate it and may wear the cooling system up to three times faster and make the engine run hotter. Only a complete fluid replacement will remove the contamination. Continue?"/>
@@ -694,8 +725,9 @@
         <text name="rms_fluid_incompatible_message_hydraulicFluid" text="This product is not intended for this circuit. It will contaminate it and may wear the hydraulics up to three times faster, make them run hotter and slow them down. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_incompatible_message_transmissionHydraulic" text="This product is not intended for this circuit. It will contaminate it and may wear the transmission and hydraulics up to three times faster, make them run hotter and slow the hydraulics down. Only a complete fluid replacement will remove the contamination. Continue?"/>
         <text name="rms_fluid_unsuited_oil_title" text="Unsuited Engine Oil"/>
-        <text name="rms_fluid_unsuited_oil_message" text="This engine runs on AdBlue or has a particulate filter: its manual asks for an oil made for them. With this oil, its oil change will come up to twice as early. A particulate filter also fills with ash 1.5 times as fast. Continue?"/>
+        <text name="rms_fluid_unsuited_oil_message" text="This engine runs on AdBlue or has a particulate filter: it needs an oil made for them. With this oil, its oil change will come up to twice as early. A particulate filter also fills with ash 1.5 times as fast. Continue?"/>
         <text name="rms_fluid_error_no_circuit" text="This vehicle does not require a fluid top-up"/>
+        <text name="rms_fluid_error_no_adblue_tank" text="This vehicle has no AdBlue tank"/>
         <text name="rms_fluid_error_motor_running" text="Stop the engine before transferring fluid"/>
         <text name="rms_fluid_error_vehicle_moving" text="The vehicle must be stationary"/>
         <text name="rms_fluid_error_busy" text="Another container is already filling this circuit"/>
@@ -736,16 +768,12 @@
         <text name="rms_inspection_status_slightly_low" text="Slightly Low"/>
         <text name="rms_inspection_status_slightly_dirty" text="Slightly Clogged"/>
         <text name="rms_inspection_status_grease_due" text="Greasing Due"/>
-        <text name="rms_inspection_status_slight_moisture" text="Light Moisture"/>
-        <text name="rms_inspection_status_seepage" text="Seepage"/>
-        <text name="rms_inspection_status_severe_leak" text="Severe Leak"/>
         <text name="rms_inspection_status_low" text="Low"/>
         <text name="rms_inspection_status_very_low" text="Very Low"/>
         <text name="rms_inspection_status_critically_low" text="Urgent Top-Up"/>
         <text name="rms_inspection_status_critically_clogged" text="Fully Obstructed"/>
         <text name="rms_inspection_status_dirty" text="Clogged"/>
         <text name="rms_inspection_status_grease_late" text="Overdue"/>
-        <text name="rms_inspection_status_active_leak" text="Active Leak"/>
         <text name="rms_inspection_status_heavily_clogged" text="Heavily Clogged"/>
         <text name="rms_inspection_status_not_required" text="Not Required"/>
         <text name="rms_inspection_status_change_overdue" text="Change Overdue"/>
@@ -910,8 +938,6 @@
         <text name="rms_fleet_check" text="Inspection"/>
         <text name="rms_fleet_location" text="Location"/>
         <text name="rms_fleet_next_service" text="Next maintenance"/>
-        <text name="rms_fleet_remaining" text="%s h remaining"/>
-        <text name="rms_fleet_overdue" text="%s h overdue"/>
         <text name="rms_fleet_overdue_label" text="Overdue"/>
         <text name="rms_fleet_overdue_count" text="Overdue: %d"/>
         <text name="rms_fleet_due_soon_label" text="Due soon"/>
@@ -919,6 +945,7 @@
         <text name="rms_fleet_part_worn" text="Worn"/>
         <text name="rms_fleet_part_failed" text="Failed"/>
         <text name="rms_fleet_part_unmeasured" text="Not measured"/>
+        <text name="rms_fleet_part_replaced" text="Part replaced"/>
         <text name="rms_fleet_parts_reading" text="Parts measured %s"/>
         <text name="rms_fleet_parts_need_complete" text="Parts measured at the next complete inspection"/>
         <text name="rms_fleet_greasing_done" text="Greasing up to date"/>
@@ -956,94 +983,10 @@
         <text name="rms_sell_dialog_repair_penalty" text="Repair"/>
         <text name="rms_sell_dialog_washing_penalty" text="Washing"/>
         <text name="rms_sell_dialog_deposit_refund" text="Deposit Refund"/>
-        <!-- Tutorial -->
-        <text name="rms_tutorial_fluid_level_title" text="Low Fluid Level"/>
-        <text name="rms_tutorial_fluid_level_message" text="One of the fluids on this machine has dropped below the mark on its gauge.&#10;&#10;Engine oil is burnt off as the hours pass, and a tired engine drinks far more of it. Coolant, transmission oil and hydraulic oil only go down through a leak.&#10;&#10;Under the mark the machine is only asking for a top-up and still works normally. The lower the level, the more easily its pump draws air on slopes: the oil pressure light flickers, and on the gearbox or hydraulic side the pump whines and hydraulic movements slow down. Every minute spent like this damages the crankshaft bearings or the pump: stop and top up the level. A machine short of coolant, transmission oil or hydraulic oil also runs hot.&#10;&#10;Buy a container of compatible product in the shop, bring it to the machine and top up the level. All products intended for that circuit have the same effect; a wrong fluid contaminates only that circuit. At the dealer, the required liters are supplied and charged."/>
-        <text name="rms_tutorial_welcome_dialog_title" text="Welcome to Realistic Mechanical Systems"/>
-        <text name="rms_tutorial_welcome_disable_button" text="Disable tips"/>
-        <text name="rms_tutorial_welcome_enable_button" text="Enable tips"/>
-        <text name="rms_tutorial_welcome_message" text="This mod completely overhauls the vehicle damage and maintenance systems in the game. There are many changes, so tutorial tips will appear from time to time. They will help you understand the new mechanics more quickly, avoid common mistakes, and keep your machines from breaking down.&#10;&#10;If you want, you can disable tutorial tips right now. You can always enable them again later in the mod settings, under the Realistic Mechanical Systems section."/>
-        <text name="rms_tutorial_wet_weather_title" text="Wet Weather"/>
-        <text name="rms_tutorial_wet_weather_message" text="Moisture damages wiring and electrical equipment. Electrical system wear rises slightly in rain, snow or hail on a machine left outdoors."/>
-        <text name="rms_tutorial_wheel_slip_title" text="Wheel Slip"/>
-        <text name="rms_tutorial_wheel_slip_message" text="Your wheels are slipping badly. Slip is one of the most destructive factors for the transmission and brings your next workshop visit much closer."/>
-        <text name="rms_tutorial_service_due_soon_title" text="Maintenance Due Soon"/>
-        <text name="rms_tutorial_service_due_soon_message" text="%s will soon need maintenance. Select the recommended package at the workshop: it covers the work due. Operating hours or calendar time trigger service, whichever comes first, even with little use. Ease of maintenance summarizes intervention complexity; routine servicing remains possible at a mobile workshop."/>
-        <text name="rms_tutorial_service_interval_expired_title" text="Maintenance Interval Expired"/>
-        <text name="rms_tutorial_service_interval_expired_message" text="The maintenance interval of %s has expired.&#10;&#10;Head to a workshop as soon as possible and select &quot;Maintenance&quot;. Continuing to operate a vehicle with overdue maintenance greatly increases the risk of multiple breakdowns."/>
-        <text name="rms_tutorial_steering_title" text="Steering While Stationary"/>
-        <text name="rms_tutorial_steering_message" text="It is best not to steer while standing still. This puts a heavy load on the steering gear and front axle components, which increases wear on the running gear.&#10;&#10;Move forward slightly before turning: the wheels will turn much more easily."/>
-        <text name="rms_tutorial_cooling_air_check_title" text="Cooling and Air Filter"/>
-        <text name="rms_tutorial_cooling_air_check_message" text="The radiator or air filter is clogged. Hold the %s key while looking at the vehicle to see which one. Clean it with the compressed-air blower. If the filter can no longer be blown clean, the workshop replaces it from the %s service up."/>
-        <text name="rms_tutorial_needs_lubrication_title" text="Lubrication Required"/>
-        <text name="rms_tutorial_needs_lubrication_message" text="Your %s has grease points to grease.&#10;&#10;In RMS, every machine has the grease points of its operator's manual. They come due again over the days the machine works: every working day, or every few working days for those the manual greases less often. A machine greased late wears its chassis faster.&#10;&#10;Buy a grease gun and cartridges in the shop. With the gun in hand, stand in front of a cartridge to load it, then aim at the machine: each click greases one grease point, and holding the click carries on to the next.&#10;&#10;To see the grease points left, hold %s while looking at the vehicle."/>
-        <text name="rms_tutorial_needs_repair_title" text="Breakdown Detected"/>
-        <text name="rms_tutorial_needs_repair_message" text="Your %s has a problem. One of its parts may have failed.&#10;&#10;Take it to the workshop: an inspection, or a service if one is due, identifies the breakdown. Do not wait: the breakdown can keep worsening, and the repair cost rises with it.&#10;&#10;Once the breakdown is identified, have it repaired at the workshop."/>
-        <text name="rms_tutorial_needs_overhaul_title" text="Overhaul Required"/>
-        <text name="rms_tutorial_needs_overhaul_message" text="Your %s is showing its age. It is time to consider a replacement or an overhaul. It is a long and expensive operation, but it is the only way to return the machine to its original condition.&#10;&#10;Vehicle lifespan is set in the mod settings: the higher it is, the slower your vehicles wear."/>
-        <text name="rms_tutorial_needs_preventive_title" text="Elevated Breakdown Risk"/>
-        <text name="rms_tutorial_needs_preventive_message" text="The engine, fuel system or cooling system of %s has an increased risk of failure.&#10;&#10;%s service: adjusts the valves and checks the injectors and the thermostat, which lowers that risk."/>
-        <text name="rms_tutorial_age_degradation_title" text="Age Degradation"/>
-        <text name="rms_tutorial_age_degradation_message" text="In RMS, vehicles gradually lose part of their original performance as they age.&#10;&#10;After about a third of their lifespan, age wear slightly reduces important characteristics such as power or braking. The effect then strengthens and becomes clearly visible near the end of life.&#10;&#10;This degradation can be disabled in the mod settings."/>
-        <text name="rms_tutorial_poor_consumables_title" text="Poor-Quality Consumables"/>
-        <text name="rms_tutorial_poor_consumables_message" text="Your %s received a defective filter at its last maintenance. This happens with the cheaper grades.&#10;&#10;The filter lets dirt through: the circuit it protects wears faster until the filter is changed. New maintenance changes it. Only a complete inspection identifies it."/>
-        <text name="rms_tutorial_poor_parts_title" text="Poor-Quality Parts"/>
-        <text name="rms_tutorial_poor_parts_message" text="Your %s received a poor-quality part during a repair. The breakdown will most likely return soon.&#10;&#10;You can wait for it to come back, or run a complete inspection, which identifies the faulty part reliably."/>
-        <text name="rms_tutorial_park_brake_title" text="Parking Brake"/>
-        <text name="rms_tutorial_park_brake_message" text="The parking brake is engaged. It engages by itself once you leave the machine at a standstill, and it releases as soon as you press the throttle again. It also engages when you stop the engine, or after 45 seconds at a standstill.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own."/>
-        <text name="rms_tutorial_park_brake_manual_message" text="The parking brake is engaged. You engage and release it yourself with its own key: press the throttle with the brake engaged and the machine strains against it, wearing out its brakes.&#10;&#10;On a slope, it is what keeps the machine from rolling away on its own: leave the machine without engaging it, and it may roll away."/>
-        <text name="rms_tutorial_preheat_title" text="Diesel Preheating"/>
-        <text name="rms_tutorial_preheat_message" text="On a cold diesel engine, one press of the start control switches on the ignition and begins the automatic glow-plug cycle. The dashboard lamps light up briefly, then the preheat lamp remains on until the engine is ready. Do not repeat the command: the starter engages automatically when the lamp goes out."/>
-        <text name="rms_tutorial_pto_engagement_title" text="PTO Engagement"/>
-        <text name="rms_tutorial_pto_engagement_message" text="Engage the PTO at idle, then raise the engine speed: engaging it at high revs shocks the driveline, all the more with a heavy implement. Every engagement also wears its clutch."/>
-        <text name="rms_tutorial_pto_raised_title" text="PTO and Raised Implement"/>
-        <text name="rms_tutorial_pto_raised_message" text="Running the PTO with the implement raised bends the cardan joints at a steep angle and wears them quickly. Switch the PTO off before lifting the implement for transport."/>
-        <text name="rms_tutorial_idle_and_downtime_title" text="Idling and Downtime"/>
-        <text name="rms_tutorial_idle_and_downtime_message" text="Wear is much lower when the machine is running without working. With the engine off it becomes minimal. Under cover, it disappears entirely."/>
-        <text name="rms_tutorial_idle_deposit_title" text="Extended Idling"/>
-        <text name="rms_tutorial_idle_deposit_message" text="The machine has been idling for too long. Long idle periods do not just waste fuel: over time they also encourage deposits in the fuel system and harm the general condition of the engine.&#10;&#10;If the machine is not needed right now, it is better to shut the engine down."/>
-        <text name="rms_tutorial_hot_weather_title" text="Hot Weather"/>
-        <text name="rms_tutorial_hot_weather_message" text="It is very hot today. In this weather, watch the radiator cleanliness and avoid overloading the engine, or overheating is only a matter of time.&#10;&#10;You can check the radiator condition: hold the %s key while looking at the machine. Cleaning is done with the Air Blower."/>
-        <text name="rms_tutorial_heavy_trailer_title" text="Heavy Trailer"/>
-        <text name="rms_tutorial_heavy_trailer_message" text="The towed load looks too heavy for this vehicle. You can keep driving, but the transmission and drivetrain will take more strain.&#10;&#10;RMS uses two references: a tractor needs at least 10 hp per tonne towed, and a truck at least 6 hp per tonne of gross combined weight. Below the applicable value and under high engine load, transmission wear increases."/>
-        <text name="rms_tutorial_hard_start_title" text="Hard Start"/>
-        <text name="rms_tutorial_hard_start_message" text="The engine of your %s is hard to start. A weak battery, frost, a mechanical breakdown or starter wear can be the cause.&#10;&#10;The electrical system takes heavy loads during starting, because of the high inrush currents."/>
-        <text name="rms_tutorial_low_fuel_title" text="Low Fuel"/>
-        <text name="rms_tutorial_low_fuel_message" text="The tank is nearing reserve. The less fuel is left, the harder the fuel pump has to work to draw it, and the bottom of the tank sends its water and sediment to the filter, which clogs faster.&#10;&#10;Better to fill up at the end of the day: a full tank gathers less condensation."/>
-        <text name="rms_tutorial_lugging_title" text="Engine Lugging"/>
-        <text name="rms_tutorial_lugging_message" text="The engine, and especially the transmission, do not like lugging: low engine speed under heavy load. The attached implement may be too heavy for the machine, or the selected gear is not the right one if the gearbox is manual."/>
-        <text name="rms_tutorial_engine_overheat_title" text="Engine Overheating"/>
-        <text name="rms_tutorial_engine_overheat_message" text="The engine is starting to overheat. This can happen for one or several reasons: the engine is under heavy load, the radiator is clogged, the weather is hot, or there is a fault in the vehicle's cooling system.&#10;&#10;Stay alert: overheating is one of the most destructive factors for any machine. It does not only harm the engine: the cooling system is pushed to its limit, and heat in the engine bay accelerates the degradation of wiring and electrical components."/>
-        <text name="rms_tutorial_engine_overload_title" text="Engine Overload"/>
-        <text name="rms_tutorial_engine_overload_message" text="The engine is under very heavy strain. The task may be too much for this machine and call for a more powerful vehicle, or it may be enough to slow down to reduce the load.&#10;&#10;In any case, wear rises noticeably under this strain."/>
-        <text name="rms_tutorial_exhaust_smoke_title" text="Reading the Smoke"/>
-        <text name="rms_tutorial_exhaust_smoke_message" text="The smoke coming out of this machine is not decoration: its color is a diagnosis.&#10;&#10;Black smoke means the engine is getting more fuel than air: a hard pickup before the turbocharger has come up to speed, an engine lugging at low speed, overload, a clogged air filter, a tired turbocharger or worn injection. Blue smoke means a tired engine burning its own oil. White smoke means fuel leaving unburnt.&#10;&#10;The plume also grows with the work the engine is doing. Older machines smoke far more than recent ones, and that is normal."/>
-        <text name="rms_tutorial_cvt_overheat_title" text="CVT Overheating"/>
-        <text name="rms_tutorial_cvt_overheat_message" text="The CVT transmission is starting to overheat. It can come from excessive load, a clogged radiator, very hot weather, or a fault in the transmission cooling circuit. A plow that is too heavy or an overloaded trailer is enough to cause it.&#10;&#10;Stay alert: overheating is one of the most destructive factors for a CVT transmission."/>
-        <text name="rms_tutorial_chassis_vibration_title" text="Rough Ground"/>
-        <text name="rms_tutorial_chassis_vibration_message" text="Driving fast over rough terrain quickly wears out the running gear of your %s. These jolts also damage the wiring and its connectors, and the hydraulics when a heavy implement is raised.&#10;&#10;Slow down on uneven ground."/>
-        <text name="rms_tutorial_terrain_impact_title" text="Hard Impact"/>
-        <text name="rms_tutorial_terrain_impact_message" text="The running gear has just taken a hard impact. Hitting an obstacle that stops the machine dead or slows it sharply wears the chassis on the spot and brings its next breakdown closer, most often in the steering or the wheel bearings.&#10;&#10;Slow down before obstacles."/>
-        <text name="rms_tutorial_cranking_title" text="Frequent Starting"/>
-        <text name="rms_tutorial_cranking_message" text="The engine is being started too often. Every start sends a very high current through the electrical system, which accelerates wear on the wiring, the starter and the other electrical components.&#10;&#10;Avoid shutting the engine down for short breaks."/>
-        <text name="rms_tutorial_critical_failure_title" text="Critical Failure"/>
-        <text name="rms_tutorial_critical_failure_message" text="Your %s can no longer move under its own power.&#10;&#10;A mobile workshop allows a temporary repair, enough for the machine to reach the workshop on its own. Otherwise, you will have to have it recovered another way."/>
-        <text name="rms_tutorial_cold_engine_title" text="Cold Engine"/>
-        <text name="rms_tutorial_cold_engine_message" text="Warm the engine gently before applying high load. Use moderate throttle and engine speed until it reaches operating temperature."/>
-        <text name="rms_tutorial_cold_oil_title" text="Cold Transmission Oil"/>
-        <text name="rms_tutorial_cold_oil_message" text="Transmission and hydraulic oil warms much more slowly than the engine. Avoid heavy work while the oil is cold; warm it gradually with light driving and light hydraulic use."/>
-        <text name="rms_tutorial_transmission_overheat_title" text="Transmission Overheating"/>
-        <text name="rms_tutorial_transmission_overheat_message" text="The transmission oil is starting to overheat. It can come from too much load, a clogged radiator, very hot weather, or a fault in the transmission cooling.&#10;&#10;Transmission oil heats up on every machine, not only on a CVT. Oil that runs too hot wears the gearbox and destroys its seals."/>
-        <text name="rms_tutorial_overload_indicator_title" text="Overload Warning"/>
-        <text name="rms_tutorial_overload_indicator_message" text="%s is under heavy load. The warning indicator that just lit up on the dashboard is letting you know.&#10;&#10;The machine may not have enough power for the current task. Try reducing the load: limit your speed with cruise control, or ease off the throttle instead of running at full power."/>
-        <text name="rms_tutorial_battery_low_title" text="Weak Battery"/>
-        <text name="rms_tutorial_battery_low_message" text="The battery of this machine is about to go flat. This happens after a long period of standing, in severe cold, or because of an electrical system fault.&#10;&#10;At low charge, starting becomes difficult and then impossible. You can then start the engine from another vehicle using the jumper cables. Before a long stop, or if the battery goes flat on its own, disconnect it at the battery disconnect switch, on foot in front of the machine."/>
-        <text name="rms_tutorial_drivetrain_windup_title" text="Drivetrain Wind-Up"/>
-        <text name="rms_tutorial_drivetrain_windup_message" text="You are turning on a high-grip surface with the differential lock engaged. Inside and outside wheels travel different distances in a curve, but the differential lock forces them to rotate at the same speed: the drivetrain winds up and transmission wear increases. Release the differential lock before turning."/>
-        <text name="rms_tutorial_drivetrain_modes_title" text="Drivetrain Modes and Differential Lock"/>
-        <text name="rms_tutorial_drivetrain_modes_message" text="This machine lets you choose its drivetrain: 2WD, 4WD or AUTO, which engages the front axle as soon as the wheels slip.&#10;&#10;The differential lock finds grip where there is none left, but it costs dearly when turning on a high-grip surface: inner and outer wheels cannot turn at the same speed, and the drivetrain takes the strain. Release it before you turn."/>
+        <!-- Welcome -->
+        <text name="rms_welcome_message" text="With Realistic Mechanical Systems, your machines wear out and break down like real ones. Three rules are enough to play without constant breakdowns:&#10;&#10;1. Service on time. The Mechanical Dashboard, in the game menu, shows the next service of each machine.&#10;2. Prepare your machines every day. Hold %s near a machine to check it: fluid levels, radiator, air filter, greasing. Clean their radiator and air filter with the Air Blower, and grease them with the Grease Gun. Your implements and trailers need greasing too: the Mechanical Dashboard lists the ones due. The Air Blower, the Grease Gun and grease cartridges are in the shop, Maintenance category.&#10;3. Go easy on your machines: overloading, overheating, working with a cold engine and wheel slip wear them out.&#10;&#10;If the game feels too hard, increase the Vehicle Lifespan and the Maintenance spacing in the RMS SETTINGS tab of the Mechanical Dashboard."/>
 
-        <!-- Mobile battery charger -->
+        <!-- Charger and diagnostic -->
         <text name="rms_charger_name" text="Doctor Charge 155 Connect"/>
         <text name="rms_charger_function" text="Telwin charger on a trolley, 150 A at 12 V, 80 A at 24 V. Connect it near the vehicle to charge its battery at the current it accepts, or for starting aid (START, 200 A at 12 V). Charging follows the game's time speed."/>
         <text name="rms_diagnostic_configuration" text="Diagnostic Tool"/>
@@ -1097,8 +1040,9 @@
         <text name="rms_diagnostic_repair_time_label" text="Repair time:"/>
         <text name="rms_diagnostic_where_label" text="Where to repair:"/>
         <text name="rms_diagnostic_where_diagnostic" text="Mobile or personal workshop with the tool connected, or dealer"/>
-        <text name="rms_diagnostic_where_high_voltage" text="Personal workshop or dealer"/>
+        <text name="rms_diagnostic_where_high_voltage" text="Dealer"/>
         <text name="rms_diagnostic_note_inspection" text="This code tells what the machine measures, not which part is at fault: an inspection finds it."/>
+        <text name="rms_diagnostic_note_adblue" text="This code tells the AdBlue tank is low: refilling AdBlue clears it."/>
         <text name="rms_diagnostic_note_uncoded" text="An inspection of the machine finds the part at fault."/>
         <text name="rms_diagnostic_uncoded" text="Warning light on with no stored code. No sensor monitors the part at fault."/>
         <text name="rms_diagnostic_uncoded_title" text="Light Without Code"/>
@@ -1125,9 +1069,10 @@
         <text name="rms_diagnostic_spn_111" text="Engine coolant level"/>
         <text name="rms_diagnostic_spn_1639" text="Fan speed"/>
         <text name="rms_diagnostic_spn_168" text="Battery voltage"/>
-        <text name="rms_diagnostic_spn_677" text="Starter relay"/>
+        <text name="rms_diagnostic_spn_676" text="Preheat relay"/>
         <text name="rms_diagnostic_spn_167" text="Charging system voltage"/>
         <text name="rms_diagnostic_spn_157" text="Injection rail pressure"/>
+        <text name="rms_diagnostic_spn_1761" text="AdBlue tank level"/>
         <text name="rms_diagnostic_spn_4375" text="AdBlue pump"/>
         <text name="rms_diagnostic_spn_3361" text="AdBlue dosing injector"/>
         <text name="rms_diagnostic_spn_3216" text="Upstream NOx sensor"/>
@@ -1167,6 +1112,7 @@
         <text name="rms_diagnostic_fmi_12" text="Bad intelligent device or component"/>
         <text name="rms_diagnostic_fmi_14" text="Special instructions"/>
         <text name="rms_diagnostic_fmi_16" text="Data above normal operational range (moderately severe level)"/>
+        <text name="rms_diagnostic_fmi_17" text="Data below normal operational range (least severe level)"/>
         <text name="rms_diagnostic_fmi_18" text="Data below normal operational range (moderately severe level)"/>
         <text name="rms_diagnostic_fmi_31" text="Condition exists"/>
         <text name="rms_dashboard_code_message" text="%s, %s"/>
@@ -1180,6 +1126,7 @@
         <text name="rms_dashboard_fmi_12" text="faulty component"/>
         <text name="rms_dashboard_fmi_14" text="service required"/>
         <text name="rms_dashboard_fmi_16" text="high"/>
+        <text name="rms_dashboard_fmi_17" text="slightly low"/>
         <text name="rms_dashboard_fmi_18" text="low"/>
         <text name="rms_dashboard_fmi_31" text="fault present"/>
         <text name="rms_diagnostic_log_title" text="Code Reading"/>
@@ -1222,7 +1169,7 @@
         <text name="rms_charger_start_connected" text="Starting aid (START, 200 A)."/>
         <text name="rms_charger_mode_charge" text="Charge the battery"/>
 
-        <!-- Battery isolator -->
+        <!-- Isolator and codes -->
         <text name="rms_battery_isolator_cut" text="Disconnect the battery"/>
         <text name="rms_battery_isolator_restore" text="Reconnect the battery"/>
         <text name="rms_battery_isolator_open" text="Battery disconnected. Reconnect it at the battery disconnect switch, on foot in front of the vehicle."/>

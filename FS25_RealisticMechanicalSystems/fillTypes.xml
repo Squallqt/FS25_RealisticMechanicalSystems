@@ -2,53 +2,57 @@
 <map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/fillTypes.xsd">
     <!-- Container contents -->
     <fillTypes>
-        <fillType name="RMS_MOTOREX_FARMER_PRO_10W40" title="MOTOREX Farmer Pro SAE 10W/40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTOREX_FARMER_PRO_10W40" title="Farmer Pro" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.868" />
-            <image hud="brands/hud_brand_motorex.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_MOTOREX_FARMER_UNI_15W40" title="MOTOREX Farmer UNI SAE 15W/40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTOREX_FARMER_UNI_15W40" title="Farmer UNI" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.880" />
-            <image hud="brands/hud_brand_motorex.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_MOTOREX_FARMER_POLY_604" title="MOTOREX Farmer Poly 604" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTOREX_FARMER_POLY_604" title="Farmer Poly 604" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.868" />
-            <image hud="brands/hud_brand_motorex.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsTransmissionOil.png" />
         </fillType>
-        <fillType name="RMS_MOTOREX_COOLANT_M30_RTU" title="MOTOREX Coolant M3.0 Ready To Use" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTOREX_COOLANT_M30_RTU" title="Coolant M3.0" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.070" />
-            <image hud="brands/hud_brand_motorex.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsCoolant.png" />
         </fillType>
-        <fillType name="RMS_MOTUL_AGRI_TEKNO_15W40" title="MOTUL AGRI TEKNO 15W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTUL_AGRI_TEKNO_15W40" title="AGRI TEKNO" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.869" />
-            <image hud="brands/hud_brand_motul.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_MOTUL_AGRI_TEKNO_LA_10W40" title="MOTUL AGRI TEKNO LA 10W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTUL_AGRI_TEKNO_LA_10W40" title="AGRI TEKNO LA" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.862" />
-            <image hud="brands/hud_brand_motul.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_MOTUL_TRH_97" title="MOTUL TRH 97" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTUL_TRH_97" title="TRH 97" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.886" />
-            <image hud="brands/hud_brand_motul.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsTransmissionOil.png" />
         </fillType>
-        <fillType name="RMS_MOTUL_AUTO_COOL_EXPERT_37C" title="MOTUL AUTO COOL EXPERT -37°C" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_MOTUL_AUTO_COOL_EXPERT_37C" title="AUTO COOL EXPERT" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.076" />
-            <image hud="brands/hud_brand_motul.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsCoolant.png" />
         </fillType>
-        <fillType name="RMS_FUCHS_AGRIFARM_MOT_XLA_10W40" title="FUCHS Agrifarm MOT X-LA 10W40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_FUCHS_AGRIFARM_MOT_XLA_10W40" title="Agrifarm MOT X-LA" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.859" />
-            <image hud="brands/hud_brand_fuchs.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_FUCHS_AGRIFARM_MOT_15W40" title="FUCHS Agrifarm MOT 15W-40" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_FUCHS_AGRIFARM_MOT_15W40" title="Agrifarm MOT" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.886" />
-            <image hud="brands/hud_brand_fuchs.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsEngineOil.png" />
         </fillType>
-        <fillType name="RMS_FUCHS_AGRIFARM_UTTO_MP" title="FUCHS Agrifarm UTTO MP" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_FUCHS_AGRIFARM_UTTO_MP" title="Agrifarm UTTO MP" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.880" />
-            <image hud="brands/hud_brand_fuchs.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsTransmissionOil.png" />
         </fillType>
-        <fillType name="RMS_FUCHS_FRICOFIN_LD50" title="FUCHS Fricofin LD50" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+        <fillType name="RMS_FUCHS_FRICOFIN_LD50" title="Fricofin LD50" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="1.070" />
-            <image hud="brands/hud_brand_fuchs.png" />
+            <image hud="objects/fluids/shared/hud_fill_rmsCoolant.png" />
+        </fillType>
+        <fillType name="RMS_TOTALENERGIES_ADBLUE" title="AdBlue" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="1.090" />
+            <image hud="$dataS/menu/hud/fillTypes/hud_fill_def.png" />
         </fillType>
     </fillTypes>
 </map>
